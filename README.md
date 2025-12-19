@@ -1,3 +1,14 @@
+---
+title: "readme"
+source: ""
+author: Edison Achalma
+published:
+created: 2025-12-19
+description:
+tags:
+  - readme
+---
+
 # Calibre PDF Tools
 
 ![Calibre](https://img.shields.io/badge/Calibre-v7%2B-blue) ![bash](https://img.shields.io/badge/bash-script-green) ![exiftool](https://img.shields.io/badge/exiftool-required-orange)
