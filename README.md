@@ -1,17 +1,8 @@
----
-title: "readme"
-source: ""
-author: Edison Achalma
-published:
-created: 2025-12-19
-description:
-tags:
-  - readme
----
-
 # Calibre PDF Tools
 
-![Calibre](https://img.shields.io/badge/Calibre-v7%2B-blue) ![bash](https://img.shields.io/badge/bash-script-green) ![exiftool](https://img.shields.io/badge/exiftool-required-orange)
+![Calibre](https://img.shields.io/badge/Calibre-v7%2B-blue) ![bash](https://img.shields.io/badge/bash-script-green) ![exiftool](https://img.shields.io/badge/exiftool-required-orange) 
+
+#readme
 
 Scripts en Bash muy útiles para quienes usan **Calibre** con PDFs externos y quieren mantener todo perfectamente organizado y con metadatos incrustados.
 
@@ -99,3 +90,4 @@ Segundo script originalmente por Edison Achalma (2024-2025)
 ---
 
 ¡Star ★ el repo si te ha sido útil!
+ 
