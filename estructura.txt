@@ -1,0 +1,24 @@
+# ============================================================
+# Proyecto : scripts_for_calibre
+# Ruta     : /home/achalmaedison/Documents/scripts_for_calibre
+# Generado : 2026-07-13 02:08:28
+# Script   : main.sh v2.1.0
+# Profund. : 6 niveles
+# Formato  : txt
+# Excluye  : _extensions _freeze _partials _site site_libs build __pycache__ log output temp .git .quarto node_modules .Rproj.user index_cache __MACOSX *.aux *.log *.out *.toc *.bbl *.blg *.synctex.gz *.fff *.ttt *.fls *.fdb_latexmk *.pyc *.pyo *.egg-info *.ipynb_checkpoints .DS_Store Thumbs.db .Rhistory .RData estructura.txt
+# ============================================================
+
+[4.0K Jul 10 22:06]  /home/achalmaedison/Documents/scripts_for_calibre
+├── [3.5K Jun 20 11:47]  README.md
+└── [4.0K Jun 22 18:32]  script_matadatos_calibre
+    ├── [2.2K Jun 22 17:05]  config.sh
+    ├── [4.0K Jun 22 17:08]  lib
+    │   ├── [5.7K Jun 22 17:06]  cli.sh
+    │   ├── [ 12K Jun 22 17:07]  embed_metadata.sh
+    │   ├── [3.5K Jun 22 17:05]  logger.sh
+    │   ├── [9.2K Jun 22 17:08]  register_formats.sh
+    │   └── [4.0K Jun 22 17:06]  validator.sh
+    ├── [4.7K Jun 22 17:08]  main.sh
+    └── [ 16K Jun 22 18:34]  README.md
+
+3 directories, 9 files
