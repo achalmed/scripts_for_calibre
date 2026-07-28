@@ -131,12 +131,18 @@ def search_crossref(title, authors):
     auths = [" ".join(filter(None, [a.get("given"), a.get("family")]))
              for a in it.get("author", [])]
     parts = (it.get("issued", {}).get("date-parts") or [[None]])[0]
+    ctype = it.get("type", "")
+    journal = (it.get("container-title") or [""])[0]
+    # For books/monographs the Crossref "publisher" is a real publishing house
+    # and belongs in Calibre's publisher field. For journal-article / report /
+    # proceedings the container-title is the JOURNAL, which must NOT be written
+    # to `publisher` (it goes in Publication); we surface it separately.
+    is_book = "book" in ctype or "monograph" in ctype
     rec = {
         "title": src_title,
         "authors": auths,
-        # For articles the "publisher" is less useful than the journal; show
-        # the container (journal) when present, else the publisher.
-        "publisher": (it.get("container-title") or [it.get("publisher", "")])[0],
+        "publisher": it.get("publisher", "") if is_book else "",
+        "journal": "" if is_book else journal,
         "year": str(parts[0]) if parts and parts[0] else "",
         "pages": None,
         "doi": it.get("DOI", ""),
@@ -182,6 +188,10 @@ def compare(row, rec, confianza):
     # A DOI we may not have is a genuinely useful find (Crossref).
     if rec.get("doi"):
         out.append((bid, "doi (encontrado)", "", rec["doi"]))
+    # Journal name (articles): informational; belongs in Publication, never in
+    # the publisher field.
+    if rec.get("journal"):
+        out.append((bid, "revista (informativo)", "", rec["journal"]))
 
     return out
 
