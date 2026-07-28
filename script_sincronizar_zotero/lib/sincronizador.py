@@ -575,10 +575,14 @@ def plan_pair(plan, bid, cal, zot):
     for cfield, zfield in (("publisher", "publisher"), ("series", series_target),
                            ("pages", "numPages"), ("edition", "edition")):
         cv = str(cal.get(cfield, "") or "").strip()
-        zv = str(zot.get(zfield, "") or "").strip()
+        # Resolver PRIMERO el campo destino del tipo (publisher->institution
+        # en report, etc.) y comparar contra ESE campo; si no, tras un cambio
+        # de tipo se releeria el generico vacio y se re-escribiria siempre.
+        target = zfield if zfield in valid else \
+            TARGET_FIELD.get((final_type, zfield))
+        zv = str(zot.get(target, "") or "").strip() if target else \
+            str(zot.get(zfield, "") or "").strip()
         if cv and norm(cv) != norm(zv):
-            target = zfield if zfield in valid else \
-                TARGET_FIELD.get((final_type, zfield))
             if target:
                 accion = "calibre->zotero" if zv else "calibre->zotero (vacio)"
                 plan.add(bid, zkey, cfield, accion, zv, cv)
