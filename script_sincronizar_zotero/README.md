@@ -105,13 +105,16 @@ y solo entonces la corrida completa.
   (conflictos de idioma, autores donde Zotero es mas completo, adjuntos que
   no se pudieron recalcular).
 
-## Estado actual de la biblioteca (simulacion 2026-07-28)
+## Estado actual de la biblioteca (APLICADO 2026-07-28)
 
-4420 pares enlazados · 13 claves huerfanas (item borrado en Zotero) ·
-~7260 escrituras a Zotero (mayoria idioma `spa`→`es`, numero de serie, tags
-saneados, 286 abstracts, 104 editoriales, 66 rutas de adjunto reparadas,
-40 titulos, 38 autores `Unknown`, 26 fechas) · 197 conflictos de idioma y
-4 de autor solo reportados.
+Corrida completa aplicada y verificada: 4420 pares · 9414 escrituras a Zotero
+(3032 cambios de tipo con migracion de campos, idioma normalizado a `es`/`en`,
+tags saneados, estrellas en ambas direcciones, 286 abstracts, 66 rutas de
+adjunto reparadas, 40 titulos, 38 autores `Unknown`, editoriales y fechas) ·
+44917 celdas espejo pobladas en Calibre (zotero_* al 100%) · idempotente
+(re-simulacion: 0 escrituras) · 4451 items con `synced=0` listos para subir a
+zotero.org · 13 claves huerfanas y 1 adjunto fantasma (libro 1667 borrado,
+duplicado del 28) para revision manual.
 
 ## Herramientas relacionadas (complementarias, no duplicar)
 
