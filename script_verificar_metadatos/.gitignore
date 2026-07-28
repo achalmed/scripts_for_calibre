@@ -1,0 +1,6 @@
+# Reportes generados en cada ejecución (salida, no código).
+reportes/
+
+# Cache de Python
+__pycache__/
+*.pyc
