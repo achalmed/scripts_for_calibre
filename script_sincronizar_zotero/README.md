@@ -41,17 +41,23 @@ que define el contrato de campos RIS de ZMI que esta herramienta implementa).
   vocabulario (`Ciencias sociales`, `economía_ambiental`, `programming_R`, el
   typo `ecuacione s_lineales`) SI se reemplazan por la version limpia de
   Calibre para no reintroducir duplicados ya fusionados.
-- **Conflicto real de idioma** (Zotero `en` vs Calibre `es`): se **reporta**,
-  no se voltea solo (ninguno de los dos es autoridad fiable). Solo se
-  autoaplica la normalizacion de formato (`spa`→`es`, `English`→`en`) o el
-  relleno de un Zotero vacio.
+- **Idioma: Calibre manda SIEMPRE** (decision del usuario: Zotero quedo mal
+  poblado, casi todo como ingles). Se escribe el codigo ISO 639-1 normalizado
+  (`spa`→`es`, `English`→`en`); los codigos regionales validos se respetan.
 - **Campo `Extra`**: se edita **linea a linea**; solo se actualiza la linea de
   ruta `{path}`, las lineas `CSL Variable: Value` se preservan.
 - **Vacio en el origen nunca borra en el destino.** `Leido` y `Generos` de
   Calibre jamas se propagan.
-- Cambiar el **tipo** de item no se hace (todos los enlazados son `book`; un
-  cambio de tipo invalidaria campos). Items enlazados que no sean `book` se
-  reportan para revision manual.
+- **El tipo de item se sincroniza de verdad**: manda el `Item type` de
+  Calibre (`book` solo cuando realmente es libro; `presentation`, `manuscript`,
+  `report`, `bookSection`, `journalArticle`...). El cambio migra los campos via
+  `baseFieldMappings` de Zotero, lo que no cabe en el tipo nuevo se preserva en
+  `Extra` como linea CSL, y los creadores pasan al rol primario del tipo
+  (`presenter` en presentaciones). Para articulos, la serie de Calibre va a
+  `publicationTitle` (contrato RIS `T2`).
+- **Valoracion en estrellas sincronizada**: Calibre `rating` (2-10) ⇄ tag de
+  estrellas de Zotero (`⭐`-`⭐⭐⭐⭐⭐`), en ambas direcciones; Calibre manda en
+  conflicto.
 
 ## Arquitectura (patron modular del repo)
 
