@@ -20,6 +20,8 @@ autor.
 | 03 | `migraciones/03_itemtype_desde_clasificador.py` | Rellena **Item type** desde el Clasificador con el mapeo dominante de alta confianza (Sesión→Presentation, Libro→Book, …). |
 | 04 | `migraciones/04_itemtype_examenes_practicas.py` | Item type del material de examen/práctica/ejercicio → **Manuscript** (docs de aula inéditos), Capítulo/Parte → Book Section, Documento de trabajo/etc. → Report. |
 | 05 | `migraciones/05_aplicar_tags_por_titulo.py` | Aplica los TSV `id,tags,genero,clasificador,item_type` producidos al clasificar por título los 739 libros sin etiquetas. Valida cada valor contra el vocabulario/enums **antes** de escribir. |
+| 06 | `migraciones/06_itemtype_por_serie_isbn.py` | Completa **Item type** por señal fuerte determinista: misma **serie** que hermanos ya catalogados → tipo dominante; sin serie pero con **ISBN** → Book. Dry-run (imprime plan). Cubrió 201 libros. |
+| 07 | `migraciones/07_itemtype_por_prompt_subagentes.py` | Valida y aplica los TSV `id,item_type` que produjeron 6 subagentes al clasificar los 950 libros restantes **leyendo los criterios del prompt de catalogación** (líneas 84-848). Rechaza cualquier tipo fuera del enum antes de escribir. Con `--apply`. Dejó el Item type al 100%. |
 
 `vocabulario_etiquetas.txt` es el vocabulario cerrado de etiquetas usado como
 lista blanca (ninguna migración inventa etiquetas nuevas).
