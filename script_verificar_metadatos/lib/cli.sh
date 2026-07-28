@@ -20,9 +20,10 @@ OPCIONES:
   --modo isbn      Verifica solo los libros con identificador fiable
                    (ISBN/Google/Amazon/Goodreads). Coincidencia exacta.
                    Es el modo por defecto.
-  --modo titulo    Ademas de lo anterior, para los libros SIN identificador
-                   intenta una busqueda por titulo+autor (coincidencia
-                   aproximada; se marca el nivel de confianza).
+  --modo titulo    Para los libros publicados (Item type = Book en config.sh)
+                   SIN identificador, busca por titulo+autor (coincidencia
+                   aproximada; se marca el nivel de confianza). Complementa al
+                   modo isbn: no re-verifica lo que aquel ya cubrio.
   --limite N       Procesa como maximo N candidatos (util para pruebas).
   --ids a,b,c      Verifica solo esos ids de libro (depuracion).
   --verbose        Traza cada consulta.

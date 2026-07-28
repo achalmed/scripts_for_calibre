@@ -33,9 +33,26 @@ select_candidates() {
                    WHEN 'amazon' THEN 3 WHEN 'goodreads' THEN 4 ELSE 5 END
         LIMIT 1)"
 
+    # Selection differs per mode:
+    #   isbn  -> books that HAVE a verifiable id (exact lookup).
+    #   titulo-> books WITHOUT a verifiable id whose Item type is publishable
+    #            (title+author search). The two modes are complementary, so a
+    #            titulo run never re-checks what an isbn run already did.
     local having=""
-    [[ "$MODE" == "isbn" ]] && having="AND EXISTS(SELECT 1 FROM identifiers i
-        WHERE i.book=b.id AND i.type IN ('isbn','google','amazon','goodreads'))"
+    if [[ "$MODE" == "isbn" ]]; then
+        having="AND EXISTS(SELECT 1 FROM identifiers i
+            WHERE i.book=b.id AND i.type IN ('isbn','google','amazon','goodreads'))"
+    else
+        # Build the quoted IN list from the space-separated config value.
+        local in_list="" t
+        for t in $TITULO_ITEM_TYPES; do in_list+="'${t//\'/\'\'}',"; done
+        in_list="${in_list%,}"
+        having="AND NOT EXISTS(SELECT 1 FROM identifiers i
+            WHERE i.book=b.id AND i.type IN ('isbn','google','amazon','goodreads'))
+          AND EXISTS(SELECT 1 FROM books_custom_column_39_link l
+            JOIN custom_column_39 it ON it.id=l.value AND it.value IN ($in_list)
+            WHERE l.book=b.id)"
+    fi
 
     sqlite3 -noheader -separator $'\t' "$METADATA_DB" "
       SELECT b.id,

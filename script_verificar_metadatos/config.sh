@@ -27,6 +27,13 @@ readonly HTTP_TIMEOUT="20"
 # reliably verifiable by exact lookup, in priority order.
 readonly VERIFIABLE_ID_TYPES="isbn google amazon goodreads"
 
+# In --modo titulo, only books of these Item types (and WITHOUT a verifiable
+# id) get a title+author search. OpenLibrary is a book database, so limiting
+# to actual books keeps the run short and the yield high; searching the ~4300
+# unpublished handouts would take ~75 min for near-zero results. Space-separated
+# list of #item_type enum values; edit to widen (e.g. add "Book Section").
+readonly TITULO_ITEM_TYPES="Book"
+
 # When searching by title+author (no ISBN), a candidate from the provider
 # is accepted as "the same book" only if the fuzzy title similarity is at
 # least this ratio (0..1). Below it, the match is reported as "dudoso" and
