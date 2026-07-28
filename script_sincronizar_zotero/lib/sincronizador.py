@@ -12,10 +12,23 @@ Reglas duras implementadas (no configurables):
   - Autores: comparacion SEMANTICA (conjuntos de tokens, tolerante al
     intercambio nombre/apellido que dejo invertir_nombres). Si Zotero tiene
     un SUPERCONJUNTO (coautores extra), se conserva y solo se reporta.
+    Editores/traductores de Zotero se preservan siempre.
   - Formato por sistema, nunca homogenizar: Calibre "Nombre, Apellido"
     (separador interno '|'), Zotero firstName/lastName separados.
+  - TIPO de item: manda el Item type de Calibre (custom_column_39). El cambio
+    de tipo migra los campos via baseFieldMappings; lo que no cabe en el tipo
+    nuevo se preserva en Extra como linea "Etiqueta: valor" (CSL). Los
+    creadores con rol invalido en el tipo nuevo pasan al rol primario.
+  - Idioma: Calibre manda SIEMPRE (Zotero quedo mal poblado); se escribe el
+    codigo ISO 639-1 normalizado.
+  - Valoracion: estrellas. Calibre rating (2-10) <-> tag de estrellas de
+    Zotero (⭐..⭐⭐⭐⭐⭐). Calibre manda en conflicto; si Calibre no tiene
+    valoracion y Zotero si, se rellena Calibre (2 puntos por estrella).
+  - Etiquetas personales de Zotero (emoji no-estrella, #hashtags) se
+    preservan; variantes obsoletas de vocabulario se reemplazan.
   - Campo Extra de Zotero: se edita linea a linea; solo se actualiza la
-    linea de ruta {path}, las lineas "CSL Variable: Value" se preservan.
+    linea de ruta {path} (y se anexan las migraciones de tipo); las lineas
+    "CSL Variable: Value" existentes se preservan.
   - Vacio en el origen NUNCA borra en el destino.
   - Leido y Generos de Calibre jamas se propagan.
   - Escrituras Zotero marcan synced=0 y actualizan (client)dateModified
@@ -31,7 +44,6 @@ import json
 import os
 import re
 import sqlite3
-import sys
 import unicodedata
 from datetime import datetime, timezone
 
@@ -56,8 +68,42 @@ LANG_2TO1 = {"spa": "es", "eng": "en", "por": "pt", "fra": "fr", "ita": "it",
 LANG_NAMES = {"spanish": "es", "english": "en", "espanol": "es", "español": "es",
               "portuguese": "pt", "french": "fr", "italian": "it", "german": "de"}
 
+# Item type de Calibre (custom_column_39) -> typeName de Zotero. Los tipos
+# sin equivalente nativo usan el sustituto del contrato + "Type: <csl>" en
+# Extra (se anexa en la migracion).
+TYPE_MAP = {
+    "Artwork": "artwork", "Audio Recording": "audioRecording", "Bill": "bill",
+    "Blog Post": "blogPost", "Book": "book", "Book Section": "bookSection",
+    "Case": "case", "Conference Paper": "conferencePaper",
+    "Dictionary Entry": "dictionaryEntry", "Document": "document",
+    "Email": "email", "Encyclopedia Article": "encyclopediaArticle",
+    "Film": "film", "Forum Post": "forumPost", "Hearing": "hearing",
+    "Instant Message": "instantMessage", "Interview": "interview",
+    "Journal Article": "journalArticle", "Letter": "letter",
+    "Magazine Article": "magazineArticle", "Manuscript": "manuscript",
+    "Map": "map", "Newspaper Article": "newspaperArticle", "Patent": "patent",
+    "Podcast": "podcast", "Presentation": "presentation",
+    "Radio Broadcast": "radioBroadcast", "Report": "report",
+    "Software": "computerProgram", "Statute": "statute", "Thesis": "thesis",
+    "TV Broadcast": "tvBroadcast", "Video Recording": "videoRecording",
+    "Webpage": "webpage", "Dataset": "dataset",
+    # sustitutos del contrato para tipos no nativos
+    "Figure": "artwork", "Musical Score": "manuscript", "Pamphlet": "report",
+    "Book Review": "journalArticle", "Treaty": "document",
+}
+STAR_RE = re.compile(r"^[⭐★]+$")
+
+# --- Esquema de Zotero cargado en main(): campos/creadores validos por tipo
+TYPE_ID = {}          # typeName -> itemTypeID
+VALID_FIELDS = {}     # typeName -> set(fieldName)
+BASE_OF = {}          # fieldName -> baseFieldName
+TARGET_FIELD = {}     # (typeName, baseFieldName) -> fieldName especifico
+VALID_CREATORS = {}   # typeName -> set(creatorTypeID)
+PRIMARY_CREATOR = {}  # typeName -> creatorTypeID primario
+FIELD_NAME = {}       # fieldID -> fieldName
+
 # Columnas espejo zotero_* de Calibre (colnum -> extractor sobre el estado
-# Zotero final). Formato Zotero preservado (autores "Apellido, Nombre; ...").
+# Zotero FINAL). Formato Zotero preservado (autores "Apellido, Nombre; ...").
 MIRROR_COLS = {
     25: lambda z: z.get("title", ""),
     33: lambda z: "; ".join(
@@ -100,14 +146,28 @@ def strip_html(s):
 
 
 def is_personal_tag(t):
-    """True para etiquetas personales de Zotero que el sync NUNCA borra:
-    valoraciones/emoji (⭐, ★, cualquier simbolo Unicode alto) y hashtags
-    (#Apuntes...). Las variantes ortograficas obsoletas de vocabulario
-    (Ciencias sociales, economía_ambiental, programming_R, el typo
-    'ecuacione s_lineales') NO son personales: se reemplazan por la version
-    limpia de Calibre para no reintroducir duplicados ya fusionados."""
+    """Etiquetas personales de Zotero que el sync preserva: hashtags y
+    emoji/simbolos NO-estrella (las estrellas las gestiona la valoracion).
+    Las variantes obsoletas de vocabulario NO son personales."""
     t = t.strip()
+    if STAR_RE.match(t):
+        return False
     return t.startswith("#") or any(ord(c) >= 0x2000 for c in t)
+
+
+def field_label(fname):
+    """fieldName camelCase -> etiqueta legible para lineas de Extra.
+    numPages -> 'Num Pages'? No: mapa explicito para los comunes."""
+    known = {"numPages": "Number Of Pages", "ISBN": "ISBN", "ISSN": "ISSN",
+             "publisher": "Publisher", "series": "Series",
+             "seriesNumber": "Series Number", "edition": "Edition",
+             "place": "Place", "archive": "Archive",
+             "libraryCatalog": "Library Catalog", "callNumber": "Call Number",
+             "numberOfVolumes": "Number Of Volumes", "volume": "Volume"}
+    if fname in known:
+        return known[fname]
+    s = re.sub(r"(?<!^)(?=[A-Z])", " ", fname)
+    return s[:1].upper() + s[1:]
 
 
 def lang_base(v):
@@ -126,9 +186,7 @@ def lang_base(v):
 
 def parse_cal_author(name):
     """Calibre 'Nombre| Apellido' (o 'Nombre, Apellido') -> (first, last, mode).
-
-    Sin separador -> institucion (fieldMode=1, todo en lastName).
-    """
+    Sin separador -> institucion (fieldMode=1, todo en lastName)."""
     if "|" in name:
         fn, ln = name.split("|", 1)
         return fn.strip(), ln.strip(), 0
@@ -144,6 +202,13 @@ def person_tokens(fn, ln):
         frozenset(norm(ln).replace(".", "").split())
 
 
+def cal_stars(rating):
+    """Calibre rating 0-10 -> numero de estrellas 1-5 (medias redondean up)."""
+    if not rating:
+        return 0
+    return min(5, int(rating / 2 + 0.5))
+
+
 class Plan:
     """Acumula acciones; cada accion es una fila del reporte."""
 
@@ -151,24 +216,53 @@ class Plan:
         self.rows = []          # (book_id, zkey, campo, accion, antes, despues)
         self.zot_writes = []    # callables sobre cursor zotero
         self.cal_writes = []    # callables sobre cursor calibre
-        self.touched_items = set()
 
     def add(self, bid, zkey, campo, accion, antes, despues):
         self.rows.append((bid, zkey, campo, accion,
                           str(antes or "")[:200], str(despues or "")[:200]))
 
 
+def load_zotero_schema(con):
+    """Puebla los mapas de validez de campos/creadores por tipo."""
+    for tid, tname in con.execute("SELECT itemTypeID, typeName FROM itemTypes"):
+        TYPE_ID[tname] = tid
+    for fid, fname in con.execute("SELECT fieldID, fieldName FROM fields"):
+        FIELD_NAME[fid] = fname
+    for tname, fname in con.execute(
+            "SELECT t.typeName, f.fieldName FROM itemTypeFields itf "
+            "JOIN itemTypes t ON t.itemTypeID=itf.itemTypeID "
+            "JOIN fields f ON f.fieldID=itf.fieldID"):
+        VALID_FIELDS.setdefault(tname, set()).add(fname)
+    for tname, base, fname in con.execute(
+            "SELECT t.typeName, fb.fieldName, ff.fieldName FROM baseFieldMappings m "
+            "JOIN itemTypes t ON t.itemTypeID=m.itemTypeID "
+            "JOIN fields fb ON fb.fieldID=m.baseFieldID "
+            "JOIN fields ff ON ff.fieldID=m.fieldID"):
+        TARGET_FIELD[(tname, base)] = fname
+        BASE_OF[fname] = base
+    for tname, ctid, prim in con.execute(
+            "SELECT t.typeName, itc.creatorTypeID, itc.primaryField "
+            "FROM itemTypeCreatorTypes itc "
+            "JOIN itemTypes t ON t.itemTypeID=itc.itemTypeID"):
+        VALID_CREATORS.setdefault(tname, set()).add(ctid)
+        if prim:
+            PRIMARY_CREATOR[tname] = ctid
+
+
 def read_calibre(con):
     """Estado Calibre por book id (solo libros con #zotero_key)."""
     books = {}
     for bid, key in con.execute(
-            f"SELECT book, TRIM(value) FROM custom_column_{COL_ZKEY} WHERE TRIM(COALESCE(value,''))<>''"):
+            f"SELECT book, TRIM(value) FROM custom_column_{COL_ZKEY} "
+            "WHERE TRIM(COALESCE(value,''))<>''"):
         books[bid] = {"zkey": key}
+    if not books:
+        return books
     q = f"({','.join(str(b) for b in books)})"
     for bid, title, pubdate, sidx, path in con.execute(
             f"SELECT id, title, pubdate, series_index, path FROM books WHERE id IN {q}"):
-        b = books[bid]
-        b.update(title=title, pubdate=pubdate or "", series_index=sidx, path=path)
+        books[bid].update(title=title, pubdate=pubdate or "",
+                          series_index=sidx, path=path)
     for bid, names in con.execute(
             f"SELECT l.book, GROUP_CONCAT(a.name, '###') FROM books_authors_link l "
             f"JOIN authors a ON a.id=l.author WHERE l.book IN {q} GROUP BY l.book"):
@@ -179,21 +273,27 @@ def read_calibre(con):
             (f"SELECT book, val FROM identifiers WHERE type='isbn' AND book IN {q}", "isbn"),
             (f"SELECT book, value FROM custom_column_31 WHERE book IN {q}", "pages"),
             (f"SELECT book, value FROM custom_column_40 WHERE book IN {q}", "edition"),
-            (f"SELECT book, text FROM comments WHERE book IN {q}", "comments")):
+            (f"SELECT book, text FROM comments WHERE book IN {q}", "comments"),
+            (f"SELECT l.book, r.rating FROM books_ratings_link l JOIN ratings r ON r.id=l.rating WHERE l.book IN {q}", "rating")):
         for bid, v in con.execute(sql):
             if bid in books:
                 books[bid][field] = v
     langs = dict(con.execute("SELECT id, lang_code FROM languages"))
-    for bid, lid in con.execute(f"SELECT book, lang_code FROM books_languages_link WHERE book IN {q}"):
+    for bid, lid in con.execute(
+            f"SELECT book, lang_code FROM books_languages_link WHERE book IN {q}"):
         if bid in books:
             books[bid]["language"] = langs.get(lid, "")
     for bid, tags in con.execute(
             f"SELECT l.book, GROUP_CONCAT(t.name, '###') FROM books_tags_link l "
             f"JOIN tags t ON t.id=l.tag WHERE l.book IN {q} GROUP BY l.book"):
         books[bid]["tags"] = set((tags or "").split("###")) - {""}
-    # formatos (para reparar rutas de adjuntos): preferir PDF
+    for bid, v in con.execute(
+            f"SELECT l.book, c.value FROM books_custom_column_39_link l "
+            f"JOIN custom_column_39 c ON c.id=l.value WHERE l.book IN {q}"):
+        books[bid]["cal_item_type"] = v
     for bid, name, fmt in con.execute(
-            f"SELECT book, name, format FROM data WHERE book IN {q} ORDER BY book, format='PDF' DESC"):
+            f"SELECT book, name, format FROM data WHERE book IN {q} "
+            "ORDER BY book, format='PDF' DESC"):
         books[bid].setdefault("files", []).append((name, fmt))
     return books
 
@@ -214,12 +314,14 @@ def read_zotero(con):
         if iid in by_id:
             by_id[iid][fname] = val
     for iid, ln, fn, fm in con.execute(
-            "SELECT ic.itemID, c.lastName, c.firstName, c.fieldMode FROM itemCreators ic "
-            "JOIN creators c ON c.creatorID=ic.creatorID ORDER BY ic.itemID, ic.orderIndex"):
+            "SELECT ic.itemID, c.lastName, c.firstName, c.fieldMode "
+            "FROM itemCreators ic JOIN creators c ON c.creatorID=ic.creatorID "
+            "ORDER BY ic.itemID, ic.orderIndex"):
         if iid in by_id:
             by_id[iid].setdefault("creators", []).append((ln or "", fn or "", fm))
     for iid, tag, ttype in con.execute(
-            "SELECT it.itemID, t.name, it.type FROM itemTags it JOIN tags t ON t.tagID=it.tagID"):
+            "SELECT it.itemID, t.name, it.type FROM itemTags it "
+            "JOIN tags t ON t.tagID=it.tagID"):
         if iid in by_id:
             k = "tags_manual" if ttype == 0 else "tags_auto"
             by_id[iid].setdefault(k, set()).add(tag)
@@ -228,7 +330,6 @@ def read_zotero(con):
         if iid in by_id:
             by_id[iid]["dateAdded"] = dadd
             by_id[iid]["dateModified"] = dmod
-    # adjuntos enlazados hijos (para reparar rutas)
     for aid, akey, parent, path in con.execute(
             "SELECT ia.itemID, i.key, ia.parentItemID, ia.path FROM itemAttachments ia "
             "JOIN items i ON i.itemID=ia.itemID WHERE ia.linkMode=2"):
@@ -249,11 +350,13 @@ def z_touch(cur, item_id):
 
 
 def z_field_id(cur, name):
-    return cur.execute("SELECT fieldID FROM fields WHERE fieldName=?", (name,)).fetchone()[0]
+    return cur.execute("SELECT fieldID FROM fields WHERE fieldName=?",
+                       (name,)).fetchone()[0]
 
 
 def z_value_id(cur, value):
-    r = cur.execute("SELECT valueID FROM itemDataValues WHERE value=?", (value,)).fetchone()
+    r = cur.execute("SELECT valueID FROM itemDataValues WHERE value=?",
+                    (value,)).fetchone()
     if r:
         return r[0]
     cur.execute("INSERT INTO itemDataValues(value) VALUES (?)", (value,))
@@ -273,37 +376,89 @@ def z_set_field(cur, item_id, field, value):
     z_touch(cur, item_id)
 
 
-def z_creator_id(cur, fn, ln, fm):
+def z_get_field(cur, item_id, field):
     r = cur.execute(
-        "SELECT creatorID FROM creators WHERE firstName=? AND lastName=? AND fieldMode=?",
-        (fn, ln, fm)).fetchone()
-    if r:
-        return r[0]
-    cur.execute("INSERT INTO creators(firstName, lastName, fieldMode) VALUES (?,?,?)",
-                (fn, ln, fm))
-    return cur.lastrowid
+        "SELECT v.value FROM itemData d JOIN itemDataValues v ON v.valueID=d.valueID "
+        "JOIN fields f ON f.fieldID=d.fieldID WHERE d.itemID=? AND f.fieldName=?",
+        (item_id, field)).fetchone()
+    return r[0] if r else ""
 
 
-def z_set_creators(cur, item_id, persons):
-    """Reemplaza los creadores de tipo AUTHOR conservando el resto.
+def z_change_type(cur, item_id, new_type, csl_type=None):
+    """Cambia el tipo del item migrando campos y creadores sin perder datos.
 
-    persons: [(first, last, fieldMode)] en orden. Editores, traductores y
-    demas roles se preservan y quedan despues de los autores. Asi el sync
-    nunca borra co-creadores que Calibre no representa.
+    - Campo valido en el tipo nuevo: se conserva tal cual.
+    - Campo con equivalente via baseFieldMappings: se traslada.
+    - Resto: se anexa al Extra como linea "Etiqueta: valor" (CSL).
+    - Creadores con rol invalido: pasan al rol primario del tipo nuevo.
+    - csl_type: para tipos sustitutos del contrato, anexa "Type: <csl>".
     """
-    at = cur.execute(
-        "SELECT creatorTypeID FROM creatorTypes WHERE creatorType='author'").fetchone()[0]
+    new_tid = TYPE_ID[new_type]
+    valid = VALID_FIELDS.get(new_type, set())
+    to_extra = []
+    for fid, vid in cur.execute(
+            "SELECT fieldID, valueID FROM itemData WHERE itemID=?",
+            (item_id,)).fetchall():
+        fname = FIELD_NAME[fid]
+        if fname in valid or fname == "extra":
+            continue
+        val = cur.execute("SELECT value FROM itemDataValues WHERE valueID=?",
+                          (vid,)).fetchone()[0]
+        base = BASE_OF.get(fname, fname)
+        target = TARGET_FIELD.get((new_type, base),
+                                  base if base in valid else None)
+        cur.execute("DELETE FROM itemData WHERE itemID=? AND fieldID=?",
+                    (item_id, fid))
+        if target and target in valid:
+            tfid = z_field_id(cur, target)
+            if not cur.execute("SELECT 1 FROM itemData WHERE itemID=? AND fieldID=?",
+                               (item_id, tfid)).fetchone():
+                cur.execute(
+                    "INSERT INTO itemData(itemID, fieldID, valueID) VALUES (?,?,?)",
+                    (item_id, tfid, vid))
+                continue
+        to_extra.append(f"{field_label(fname)}: {val}")
+    if csl_type:
+        to_extra.append(f"Type: {csl_type}")
+    if to_extra:
+        extra = z_get_field(cur, item_id, "extra")
+        lines = [l for l in extra.split("\n") if l.strip()] if extra else []
+        for line in to_extra:
+            if line not in lines:
+                lines.append(line)
+        z_set_field(cur, item_id, "extra", "\n".join(lines))
+    # creadores: roles invalidos -> rol primario del tipo nuevo
+    vc = VALID_CREATORS.get(new_type, set())
+    prim = PRIMARY_CREATOR.get(new_type)
+    if prim:
+        cur.execute(
+            "UPDATE itemCreators SET creatorTypeID=? WHERE itemID=? "
+            f"AND creatorTypeID NOT IN ({','.join(str(c) for c in vc)})",
+            (prim, item_id))
+    cur.execute("UPDATE items SET itemTypeID=? WHERE itemID=?", (new_tid, item_id))
+    z_touch(cur, item_id)
+
+
+def z_set_creators(cur, item_id, persons, ctype_id):
+    """Reemplaza los creadores del rol primario conservando el resto."""
     others = cur.execute(
         "SELECT creatorID, creatorTypeID FROM itemCreators "
         "WHERE itemID=? AND creatorTypeID!=? ORDER BY orderIndex",
-        (item_id, at)).fetchall()
+        (item_id, ctype_id)).fetchall()
     cur.execute("DELETE FROM itemCreators WHERE itemID=?", (item_id,))
     idx = 0
     for fn, ln, fm in persons:
-        cid = z_creator_id(cur, fn, ln, fm)
+        r = cur.execute(
+            "SELECT creatorID FROM creators WHERE firstName=? AND lastName=? AND fieldMode=?",
+            (fn, ln, fm)).fetchone()
+        cid = r[0] if r else None
+        if cid is None:
+            cur.execute("INSERT INTO creators(firstName, lastName, fieldMode) VALUES (?,?,?)",
+                        (fn, ln, fm))
+            cid = cur.lastrowid
         cur.execute(
             "INSERT INTO itemCreators(itemID, creatorID, creatorTypeID, orderIndex) "
-            "VALUES (?,?,?,?)", (item_id, cid, at, idx))
+            "VALUES (?,?,?,?)", (item_id, cid, ctype_id, idx))
         idx += 1
     for cid, ctype in others:
         cur.execute(
@@ -323,17 +478,13 @@ def z_tag_id(cur, name):
 
 def z_set_manual_tags(cur, item_id, tags):
     """Reemplaza SOLO las etiquetas manuales (type=0); conserva automaticas.
-
-    La PK de itemTags es (itemID, tagID) — 'type' no es parte de la clave.
-    Si la etiqueta ya esta en el item como automatica (type=1) se deja como
-    esta (el item ya la lleva); un INSERT type=0 chocaria en silencio.
-    """
+    PK de itemTags = (itemID, tagID): si la tag ya existe como automatica se
+    deja como esta (el item ya la lleva)."""
     cur.execute("DELETE FROM itemTags WHERE itemID=? AND type=0", (item_id,))
     for t in sorted(tags):
         tid = z_tag_id(cur, t)
-        exists = cur.execute(
-            "SELECT 1 FROM itemTags WHERE itemID=? AND tagID=?", (item_id, tid)).fetchone()
-        if not exists:
+        if not cur.execute("SELECT 1 FROM itemTags WHERE itemID=? AND tagID=?",
+                           (item_id, tid)).fetchone():
             cur.execute("INSERT INTO itemTags(itemID, tagID, type) VALUES (?,?,0)",
                         (item_id, tid))
     z_touch(cur, item_id)
@@ -347,49 +498,58 @@ def plan_pair(plan, bid, cal, zot):
     zkey = cal["zkey"]
     iid = zot["itemID"]
 
-    # Guarda de tipo: el contrato ZMI crea items 'book' y todos los campos
-    # que escribimos (publisher, series, numPages, edition, ISBN...) existen
-    # para 'book'. Un item de otro tipo tendria campos invalidos: no se toca,
-    # solo se reporta para revision manual.
-    if zot.get("typeName") != "book":
-        plan.add(bid, zkey, "item", "reporte (tipo Zotero != book, revision manual)",
-                 zot.get("typeName", ""), cal.get("title", ""))
-        return
+    # --- tipo de item: manda el Item type de Calibre ---
+    cal_itype = cal.get("cal_item_type", "")
+    final_type = zot["typeName"]
+    if cal_itype:
+        mapped = TYPE_MAP.get(cal_itype)
+        if mapped and mapped in TYPE_ID and mapped != zot["typeName"]:
+            csl = {"Figure": "figure", "Musical Score": "musical_score",
+                   "Pamphlet": "pamphlet", "Book Review": "review-book",
+                   "Treaty": "treaty"}.get(cal_itype)
+            plan.add(bid, zkey, "tipo", "calibre->zotero (cambio de tipo)",
+                     zot["typeName"], mapped)
+            plan.zot_writes.append(
+                lambda c, i=iid, t=mapped, x=csl: z_change_type(c, i, t, x))
+            final_type = mapped
+        elif not mapped:
+            plan.add(bid, zkey, "tipo", "reporte (sin mapeo de tipo)",
+                     zot["typeName"], cal_itype)
+    valid = VALID_FIELDS.get(final_type, set())
+    prim_creator = PRIMARY_CREATOR.get(final_type)
 
     # --- titulo (Calibre manda; Zotero se ajusta) ---
     ct, zt = cal.get("title", ""), zot.get("title", "")
     if norm(ct) and norm(ct) != norm(zt):
         plan.add(bid, zkey, "titulo", "calibre->zotero", zt, ct)
         plan.zot_writes.append(lambda c, i=iid, v=ct: z_set_field(c, i, "title", v))
-    elif not norm(zt) and norm(ct):
-        plan.add(bid, zkey, "titulo", "calibre->zotero (vacio)", "", ct)
-        plan.zot_writes.append(lambda c, i=iid, v=ct: z_set_field(c, i, "title", v))
 
     # --- autores (semantico; superconjunto de Zotero se respeta) ---
-    cal_names = [a for a in cal.get("authors", []) if norm(a) not in ("unknown", "desconocido", "")]
+    cal_names = [a for a in cal.get("authors", [])
+                 if norm(a) not in ("unknown", "desconocido", "")]
     cal_persons = [parse_cal_author(a) for a in cal_names]
     cal_sets = {person_tokens(fn, ln) for fn, ln, _ in cal_persons}
     zot_creators = zot.get("creators", [])
     zot_sets = {person_tokens(fn, ln) for ln, fn, _ in zot_creators
                 if norm(ln) not in ("unknown", "desconocido") or norm(fn)}
     zot_sets = {s for s in zot_sets if s}
-    if cal_sets:
+    zdisp = "; ".join(f"{l}, {f}" if f else l for l, f, _ in zot_creators)
+    if cal_sets and prim_creator:
         if not zot_sets:
             plan.add(bid, zkey, "autores", "calibre->zotero (Unknown/vacio)",
-                     "; ".join(f"{l}, {f}" if f else l for l, f, _ in zot_creators),
-                     " & ".join(cal_names))
-            plan.zot_writes.append(lambda c, i=iid, p=cal_persons: z_set_creators(c, i, p))
+                     zdisp, " & ".join(cal_names))
+            plan.zot_writes.append(
+                lambda c, i=iid, p=cal_persons, t=prim_creator: z_set_creators(c, i, p, t))
         elif cal_sets == zot_sets:
             pass  # misma gente, cada sistema en su formato: correcto
         elif cal_sets < zot_sets:
             plan.add(bid, zkey, "autores", "reporte (Zotero mas completo)",
-                     " & ".join(cal_names),
-                     "; ".join(f"{l}, {f}" if f else l for l, f, _ in zot_creators))
+                     " & ".join(cal_names), zdisp)
         else:
             plan.add(bid, zkey, "autores", "calibre->zotero (conflicto)",
-                     "; ".join(f"{l}, {f}" if f else l for l, f, _ in zot_creators),
-                     " & ".join(cal_names))
-            plan.zot_writes.append(lambda c, i=iid, p=cal_persons: z_set_creators(c, i, p))
+                     zdisp, " & ".join(cal_names))
+            plan.zot_writes.append(
+                lambda c, i=iid, p=cal_persons, t=prim_creator: z_set_creators(c, i, p, t))
 
     # --- fecha ---
     cal_year = year_of(cal.get("pubdate", ""))
@@ -404,21 +564,32 @@ def plan_pair(plan, bid, cal, zot):
                  cal.get("pubdate", ""), f"{zot_year}-01-01")
         plan.cal_writes.append(
             lambda c, b=bid, y=zot_year: c.execute(
-                "UPDATE books SET pubdate=? WHERE id=?", (f"{y}-01-01 00:00:00+00:00", b)))
+                "UPDATE books SET pubdate=? WHERE id=?",
+                (f"{y}-01-01 00:00:00+00:00", b)))
 
-    # --- campos escalares: Calibre manda ---
-    for cfield, zfield in (("publisher", "publisher"), ("series", "series"),
+    # --- campos escalares: Calibre manda (solo si el campo cabe en el tipo) ---
+    # Para articulos, la SERIE de Calibre es el nombre de la publicacion
+    # (contrato RIS: T2={series} -> publicationTitle), no una serie editorial.
+    series_target = "publicationTitle" if final_type in (
+        "journalArticle", "magazineArticle", "newspaperArticle") else "series"
+    for cfield, zfield in (("publisher", "publisher"), ("series", series_target),
                            ("pages", "numPages"), ("edition", "edition")):
         cv = str(cal.get(cfield, "") or "").strip()
         zv = str(zot.get(zfield, "") or "").strip()
         if cv and norm(cv) != norm(zv):
-            accion = "calibre->zotero" if zv else "calibre->zotero (vacio)"
-            plan.add(bid, zkey, cfield, accion, zv, cv)
-            plan.zot_writes.append(
-                lambda c, i=iid, f=zfield, v=cv: z_set_field(c, i, f, v))
+            target = zfield if zfield in valid else \
+                TARGET_FIELD.get((final_type, zfield))
+            if target:
+                accion = "calibre->zotero" if zv else "calibre->zotero (vacio)"
+                plan.add(bid, zkey, cfield, accion, zv, cv)
+                plan.zot_writes.append(
+                    lambda c, i=iid, f=target, v=cv: z_set_field(c, i, f, v))
+            else:
+                plan.add(bid, zkey, cfield,
+                         f"reporte (campo no aplicable a {final_type})", zv, cv)
 
     # --- numero de serie ---
-    if cal.get("series"):
+    if cal.get("series") and "seriesNumber" in valid:
         sidx = cal.get("series_index")
         cv = str(int(sidx)) if sidx == int(sidx) else str(sidx)
         zv = str(zot.get("seriesNumber", "") or "")
@@ -430,7 +601,7 @@ def plan_pair(plan, bid, cal, zot):
     # --- ISBN (ambas direcciones, relleno) ---
     ci = re.sub(r"[^0-9Xx]", "", cal.get("isbn", "") or "")
     zi = re.sub(r"[^0-9Xx]", "", zot.get("ISBN", "") or "")
-    if ci and not zi:
+    if ci and not zi and "ISBN" in valid:
         plan.add(bid, zkey, "isbn", "calibre->zotero (vacio)", "", cal["isbn"])
         plan.zot_writes.append(
             lambda c, i=iid, v=cal["isbn"]: z_set_field(c, i, "ISBN", v))
@@ -440,40 +611,57 @@ def plan_pair(plan, bid, cal, zot):
             lambda c, b=bid, v=zot["ISBN"]: c.execute(
                 "INSERT OR IGNORE INTO identifiers(book, type, val) VALUES (?,?,?)",
                 (b, "isbn", v)))
-    elif ci and zi and ci.lower() != zi.lower():
-        plan.add(bid, zkey, "isbn", "calibre->zotero (conflicto)", zot["ISBN"], cal["isbn"])
+    elif ci and zi and ci.lower() != zi.lower() and "ISBN" in valid:
+        plan.add(bid, zkey, "isbn", "calibre->zotero (conflicto)",
+                 zot["ISBN"], cal["isbn"])
         plan.zot_writes.append(
             lambda c, i=iid, v=cal["isbn"]: z_set_field(c, i, "ISBN", v))
 
-    # --- idioma ---
-    # Se comparan por base ISO 639-1. Solo se AUTOAPLICA la normalizacion de
-    # formato (spa->es, English->en) o el relleno de un Zotero vacio. Un
-    # desacuerdo REAL de idioma (Zotero 'en' vs Calibre 'es') no se voltea
-    # solo: se reporta, porque ninguno de los dos lados es autoridad fiable.
+    # --- idioma: CALIBRE MANDA SIEMPRE (Zotero quedo mal poblado) ---
     cb = lang_base(cal.get("language", ""))
     zraw = (zot.get("language", "") or "").strip()
-    zb = lang_base(zraw)
     if cb:
+        zb = lang_base(zraw)
         valid_iso = bool(re.fullmatch(r"[a-z]{2}(-[A-Za-z]{2})?", zraw))
         if cb != zb:
-            if zb:
-                plan.add(bid, zkey, "idioma", "reporte (conflicto de idioma)", zraw, cb)
-            else:
-                plan.add(bid, zkey, "idioma", "calibre->zotero (vacio)", zraw, cb)
-                plan.zot_writes.append(lambda c, i=iid, v=cb: z_set_field(c, i, "language", v))
+            accion = "calibre->zotero (conflicto)" if zb else "calibre->zotero (vacio)"
+            plan.add(bid, zkey, "idioma", accion, zraw, cb)
+            plan.zot_writes.append(lambda c, i=iid, v=cb: z_set_field(c, i, "language", v))
         elif not valid_iso and zraw != cb:
             plan.add(bid, zkey, "idioma", "normalizar codigo ISO", zraw, cb)
             plan.zot_writes.append(lambda c, i=iid, v=cb: z_set_field(c, i, "language", v))
 
-    # --- tags: Calibre manda SOLO sobre el vocabulario controlado ---
-    # Las etiquetas personales de Zotero fuera del vocabulario de Calibre
-    # (valoraciones ⭐, emojis, tags libres) se PRESERVAN siempre. El destino
-    # es: (personales de Zotero) union (tags de Calibre).
+    # --- valoracion (estrellas) + tags ---
     ct_set = cal.get("tags", set())
     zt_set = zot.get("tags_manual", set())
-    if ct_set:
+    zot_star = next((t for t in sorted(zt_set) if STAR_RE.match(t)), "")
+    stars_c = cal_stars(cal.get("rating", 0))
+    star_tag = ""
+    if stars_c:
+        star_tag = "⭐" * stars_c
+        if zot_star and zot_star != star_tag:
+            plan.add(bid, zkey, "valoracion", "calibre->zotero (conflicto)",
+                     zot_star, star_tag)
+        elif not zot_star:
+            plan.add(bid, zkey, "valoracion", "calibre->zotero (vacio)", "", star_tag)
+    elif zot_star:
+        star_tag = zot_star  # se conserva en Zotero
+        if DO_BACKFILL:
+            pts = min(10, 2 * len(zot_star))
+            plan.add(bid, zkey, "valoracion", "zotero->calibre (relleno)",
+                     "", f"{zot_star} ({pts}/10)")
+            plan.cal_writes.append(
+                lambda c, b=bid, r=pts: (
+                    c.execute("INSERT OR IGNORE INTO ratings(rating) VALUES (?)", (r,)),
+                    c.execute(
+                        "INSERT OR REPLACE INTO books_ratings_link(book, rating) "
+                        "SELECT ?, id FROM ratings WHERE rating=?", (b, r))))
+
+    if ct_set or star_tag:
         personales = {t for t in zt_set if is_personal_tag(t)}
         destino = personales | ct_set
+        if star_tag:
+            destino.add(star_tag)
         if destino != zt_set:
             accion = "calibre->zotero" if zt_set else "calibre->zotero (vacio)"
             plan.add(bid, zkey, "tags", accion,
@@ -488,20 +676,24 @@ def plan_pair(plan, bid, cal, zot):
         plan.zot_writes.append(
             lambda c, i=iid, v=ca: z_set_field(c, i, "abstractNote", v))
 
-    # (No se compara el tipo: todos los items enlazados son 'book' por
-    # diseno ZMI; el Item type interno de Calibre sirve a otro proposito.)
-
     # --- Extra: actualizar SOLO la linea de ruta, preservando lineas CSL ---
+    # ZMI (M2={path}) guarda la RUTA ABSOLUTA del fichero dentro de la
+    # biblioteca: /.../biblioteca/Autor/Titulo (id)/Fichero.ext
     extra = zot.get("extra", "")
-    if extra and cal.get("path"):
+    if extra and cal.get("path") and cal.get("files"):
+        base = os.path.dirname(CAL_DB)
+        name = next((f[0] for f in cal["files"] if f[1] == "PDF"), cal["files"][0][0])
+        ext = ".pdf" if any(f[1] == "PDF" for f in cal["files"]) \
+            else "." + cal["files"][0][1].lower()
+        actual = f"{base}/{cal['path']}/{name}{ext}"
         lines = extra.split("\n")
         for n, line in enumerate(lines):
-            if re.fullmatch(r"[^:\n]{1,300}\(\d+\)", line.strip()):
-                if line.strip() != cal["path"]:
-                    old = line.strip()
-                    lines[n] = cal["path"]
+            s = line.strip()
+            if s.startswith(base + "/") and re.search(r"\(\d+\)/", s):
+                if s != actual:
+                    lines[n] = actual
                     newextra = "\n".join(lines)
-                    plan.add(bid, zkey, "extra_path", "actualizar ruta", old, cal["path"])
+                    plan.add(bid, zkey, "extra_path", "actualizar ruta", s, actual)
                     plan.zot_writes.append(
                         lambda c, i=iid, v=newextra: z_set_field(c, i, "extra", v))
                 break
@@ -510,7 +702,8 @@ def plan_pair(plan, bid, cal, zot):
     if DO_ATTACH:
         base = os.path.dirname(CAL_DB)
         for att in zot.get("attachments", []):
-            rel = att["path"][len("attachments:"):] if att["path"].startswith("attachments:") else None
+            rel = att["path"][len("attachments:"):] \
+                if att["path"].startswith("attachments:") else None
             if rel is None or os.path.exists(os.path.join(base, rel)):
                 continue
             files = cal.get("files", [])
@@ -518,7 +711,8 @@ def plan_pair(plan, bid, cal, zot):
                 plan.add(bid, zkey, "adjunto", "reporte (sin formatos en calibre)",
                          att["path"], "")
                 continue
-            ext = ".pdf" if any(f[1] == "PDF" for f in files) else "." + files[0][1].lower()
+            ext = ".pdf" if any(f[1] == "PDF" for f in files) \
+                else "." + files[0][1].lower()
             name = next((f[0] for f in files if f[1] == "PDF"), files[0][0])
             newrel = f"{cal['path']}/{name}{ext}"
             if os.path.exists(os.path.join(base, newrel)):
@@ -526,7 +720,8 @@ def plan_pair(plan, bid, cal, zot):
                          "attachments:" + newrel)
                 plan.zot_writes.append(
                     lambda c, a=att["itemID"], v="attachments:" + newrel: (
-                        c.execute("UPDATE itemAttachments SET path=? WHERE itemID=?", (v, a)),
+                        c.execute("UPDATE itemAttachments SET path=? WHERE itemID=?",
+                                  (v, a)),
                         z_touch(c, a)))
             else:
                 plan.add(bid, zkey, "adjunto", "reporte (fichero no hallado)",
@@ -540,7 +735,8 @@ def write_reports(plan, n_pairs, orphans):
     with open(REPORT_TSV, "w", encoding="utf-8") as f:
         f.write("book_id\tzotero_key\tcampo\taccion\tantes\tdespues\n")
         for r in plan.rows:
-            f.write("\t".join(str(x).replace("\t", " ").replace("\n", " ") for x in r) + "\n")
+            f.write("\t".join(str(x).replace("\t", " ").replace("\n", " ")
+                              for x in r) + "\n")
     with open(REPORT_MD, "w", encoding="utf-8") as f:
         f.write("# Reporte de sincronizacion Calibre <-> Zotero\n\n")
         f.write(f"- Pares enlazados analizados: **{n_pairs}**\n")
@@ -559,18 +755,29 @@ def write_reports(plan, n_pairs, orphans):
     return counts
 
 
+def mirror_writes(cal_books, zot_items, pairs):
+    """Escrituras de columnas espejo desde el estado Zotero dado."""
+    writes, count = [], 0
+    for bid, c, _ in pairs:
+        z = zot_items.get(c["zkey"])
+        if not z:
+            continue
+        for colnum, extract in MIRROR_COLS.items():
+            val = (extract(z) or "").strip()
+            if not val:
+                continue
+            count += 1
+            writes.append((bid, colnum, val))
+    return writes, count
+
+
 def main():
     cal = sqlite3.connect(CAL_DB if APPLY else f"file:{CAL_DB}?mode=ro",
                           uri=not APPLY)
     zot = sqlite3.connect(ZOT_DB if APPLY else f"file:{ZOT_DB}?mode=ro",
                           uri=not APPLY)
+    load_zotero_schema(zot)
     cal_books = read_calibre(cal)
-    # item type de Calibre (col 39) para el informe de tipos
-    q = f"({','.join(str(b) for b in cal_books)})"
-    for bid, v in cal.execute(
-            f"SELECT l.book, c.value FROM books_custom_column_39_link l "
-            f"JOIN custom_column_39 c ON c.id=l.value WHERE l.book IN {q}"):
-        cal_books[bid]["cal_item_type"] = v
     zot_items = read_zotero(zot)
 
     pairs, orphans = [], []
@@ -589,43 +796,41 @@ def main():
     for bid, c, z in pairs:
         plan_pair(plan, bid, c, z)
 
-    # --- columnas espejo (Zotero -> Calibre), estado final tras aplicar ---
-    mirror_count = 0
-    if DO_MIRROR:
-        for bid, c, z in pairs:
-            for colnum, extract in MIRROR_COLS.items():
-                val = (extract(z) or "").strip()
-                if not val:
-                    continue
-                mirror_count += 1
-                plan.cal_writes.append(
-                    lambda cur, b=bid, n=colnum, v=val: cur.execute(
-                        f"INSERT INTO custom_column_{n}(book, value) VALUES (?,?) "
-                        "ON CONFLICT(book) DO UPDATE SET value=excluded.value",
-                        (b, v)))
-
     counts = write_reports(plan, len(pairs), orphans)
 
+    mcount = 0
     if APPLY:
         zcur = zot.cursor()
         for w in plan.zot_writes:
             w(zcur)
         zot.commit()
+        # espejo desde el estado Zotero FINAL (re-lectura tras aplicar)
+        if DO_MIRROR:
+            fresh = read_zotero(zot)
+            writes, mcount = mirror_writes(cal_books, fresh, pairs)
+        else:
+            writes = []
         ccur = cal.cursor()
         for w in plan.cal_writes:
             w(ccur)
+        for bid, colnum, val in writes:
+            ccur.execute(
+                f"INSERT INTO custom_column_{colnum}(book, value) VALUES (?,?) "
+                "ON CONFLICT(book) DO UPDATE SET value=excluded.value",
+                (bid, val))
         cal.commit()
-        state = {c["zkey"]: {"title": z.get("title", ""),
-                             "sync": NOW_SQL} for _, c, z in pairs}
+        state = {c["zkey"]: {"title": z.get("title", ""), "sync": NOW_SQL}
+                 for _, c, z in pairs}
         os.makedirs(os.path.dirname(STATE_JSON), exist_ok=True)
         with open(STATE_JSON, "w", encoding="utf-8") as f:
             json.dump({"fecha": NOW_SQL, "pares": len(pairs), "items": state}, f)
+    elif DO_MIRROR:
+        _, mcount = mirror_writes(cal_books, zot_items, pairs)
 
     cal.close()
     zot.close()
-    # linea resumen para main.sh
     print(f"{len(pairs)}\t{len(plan.rows)}\t{len(plan.zot_writes)}\t"
-          f"{len(plan.cal_writes)}\t{len(orphans)}\t{mirror_count}")
+          f"{len(plan.cal_writes) + mcount}\t{len(orphans)}\t{mcount}")
 
 
 if __name__ == "__main__":
