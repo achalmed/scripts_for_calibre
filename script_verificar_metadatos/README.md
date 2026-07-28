@@ -98,8 +98,13 @@ se descarta para no generar falsos positivos.
 
 ## Notas
 
-- Google Books se deja como referencia en `config.sh`, pero la cuota anónima
-  suele devolver `429`; por eso el proveedor primario es OpenLibrary.
+- **Proveedores**: OpenLibrary es el primario (libros). En `--modo titulo`,
+  cuando OpenLibrary no encuentra nada se consulta **Crossref** como respaldo
+  (indexa artículos de revista, working papers y libros por DOI); de ahí salen
+  los `Report` y `Journal Article` que OpenLibrary no ve, y a menudo un **DOI
+  que no teníamos** (`doi (encontrado)` en el reporte). Se desactiva con
+  `USE_CROSSREF="false"` en `config.sh`. Google Books queda solo de referencia
+  (su cuota anónima suele devolver `429`).
 - Ninguna corrección se aplica automáticamente: revisa el reporte y edita en
   Calibre lo que consideres. Tras editar en Calibre, recuerda regenerar los
   OPF (`calibredb backup_metadata --all`) para que ZMI/Zotero lo vean.

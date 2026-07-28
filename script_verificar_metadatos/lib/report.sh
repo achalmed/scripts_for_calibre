@@ -18,6 +18,7 @@ prepare_report_paths() {
 # Surfaces the config.sh values the Python core reads from the environment.
 export_python_env() {
     export OL_ISBN_ENDPOINT OL_SEARCH_ENDPOINT GB_ENDPOINT
+    export CROSSREF_ENDPOINT USE_CROSSREF CROSSREF_MAILTO
     export RATE_LIMIT_SECONDS HTTP_TIMEOUT FUZZY_TITLE_THRESHOLD MODE
 }
 

@@ -27,6 +27,9 @@ from difflib import SequenceMatcher
 import os
 OL_ISBN = os.environ["OL_ISBN_ENDPOINT"]
 OL_SEARCH = os.environ["OL_SEARCH_ENDPOINT"]
+CROSSREF = os.environ.get("CROSSREF_ENDPOINT", "https://api.crossref.org/works")
+USE_CROSSREF = os.environ.get("USE_CROSSREF", "true").lower() == "true"
+CROSSREF_MAILTO = os.environ.get("CROSSREF_MAILTO", "")
 RATE = float(os.environ.get("RATE_LIMIT_SECONDS", "1"))
 TIMEOUT = float(os.environ.get("HTTP_TIMEOUT", "20"))
 FUZZY = float(os.environ.get("FUZZY_TITLE_THRESHOLD", "0.80"))
@@ -83,6 +86,7 @@ def lookup_isbn(isbn):
         "publisher": ", ".join(p.get("name", "") for p in v.get("publishers", [])),
         "year": year_of(v.get("publish_date", "")),
         "pages": v.get("number_of_pages"),
+        "doi": "",
     }
 
 
@@ -102,8 +106,42 @@ def search_title(title, authors):
         "publisher": ", ".join(doc.get("publisher", [])[:1]),
         "year": str(doc.get("first_publish_year", "") or ""),
         "pages": doc.get("number_of_pages_median"),
+        "doi": "",
     }
     return rec, ratio(title, rec["title"])
+
+
+def search_crossref(title, authors):
+    """Fuzzy title+author search on Crossref; return (record, ratio).
+
+    Crossref indexes journal articles, working papers and books, so it is the
+    fallback for the publications OpenLibrary (books only) cannot find.
+    """
+    params = {"query.bibliographic": title, "rows": "1"}
+    if authors:
+        params["query.author"] = authors.split(" & ")[0]
+    if CROSSREF_MAILTO:
+        params["mailto"] = CROSSREF_MAILTO
+    url = f"{CROSSREF}?{urllib.parse.urlencode(params)}"
+    d = http_json(url)
+    if not d or not d.get("message", {}).get("items"):
+        return None, 0.0
+    it = d["message"]["items"][0]
+    src_title = (it.get("title") or [""])[0]
+    auths = [" ".join(filter(None, [a.get("given"), a.get("family")]))
+             for a in it.get("author", [])]
+    parts = (it.get("issued", {}).get("date-parts") or [[None]])[0]
+    rec = {
+        "title": src_title,
+        "authors": auths,
+        # For articles the "publisher" is less useful than the journal; show
+        # the container (journal) when present, else the publisher.
+        "publisher": (it.get("container-title") or [it.get("publisher", "")])[0],
+        "year": str(parts[0]) if parts and parts[0] else "",
+        "pages": None,
+        "doi": it.get("DOI", ""),
+    }
+    return rec, ratio(title, src_title)
 
 
 def compare(row, rec, confianza):
@@ -141,6 +179,10 @@ def compare(row, rec, confianza):
     if ra and authors and ratio(authors, ra) < 0.7:
         out.append((bid, "autor (informativo)", authors, ra))
 
+    # A DOI we may not have is a genuinely useful find (Crossref).
+    if rec.get("doi"):
+        out.append((bid, "doi (encontrado)", "", rec["doi"]))
+
     return out
 
 
@@ -156,7 +198,7 @@ def main():
         bid, isbn, title, authors, publisher, year, pages = row[:7]
         sys.stderr.write(f"[{n}/{total}] id={bid} {title[:50]}\n")
 
-        rec, conf = None, "exacta"
+        rec, conf, source = None, "exacta", "OpenLibrary"
         if isbn:
             rec = lookup_isbn(isbn)
             time.sleep(RATE)
@@ -167,6 +209,13 @@ def main():
                 conf = f"aprox:{r:.2f}"
             else:
                 rec = None  # match too weak -> treat as not found
+        if rec is None and MODE == "titulo" and USE_CROSSREF:
+            rec, r = search_crossref(title, authors)
+            time.sleep(RATE)
+            if rec and r >= FUZZY:
+                conf, source = f"aprox:{r:.2f}", "Crossref"
+            else:
+                rec = None
 
         checked += 1
         if rec is None:
@@ -174,7 +223,7 @@ def main():
             continue
         found += 1
         for d in compare(row, rec, conf):
-            discrepancies.append((*d, "OpenLibrary", conf))
+            discrepancies.append((*d, source, conf))
 
     # --- write reports ----------------------------------------------------
     with open(REPORT_TSV, "w", encoding="utf-8") as f:
