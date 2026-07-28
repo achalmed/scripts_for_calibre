@@ -22,6 +22,8 @@ autor.
 | 05 | `migraciones/05_aplicar_tags_por_titulo.py` | Aplica los TSV `id,tags,genero,clasificador,item_type` producidos al clasificar por título los 739 libros sin etiquetas. Valida cada valor contra el vocabulario/enums **antes** de escribir. |
 | 06 | `migraciones/06_itemtype_por_serie_isbn.py` | Completa **Item type** por señal fuerte determinista: misma **serie** que hermanos ya catalogados → tipo dominante; sin serie pero con **ISBN** → Book. Dry-run (imprime plan). Cubrió 201 libros. |
 | 07 | `migraciones/07_itemtype_por_prompt_subagentes.py` | Valida y aplica los TSV `id,item_type` que produjeron 6 subagentes al clasificar los 950 libros restantes **leyendo los criterios del prompt de catalogación** (líneas 84-848). Rechaza cualquier tipo fuera del enum antes de escribir. Con `--apply`. Dejó el Item type al 100%. |
+| 08 | `migraciones/08_refinar_itype_openlibrary_crossref.py` | Pasada de **refinamiento**: los libros inciertos (Manuscript/Journal Article sin serie ni editorial) se verifican en OpenLibrary y Crossref (difuso 0.92). Solo lectura; escribe una propuesta TSV. Halla libros publicados mal marcados como Manuscript. |
+| 09 | `migraciones/09_aplicar_refino_itype.py` | Valida y aplica la propuesta del 08: reclasifica el Item type y, de regalo, rellena editorial/ISBN hallados donde estaban vacíos (aditivo). Con `--apply`. Refinó 48 libros (+34 editoriales, +30 ISBN). |
 
 `vocabulario_etiquetas.txt` es el vocabulario cerrado de etiquetas usado como
 lista blanca (ninguna migración inventa etiquetas nuevas).
