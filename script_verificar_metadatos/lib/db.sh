@@ -43,9 +43,11 @@ select_candidates() {
         having="AND EXISTS(SELECT 1 FROM identifiers i
             WHERE i.book=b.id AND i.type IN ('isbn','google','amazon','goodreads'))"
     else
-        # Build the quoted IN list from the space-separated config value.
-        local in_list="" t
-        for t in $TITULO_ITEM_TYPES; do in_list+="'${t//\'/\'\'}',"; done
+        # Build the quoted IN list from the PIPE-separated config value.
+        # Pipe (not space) because item-type values contain spaces.
+        local in_list="" t types=()
+        IFS='|' read -ra types <<<"$TITULO_ITEM_TYPES"
+        for t in "${types[@]}"; do in_list+="'${t//\'/\'\'}',"; done
         in_list="${in_list%,}"
         having="AND NOT EXISTS(SELECT 1 FROM identifiers i
             WHERE i.book=b.id AND i.type IN ('isbn','google','amazon','goodreads'))
