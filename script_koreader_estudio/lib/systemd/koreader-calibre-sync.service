@@ -1,0 +1,7 @@
+[Unit]
+Description=Sincronizar estadisticas de KOReader hacia Calibre (estudio)
+
+[Service]
+Type=oneshot
+ExecStart=@MAIN@ --desde-timer
+Nice=10
