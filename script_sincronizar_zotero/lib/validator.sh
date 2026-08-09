@@ -56,6 +56,11 @@ backup_databases() {
     cp "$ZOTERO_DB" "$BACKUP_ZOT"
     log_info "Backup Calibre: $BACKUP_CAL"
     log_info "Backup Zotero : $BACKUP_ZOT"
+    # Rotación (auditoría C2): conservar solo los N pares más recientes.
+    # zotero.sqlite pesa ~216 MB; sin rotación esto crecía sin límite.
+    local conservar="${BACKUP_PARES_CONSERVAR:-2}"
+    ls -1t "$dir"/metadata.db.* 2>/dev/null | tail -n +$((conservar + 1)) | xargs -r rm -f
+    ls -1t "$dir"/zotero.sqlite.* 2>/dev/null | tail -n +$((conservar + 1)) | xargs -r rm -f
 }
 
 # verify_integrity()

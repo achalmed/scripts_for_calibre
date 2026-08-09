@@ -17,6 +17,17 @@ source "$PROJECT_DIR/lib/validator.sh"
 # shellcheck source=lib/cli.sh
 source "$PROJECT_DIR/lib/cli.sh"
 
+# Lock compartido del ecosistema (auditoría C5): toda escritura a metadata.db
+# serializa con los timers de scripts_for_calibre. Si nos invoca el orquestador
+# (ECOSISTEMA_LOCK_HELD=1) el lock ya viene heredado por fd y no se retoma.
+if [ "${ECOSISTEMA_LOCK_HELD:-0}" != "1" ]; then
+    exec 9>"$PROJECT_DIR/../.lock_calibre_write"
+    if ! flock -n 9; then
+        echo "· Otra herramienta del ecosistema está escribiendo en Calibre; reintenta luego." >&2
+        exit 0
+    fi
+fi
+
 # prepare_output_paths()
 # Timestamped reports plus the persistent state snapshot path.
 prepare_output_paths() {

@@ -2,6 +2,7 @@
 Description=Sincronizar estadisticas de KOReader hacia Calibre (estudio)
 
 [Service]
+Environment="PATH=/home/achalmaedison/anaconda3/bin:/usr/local/bin:/usr/bin:/bin"
 Type=oneshot
 ExecStart=@MAIN@ --desde-timer
 Nice=10

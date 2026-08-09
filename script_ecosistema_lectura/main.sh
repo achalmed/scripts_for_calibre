@@ -75,6 +75,8 @@ accion_metadatos() {
         echo "· Otra herramienta está escribiendo en Calibre; salgo."
         exit 0
     fi
+    # El hijo (sincronizar_zotero) hereda el lock por fd: que no intente retomarlo (C5).
+    export ECOSISTEMA_LOCK_HELD=1
     comprobar_entorno
     orquestar_metadatos
 }

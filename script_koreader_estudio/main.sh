@@ -57,6 +57,13 @@ done
 
 # ── Acción: enlace de apuntes ────────────────────────────────────────────────
 accion_apuntes() {
+    # Lock compartido (auditoría C5): calibredb set_custom escribe metadata.db
+    # y debe serializar con los timers, igual que accion_sync.
+    exec 9>"$LOCK_ESCRITURA_CALIBRE"
+    if ! flock -n 9; then
+        echo "· Otra herramienta está escribiendo en Calibre; reintenta en un momento." >&2
+        exit 0
+    fi
     exigir_calibre_cerrado
     [ -f "$APUNTES_RUTA" ] || { echo "✗ No existe el archivo: $APUNTES_RUTA" >&2; exit 1; }
     local abs texto html
