@@ -1,0 +1,7 @@
+[Unit]
+Description=Sincronizar Read Time de Zotero hacia Calibre (ecosistema de lectura)
+
+[Service]
+Type=oneshot
+ExecStart=@MAIN@ --desde-timer
+Nice=10

@@ -1,0 +1,5 @@
+# Artefactos de ejecución: no versionar (rotan/cambian en cada pasada)
+*/backups/
+*/reportes/
+.lock_calibre_write
+script_verificar_metadatos/metadata.db

@@ -16,6 +16,12 @@ Scripts en Bash muy útiles para quienes usan **Calibre** con PDFs externos y qu
 | 4 | `script_normalizacion_metadatos/` | Migraciones que normalizaron en bloque **etiquetas, Géneros, Item type y Clasificador** de toda la biblioteca a partir de los metadatos existentes (dry-run por defecto, `--apply` para escribir). Ya aplicadas el 2026-07-28; se conservan como registro reproducible | Para volver a normalizar en bloque tras una importación grande, o como base para nuevas reglas |
 | 5 | `script_verificar_metadatos/` | Verifica los metadatos contra **OpenLibrary** (por ISBN o por título+autor) y genera un **reporte de discrepancias** (año, editorial, páginas). **Solo lectura**: nunca escribe en Calibre ni toca título/autor | Para auditar los libros publicados (con ISBN) y detectar editorial vacía/errónea, año o páginas incorrectos |
 | 6 | `script_sincronizar_zotero/` | Sincroniza **bidireccionalmente** los metadatos entre Calibre y Zotero para los libros enlazados por ZMI (`#zotero_key`): "Calibre manda", rellena vacios, repara rutas de adjuntos rotas y puebla las columnas espejo `#zotero_*`. Simulacion por defecto, `--aplicar` con ambas apps cerradas + backups + integrity_check | Para dejar Zotero y Calibre con metadatos completos y coherentes en ambos lados tras normalizar/verificar |
+| 7 | `script_koreader_estudio/` | KOReader → Calibre: progreso, estado, minutos y fechas de lectura en columnas (`#barra`, `#estado_estudio`…), enlace clicable a apuntes `.md` (`#apuntes`, abre en Obsidian), migración de sidecars a hash y **respaldo continuo** de estadísticas a `~/.dotfiles/koreader-data/`. Timer systemd cada 30 min | Se instala una vez y corre solo; manual para forzar pasadas o enlazar apuntes |
+| 8 | `script_ecosistema_lectura/` | Zotero (Ethereal Style) → Calibre: tiempo (`#zot_tiempo`), progreso (`#zot_progreso`) y `#tiempo_estudio` total; **orquesta** el script 6 a diario (04:30) y genera el reporte de libros sin `#zotero_key` (`--enlazar`). Timers systemd | Se instala una vez y corre solo; `--metadatos --aplicar` para forzar la sync de etiquetas |
+
+> 📖 **Guía práctica del ecosistema completo** (qué es automático, qué es
+> manual, chuleta de comandos, solución de problemas):
+> [`GUIA_ECOSISTEMA.md`](GUIA_ECOSISTEMA.md)
 
 ## Requisitos
 

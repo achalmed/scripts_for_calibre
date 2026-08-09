@@ -1,0 +1,7 @@
+[Unit]
+Description=Orquestar sincronizacion de metadatos/etiquetas Calibre-Zotero (si ambos cerrados y hubo cambios)
+
+[Service]
+Type=oneshot
+ExecStart=@MAIN@ --metadatos --desde-timer
+Nice=10

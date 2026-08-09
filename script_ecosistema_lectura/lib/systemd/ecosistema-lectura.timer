@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer: Zotero -> Calibre cada 30 minutos
+
+[Timer]
+OnBootSec=12min
+OnUnitActiveSec=30min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
