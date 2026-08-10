@@ -144,16 +144,31 @@ _build_exiftool_args() {
 
     local title="$1" author="$2" publisher="$3" tags="$4" language="$5" date="$6" pdf="$7"
 
-    [[ -n "$title" ]]     && EXIFTOOL_CMD+=(-Title="$title")
-    [[ -n "$author" ]]    && EXIFTOOL_CMD+=(-Author="$author")
-    [[ -n "$publisher" ]] && EXIFTOOL_CMD+=(-PDF:Producer="$publisher")
-    [[ -n "$tags" ]]      && EXIFTOOL_CMD+=(-Keywords="$tags")
-    [[ -n "$language" ]]  && EXIFTOOL_CMD+=(-Language="$language")
-    [[ -n "$date" ]]      && EXIFTOOL_CMD+=(-CreateDate="$date")
+    # Valores por nombre lógico → los mapas de tags de config.sh los enrutan.
+    # (A7): un solo lugar decide los tags; embed no re-hardcodea nada.
+    local -A _val=(
+        [title]="$title"
+        [author]="$author"
+        [publisher]="$publisher"
+        [tags]="$tags"
+        [language]="$language"
+        [date]="$date"
+    )
+
+    # Solo se escriben campos no vacíos (escribir "" borraría tags existentes).
+    local campo
+    # Grupo A — PDF InfoDict (EXIFTOOL_TAG_MAP).
+    for campo in "${!EXIFTOOL_TAG_MAP[@]}"; do
+        [[ -n "${_val[$campo]:-}" ]] && EXIFTOOL_CMD+=("${EXIFTOOL_TAG_MAP[$campo]}=${_val[$campo]}")
+    done
+    # Grupo B — XMP Dublin Core (EXIFTOOL_XMP_TAG_MAP), Calibre-compatible.
+    for campo in "${!EXIFTOOL_XMP_TAG_MAP[@]}"; do
+        [[ -n "${_val[$campo]:-}" ]] && EXIFTOOL_CMD+=("${EXIFTOOL_XMP_TAG_MAP[$campo]}=${_val[$campo]}")
+    done
 
     # Strip tool-generated fields that Calibre does not use and that reveal
     # the authoring application (privacy + cleanliness).
-    EXIFTOOL_CMD+=(-Creator= -CreatorTool=)
+    EXIFTOOL_CMD+=("${EXIFTOOL_STRIP_FIELDS[@]}")
 
     EXIFTOOL_CMD+=("$pdf")
 }

@@ -22,7 +22,9 @@ parse_arguments() {
     # Defaults — defined here so parse_arguments() is self-contained
     ACTION=""
     ROOT_DIR=""
+    ROOT_DIR_EXPLICITO=false
     LIBRARY_PATH=""
+    APPLY=false
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
@@ -38,9 +40,18 @@ parse_arguments() {
                 ACTION="all"
                 shift
                 ;;
+            limpiar-json)
+                ACTION="limpiar-json"
+                shift
+                ;;
             --root|-r)
                 ROOT_DIR="$2"
+                ROOT_DIR_EXPLICITO=true
                 shift 2
+                ;;
+            --aplicar)
+                APPLY=true
+                shift
                 ;;
             --library|-l)
                 LIBRARY_PATH="$2"
@@ -90,19 +101,24 @@ USAGE:
   $(basename "$0") COMMAND [OPTIONS]
 
 COMMANDS:
-  embed       Read metadata.opf files and embed them into companion PDFs
-  register    Add PDF files as additional formats inside the Calibre library
-  all         Run both operations in sequence (embed → register)
-  (none)      Launch the interactive menu
+  embed         Read metadata.opf files and embed them into companion PDFs
+  register      Add PDF files as additional formats inside the Calibre library
+  all           Run both operations in sequence (embed → register)
+  limpiar-json  List (and with --aplicar delete) orphan zotero_metadata.json
+                sidecars left under the Calibre library by the deprecated
+                scripts_for_zotero embedder
+  (none)        Launch the interactive menu
 
 OPTIONS:
   -r, --root PATH       Root directory to search for metadata.opf files
-                        (default: current working directory)
+                        (default: current working directory; for limpiar-json
+                        the default is the Calibre library from config.sh)
   -l, --library PATH    Calibre library root path
                         (default: parent of current directory)
   -v, --verbose         Print debug-level messages
   -n, --dry-run         Simulate all operations without making any changes
   -f, --force           Overwrite existing PDF formats in Calibre
+      --aplicar         For limpiar-json: actually delete (default is list-only)
       --version         Show version information
   -h, --help            Show this help
 
@@ -140,6 +156,7 @@ show_interactive_menu() {
     printf '    [1]  Embed metadata (OPF → PDF via exiftool)\n'
     printf '    [2]  Register PDFs in Calibre (calibredb add_format)\n'
     printf '    [3]  Run both operations in sequence\n'
+    printf '    [4]  Clean orphan zotero_metadata.json (list-only; safe)\n'
     printf '    [q]  Quit\n\n'
 
     local choice
@@ -147,15 +164,16 @@ show_interactive_menu() {
         printf '  Your choice: '
         read -r choice
         case "$choice" in
-            1) ACTION="embed";    break ;;
-            2) ACTION="register"; break ;;
-            3) ACTION="all";      break ;;
+            1) ACTION="embed";        break ;;
+            2) ACTION="register";     break ;;
+            3) ACTION="all";          break ;;
+            4) ACTION="limpiar-json"; break ;;
             q|Q)
                 log_info "Exiting."
                 exit "${EXIT_SUCCESS}"
                 ;;
             *)
-                printf '  Invalid option. Please enter 1, 2, 3, or q.\n'
+                printf '  Invalid option. Please enter 1, 2, 3, 4, or q.\n'
                 ;;
         esac
     done

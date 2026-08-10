@@ -48,6 +48,9 @@ source "${SCRIPT_DIR}/lib/embed_metadata.sh"
 # shellcheck source=lib/register_formats.sh
 source "${SCRIPT_DIR}/lib/register_formats.sh"
 
+# shellcheck source=lib/limpiar_json_huerfanos.sh
+source "${SCRIPT_DIR}/lib/limpiar_json_huerfanos.sh"
+
 # ------------------------------------------------------------------------------
 # main()
 # Orchestrates the full execution flow:
@@ -102,6 +105,10 @@ main() {
             run_embed_metadata   || true
             printf '\n'
             run_register_formats || overall_status=$?
+            ;;
+
+        limpiar-json)
+            run_limpiar_json_huerfanos || overall_status=$?
             ;;
 
         *)
