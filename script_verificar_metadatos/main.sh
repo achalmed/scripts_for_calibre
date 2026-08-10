@@ -9,8 +9,8 @@ readonly PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=config.sh
 source "$PROJECT_DIR/config.sh"
-# shellcheck source=lib/logger.sh
-source "$PROJECT_DIR/lib/logger.sh"
+# shellcheck source=../lib_comun/logger.sh
+source "$PROJECT_DIR/../lib_comun/logger.sh"
 # shellcheck source=lib/cli.sh
 source "$PROJECT_DIR/lib/cli.sh"
 # shellcheck source=lib/db.sh

@@ -5,6 +5,9 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/config.sh"
+source "$SCRIPT_DIR/../lib_comun/detectar_apps.sh"
+source "$SCRIPT_DIR/../lib_comun/lock.sh"
+source "$SCRIPT_DIR/../lib_comun/backup_rotado.sh"
 source "$SCRIPT_DIR/lib/checks.sh"
 source "$SCRIPT_DIR/lib/setup_columnas.sh"
 source "$SCRIPT_DIR/lib/orquestar_metadatos.sh"
@@ -70,11 +73,7 @@ accion_timer_off() {
 }
 
 accion_metadatos() {
-    exec 9>"$LOCK_ESCRITURA_CALIBRE"
-    if ! flock -n 9; then
-        echo "· Otra herramienta está escribiendo en Calibre; salgo."
-        exit 0
-    fi
+    tomar_lock_calibre
     # El hijo (sincronizar_zotero) hereda el lock por fd: que no intente retomarlo (C5).
     export ECOSISTEMA_LOCK_HELD=1
     comprobar_entorno
@@ -91,11 +90,7 @@ accion_enlazar() {
 
 accion_sync() {
     # Lock COMPARTIDO con script_koreader_estudio: ambos escriben metadata.db.
-    exec 9>"$LOCK_ESCRITURA_CALIBRE"
-    if ! flock -n 9; then
-        echo "· Otra herramienta está escribiendo en Calibre; salgo sin hacer nada."
-        exit 0
-    fi
+    tomar_lock_calibre
 
     comprobar_entorno
 
@@ -110,12 +105,7 @@ accion_sync() {
     setup_columnas
 
     if [ "$MODO" = "aplicar" ]; then
-        mkdir -p "$BACKUPS_DIR"
-        local backup="$BACKUPS_DIR/metadata_$(date +%Y%m%d_%H%M%S).db"
-        cp "$BIBLIOTECA/metadata.db" "$backup"
-        ls -1t "$BACKUPS_DIR"/metadata_*.db 2>/dev/null \
-            | tail -n +"$((BACKUPS_CONSERVAR + 1))" | xargs -r rm -f
-        echo "── Backup: $backup"
+        backup_metadata_db "$BIBLIOTECA/metadata.db" "$BACKUPS_DIR" "$BACKUPS_CONSERVAR"
     fi
 
     mkdir -p "$REPORTES_DIR"

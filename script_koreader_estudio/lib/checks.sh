@@ -19,11 +19,8 @@ comprobar_entorno() {
     return "$errores"
 }
 
-# Calibre (GUI o servidor) no debe estar abierto para escribir en la base.
-calibre_abierto() {
-    pgrep -x calibre >/dev/null 2>&1 || pgrep -f "calibre-server" >/dev/null 2>&1
-}
-
+# calibre_abierto() lo aporta lib_comun/detectar_apps.sh (detección canónica
+# `ps -eo comm`); main.sh lo tiene sourced antes que este módulo.
 exigir_calibre_cerrado() {
     if calibre_abierto; then
         echo "✗ Calibre está abierto. Ciérralo antes de sincronizar (la base se bloquea)." >&2

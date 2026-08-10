@@ -2,23 +2,17 @@
 # (metadatos + etiquetas bidireccionales) SOLO cuando es seguro y necesario:
 # Calibre y Zotero cerrados + alguna base cambió desde la última pasada.
 
-# Detección CANÓNICA (auditoría C1): `ps -eo comm` ve procesos arrancando que
+# Detección CANÓNICA (auditoría C1): `calibre_abierto`/`zotero_abierto` de
+# lib_comun/detectar_apps.sh usan `ps -eo comm`, que ve procesos arrancando que
 # `pgrep -x` no ve — esa divergencia convirtió un skip legítimo en unidad
-# FAILED el 2026-08-09 09:36. Misma semántica que sincronizar/lib/validator.sh.
-zotero_abierto() {
-    ps -eo comm | grep -qiE '^zotero'
-}
-
-calibre_abierto_estricto() {
-    ps -eo comm | grep -qiE '^calibre'
-}
+# FAILED el 2026-08-09 09:36. main.sh los tiene sourced antes que este módulo.
 
 orquestar_metadatos() {
     if [ ! -x "$SINCRONIZAR_ZOTERO_DIR/main.sh" ]; then
         echo "✗ No encuentro $SINCRONIZAR_ZOTERO_DIR/main.sh" >&2
         return 1
     fi
-    if calibre_abierto || calibre_abierto_estricto; then
+    if calibre_abierto; then
         echo "· Calibre está abierto; la orquestación reintentará luego."
         return 0
     fi

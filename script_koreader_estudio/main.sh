@@ -6,6 +6,9 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/config.sh"
+source "$SCRIPT_DIR/../lib_comun/detectar_apps.sh"
+source "$SCRIPT_DIR/../lib_comun/lock.sh"
+source "$SCRIPT_DIR/../lib_comun/backup_rotado.sh"
 source "$SCRIPT_DIR/lib/checks.sh"
 source "$SCRIPT_DIR/lib/setup_columnas.sh"
 source "$SCRIPT_DIR/lib/respaldo_koreader.sh"
@@ -59,11 +62,7 @@ done
 accion_apuntes() {
     # Lock compartido (auditoría C5): calibredb set_custom escribe metadata.db
     # y debe serializar con los timers, igual que accion_sync.
-    exec 9>"$LOCK_ESCRITURA_CALIBRE"
-    if ! flock -n 9; then
-        echo "· Otra herramienta está escribiendo en Calibre; reintenta en un momento." >&2
-        exit 0
-    fi
+    tomar_lock_calibre
     exigir_calibre_cerrado
     [ -f "$APUNTES_RUTA" ] || { echo "✗ No existe el archivo: $APUNTES_RUTA" >&2; exit 1; }
     local abs texto html
@@ -144,11 +143,7 @@ accion_migrar() {
 accion_sync() {
     # Lock COMPARTIDO entre las herramientas que escriben metadata.db
     # (script_koreader_estudio y script_ecosistema_lectura): nunca a la vez.
-    exec 9>"$SCRIPT_DIR/../.lock_calibre_write"
-    if ! flock -n 9; then
-        echo "· Otra herramienta está escribiendo en Calibre; salgo sin hacer nada."
-        exit 0
-    fi
+    tomar_lock_calibre
 
     comprobar_entorno
 
@@ -163,13 +158,7 @@ accion_sync() {
     setup_columnas
 
     if [ "$MODO" = "aplicar" ]; then
-        mkdir -p "$BACKUPS_DIR"
-        local backup="$BACKUPS_DIR/metadata_$(date +%Y%m%d_%H%M%S).db"
-        cp "$BIBLIOTECA/metadata.db" "$backup"
-        # Rotación: conservar los N más recientes
-        ls -1t "$BACKUPS_DIR"/metadata_*.db 2>/dev/null \
-            | tail -n +"$((BACKUPS_CONSERVAR + 1))" | xargs -r rm -f
-        echo "── Backup: $backup"
+        backup_metadata_db "$BIBLIOTECA/metadata.db" "$BACKUPS_DIR" "$BACKUPS_CONSERVAR"
     fi
 
     mkdir -p "$REPORTES_DIR"

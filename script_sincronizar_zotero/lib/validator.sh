@@ -16,27 +16,17 @@ validate_database() {
         || { log_error "Base sin tabla '$table' (¿fichero corrupto?): $db"; exit 1; }
 }
 
-# app_running()
-# True if a process whose binary name (comm) matches the given regex is
-# running. Uses `ps -eo comm` (the executable name, never the command line)
-# to avoid the classic pgrep -f self-match: a `pgrep -f "zotero"` can match
-# the very shell that invoked it because the pattern appears in its argv.
-#
-# Arguments:
-#   $1 - case-insensitive regex anchored at the start of comm
-app_running() {
-    ps -eo comm 2>/dev/null | grep -qiE "$1"
-}
-
 # ensure_apps_closed()
 # Calibre and Zotero must both be closed before writing to their databases.
+# La detección canónica (`ps -eo comm`) vive en lib_comun/detectar_apps.sh
+# (calibre_abierto / zotero_abierto), que main.sh ya tiene sourced.
 ensure_apps_closed() {
-    if app_running '^calibre'; then
+    if calibre_abierto; then
         log_error "Calibre esta abierto. Cierralo antes de --aplicar."
         exit 1
     fi
     # zotero launcher (comm 'zotero') o binario real (comm 'zotero-bin').
-    if app_running '^zotero'; then
+    if zotero_abierto; then
         log_error "Zotero esta abierto. Cierralo antes de --aplicar."
         exit 1
     fi

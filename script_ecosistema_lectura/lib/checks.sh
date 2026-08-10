@@ -11,12 +11,9 @@ comprobar_entorno() {
     return "$errores"
 }
 
-# Calibre no debe estar abierto para escribir. Zotero SÍ puede estarlo:
-# su base solo se lee (modo ro).
-calibre_abierto() {
-    pgrep -x calibre >/dev/null 2>&1 || pgrep -f "calibre-server" >/dev/null 2>&1
-}
-
+# calibre_abierto() lo aporta lib_comun/detectar_apps.sh (detección canónica
+# `ps -eo comm`); main.sh lo tiene sourced antes que este módulo. Zotero SÍ
+# puede estar abierto en accion_sync: su base solo se lee (modo ro).
 exigir_calibre_cerrado() {
     if calibre_abierto; then
         echo "✗ Calibre está abierto. Ciérralo antes de sincronizar." >&2

@@ -12,6 +12,10 @@ REPORTES_DIR="$SCRIPT_DIR/reportes"
 BACKUPS_DIR="$SCRIPT_DIR/backups"
 BACKUPS_CONSERVAR=5          # cuántos backups de metadata.db conservar
 
+# Lock COMPARTIDO con las demás herramientas que escriben metadata.db
+# (script_ecosistema_lectura, script_sincronizar_zotero): nunca a la vez (C5).
+LOCK_ESCRITURA_CALIBRE="$SCRIPT_DIR/../.lock_calibre_write"
+
 # ── Columnas de Calibre (labels sin #) ───────────────────────────────────────
 # Existentes (creadas por el plugin KOReader Sync) que este script POBLA:
 COL_MD5="ko_md5"             # MD5 parcial (algoritmo KOReader)
