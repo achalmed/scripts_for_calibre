@@ -102,21 +102,27 @@ Los `.sdr` ya **no** viven junto a los libros: se migraron con `--migrar-sdr` a
 
 ## Respaldo continuo (no volver a perder lecturas)
 
-Cada sincronización (y el timer cada 30 min) espeja estadísticas, sidecars
-hash, historial y configuración a:
+Cada sincronización (y el timer cada 30 min) espeja **en texto** las
+estadísticas (dump SQL), los sidecars hash y el historial al repo de dotfiles,
+con commit local automático (publicar = `dotfiles sync-push`):
 
 ```
-~/Documents/backups_koreader/     ← viaja con los respaldos de ~/Documents
-├── settings/          (statistics.sqlite3 incluida)
-├── hashdocsettings/   (todos los sidecars)
-├── settings.reader.lua · history.lua · styletweaks/
+~/.dotfiles/koreader-data/         ← versionado en git (dotfiles)
+├── statistics.sql     (dump SQL de statistics.sqlite3, restaurable)
+├── hashdocsettings/   (todos los sidecars .lua de texto)
+└── history.lua
 ```
 
-**Restaurar en una laptop nueva:** instalar KOReader y copiar ese contenido de
-vuelta a `~/.config/koreader/`. Las estadísticas y sidecars emparejan por hash
-del contenido de los archivos, así que funcionan aunque la biblioteca cambie de
-ruta. (Opcional: gestionar `settings.reader.lua` con `~/.dotfiles` + stow; la
-base sqlite y los sidecars es mejor respaldarlos como datos, no como dotfiles.)
+Los datos **vivos** siguen en `~/.config/koreader/` (principio de mínima
+captura de los dotfiles); esto es un respaldo versionado, no la copia de
+trabajo. **`settings.reader.lua` se EXCLUYE a propósito**: contiene el bloque
+`kosync` con credenciales y el escáner de sensibles de los dotfiles lo vetaría.
+
+**Restaurar en una laptop nueva:** instalar KOReader y reconstruir desde el
+repo — `sqlite3 ~/.config/koreader/settings/statistics.sqlite3 < statistics.sql`
+y copiar `hashdocsettings/` + `history.lua` a `~/.config/koreader/`. Las
+estadísticas y sidecars emparejan por hash del contenido, así que funcionan
+aunque la biblioteca cambie de ruta.
 
 ## Trampas conocidas (documentadas con sangre)
 
@@ -138,7 +144,7 @@ script_koreader_estudio/
 │   ├── setup_columnas.sh# creación idempotente de columnas y plantillas
 │   ├── sync_koreader.py # núcleo (calibre-debug): sidecars + stats → columnas
 │   ├── migrar_sdr.py    # migración .sdr → hashdocsettings (una vez)
-│   ├── respaldo_koreader.sh # espejo continuo a ~/Documents/backups_koreader
+│   ├── respaldo_koreader.sh # espejo continuo (texto) a ~/.dotfiles/koreader-data
 │   └── systemd/         # unidades service + timer (usuario)
 ├── reportes/            # TSV de cada pasada
 └── backups/             # metadata.db rotados (5) + tars pre-migración

@@ -25,11 +25,12 @@ Este proyecto reemplaza y unifica dos scripts independientes en un sistema
 modular con un único punto de entrada (`main.sh`). Las dos operaciones
 disponibles son:
 
-| Operación  | Qué hace                                                                                                                               |
-| ---------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| `embed`    | Lee `metadata.opf` de Calibre e incrusta sus campos en los PDFs del mismo directorio usando `exiftool`                                 |
-| `register` | Añade los PDFs físicamente presentes en las carpetas de libro como formato adicional en la base de datos de Calibre usando `calibredb` |
-| `all`      | Ejecuta `embed` → `register` en secuencia                                                                                              |
+| Operación      | Qué hace                                                                                                                               |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| `embed`        | Lee `metadata.opf` de Calibre e incrusta sus campos en los PDFs del mismo directorio usando `exiftool`. Escribe **PDF InfoDict + XMP Dublin Core** (`XMP-dc:*`); los tags salen de los mapas de `config.sh` (`EXIFTOOL_TAG_MAP` / `EXIFTOOL_XMP_TAG_MAP`) |
+| `register`     | Añade los PDFs físicamente presentes en las carpetas de libro como formato adicional en la base de datos de Calibre usando `calibredb` |
+| `all`          | Ejecuta `embed` → `register` en secuencia                                                                                              |
+| `limpiar-json` | Localiza los `zotero_metadata.json` huérfanos que el incrustador rival (deprecado) sembró bajo la biblioteca. **Seguro por defecto: solo lista;** borra únicamente con `--aplicar` |
 
 Características adicionales respecto a los scripts originales:
 
@@ -118,21 +119,23 @@ alias calibre-meta='~/Documents/scripts_for_calibre/script_metadatos_calibre/mai
 
 ### Comandos
 
-| Comando    | Descripción                                   |
-| ---------- | --------------------------------------------- |
-| `embed`    | Incrustar metadatos OPF en PDFs               |
-| `register` | Registrar PDFs en la base de datos de Calibre |
-| `all`      | Ejecutar ambas operaciones en secuencia       |
+| Comando        | Descripción                                            |
+| -------------- | ------------------------------------------------------ |
+| `embed`        | Incrustar metadatos OPF en PDFs (InfoDict + XMP-dc)     |
+| `register`     | Registrar PDFs en la base de datos de Calibre           |
+| `all`          | Ejecutar ambas operaciones en secuencia                 |
+| `limpiar-json` | Listar (y con `--aplicar` borrar) los `zotero_metadata.json` huérfanos |
 
 ### Opciones
 
 | Flag                 | Descripción                                                      | Requerido |
 | -------------------- | ---------------------------------------------------------------- | --------- |
-| `-r, --root PATH`    | Directorio raíz donde buscar `metadata.opf` o carpetas de autor  | No        |
+| `-r, --root PATH`    | Directorio raíz donde buscar `metadata.opf` o carpetas de autor. Para `limpiar-json`, raíz de búsqueda (por defecto la biblioteca de `config.sh`) | No        |
 | `-l, --library PATH` | Ruta raíz de la biblioteca Calibre (debe contener `metadata.db`) | No        |
 | `-v, --verbose`      | Mostrar mensajes de nivel DEBUG                                  | No        |
 | `-n, --dry-run`      | Simular toda la operación sin modificar ningún archivo           | No        |
 | `-f, --force`        | Sobreescribir formatos PDF existentes en Calibre                 | No        |
+| `--aplicar`          | Para `limpiar-json`: borrar de verdad (por defecto solo lista)   | No        |
 | `--version`          | Mostrar versión del script                                       | No        |
 | `-h, --help`         | Mostrar ayuda completa                                           | No        |
 
@@ -156,6 +159,12 @@ alias calibre-meta='~/Documents/scripts_for_calibre/script_metadatos_calibre/mai
 
 # Sobreescribir formatos ya registrados
 ./main.sh register --library ~/Calibre --force
+
+# Listar los zotero_metadata.json huérfanos (seguro, no borra nada)
+./main.sh limpiar-json
+
+# Borrarlos de verdad
+./main.sh limpiar-json --aplicar
 
 # Ver la versión
 ./main.sh --version
@@ -192,7 +201,8 @@ script_metadatos_calibre/
     ├── validator.sh         # Validación de dependencias, rutas y permisos
     ├── cli.sh               # Parsing de argumentos y menú interactivo
     ├── embed_metadata.sh    # Lógica de incrustar OPF → PDF (operación 'embed')
-    └── register_formats.sh  # Lógica de registrar PDFs en Calibre (operación 'register')
+    ├── register_formats.sh  # Lógica de registrar PDFs en Calibre (operación 'register')
+    └── limpiar_json_huerfanos.sh  # Limpieza de zotero_metadata.json ('limpiar-json')
 ```
 
 ### Descripción de módulos
@@ -204,8 +214,9 @@ script_metadatos_calibre/
 | `lib/logger.sh`           | `log_info`, `log_warn`, `log_error`, `log_debug` con archivo de log   |
 | `lib/validator.sh`        | Valida dependencias, rutas, permisos y biblioteca Calibre             |
 | `lib/cli.sh`              | `parse_arguments()` y `show_interactive_menu()`                       |
-| `lib/embed_metadata.sh`   | Extracción de OPF + construcción del comando exiftool + bucle de PDFs |
+| `lib/embed_metadata.sh`   | Extracción de OPF + construcción del comando exiftool (InfoDict + XMP-dc desde los mapas de `config.sh`) + bucle de PDFs |
 | `lib/register_formats.sh` | Extracción de IDs Calibre + llamadas a `calibredb add_format`         |
+| `lib/limpiar_json_huerfanos.sh` | Localiza y (con `--aplicar`) borra los `zotero_metadata.json` huérfanos |
 
 ### Flujo de ejecución
 

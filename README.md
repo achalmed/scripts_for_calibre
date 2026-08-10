@@ -1,103 +1,91 @@
-# Calibre PDF Tools
+# scripts_for_calibre
 
-![Calibre](https://img.shields.io/badge/Calibre-v7%2B-blue) ![bash](https://img.shields.io/badge/bash-script-green) ![exiftool](https://img.shields.io/badge/exiftool-required-orange) 
+![Calibre](https://img.shields.io/badge/Calibre-v7%2B-blue) ![bash](https://img.shields.io/badge/bash-script-green) ![exiftool](https://img.shields.io/badge/exiftool-opcional-orange)
 
 #readme
 
-Scripts en Bash muy útiles para quienes usan **Calibre** con PDFs externos y quieren mantener todo perfectamente organizado y con metadatos incrustados.
+Colección de herramientas modulares (Bash + Python) alrededor de la biblioteca
+**Calibre** (`~/Documents/biblioteca`): catalogación y normalización de
+metadatos, verificación contra bases bibliográficas, incrustación en PDF y la
+**plomería de sincronización** que une Calibre con **KOReader** (lectura) y
+**Zotero** (referencias/citas).
 
-## Scripts incluidos
+Este repo es una de las 7 piezas del ecosistema personal. El contrato
+arquitectónico global —capas, responsabilidades, dependencias, sincronización—
+vive en `~/Documents/ecosistema/` (`ARQUITECTURA.md`, `SINCRONIZACION.md`,
+`MODELO_METADATOS.md`); el `doctor/` de esa carpeta diagnostica el conjunto.
 
-| Script | Nombre del archivo | ¿Qué hace? | Cuándo usarlo |
-|--------|---------------------|------------|---------------|
-| 1 | `add-pdf-to-calibre.sh` | Añade automáticamente todos los PDFs que estén físicamente en las carpetas de los libros como formato adicional en Calibre (sin duplicarlos) | Después de descargar PDFs complementarios (ODT → PDF, versiones impresas, etc.) y colocarlos en las carpetas de los libros |
-| 2 | `incrustar-metadatos-calibre.sh` | Lee el `metadata.opf` de cada libro y usa **exiftool** para incrustar título, autor, editorial, etiquetas, idioma, etc. en los PDFs | Antes de enviar los PDFs a un lector, tablet, teléfono o nube (así los metadatos se ven fuera de Calibre) |
-| 3 | `script_catalogacion_biblioteca/` | Catalogación de libros **sin autor** (`Unknown`, `Desconocido`): fichas duales Zotero+Calibre por libro (generadas con el prompt `prompt_para_zotero_1_catalogacion.md`) y herramienta modular (`main.sh` + `config.sh` + `lib/`) que escribe los metadatos en Calibre vía `calibredb` (simulación por defecto, `--aplicar` para ejecutar) | Cuando hay libros sin autor o con metadatos vacíos que catalogar; correr **antes** de incrustar metadatos con el script 2 |
-| 4 | `script_normalizacion_metadatos/` | Migraciones que normalizaron en bloque **etiquetas, Géneros, Item type y Clasificador** de toda la biblioteca a partir de los metadatos existentes (dry-run por defecto, `--apply` para escribir). Ya aplicadas el 2026-07-28; se conservan como registro reproducible | Para volver a normalizar en bloque tras una importación grande, o como base para nuevas reglas |
-| 5 | `script_verificar_metadatos/` | Verifica los metadatos contra **OpenLibrary** (por ISBN o por título+autor) y genera un **reporte de discrepancias** (año, editorial, páginas). **Solo lectura**: nunca escribe en Calibre ni toca título/autor | Para auditar los libros publicados (con ISBN) y detectar editorial vacía/errónea, año o páginas incorrectos |
-| 6 | `script_sincronizar_zotero/` | Sincroniza **bidireccionalmente** los metadatos entre Calibre y Zotero para los libros enlazados por ZMI (`#zotero_key`): "Calibre manda", rellena vacios, repara rutas de adjuntos rotas y puebla las columnas espejo `#zotero_*`. Simulacion por defecto, `--aplicar` con ambas apps cerradas + backups + integrity_check | Para dejar Zotero y Calibre con metadatos completos y coherentes en ambos lados tras normalizar/verificar |
-| 7 | `script_koreader_estudio/` | KOReader → Calibre: progreso, estado, minutos y fechas de lectura en columnas (`#barra`, `#estado_estudio`…), enlace clicable a apuntes `.md` (`#apuntes`, abre en Obsidian), migración de sidecars a hash y **respaldo continuo** de estadísticas a `~/.dotfiles/koreader-data/`. Timer systemd cada 30 min | Se instala una vez y corre solo; manual para forzar pasadas o enlazar apuntes |
-| 8 | `script_ecosistema_lectura/` | Zotero (Ethereal Style) → Calibre: tiempo (`#zot_tiempo`), progreso (`#zot_progreso`) y `#tiempo_estudio` total; **orquesta** el script 6 a diario (04:30) y genera el reporte de libros sin `#zotero_key` (`--enlazar`). Timers systemd | Se instala una vez y corre solo; `--metadatos --aplicar` para forzar la sync de etiquetas |
+> 📖 **Guía práctica del ecosistema de lectura/estudio** (qué es automático, qué
+> es manual, chuleta de comandos, solución de problemas):
+> [`GUIA_ECOSISTEMA.md`](GUIA_ECOSISTEMA.md).
 
-> 📖 **Guía práctica del ecosistema completo** (qué es automático, qué es
-> manual, chuleta de comandos, solución de problemas):
-> [`GUIA_ECOSISTEMA.md`](GUIA_ECOSISTEMA.md)
+## Las 7 suites
+
+| Suite | Rol | Escribe | Estado |
+|---|---|---|---|
+| `script_catalogacion_biblioteca/` | Cataloga libros **sin autor** (`Unknown`/`Desconocido`): fichas duales Zotero+Calibre por libro y aplicación de metadatos vía `calibredb`. | metadata.db (vía `calibredb`) | **Campaña terminada** (2026-07-27); herramienta reutilizable |
+| `script_normalizacion_metadatos/` | Migraciones que normalizaron en bloque **etiquetas, Géneros, Item type y Clasificador** de ~4 484 libros desde los metadatos existentes. | metadata.db (SQLite directo) | **Campaña terminada** (2026-07-28); registro histórico (ver su README §Reproducibilidad) |
+| `script_verificar_metadatos/` | Verifica metadatos contra **OpenLibrary/Crossref** (ISBN o título+autor) y reporta discrepancias. **Solo lectura.** | — (nunca escribe) | Herramienta de auditoría, a demanda |
+| `script_metadatos_calibre/` | Incrustador **canónico** de metadatos en PDF (OPF → InfoDict + XMP-dc vía exiftool), registro de PDFs como formato en Calibre, y limpieza de `zotero_metadata.json` huérfanos. | PDFs (exiftool) / metadata.db (`add_format`) | Activo; incrustador único (el de `scripts_for_zotero` quedó deprecado, auditoría A7) |
+| `script_sincronizar_zotero/` | Sincroniza **bidireccionalmente** metadatos/etiquetas entre Calibre y Zotero para los libros enlazados por ZMI (`#zotero_key`). Política "Calibre manda"; rellena vacíos, repara adjuntos, puebla `#zotero_*`. | metadata.db + zotero.sqlite | Activo; orquestado a diario (04:30) |
+| `script_koreader_estudio/` | KOReader → Calibre: progreso, estado, minutos y fechas de lectura (`#barra`, `#estado_estudio`…), enlace clicable a apuntes (`#apuntes`), migración de sidecars a hash y respaldo continuo a `~/.dotfiles/koreader-data/`. | metadata.db (columnas `ko_*`) | Activo; **timer 30 min** |
+| `script_ecosistema_lectura/` | Zotero (Ethereal Style) → Calibre: tiempo (`#zot_tiempo`), progreso (`#zot_progreso`), `#tiempo_estudio`; **orquesta** `script_sincronizar_zotero` y reporta libros sin `#zotero_key`. | metadata.db (columnas `zot_*`) | Activo; **timers** (lectura 30 min; metadatos 04:30) |
+
+Dirección de cada dato y autoridad de cada campo: `MODELO_METADATOS.md` y
+`SINCRONIZACION.md` en `~/Documents/ecosistema/`. Regla de oro: los relojes de
+lectura (KOReader vs Zotero) nunca se copian entre sí; el único canal
+bidireccional (metadatos) es asimétrico (Calibre gana todo diff; Zotero solo
+rellena vacíos).
+
+## Código compartido: `lib_comun/`
+
+Módulos de única responsabilidad consumidos por varias suites (auditoría M1),
+para no duplicar plomería:
+
+| Módulo | Aporta | Consumido por |
+|---|---|---|
+| `lib_comun/logger.sh` | logger canónico `[LEVEL] YYYY-MM-DD HH:MM:SS - msg` | catalogacion, sincronizar, verificar |
+| `lib_comun/detectar_apps.sh` | `calibre_abierto()` / `zotero_abierto()` (detección robusta `ps -eo comm`) | sincronizar, koreader_estudio, ecosistema_lectura |
+| `lib_comun/lock.sh` | `tomar_lock_calibre()` (flock sobre `.lock_calibre_write`) | sincronizar, koreader_estudio, ecosistema_lectura |
+| `lib_comun/backup_rotado.sh` | `backup_metadata_db RUTA DIR N` (cp + rotación) | koreader_estudio, ecosistema_lectura |
+
+Las suites hacen `source "$PROJECT_DIR/../lib_comun/<módulo>.sh"`.
+
+## Estándares comunes
+
+Se siguen las convenciones del ecosistema (`~/Documents/ecosistema/ARQUITECTURA.md`
+**§5**). En resumen:
+
+1. **Patrón de suite**: `main.sh` (orquestación) + `config.sh` (todo lo
+   tunable) + `lib/` (módulos de única responsabilidad) + `README.md` honesto.
+   Los tunables nuevos van al `config.sh`, nunca hardcodeados en `lib/`.
+2. **Simulación por defecto**; escritura solo con `--aplicar` (o `--apply` en
+   las migraciones). Correr siempre en simulación antes de un cambio masivo.
+3. **Backups rotados** antes de escribir un almacén (5 para metadata.db; 2
+   pares para el sincronizador bidireccional), en el `backups/` de la suite.
+4. **Locking**: todo escritor de metadata.db toma `.lock_calibre_write`
+   (flock, `lib_comun/lock.sh`); detección de apps con `ps -eo comm`.
+5. **Idioma español** en código nuevo, docs y CLI.
+6. **Sanity-check sin efectos**: `bash -n <archivo>.sh`.
+
+Artefactos de ejecución (`*/backups/`, `*/reportes/`, `.lock_calibre_write`,
+`estado/` runtime) están gitignorados: rotan/cambian en cada pasada.
 
 ## Requisitos
 
-- Calibre instalado y con `calibredb` en el PATH
-- **exiftool** (solo para el segundo script)  
+- Calibre con `calibredb` y `calibre-debug` en el PATH.
+- `python3` (biblioteca estándar) y `sqlite3`.
+- **exiftool** solo para `script_metadatos_calibre` (incrustar en PDF):
   ```bash
-  sudo apt install libimage-exiftool-perl    # Debian/Ubuntu
-  brew install exiftool                      # macOS
+  sudo apt install libimage-exiftool-perl   # Debian/Ubuntu
+  brew install exiftool                     # macOS
   ```
-- Los scripts están pensados para ejecutarse **sin sudo**
-
-## Uso rápido
-
-### 1. add-pdf-to-calibre.sh → Añadir PDFs como formato adicional
-
-1. Entra con tu terminal dentro de la carpeta de un autor de tu biblioteca Calibre  
-   (ejemplo: `/home/yo/Calibre/Author Name/`)
-2. Ejecuta el script (estando dentro de la carpeta del autor):
-
-```bash
-~/scripts/add-pdf-to-calibre.sh
-# o ./add-pdf-to-calibre.sh si está en la misma carpeta
-```
-
-El script:
-- Detecta automáticamente la raíz de la biblioteca (sube un nivel)
-- Recorre todos los libros del autor
-- Añade cada PDF encontrado como formato adicional (con `--dont-replace`)
-- Te da un resumen final muy claro
-
-> Ideal para cuando conviertes ODT → PDF o descargas versiones “bonitas” y las dejas en la carpeta del libro.
-
-### 2. incrustar-metadatos-calibre.sh → Incrustar metadatos en PDFs
-
-Puedes ejecutarlo en toda tu biblioteca o en una subcarpeta:
-
-```bash
-# Toda la biblioteca
-~/scripts/incrustar-metadatos-calibre.sh "/ruta/a/tu/biblioteca/Calibre"
-
-# Solo un autor o colección
-~/scripts/incrustar-metadatos-calibre.sh "/ruta/a/tu/biblioteca/Calibre/Autor Favorito"
-```
-
-El script:
-- Busca recursivamente todos los `metadata.opf`
-- Extrae título, autor, etiquetas, editorial, idioma, fecha…
-- Usa **exiftool** para escribirlos directamente en los PDFs (sin crear copias)
-- Genera un log detallado en `/tmp/` y un reporte final muy completo
-
-> Perfecto antes de copiar PDFs al móvil, Kindle (sin jailbreak), tablet, etc.
-
-## Ejemplo de flujo de trabajo recomendado
-
-```bash
-# 1. Descargas/conviertes PDFs y los dejas en las carpetas de los libros
-# 2. Añades los PDFs a Calibre (para que aparezcan como formato disponible)
-cd "/mi/biblioteca/Calibre/George Orwell"
-~/scripts/add-pdf-to-calibre.sh
-
-# 3. (Opcional pero muy recomendado) Incrustas los metadatos en los PDFs
-~/scripts/incrustar-metadatos-calibre.sh "/mi/biblioteca/Calibre"
-```
-
-¡Listo! Tus PDFs aparecen en Calibre y además llevan todos los metadatos incrustados.
+- Pensadas para ejecutarse **sin sudo**.
 
 ## Licencia
 
-MIT License – puedes usar, modificar y distribuir libremente.
+MIT License — usar, modificar y distribuir libremente.
 
 ## Autor
 
-Creado con ❤️ por la comunidad hispanohablante de Calibre  
-Segundo script originalmente por Edison Achalma (2024-2025)
-
----
-
-¡Star ★ el repo si te ha sido útil!
- 
+Edison Achalma B.Sc. Econ.

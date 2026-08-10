@@ -62,9 +62,10 @@ parse_arguments() {
 
 # check_dependencies()
 # Verifies the external commands the tool relies on are present.
+# (curl NO se chequea: el core Python hace las peticiones con urllib, no curl.)
 check_dependencies() {
     local missing=()
-    for cmd in curl python3 sqlite3; do
+    for cmd in python3 sqlite3; do
         command -v "$cmd" >/dev/null 2>&1 || missing+=("$cmd")
     done
     if [[ ${#missing[@]} -gt 0 ]]; then

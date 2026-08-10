@@ -6,10 +6,11 @@ Clasificador de los 4 484 libros, derivados **solo de los metadatos ya
 existentes** (sin abrir PDFs), respetando la regla de no tocar título ni
 autor.
 
-> Estos scripts **ya se aplicaron**. Se conservan aquí como registro
-> reproducible y base para trabajo futuro. Todos escriben **directo en
-> `metadata.db` vía SQLite** y son **dry-run por defecto** (requieren
-> `--apply` para escribir). Ver "Gotcha del OPF" más abajo.
+> Estos scripts **ya se aplicaron** (campaña terminada el 2026-07-28). Se
+> conservan como **registro histórico**, no como pipeline re-ejecutable en
+> bloque. Todos escriben **directo en `metadata.db` vía SQLite** y son
+> **dry-run por defecto** (requieren `--apply` para escribir). Ver
+> "Reproducibilidad" y "Gotcha del OPF" más abajo.
 
 ## Orden de ejecución
 
@@ -27,6 +28,28 @@ autor.
 
 `vocabulario_etiquetas.txt` es el vocabulario cerrado de etiquetas usado como
 lista blanca (ninguna migración inventa etiquetas nuevas).
+
+## Reproducibilidad (honesta)
+
+Hay que distinguir dos grupos:
+
+- **Re-ejecutables** (01, 02, 03, 04, 06): derivan sus decisiones **solo de
+  `metadata.db`** (etiquetas, Clasificador, serie, ISBN ya presentes). Se
+  pueden volver a correr tal cual sobre la base actual — son idempotentes en
+  la práctica (re-aplicar no cambia lo ya normalizado).
+
+- **NO re-ejecutables — registro histórico** (05, 07, 08, 09): leen/escriben
+  archivos `res_*.tsv` / `refinar_prop.tsv` desde un **scratchpad de sesión ya
+  extinto** (`/tmp/claude-1000/.../07e95f6c-.../scratchpad`, hardcodeado en
+  cada uno). Esos TSV eran salidas efímeras de subagentes/consultas de una
+  corrida concreta; **ya no existen**. Correr estos scripts hoy no hace nada
+  útil (no encuentran sus insumos). Se conservan para **documentar qué lógica
+  de validación** se aplicó (rechazo contra enum/vocabulario antes de escribir)
+  y con qué criterios se reclasificó, no para re-ejecutar.
+
+Para una nueva normalización en bloque tras una importación grande: partir de
+01–04/06 (que sí leen la base) y regenerar los insumos de clasificación por
+título/tipo con las herramientas actuales, no reutilizar los `/tmp` muertos.
 
 ## Uso (patrón dry-run)
 

@@ -57,8 +57,8 @@ de `lib/` nunca codifican rutas.
 
 ## Requisitos
 
-- `curl`, `python3` (solo biblioteca estándar), `sqlite3`
-- Conexión a internet (OpenLibrary). No requiere clave de API.
+- `python3` (solo biblioteca estándar; las peticiones HTTP van por `urllib`), `sqlite3`
+- Conexión a internet (OpenLibrary/Crossref). No requiere clave de API.
 - No necesita cerrar Calibre (solo lee `metadata.db`).
 
 ## Uso

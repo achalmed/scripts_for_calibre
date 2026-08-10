@@ -16,16 +16,16 @@ readonly METADATA_DB="$CALIBRE_LIBRARY/metadata.db"
 # Google Books is only a fallback because the anonymous quota is often 429.
 readonly OL_ISBN_ENDPOINT="https://openlibrary.org/api/books"
 readonly OL_SEARCH_ENDPOINT="https://openlibrary.org/search.json"
-readonly GB_ENDPOINT="https://www.googleapis.com/books/v1/volumes"
 # Crossref indexes journal articles, working papers and books by DOI. Used
 # as a fallback in --modo titulo when OpenLibrary (books only) finds nothing,
 # which is what happens for Report / Journal Article. Returns year, publisher
 # and, valuably, a DOI we may not have. Set USE_CROSSREF=false to disable.
 readonly CROSSREF_ENDPOINT="https://api.crossref.org/works"
 readonly USE_CROSSREF="true"
-# Crossref asks for a contact in the User-Agent (the "polite pool"); harmless
-# if left generic.
-readonly CROSSREF_MAILTO="achalmed.18@gmail.com"
+# Crossref pide un contacto en el User-Agent (el "polite pool"). Se toma de
+# CROSSREF_MAILTO_OVERRIDE si está definida en el entorno; si no, el valor por
+# defecto de abajo (edítalo o exporta la variable para no dejar tu correo aquí).
+readonly CROSSREF_MAILTO="${CROSSREF_MAILTO_OVERRIDE:-achalmed.18@gmail.com}"
 
 # Seconds to wait between network calls (be polite; avoid throttling).
 readonly RATE_LIMIT_SECONDS="1"
