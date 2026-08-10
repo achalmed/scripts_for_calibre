@@ -66,15 +66,15 @@ Características adicionales respecto a los scripts originales:
 
 ```bash
 git clone https://github.com/achalmed/scripts_for_calibre.git
-cd scripts_for_calibre/script_matadatos_calibre
+cd scripts_for_calibre/script_metadatos_calibre
 ```
 
 O copiar directamente a tu ruta definitiva:
 
 ```bash
-mkdir -p ~/Documents/scripts_for_calibre/script_matadatos_calibre
-cp -r . ~/Documents/scripts_for_calibre/script_matadatos_calibre/
-cd ~/Documents/scripts_for_calibre/script_matadatos_calibre
+mkdir -p ~/Documents/scripts_for_calibre/script_metadatos_calibre
+cp -r . ~/Documents/scripts_for_calibre/script_metadatos_calibre/
+cd ~/Documents/scripts_for_calibre/script_metadatos_calibre
 ```
 
 ### Paso 2: Dar permisos de ejecución
@@ -102,7 +102,7 @@ sudo pacman -S perl-image-exiftool calibre
 
 ```bash
 # En ~/.zshrc o ~/.config/fish/config.fish
-alias calibre-meta='~/Documents/scripts_for_calibre/script_matadatos_calibre/main.sh'
+alias calibre-meta='~/Documents/scripts_for_calibre/script_metadatos_calibre/main.sh'
 ```
 
 ---
@@ -183,7 +183,7 @@ cat /tmp/calibre-metadata-manager_*.log
 ## 🗂️ Arquitectura
 
 ```
-script_matadatos_calibre/
+script_metadatos_calibre/
 ├── main.sh                  # Punto de entrada único: orquesta todo el sistema
 ├── config.sh                # Constantes globales, códigos de salida y configuración
 ├── README.md                # Esta documentación

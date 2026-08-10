@@ -85,7 +85,7 @@ script_sincronizar_zotero/
   cambios en el siguiente sync.
 - Tras aplicar: `PRAGMA integrity_check` en ambas bases y regeneracion de los
   OPF de Calibre (`calibredb backup_metadata --all`) para que ZMI y los
-  incrustadores de PDF (`script_matadatos_calibre`) no lean metadatos rancios.
+  incrustadores de PDF (`script_metadatos_calibre`) no lean metadatos rancios.
 - Si el integrity_check falla, la herramienta te dice que restaures los backups.
 
 ## Uso

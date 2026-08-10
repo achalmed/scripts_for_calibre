@@ -122,7 +122,7 @@ enum de respaldo) vive en `config.sh`.
 4. **Cerrar Calibre** y aplicar: `./main.sh --aplicar`.
 5. Ingresar la parte Zotero de cada ficha manualmente (o vía plugin ZMI).
 6. Opcional: incrustar los metadatos en los PDFs con
-   `../script_matadatos_calibre/`.
+   `../script_metadatos_calibre/`.
 
 ## 🗂️ Arquitectura
 
