@@ -3,3 +3,4 @@
 */reportes/
 .lock_calibre_write
 script_verificar_metadatos/metadata.db
+script_ecosistema_lectura/estado/
