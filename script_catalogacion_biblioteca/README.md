@@ -3,6 +3,16 @@
 > Fichas de catalogación (dual Zotero + Calibre) para los 113 libros sin autor
 > de `~/Documents/biblioteca`, y herramienta modular `main.sh` que aplica esos
 > metadatos a Calibre vía `calibredb` (simulación por defecto).
+>
+> **Hogar canónico de la salida del prompt 1.** El formato de cada ficha lo define
+> [`prompt_para_zotero_1_catalogacion.md`](../../git-awesome-ai-prompts/prompts_for_zotero/prompt_para_zotero_1_catalogacion.md)
+> (repo `git-awesome-ai-prompts`); esta suite es donde esa salida **se guarda**
+> (`fichas/`), **se registra** (`resumen_catalogacion.tsv`, fuente de verdad) y
+> **se aplica** a Calibre. La campaña de los 113 sin autor está cerrada, pero la
+> herramienta es **reutilizable para cualquier libro nuevo** (ver
+> [«Reutilización para libros nuevos»](#-reutilización-para-libros-nuevos-flujo-prompt--ficha--tsv--calibre)).
+> Mapa del ecosistema y contrato de complementariedad prompt ⇄ scripts:
+> [`../../git-awesome-ai-prompts/ECOSISTEMA_APRENDIZAJE.md`](../../git-awesome-ai-prompts/ECOSISTEMA_APRENDIZAJE.md).
 
 #catalogacion #calibre #zotero
 
@@ -33,6 +43,29 @@ Componentes:
 | `fichas/` | Una ficha Markdown por libro (`<id_calibre>_<slug>.md`): tipo Zotero, tablas Zotero y Calibre, tags, nombre de archivo y notas con nivel de confianza |
 | `resumen_catalogacion.tsv` | Tabla resumen (una fila por libro) — **fuente de verdad** para `main.sh` |
 | `main.sh` + `config.sh` + `lib/` | Herramienta que aplica el TSV a Calibre con `calibredb set_metadata` |
+
+### 🔁 Reutilización para libros nuevos (flujo prompt → ficha → TSV → Calibre)
+
+La campaña de los 113 está cerrada, pero el circuito sirve para **cualquier alta
+nueva**. Por cada libro nuevo ya importado en Calibre (con su `id`):
+
+1. **Cataloga** leyendo su portada/página legal con el prompt 1; genera la ficha
+   dual (tablas Zotero + Calibre, tags oficiales, nombre de archivo).
+2. **Guarda** la ficha en `fichas/<id_calibre>_<slug>.md` (este formato exacto).
+3. **Registra** una fila en `resumen_catalogacion.tsv` (columnas: `id · autores ·
+   titulo · tipo_zotero · clasificador · editorial · fecha · identificador ·
+   idioma · tags · confianza · nota`). El TSV cubre solo ese subconjunto; los
+   campos ricos (`#edition`, `#pages`, `#genres`, `#sub_tipo`) se ponen a mano y
+   quedan intactos (un campo vacío del TSV nunca borra metadatos existentes).
+4. **Simula** `./main.sh`, luego **aplica** `./main.sh --aplicar` con **Calibre
+   cerrado** (empieza por `--solo-alta` si hay filas de confianza media/baja).
+5. **Zotero**: ingresa la parte Zotero de la ficha (manual o ZMI). Opcional:
+   incrusta en el PDF con `../script_metadatos_calibre/`.
+
+Primer uso tras la campaña: **2026-08-30**, ids **9910–9913** (Blanchard,
+*Macroeconomía* 7.ª ed.; Brancaccio & Bibi, *Anti-Blanchard*; Mendoza & Herrera,
+*Macroeconomía* PUCP; Guardia, *César Guardia Mayorga*) — fichas y filas ya
+presentes en `fichas/` y en el TSV.
 
 ## 📌 Estado (2026-07-27)
 
