@@ -12,7 +12,7 @@ metadatos, verificación contra bases bibliográficas, incrustación en PDF y la
 
 Este repo es una de las 7 piezas del ecosistema personal. El contrato
 arquitectónico global —capas, responsabilidades, dependencias, sincronización—
-vive en `~/Documents/ecosistema/` (`ARQUITECTURA.md`, `SINCRONIZACION.md`,
+vive en `~/Documents/meta/` (`ARQUITECTURA.md`, `SINCRONIZACION.md`,
 `MODELO_METADATOS.md`); el `doctor/` de esa carpeta diagnostica el conjunto.
 
 > 📖 **Guía práctica del ecosistema de lectura/estudio** (qué es automático, qué
@@ -32,7 +32,7 @@ vive en `~/Documents/ecosistema/` (`ARQUITECTURA.md`, `SINCRONIZACION.md`,
 | `script_ecosistema_lectura/` | Zotero (Ethereal Style) → Calibre: tiempo (`#zot_tiempo`), progreso (`#zot_progreso`), `#tiempo_estudio`; **orquesta** `script_sincronizar_zotero` y reporta libros sin `#zotero_key`. | metadata.db (columnas `zot_*`) | Activo; **timers** (lectura 30 min; metadatos 04:30) |
 
 Dirección de cada dato y autoridad de cada campo: `MODELO_METADATOS.md` y
-`SINCRONIZACION.md` en `~/Documents/ecosistema/`. Regla de oro: los relojes de
+`SINCRONIZACION.md` en `~/Documents/meta/`. Regla de oro: los relojes de
 lectura (KOReader vs Zotero) nunca se copian entre sí; el único canal
 bidireccional (metadatos) es asimétrico (Calibre gana todo diff; Zotero solo
 rellena vacíos).
@@ -53,7 +53,7 @@ Las suites hacen `source "$PROJECT_DIR/../lib_comun/<módulo>.sh"`.
 
 ## Estándares comunes
 
-Se siguen las convenciones del ecosistema (`~/Documents/ecosistema/ARQUITECTURA.md`
+Se siguen las convenciones del ecosistema (`~/Documents/meta/ARQUITECTURA.md`
 **§5**). En resumen:
 
 1. **Patrón de suite**: `main.sh` (orquestación) + `config.sh` (todo lo

@@ -34,7 +34,7 @@
 La biblioteca Calibre tenía 113 libros sin autor identificado (90 bajo
 `Unknown`, 22 bajo `Desconocido`, 1 bajo `Varios autores`). Cada uno fue
 catalogado leyendo la portada/página legal de su PDF, siguiendo el prompt
-oficial `~/Documents/git-awesome-ai-prompts/prompts_for_zotero/prompt_para_zotero_1_catalogacion.md`.
+oficial `~/Documents/prompts/prompts_for_zotero/prompt_para_zotero_1_catalogacion.md`.
 
 Componentes:
 
