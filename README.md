@@ -19,7 +19,7 @@ vive en `~/Documents/meta/` (`ARQUITECTURA.md`, `SINCRONIZACION.md`,
 > es manual, chuleta de comandos, solución de problemas):
 > [`GUIA_ECOSISTEMA.md`](GUIA_ECOSISTEMA.md).
 
-## Las 7 suites
+## Las 8 suites
 
 | Suite | Rol | Escribe | Estado |
 |---|---|---|---|
@@ -29,6 +29,7 @@ vive en `~/Documents/meta/` (`ARQUITECTURA.md`, `SINCRONIZACION.md`,
 | `script_metadatos_calibre/` | Incrustador **canónico** de metadatos en PDF (OPF → InfoDict + XMP-dc vía exiftool), registro de PDFs como formato en Calibre, y limpieza de `zotero_metadata.json` huérfanos. | PDFs (exiftool) / metadata.db (`add_format`) | Activo; incrustador único (el de `scripts_for_zotero` quedó deprecado, auditoría A7) |
 | `script_sincronizar_zotero/` | Sincroniza **bidireccionalmente** metadatos/etiquetas entre Calibre y Zotero para los libros enlazados por ZMI (`#zotero_key`). Política "Calibre manda"; rellena vacíos, repara adjuntos, puebla `#zotero_*`. | metadata.db + zotero.sqlite | Activo; orquestado a diario (04:30) |
 | `script_koreader_estudio/` | KOReader → Calibre: progreso, estado, minutos y fechas de lectura (`#barra`, `#estado_estudio`…), enlace clicable a apuntes (`#apuntes`), migración de sidecars a hash y respaldo continuo a `~/.dotfiles/koreader-data/`. | metadata.db (columnas `ko_*`) | Activo; **timer 30 min** |
+| `script_ingesta_recursos/` | Lleva a Calibre el material bibliográfico **externo** que vivía en los cursos docentes (`06_RECURSOS`, `08_INVESTIGACION`) y registra el `calibre_id` en el `temario.yml` del curso. | metadata.db (vía `calibredb add`) | Activo desde F5.4 (2026-09-06); a demanda |
 | `script_ecosistema_lectura/` | Zotero (Ethereal Style) → Calibre: tiempo (`#zot_tiempo`), progreso (`#zot_progreso`), `#tiempo_estudio`; **orquesta** `script_sincronizar_zotero` y reporta libros sin `#zotero_key`. | metadata.db (columnas `zot_*`) | Activo; **timers** (lectura 30 min; metadatos 04:30) |
 
 Dirección de cada dato y autoridad de cada campo: `MODELO_METADATOS.md` y
