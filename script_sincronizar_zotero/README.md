@@ -10,7 +10,7 @@ Es la pieza que faltaba en el flujo del ecosistema
 **catalogar → normalizar → verificar → sincronizar → incrustar → fichas**
 (ver `../script_verificar_metadatos`, `../script_normalizacion_metadatos`,
 `../script_catalogacion_biblioteca` y
-`prompts/prompts_for_zotero/prompt_para_zotero_1_catalogacion.md`,
+`prompts/01 fuentes/prompt_02_catalogar.md`,
 que define el contrato de campos RIS de ZMI que esta herramienta implementa).
 
 ## Politica de sincronizacion (decidida por el usuario)

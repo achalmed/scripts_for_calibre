@@ -5,7 +5,7 @@
 > metadatos a Calibre vía `calibredb` (simulación por defecto).
 >
 > **Hogar canónico de la salida del prompt 1.** El formato de cada ficha lo define
-> [`prompt_para_zotero_1_catalogacion.md`](../../git-awesome-ai-prompts/prompts_for_zotero/prompt_para_zotero_1_catalogacion.md)
+> [`01 fuentes/prompt_02_catalogar.md (antes prompt_para_zotero_1)`](../../git-awesome-ai-prompts/01 fuentes/prompt_02_catalogar.md)
 > (repo `git-awesome-ai-prompts`); esta suite es donde esa salida **se guarda**
 > (`fichas/`), **se registra** (`resumen_catalogacion.tsv`, fuente de verdad) y
 > **se aplica** a Calibre. La campaña de los 113 sin autor está cerrada, pero la
@@ -34,7 +34,7 @@
 La biblioteca Calibre tenía 113 libros sin autor identificado (90 bajo
 `Unknown`, 22 bajo `Desconocido`, 1 bajo `Varios autores`). Cada uno fue
 catalogado leyendo la portada/página legal de su PDF, siguiendo el prompt
-oficial `~/Documents/prompts/prompts_for_zotero/prompt_para_zotero_1_catalogacion.md`.
+oficial `~/Documents/prompts/01 fuentes/prompt_02_catalogar.md`.
 
 Componentes:
 
