@@ -4,3 +4,7 @@
 .lock_calibre_write
 script_verificar_metadatos/metadata.db
 script_ecosistema_lectura/estado/
+
+# bytecode de lib_comun/biblioteca.py y otros módulos Python
+__pycache__/
+*.pyc
