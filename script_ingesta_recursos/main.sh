@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # main.sh — script_ingesta_recursos: material externo de los cursos → Calibre (F5.4, 2026-09-06).
 #   ./main.sh --escanear                    escribe reportes/candidatos_<fecha>.tsv (decisión propuesta por fila)
-#   ./main.sh --aplicar [--tsv ARCHIVO]     ingesta las filas decision=ingestar (Calibre cerrado; toma el lock; backup de metadata.db)
+#   ./main.sh --aplicar [--tsv ARCHIVO]     aplica las filas ingestar/duplicado (Calibre cerrado; toma el lock; backup de metadata.db)
 #   ./main.sh [--tsv ARCHIVO]               simula la ingesta (por defecto)
 # Edita el TSV (columna decision) antes de --aplicar si quieres afinar qué entra.
 set -euo pipefail
