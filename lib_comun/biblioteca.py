@@ -188,17 +188,19 @@ def abrir(bid):
 
 
 # ---------------------------------------------------------------- texto por páginas
-def texto(bid, cache=True):
-    """Páginas de texto del formato principal (índice 0 = página 1 del PDF, no la impresa). [] si no hay texto."""
+def texto(bid, cache=True, layout=True):
+    """Páginas de texto del formato principal (índice 0 = página 1 del PDF, no la impresa). [] si no hay texto.
+    layout=True conserva la disposición (tablas, cabeceras); layout=False da el orden de lectura, necesario en los
+    documentos a dos columnas (normas de El Peruano y del Congreso), donde -layout entrelaza las columnas."""
     p = ruta(bid)
     if not p:
         return []
     st = p.stat()
     CACHE.mkdir(parents=True, exist_ok=True)
-    cf = CACHE / f"{int(bid)}_{int(st.st_mtime)}_{st.st_size}.txt"
+    cf = CACHE / f"{int(bid)}_{int(st.st_mtime)}_{st.st_size}{'' if layout else '_lectura'}.txt"
     if not (cache and cf.exists()):
         if p.suffix.lower() == ".pdf":
-            subprocess.run(["pdftotext", "-layout", str(p), str(cf)], capture_output=True)
+            subprocess.run(["pdftotext", *(["-layout"] if layout else []), "-enc", "UTF-8", str(p), str(cf)], capture_output=True)
         else:
             subprocess.run(["ebook-convert", str(p), str(cf)], capture_output=True)
         if not cf.exists():
