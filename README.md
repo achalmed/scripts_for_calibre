@@ -48,6 +48,7 @@ para no duplicar plomería:
 | `lib_comun/logger.sh` | logger canónico `[LEVEL] YYYY-MM-DD HH:MM:SS - msg` | catalogacion, sincronizar, verificar |
 | `lib_comun/detectar_apps.sh` | `calibre_abierto()` / `zotero_abierto()` (detección robusta `ps -eo comm`) | sincronizar, koreader_estudio, ecosistema_lectura |
 | `lib_comun/lock.sh` | `tomar_lock_calibre()` (flock sobre `.lock_calibre_write`) | sincronizar, koreader_estudio, ecosistema_lectura |
+| `lib_comun/biblioteca.py` | **Resolutor único de la biblioteca (solo lectura, FD2):** `datos`, `ruta`, `anexos`, `texto` (páginas con caché) y `existe` (identificador → huella → título por tokens). Los proyectos referencian por `calibre_id` y piden aquí la ruta física; ningún script fuera de esta lib abre `metadata.db` para resolver rutas | `scripts_for_fuentes` (verificar, ingesta, ingesta_cursos, fichas, lecturas), datafw, doctor |
 | `lib_comun/backup_rotado.sh` | `backup_metadata_db RUTA DIR N` (cp + rotación) | koreader_estudio, ecosistema_lectura |
 
 Las suites hacen `source "$PROJECT_DIR/../lib_comun/<módulo>.sh"`.

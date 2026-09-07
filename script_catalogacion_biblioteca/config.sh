@@ -20,6 +20,7 @@ readonly TSV_BASENAME="resumen_catalogacion.tsv"
 # --- Runtime option defaults (overridden by CLI flags in lib/cli.sh) ---
 APPLY_CHANGES=false   # false = simulation; true only with --aplicar
 ONLY_HIGH_CONFIDENCE=false
+ONLY_IDS=""           # --ids 10011,10012 → solo esas filas (FD2, 2026-09-07); vacío = todas
 VERBOSE=false
 
 # --- Fallback enum for the #clasificador custom column -----------------

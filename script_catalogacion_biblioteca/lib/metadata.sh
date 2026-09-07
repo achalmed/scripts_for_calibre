@@ -97,6 +97,7 @@ process_tsv_rows() {
     while IFS=$'\037' read -r id autores titulo tipo_zotero clasificador \
             editorial fecha identificador idioma tags confianza nota; do
         [[ "$id" == "id" || -z "$id" ]] && continue
+        [[ -n "$ONLY_IDS" && "$ONLY_IDS" != *",$id,"* ]] && continue
         TOTAL_ROWS=$((TOTAL_ROWS + 1))
         if [[ "$ONLY_HIGH_CONFIDENCE" == true && "$confianza" != "alta" ]]; then
             SKIPPED_LOW_CONFIDENCE=$((SKIPPED_LOW_CONFIDENCE + 1))

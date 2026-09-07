@@ -130,6 +130,7 @@ enum de respaldo) vive en `config.sh`.
 | `--aplicar` | Ejecuta los cambios (requiere Calibre cerrado) | No |
 | `--dry-run` | Fuerza simulación (modo por defecto) | No |
 | `--solo-alta` | Procesa solo filas con `confianza=alta` | No |
+| `--ids 10011,10012` | Procesa solo esas filas del TSV (libros recién ingresados; FD2) | No |
 | `-v`, `--verbose` | Trazas por fila (DEBUG) | No |
 | `-h`, `--help` | Ayuda | No |
 | `--version` | Versión | No |
