@@ -1,5 +1,26 @@
 # calibre-metadata-manager
 
+<!-- suite:inicio -->
+**Suite `metadatos_calibre`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
+
+Incrusta los metadatos OPF de Calibre en los PDF (XMP con exiftool) y registra PDF sueltos como libros.
+
+- Escribe en: calibre, archivos · simula por defecto: sí
+- Depende de: calibredb, exiftool, lib_comun
+
+Comandos:
+
+```bash
+main.sh                      # menú interactivo
+main.sh embed --dry-run
+main.sh embed --aplicar
+main.sh register --aplicar
+main.sh limpiar-json --aplicar
+```
+
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-07); no se edita a mano.</sub>
+<!-- suite:fin -->
+
 > Herramienta de línea de comandos que unifica dos operaciones esenciales
 > para tu biblioteca Calibre: **incrustar metadatos** de los archivos `.opf`
 > directamente en los PDFs (vía `exiftool`) y **registrar PDFs** como

@@ -1,5 +1,23 @@
 # script_sincronizar_zotero
 
+<!-- suite:inicio -->
+**Suite `sincronizar_zotero`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
+
+Sincroniza en las dos direcciones los metadatos de los libros enlazados por #zotero_key entre Calibre y Zotero, con backups e integridad.
+
+- Escribe en: calibre, zotero · simula por defecto: sí
+- Depende de: calibredb, zotero.sqlite, lib_comun
+
+Comandos:
+
+```bash
+main.sh                      # simula y reporta
+main.sh --aplicar            # ambas apps cerradas
+```
+
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-07); no se edita a mano.</sub>
+<!-- suite:fin -->
+
 Sincronizador **bidireccional** de metadatos entre la biblioteca **Calibre**
 (`biblioteca/metadata.db`) y **Zotero** (`~/Zotero/zotero.sqlite`) para los
 libros enlazados por el plugin **ZMI** (columna Calibre `#zotero_key` = clave

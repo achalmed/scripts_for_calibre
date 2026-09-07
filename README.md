@@ -1,5 +1,21 @@
 # scripts_for_calibre
 
+<!-- suites:inicio -->
+Suites de esta carpeta (7); índice global en `meta/INDICE_SCRIPTS.md`. Patrón: M main · C config · L lib.
+
+| Suite | Carpeta | Objetivo | Escribe en | Simula | Timer | Estado | Patrón |
+|---|---|---|---|---|---|---|---|
+| `catalogacion_biblioteca` | [scripts_for_calibre/script_catalogacion_biblioteca](script_catalogacion_biblioteca/) | fuentes | calibre | sí |  | activo | `MCL` |
+| `ecosistema_lectura` | [scripts_for_calibre/script_ecosistema_lectura](script_ecosistema_lectura/) | biblioteca | calibre | sí | ecosistema-lectura.timer · ecosistema-metadatos.timer | activo | `MCL` |
+| `koreader_estudio` | [scripts_for_calibre/script_koreader_estudio](script_koreader_estudio/) | biblioteca | calibre | sí | koreader-calibre-sync.timer | activo | `MCL` |
+| `metadatos_calibre` | [scripts_for_calibre/script_metadatos_calibre](script_metadatos_calibre/) | biblioteca | calibre, archivos | sí |  | activo | `MCL` |
+| `normalizacion_metadatos` | [scripts_for_calibre/script_normalizacion_metadatos](script_normalizacion_metadatos/) | biblioteca | calibre | sí |  | historico | `···` |
+| `sincronizar_zotero` | [scripts_for_calibre/script_sincronizar_zotero](script_sincronizar_zotero/) | biblioteca | calibre, zotero | sí |  | activo | `MCL` |
+| `verificar_metadatos` | [scripts_for_calibre/script_verificar_metadatos](script_verificar_metadatos/) | biblioteca | ninguno | sí |  | activo | `MCL` |
+
+<sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-09-07); no se edita a mano.</sub>
+<!-- suites:fin -->
+
 ![Calibre](https://img.shields.io/badge/Calibre-v7%2B-blue) ![bash](https://img.shields.io/badge/bash-script-green) ![exiftool](https://img.shields.io/badge/exiftool-opcional-orange)
 
 #readme

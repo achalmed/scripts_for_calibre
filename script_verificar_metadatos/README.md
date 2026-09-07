@@ -1,5 +1,23 @@
 # script_verificar_metadatos
 
+<!-- suite:inicio -->
+**Suite `verificar_metadatos`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
+
+Coteja los metadatos de Calibre contra bases bibliográficas públicas y escribe un informe de discrepancias; nunca modifica la biblioteca.
+
+- Escribe en: ninguno · simula por defecto: sí
+- Depende de: curl, python3, lib_comun
+
+Comandos:
+
+```bash
+main.sh                      # informe en reportes/
+main.sh --modo isbn
+```
+
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-07); no se edita a mano.</sub>
+<!-- suite:fin -->
+
 Verifica los metadatos de la biblioteca **Calibre** contra bases
 bibliográficas públicas (**OpenLibrary**) y genera un **reporte de
 discrepancias** para que las corrijas a mano. Es de **solo lectura**: nunca

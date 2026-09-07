@@ -1,5 +1,26 @@
 # Catalogación de libros sin autor — biblioteca Calibre
 
+<!-- suite:inicio -->
+**Suite `catalogacion_biblioteca`** · objetivo *fuentes* · estado *activo* · bash · interfaz cli
+
+Aplica a Calibre los metadatos catalogados en resumen_catalogacion.tsv (autor «Nombre, Apellidos», vocabulario cerrado, serie, identificadores); registro canónico de lo catalogado.
+
+- Escribe en: calibre · simula por defecto: sí
+- Entrada: resumen_catalogacion.tsv (lo alimentan ingesta e ingesta_cursos)
+- Depende de: calibredb, lib_comun
+- Método Documental: paso 02
+
+Comandos:
+
+```bash
+main.sh                      # simula sobre resumen_catalogacion.tsv
+main.sh --aplicar            # escribe (Calibre cerrado, lock)
+main.sh --aplicar --ids 10265,10266
+```
+
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-07); no se edita a mano.</sub>
+<!-- suite:fin -->
+
 > Fichas de catalogación (dual Zotero + Calibre) para los 113 libros sin autor
 > de `~/Documents/biblioteca`, y herramienta modular `main.sh` que aplica esos
 > metadatos a Calibre vía `calibredb` (simulación por defecto).

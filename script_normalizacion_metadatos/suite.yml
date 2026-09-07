@@ -1,0 +1,12 @@
+# suite.yml — contrato de la suite (esquema en core/suite.schema.yml); core/suites.py generar escribe los índices y READMEs.
+nombre: normalizacion_metadatos
+objetivo: biblioteca
+resumen: Migraciones puntuales (2026) que normalizaron en bloque géneros, tipos de ítem y vocabulario de etiquetas de la biblioteca.
+escribe_en:
+- calibre
+simula_por_defecto: true
+comandos:
+- 'python3 migraciones/02_genres.py            # imprime el plan'
+- 'python3 migraciones/02_genres.py --apply    # escribe'
+estado: historico
+nota: 'sin main.sh: son scripts de una sola vez; se conservan como historia de la biblioteca'

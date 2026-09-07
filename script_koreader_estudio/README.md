@@ -1,5 +1,26 @@
 # script_koreader_estudio — KOReader → Calibre como gestor de estudio
 
+<!-- suite:inicio -->
+**Suite `koreader_estudio`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
+
+Convierte Calibre en tablero de estudio: progreso, tiempo y anotaciones de KOReader hacia las columnas del libro.
+
+- Escribe en: calibre · simula por defecto: sí
+- Entrada: statistics.sqlite3 de KOReader
+- Depende de: calibredb, koreader, lib_comun
+- Timer: `koreader-calibre-sync.timer`
+
+Comandos:
+
+```bash
+main.sh                      # simula
+main.sh --aplicar
+main.sh --desde-timer
+```
+
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-07); no se edita a mano.</sub>
+<!-- suite:fin -->
+
 #readme
 
 Convierte Calibre en un **tablero de seguimiento de estudio**: KOReader (en este

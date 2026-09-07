@@ -1,5 +1,25 @@
 # script_ecosistema_lectura — Zotero (Read Time) → Calibre
 
+<!-- suite:inicio -->
+**Suite `ecosistema_lectura`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
+
+Lleva el tiempo de lectura de Zotero (readingTime) y los metadatos de estudio a las columnas de Calibre.
+
+- Escribe en: calibre · simula por defecto: sí
+- Depende de: calibredb, zotero.sqlite, lib_comun
+- Timer: `ecosistema-lectura.timer · ecosistema-metadatos.timer`
+
+Comandos:
+
+```bash
+main.sh                      # simula
+main.sh --aplicar
+main.sh --metadatos --desde-timer
+```
+
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-07); no se edita a mano.</sub>
+<!-- suite:fin -->
+
 #readme
 
 **Fase 2 del ecosistema de lectura** (ver [DISENO.md](DISENO.md)): lleva a

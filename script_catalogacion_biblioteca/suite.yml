@@ -1,0 +1,18 @@
+# suite.yml — contrato de la suite (esquema en core/suite.schema.yml); core/suites.py generar escribe los índices y READMEs.
+nombre: catalogacion_biblioteca
+objetivo: fuentes
+resumen: Aplica a Calibre los metadatos catalogados en resumen_catalogacion.tsv (autor «Nombre, Apellidos», vocabulario cerrado, serie, identificadores); registro
+  canónico de lo catalogado.
+escribe_en:
+- calibre
+simula_por_defecto: true
+comandos:
+- 'main.sh                      # simula sobre resumen_catalogacion.tsv'
+- 'main.sh --aplicar            # escribe (Calibre cerrado, lock)'
+- main.sh --aplicar --ids 10265,10266
+estado: activo
+entrada: resumen_catalogacion.tsv (lo alimentan ingesta e ingesta_cursos)
+depende_de:
+- calibredb
+- lib_comun
+metodo_documental: paso 02

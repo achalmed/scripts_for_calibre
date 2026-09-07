@@ -1,0 +1,19 @@
+# suite.yml — contrato de la suite (esquema en core/suite.schema.yml); core/suites.py generar escribe los índices y READMEs.
+nombre: metadatos_calibre
+objetivo: biblioteca
+resumen: Incrusta los metadatos OPF de Calibre en los PDF (XMP con exiftool) y registra PDF sueltos como libros.
+escribe_en:
+- calibre
+- archivos
+simula_por_defecto: true
+comandos:
+- 'main.sh                      # menú interactivo'
+- main.sh embed --dry-run
+- main.sh embed --aplicar
+- main.sh register --aplicar
+- main.sh limpiar-json --aplicar
+estado: activo
+depende_de:
+- calibredb
+- exiftool
+- lib_comun

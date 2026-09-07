@@ -1,5 +1,23 @@
 # script_normalizacion_metadatos
 
+<!-- suite:inicio -->
+**Suite `normalizacion_metadatos`** · objetivo *biblioteca* · estado *historico* · - · interfaz cli
+
+Migraciones puntuales (2026) que normalizaron en bloque géneros, tipos de ítem y vocabulario de etiquetas de la biblioteca.
+
+- Escribe en: calibre · simula por defecto: sí
+- Nota: sin main.sh: son scripts de una sola vez; se conservan como historia de la biblioteca
+
+Comandos:
+
+```bash
+python3 migraciones/02_genres.py            # imprime el plan
+python3 migraciones/02_genres.py --apply    # escribe
+```
+
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-07); no se edita a mano.</sub>
+<!-- suite:fin -->
+
 Migraciones puntuales que normalizaron en bloque los metadatos de la
 biblioteca **Calibre** el **2026-07-28**: etiquetas, Géneros, Item type y
 Clasificador de los 4 484 libros, derivados **solo de los metadatos ya
