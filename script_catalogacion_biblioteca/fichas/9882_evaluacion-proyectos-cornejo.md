@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9882
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Evaluacion de proyectos: con ejemplos». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9882
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Evaluacion de proyectos Rene Cornejo (9882)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Rene, Cornejo Diaz/Evaluacion de proyectos_ con ejemplos (9882)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: El propio documento se declara "Borrador solo para uso en aula" y "Material academico para uso exclusivo en la Universidad ESAN", es decir, un texto docente inedito sin editorial ni ISBN. `Manuscript` (Type: Draft / Lecture notes) es mas adecuado que `Book` para un borrador no publicado.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                      |
 | --------------- | ------------------------------------------ |
@@ -33,9 +45,7 @@
 | Rights          | Derechos reservados © 2017 Rene Cornejo Diaz |
 | Extra           |                                            |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -62,17 +72,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Rene, Cornejo Diaz - Evaluacion de proyectos: con ejemplos - # -  -  - 2017 - Documento de trabajo.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `evaluacion_privada; proyectos_inversion; finanzas_corporativas`
 **Calibre**: `evaluacion_privada, proyectos_inversion, finanzas_corporativas`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: portadilla y pagina de creditos del PDF ("Rene Cornejo Diaz", "Evaluacion de proyectos. Con ejemplos", "Material academico para uso exclusivo en la Universidad ESAN", "Derechos reservados © 2017", "Borrador solo para uso en aula", abril 2017).
+**Confianza: alta.** Evidencia: portadilla y pagina de creditos del PDF ("Rene Cornejo Diaz", "Evaluacion de proyectos. Con ejemplos", "Material academico para uso exclusivo en la Universidad ESAN", "Derechos reservados © 2017", "Borrador solo para uso en aula", abril 2017).
 - El lugar (Lima) se infiere de la afiliacion a la Universidad ESAN indicada en el propio documento.
 - Sin editorial ni ISBN por tratarse de un borrador de circulacion interna.

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9889
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Final II parte». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9889
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/FINAL II PARTE (1) (9889)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Carlos, Aliaga/Final II parte (9889)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Es un texto de matematica financiera (312 paginas sobre anualidades, perpetuidades y modelos con Excel) sin portada, editorial, ISBN ni pagina legal, generado en Word y con la marca de agua "Carlos Aliaga" en todas las paginas; corresponde a `Manuscript` (Type: Unpublished manuscript) y no a `Book`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                          |
 | --------------- | ---------------------------------------------- |
@@ -33,9 +45,7 @@
 | Rights          |                                                |
 | Extra           |                                                |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -62,17 +72,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Carlos, Aliaga - Final II parte - # -  -  - 2012 - Documento de trabajo.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `matematicas_financieras; economia_financiera`
 **Calibre**: `matematicas_financieras, economia_financiera`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: la autoria se deduce unicamente de la marca de agua "Carlos Aliaga" repetida en el texto; la fecha 2012 proviene de los metadatos incrustados del PDF (Word 2010, creado 2012-03-06). No hay portada, titulo de obra, editorial ni ISBN en el documento.
+**Confianza: baja.** Evidencia: la autoria se deduce unicamente de la marca de agua "Carlos Aliaga" repetida en el texto; la fecha 2012 proviene de los metadatos incrustados del PDF (Word 2010, creado 2012-03-06). No hay portada, titulo de obra, editorial ni ISBN en el documento.
 - El titulo "Final II parte" es el del archivo original; el contenido corresponde a la parte de anualidades de un manual de matematica financiera. Es probable que se relacione con las obras de Carlos Aliaga Valdez (cf. id 9880, Manual de Matematica Financiera, Universidad del Pacifico), pero no hay evidencia interna que permita asignar el titulo de la obra contenedora, por lo que no se cataloga como Book Section.
 - Sugerencia: si se localiza la obra completa a la que pertenece, recatalogar como `Book Section` con Book Title.

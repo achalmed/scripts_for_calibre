@@ -1,8 +1,20 @@
-# Ficha de catalogación — Código tributario TUO D.S. 133-2013 EF (El Peruano)
+---
+tipo: ficha-catalogacion
+calibre-id: 10126
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Código tributario TUO D.S. 133-2013 EF (El Peruano)». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/codigo_tributario_tuo_ds_133_2013_ef_elperuano.pdf` · SHA-256 `63b982b8e89f23ff…` · 137 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/codigo_tributario_tuo_ds_133_2013_ef_elperuano.pdf` · SHA-256 `63b982b8e89f23ff…` · 137 págs · con texto
 
 ## Zotero
 | Campo | Valor |

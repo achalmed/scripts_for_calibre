@@ -1,8 +1,20 @@
-# Ficha de catalogación — Texto Único Ordenado del Decreto Legislativo N.° 728. D.S. 003 97 tr productividad competitividad laboral
+---
+tipo: ficha-catalogacion
+calibre-id: 10013
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Texto Único Ordenado del Decreto Legislativo N.° 728. D.S. 003 97 tr productividad competitividad laboral». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/14_trabajo/tuo_dleg_728_ds_003_97_tr_productividad_competitividad_laboral.pdf` · SHA-256 `47d7a5c1ed539d31…` · 52 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/14_trabajo/tuo_dleg_728_ds_003_97_tr_productividad_competitividad_laboral.pdf` · SHA-256 `47d7a5c1ed539d31…` · 52 págs · con texto
 
 ## Zotero
 | Campo | Valor |

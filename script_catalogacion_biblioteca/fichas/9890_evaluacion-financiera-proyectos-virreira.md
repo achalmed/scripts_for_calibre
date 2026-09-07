@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9890
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Evaluacion financiera de proyectos de inversion: metodos y aplicaciones». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9890
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/libro evaluacion-financiera-de-proyectos-de-inversion (9890)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Mauricio M., Virreira Avila/Evaluacion financiera de proyectos de inversion_ metodos y aplicaciones (9890)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Libro academico con autor, ano y lugar en portada, promovido y presentado por la Universidad Privada de Santa Cruz de la Sierra (UPSA) segun la presentacion de la rectora; corresponde al tipo `Book`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                        |
 | --------------- | ------------------------------------------------------------ |
@@ -42,9 +54,7 @@
 | Rights          |                                                              |
 | Extra           |                                                              |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -71,16 +81,10 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Mauricio M., Virreira Avila - Evaluacion financiera de proyectos de inversion: metodos y aplicaciones - # -  - Universidad Privada de Santa Cruz de la Sierra (UPSA) - 2020 - Libro.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `evaluacion_privada; proyectos_inversion; finanzas_corporativas`
 **Calibre**: `evaluacion_privada, proyectos_inversion, finanzas_corporativas`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media-alta.** Evidencia: portada del PDF (autor, titulo, "Santa Cruz - Bolivia, 2020") y presentacion de la rectora de la UPSA que identifica a la universidad como promotora de la publicacion. No se localizo pagina legal con ISBN ni editorial formal en el PDF.
+**Confianza: media-alta.** Evidencia: portada del PDF (autor, titulo, "Santa Cruz - Bolivia, 2020") y presentacion de la rectora de la UPSA que identifica a la universidad como promotora de la publicacion. No se localizo pagina legal con ISBN ni editorial formal en el PDF.
 - La UPSA se registra como editorial por ser la institucion que "pone en manos de sus estudiantes" la obra segun la presentacion; si se localiza el ISBN de la edicion impresa, completarlo.

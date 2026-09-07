@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 29944. Reforma magisterial
+---
+tipo: ficha-catalogacion
+calibre-id: 10029
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 29944. Reforma magisterial». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/12_educacion/ley_29944_reforma_magisterial.pdf` · SHA-256 `40f12ca17a66daf8…` · 33 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/12_educacion/ley_29944_reforma_magisterial.pdf` · SHA-256 `40f12ca17a66daf8…` · 33 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9892
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Cuentos para educar: dirigido a ninos y ninas de entre 6 y 12 anos para promover los valores en el deporte». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9892
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para educar (9892)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Clara, Redondo/Cuentos para educar_ dirigido a ninos y ninas de entre 6 y 12 anos para promover los valores en (9892)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Es una obra publicada formalmente por CEAPA (Confederacion Espanola de Asociaciones de Padres y Madres de Alumnos) con pagina de creditos, primera edicion fechada y deposito legal. Reune cuatro cuentos de autores identificados, por lo que `Book` es el tipo mas especifico.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                                     |
 | --------------- | ------------------------------------------------------------------------- |
@@ -42,9 +54,7 @@
 | Rights          |                                                                           |
 | Extra           | Illustrator: Barbero-Gil Vicente || Beatriz                               |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                                                  |
 | ------------- | -------------------------------------------------------------------------------------- |
@@ -71,17 +81,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Clara, Redondo & Chema, Gomez de Lora & Esperanza, Fabregat & Raquel, Miguez - Cuentos para educar: dirigido a ninos y ninas de entre 6 y 12 anos para promover los valores en el deporte - # -  - CEAPA - 2009 - Libro (Ed 1).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `pedagogia; didactica; aprendizaje`
 **Calibre**: `pedagogia, didactica, aprendizaje`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: pagina de creditos del PDF (autores, ilustradora, Edita: CEAPA, Madrid, Primera edicion: diciembre 2009, deposito legal M-XXXXX-2009).
+**Confianza: alta.** Evidencia: pagina de creditos del PDF (autores, ilustradora, Edita: CEAPA, Madrid, Primera edicion: diciembre 2009, deposito legal M-XXXXX-2009).
 - No consta ISBN en el documento (solo deposito legal con numeracion sin completar).
 - No confundir con las obras homonimas de Leticia Dotras (id 9899) ni con los otros titulos "Cuentos para educar" del lote; esta es la edicion de CEAPA sobre valores en el deporte.

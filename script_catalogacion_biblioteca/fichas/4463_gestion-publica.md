@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 4463
+zotero-key: WHB2IEE5
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Gestion publica». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 4463
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Gestion publica (4463)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Gestion publica (4463)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Es un documento monografico extenso (141 paginas con indice propio) sobre gestion publica —concepto, nueva gestion publica, etica, planeamiento estrategico, logistica y contrataciones del Estado— sin autor, editorial, ISBN ni sello institucional. Al ser un compilado inedito sin datos editoriales, corresponde `Manuscript` con Type `Unpublished manuscript`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -36,9 +48,7 @@
 | Rights          |                        |
 | Extra           |                        |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -68,17 +78,11 @@
  - Gestion publica - # -  -  - 2018 - Monografia.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `gestion_publica; administracion`
 **Calibre**: `gestion_publica, administracion`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: indice y primeras paginas del PDF; metadatos incrustados (Nitro Pro 9, fecha de creacion 2017-12-31 zona -05, equivalente a 2018-01-01; el registro Zotero previo indica 2018). Sin autor ni institucion identificables.
+**Confianza: baja.** Evidencia: indice y primeras paginas del PDF; metadatos incrustados (Nitro Pro 9, fecha de creacion 2017-12-31 zona -05, equivalente a 2018-01-01; el registro Zotero previo indica 2018). Sin autor ni institucion identificables.
 - El contenido (logistica publica, procesos tecnicos, contrataciones y adquisiciones del Estado) sugiere contexto peruano de administracion publica, pero no hay mencion institucional explicita que lo confirme.
 - El nombre de archivo comienza con el campo autor vacio seguido del separador, conforme a la regla de campos vacios.

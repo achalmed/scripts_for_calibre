@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Ley N.° 25844. Ley de concesiones electricas
+---
+tipo: ficha-catalogacion
+calibre-id: 9915
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Ley N.° 25844. Ley de concesiones electricas». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/20_desarrollo_productivo/dley_25844_ley_de_concesiones_electricas.pdf` · SHA-256 `143c02cf0735cea3…` · 11 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/20_desarrollo_productivo/dley_25844_ley_de_concesiones_electricas.pdf` · SHA-256 `143c02cf0735cea3…` · 11 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

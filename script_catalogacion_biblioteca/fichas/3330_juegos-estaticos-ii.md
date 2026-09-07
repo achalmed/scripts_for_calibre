@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 3330
+zotero-key: E6TBDUZD
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Analisis en forma estrategica: juegos estaticos II». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 3330
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Analisis en forma estrategica_ juegos estaticos ii (3330)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Analisis en forma estrategica_ juegos estaticos II (3330)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Documento de 8 paginas con notas de curso sobre el equilibrio de Nash y aplicaciones economicas (Cournot, Bertrand, bienes publicos), continuacion directa del item 3332, sin autor ni datos de publicacion. Corresponde `Manuscript` con Type `Lecture notes`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -33,9 +45,7 @@
 | Rights       | |
 | Extra        | |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -62,17 +72,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Analisis en forma estrategica: juegos estaticos II - # -  -  - 2008 - Apuntes de clase.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `microeconomia; teoria_juegos`
 **Calibre**: `microeconomia, teoria_juegos`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto de las primeras paginas y metadatos incrustados (CreationDate 2008-09-30). No hay autor, institucion ni curso identificados en el PDF.
+**Confianza: baja.** Evidencia: texto de las primeras paginas y metadatos incrustados (CreationDate 2008-09-30). No hay autor, institucion ni curso identificados en el PDF.
 - La fecha 2008 proviene unicamente de la fecha de creacion del PDF incrustada.
 - Forma pareja con el item 3332 ("Juegos estaticos I"), mismo origen y formato.

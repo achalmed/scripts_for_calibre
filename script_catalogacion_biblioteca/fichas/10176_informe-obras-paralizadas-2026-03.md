@@ -1,8 +1,20 @@
-# Ficha de catalogación — Informe obras paralizadas 2026 03
+---
+tipo: ficha-catalogacion
+calibre-id: 10176
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Informe obras paralizadas 2026 03». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/19_informes_permanentes/contraloria_informe_obras_paralizadas_2026_03.pdf` · SHA-256 `da100c86db8195d1…` · 22 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/19_informes_permanentes/contraloria_informe_obras_paralizadas_2026_03.pdf` · SHA-256 `da100c86db8195d1…` · 22 págs · con texto
 
 ## Zotero
 | Campo | Valor |

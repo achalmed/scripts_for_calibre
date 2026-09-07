@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 143
+zotero-key: DDEXP5NP
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Crecimiento sostenido "guiado" por las exportaciones. Un modelo tipo AK para una economia abierta». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 143
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Crecimiento sostenido _guiado_por las exportaciones. un modelo tipo ak para una economia abiert (143)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Crecimiento sostenido _guiado_ por las exportaciones. Un modelo tipo AK para una economia abier (143)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Nota tecnica de 10 paginas compuesta en TeX que reformula el "export-led growth" en un modelo AK de crecimiento endogeno para una economia abierta, con referencias academicas (Edwards 1993, Feder 1983) pero sin autor, revista ni datos de publicacion. Es un documento docente/de trabajo inedito, por lo que corresponde `Manuscript` con Type `Lecture notes`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -33,9 +45,7 @@
 | Rights       | |
 | Extra        | |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -62,17 +72,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Crecimiento sostenido "guiado" por las exportaciones. Un modelo tipo AK para una economia abierta - # -  -  - 2005 - Apuntes de clase.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `crecimiento_economico; comercio_internacional; macroeconomia`
 **Calibre**: `crecimiento_economico, comercio_internacional, macroeconomia`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto de las 10 paginas y metadatos incrustados (pdfTeX, CreationDate 2005-09-14). Sin autor ni institucion identificables.
+**Confianza: baja.** Evidencia: texto de las 10 paginas y metadatos incrustados (pdfTeX, CreationDate 2005-09-14). Sin autor ni institucion identificables.
 - La fecha 2005 proviene unicamente de la fecha de creacion del PDF incrustada.
 - Las comillas tipograficas defectuosas del titulo original ("guiado"por) se normalizaron en la ficha. El titulo contiene un punto; no afecta el nombre de archivo porque el punto no esta en el campo de comentarios.

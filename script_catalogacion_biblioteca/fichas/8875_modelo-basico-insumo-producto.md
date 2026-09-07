@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 8875
+zotero-key: ASBUQS23
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Modelo basico insumo-producto». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 8875
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Modelo basico insumo - producto (8875)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Modelo basico insumo-producto (8875)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: Es un juego de diapositivas (17 laminas creadas con LibreOffice Impress) sobre el modelo basico insumo-producto y la tabla input-output, sin autor, fecha ni institucion. Corresponde a material docente tipo diapositivas de clase, por lo que `Presentation` con Type `Class slides` es el tipo mas especifico.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -32,9 +44,7 @@
 | Rights       |                               |
 | Extra        |                               |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -64,18 +74,12 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  | Modelo basico insumo-producto | # |  |  |  | Diapositiva.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; modelamiento_economico`
 **Calibre**: `macroeconomia, modelamiento_economico`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- Nivel de confianza: baja.
+Nivel de confianza: baja.
 - Evidencia usada: texto de las laminas (portada "Modelo Basico INSUMO - PRODUCTO", tabla input-output con sectores A/B/C) y metadatos incrustados (LibreOffice Impress 25.8, fecha de creacion invalida).
 - Advertencia de nombre de archivo: el titulo contiene guion ("insumo-producto"), por lo que se uso el separador alternativo `|` en todo el nombre de archivo, segun la regla del generador.
 - Pertenece a la misma serie de diapositivas de cuentas nacionales que los items 8872, 8876 y 8877.

@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 30077. Ley contra el crimen organizado
+---
+tipo: ficha-catalogacion
+calibre-id: 10165
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 30077. Ley contra el crimen organizado». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/11_seguridad/ley_30077_ley_contra_el_crimen_organizado.pdf` · SHA-256 `21728226c0ff8521…` · 24 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/11_seguridad/ley_30077_ley_contra_el_crimen_organizado.pdf` · SHA-256 `21728226c0ff8521…` · 24 págs · con texto
 
 ## Zotero
 | Campo | Valor |

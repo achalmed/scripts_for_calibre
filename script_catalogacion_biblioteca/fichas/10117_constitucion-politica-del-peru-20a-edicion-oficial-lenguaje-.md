@@ -1,8 +1,20 @@
-# Ficha de catalogación — Constitución política del Perú 20a edición oficial lenguaje llano 2025
+---
+tipo: ficha-catalogacion
+calibre-id: 10117
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Constitución política del Perú 20a edición oficial lenguaje llano 2025». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/01_normativa_fundamental/01_constitucion/constitucion_politica_del_peru_20a_edicion_oficial_lenguaje_llano_2025.pdf` · SHA-256 `6b363783a5e72394…` · 272 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/01_normativa_fundamental/01_constitucion/constitucion_politica_del_peru_20a_edicion_oficial_lenguaje_llano_2025.pdf` · SHA-256 `6b363783a5e72394…` · 272 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

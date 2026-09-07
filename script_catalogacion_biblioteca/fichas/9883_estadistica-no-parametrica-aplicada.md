@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9883
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Estadistica no parametrica aplicada a la investigacion cientifica con software SPSS, MINITAB y Excel: enfoque practico». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9883
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Estadistica-no-parametrica-aplicada (9883)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Adrian, Quispe Andia/Estadistica no parametrica aplicada a la investigacion cientifica con software SPSS, MINITAB y (9883)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Libro publicado por Editorial EIDEC (Colombia) con autores, ISBN, coleccion, volumen y fecha de publicacion verificados en la pagina legal del PDF; corresponde al tipo `Book`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                        |
 | --------------- | ------------------------------------------------------------ |
@@ -42,9 +54,7 @@
 | Rights          |                                                              |
 | Extra           |                                                              |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -71,16 +81,10 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Adrian, Quispe Andia & Kriss Melody, Calla Vasquez & Judith Soledad, Yangali Vicente & Jose Luis, Rodriguez Lopez & Ilich Ivan, Pumacayo Palomino - Estadistica no parametrica aplicada a la investigacion cientifica con software SPSS, MINITAB y Excel: enfoque practico - Resultado de Investigacion #1 - 9789585203099 - Editorial EIDEC - 2019 - Libro (Ed 1).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `estadistica; inferencia_estadistica; metodologia_investigacion`
 **Calibre**: `estadistica, inferencia_estadistica, metodologia_investigacion`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: pagina legal y lista de autores del PDF (Editorial EIDEC, Colombia; Primera Edicion 2019; ISBN 978-958-52030-9-9; coleccion Resultado de Investigacion, Volumen No. 1; fecha de publicacion 2019-12-18).
+**Confianza: alta.** Evidencia: pagina legal y lista de autores del PDF (Editorial EIDEC, Colombia; Primera Edicion 2019; ISBN 978-958-52030-9-9; coleccion Resultado de Investigacion, Volumen No. 1; fecha de publicacion 2019-12-18).
 - El lugar de publicacion figura solo como "Colombia" (sin ciudad).

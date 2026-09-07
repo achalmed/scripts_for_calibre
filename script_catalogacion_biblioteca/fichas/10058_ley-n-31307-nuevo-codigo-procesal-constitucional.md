@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 31307. Nuevo codigo procesal constitucional
+---
+tipo: ficha-catalogacion
+calibre-id: 10058
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 31307. Nuevo codigo procesal constitucional». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/02_leyes_organicas/ley_31307_nuevo_codigo_procesal_constitucional.pdf` · SHA-256 `2bd8dbeab9c6e642…` · 40 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/02_leyes_organicas/ley_31307_nuevo_codigo_procesal_constitucional.pdf` · SHA-256 `2bd8dbeab9c6e642…` · 40 págs · con texto
 
 ## Zotero
 | Campo | Valor |

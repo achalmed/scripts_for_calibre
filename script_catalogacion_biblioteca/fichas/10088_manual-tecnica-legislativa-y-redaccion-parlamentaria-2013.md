@@ -1,8 +1,20 @@
-# Ficha de catalogación — Manual técnica legislativa y redacción parlamentaria 2013
+---
+tipo: ficha-catalogacion
+calibre-id: 10088
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Manual técnica legislativa y redacción parlamentaria 2013». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/03_congreso/manual_tecnica_legislativa_y_redaccion_parlamentaria_2013.pdf` · SHA-256 `31cda35afcfb27f3…` · 147 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/03_congreso/manual_tecnica_legislativa_y_redaccion_parlamentaria_2013.pdf` · SHA-256 `31cda35afcfb27f3…` · 147 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -1,8 +1,20 @@
-# Ficha de catalogación — Directiva N.° 07-2022-DGP/CR. Mesa de partes digital
+---
+tipo: ficha-catalogacion
+calibre-id: 10099
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Directiva N.° 07-2022-DGP/CR. Mesa de partes digital». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/03_congreso/directiva_07_2022_dgp_cr_mesa_de_partes_digital.pdf` · SHA-256 `546097851e0b2eb3…` · 8 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/03_congreso/directiva_07_2022_dgp_cr_mesa_de_partes_digital.pdf` · SHA-256 `546097851e0b2eb3…` · 8 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

@@ -1,8 +1,20 @@
-# Ficha de catalogación — Código procesal penal D.Leg. 957 8a edición oficial 2024
+---
+tipo: ficha-catalogacion
+calibre-id: 10130
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Código procesal penal D.Leg. 957 8a edición oficial 2024». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/codigo_procesal_penal_dleg_957_8a_edicion_oficial_2024.pdf` · SHA-256 `969ecc22459bb3e1…` · 396 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/codigo_procesal_penal_dleg_957_8a_edicion_oficial_2024.pdf` · SHA-256 `969ecc22459bb3e1…` · 396 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

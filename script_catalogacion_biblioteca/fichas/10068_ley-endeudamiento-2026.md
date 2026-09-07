@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley endeudamiento 2026
+---
+tipo: ficha-catalogacion
+calibre-id: 10068
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley endeudamiento 2026». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/06_presupuesto/ley_endeudamiento_2026.pdf` · SHA-256 `76ae2aceb8373d5e…` · 10 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/06_presupuesto/ley_endeudamiento_2026.pdf` · SHA-256 `76ae2aceb8373d5e…` · 10 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -1,8 +1,20 @@
-# Ficha de catalogación — Constitución política del Perú texto actualizado (El Peruano)
+---
+tipo: ficha-catalogacion
+calibre-id: 10116
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Constitución política del Perú texto actualizado (El Peruano)». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/01_normativa_fundamental/01_constitucion/constitucion_politica_del_peru_texto_actualizado_elperuano.pdf` · SHA-256 `92120c83449cf745…` · 31 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/01_normativa_fundamental/01_constitucion/constitucion_politica_del_peru_texto_actualizado_elperuano.pdf` · SHA-256 `92120c83449cf745…` · 31 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 3080
+zotero-key: 2PJH5UVL
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Matrices y determinantes». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 3080
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Matrices y determinantes (3080)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Matrices y determinantes (3080)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book Section
 **Justificacion**: El documento es explicitamente el "Capitulo 6. Matrices y determinantes" de un libro de texto de matematicas, con estructura de capitulo (secciones 6.1, 6.2, etc.). Corresponde a `Book Section`, aunque la obra contenedora no es identificable con la evidencia disponible.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -47,9 +59,7 @@
 | Rights          |                           |
 | Extra           | Chapter Number: 6         |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -79,17 +89,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Matrices y determinantes - # -  -  -  - Capitulo de libro.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `algebra_lineal; matematicas_i`
 **Calibre**: `algebra_lineal, matematicas_i`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- Nivel de confianza: media (capitulo verificado en el texto; obra contenedora, autor y fecha desconocidos).
+Nivel de confianza: media (capitulo verificado en el texto; obra contenedora, autor y fecha desconocidos).
 - Evidencia usada: texto del PDF (encabezado "Capitulo 6. MATRICES Y DETERMINANTES", secciones 6.1-6.2) y metadatos incrustados (Acrobat Distiller 4.0 para Macintosh, 2004).
 - Mismo origen tipografico que el item 3077 ("Limites y continuidad de funciones", Capitulo 9): ambos parecen capitulos del mismo libro de texto de matematicas (nivel bachillerato/preuniversitario), cuyo titulo no consta en los PDF.

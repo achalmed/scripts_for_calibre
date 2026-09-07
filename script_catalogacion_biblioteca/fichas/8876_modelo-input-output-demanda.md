@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 8876
+zotero-key: 5683NIKE
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Modelo input-output: modelo de demanda». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 8876
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Modelo input - output modelo de demanda (8876)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Modelo input-output_ modelo de demanda (8876)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: Es un juego de diapositivas (10 laminas creadas con LibreOffice Impress) sobre el modelo input-output en su version de modelo de demanda, con tablas numericas de ejemplo, sin autor, fecha ni institucion. Corresponde a material docente tipo diapositivas de clase, por lo que `Presentation` con Type `Class slides` es el tipo mas especifico.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -32,9 +44,7 @@
 | Rights       |                                       |
 | Extra        |                                       |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -64,18 +74,12 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  | Modelo input-output: modelo de demanda | # |  |  |  | Diapositiva.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; modelamiento_economico`
 **Calibre**: `macroeconomia, modelamiento_economico`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- Nivel de confianza: baja.
+Nivel de confianza: baja.
 - Evidencia usada: texto de las laminas (portada "MODELO INPUT - OUTPUT / MODELO DE DEMANDA", tabla input-output numerica con sectores A/B/C) y metadatos incrustados (LibreOffice Impress 25.8, fecha de creacion invalida).
 - Advertencia de nombre de archivo: el titulo contiene guion ("input-output"), por lo que se uso el separador alternativo `|` en todo el nombre de archivo, segun la regla del generador.
 - Pertenece a la misma serie de diapositivas de cuentas nacionales que los items 8872, 8875 y 8877.

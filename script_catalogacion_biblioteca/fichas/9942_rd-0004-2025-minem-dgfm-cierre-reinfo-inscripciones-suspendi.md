@@ -1,8 +1,20 @@
-# Ficha de catalogación — Resolución Directoral N.° 0004-2025-MINEM/DGFM. Declaran concluido el proceso de formalización minera integral de 50 565 inscripciones del REINFO suspendidas por más de un año
+---
+tipo: ficha-catalogacion
+calibre-id: 9942
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta** (revisada a mano el 2026-09-02). Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Resolución Directoral N.° 0004-2025-MINEM/DGFM. Declaran concluido el proceso de formalización minera integral de 50 565 inscripciones del REINFO suspendidas por más de un año». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta** (revisada a mano el 2026-09-02). Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/20_desarrollo_productivo/rd_0004_2025_minem_dgfm_cierre_reinfo_inscripciones_suspendidas.pdf` · SHA-256 `e99529c4512882d4…` · 1 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/20_desarrollo_productivo/rd_0004_2025_minem_dgfm_cierre_reinfo_inscripciones_suspendidas.pdf` · SHA-256 `e99529c4512882d4…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

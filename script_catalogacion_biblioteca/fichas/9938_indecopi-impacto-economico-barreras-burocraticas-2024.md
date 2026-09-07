@@ -1,8 +1,20 @@
-# Ficha de catalogación — Observatorio de barreras burocráticas 2024: impacto económico de la imposición de barreras burocráticas en el Perú
+---
+tipo: ficha-catalogacion
+calibre-id: 9938
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta** (revisada a mano el 2026-09-02). Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Observatorio de barreras burocráticas 2024: impacto económico de la imposición de barreras burocráticas en el Perú». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta** (revisada a mano el 2026-09-02). Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/19_informes_permanentes/indecopi_impacto_economico_barreras_burocraticas_2024.pdf` · SHA-256 `896d1b5dbfb067b1…` · 56 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/19_informes_permanentes/indecopi_impacto_economico_barreras_burocraticas_2024.pdf` · SHA-256 `896d1b5dbfb067b1…` · 56 págs · con texto
 
 ## Zotero
 | Campo | Valor |

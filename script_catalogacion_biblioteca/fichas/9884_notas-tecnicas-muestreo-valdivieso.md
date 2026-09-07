@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9884
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Notas de tecnicas de muestreo». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9884
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/NOTAS DE TECNICAS DE MUESTREO 2021 (9884)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Luis, Valdivieso Serrano/Notas de tecnicas de muestreo (9884)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Aunque el titulo diga "Notas", es una publicacion formal del Departamento Academico de Ciencias de la PUCP con ISBN, deposito legal y segunda edicion digital fechada, por lo que corresponde al tipo `Book`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                        |
 | --------------- | ------------------------------------------------------------ |
@@ -42,9 +54,7 @@
 | Rights          | Derechos reservados                                          |
 | Extra           |                                                              |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -71,15 +81,9 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Luis, Valdivieso Serrano - Notas de tecnicas de muestreo - # - 9786124775727 - Pontificia Universidad Catolica del Peru, Departamento Academico de Ciencias - 2021 - Libro (Ed 2).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `muestreo; estadistica; inferencia_estadistica; programming_r`
 **Calibre**: `muestreo, estadistica, inferencia_estadistica, programming_r`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: portada y pagina de creditos del PDF (Luis Valdivieso Serrano; PUCP, Departamento Academico de Ciencias, Seccion Matematicas; segunda edicion digital octubre 2021; ISBN 978-612-47757-2-7; Deposito Legal 2021-11437).
+**Confianza: alta.** Evidencia: portada y pagina de creditos del PDF (Luis Valdivieso Serrano; PUCP, Departamento Academico de Ciencias, Seccion Matematicas; segunda edicion digital octubre 2021; ISBN 978-612-47757-2-7; Deposito Legal 2021-11437).

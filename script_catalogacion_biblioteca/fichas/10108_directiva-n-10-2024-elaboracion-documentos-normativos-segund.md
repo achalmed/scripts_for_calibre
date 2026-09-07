@@ -1,8 +1,20 @@
-# Ficha de catalogación — Directiva N.° 10-2024. Elaboracion documentos normativos segunda version
+---
+tipo: ficha-catalogacion
+calibre-id: 10108
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Directiva N.° 10-2024. Elaboracion documentos normativos segunda version». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/03_congreso/directiva_10_2024_elaboracion_documentos_normativos_segunda_version.pdf` · SHA-256 `784e1cafc1abb4ba…` · 34 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/03_congreso/directiva_10_2024_elaboracion_documentos_normativos_segunda_version.pdf` · SHA-256 `784e1cafc1abb4ba…` · 34 págs · con texto
 
 ## Zotero
 | Campo | Valor |

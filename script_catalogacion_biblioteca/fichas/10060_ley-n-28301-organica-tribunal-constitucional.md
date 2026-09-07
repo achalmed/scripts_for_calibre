@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 28301. Orgánica tribunal constitucional
+---
+tipo: ficha-catalogacion
+calibre-id: 10060
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 28301. Orgánica tribunal constitucional». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/02_leyes_organicas/ley_28301_organica_tribunal_constitucional.pdf` · SHA-256 `b8a93e1f5c54c1d2…` · 12 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/02_leyes_organicas/ley_28301_organica_tribunal_constitucional.pdf` · SHA-256 `b8a93e1f5c54c1d2…` · 12 págs · con texto
 
 ## Zotero
 | Campo | Valor |

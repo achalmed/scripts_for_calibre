@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9899
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Cuentos para educar». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9899
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para educar -pdf (9899)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Leticia, Dotras/Cuentos para educar (9899)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Obra publicada por Editorial CCS con autora, edicion (quinta, enero 2011), ISBN y pagina legal completa verificadas en el PDF, por lo que corresponde al tipo `Book`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                        |
 | --------------- | -------------------------------------------- |
@@ -42,9 +54,7 @@
 | Rights          |                                              |
 | Extra           | Original Date: 1997                          |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                       |
 | ------------- | ----------------------------------------------------------- |
@@ -71,17 +81,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Leticia, Dotras - Cuentos para educar - Materiales para educadores # - 9788490236192 - Editorial CCS - 2011 - Libro (Ed 5).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `pedagogia; didactica`
 **Calibre**: `pedagogia, didactica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: pagina legal del PDF (Leticia Dotras, Editorial CCS, Madrid, quinta edicion enero 2011, ISBN epub 978-84-9023-619-2) y metadatos incrustados del PDF (titulo de la serie "Materiales para educadores").
+**Confianza: alta.** Evidencia: pagina legal del PDF (Leticia Dotras, Editorial CCS, Madrid, quinta edicion enero 2011, ISBN epub 978-84-9023-619-2) y metadatos incrustados del PDF (titulo de la serie "Materiales para educadores").
 - El campo Series no tiene numero visible en el documento; se deja vacio el Series Number (en el nombre de archivo queda `Materiales para educadores #`).
 - El ISBN registrado es el de la edicion epub (unico presente en el documento); el PDF es una conversion de Calibre de esa edicion.

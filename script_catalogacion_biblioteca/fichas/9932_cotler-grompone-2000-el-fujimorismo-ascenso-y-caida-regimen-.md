@@ -1,8 +1,20 @@
-# Ficha de catalogación — El fujimorismo: ascenso y caída de un régimen autoritario
+---
+tipo: ficha-catalogacion
+calibre-id: 9932
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta** (revisada a mano el 2026-09-02). Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «El fujimorismo: ascenso y caída de un régimen autoritario». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta** (revisada a mano el 2026-09-02). Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/bibliografia/cotler_grompone_2000_el_fujimorismo_ascenso_y_caida_regimen_autoritario_iep.pdf` · SHA-256 `fc5ebeb537ed0975…` · 92 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/bibliografia/cotler_grompone_2000_el_fujimorismo_ascenso_y_caida_regimen_autoritario_iep.pdf` · SHA-256 `fc5ebeb537ed0975…` · 92 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

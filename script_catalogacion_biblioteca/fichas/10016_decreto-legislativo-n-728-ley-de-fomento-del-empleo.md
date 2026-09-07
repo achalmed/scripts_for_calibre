@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Legislativo N.° 728. Ley de fomento del empleo
+---
+tipo: ficha-catalogacion
+calibre-id: 10016
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Legislativo N.° 728. Ley de fomento del empleo». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/14_trabajo/dleg_728_ley_de_fomento_del_empleo.pdf` · SHA-256 `21a201137159109b…` · 38 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/14_trabajo/dleg_728_ley_de_fomento_del_empleo.pdf` · SHA-256 `21a201137159109b…` · 38 págs · con texto
 
 ## Zotero
 | Campo | Valor |

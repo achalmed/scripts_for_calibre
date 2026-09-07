@@ -1,8 +1,20 @@
-# Ficha de catalogación — Código procesal civil TUO R.M. 010 93 JUS
+---
+tipo: ficha-catalogacion
+calibre-id: 10124
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Código procesal civil TUO R.M. 010 93 JUS». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/codigo_procesal_civil_tuo_rm_010_93_jus.pdf` · SHA-256 `d7552e506c51e2ca…` · 98 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/codigo_procesal_civil_tuo_rm_010_93_jus.pdf` · SHA-256 `d7552e506c51e2ca…` · 98 págs · con texto
 
 ## Zotero
 | Campo | Valor |

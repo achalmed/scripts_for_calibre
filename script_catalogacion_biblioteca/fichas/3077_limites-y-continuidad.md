@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 3077
+zotero-key: TWIZ4SKE
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Limites y continuidad de funciones». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 3077
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Limites y continuidad de funciones (3077)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Limites y continuidad de funciones (3077)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book Section
 **Justificacion**: El documento es explicitamente el "Capitulo 9. Limites y continuidad de funciones" de un libro de texto de matematicas, con paginacion continua impresa (pp. 145-160) que confirma que es una parte extraida de una obra mayor. Corresponde a `Book Section`, aunque la obra contenedora no es identificable con la evidencia disponible.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -47,9 +59,7 @@
 | Rights          |                                     |
 | Extra           | Chapter Number: 9                   |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -79,17 +89,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Limites y continuidad de funciones - # -  -  -  - Capitulo de libro.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `matematicas_i; calculo_diferencial`
 **Calibre**: `matematicas_i, calculo_diferencial`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- Nivel de confianza: media (capitulo y paginas verificados en el texto; obra contenedora, autor y fecha desconocidos).
+Nivel de confianza: media (capitulo y paginas verificados en el texto; obra contenedora, autor y fecha desconocidos).
 - Evidencia usada: texto del PDF (encabezado "Capitulo 9. LIMITES Y CONTINUIDAD DE FUNCIONES", paginas impresas 145-160) y metadatos incrustados (Acrobat Distiller 4.0 para Macintosh, 2004).
 - Mismo origen tipografico que el item 3080 ("Matrices y determinantes", Capitulo 6): ambos parecen capitulos del mismo libro de texto de matematicas (nivel bachillerato/preuniversitario), cuyo titulo no consta en los PDF.

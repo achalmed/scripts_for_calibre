@@ -1,8 +1,20 @@
-# Ficha de catalogación — Seguridad ciudadana dic24 may25
+---
+tipo: ficha-catalogacion
+calibre-id: 10244
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Seguridad ciudadana dic24 may25». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/inei/seguridad_ciudadana_dic24_may25/seguridad_ciudadana_dic24_may25_v001_2026-09-02.pdf` · SHA-256 `1ef0ea8c4b434766…` · 37 págs · con texto
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/inei/seguridad_ciudadana_dic24_may25/seguridad_ciudadana_dic24_may25_v001_2026-09-02.pdf` · SHA-256 `1ef0ea8c4b434766…` · 37 págs · con texto
 
 ## Zotero
 | Campo | Valor |

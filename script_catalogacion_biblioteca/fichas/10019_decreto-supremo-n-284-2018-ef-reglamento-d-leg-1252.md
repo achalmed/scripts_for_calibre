@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Supremo N.° 284-2018-EF. Reglamento D.Leg. 1252
+---
+tipo: ficha-catalogacion
+calibre-id: 10019
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Supremo N.° 284-2018-EF. Reglamento D.Leg. 1252». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/09_inversion_publica/ds_284_2018_ef_reglamento_dleg_1252.pdf` · SHA-256 `d1aa77c0121854d7…` · 28 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/09_inversion_publica/ds_284_2018_ef_reglamento_dleg_1252.pdf` · SHA-256 `d1aa77c0121854d7…` · 28 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 449
+zotero-key: YBPZ866Z
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Comparacion entre el modelo clasico y el de Keynes». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 449
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Comparacion entre el modelo clasico y el de keynes (449)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/John, Petroff/Comparacion entre el modelo clasico y el de Keynes (449)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Documento Word de 6 paginas que expone con proposito didactico ("El proposito de este tema es mostrar...") la comparacion entre la teoria clasica y la keynesiana, sin autor, fuente ni datos de publicacion. Es un apunte de tema de curso inedito, por lo que corresponde `Manuscript` con Type `Lecture notes`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -33,9 +45,7 @@
 | Rights       | |
 | Extra        | |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -62,24 +72,13 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Comparacion entre el modelo clasico y el de Keynes - # -  -  -  - Apuntes de clase.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; historia_pensamiento_economico`
 **Calibre**: `macroeconomia, historia_pensamiento_economico`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto completo del PDF y metadatos incrustados (Microsoft Word 2013; fecha de creacion corrupta, no utilizable). Sin autor, curso ni institucion identificables.
-
----
-
-### ACTUALIZACIÓN (2026-07-27) — Identificación por búsqueda web
-
-**Autor(es)**: John Petroff (curso de Macroeconomía de PEOI, con traducción colaborativa al español)
+**Confianza: baja.** Evidencia: texto completo del PDF y metadatos incrustados (Microsoft Word 2013; fecha de creacion corrupta, no utilizable). Sin autor, curso ni institucion identificables.
+**ACTUALIZACIÓN (2026-07-27) — Identificación por búsqueda web.** **Autor(es)**: John Petroff (curso de Macroeconomía de PEOI, con traducción colaborativa al español)
 **Obra contenedora / datos nuevos**: Capítulo 7 («Comparación entre el modelo clásico y el de Keynes») del curso online gratuito de Macroeconomía de PEOI (Professional Education Organization International)
 **Evidencia**: https://peoi.org/Courses/Coursessp/mac/mac7.html — página con el mismo título y la frase literal «La opinión de Keynes se expone como crítica a la teoría clásica»; el curso de macroeconomía de PEOI está firmado por John Petroff
 **Confianza**: media

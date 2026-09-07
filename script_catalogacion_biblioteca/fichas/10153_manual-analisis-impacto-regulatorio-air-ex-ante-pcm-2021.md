@@ -1,8 +1,20 @@
-# Ficha de catalogación — Manual analisis impacto regulatorio AIR ex ante PCM 2021
+---
+tipo: ficha-catalogacion
+calibre-id: 10153
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Manual analisis impacto regulatorio AIR ex ante PCM 2021». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/18_manuales/manual_analisis_impacto_regulatorio_air_ex_ante_pcm_2021.pdf` · SHA-256 `f67d1c4b99688010…` · 77 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/18_manuales/manual_analisis_impacto_regulatorio_air_ex_ante_pcm_2021.pdf` · SHA-256 `f67d1c4b99688010…` · 77 págs · con texto
 
 ## Zotero
 | Campo | Valor |

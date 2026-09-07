@@ -1,8 +1,20 @@
-# Ficha de catalogación — PTA N.° 02-2017. Tramitacion pedidos de información despacho parlamentario
+---
+tipo: ficha-catalogacion
+calibre-id: 10102
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «PTA N.° 02-2017. Tramitacion pedidos de información despacho parlamentario». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/03_congreso/pta_02_2017_tramitacion_pedidos_de_informacion_despacho_parlamentario.pdf` · SHA-256 `e0c58b92aad2e530…` · 10 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/03_congreso/pta_02_2017_tramitacion_pedidos_de_informacion_despacho_parlamentario.pdf` · SHA-256 `e0c58b92aad2e530…` · 10 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

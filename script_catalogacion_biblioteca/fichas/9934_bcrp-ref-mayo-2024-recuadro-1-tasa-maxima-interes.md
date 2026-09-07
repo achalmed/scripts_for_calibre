@@ -1,8 +1,20 @@
-# Ficha de catalogación — Reporte de Estabilidad Financiera, mayo 2024. Recuadro 1: Actualización de los efectos de la tasa máxima de interés para los créditos de consumo y MYPE
+---
+tipo: ficha-catalogacion
+calibre-id: 9934
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Reporte de Estabilidad Financiera, mayo 2024. Recuadro 1: Actualización de los efectos de la tasa máxima de interés para los créditos de consumo y MYPE». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/19_informes_permanentes/bcrp_ref_mayo_2024_recuadro_1_tasa_maxima_interes.pdf` · SHA-256 `60e4e9c95e32be35…` · 6 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/19_informes_permanentes/bcrp_ref_mayo_2024_recuadro_1_tasa_maxima_interes.pdf` · SHA-256 `60e4e9c95e32be35…` · 6 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9878
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Guia rapida de fundamentos en Python». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9878
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/guia fundamentos python mouredevpro (9878)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/MoureDev Pro/Guia rapida de fundamentos en Python (9878)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Report
 **Justificacion**: Es una guia de referencia publicada informalmente ("Guia rapida de fundamentos en Python. Con mas de 200 terminos", titulo confirmado en los metadatos incrustados) distribuida por el campus de estudiantes MoureDev Pro a traves de mouredev.pro/recursos. Al ser una publicacion informal de una organizacion, corresponde `Report` (uso tipo folleto/guia), con autoria institucional.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -41,9 +53,7 @@
 | Rights          |                                          |
 | Extra           |                                          |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -73,16 +83,10 @@
 MoureDev Pro - Guia rapida de fundamentos en Python - # -  - MoureDev Pro -  - Guia.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `python; fundamento_programacion`
 **Calibre**: `python, fundamento_programacion`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media.** Evidencia: titulo en metadatos incrustados ("Guia rapida de fundamentos en Python"), portada con "mouredev.pro/recursos" y pagina final que remite a los cursos del campus "mouredev pro". El autor se registro como entidad (MoureDev Pro, marca del divulgador Brais Moure); si se prefiere autor personal, verificar y usar "Moure, Brais".
+**Confianza: media.** Evidencia: titulo en metadatos incrustados ("Guia rapida de fundamentos en Python"), portada con "mouredev.pro/recursos" y pagina final que remite a los cursos del campus "mouredev pro". El autor se registro como entidad (MoureDev Pro, marca del divulgador Brais Moure); si se prefiere autor personal, verificar y usar "Moure, Brais".
 - Sin fecha de publicacion en el documento (el PDF se genero con Google Docs sin fecha valida); el campo queda vacio.

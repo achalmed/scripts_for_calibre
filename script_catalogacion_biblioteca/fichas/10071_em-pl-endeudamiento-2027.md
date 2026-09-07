@@ -1,8 +1,20 @@
-# Ficha de catalogación — EM PL endeudamiento 2027
+---
+tipo: ficha-catalogacion
+calibre-id: 10071
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «EM PL endeudamiento 2027». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/presupuesto/proyecto/2027/EM_PL_Endeudamiento_2027.pdf` · SHA-256 `4154d5a7d2bb5af2…` · 36 págs · con texto
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/presupuesto/proyecto/2027/EM_PL_Endeudamiento_2027.pdf` · SHA-256 `4154d5a7d2bb5af2…` · 36 págs · con texto
 
 ## Zotero
 | Campo | Valor |

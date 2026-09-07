@@ -1,8 +1,20 @@
-# Ficha de catalogación — Manual técnica legislativa 2011 DGP
+---
+tipo: ficha-catalogacion
+calibre-id: 10089
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Manual técnica legislativa 2011 DGP». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/03_congreso/manual_tecnica_legislativa_2011_dgp.pdf` · SHA-256 `8ae31cb3a1ec50e4…` · 76 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/03_congreso/manual_tecnica_legislativa_2011_dgp.pdf` · SHA-256 `8ae31cb3a1ec50e4…` · 76 págs · con texto
 
 ## Zotero
 | Campo | Valor |

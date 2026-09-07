@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9912
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Macroeconomía. Un marco de análisis para una economía pequeña y abierta». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9912
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Waldo, Mendoza Bellido/Macroeconomia. Un marco de analisis para una economia pequena y abierta (9912)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Waldo, Mendoza Bellido/Macroeconomia. Un marco de analisis para una economia pequena y abierta (9912)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Libro publicado por el Fondo Editorial de la PUCP (Lima, noviembre de 2006), con ISBN, depósito legal y dos autores identificados; manual académico completo, tipo `Book`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                        |
 | --------------- | ------------------------------------------------------------ |
@@ -42,9 +54,7 @@
 | Rights          | © Fondo Editorial de la Pontificia Universidad Católica del Perú, 2006 |
 | Extra           |                                                              |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -71,16 +81,10 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Waldo, Mendoza Bellido & Pedro, Herrera Catalán - Macroeconomía. Un marco de análisis para una economía pequeña y abierta - # - 9972427811 - Fondo Editorial de la Pontificia Universidad Católica del Perú - 2006-11 - Libro (Ed 1).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; economia_internacional; politica_economica`
 **Calibre**: `macroeconomia, economia_internacional, politica_economica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: página legal del PDF (Fondo Editorial PUCP, Lima, primera edición noviembre de 2006, ISBN 9972-42-781-1, Depósito Legal 2006-8923).
+**Confianza: alta.** Evidencia: página legal del PDF (Fondo Editorial PUCP, Lima, primera edición noviembre de 2006, ISBN 9972-42-781-1, Depósito Legal 2006-8923).
 - ISBN-10 (9972-42-781-1) registrado sin guiones. Segundo autor (Pedro Herrera Catalán) aparece en portada junto a Waldo Mendoza Bellido.

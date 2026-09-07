@@ -1,8 +1,20 @@
-# Ficha de catalogación — Manual del parlamento delgado guembes oficialia mayor 2012
+---
+tipo: ficha-catalogacion
+calibre-id: 10087
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Manual del parlamento delgado guembes oficialia mayor 2012». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/03_congreso/manual_del_parlamento_delgado_guembes_oficialia_mayor_2012.pdf` · SHA-256 `2a1332a9e6df39ad…` · 638 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/03_congreso/manual_del_parlamento_delgado_guembes_oficialia_mayor_2012.pdf` · SHA-256 `2a1332a9e6df39ad…` · 638 págs · con texto
 
 ## Zotero
 | Campo | Valor |

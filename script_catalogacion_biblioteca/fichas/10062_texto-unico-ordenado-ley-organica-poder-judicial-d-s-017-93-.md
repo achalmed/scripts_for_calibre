@@ -1,8 +1,20 @@
-# Ficha de catalogación — Texto Único Ordenado. Ley orgánica poder judicial D.S. 017 93 JUS
+---
+tipo: ficha-catalogacion
+calibre-id: 10062
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Texto Único Ordenado. Ley orgánica poder judicial D.S. 017 93 JUS». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/02_leyes_organicas/tuo_ley_organica_poder_judicial_ds_017_93_jus.pdf` · SHA-256 `692492c5f8b328cf…` · 161 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/02_leyes_organicas/tuo_ley_organica_poder_judicial_ds_017_93_jus.pdf` · SHA-256 `692492c5f8b328cf…` · 161 págs · con texto
 
 ## Zotero
 | Campo | Valor |

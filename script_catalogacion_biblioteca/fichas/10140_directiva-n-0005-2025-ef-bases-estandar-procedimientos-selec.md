@@ -1,8 +1,20 @@
-# Ficha de catalogación — Directiva N.° 0005-2025-EF. Bases estandar procedimientos seleccion
+---
+tipo: ficha-catalogacion
+calibre-id: 10140
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Directiva N.° 0005-2025-EF. Bases estandar procedimientos seleccion». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/05_contrataciones/directiva_0005_2025_ef_bases_estandar_procedimientos_seleccion.pdf` · SHA-256 `5fa22a4b586c618f…` · 6 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/05_contrataciones/directiva_0005_2025_ef_bases_estandar_procedimientos_seleccion.pdf` · SHA-256 `5fa22a4b586c618f…` · 6 págs · con texto
 
 ## Zotero
 | Campo | Valor |

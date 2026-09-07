@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Legislativo N.° 1400. Regimen de garantia mobiliaria
+---
+tipo: ficha-catalogacion
+calibre-id: 10079
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Legislativo N.° 1400. Regimen de garantia mobiliaria». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/07_economia/dleg_1400_regimen_de_garantia_mobiliaria.pdf` · SHA-256 `e93602b854a2aaba…` · 12 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/07_economia/dleg_1400_regimen_de_garantia_mobiliaria.pdf` · SHA-256 `e93602b854a2aaba…` · 12 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

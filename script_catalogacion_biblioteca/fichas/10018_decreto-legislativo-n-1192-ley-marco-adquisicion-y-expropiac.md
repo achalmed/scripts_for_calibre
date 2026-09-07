@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Legislativo N.° 1192. Ley marco adquisicion y expropiacion
+---
+tipo: ficha-catalogacion
+calibre-id: 10018
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Legislativo N.° 1192. Ley marco adquisicion y expropiacion». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/09_inversion_publica/dleg_1192_ley_marco_adquisicion_y_expropiacion.pdf` · SHA-256 `109b9d6e0f18e433…` · 10 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/09_inversion_publica/dleg_1192_ley_marco_adquisicion_y_expropiacion.pdf` · SHA-256 `109b9d6e0f18e433…` · 10 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

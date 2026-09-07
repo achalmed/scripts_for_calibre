@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9894
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Cuentos para educar con inteligencia emocional». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9894
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para educar con inteligencia emocional by Clara Penalver (9894)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Clara, Penalver/Cuentos para educar con inteligencia emocional (9894)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Libro publicado por Penguin Random House Grupo Editorial en edicion digital (diciembre de 2014), con autoras, ISBN y pagina de creditos verificados en el propio PDF; corresponde al tipo `Book`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                            |
 | --------------- | ------------------------------------------------ |
@@ -42,9 +54,7 @@
 | Rights          |                                                  |
 | Extra           | Illustrator: Sanchez || Sara                     |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                     |
 | ------------- | --------------------------------------------------------- |
@@ -71,16 +81,10 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Clara, Penalver & Sara, Sanchez - Cuentos para educar con inteligencia emocional - # - 9788448843809 - Penguin Random House Grupo Editorial - 2014 - Libro.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `pedagogia; psychology; aprendizaje`
 **Calibre**: `pedagogia, psychology, aprendizaje`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: pagina de creditos al final del PDF (© 2014 Penguin Random House Grupo Editorial, S.A.U., Barcelona; © 2014 Clara Penalver por el texto; © 2014 Sara Sanchez por las ilustraciones; ISBN 978-84-488-4380-9) y metadatos incrustados.
+**Confianza: alta.** Evidencia: pagina de creditos al final del PDF (© 2014 Penguin Random House Grupo Editorial, S.A.U., Barcelona; © 2014 Clara Penalver por el texto; © 2014 Sara Sanchez por las ilustraciones; ISBN 978-84-488-4380-9) y metadatos incrustados.
 - Sara Sanchez figura como coautora en los metadatos, pero su rol real es de ilustradora (registrado tambien en Extra).

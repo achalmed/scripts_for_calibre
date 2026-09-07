@@ -1,8 +1,20 @@
-# Ficha de catalogación — Indicadores educacion dep 2014-2024
+---
+tipo: ficha-catalogacion
+calibre-id: 10206
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Indicadores educacion dep 2014-2024». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/2026-08-07-diagnostico-educacion-ayacucho/fuentes/inei_indicadores_educacion_dep_2014-2024.pdf` · SHA-256 `5aba0cdd1db52d5f…` · 291 págs · con texto
+## Origen
+
+`02_investigacion/2026-08-07-diagnostico-educacion-ayacucho/fuentes/inei_indicadores_educacion_dep_2014-2024.pdf` · SHA-256 `5aba0cdd1db52d5f…` · 291 págs · con texto
 
 ## Zotero
 | Campo | Valor |

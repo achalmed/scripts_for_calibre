@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 1599
+zotero-key: 29UQ2MWZ
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «El dinero». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 1599
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/El dinero (1599)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/El dinero (1599)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Documento de 21 paginas rotulado "Capitulo 4. El dinero. Curso 2006-2007", que desarrolla el modelo de generaciones solapadas (OLG) con dinero en formato de apuntes formales de catedra, sin autor ni datos editoriales. Corresponde `Manuscript` con Type `Lecture notes`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -33,9 +45,7 @@
 | Rights       | |
 | Extra        | Chapter Number: 4 |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -62,16 +72,10 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - El dinero - # -  -  - 2006 - Apuntes de clase.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; politica_monetaria; macroeconomia_dinamica`
 **Calibre**: `macroeconomia, politica_monetaria, macroeconomia_dinamica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: encabezado del PDF ("Capitulo 4. El dinero. Curso 2006-2007") y metadatos incrustados (CreationDate 2006-09-18). Sin autor, asignatura ni universidad identificables.
+**Confianza: baja.** Evidencia: encabezado del PDF ("Capitulo 4. El dinero. Curso 2006-2007") y metadatos incrustados (CreationDate 2006-09-18). Sin autor, asignatura ni universidad identificables.
 - La fecha 2006 corresponde al inicio del curso 2006-2007 indicado en el propio documento.

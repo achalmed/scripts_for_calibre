@@ -1,8 +1,20 @@
-# Ficha de catalogación — Reporte inflacion 2026 06
+---
+tipo: ficha-catalogacion
+calibre-id: 10175
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Reporte inflacion 2026 06». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/19_informes_permanentes/bcrp_reporte_inflacion_2026_06.pdf` · SHA-256 `9b93e259669b5a4a…` · 149 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/19_informes_permanentes/bcrp_reporte_inflacion_2026_06.pdf` · SHA-256 `9b93e259669b5a4a…` · 149 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

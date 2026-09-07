@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9103
+zotero-key: SNW6WUCY
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Problem set 2». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9103
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Problem set 2 (9103)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Problem set 2 (9103)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Hoja de ejercicios de curso ("Problem Set 2 — International Macroeconomics", 2 paginas, compuesta en TeX) sin autor ni publicacion formal. Como material docente inedito corresponde `Manuscript` con Type `Lecture notes`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -36,9 +48,7 @@
 | Rights          |                |
 | Extra           |                |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -68,18 +78,12 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Problem set 2 - # -  -  -  - Problemas.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; economia_internacional`
 **Calibre**: `macroeconomia, economia_internacional`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media.** Evidencia usada: texto del PDF (encabezado "Problem Set 2 / International Macroeconomics") y pdfinfo (2 paginas, pdfTeX, sin fecha valida).
+**Confianza: media.** Evidencia usada: texto del PDF (encabezado "Problem Set 2 / International Macroeconomics") y pdfinfo (2 paginas, pdfTeX, sin fecha valida).
 - Mismo curso y misma tipografia que el id 9090 (Problem set 1); forman pareja.
 - Sin autor, institucion ni fecha identificables; campos vacios por regla de no inventar. Idioma real: ingles.
 - El nombre de archivo comienza con ` - ` porque el campo Autor esta vacio.

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9887
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Contabilidad de costos: un enfoque gerencial». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9887
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Contabilidad de costos (9887)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Charles T., Horngren/Contabilidad de costos_ un enfoque gerencial (9887)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Es un libro de texto universitario publicado formalmente por Pearson Educacion con autores, edicion, ISBN y numero de paginas verificados en la pagina legal del PDF. Corresponde exactamente al criterio de `Book` para monografias y textos academicos.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                          |
 | --------------- | -------------------------------------------------------------- |
@@ -42,9 +54,7 @@
 | Rights          |                                                                |
 | Extra           | Original Title: Cost Accounting (14th edition)                 |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -71,17 +81,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Charles T., Horngren & Srikant M., Datar & Madhav V., Rajan - Contabilidad de costos: un enfoque gerencial - # - 9786073210249 - Pearson Educacion - 2012 - Libro (Ed 14).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `contabilidad_costos; contabilidad; administracion`
 **Calibre**: `contabilidad_costos, contabilidad, administracion`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: pagina legal del PDF (Pearson Educacion de Mexico, 2012, ISBN 978-607-32-1024-9, decimocuarta edicion, 728 paginas) y metadatos incrustados (Author: Charles T. Horngren).
+**Confianza: alta.** Evidencia: pagina legal del PDF (Pearson Educacion de Mexico, 2012, ISBN 978-607-32-1024-9, decimocuarta edicion, 728 paginas) y metadatos incrustados (Author: Charles T. Horngren).
 - El archivo en la carpeta tiene una extension corrupta (`.unenfoquegerencial` en lugar de `.pdf`); es un PDF valido de 730 paginas. Renombrar a `.pdf` al importar.
 - Traduccion autorizada de *Cost Accounting*, 14th ed. (Prentice Hall, ISBN 9780132109178).

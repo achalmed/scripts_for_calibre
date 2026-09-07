@@ -1,8 +1,20 @@
-# Ficha de catalogación — Criminalidad i sem 2025
+---
+tipo: ficha-catalogacion
+calibre-id: 10239
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Criminalidad i sem 2025». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/inei/criminalidad_i_sem_2025/criminalidad_i_sem_2025_v001_2026-09-02.pdf` · SHA-256 `a1db20ee53093256…` · 103 págs · con texto
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/inei/criminalidad_i_sem_2025/criminalidad_i_sem_2025_v001_2026-09-02.pdf` · SHA-256 `a1db20ee53093256…` · 103 págs · con texto
 
 ## Zotero
 | Campo | Valor |

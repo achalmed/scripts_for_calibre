@@ -1,8 +1,20 @@
-# Ficha de catalogación — Memoria anual 2025
+---
+tipo: ficha-catalogacion
+calibre-id: 10256
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Memoria anual 2025». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/indecopi/memoria_anual_2025/memoria_anual_2025_v001_2026-09-05.pdf` · SHA-256 `5a6aff885808ef37…` · 73 págs · con texto
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/indecopi/memoria_anual_2025/memoria_anual_2025_v001_2026-09-05.pdf` · SHA-256 `5a6aff885808ef37…` · 73 págs · con texto
 
 ## Zotero
 | Campo | Valor |

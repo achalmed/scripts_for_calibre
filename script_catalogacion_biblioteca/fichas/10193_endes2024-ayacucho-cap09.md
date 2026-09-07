@@ -1,8 +1,20 @@
-# Ficha de catalogación — Endes2024 ayacucho cap09
+---
+tipo: ficha-catalogacion
+calibre-id: 10193
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Endes2024 ayacucho cap09». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/2026-08-07-diagnostico-educacion-ayacucho/fuentes/endes2024_ayacucho_cap09.pdf` · SHA-256 `281eb766862fe62d…` · 10 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/2026-08-07-diagnostico-educacion-ayacucho/fuentes/endes2024_ayacucho_cap09.pdf` · SHA-256 `281eb766862fe62d…` · 10 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

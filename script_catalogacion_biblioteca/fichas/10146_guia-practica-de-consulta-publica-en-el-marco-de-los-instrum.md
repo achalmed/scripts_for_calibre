@@ -1,8 +1,20 @@
-# Ficha de catalogación — Guía práctica de Consulta Pública en el marco de los instrumentos de mejora de la calidad regulatoria
+---
+tipo: ficha-catalogacion
+calibre-id: 10146
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Guía práctica de Consulta Pública en el marco de los instrumentos de mejora de la calidad regulatoria». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/18_manuales/guia_practica_consulta_publica_calidad_regulatoria_2026.pdf` · SHA-256 `1ab4286a88a0e358…` · 95 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/18_manuales/guia_practica_consulta_publica_calidad_regulatoria_2026.pdf` · SHA-256 `1ab4286a88a0e358…` · 95 págs · con texto
 
 ## Zotero
 | Campo | Valor |

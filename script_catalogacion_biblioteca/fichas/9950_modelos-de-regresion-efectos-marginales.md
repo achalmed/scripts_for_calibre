@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9950
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Modelos de regresión: efectos marginales». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9950
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Juan A., Huaripuma Vargas/Modelos de regresion_ efectos marginales (9950)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: Capítulo 8 de un curso de la UNSCH (17-07-2023); serie asignada por el área donde estaba archivado (Estadística), curso exacto no identificado en el PDF.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | --- | --- |
@@ -24,9 +36,7 @@
 | # of Pages | 26 |
 | Language | es |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | --- | --- |
@@ -43,14 +53,10 @@
 | Paginas | 26 |
 | Item type | Presentation |
 
----
-
-### TAGS
-
 **Zotero**: `regresion; estadistica; econometrics`
 **Calibre**: `regresion, estadistica, econometrics`
 
-### NOTAS
+## Notas
 
-- Confianza: **media**. Capítulo 8 de un curso de la UNSCH (17-07-2023); serie asignada por el área donde estaba archivado (Estadística), curso exacto no identificado en el PDF.
+Confianza: **media**. Capítulo 8 de un curso de la UNSCH (17-07-2023); serie asignada por el área donde estaba archivado (Estadística), curso exacto no identificado en el PDF.
 - Origen: `10 Class/areas/Academic_Class-Estadistica/course_00_curso_base/06_RECURSOS/presentaciones/slide chapter 08 modelos de regresion efectos marginales.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).

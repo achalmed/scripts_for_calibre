@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9903
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «High-dimensional probability: an introduction with applications in data science». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9903
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/HDP-2 no borrar (9903)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Roman, Vershynin/High-dimensional probability_ an introduction with applications in data science (9903)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Es la segunda edicion del libro *High-Dimensional Probability* de Roman Vershynin, con editorial (Cambridge University Press) y cita BibTeX indicadas en la propia portada; aunque se trata de una version pre-publicacion, la obra es un libro formal, por lo que `Book` es el tipo adecuado con nota de estado en Extra.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                        |
 | --------------- | ------------------------------------------------------------ |
@@ -42,9 +54,7 @@
 | Rights          | © Roman Vershynin 2026. Pre-publication version free for personal use only |
 | Extra           | Status: pre-publication version                              |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -71,17 +81,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Roman, Vershynin | High|dimensional probability: an introduction with applications in data science | # |  | Cambridge University Press | 2026 | Libro (Ed 2).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `probability; estadistica; data_science`
 **Calibre**: `probability, estadistica, data_science`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: portada del PDF con titulo, autor, edicion, editorial, fecha (May 28, 2026) y cita BibTeX incluida por el propio autor.
+**Confianza: alta.** Evidencia: portada del PDF con titulo, autor, edicion, editorial, fecha (May 28, 2026) y cita BibTeX incluida por el propio autor.
 - **Advertencia sobre el nombre de archivo**: el titulo contiene guion (`High-dimensional`), por lo que se uso el separador alternativo `|` en todo el nombre de archivo (incluida la sustitucion del guion interno del titulo) para no romper la expresion regular de Calibre. Corregir el titulo manualmente tras importar si se desea conservar el guion.
 - Version pre-publicacion sin ISBN; el titulo actual de la carpeta ("HDP-2 no borrar") era un nombre de trabajo.

@@ -1,8 +1,20 @@
-# Ficha de catalogación — Guía técnica legislativa MINJUS 4ta ed impresa
+---
+tipo: ficha-catalogacion
+calibre-id: 10150
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Guía técnica legislativa MINJUS 4ta ed impresa». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/18_manuales/guia_tecnica_legislativa_minjus_4ta_ed_impresa.pdf` · SHA-256 `f80238fc31a1a291…` · 74 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/18_manuales/guia_tecnica_legislativa_minjus_4ta_ed_impresa.pdf` · SHA-256 `f80238fc31a1a291…` · 74 págs · con texto
 
 ## Zotero
 | Campo | Valor |

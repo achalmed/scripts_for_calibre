@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9594
+zotero-key: KZKU7VZD
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Analisis de regresion». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9594
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Introduccion al analisis de regresion (9594)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Analisis de regresion (9594)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: El documento es un juego de diapositivas (16 paginas de laminas con titulos grandes, graficos y texto esquematico sobre analisis de regresion y correlacion), sin estructura de articulo ni libro. Corresponde a material docente tipo diapositivas de clase, por lo que `Presentation` con Type `Class slides` es el tipo mas especifico.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -32,9 +44,7 @@
 | Rights       |                         |
 | Extra        |                         |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -64,17 +74,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Analisis de regresion - # -  -  -  - Diapositiva.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `fundamentos_econometria; regresion; estadistica`
 **Calibre**: `fundamentos_econometria, regresion, estadistica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- Nivel de confianza: baja.
+Nivel de confianza: baja.
 - Evidencia usada: texto extraido de las laminas (portada "ANALISIS DE REGRESION", contenido sobre regresion vs. correlacion) y metadatos incrustados (16 paginas, PDFCreator). No hay autor, fecha ni institucion en el documento; la fecha de creacion del PDF es invalida (ano 100).
 - El titulo actual en Calibre ("Introduccion al analisis de regresion") no aparece en el documento; la portada dice solo "Analisis de regresion".

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 3084
+zotero-key: 3CE7U7QE
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Distribucion binomial y distribucion normal». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 3084
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Distribucion binomial y normal (3084)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Distribucion binomial y distribucion normal (3084)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Documento LaTeX de 13 paginas, "Capitulo 3. Distribucion binomial y distribucion normal", perteneciente a los mismos apuntes espanoles de probabilidad y estadistica que el item 3074 (mismo productor y fecha), sin autor ni datos editoriales. Corresponde `Manuscript` con Type `Lecture notes`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -33,9 +45,7 @@
 | Rights       | |
 | Extra        | Chapter Number: 3 |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -62,17 +72,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Distribucion binomial y distribucion normal - # -  -  - 2004 - Apuntes de estudio.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `estadistica; probabilidad_estadistica; inferencia_estadistica`
 **Calibre**: `estadistica, probabilidad_estadistica, inferencia_estadistica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto del capitulo y metadatos incrustados (Acrobat Distiller 4.0 para Macintosh, CreationDate 2004-01-31). Sin autor ni institucion.
+**Confianza: baja.** Evidencia: texto del capitulo y metadatos incrustados (Acrobat Distiller 4.0 para Macintosh, CreationDate 2004-01-31). Sin autor ni institucion.
 - La fecha 2004 proviene unicamente de la fecha de creacion del PDF incrustada.
 - Mismo origen que el item 3074 "Combinatoria" (Capitulo 1 de los mismos apuntes).

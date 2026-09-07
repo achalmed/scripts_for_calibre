@@ -1,8 +1,20 @@
-# Ficha de catalogación — Informe estadístico 2026 junio
+---
+tipo: ficha-catalogacion
+calibre-id: 10249
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Informe estadístico 2026 junio». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/inpe/informe_estadistico_2026_junio/informe_estadistico_2026_junio_v001_2026-09-04.pdf` · SHA-256 `c0845a7c4bc21302…` · 127 págs · con texto
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/inpe/informe_estadistico_2026_junio/informe_estadistico_2026_junio_v001_2026-09-04.pdf` · SHA-256 `c0845a7c4bc21302…` · 127 págs · con texto
 
 ## Zotero
 | Campo | Valor |

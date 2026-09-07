@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 1731
+zotero-key: MUYDWZ9P
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «El comercio y los efectos de la formacion de uniones aduaneras». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 1731
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/El comercio y los efectos de la formacion de uniones aduaneras (1731)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/El comercio y los efectos de la formacion de uniones aduaneras (1731)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Documento Word de 16 paginas rotulado "Esquema Tema 1" sobre el comercio y las uniones aduaneras, con instrucciones docentes ("ver Lecturas", "Antes de considerarlos en clase..."), sin autor ni datos de publicacion. Es un esquema/apunte de curso inedito, por lo que corresponde `Manuscript` con Type `Lecture notes`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -33,9 +45,7 @@
 | Rights       | |
 | Extra        | |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -62,15 +72,9 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - El comercio y los efectos de la formacion de uniones aduaneras - # -  -  -  - Apuntes de clase.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `comercio_internacional; economia_internacional`
 **Calibre**: `comercio_internacional, economia_internacional`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto del PDF (esquema docente, referencias a la UE y NAFTA) y metadatos incrustados (Acrobat PDFMaker 5.0 para Word; fecha corrupta). Sin autor, curso ni universidad identificables; el contexto europeo sugiere un curso espanol de economia internacional posterior a 1995.
+**Confianza: baja.** Evidencia: texto del PDF (esquema docente, referencias a la UE y NAFTA) y metadatos incrustados (Acrobat PDFMaker 5.0 para Word; fecha corrupta). Sin autor, curso ni universidad identificables; el contexto europeo sugiere un curso espanol de economia internacional posterior a 1995.

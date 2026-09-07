@@ -1,8 +1,20 @@
-# Ficha de catalogación — Código ejecución penal TUO D.S. 003-2021 JUS actualizado
+---
+tipo: ficha-catalogacion
+calibre-id: 10127
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Código ejecución penal TUO D.S. 003-2021 JUS actualizado». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/codigo_ejecucion_penal_tuo_ds_003_2021_jus_actualizado.pdf` · SHA-256 `3bbf3f3bad41008e…` · 59 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/codigo_ejecucion_penal_tuo_ds_003_2021_jus_actualizado.pdf` · SHA-256 `3bbf3f3bad41008e…` · 59 págs · con texto
 
 ## Zotero
 | Campo | Valor |

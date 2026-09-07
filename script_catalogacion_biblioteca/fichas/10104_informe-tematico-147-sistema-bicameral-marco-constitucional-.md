@@ -1,8 +1,20 @@
-# Ficha de catalogación — Informe tematico 147 sistema bicameral marco constitucional y legal 2026
+---
+tipo: ficha-catalogacion
+calibre-id: 10104
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Informe tematico 147 sistema bicameral marco constitucional y legal 2026». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/03_congreso/informe_tematico_147_sistema_bicameral_marco_constitucional_y_legal_2026.pdf` · SHA-256 `2489fb1eddd49993…` · 70 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/03_congreso/informe_tematico_147_sistema_bicameral_marco_constitucional_y_legal_2026.pdf` · SHA-256 `2489fb1eddd49993…` · 70 págs · con texto
 
 ## Zotero
 | Campo | Valor |

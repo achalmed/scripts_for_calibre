@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Supremo N.° 090-2026-PCM. Modifica reglamento modernización
+---
+tipo: ficha-catalogacion
+calibre-id: 10038
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Supremo N.° 090-2026-PCM. Modifica reglamento modernización». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/04_administracion_publica/ds_090_2026_pcm_modifica_reglamento_modernizacion.pdf` · SHA-256 `6ebc3b3108b725c8…` · 2 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/04_administracion_publica/ds_090_2026_pcm_modifica_reglamento_modernizacion.pdf` · SHA-256 `6ebc3b3108b725c8…` · 2 págs · con texto
 
 ## Zotero
 | Campo | Valor |

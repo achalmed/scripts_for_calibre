@@ -1,8 +1,20 @@
-# Ficha de catalogación — Directiva N.° 26-2025. Gestión sistema institucional archivos 2da version
+---
+tipo: ficha-catalogacion
+calibre-id: 10096
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Directiva N.° 26-2025. Gestión sistema institucional archivos 2da version». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/03_congreso/directiva_26_2025_gestion_sistema_institucional_archivos_2da_version.pdf` · SHA-256 `f5a31bd7f1b72ab7…` · 65 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/03_congreso/directiva_26_2025_gestion_sistema_institucional_archivos_2da_version.pdf` · SHA-256 `f5a31bd7f1b72ab7…` · 65 págs · con texto
 
 ## Zotero
 | Campo | Valor |

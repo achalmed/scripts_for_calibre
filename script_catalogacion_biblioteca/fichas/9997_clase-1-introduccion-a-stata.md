@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9997
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Clase 1: introducción a Stata». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9997
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Ricardo A., Pasquini/Clase 1_ introduccion a Stata (9997)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: Econometría, Maestría en Economía Urbana (UTDT), marzo de 2012.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | --- | --- |
@@ -24,9 +36,7 @@
 | # of Pages | 41 |
 | Language | es |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | --- | --- |
@@ -43,14 +53,10 @@
 | Paginas | 41 |
 | Item type | Presentation |
 
----
-
-### TAGS
-
 **Zotero**: `stata; econometrics`
 **Calibre**: `stata, econometrics`
 
-### NOTAS
+## Notas
 
-- Confianza: **alta**. Econometría, Maestría en Economía Urbana (UTDT), marzo de 2012.
+Confianza: **alta**. Econometría, Maestría en Economía Urbana (UTDT), marzo de 2012.
 - Origen: `10 Class/areas/Academic_Class-Stata/course_00_curso_base/06_RECURSOS/presentaciones/slide sesion 01 c intro a stata ricardo pasquini.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).

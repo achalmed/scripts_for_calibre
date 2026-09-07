@@ -1,8 +1,20 @@
-# Ficha de catalogación — PTA N.° 01-2017. Expediente virtual parlamentario ley resolucion legislativa
+---
+tipo: ficha-catalogacion
+calibre-id: 10105
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «PTA N.° 01-2017. Expediente virtual parlamentario ley resolucion legislativa». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/03_congreso/pta_01_2017_expediente_virtual_parlamentario_ley_resolucion_legislativa.pdf` · SHA-256 `ff2dc044fd254160…` · 26 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/03_congreso/pta_01_2017_expediente_virtual_parlamentario_ley_resolucion_legislativa.pdf` · SHA-256 `ff2dc044fd254160…` · 26 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

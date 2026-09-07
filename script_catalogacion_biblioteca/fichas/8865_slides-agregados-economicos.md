@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 8865
+zotero-key: 66QIC8BD
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Agregados económicos». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 8865
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Slide agregados economicos (8865)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Agregados economicos (8865)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: El PDF son 99 laminas de un curso de macroeconomia (generadas con LibreOffice Impress; portada "Tema 1: Introducción", pie "Macroeconomía / Tema 1: Introducción" y numeracion de lamina). Como diapositivas de clase no publicadas corresponde `Presentation` con Type `Class slides`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -32,9 +44,7 @@
 | Rights       |                       |
 | Extra        |                       |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -64,18 +74,12 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Agregados económicos - # -  -  -  - Diapositiva.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; teoria_macroeconomica`
 **Calibre**: `macroeconomia, teoria_macroeconomica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media** en tipo y contenido; **baja** en datos bibliograficos. Evidencia usada: texto y maqueta del PDF (99 laminas, pies de pagina de curso de Macroeconomia) y pdfinfo (LibreOffice Impress, sin fecha de creacion valida).
+**Confianza: media** en tipo y contenido; **baja** en datos bibliograficos. Evidencia usada: texto y maqueta del PDF (99 laminas, pies de pagina de curso de Macroeconomia) y pdfinfo (LibreOffice Impress, sin fecha de creacion valida).
 - Titulo normalizado: el registro previo decia "Slide agregados economicos"; se retira el descriptor "Slide" (ya recogido en el Clasificador) y se conserva "Agregados económicos" como titulo tematico. La portada interna reza "Tema 1: Introducción"; el contenido corresponde a produccion agregada y contabilidad nacional (estructura tipica de un curso basado en Blanchard, aunque la fuente exacta no consta).
 - Sin presentador, institucion ni fecha identificables; campos vacios por regla de no inventar.
 - El nombre de archivo comienza con ` - ` porque el campo Autor esta vacio.

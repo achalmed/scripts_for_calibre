@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9880
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Manual de matematica financiera: texto, problemas y casos». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9880
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Manual de Matematica Financiera Carlos Aliaga Valdez (9880)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Carlos, Aliaga Valdez/Manual de matematica financiera_ texto, problemas y casos (9880)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Manual publicado por el Centro de Investigacion de la Universidad del Pacifico dentro de la serie "Apuntes de Estudio" (n. 18), con autor, edicion y ficha catalografica verificadas en el PDF (escaneo con OCR de ABBYY FineReader); corresponde al tipo `Book`. El titulo actual de la carpeta ya contenia el autor y se verifico contra el PDF.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                     |
 | --------------- | --------------------------------------------------------- |
@@ -42,9 +54,7 @@
 | Rights          | Derechos reservados conforme a ley                        |
 | Extra           |                                                           |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -71,17 +81,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Carlos, Aliaga Valdez - Manual de matematica financiera: texto, problemas y casos - Apuntes de Estudio #18 -  - Universidad del Pacifico, Centro de Investigacion - 1995 - Libro (Ed 2).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `matematicas_financieras; economia_financiera`
 **Calibre**: `matematicas_financieras, economia_financiera`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: portada, pagina legal y ficha catalografica BUP-CENDI del PDF ("Aliaga Valdez, Carlos. Manual de matematica financiera: texto, problemas y casos. Lima: Universidad del Pacifico, 1995. 2a. ed. (Apuntes de Estudio; 18)"); metadatos incrustados coinciden (Carlos Aliaga Valdez).
+**Confianza: alta.** Evidencia: portada, pagina legal y ficha catalografica BUP-CENDI del PDF ("Aliaga Valdez, Carlos. Manual de matematica financiera: texto, problemas y casos. Lima: Universidad del Pacifico, 1995. 2a. ed. (Apuntes de Estudio; 18)"); metadatos incrustados coinciden (Carlos Aliaga Valdez).
 - El escaneo tiene OCR imperfecto (ABBYY FineReader); no se pudo leer ISBN alguno con certeza, por lo que queda vacio.
 - La portada muestra 1994 (fecha de la 1a edicion); esta copia es la 2a edicion de agosto de 1995.

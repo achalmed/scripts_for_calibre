@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 4016
+zotero-key: 3TCMJSTN
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Argentina. Desarrollo socioeconomico en el siglo XX e inicios del siglo XXI». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 4016
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Desarrollo socioeconomicos de argentina (4016)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Argentina. Desarrollo socioeconomico en el siglo XX e inicios del siglo XXI (4016)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: PDF de 10 diapositivas (LibreOffice Impress) titulado "Argentina. Desarrollo Socioeconomico en el siglo XX e inicios del siglo XXI", que repasa el modelo agroexportador, el modelo ISI y las exportaciones industriales. Es una presentacion de exposicion academica sin autor ni evento identificados, por lo que corresponde `Presentation` con Type `Class slides`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -29,9 +41,7 @@
 | Rights       | |
 | Extra        | |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -58,17 +68,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Argentina. Desarrollo socioeconomico en el siglo XX e inicios del siglo XXI - # -  -  -  - Diapositiva.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `historia_economica; economia_desarrollo`
 **Calibre**: `historia_economica, economia_desarrollo`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto de las diapositivas y metadatos incrustados (LibreOffice Impress; CreationDate 2016-12-31, probablemente artificial). Sin autor, curso ni fecha fiable; el campo Date queda vacio.
+**Confianza: baja.** Evidencia: texto de las diapositivas y metadatos incrustados (LibreOffice Impress; CreationDate 2016-12-31, probablemente artificial). Sin autor, curso ni fecha fiable; el campo Date queda vacio.
 - El titulo actual en Calibre ("Desarrollo socioeconomicos de argentina") contiene errores gramaticales; se sustituyo por el titulo real de la portada.
 - La diapositiva "Modelo ISI (1039-1975)" contiene la errata "1039" por "1930" en el original.

@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 30220. Universitaria
+---
+tipo: ficha-catalogacion
+calibre-id: 10026
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 30220. Universitaria». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/12_educacion/ley_30220_universitaria.pdf` · SHA-256 `a9cb4adf8bb8b489…` · 21 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/12_educacion/ley_30220_universitaria.pdf` · SHA-256 `a9cb4adf8bb8b489…` · 21 págs · con texto
 
 ## Zotero
 | Campo | Valor |

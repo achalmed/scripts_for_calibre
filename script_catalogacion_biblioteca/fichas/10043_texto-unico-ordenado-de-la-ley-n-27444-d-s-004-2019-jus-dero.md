@@ -1,8 +1,20 @@
-# Ficha de catalogación — Texto Único Ordenado de la Ley N.° 27444. D.S. 004-2019 JUS derogado
+---
+tipo: ficha-catalogacion
+calibre-id: 10043
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Texto Único Ordenado de la Ley N.° 27444. D.S. 004-2019 JUS derogado». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/04_administracion_publica/tuo_ley_27444_ds_004_2019_jus_derogado.pdf` · SHA-256 `8f9269ac92142b63…` · 44 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/04_administracion_publica/tuo_ley_27444_ds_004_2019_jus_derogado.pdf` · SHA-256 `8f9269ac92142b63…` · 44 págs · con texto
 
 ## Zotero
 | Campo | Valor |

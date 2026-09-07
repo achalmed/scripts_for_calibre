@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 3751
+zotero-key: D9BXAUMD
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Diseno metodologico de la investigacion». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 3751
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Diseno metodologico de la investigacion (3751)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Diseno metodologico de la investigacion (3751)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: PDF de 24 diapositivas (PowerPoint) de la "Semana 7: Diseno Metodologico de la Investigacion" del curso "Metodologia de la Investigacion I", con objetivo de sesion y contenidos didacticos. Es material de clase proyectado, por lo que corresponde `Presentation` con Type `Class slides`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -29,9 +41,7 @@
 | Rights       | |
 | Extra        | |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -58,16 +68,10 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Diseno metodologico de la investigacion - # -  -  -  - Diapositiva.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `metodologia_investigacion; diseno_investigacion`
 **Calibre**: `metodologia_investigacion, diseno_investigacion`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media.** Evidencia: portada y contenido de las diapositivas ("Metodologia de la Investigacion I, Semana 7"); metadatos incrustados (PowerPoint para Microsoft 365; fecha corrupta). Sin docente ni universidad identificados; el ejemplo de Claro Peru sugiere una universidad peruana.
+**Confianza: media.** Evidencia: portada y contenido de las diapositivas ("Metodologia de la Investigacion I, Semana 7"); metadatos incrustados (PowerPoint para Microsoft 365; fecha corrupta). Sin docente ni universidad identificados; el ejemplo de Claro Peru sugiere una universidad peruana.
 - El ejemplo interno esta fechado en 2015, pero no es evidencia de la fecha de la presentacion; Date queda vacio.

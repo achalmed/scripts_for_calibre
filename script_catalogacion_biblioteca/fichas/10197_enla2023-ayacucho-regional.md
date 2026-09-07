@@ -1,8 +1,20 @@
-# Ficha de catalogación — Enla2023 ayacucho regional
+---
+tipo: ficha-catalogacion
+calibre-id: 10197
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Enla2023 ayacucho regional». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/2026-08-07-diagnostico-educacion-ayacucho/fuentes/enla2023_ayacucho_regional.pdf` · SHA-256 `140514ef9d1ef6aa…` · 104 págs · con texto
+## Origen
+
+`02_investigacion/2026-08-07-diagnostico-educacion-ayacucho/fuentes/enla2023_ayacucho_regional.pdf` · SHA-256 `140514ef9d1ef6aa…` · 104 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9090
+zotero-key: VA6PCHKA
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Problem set 1». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9090
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Problem set 1 (9090)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Problem set 1 (9090)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Es una hoja de ejercicios de curso ("Problem Set 1 — International Macroeconomics", 2 paginas, compuesta en TeX) sin autor, editorial ni publicacion formal. Como material docente inedito, corresponde `Manuscript` con Type `Lecture notes`, y no `Book` ni `Document`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -36,9 +48,7 @@
 | Rights          |                |
 | Extra           |                |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -68,18 +78,12 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Problem set 1 - # -  -  -  - Problemas.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; economia_internacional`
 **Calibre**: `macroeconomia, economia_internacional`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media.** Evidencia usada: texto del PDF (encabezado "Problem Set 1 / International Macroeconomics"; los ejercicios 4 y 5 citan "OR chapter 1", es decir, Obstfeld y Rogoff) y pdfinfo (2 paginas, pdfTeX, sin fecha valida).
+**Confianza: media.** Evidencia usada: texto del PDF (encabezado "Problem Set 1 / International Macroeconomics"; los ejercicios 4 y 5 citan "OR chapter 1", es decir, Obstfeld y Rogoff) y pdfinfo (2 paginas, pdfTeX, sin fecha valida).
 - Sin autor, institucion ni fecha identificables; los campos quedan vacios (regla de no inventar datos). El idioma real es ingles, aunque los metadatos previos decian "spa".
 - El curso contenedor ("International Macroeconomics") se registra en Comments por no existir campo nativo adecuado.
 - El nombre de archivo comienza con ` - ` porque el campo Autor esta vacio.

@@ -1,8 +1,20 @@
-# Ficha de catalogación — Convenio OIT 87 libertad sindical
+---
+tipo: ficha-catalogacion
+calibre-id: 10184
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Convenio OIT 87 libertad sindical». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/16_derechos_humanos/convenio_oit_87_libertad_sindical.pdf` · SHA-256 `816aee6e45694690…` · 7 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/16_derechos_humanos/convenio_oit_87_libertad_sindical.pdf` · SHA-256 `816aee6e45694690…` · 7 págs · con texto
 
 ## Zotero
 | Campo | Valor |

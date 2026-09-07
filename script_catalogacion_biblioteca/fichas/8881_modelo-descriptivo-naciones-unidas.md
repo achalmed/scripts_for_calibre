@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 8881
+zotero-key: 9U9B4ZD3
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «El modelo descriptivo de las Naciones Unidas». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 8881
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/El modelo descriptivo de las naciones unidas (8881)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/El modelo descriptivo de las Naciones Unidas (8881)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: El PDF son diapositivas (generado con LibreOffice Impress, 34 laminas con texto esquematico en vinetas) sobre el modelo descriptivo de contabilidad social de Naciones Unidas, sin autor ni datos de publicacion. Corresponde a `Presentation` con Type `Class slides` (diapositivas de clase), no publicadas en actas.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -32,9 +44,7 @@
 | Rights       |                                                |
 | Extra        |                                                |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -64,16 +74,10 @@
  - El modelo descriptivo de las Naciones Unidas - # -  -  -  - Diapositiva.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; economia_descriptiva`
 **Calibre**: `macroeconomia, economia_descriptiva`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media** para el tipo (formato de diapositivas evidente en el texto extraido) y **baja** para el resto: no hay autor, institucion ni fecha en el documento; la fecha de creacion incrustada es invalida (ano 0101) y se deja vacia.
+**Confianza: media** para el tipo (formato de diapositivas evidente en el texto extraido) y **baja** para el resto: no hay autor, institucion ni fecha en el documento; la fecha de creacion incrustada es invalida (ano 0101) y se deja vacia.
 - El nombre de archivo comienza con el campo autor vacio seguido del separador, conforme a la regla de campos vacios.

@@ -1,8 +1,20 @@
-# Ficha de catalogación — Exposición de motivos del proyecto de Ley de equilibrio financiero del presupuesto del sector público para el año fiscal 2027
+---
+tipo: ficha-catalogacion
+calibre-id: 10231
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Exposición de motivos del proyecto de Ley de equilibrio financiero del presupuesto del sector público para el año fiscal 2027». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/presupuesto/proyecto/2027/EM_PL_Equilibrio_Financiero_2027.pdf` · SHA-256 `e7710053ba7eee03…` · 28 págs · con texto
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/presupuesto/proyecto/2027/EM_PL_Equilibrio_Financiero_2027.pdf` · SHA-256 `e7710053ba7eee03…` · 28 págs · con texto
 
 ## Zotero
 | Campo | Valor |

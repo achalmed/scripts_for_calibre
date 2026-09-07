@@ -1,8 +1,20 @@
-# Ficha de catalogación — Informe indicadores ppr ENDES 2025
+---
+tipo: ficha-catalogacion
+calibre-id: 10242
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Informe indicadores ppr ENDES 2025». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/inei/endes_2025_ppr/Informe_Indicadores_PPR_ENDES_2025.pdf` · SHA-256 `d3c9220633b8e0b7…` · 296 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/inei/endes_2025_ppr/Informe_Indicadores_PPR_ENDES_2025.pdf` · SHA-256 `d3c9220633b8e0b7…` · 296 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

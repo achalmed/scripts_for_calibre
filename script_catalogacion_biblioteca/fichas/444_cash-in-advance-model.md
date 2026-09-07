@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 444
+zotero-key: J93SX5IV
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Cash in advance model (Monetary Economics, cap. 4)». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 444
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Cash in advance model (444)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Martin, Ellison/Cash in advance model (Monetary Economics, cap. 4) (444)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Documento de 8 paginas rotulado "Chapter 4. Cash in advance model" que se presenta explicitamente como material de un curso ("In this lecture we will look at...", seccion "Key readings"), sin autor ni datos de publicacion. Son apuntes de catedra ineditos, por lo que corresponde `Manuscript` con Type `Lecture notes`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -33,9 +45,7 @@
 | Rights       | |
 | Extra        | Chapter Number: 4 |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -62,25 +72,14 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Cash in advance model - # -  -  -  - Apuntes de clase.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; politica_monetaria; macroeconomia_dinamica`
 **Calibre**: `macroeconomia, politica_monetaria, macroeconomia_dinamica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto de las 8 paginas (numeradas 27-34 dentro de un conjunto mayor de apuntes) y metadatos incrustados (fecha corrupta, no utilizable). Sin autor, curso ni universidad identificables en el PDF.
+**Confianza: baja.** Evidencia: texto de las 8 paginas (numeradas 27-34 dentro de un conjunto mayor de apuntes) y metadatos incrustados (fecha corrupta, no utilizable). Sin autor, curso ni universidad identificables en el PDF.
 - El documento pertenece a una serie de "lectures" de un curso de macroeconomia monetaria de posgrado (paginacion continua desde la pagina 27).
-
----
-
-### ACTUALIZACIÓN (2026-07-27) — Identificación por búsqueda web
-
-**Autor(es)**: Martin Ellison (University of Oxford; antes University of Warwick)
+**ACTUALIZACIÓN (2026-07-27) — Identificación por búsqueda web.** **Autor(es)**: Martin Ellison (University of Oxford; antes University of Warwick)
 **Obra contenedora / datos nuevos**: Capítulo 4 («Cash in advance model») de sus lecture notes de Monetary Economics para el MSc (curso EC924, Warwick). El PDF idéntico está alojado en su página personal de Oxford
 **Evidencia**: https://users.ox.ac.uk/~exet2581/msc/ec924cia.pdf — coincidencia exacta del texto inicial («the origins of the modern literature rest with Lucas (1982)…»); users.ox.ac.uk/~exet2581 es la página personal de Martin Ellison
 **Confianza**: alta

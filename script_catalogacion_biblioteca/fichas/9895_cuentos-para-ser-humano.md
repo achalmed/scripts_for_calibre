@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9895
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Cuentos para ser humano: cuentos, peliculas y canciones con valores». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9895
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para ser humano pdf (9895)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Luis M., Benavides/Cuentos para ser humano_ cuentos, peliculas y canciones con valores (9895)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Libro publicado por Editorial CCS dentro de la coleccion "Gestos y palabras", con autor-compilador, ISBN y pagina legal verificados en el PDF; corresponde al tipo `Book`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                        |
 | --------------- | ------------------------------------------------------------ |
@@ -42,9 +54,7 @@
 | Rights          |                                                              |
 | Extra           |                                                              |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -71,17 +81,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Luis M., Benavides - Cuentos para ser humano: cuentos, peliculas y canciones con valores - Gestos y palabras # - 9788490237021 - Editorial CCS - 2012 - Libro.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `pedagogia; didactica; ethics`
 **Calibre**: `pedagogia, didactica, ethics`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: portada y pagina legal del PDF (© Luis M. Benavides; © 2012 Editorial CCS, Madrid; ISBN (pdf) 978-84-9023-702-1; coleccion "Gestos y palabras").
+**Confianza: alta.** Evidencia: portada y pagina legal del PDF (© Luis M. Benavides; © 2012 Editorial CCS, Madrid; ISBN (pdf) 978-84-9023-702-1; coleccion "Gestos y palabras").
 - Los metadatos incrustados dan el nombre completo "Luis M. Benavides Leporace"; la pagina legal usa "Luis M. Benavides", que es la forma registrada.
 - El numero de la obra dentro de la coleccion no es legible con certeza en el listado de la coleccion, por lo que Series Number queda vacio.

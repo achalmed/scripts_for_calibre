@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9906
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Turismo: guia para la formulacion de proyectos de inversion exitosos». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9906
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/guia para la formulacion de proyectos de inversion exitosos (9906)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Ministerio de Economia y Finanzas/Turismo_ guia para la formulacion de proyectos de inversion exitosos (9906)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Report
 **Justificacion**: Es una guia metodologica gubernamental publicada por el Ministerio de Economia y Finanzas del Peru (DGPI) para proyectos de inversion publica del sector turismo; para documentos gubernamentales y manuales el tipo indicado es `Report` en lugar de `Book`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                        |
 | --------------- | ------------------------------------------------------------ |
@@ -38,9 +50,7 @@
 | Rights          |                                                              |
 | Extra           |                                                              |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -67,17 +77,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Ministerio de Economia y Finanzas - Turismo: guia para la formulacion de proyectos de inversion exitosos - # -  - Ministerio de Economia y Finanzas, Direccion General de Politica de Inversiones - 2011 - Guia (Ed 1).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `formulacion_proyectos; proyectos_inversion; evaluacion_social; gestion_publica`
 **Calibre**: `formulacion_proyectos, proyectos_inversion, evaluacion_social, gestion_publica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: portada y pagina de creditos del PDF (© 2011 Ministerio de Economia y Finanzas; DGPI; especialistas de MINCETUR; primera edicion octubre 2011; Lima, Peru).
+**Confianza: alta.** Evidencia: portada y pagina de creditos del PDF (© 2011 Ministerio de Economia y Finanzas; DGPI; especialistas de MINCETUR; primera edicion octubre 2011; Lima, Peru).
 - Autor institucional (sin coma en el formato de autores de Calibre).
 - Sin ISBN visible en las paginas examinadas.

@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 29622. Amplia facultades sancionadoras contraloria
+---
+tipo: ficha-catalogacion
+calibre-id: 10046
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 29622. Amplia facultades sancionadoras contraloria». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/10_control/ley_29622_amplia_facultades_sancionadoras_contraloria.pdf` · SHA-256 `f2cdb9815ff64855…` · 3 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/10_control/ley_29622_amplia_facultades_sancionadoras_contraloria.pdf` · SHA-256 `f2cdb9815ff64855…` · 3 págs · con texto
 
 ## Zotero
 | Campo | Valor |

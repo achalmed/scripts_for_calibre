@@ -1,8 +1,20 @@
-# Ficha de catalogación — Reglamento D.L. 1565 ley general mejora calidad regulatoria D.S. 023-2025 PCM
+---
+tipo: ficha-catalogacion
+calibre-id: 10147
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Reglamento D.L. 1565 ley general mejora calidad regulatoria D.S. 023-2025 PCM». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/18_manuales/reglamento_dl_1565_ley_general_mejora_calidad_regulatoria_ds_023_2025_pcm.pdf` · SHA-256 `579a3c530c427b8b…` · 41 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/18_manuales/reglamento_dl_1565_ley_general_mejora_calidad_regulatoria_ds_023_2025_pcm.pdf` · SHA-256 `579a3c530c427b8b…` · 41 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

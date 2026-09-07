@@ -1,8 +1,20 @@
-# Ficha de catalogación — INEI — Estadisticas criminalidad seguridad ciudadana ii semestre 2025
+---
+tipo: ficha-catalogacion
+calibre-id: 9926
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «INEI — Estadisticas criminalidad seguridad ciudadana ii semestre 2025». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/informes/2026-09-02-delegacion-facultades-2026/inei_estadisticas_criminalidad_seguridad_ciudadana_ii_semestre_2025.pdf` · SHA-256 `549badd03c619ce7…` · 38 págs · con texto
+## Origen
+
+`02_investigacion/informes/2026-09-02-delegacion-facultades-2026/inei_estadisticas_criminalidad_seguridad_ciudadana_ii_semestre_2025.pdf` · SHA-256 `549badd03c619ce7…` · 38 págs · con texto
 
 ## Zotero
 | Campo | Valor |

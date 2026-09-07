@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 3078
+zotero-key: GWA67TXP
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Programación lineal». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 3078
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Programacionn lineaal (3078)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Programacion lineal (3078)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book Section
 **Justificacion**: El PDF es el "Capítulo 8. PROGRAMACIÓN LINEAL" de una obra mayor (paginacion continua 127-140, encabezados de capitulo), perteneciente al mismo compendio anonimo de apuntes que los ids 3083, 3079 y 3081. Al ser una seccion de una obra contenedora corresponde `Book Section`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -47,9 +59,7 @@
 | Rights          |                                      |
 | Extra           | Chapter Number: 8                    |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -79,18 +89,12 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Programación lineal - Apuntes de matematica y estadistica # -  -  -  - Apuntes de estudio.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `mathematics; investigacion_operativa`
 **Calibre**: `mathematics, investigacion_operativa`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media.** Evidencia usada: texto del PDF (encabezado "Capítulo 8. PROGRAMACIÓN LINEAL", paginacion 127-140) y pdfinfo (14 paginas, Acrobat Distiller 4.0 para Macintosh).
+**Confianza: media.** Evidencia usada: texto del PDF (encabezado "Capítulo 8. PROGRAMACIÓN LINEAL", paginacion 127-140) y pdfinfo (14 paginas, Acrobat Distiller 4.0 para Macintosh).
 - Titulo corregido: el titulo previo del registro ("Programacionn lineaal") contenia erratas; el texto del PDF confirma "Programación lineal".
 - La fecha de creacion incrustada (septiembre 2025) es una regeneracion reciente del archivo y contradice a sus capitulos hermanos (2004), por lo que el campo Date queda vacio.
 - Sin autor ni obra contenedora identificables; `Book Title` vacio por regla de no inventar.

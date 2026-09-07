@@ -1,8 +1,20 @@
-# Ficha de catalogación — Reglamento ley 30225 D.S. 344-2018 EF historico
+---
+tipo: ficha-catalogacion
+calibre-id: 10138
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Reglamento ley 30225 D.S. 344-2018 EF historico». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/05_contrataciones/reglamento_ley_30225_ds_344_2018_ef_historico.pdf` · SHA-256 `fb471dc80798d10f…` · 64 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/05_contrataciones/reglamento_ley_30225_ds_344_2018_ef_historico.pdf` · SHA-256 `fb471dc80798d10f…` · 64 págs · con texto
 
 ## Zotero
 | Campo | Valor |

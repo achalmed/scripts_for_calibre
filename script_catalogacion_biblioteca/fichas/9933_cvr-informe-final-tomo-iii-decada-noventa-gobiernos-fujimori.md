@@ -1,8 +1,20 @@
-# Ficha de catalogación — Informe Final. Tomo III
+---
+tipo: ficha-catalogacion
+calibre-id: 9933
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta** (revisada a mano el 2026-09-02). Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Informe Final. Tomo III». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta** (revisada a mano el 2026-09-02). Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/bibliografia/cvr_informe_final_tomo_iii_decada_noventa_gobiernos_fujimori.pdf` · SHA-256 `390a3330b2cf5121…` · 438 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/bibliografia/cvr_informe_final_tomo_iii_decada_noventa_gobiernos_fujimori.pdf` · SHA-256 `390a3330b2cf5121…` · 438 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

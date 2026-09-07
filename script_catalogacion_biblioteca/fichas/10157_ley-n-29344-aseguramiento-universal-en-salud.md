@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 29344. Aseguramiento universal en salud
+---
+tipo: ficha-catalogacion
+calibre-id: 10157
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 29344. Aseguramiento universal en salud». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/13_salud/ley_29344_aseguramiento_universal_en_salud.pdf` · SHA-256 `eee7813dd821c800…` · 4 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/13_salud/ley_29344_aseguramiento_universal_en_salud.pdf` · SHA-256 `eee7813dd821c800…` · 4 págs · con texto
 
 ## Zotero
 | Campo | Valor |

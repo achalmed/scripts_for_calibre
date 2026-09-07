@@ -1,8 +1,20 @@
-# Ficha de catalogación — Lineamientos para la evaluación Ex Post de las regulaciones vigentes en el marco de la mejora de la calidad regulatoria
+---
+tipo: ficha-catalogacion
+calibre-id: 10152
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Lineamientos para la evaluación Ex Post de las regulaciones vigentes en el marco de la mejora de la calidad regulatoria». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/18_manuales/lineamientos_evaluacion_ex_post_regulaciones_vigentes_2026.pdf` · SHA-256 `6a17729630c11e63…` · 17 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/18_manuales/lineamientos_evaluacion_ex_post_regulaciones_vigentes_2026.pdf` · SHA-256 `6a17729630c11e63…` · 17 págs · con texto
 
 ## Zotero
 | Campo | Valor |

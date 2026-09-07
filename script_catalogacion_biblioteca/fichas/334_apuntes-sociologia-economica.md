@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 334
+zotero-key: NVGHMPDV
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Sociología económica». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 334
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Sociologia economica (334)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Sociologia economica (334)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Texto extenso (146 paginas) de apuntes de sociologia economica generado a partir de HTML (htmldoc), sin autor, editorial, ISBN ni pagina legal. Al carecer de todo dato de publicacion formal se cataloga como `Manuscript` (Type `Unpublished manuscript`) y no como `Book`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -36,9 +48,7 @@
 | Rights          |                        |
 | Extra           |                        |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -68,17 +78,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Sociología económica - # -  -  -  - Apuntes de estudio.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `sociology; socioeconomia; social_science`
 **Calibre**: `sociology, socioeconomia, social_science`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia usada: texto del PDF (titulo interno "SOCIOLOGIA ECONOMICA" y contenido tematico) y pdfinfo (146 paginas, generado con htmldoc 1.8.23, sin fecha valida).
+**Confianza: baja.** Evidencia usada: texto del PDF (titulo interno "SOCIOLOGIA ECONOMICA" y contenido tematico) y pdfinfo (146 paginas, generado con htmldoc 1.8.23, sin fecha valida).
 - Sin autor, fuente, institucion ni fecha identificables; el formato (htmldoc) sugiere una compilacion descargada de un sitio de apuntes tipo monografias, pero no consta URL en el documento.
 - El nombre de archivo comienza con ` - ` porque el campo Autor esta vacio.

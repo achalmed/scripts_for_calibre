@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 1967
+zotero-key: 8QBTG3MM
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Estado de resultados». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 1967
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Estado de resultados (1967)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Estado de resultados (1967)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book Section
 **Justificacion**: El PDF es la "Unidad 3. Estado de resultados" de un libro de texto cuyo titulo aparece en la cabecera corrida de las paginas: "Contabilidad Financiera I" (paginacion impresa 91 en adelante). Al tratarse de una parte especifica de una obra mayor identificada por su cabecera, corresponde `Book Section` con Book Title.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -47,9 +59,7 @@
 | Rights          |                           |
 | Extra           | Chapter Number: 3         |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -79,18 +89,12 @@
  - Estado de resultados - # -  -  -  - Capitulo de libro.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `contabilidad; contabilidad_financiera; analisis_financiero`
 **Calibre**: `contabilidad, contabilidad_financiera, analisis_financiero`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media.** Evidencia: texto del PDF (encabezado "Unidad 3. Estado de resultados", cabecera corrida "Contabilidad Financiera I", paginacion impresa 91 al inicio y 107-108 al final, referencias a las NIF mexicanas). No hay autor, editorial, edicion ni ano visibles en el extracto.
+**Confianza: media.** Evidencia: texto del PDF (encabezado "Unidad 3. Estado de resultados", cabecera corrida "Contabilidad Financiera I", paginacion impresa 91 al inicio y 107-108 al final, referencias a las NIF mexicanas). No hay autor, editorial, edicion ni ano visibles en el extracto.
 - El rango de paginas 91-108 corresponde a la numeracion impresa visible; algunas paginas del PDF carecen de numero impreso.
 - El contenido corresponde a un manual universitario mexicano de contabilidad financiera; la obra contenedora exacta (editorial/autor) no pudo identificarse con la evidencia disponible.
 - El nombre de archivo comienza con el campo autor vacio seguido del separador, conforme a la regla de campos vacios.

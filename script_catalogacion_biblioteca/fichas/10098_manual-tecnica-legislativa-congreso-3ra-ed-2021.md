@@ -1,8 +1,20 @@
-# Ficha de catalogación — Manual técnica legislativa congreso 3ra ed 2021
+---
+tipo: ficha-catalogacion
+calibre-id: 10098
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Manual técnica legislativa congreso 3ra ed 2021». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/03_congreso/manual_tecnica_legislativa_congreso_3ra_ed_2021.pdf` · SHA-256 `ccf81a4ff4935204…` · 108 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/03_congreso/manual_tecnica_legislativa_congreso_3ra_ed_2021.pdf` · SHA-256 `ccf81a4ff4935204…` · 108 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

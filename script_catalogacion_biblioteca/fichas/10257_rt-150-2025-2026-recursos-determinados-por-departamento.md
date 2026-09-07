@@ -1,8 +1,20 @@
-# Ficha de catalogación — RT 150-2025-2026 recursos determinados por departamento
+---
+tipo: ficha-catalogacion
+calibre-id: 10257
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «RT 150-2025-2026 recursos determinados por departamento». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/congreso/rt150_recursos_determinados_2026/RT_150_2025-2026_recursos_determinados_por_departamento.pdf` · SHA-256 `ca21dddd045fcca7…` · 64 págs · con texto
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/congreso/rt150_recursos_determinados_2026/RT_150_2025-2026_recursos_determinados_por_departamento.pdf` · SHA-256 `ca21dddd045fcca7…` · 64 págs · con texto
 
 ## Zotero
 | Campo | Valor |

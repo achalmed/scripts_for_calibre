@@ -1,8 +1,20 @@
-# Ficha de catalogación — Directiva N.° 0002-2025-EF. Plan anual contrataciones
+---
+tipo: ficha-catalogacion
+calibre-id: 10141
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Directiva N.° 0002-2025-EF. Plan anual contrataciones». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/05_contrataciones/directiva_0002_2025_ef_plan_anual_contrataciones.pdf` · SHA-256 `134db40c17baeb6e…` · 9 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/05_contrataciones/directiva_0002_2025_ef_plan_anual_contrataciones.pdf` · SHA-256 `134db40c17baeb6e…` · 9 págs · con texto
 
 ## Zotero
 | Campo | Valor |

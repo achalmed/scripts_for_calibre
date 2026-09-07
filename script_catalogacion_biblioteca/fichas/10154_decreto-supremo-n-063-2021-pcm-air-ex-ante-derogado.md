@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Supremo N.° 063-2021-PCM. AIR ex ante derogado
+---
+tipo: ficha-catalogacion
+calibre-id: 10154
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Supremo N.° 063-2021-PCM. AIR ex ante derogado». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/18_manuales/ds_063_2021_pcm_air_ex_ante_derogado.pdf` · SHA-256 `d4a212a070c1bbaf…` · 11 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/18_manuales/ds_063_2021_pcm_air_ex_ante_derogado.pdf` · SHA-256 `d4a212a070c1bbaf…` · 11 págs · con texto
 
 ## Zotero
 | Campo | Valor |

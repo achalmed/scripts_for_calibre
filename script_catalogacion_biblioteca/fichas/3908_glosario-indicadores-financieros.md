@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 3908
+zotero-key: MNETVTVG
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Glosario de indicadores financieros». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 3908
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Glosario de indicadores financieros (3908)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Superintendencia de Banca, Seguros y AFP (Peru)/Glosario de indicadores financieros (3908)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Es un glosario breve (3 paginas) de indicadores financieros bancarios (solvencia, calidad de activos, eficiencia y gestion, rentabilidad) sin autor, institucion ni fecha. Al ser un documento de referencia inedito sin datos editoriales, se cataloga como `Manuscript` (Type `Unpublished manuscript`), evitando el tipo generico `Document`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -36,9 +48,7 @@
 | Rights          |                                     |
 | Extra           |                                     |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -68,26 +78,15 @@
  - Glosario de indicadores financieros - # -  -  -  - Handout.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `banca; analisis_financiero; referencia`
 **Calibre**: `banca, analisis_financiero, referencia`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto completo del PDF. Sin autor, institucion ni fecha; el metadato de fecha es invalido (ano 0101).
+**Confianza: baja.** Evidencia: texto completo del PDF. Sin autor, institucion ni fecha; el metadato de fecha es invalido (ano 0101).
 - Las definiciones ("nuevos soles", "Ratio de Capital Global vigente a partir de julio 2009") coinciden con el glosario de indicadores de la SBS del Peru (Superintendencia de Banca, Seguros y AFP), pero la entidad no aparece nombrada en el documento, por lo que no se registro como autor. Si se confirma la fuente, anadir la SBS como autor institucional.
 - El nombre de archivo comienza con el campo autor vacio seguido del separador, conforme a la regla de campos vacios.
-
----
-
-### ACTUALIZACIÓN (2026-07-27) — Identificación por búsqueda web
-
-**Autor(es)**: Superintendencia de Banca, Seguros y AFP (SBS), Perú (autor institucional)
+**ACTUALIZACIÓN (2026-07-27) — Identificación por búsqueda web.** **Autor(es)**: Superintendencia de Banca, Seguros y AFP (SBS), Perú (autor institucional)
 **Obra contenedora / datos nuevos**: "Glosario de términos e indicadores financieros" que acompaña las estadísticas del sistema financiero de la SBS. Las definiciones de nuestra copia ("Ratio de Capital Global: Patrimonio efectivo / activos y contingentes ponderados por riesgo... Vigente a partir de Julio 2009", "Cartera Atrasada / Créditos Directos") coinciden literalmente con el glosario oficial publicado en el sitio de la SBS (versión ca. 2010).
 **Evidencia**: https://www.sbs.gob.pe/app/stats/Glosarios/Glosario_Banca_(Mayo2010).doc — documento oficial alojado en sbs.gob.pe con las mismas definiciones literales; véase también https://www.sbs.gob.pe/app/web_doc/Paginas/documentos.aspx?cod=SF-0002
 **Confianza**: alta

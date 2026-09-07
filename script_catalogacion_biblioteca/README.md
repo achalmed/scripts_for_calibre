@@ -5,14 +5,14 @@
 > metadatos a Calibre vía `calibredb` (simulación por defecto).
 >
 > **Hogar canónico de la salida del prompt 1.** El formato de cada ficha lo define
-> [`01 fuentes/prompt_02_catalogar.md (antes prompt_para_zotero_1)`](../../git-awesome-ai-prompts/01 fuentes/prompt_02_catalogar.md)
-> (repo `git-awesome-ai-prompts`); esta suite es donde esa salida **se guarda**
+> `~/Documents/prompts/01 fuentes/prompt_02_catalogar.md` (antes `prompt_para_zotero_1`)
+> (repo `prompts`); esta suite es donde esa salida **se guarda**
 > (`fichas/`), **se registra** (`resumen_catalogacion.tsv`, fuente de verdad) y
 > **se aplica** a Calibre. La campaña de los 113 sin autor está cerrada, pero la
 > herramienta es **reutilizable para cualquier libro nuevo** (ver
 > [«Reutilización para libros nuevos»](#-reutilización-para-libros-nuevos-flujo-prompt--ficha--tsv--calibre)).
 > Mapa del ecosistema y contrato de complementariedad prompt ⇄ scripts:
-> [`../../git-awesome-ai-prompts/ECOSISTEMA_APRENDIZAJE.md`](../../git-awesome-ai-prompts/ECOSISTEMA_APRENDIZAJE.md).
+> `~/Documents/prompts/ECOSISTEMA_APRENDIZAJE.md`.
 
 #catalogacion #calibre #zotero
 
@@ -40,7 +40,7 @@ Componentes:
 
 | Elemento | Descripción |
 |---|---|
-| `fichas/` | Una ficha Markdown por libro (`<id_calibre>_<slug>.md`): tipo Zotero, tablas Zotero y Calibre, tags, nombre de archivo y notas con nivel de confianza |
+| `fichas/` | Una ficha Markdown por libro (`<id_calibre>_<slug>.md`) con el frontmatter único (`tipo: ficha-catalogacion`, `calibre-id`, `zotero-key`; norma `prompts/00 metodo/fichas_formato_y_voz.md`) y secciones Origen · Zotero · Calibre · Notas. Migradas al formato único el 2026-09-07 (FD3); las nuevas las escribe `scripts_for_fuentes/ingesta` |
 | `resumen_catalogacion.tsv` | Tabla resumen (una fila por libro) — **fuente de verdad** para `main.sh` |
 | `main.sh` + `config.sh` + `lib/` | Herramienta que aplica el TSV a Calibre con `calibredb set_metadata` |
 

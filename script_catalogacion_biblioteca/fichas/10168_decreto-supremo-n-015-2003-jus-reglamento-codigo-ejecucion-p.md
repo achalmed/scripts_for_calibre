@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Supremo N.° 015-2003-JUS. Reglamento codigo ejecución penal
+---
+tipo: ficha-catalogacion
+calibre-id: 10168
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Supremo N.° 015-2003-JUS. Reglamento codigo ejecución penal». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/11_seguridad/ds_015_2003_jus_reglamento_codigo_ejecucion_penal.pdf` · SHA-256 `5274c6035f27f23c…` · 135 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/11_seguridad/ds_015_2003_jus_reglamento_codigo_ejecucion_penal.pdf` · SHA-256 `5274c6035f27f23c…` · 135 págs · con texto
 
 ## Zotero
 | Campo | Valor |

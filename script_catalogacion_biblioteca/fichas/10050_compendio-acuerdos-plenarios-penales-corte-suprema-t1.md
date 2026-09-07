@@ -1,8 +1,20 @@
-# Ficha de catalogación — Compendio acuerdos plenarios penales corte suprema t1
+---
+tipo: ficha-catalogacion
+calibre-id: 10050
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Compendio acuerdos plenarios penales corte suprema t1». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/17_jurisprudencia/compendio_acuerdos_plenarios_penales_corte_suprema_t1.pdf` · SHA-256 `3f2adb400ba55513…` · 590 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/17_jurisprudencia/compendio_acuerdos_plenarios_penales_corte_suprema_t1.pdf` · SHA-256 `3f2adb400ba55513…` · 590 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

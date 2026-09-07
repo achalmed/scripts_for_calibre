@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9911
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Anti-Blanchard. Un enfoque comparativo para el estudio de la macroeconomía». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9911
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Emiliano, Brancaccio/Anti-Blanchard. Un enfoque comparativo para el estudio de la macroeconomia (9911)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Emiliano, Brancaccio/Anti-Blanchard. Un enfoque comparativo para el estudio de la macroeconomia (9911)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Libro publicado por la Universidad Peruana de Ciencias Aplicadas (Lima, 2021), con ISBN, DOI y autores identificados; texto académico completo, por lo que `Book` es el tipo correcto.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                        |
 | --------------- | ------------------------------------------------------------ |
@@ -42,9 +54,7 @@
 | Rights          | © Universidad Peruana de Ciencias Aplicadas (UPC)            |
 | Extra           | DOI: 10.19083/978-612-318-327-1                              |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                    |
 | ------------- | -------------------------------------------------------- |
@@ -71,18 +81,12 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Emiliano, Brancaccio & Samuele, Bibi | Anti-Blanchard. Un enfoque comparativo para el estudio de la macroeconomía | # | 9786123183271 | Universidad Peruana de Ciencias Aplicadas | 2021-06 | Libro (Ed 1).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; teoria_macroeconomica; economia_heterodoxa`
 **Calibre**: `macroeconomia, teoria_macroeconomica, economia_heterodoxa`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: página legal del PDF (UPC, Lima, primera edición mayo/junio de 2021; Depósito Legal BNP n.º 2021-04092 y 2021-04908) y cita de recuperación de eLibro.
+**Confianza: alta.** Evidencia: página legal del PDF (UPC, Lima, primera edición mayo/junio de 2021; Depósito Legal BNP n.º 2021-04092 y 2021-04908) y cita de recuperación de eLibro.
 - El título contiene guion ("Anti-Blanchard"), por lo que el nombre de archivo usa el separador alternativo `|` en todo el nombre (regla del prompt). La regex de importación configurada usa ` - `, así que este archivo no se autoparsea por nombre; no afectó porque los metadatos se cargaron con `calibredb`.
 - El ISBN de la edición impresa figura como marcador `000-000-000-000-0` en la página legal del escaneo. Se usó el ISBN de la versión epub (978-612-318-327-1) con su DOI 10.19083/978-612-318-327-1.
 - El tipo Book de Zotero no tiene campo DOI nativo; el DOI va en `Extra` (Zotero) y en `Ids`/`Comments` (Calibre).

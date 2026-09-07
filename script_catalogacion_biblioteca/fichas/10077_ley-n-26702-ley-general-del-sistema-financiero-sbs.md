@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 26702. Ley general del sistema financiero SBS
+---
+tipo: ficha-catalogacion
+calibre-id: 10077
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 26702. Ley general del sistema financiero SBS». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/07_economia/ley_26702_ley_general_del_sistema_financiero_sbs.pdf` · SHA-256 `f639d2592632debd…` · 63 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/07_economia/ley_26702_ley_general_del_sistema_financiero_sbs.pdf` · SHA-256 `f639d2592632debd…` · 63 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

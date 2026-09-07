@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Supremo N.° 012-2025-IN. Reglamento D.Leg. 1267 PNP vigente
+---
+tipo: ficha-catalogacion
+calibre-id: 10159
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Supremo N.° 012-2025-IN. Reglamento D.Leg. 1267 PNP vigente». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/11_seguridad/ds_012_2025_in_reglamento_dleg_1267_pnp_vigente.pdf` · SHA-256 `27fb8517549d6585…` · 321 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/11_seguridad/ds_012_2025_in_reglamento_dleg_1267_pnp_vigente.pdf` · SHA-256 `27fb8517549d6585…` · 321 págs · con texto
 
 ## Zotero
 | Campo | Valor |

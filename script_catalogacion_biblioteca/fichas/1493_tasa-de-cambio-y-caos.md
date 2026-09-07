@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 1493
+zotero-key: KM39Q8KM
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «La relacion sobre la tasa de cambio y caos». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 1493
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/La relacion sobre la tasa de cambio y caos (1493)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/La relacion sobre la tasa de cambio y caos (1493)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Es un texto breve (4 paginas) de tipo ensayo/apunte sobre dolarizacion, tipo de cambio y politica monetaria, generado con LibreOffice Writer, sin autor, institucion, fecha ni datos editoriales. Al ser un documento inedito sin datos de publicacion, `Manuscript` con Type `Unpublished manuscript` es el tipo adecuado.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -36,9 +48,7 @@
 | Rights          |                                              |
 | Extra           |                                              |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -68,17 +78,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - La relacion sobre la tasa de cambio y caos - # -  -  -  - Apuntes de estudio.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; finanzas_internacionales`
 **Calibre**: `macroeconomia, finanzas_internacionales`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- Nivel de confianza: baja.
+Nivel de confianza: baja.
 - Evidencia usada: texto completo del PDF (titulo en la primera linea, contenido sobre dolarizacion informal, Plan de Convertibilidad argentino y caso del sucre ecuatoriano) y metadatos incrustados (LibreOffice Writer 25.2, fecha de creacion invalida).
 - El documento tiene apariencia de ensayo o apunte de estudio personal; la redaccion es informal y no hay aparato de citas.

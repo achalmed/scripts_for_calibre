@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 27867. Orgánica gobiernos regionales
+---
+tipo: ficha-catalogacion
+calibre-id: 10061
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 27867. Orgánica gobiernos regionales». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/02_leyes_organicas/ley_27867_organica_gobiernos_regionales.pdf` · SHA-256 `731aaef6e6628108…` · 75 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/02_leyes_organicas/ley_27867_organica_gobiernos_regionales.pdf` · SHA-256 `731aaef6e6628108…` · 75 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 30512. Institutos escuelas educacion superior
+---
+tipo: ficha-catalogacion
+calibre-id: 10025
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 30512. Institutos escuelas educacion superior». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/12_educacion/ley_30512_institutos_escuelas_educacion_superior.pdf` · SHA-256 `a7cdeed85fa6b9dd…` · 21 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/12_educacion/ley_30512_institutos_escuelas_educacion_superior.pdf` · SHA-256 `a7cdeed85fa6b9dd…` · 21 págs · con texto
 
 ## Zotero
 | Campo | Valor |

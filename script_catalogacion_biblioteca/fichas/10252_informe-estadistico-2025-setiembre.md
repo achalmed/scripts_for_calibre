@@ -1,8 +1,20 @@
-# Ficha de catalogación — Informe estadístico 2025 setiembre
+---
+tipo: ficha-catalogacion
+calibre-id: 10252
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Informe estadístico 2025 setiembre». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/inpe/informe_estadistico_2025_setiembre/informe_estadistico_2025_setiembre_v001_2026-09-02.pdf` · SHA-256 `9121c86c0100bd65…` · 127 págs · con texto
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/inpe/informe_estadistico_2025_setiembre/informe_estadistico_2025_setiembre_v001_2026-09-02.pdf` · SHA-256 `9121c86c0100bd65…` · 127 págs · con texto
 
 ## Zotero
 | Campo | Valor |

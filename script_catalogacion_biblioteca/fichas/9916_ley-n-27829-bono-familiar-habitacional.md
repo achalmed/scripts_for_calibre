@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 27829. Bono familiar habitacional
+---
+tipo: ficha-catalogacion
+calibre-id: 9916
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 27829. Bono familiar habitacional». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/20_desarrollo_productivo/ley_27829_bono_familiar_habitacional.pdf` · SHA-256 `2c016703c2347336…` · 2 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/20_desarrollo_productivo/ley_27829_bono_familiar_habitacional.pdf` · SHA-256 `2c016703c2347336…` · 2 págs · con texto
 
 ## Zotero
 | Campo | Valor |

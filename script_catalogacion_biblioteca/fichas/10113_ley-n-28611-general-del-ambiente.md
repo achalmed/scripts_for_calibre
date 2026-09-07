@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 28611. General del ambiente
+---
+tipo: ficha-catalogacion
+calibre-id: 10113
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 28611. General del ambiente». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/15_ambiente/ley_28611_general_del_ambiente.pdf` · SHA-256 `45f856ea0282f80d…` · 45 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/15_ambiente/ley_28611_general_del_ambiente.pdf` · SHA-256 `45f856ea0282f80d…` · 45 págs · con texto
 
 ## Zotero
 | Campo | Valor |

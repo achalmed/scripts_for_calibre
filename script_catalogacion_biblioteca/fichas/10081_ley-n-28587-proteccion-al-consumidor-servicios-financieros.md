@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 28587. Proteccion al consumidor servicios financieros
+---
+tipo: ficha-catalogacion
+calibre-id: 10081
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 28587. Proteccion al consumidor servicios financieros». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/07_economia/ley_28587_proteccion_al_consumidor_servicios_financieros.pdf` · SHA-256 `4d3cf695930d4f78…` · 3 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/07_economia/ley_28587_proteccion_al_consumidor_servicios_financieros.pdf` · SHA-256 `4d3cf695930d4f78…` · 3 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

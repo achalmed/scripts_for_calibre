@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Legislativo N.° 1106. Lucha eficaz contra el lavado de activos
+---
+tipo: ficha-catalogacion
+calibre-id: 10161
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Legislativo N.° 1106. Lucha eficaz contra el lavado de activos». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/11_seguridad/dleg_1106_lucha_eficaz_contra_el_lavado_de_activos.pdf` · SHA-256 `9d91631d2c36431d…` · 146 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/11_seguridad/dleg_1106_lucha_eficaz_contra_el_lavado_de_activos.pdf` · SHA-256 `9d91631d2c36431d…` · 146 págs · con texto
 
 ## Zotero
 | Campo | Valor |

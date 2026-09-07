@@ -1,8 +1,20 @@
-# Ficha de catalogación — Evolucion pobreza monetaria 2016 2025
+---
+tipo: ficha-catalogacion
+calibre-id: 10180
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Evolucion pobreza monetaria 2016 2025». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/19_informes_permanentes/inei_evolucion_pobreza_monetaria_2016_2025.pdf` · SHA-256 `475cc9c6b9c3539e…` · 425 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/19_informes_permanentes/inei_evolucion_pobreza_monetaria_2016_2025.pdf` · SHA-256 `475cc9c6b9c3539e…` · 425 págs · con texto
 
 ## Zotero
 | Campo | Valor |

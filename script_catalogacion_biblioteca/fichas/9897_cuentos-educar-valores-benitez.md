@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9897
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Cuentos para educar en valores: actividades para animacion a la lectura, educacion para la ciudadania, etica y tutorias». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9897
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para educar en valores (9897)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Laureano, Benitez Grande-Caballero/Cuentos para educar en valores_ actividades para animacion a la lectura, educacion para la ciud (9897)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Libro publicado por Editorial CCS con autor, ISBN y pagina legal verificados en el PDF; corresponde al tipo `Book`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                              |
 | --------------- | ------------------------------------------------------------------ |
@@ -42,9 +54,7 @@
 | Rights          |                                                                    |
 | Extra           |                                                                    |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                                 |
 | ------------- | --------------------------------------------------------------------- |
@@ -71,17 +81,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Laureano, Benitez Grande|Caballero | Cuentos para educar en valores: actividades para animacion a la lectura, educacion para la ciudadania, etica y tutorias | # | 9788490238233 | Editorial CCS | 2011 | Libro.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `pedagogia; didactica; ethics`
 **Calibre**: `pedagogia, didactica, ethics`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: portada y pagina legal del PDF (Laureano Benitez Grande-Caballero, Editorial CCS, Madrid, © 2011, ISBN epub 978-84-9023-823-3) y metadatos incrustados (serie "Materiales para educadores").
+**Confianza: alta.** Evidencia: portada y pagina legal del PDF (Laureano Benitez Grande-Caballero, Editorial CCS, Madrid, © 2011, ISBN epub 978-84-9023-823-3) y metadatos incrustados (serie "Materiales para educadores").
 - **Advertencia sobre el nombre de archivo**: el apellido del autor contiene guion (`Grande-Caballero`), por lo que se uso el separador alternativo `|` en todo el nombre de archivo, incluida la sustitucion del guion interno del apellido, para no romper la expresion regular de Calibre. Si se prefiere conservar el guion del apellido, corregir los metadatos manualmente tras importar.
 - El ISBN registrado es el de la edicion epub (unico presente en el documento).

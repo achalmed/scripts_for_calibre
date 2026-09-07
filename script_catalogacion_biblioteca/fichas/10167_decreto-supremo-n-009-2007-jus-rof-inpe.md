@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Supremo N.° 009-2007-JUS. Rof inpe
+---
+tipo: ficha-catalogacion
+calibre-id: 10167
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Supremo N.° 009-2007-JUS. Rof inpe». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/11_seguridad/ds_009_2007_jus_rof_inpe.pdf` · SHA-256 `f2fb3331080234ba…` · 91 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/11_seguridad/ds_009_2007_jus_rof_inpe.pdf` · SHA-256 `f2fb3331080234ba…` · 91 págs · con texto
 
 ## Zotero
 | Campo | Valor |

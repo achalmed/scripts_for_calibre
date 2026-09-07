@@ -1,8 +1,20 @@
-# Ficha de catalogación — Reglamento camara de diputados
+---
+tipo: ficha-catalogacion
+calibre-id: 10090
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Reglamento camara de diputados». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/03_congreso/reglamento_camara_de_diputados.pdf` · SHA-256 `c1eecf90008d23bb…` · 135 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/03_congreso/reglamento_camara_de_diputados.pdf` · SHA-256 `c1eecf90008d23bb…` · 135 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 1660
+zotero-key: 2IXSD7SV
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «¿Qué es la ingeniería financiera?». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 1660
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Que es la ingenieria financiera (1660)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/_Que es la ingenieria financiera_ (1660)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: El PDF se titula "LECTURA 2 — ¿QUÉ ES LA INGENIERÍA FINANCIERA?", es decir, una lectura de curso sin autor, editorial ni datos de publicacion formal. Como material docente inedito corresponde `Manuscript` con Type `Lecture notes`, y no `Book` ni `Document`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -36,9 +48,7 @@
 | Rights          |                                   |
 | Extra           |                                   |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -68,18 +78,12 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - ¿Qué es la ingeniería financiera? - # -  -  -  - Lectura.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `economia_financiera; derivados_financieros; gestion_riesgos`
 **Calibre**: `economia_financiera, derivados_financieros, gestion_riesgos`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media.** Evidencia usada: texto del PDF (encabezado "LECTURA 2 — ¿QUÉ ES LA INGENIERÍA FINANCIERA?") y pdfinfo (23 paginas, sin fecha valida, Ghostscript).
+**Confianza: media.** Evidencia usada: texto del PDF (encabezado "LECTURA 2 — ¿QUÉ ES LA INGENIERÍA FINANCIERA?") y pdfinfo (23 paginas, sin fecha valida, Ghostscript).
 - Sin autor, institucion, curso ni fecha identificables en el texto extraido; campos vacios por regla de no inventar. El contenido sigue de cerca la introduccion clasica de manuales de ingenieria financiera (estilo Marshall y Bansal), pero la fuente exacta no consta en el PDF, por lo que no se registra.
 - El titulo contiene los signos "¿?" — validos en Linux, pero pueden dar problemas si la biblioteca se copia a Windows.
 - El nombre de archivo comienza con ` - ` porque el campo Autor esta vacio.

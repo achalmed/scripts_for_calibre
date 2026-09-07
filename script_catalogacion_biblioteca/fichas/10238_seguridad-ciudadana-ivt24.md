@@ -1,8 +1,20 @@
-# Ficha de catalogación — Seguridad ciudadana ivt24
+---
+tipo: ficha-catalogacion
+calibre-id: 10238
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Seguridad ciudadana ivt24». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/inei/seguridad_ciudadana_ivt24/seguridad_ciudadana_ivt24_v001_2026-09-02.pdf` · SHA-256 `cb49482381f5b014…` · 86 págs · con texto
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/inei/seguridad_ciudadana_ivt24/seguridad_ciudadana_ivt24_v001_2026-09-02.pdf` · SHA-256 `cb49482381f5b014…` · 86 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -1,8 +1,20 @@
-# Ficha de catalogación — Pacto internacional derechos economicos sociales culturales
+---
+tipo: ficha-catalogacion
+calibre-id: 10185
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Pacto internacional derechos economicos sociales culturales». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/16_derechos_humanos/pacto_internacional_derechos_economicos_sociales_culturales.pdf` · SHA-256 `63bc00906f36b946…` · 10 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/16_derechos_humanos/pacto_internacional_derechos_economicos_sociales_culturales.pdf` · SHA-256 `63bc00906f36b946…` · 10 págs · con texto
 
 ## Zotero
 | Campo | Valor |

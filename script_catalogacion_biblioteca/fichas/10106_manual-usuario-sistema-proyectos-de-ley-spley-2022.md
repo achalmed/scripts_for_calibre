@@ -1,8 +1,20 @@
-# Ficha de catalogación — Manual usuario sistema proyectos de ley SPLEY 2022
+---
+tipo: ficha-catalogacion
+calibre-id: 10106
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Manual usuario sistema proyectos de ley SPLEY 2022». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/03_congreso/manual_usuario_sistema_proyectos_de_ley_spley_2022.pdf` · SHA-256 `76eab22b513d8f64…` · 28 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/03_congreso/manual_usuario_sistema_proyectos_de_ley_spley_2022.pdf` · SHA-256 `76eab22b513d8f64…` · 28 págs · con texto
 
 ## Zotero
 | Campo | Valor |

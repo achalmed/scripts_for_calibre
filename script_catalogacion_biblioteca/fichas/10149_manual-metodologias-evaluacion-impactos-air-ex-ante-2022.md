@@ -1,8 +1,20 @@
-# Ficha de catalogación — Manual metodologias evaluación impactos AIR ex ante 2022
+---
+tipo: ficha-catalogacion
+calibre-id: 10149
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Manual metodologias evaluación impactos AIR ex ante 2022». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/18_manuales/manual_metodologias_evaluacion_impactos_air_ex_ante_2022.pdf` · SHA-256 `c2de19998ad57a3f…` · 88 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/18_manuales/manual_metodologias_evaluacion_impactos_air_ex_ante_2022.pdf` · SHA-256 `c2de19998ad57a3f…` · 88 págs · con texto
 
 ## Zotero
 | Campo | Valor |

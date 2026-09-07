@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9990
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Taller 41. Paráfrasis con IA sin perder tu estilo». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9990
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Christopher, Hernandez Amesquita/Taller 41. Parafrasis con IA sin perder tu estilo (9990)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: Fecha impresa en las diapositivas (11 de diciembre de 2025).
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | --- | --- |
@@ -24,9 +36,7 @@
 | # of Pages | 53 |
 | Language | es |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | --- | --- |
@@ -43,14 +53,10 @@
 | Paginas | 53 |
 | Item type | Presentation |
 
----
-
-### TAGS
-
 **Zotero**: `apa; inteligencia_artificial; redaccion_academica`
 **Calibre**: `apa, inteligencia_artificial, redaccion_academica`
 
-### NOTAS
+## Notas
 
-- Confianza: **alta**. Fecha impresa en las diapositivas (11 de diciembre de 2025).
+Confianza: **alta**. Fecha impresa en las diapositivas (11 de diciembre de 2025).
 - Origen: `10 Class/areas/Academic_Class-Metodologia-investigacion/course_00_sistema_apa/06_RECURSOS/talleres/taller 41 parafrasis con ia sin perder tu estilo.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).

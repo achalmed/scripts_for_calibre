@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9898
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Cuentos para educar en familia: dirigido a ninos y ninas de entre 6 y 12 anos para fomentar la educacion sexual». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9898
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para educar en familia-Educacion-sexual (9898)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Maria Victoria, Ramirez/Cuentos para educar en familia_ dirigido a ninos y ninas de entre 6 y 12 anos para fomentar la (9898)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Obra publicada formalmente por CEAPA con pagina de creditos, autores identificados y primera edicion fechada, por lo que `Book` es el tipo mas especifico.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                              |
 | --------------- | ------------------------------------------------------------------ |
@@ -42,9 +54,7 @@
 | Rights          |                                                                    |
 | Extra           | Illustrator: El Rubencio                                           |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                                 |
 | ------------- | --------------------------------------------------------------------- |
@@ -71,17 +81,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Maria Victoria, Ramirez & Ana Belen, Carmona & Carlos, de la Cruz - Cuentos para educar en familia: dirigido a ninos y ninas de entre 6 y 12 anos para fomentar la educacion sexual - # -  - CEAPA - 2009 - Libro (Ed 1).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `pedagogia; didactica; aprendizaje`
 **Calibre**: `pedagogia, didactica, aprendizaje`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: portada y pagina de creditos del PDF (autores, Edita: CEAPA, Madrid, Primera edicion: noviembre 2009).
+**Confianza: alta.** Evidencia: portada y pagina de creditos del PDF (autores, Edita: CEAPA, Madrid, Primera edicion: noviembre 2009).
 - Sin ISBN visible en el documento.
 - El PDF esta maquetado a doble pagina (paginas apaisadas); las 66 paginas del PDF equivalen a mas paginas impresas.

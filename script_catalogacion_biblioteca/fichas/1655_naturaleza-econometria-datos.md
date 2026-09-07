@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 1655
+zotero-key: MNCWGTBM
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Naturaleza de la econometria y de los datos economicos». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 1655
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Naturaleza de la econometria y de los datos economicos (1655)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Naturaleza de la econometria y de los datos economicos (1655)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Son 5 paginas de apuntes introductorios de econometria (definicion de econometria, etapas del analisis empirico, ejemplo del modelo economico de la delincuencia de Gary Becker), sin autor, editorial ni datos de publicacion. Al ser material docente inedito, `Manuscript` con Type `Lecture notes` es el tipo adecuado.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -36,9 +48,7 @@
 | Rights          |                                                      |
 | Extra           |                                                      |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -68,17 +78,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Naturaleza de la econometria y de los datos economicos - # -  -  -  - Apuntes de clase.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `fundamentos_econometria; estadistica`
 **Calibre**: `fundamentos_econometria, estadistica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- Nivel de confianza: baja.
+Nivel de confianza: baja.
 - Evidencia usada: texto del PDF (titulo en cabecera, contenido introductorio de econometria) y metadatos incrustados (5 paginas; PDF creado en octubre de 2006, dato no usado como fecha).
 - El titulo y el contenido (incluido el ejemplo del modelo de la delincuencia de Gary Becker) coinciden con el capitulo 1 de "Introduccion a la econometria" de J. M. Wooldridge, pero el documento no menciona esa obra; parece un resumen o apunte de clase basado en ella. No se registro la obra contenedora por falta de evidencia interna.

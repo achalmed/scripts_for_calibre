@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 31084. Presupuesto del sector público para el año fiscal 2021
+---
+tipo: ficha-catalogacion
+calibre-id: 10236
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 31084. Presupuesto del sector público para el año fiscal 2021». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/presupuesto/aprobado/2021/Ley_31084_Presupuesto_del_Sector_Publico_para_el_Anio_Fiscal_2021.pdf` · SHA-256 `95af0a52d8cceb67…` · 76 págs · con texto
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/presupuesto/aprobado/2021/Ley_31084_Presupuesto_del_Sector_Publico_para_el_Anio_Fiscal_2021.pdf` · SHA-256 `95af0a52d8cceb67…` · 76 págs · con texto
 
 ## Zotero
 | Campo | Valor |

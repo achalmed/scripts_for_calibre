@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 3332
+zotero-key: SRAVXLK5
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Analisis en forma estrategica: juegos estaticos I». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 3332
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Analisis en forma estrategica_ juegos estaticos i (3332)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Analisis en forma estrategica_ juegos estaticos I (3332)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Documento de 16 paginas con notas de curso sobre juegos estaticos (dominacion, mejor respuesta, dominacion iterativa, equilibrio de Nash), redactado en tono docente ("Empezaremos nuestro analisis...", "Ver Tablero"), sin autor, editorial ni datos de publicacion. Corresponde `Manuscript` con Type `Lecture notes`, el tipo indicado para apuntes de clase ineditos.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -33,9 +45,7 @@
 | Rights       | |
 | Extra        | |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -62,17 +72,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Analisis en forma estrategica: juegos estaticos I - # -  -  - 2008 - Apuntes de clase.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `microeconomia; teoria_juegos`
 **Calibre**: `microeconomia, teoria_juegos`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto de las primeras paginas y metadatos incrustados (CreationDate 2008-09-30, Acrobat Distiller 7.0.5). No hay autor, institucion ni curso identificados en el PDF.
+**Confianza: baja.** Evidencia: texto de las primeras paginas y metadatos incrustados (CreationDate 2008-09-30, Acrobat Distiller 7.0.5). No hay autor, institucion ni curso identificados en el PDF.
 - La fecha 2008 proviene unicamente de la fecha de creacion del PDF incrustada; verificar antes de usarla en citas formales.
 - Forma pareja con el item 3330 ("Juegos estaticos II"), mismo origen y formato.

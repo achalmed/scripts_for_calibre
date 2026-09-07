@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 4392
+zotero-key: GLDZXGZQ
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Expectativas y politica macroeconomica». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 4392
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Expectativas y politica macroeconomicas (4392)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/A., Novales/Expectativas y politica macroeconomica (4392)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: El PDF son diapositivas de clase sobre expectativas y politica macroeconomica (curva de Phillips, tasa natural de paro) con pie de pagina de copyright "(c) A. Novales y C. Sebastian" en cada lamina, lo que identifica a los autores/presentadores. Corresponde a `Presentation` con Type `Class slides`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -32,9 +44,7 @@
 | Rights       | (c) A. Novales y C. Sebastian            |
 | Extra        |                                          |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -64,17 +74,11 @@
 A., Novales & C., Sebastian - Expectativas y politica macroeconomica - # -  -  -  - Diapositiva.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; politica_economica; teoria_macroeconomica`
 **Calibre**: `macroeconomia, politica_economica, teoria_macroeconomica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media-alta** en los autores (pie "(c) A. Novales y C. Sebastian" repetido en todas las laminas); **baja** en la fecha (metadato incrustado invalido, queda vacia).
+**Confianza: media-alta** en los autores (pie "(c) A. Novales y C. Sebastian" repetido en todas las laminas); **baja** en la fecha (metadato incrustado invalido, queda vacia).
 - Los nombres de pila de los autores solo aparecen como iniciales (A. y C.); no se expandieron por falta de evidencia en el documento. Probablemente corresponden a los autores del manual universitario de analisis macroeconomico del que derivan estas laminas; verificar manualmente si se desea completar.
 - Titulo normalizado a singular "macroeconomica" tal como aparece en la portada del PDF (el titulo del archivo decia "macroeconomicas").

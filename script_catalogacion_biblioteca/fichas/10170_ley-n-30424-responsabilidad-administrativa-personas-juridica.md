@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 30424. Responsabilidad administrativa personas juridicas
+---
+tipo: ficha-catalogacion
+calibre-id: 10170
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 30424. Responsabilidad administrativa personas juridicas». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/11_seguridad/ley_30424_responsabilidad_administrativa_personas_juridicas.pdf` · SHA-256 `66f0f613d22b1dc8…` · 4 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/11_seguridad/ley_30424_responsabilidad_administrativa_personas_juridicas.pdf` · SHA-256 `66f0f613d22b1dc8…` · 4 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

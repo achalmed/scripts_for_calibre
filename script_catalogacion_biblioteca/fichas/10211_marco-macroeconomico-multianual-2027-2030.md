@@ -1,8 +1,20 @@
-# Ficha de catalogación — Marco Macroeconómico Multianual 2027-2030
+---
+tipo: ficha-catalogacion
+calibre-id: 10211
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Marco Macroeconómico Multianual 2027-2030». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/mmm_2027_2030/mmm_2027_2030_v001_2026-09-04.pdf` · SHA-256 `2bec400f19265754…` · 295 págs · con texto
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/mmm_2027_2030/mmm_2027_2030_v001_2026-09-04.pdf` · SHA-256 `2bec400f19265754…` · 295 págs · con texto
 
 ## Zotero
 | Campo | Valor |

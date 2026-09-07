@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 26859. Orgánica de elecciones
+---
+tipo: ficha-catalogacion
+calibre-id: 10053
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 26859. Orgánica de elecciones». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/02_leyes_organicas/ley_26859_organica_de_elecciones.pdf` · SHA-256 `20908b0b095fed30…` · 145 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/02_leyes_organicas/ley_26859_organica_de_elecciones.pdf` · SHA-256 `20908b0b095fed30…` · 145 págs · con texto
 
 ## Zotero
 | Campo | Valor |

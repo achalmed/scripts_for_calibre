@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 48
+zotero-key: XKNFW94X
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «60 años después de Bretton Woods». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 48
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/60 anos de bretton woods (48)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Pedro, Solbes Mira/60 anos despues de Bretton Woods (48)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Magazine Article
 **Justificacion**: Es una colaboracion publicada en el *Boletin Economico de ICE* n. 2814 (6-12 de septiembre de 2004), una revista institucional no revisada por pares, que reproduce las conferencias de Pedro Solbes y Rodrigo de Rato en el seminario del FMI y el Banco de Espana; `Magazine Article` es mas adecuado que `Book` (tipo actual en los metadatos) o `Journal Article`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                        |
 | --------------- | ------------------------------------------------------------ |
@@ -35,9 +47,7 @@
 | Rights          |                                                              |
 | Extra           | JEL: F33                                                     |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -64,27 +74,16 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - 60 anos despues de Bretton Woods - # -  - Boletin Economico de ICE - 2004 - Articulo de revista.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `finanzas_internacionales; economia_internacional; historia_economica`
 **Calibre**: `finanzas_internacionales, economia_internacional, historia_economica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta** para la fuente y fecha (cabecera del PDF: "BOLETIN ECONOMICO DE ICE N° 2814, del 6 al 12 de septiembre de 2004", paginas impresas 11-21).
+**Confianza: alta** para la fuente y fecha (cabecera del PDF: "BOLETIN ECONOMICO DE ICE N° 2814, del 6 al 12 de septiembre de 2004", paginas impresas 11-21).
 - La pieza es una colaboracion sin firma que reproduce discursos de Pedro Solbes y Rodrigo de Rato; no se asigna autor para no atribuir la autoria editorial a los oradores. Si se prefiere, pueden registrarse ambos oradores como autores.
 - El `zotero_metadata.json` existente clasifica el item como Book con editorial "Informacion Comercial Espanola (ICE)"; esta ficha lo corrige a Magazine Article.
 - El nombre de archivo comienza con el campo de autor vacio (espacio antes del primer separador), conforme a la regla de campos vacios de la expresion regular.
-
----
-
-### ACTUALIZACIÓN (2026-07-27) — Identificación por búsqueda web
-
-**Autor(es)**: Pedro Solbes Mira y Rodrigo de Rato y Figaredo (conferencias); pieza editorial del Boletín Económico de ICE
+**ACTUALIZACIÓN (2026-07-27) — Identificación por búsqueda web.** **Autor(es)**: Pedro Solbes Mira y Rodrigo de Rato y Figaredo (conferencias); pieza editorial del Boletín Económico de ICE
 **Obra contenedora / datos nuevos**: «60 años después de Bretton Woods», Boletín Económico de ICE n.º 2814 (junio-julio 2004), pp. 11-21. Conferencias del seminario FMI–Banco de España «Dólares, Deuda y Déficit», Madrid, 14 de junio de 2004
 **Evidencia**: https://www.revistasice.com/index.php/BICE/article/view/3603 — el artículo aparece en el archivo oficial de la revista (Ministerio de Economía y Comercio, España) con el mismo título y contenido
 **Confianza**: alta

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 436
+zotero-key: LRAL64KG
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Bretton Woods, el BM y el FMI». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 436
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Bretton woods, el bm y el fmi (436)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Bretton Woods, el BM y el FMI (436)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Documento de 9 paginas generado desde HTML (htmldoc) que resume el sistema de Bretton Woods, el FMI, el BM, el sistema de Naciones Unidas y la politica de cooperacion del Estado Espanol, sin autor, fuente ni datos de publicacion. Es un texto de estudio/apunte inedito, por lo que corresponde `Manuscript` con Type `Lecture notes`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -33,9 +45,7 @@
 | Rights       | |
 | Extra        | |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -62,16 +72,10 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Bretton Woods, el BM y el FMI - # -  -  -  - Apuntes de clase.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `economia_internacional; finanzas_internacionales; historia_economica`
 **Calibre**: `economia_internacional, finanzas_internacionales, historia_economica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto completo del PDF y metadatos incrustados (Producer htmldoc 1.8.23; fecha de creacion corrupta, no utilizable). Sin autor ni institucion identificables; el contexto (Estado Espanol, cita del "ABC de las Naciones Unidas", datos de 1997) sugiere material docente espanol de circa 1998-2002, sin evidencia suficiente para fijar fecha.
+**Confianza: baja.** Evidencia: texto completo del PDF y metadatos incrustados (Producer htmldoc 1.8.23; fecha de creacion corrupta, no utilizable). Sin autor ni institucion identificables; el contexto (Estado Espanol, cita del "ABC de las Naciones Unidas", datos de 1997) sugiere material docente espanol de circa 1998-2002, sin evidencia suficiente para fijar fecha.
 - Cita a Samir Amin y otras fuentes sin referencias completas; parece extracto o apunte derivado de materiales de un curso de cooperacion internacional.

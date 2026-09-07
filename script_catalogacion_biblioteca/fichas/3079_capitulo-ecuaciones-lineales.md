@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 3079
+zotero-key: PCIHAR9M
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Sistemas de ecuaciones lineales». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 3079
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Sistema de ecuaciones lineales (3079)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Sistemas de ecuaciones lineales (3079)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book Section
 **Justificacion**: El PDF es el "Capítulo 7. SISTEMAS DE ECUACIONES LINEALES" de una obra mayor (paginacion continua 109-124, encabezados de capitulo), del mismo compendio anonimo de apuntes que los ids 3083, 3078 y 3081. Al ser una seccion de una obra contenedora corresponde `Book Section`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -47,9 +59,7 @@
 | Rights          |                                      |
 | Extra           | Chapter Number: 7                    |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -79,18 +89,12 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Sistemas de ecuaciones lineales - Apuntes de matematica y estadistica # -  -  - 2004 - Apuntes de estudio.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `algebra_lineal; mathematics`
 **Calibre**: `algebra_lineal, mathematics`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media.** Evidencia usada: texto del PDF (encabezado "Capítulo 7. SISTEMAS DE ECUACIONES LINEALES", paginacion 109-124) y pdfinfo (16 paginas, Acrobat Distiller 4.0 para Macintosh, CreationDate enero 2004).
+**Confianza: media.** Evidencia usada: texto del PDF (encabezado "Capítulo 7. SISTEMAS DE ECUACIONES LINEALES", paginacion 109-124) y pdfinfo (16 paginas, Acrobat Distiller 4.0 para Macintosh, CreationDate enero 2004).
 - Titulo normalizado del PDF ("Sistemas...", en plural) frente al titulo previo del registro ("Sistema de ecuaciones lineales").
 - La fecha 2004 proviene de los metadatos incrustados (fecha de creacion del archivo), no de una pagina legal; tomarla como aproximada.
 - Sin autor ni obra contenedora identificables; `Book Title` vacio por regla de no inventar.

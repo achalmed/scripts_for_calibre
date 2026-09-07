@@ -1,8 +1,20 @@
-# Ficha de catalogación — Resolución Directoral N.° 0002-2025-EF. 6301 modifica directiva general invierte pe
+---
+tipo: ficha-catalogacion
+calibre-id: 10017
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Resolución Directoral N.° 0002-2025-EF. 6301 modifica directiva general invierte pe». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/09_inversion_publica/rd_0002_2025_ef_6301_modifica_directiva_general_invierte_pe.pdf` · SHA-256 `01f56d998fefa990…` · 2 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/09_inversion_publica/rd_0002_2025_ef_6301_modifica_directiva_general_invierte_pe.pdf` · SHA-256 `01f56d998fefa990…` · 2 págs · con texto
 
 ## Zotero
 | Campo | Valor |

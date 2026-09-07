@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 1973
+zotero-key: FI6BXCBZ
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Manual de analisis de estados financieros». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 1973
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Manual de analisis estados financieros (1973)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Instituto Europeo de Gestion Empresarial/Manual de analisis de estados financieros (1973)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Report
 **Justificacion**: Es un manual formativo de 64 paginas sobre analisis de estados financieros con copyright institucional ("(c) Instituto Europeo de Gestion Empresarial-2007") y sin autor personal. Segun los criterios de Zotero, los manuales y documentos institucionales se registran como `Report`, con la institucion como autor corporativo.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -41,9 +53,7 @@
 | Rights          | (c) Instituto Europeo de Gestion Empresarial-2007 |
 | Extra           |                                                  |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -73,17 +83,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Instituto Europeo de Gestion Empresarial - Manual de analisis de estados financieros - # -  - Instituto Europeo de Gestion Empresarial - 2007 - Guia.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `analisis_financiero; contabilidad_financiera; finanzas_corporativas`
 **Calibre**: `analisis_financiero, contabilidad_financiera, finanzas_corporativas`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- Nivel de confianza: media.
+Nivel de confianza: media.
 - Evidencia usada: sumario y texto de las primeras paginas (siete unidades sobre analisis de estados financieros), bibliografia final y linea de copyright en la ultima pagina: "(c) Instituto Europeo de Gestion Empresarial-2007". Coincide con la fecha de creacion del PDF (marzo de 2007).
 - No consta autor personal ni lugar de publicacion. La lista oficial de Clasificadores no incluye "Manual"; se uso "Guia" como valor mas cercano. Tag nuevo sugerido: no aplica (los tags de la lista cubren el contenido).

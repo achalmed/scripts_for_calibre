@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9590
+zotero-key: XC4I3BL8
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Numeros indices». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9590
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Numeros indices (9590)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Numeros indices (9590)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: Es un juego de diapositivas (21 laminas creadas con LibreOffice Impress) cuyo unico texto extraible es el titulo "Numeros indices"; el resto del contenido parece ser imagenes o graficos sin capa de texto. Corresponde a material docente tipo diapositivas de clase, por lo que `Presentation` con Type `Class slides` es el tipo mas especifico.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -32,9 +44,7 @@
 | Rights       |                 |
 | Extra        |                 |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -64,17 +74,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Numeros indices - # -  -  -  - Diapositiva.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `estadistica; economia_descriptiva`
 **Calibre**: `estadistica, economia_descriptiva`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- Nivel de confianza: baja.
+Nivel de confianza: baja.
 - Evidencia usada: unico texto extraible ("Numeros indices" en la portada), nombre de archivo y metadatos incrustados (21 laminas, LibreOffice Impress 25.8, fecha de creacion invalida). Las laminas interiores no tienen capa de texto extraible.
 - Tema muy similar al item 8877 ("Numeros indice", 38 laminas); revisar si son versiones distintas del mismo material antes de importar para evitar duplicados.

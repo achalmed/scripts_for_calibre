@@ -1,8 +1,20 @@
-# Ficha de catalogación — Texto Único Ordenado de la Ley N.° 27806. Transparencia acceso información pública
+---
+tipo: ficha-catalogacion
+calibre-id: 10042
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Texto Único Ordenado de la Ley N.° 27806. Transparencia acceso información pública». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/04_administracion_publica/tuo_ley_27806_transparencia_acceso_informacion_publica.pdf` · SHA-256 `6e614e9068df6de8…` · 9 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/04_administracion_publica/tuo_ley_27806_transparencia_acceso_informacion_publica.pdf` · SHA-256 `6e614e9068df6de8…` · 9 págs · con texto
 
 ## Zotero
 | Campo | Valor |

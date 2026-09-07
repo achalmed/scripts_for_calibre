@@ -1,8 +1,20 @@
-# Ficha de catalogación — Enla2024 reporte tecnico
+---
+tipo: ficha-catalogacion
+calibre-id: 10199
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Enla2024 reporte tecnico». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/2026-08-07-diagnostico-educacion-ayacucho/fuentes/enla2024_reporte_tecnico.pdf` · SHA-256 `ee277c98812737d4…` · 159 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/2026-08-07-diagnostico-educacion-ayacucho/fuentes/enla2024_reporte_tecnico.pdf` · SHA-256 `ee277c98812737d4…` · 159 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

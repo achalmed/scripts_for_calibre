@@ -1,8 +1,20 @@
-# Ficha de catalogación — INEI — Estadisticas seguridad ciudadana nov2025 abr2026
+---
+tipo: ficha-catalogacion
+calibre-id: 9927
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «INEI — Estadisticas seguridad ciudadana nov2025 abr2026». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/informes/2026-09-02-delegacion-facultades-2026/inei_estadisticas_seguridad_ciudadana_nov2025_abr2026.pdf` · SHA-256 `2f3fe08ec884db13…` · 38 págs · con texto
+## Origen
+
+`02_investigacion/informes/2026-09-02-delegacion-facultades-2026/inei_estadisticas_seguridad_ciudadana_nov2025_abr2026.pdf` · SHA-256 `2f3fe08ec884db13…` · 38 págs · con texto
 
 ## Zotero
 | Campo | Valor |

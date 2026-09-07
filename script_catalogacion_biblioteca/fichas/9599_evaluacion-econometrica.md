@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9599
+zotero-key: MIYXX87B
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Evaluacion econometrica». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9599
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Evaluacion econometrica (9599)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Evaluacion econometrica (9599)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Es un cuadro-resumen de 2 paginas de un curso de econometria (supuestos violados, heteroscedasticidad y autocorrelacion: consecuencias, tests de deteccion y soluciones), sin autor ni datos de publicacion. Corresponde a `Manuscript` con Type `Lecture notes` como material docente inedito.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -36,9 +48,7 @@
 | Rights          |                         |
 | Extra           |                         |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -68,16 +78,10 @@
  - Evaluacion econometrica - # -  -  -  - Resumen.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `fundamentos_econometria; regresion`
 **Calibre**: `fundamentos_econometria, regresion`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto completo del PDF (2 paginas). Sin autor, fecha ni procedencia; la fecha incrustada es invalida (ano 0101) y queda vacia.
+**Confianza: baja.** Evidencia: texto completo del PDF (2 paginas). Sin autor, fecha ni procedencia; la fecha incrustada es invalida (ano 0101) y queda vacia.
 - El nombre de archivo comienza con el campo autor vacio seguido del separador, conforme a la regla de campos vacios.

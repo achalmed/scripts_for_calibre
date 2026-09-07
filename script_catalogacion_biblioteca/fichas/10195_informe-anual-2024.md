@@ -1,8 +1,20 @@
-# Ficha de catalogación — Informe anual 2024
+---
+tipo: ficha-catalogacion
+calibre-id: 10195
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Informe anual 2024». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/2026-08-07-diagnostico-educacion-ayacucho/fuentes/defensoria_informe_anual_2024.pdf` · SHA-256 `ea81524579abe1ec…` · 490 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/2026-08-07-diagnostico-educacion-ayacucho/fuentes/defensoria_informe_anual_2024.pdf` · SHA-256 `ea81524579abe1ec…` · 490 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

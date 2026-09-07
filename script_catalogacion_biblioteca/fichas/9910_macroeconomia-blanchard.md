@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9910
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Macroeconomía». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9910
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Olivier, Blanchard/Macroeconomia (9910)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Olivier, Blanchard/Macroeconomia (9910)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Es un libro publicado con editorial (Pearson Educación), número de edición (7.a), ISBN y autor identificado; manual académico completo, no un capítulo ni un informe, por lo que `Book` es el tipo más específico.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                        |
 | --------------- | ------------------------------------------------------------ |
@@ -42,9 +54,7 @@
 | Rights          | © 2017, PEARSON EDUCACIÓN, S.A.                              |
 | Extra           |                                                              |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                  |
 | ------------- | ------------------------------------------------------ |
@@ -71,17 +81,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Olivier, Blanchard - Macroeconomía - # - 9788490355350 - Pearson Educación - 2017 - Libro (Ed 7).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; teoria_macroeconomica; politica_economica`
 **Calibre**: `macroeconomia, teoria_macroeconomica, politica_economica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: página de datos de catalogación bibliográfica del propio PDF (Pearson Educación, S.A., Madrid, 2017, ISBN 978-84-9035-535-0) y metadatos incrustados (Author: Olivier Blanchard).
+**Confianza: alta.** Evidencia: página de datos de catalogación bibliográfica del propio PDF (Pearson Educación, S.A., Madrid, 2017, ISBN 978-84-9035-535-0) y metadatos incrustados (Author: Olivier Blanchard).
 - La página de catalogación declara 576 páginas; el PDF contiene 574. Se registró 576 (dato bibliográfico oficial).
 - El tipo Book de Zotero no tiene campo DOI/traductor visible en tabla; traductor va como Translator y en Comments de Calibre.

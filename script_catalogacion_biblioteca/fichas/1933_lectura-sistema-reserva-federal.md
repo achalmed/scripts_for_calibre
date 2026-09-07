@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 1933
+zotero-key: NR3Z2IV7
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «¿Qué es el FED (Sistema de Reserva Federal)?». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 1933
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Sistema de reserva federal (1933)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Efxto/_Que es el FED (Sistema de Reserva Federal)_ (1933)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Documento divulgativo de 8 paginas sobre la estructura y funciones de la FED, sin autor, sin fuente editorial y sin fecha, aparentemente compilado como material de lectura (generado con PDF24 Creator). Al ser un texto inedito sin datos de publicacion formal, se cataloga como `Manuscript` (Type `Unpublished manuscript`) en lugar del tipo generico `Document`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -36,9 +48,7 @@
 | Rights          |                            |
 | Extra           |                            |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -68,27 +78,16 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Sistema de Reserva Federal - # -  -  -  - Lectura.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `politica_monetaria; banca; macroeconomia`
 **Calibre**: `politica_monetaria, banca, macroeconomia`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia usada: texto del PDF (titulo interno "FED (Sistema de Reserva Federal)" y contenido) y pdfinfo (8 paginas, PDF24 Creator, sin fecha valida).
+**Confianza: baja.** Evidencia usada: texto del PDF (titulo interno "FED (Sistema de Reserva Federal)" y contenido) y pdfinfo (8 paginas, PDF24 Creator, sin fecha valida).
 - Sin autor, fuente ni fecha identificables. El estilo sugiere un articulo web recopilado, pero no consta URL en el documento, por lo que no se registra.
 - La mencion de Ben Bernanke como presidente actual acota la redaccion a 2006-2014; se deja constancia en Comments sin fijar fecha en el registro (regla de no inventar).
 - El nombre de archivo comienza con ` - ` porque el campo Autor esta vacio.
-
----
-
-### ACTUALIZACIÓN (2026-07-27) — Identificación por búsqueda web
-
-**Autor(es)**: Efxto.com (diccionario financiero, autoría institucional)
+**ACTUALIZACIÓN (2026-07-27) — Identificación por búsqueda web.** **Autor(es)**: Efxto.com (diccionario financiero, autoría institucional)
 **Obra contenedora / datos nuevos**: artículo «¿Qué es el FED (Sistema de Reserva Federal)?» del diccionario de Efxto; la frase distintiva del PDF («…es el sistema bancario central de Estados Unidos cuyos objetivos, de acuerdo con la documentación de la FED…») aparece literalmente en ese artículo.
 **Evidencia**: https://efxto.com/diccionario/fed-sistema-de-reserva-federal — coincidencia literal de la frase de apertura. No puede descartarse por completo la dirección inversa de la copia, por eso no se marca confianza alta.
 **Confianza**: media

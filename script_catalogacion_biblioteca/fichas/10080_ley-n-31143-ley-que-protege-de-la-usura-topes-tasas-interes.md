@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 31143. Ley que protege de la usura topes tasas interes
+---
+tipo: ficha-catalogacion
+calibre-id: 10080
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 31143. Ley que protege de la usura topes tasas interes». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/07_economia/ley_31143_ley_que_protege_de_la_usura_topes_tasas_interes.pdf` · SHA-256 `af6d7cef81bb357d…` · 4 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/07_economia/ley_31143_ley_que_protege_de_la_usura_topes_tasas_interes.pdf` · SHA-256 `af6d7cef81bb357d…` · 4 págs · con texto
 
 ## Zotero
 | Campo | Valor |

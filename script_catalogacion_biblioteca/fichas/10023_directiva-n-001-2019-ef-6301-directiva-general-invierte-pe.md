@@ -1,8 +1,20 @@
-# Ficha de catalogación — Directiva N.° 001-2019-EF. 6301 directiva general invierte pe
+---
+tipo: ficha-catalogacion
+calibre-id: 10023
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Directiva N.° 001-2019-EF. 6301 directiva general invierte pe». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/09_inversion_publica/directiva_001_2019_ef_6301_directiva_general_invierte_pe.pdf` · SHA-256 `f2b15561bf8b1446…` · 47 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/09_inversion_publica/directiva_001_2019_ef_6301_directiva_general_invierte_pe.pdf` · SHA-256 `f2b15561bf8b1446…` · 47 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 3075
+zotero-key: 7I7XP6LL
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Indice general». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 3075
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Indice (3075)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Indice general (3075)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book Section
 **Justificacion**: El PDF contiene unicamente el "Indice general" (4 paginas) de una obra de matematicas organizada en capitulos (combinatoria, probabilidad, distribuciones binomial y normal, inferencia, etc.), es decir, una seccion de un libro cuya identidad no consta en el extracto. `Book Section` es el tipo adecuado para secciones de libro como indices, dejando Book Title vacio por falta de evidencia.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -47,9 +59,7 @@
 | Rights          |                |
 | Extra           |                |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -79,18 +89,12 @@
  - Indice general - # -  -  - 2004 - Extracto.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `probabilidad_estadistica; estadistica`
 **Calibre**: `probabilidad_estadistica, estadistica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto del PDF (indice completo) y metadatos incrustados (Acrobat Distiller 4.0 para Macintosh, enero-febrero 2004).
+**Confianza: baja.** Evidencia: texto del PDF (indice completo) y metadatos incrustados (Acrobat Distiller 4.0 para Macintosh, enero-febrero 2004).
 - Este item pertenece a la misma obra que "Inferencia estadistica" (id 3082, capitulo 4) e "Integracion. Calculo de areas" (id 3076, capitulo 11): mismos metadatos tecnicos y misma numeracion de capitulos. La obra parece un texto/apuntes de matematicas de nivel bachillerato-primeros ciclos (probablemente Matematicas Aplicadas a las Ciencias Sociales); no pudo identificarse titulo ni autor.
 - Considerar fusionar los tres items o completar Book Title cuando se identifique la obra contenedora.
 - El nombre de archivo comienza con el campo autor vacio seguido del separador, conforme a la regla de campos vacios.

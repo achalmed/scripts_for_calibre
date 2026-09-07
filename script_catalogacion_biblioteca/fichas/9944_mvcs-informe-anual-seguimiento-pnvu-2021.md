@@ -1,8 +1,20 @@
-# Ficha de catalogación — Informe Anual de Seguimiento de la Política Nacional de Vivienda y Urbanismo 2021
+---
+tipo: ficha-catalogacion
+calibre-id: 9944
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta** (revisada a mano el 2026-09-02). Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Informe Anual de Seguimiento de la Política Nacional de Vivienda y Urbanismo 2021». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta** (revisada a mano el 2026-09-02). Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/19_informes_permanentes/mvcs_informe_anual_seguimiento_pnvu_2021.pdf` · SHA-256 `24ceafb2125e26e2…` · 26 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/19_informes_permanentes/mvcs_informe_anual_seguimiento_pnvu_2021.pdf` · SHA-256 `24ceafb2125e26e2…` · 26 págs · con texto
 
 ## Zotero
 | Campo | Valor |

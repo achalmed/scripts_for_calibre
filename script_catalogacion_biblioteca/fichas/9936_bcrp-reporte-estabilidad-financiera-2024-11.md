@@ -1,8 +1,20 @@
-# Ficha de catalogación — Reporte de Estabilidad Financiera. Noviembre 2024
+---
+tipo: ficha-catalogacion
+calibre-id: 9936
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta** (revisada a mano el 2026-09-02). Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Reporte de Estabilidad Financiera. Noviembre 2024». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta** (revisada a mano el 2026-09-02). Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/19_informes_permanentes/bcrp_reporte_estabilidad_financiera_2024_11.pdf` · SHA-256 `0fb9622f9a0a085e…` · 93 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/19_informes_permanentes/bcrp_reporte_estabilidad_financiera_2024_11.pdf` · SHA-256 `0fb9622f9a0a085e…` · 93 págs · con texto
 
 ## Zotero
 | Campo | Valor |

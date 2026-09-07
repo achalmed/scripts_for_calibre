@@ -1,8 +1,20 @@
-# Ficha de catalogación — INEI — Evolucion tasa homicidios 2022 2025
+---
+tipo: ficha-catalogacion
+calibre-id: 9928
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «INEI — Evolucion tasa homicidios 2022 2025». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/informes/2026-09-02-delegacion-facultades-2026/inei_evolucion_tasa_homicidios_2022_2025.pdf` · SHA-256 `33d578fafc9b0b41…` · 29 págs · con texto
+## Origen
+
+`02_investigacion/informes/2026-09-02-delegacion-facultades-2026/inei_evolucion_tasa_homicidios_2022_2025.pdf` · SHA-256 `33d578fafc9b0b41…` · 29 págs · con texto
 
 ## Zotero
 | Campo | Valor |

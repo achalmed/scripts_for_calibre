@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 27287. Ley de titulos valores
+---
+tipo: ficha-catalogacion
+calibre-id: 10075
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 27287. Ley de titulos valores». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/07_economia/ley_27287_ley_de_titulos_valores.pdf` · SHA-256 `01ae347a9afd44ab…` · 40 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/07_economia/ley_27287_ley_de_titulos_valores.pdf` · SHA-256 `01ae347a9afd44ab…` · 40 págs · con texto
 
 ## Zotero
 | Campo | Valor |

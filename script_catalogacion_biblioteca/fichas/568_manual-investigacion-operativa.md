@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 568
+zotero-key: ASLTUTK8
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Manual de investigacion operativa». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 568
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Manual investigacion operativa (568)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Manual de investigacion operativa (568)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Report
 **Justificacion**: Es un "manual de estudio" de 172 paginas elaborado para la asignatura Investigacion de Operaciones de la Escuela de Economia de la Universidad de Carabobo (segun su propio prefacio e introduccion), sin autor personal ni datos editoriales. Segun los criterios de Zotero los manuales institucionales se registran como `Report` con la institucion en el campo Institution.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -41,9 +53,7 @@
 | Rights          |                                                  |
 | Extra           |                                                  |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -73,17 +83,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Manual de investigacion operativa - # -  - Escuela de Economia, Universidad de Carabobo -  - Guia de estudio.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `investigacion_operativa; matematica_economistas`
 **Calibre**: `investigacion_operativa, matematica_economistas`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- Nivel de confianza: media.
+Nivel de confianza: media.
 - Evidencia usada: prefacio e introduccion del propio PDF ("Este manual de estudio ha sido elaborado teniendo como guia el Programa de Estudios de la asignatura Investigacion de Operaciones de la Escuela de Economia de la Universidad de Carabobo"), tabla de contenido (programacion lineal, transporte, PERT-CPM, teoria de colas) y metadatos incrustados (172 paginas; PDF creado en 2002, dato no usado como fecha por no constar en el texto).
 - El autor personal (probablemente un profesor de la catedra) no aparece en las paginas examinadas; la institucion se registro en Institution/Publisher, no como autor, porque el texto no la declara autora.

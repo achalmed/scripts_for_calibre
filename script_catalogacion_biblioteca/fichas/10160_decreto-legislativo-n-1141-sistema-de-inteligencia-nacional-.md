@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Legislativo N.° 1141. Sistema de inteligencia nacional DINI
+---
+tipo: ficha-catalogacion
+calibre-id: 10160
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Legislativo N.° 1141. Sistema de inteligencia nacional DINI». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/11_seguridad/dleg_1141_sistema_de_inteligencia_nacional_dini.pdf` · SHA-256 `d968669147beeca4…` · 8 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/11_seguridad/dleg_1141_sistema_de_inteligencia_nacional_dini.pdf` · SHA-256 `d968669147beeca4…` · 8 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

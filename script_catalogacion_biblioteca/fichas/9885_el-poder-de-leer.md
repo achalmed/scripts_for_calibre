@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9885
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «El poder de leer: tecnicas, procedimientos y orientaciones para la ensenanza y aprendizaje de la lectura». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9885
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/El poder de leer (9885)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Josette, Jolibert/El poder de leer_ tecnicas, procedimientos y orientaciones para la ensenanza y aprendizaje de l (9885)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Obra colectiva publicada por Editorial Gedisa con compiladores, ISBN, traduccion del frances y pagina legal verificadas por OCR (el PDF es un escaneo sin capa de texto); corresponde al tipo `Book` con los compiladores registrados como editores.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                        |
 | --------------- | ------------------------------------------------------------ |
@@ -42,9 +54,7 @@
 | Rights          |                                                              |
 | Extra           | Original Title: Le pouvoir de lire                           |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -71,16 +81,10 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Josette, Jolibert & Robert, Gloton - El poder de leer: tecnicas, procedimientos y orientaciones para la ensenanza y aprendizaje de la lectura - Renovacion pedagogica # - 8474320488 - Editorial Gedisa - 2003 - Libro (Ed 5).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `pedagogia; didactica; aprendizaje`
 **Calibre**: `pedagogia, didactica, aprendizaje`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media.** El PDF es un escaneo sin capa de texto; los datos provienen del OCR de portada, portadilla y pagina legal (J. Jolibert y R. Gloton compiladores; Editorial Gedisa, Barcelona; quinta edicion febrero 2003; ISBN 84-7432-048-8; coleccion "Renovacion pedagogica"). OCR claro pero no texto nativo.
+**Confianza: media.** El PDF es un escaneo sin capa de texto; los datos provienen del OCR de portada, portadilla y pagina legal (J. Jolibert y R. Gloton compiladores; Editorial Gedisa, Barcelona; quinta edicion febrero 2003; ISBN 84-7432-048-8; coleccion "Renovacion pedagogica"). OCR claro pero no texto nativo.
 - Jolibert y Gloton son compiladores de la obra colectiva; en Calibre se registran en Authors por ser los responsables principales, y en Zotero van en el campo Editor.

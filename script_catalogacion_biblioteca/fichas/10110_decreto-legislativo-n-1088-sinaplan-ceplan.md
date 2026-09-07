@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Legislativo N.° 1088. Sinaplan CEPLAN
+---
+tipo: ficha-catalogacion
+calibre-id: 10110
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Legislativo N.° 1088. Sinaplan CEPLAN». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/08_planeamiento/dleg_1088_sinaplan_ceplan.pdf` · SHA-256 `6c6bfd27256e7912…` · 8 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/08_planeamiento/dleg_1088_sinaplan_ceplan.pdf` · SHA-256 `6c6bfd27256e7912…` · 8 págs · con texto
 
 ## Zotero
 | Campo | Valor |

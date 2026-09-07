@@ -1,8 +1,20 @@
-# Ficha de catalogación — The Global Findex Database 2025: Connectivity and Financial Inclusion in the Digital Economy
+---
+tipo: ficha-catalogacion
+calibre-id: 10262
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «The Global Findex Database 2025: Connectivity and Financial Inclusion in the Digital Economy». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/world_bank/global_findex_2025/global_findex_2025_v001_2026-09-04.pdf` · SHA-256 `f9c5bf8a1091dea7…` · 342 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/world_bank/global_findex_2025/global_findex_2025_v001_2026-09-04.pdf` · SHA-256 `f9c5bf8a1091dea7…` · 342 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

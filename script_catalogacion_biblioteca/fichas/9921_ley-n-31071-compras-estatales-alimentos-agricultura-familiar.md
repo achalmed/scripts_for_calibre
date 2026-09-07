@@ -1,8 +1,20 @@
-# Ficha de catalogación — Ley N.° 31071. Compras estatales alimentos agricultura familiar
+---
+tipo: ficha-catalogacion
+calibre-id: 9921
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 31071. Compras estatales alimentos agricultura familiar». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/20_desarrollo_productivo/ley_31071_compras_estatales_alimentos_agricultura_familiar.pdf` · SHA-256 `55eab5df76b6459b…` · 2 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/20_desarrollo_productivo/ley_31071_compras_estatales_alimentos_agricultura_familiar.pdf` · SHA-256 `55eab5df76b6459b…` · 2 págs · con texto
 
 ## Zotero
 | Campo | Valor |

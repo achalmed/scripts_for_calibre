@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9896
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Cuentos para educar ninos felices». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9896
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para educar ninos (9896)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Begona, Ibarrola/Cuentos para educar ninos felices (9896)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Es una obra publicada por Ediciones SM con autora, ilustrador y pagina de creditos legibles por OCR (el PDF es un escaneo sin capa de texto); corresponde al tipo `Book` aunque el archivo contenga solo un extracto.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                        |
 | --------------- | -------------------------------------------- |
@@ -42,9 +54,7 @@
 | Rights          |                                              |
 | Extra           | Illustrator: Gaban || Jesus                  |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                     |
 | ------------- | --------------------------------------------------------- |
@@ -71,17 +81,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Begona, Ibarrola - Cuentos para educar ninos felices - # -  - Ediciones SM - 2010 - Extracto.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `pedagogia; psychology; aprendizaje`
 **Calibre**: `pedagogia, psychology, aprendizaje`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media.** Evidencia: OCR de la portada y de la pagina de creditos del escaneo ("Begona Ibarrola", "Ilustraciones de Jesus Gaban", "© Ediciones SM, 2010", "Primera edicion: octubre de 2010"). El titulo exacto quedo parcialmente ilegible en el OCR; "Cuentos para educar ninos felices" es la unica obra de Ibarrola/Gaban/SM 2010 compatible con los fragmentos legibles y con el titulo actual de la carpeta.
+**Confianza: media.** Evidencia: OCR de la portada y de la pagina de creditos del escaneo ("Begona Ibarrola", "Ilustraciones de Jesus Gaban", "© Ediciones SM, 2010", "Primera edicion: octubre de 2010"). El titulo exacto quedo parcialmente ilegible en el OCR; "Cuentos para educar ninos felices" es la unica obra de Ibarrola/Gaban/SM 2010 compatible con los fragmentos legibles y con el titulo actual de la carpeta.
 - El PDF es un escaneo sin capa de texto de solo 20 paginas: es un extracto, no el libro completo (por eso el Clasificador es `Extracto`).
 - Sin ISBN legible en las paginas escaneadas.

@@ -1,8 +1,20 @@
-# Ficha de catalogación — PPTRegional ENLA2025 Ayacucho
+---
+tipo: ficha-catalogacion
+calibre-id: 10254
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «PPTRegional ENLA2025 Ayacucho». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/minedu/enla_2025_ayacucho/PPTRegional_ENLA2025_Ayacucho.pdf` · SHA-256 `c6b6d69136b88166…` · 108 págs · con texto
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/minedu/enla_2025_ayacucho/PPTRegional_ENLA2025_Ayacucho.pdf` · SHA-256 `c6b6d69136b88166…` · 108 págs · con texto
 
 ## Zotero
 | Campo | Valor |

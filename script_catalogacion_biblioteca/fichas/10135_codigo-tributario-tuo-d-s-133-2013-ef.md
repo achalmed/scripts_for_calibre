@@ -1,8 +1,20 @@
-# Ficha de catalogación — Código tributario TUO D.S. 133-2013 EF
+---
+tipo: ficha-catalogacion
+calibre-id: 10135
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Código tributario TUO D.S. 133-2013 EF». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/codigo_tributario_tuo_ds_133_2013_ef.pdf` · SHA-256 `d27a0caba13cb4a9…` · 253 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/codigo_tributario_tuo_ds_133_2013_ef.pdf` · SHA-256 `d27a0caba13cb4a9…` · 253 págs · con texto
 
 ## Zotero
 | Campo | Valor |

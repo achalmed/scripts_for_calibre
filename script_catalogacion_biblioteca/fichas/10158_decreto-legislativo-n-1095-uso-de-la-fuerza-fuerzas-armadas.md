@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Legislativo N.° 1095. Uso de la fuerza fuerzas armadas
+---
+tipo: ficha-catalogacion
+calibre-id: 10158
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Legislativo N.° 1095. Uso de la fuerza fuerzas armadas». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/11_seguridad/dleg_1095_uso_de_la_fuerza_fuerzas_armadas.pdf` · SHA-256 `a84121c07a73b140…` · 5 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/11_seguridad/dleg_1095_uso_de_la_fuerza_fuerzas_armadas.pdf` · SHA-256 `a84121c07a73b140…` · 5 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

@@ -1,8 +1,20 @@
-# Ficha de catalogación — Texto Único Ordenado de la Ley N.° 30225. Contrataciones estado historico
+---
+tipo: ficha-catalogacion
+calibre-id: 10137
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Texto Único Ordenado de la Ley N.° 30225. Contrataciones estado historico». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/05_contrataciones/tuo_ley_30225_contrataciones_estado_historico.pdf` · SHA-256 `616502ab9ce9454d…` · 21 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/05_contrataciones/tuo_ley_30225_contrataciones_estado_historico.pdf` · SHA-256 `616502ab9ce9454d…` · 21 págs · con texto
 
 ## Zotero
 | Campo | Valor |

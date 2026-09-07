@@ -1,8 +1,20 @@
-# Ficha de catalogación — Guía gestión representacion política congreso
+---
+tipo: ficha-catalogacion
+calibre-id: 10094
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Guía gestión representacion política congreso». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/03_congreso/guia_gestion_representacion_politica_congreso.pdf` · SHA-256 `52bff5d3d2f434af…` · 105 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`02_investigacion/marco_legal/03_congreso/guia_gestion_representacion_politica_congreso.pdf` · SHA-256 `52bff5d3d2f434af…` · 105 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

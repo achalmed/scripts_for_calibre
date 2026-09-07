@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 8874
+zotero-key: STCVEDB2
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «El mercado de bienes en una economia abierta». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 8874
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/El mercado de bienes en una economia abierta (8874)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/El mercado de bienes en una economia abierta (8874)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: PDF de 32 diapositivas (LibreOffice Impress) del "Tema 12: El mercado de bienes en una economia abierta" del mismo curso de Macroeconomia que el item 8873 (pie de diapositiva "Macroeconomia - Tema 12"). Es material de clase proyectado, sin autor identificado, por lo que corresponde `Presentation` con Type `Class slides`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -29,9 +41,7 @@
 | Rights       | |
 | Extra        | |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -58,17 +68,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - El mercado de bienes en una economia abierta - # -  -  -  - Diapositiva.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia; economia_internacional; teoria_macroeconomica`
 **Calibre**: `macroeconomia, economia_internacional, teoria_macroeconomica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto de las diapositivas (pie "Macroeconomia - Tema 12"); metadatos incrustados (LibreOffice Impress 25.8; fecha corrupta). Sin docente, universidad ni fecha.
+**Confianza: baja.** Evidencia: texto de las diapositivas (pie "Macroeconomia - Tema 12"); metadatos incrustados (LibreOffice Impress 25.8; fecha corrupta). Sin docente, universidad ni fecha.
 - La estructura del tema sigue el capitulo correspondiente del manual de Macroeconomia de Olivier Blanchard, pero las diapositivas no lo citan; no se registra como obra contenedora.
 - Forma pareja con el item 8873 ("El mercado de bienes", Tema 2 del mismo curso).

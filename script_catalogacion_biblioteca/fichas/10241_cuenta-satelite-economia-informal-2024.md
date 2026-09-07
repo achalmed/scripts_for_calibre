@@ -1,8 +1,20 @@
-# Ficha de catalogación — Cuenta satelite economia informal 2024
+---
+tipo: ficha-catalogacion
+calibre-id: 10241
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Cuenta satelite economia informal 2024». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/inei/cuenta_satelite_economia_informal_2024/cuenta_satelite_economia_informal_2024_v001_2026-09-04.pdf` · SHA-256 `7409356cf979896e…` · 128 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/inei/cuenta_satelite_economia_informal_2024/cuenta_satelite_economia_informal_2024_v001_2026-09-04.pdf` · SHA-256 `7409356cf979896e…` · 128 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

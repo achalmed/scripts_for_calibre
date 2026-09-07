@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Legislativo N.° 957. Nuevo codigo procesal penal
+---
+tipo: ficha-catalogacion
+calibre-id: 10134
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Legislativo N.° 957. Nuevo codigo procesal penal». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/dleg_957_nuevo_codigo_procesal_penal.pdf` · SHA-256 `01c2b9f8e4828736…` · 78 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/dleg_957_nuevo_codigo_procesal_penal.pdf` · SHA-256 `01c2b9f8e4828736…` · 78 págs · con texto
 
 ## Zotero
 | Campo | Valor |

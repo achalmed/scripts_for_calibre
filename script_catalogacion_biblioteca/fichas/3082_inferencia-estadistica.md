@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 3082
+zotero-key: WHK7TFMX
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Inferencia estadistica». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 3082
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Inferencia estadisticaistica (3082)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Inferencia estadistica (3082)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book Section
 **Justificacion**: El PDF es el "Capitulo 4. Inferencia estadistica" de una obra mayor (cabecera "CAPITULO 4. INFERENCIA ESTADISTICA", paginacion impresa 56-68), por lo que corresponde `Book Section`; la obra contenedora no se identifica en el extracto y Book Title queda vacio.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -47,9 +59,7 @@
 | Rights          |                        |
 | Extra           | Chapter Number: 4      |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -79,18 +89,12 @@
  - Inferencia estadistica - # -  -  - 2004 - Capitulo.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `estadistica; inferencia_estadistica; muestreo`
 **Calibre**: `estadistica, inferencia_estadistica, muestreo`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media** para tipo, titulo, capitulo y paginas (evidencia directa en el texto: "Capitulo 4 INFERENCIA ESTADISTICA", paginas impresas 56 a 68); **baja** para el resto: sin autor ni obra contenedora identificable.
+**Confianza: media** para tipo, titulo, capitulo y paginas (evidencia directa en el texto: "Capitulo 4 INFERENCIA ESTADISTICA", paginas impresas 56 a 68); **baja** para el resto: sin autor ni obra contenedora identificable.
 - Mismo origen que "Indice general" (id 3075) e "Integracion. Calculo de areas" (id 3076): mismos metadatos tecnicos (Distiller 4.0 Macintosh, 2004). Completar Book Title cuando se identifique la obra.
 - Titulo corregido: el archivo decia "Inferencia estadisticaistica" (errata de duplicacion).
 - El nombre de archivo comienza con el campo autor vacio seguido del separador, conforme a la regla de campos vacios.

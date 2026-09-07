@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9913
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «César Guardia Mayorga. Insigne maestro». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9913
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Sara Beatriz, Guardia/Cesar Guardia Mayorga. Insigne maestro (9913)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Sara Beatriz, Guardia/Cesar Guardia Mayorga. Insigne maestro (9913)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: Es el texto de una conferencia magistral dictada en la apertura del ciclo académico 2015-I de la Universidad Nacional de Educación Enrique Guzmán y Valle, sin actas publicadas ni editorial, por lo que corresponde `Presentation` (no `Conference Paper`, reservado a trabajos publicados en actas).
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor                                                        |
 | ------------ | ------------------------------------------------------------ |
@@ -29,9 +41,7 @@
 | Rights       |                                                              |
 | Extra        |                                                              |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                        |
 | ------------- | -------------------------------------------- |
@@ -58,18 +68,12 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Sara Beatriz, Guardia - César Guardia Mayorga. Insigne maestro - # -  -  - 2015-04-22 - Presentación.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `filosofia; historia; educacion_superior`
 **Calibre**: `filosofia, historia, educacion_superior`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: primera página del PDF (encabezado "Homenaje a César Guardia Mayorga", UNE Enrique Guzmán y Valle, Lima, miércoles 22 de abril de 2015; autora Sara Beatriz Guardia).
+**Confianza: alta.** Evidencia: primera página del PDF (encabezado "Homenaje a César Guardia Mayorga", UNE Enrique Guzmán y Valle, Lima, miércoles 22 de abril de 2015; autora Sara Beatriz Guardia).
 - En Calibre se registró además `Sub tipo: Keynote speech` (columna equivalente al campo Type de Zotero), y `pubdate` se grabó con hora local (`2015-04-22T12:00:00-05:00`) para evitar el corrimiento UTC que mostraría el 21 de abril.
 - El tipo Presentation de Zotero no tiene campo de páginas; las 14 páginas van solo en la columna Paginas de Calibre.
 - Archivo original: `6_Conferencia_SBG.pdf` (metadatos incrustados del .docx "3 Cesar Guardia Mayorga").

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9582
+zotero-key: E77SI94G
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Extensions to consumer theory: intertemporal choice, uncertainty and revealed preferences». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9582
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Extensions uncertainty and intertemporal choice (9582)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Extensions to consumer theory_ intertemporal choice, uncertainty and revealed preferences (9582)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: El PDF son diapositivas (LibreOffice Impress, 42 laminas en vinetas) de un curso de microeconomia en ingles, tituladas "Extensions to Consumer theory" y que cubren eleccion intertemporal, incertidumbre y preferencias reveladas. Corresponde a `Presentation` con Type `Class slides`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -32,9 +44,7 @@
 | Rights       |                                                                           |
 | Extra        |                                                                           |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -64,18 +74,12 @@
  - Extensions to consumer theory: intertemporal choice, uncertainty and revealed preferences - # -  -  -  - Diapositiva.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `microeconomia; teoria_economica`
 **Calibre**: `microeconomia, teoria_economica`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media** para tipo, titulo e idioma (texto de las laminas); **baja** para el resto: sin autor, institucion ni fecha (metadato de fecha invalido, queda vacio).
+**Confianza: media** para tipo, titulo e idioma (texto de las laminas); **baja** para el resto: sin autor, institucion ni fecha (metadato de fecha invalido, queda vacio).
 - El titulo se compuso con la portada real de las laminas ("Extensions to Consumer theory" mas los tres subtemas listados); se escribio "intertemporal" sin guion para evitar el separador `-` en el nombre de archivo.
 - El titulo contiene dos puntos (`:`); es valido en Linux, pero conviene evitarlo si la biblioteca se sincroniza con sistemas Windows.
 - El nombre de archivo comienza con el campo autor vacio seguido del separador, conforme a la regla de campos vacios.

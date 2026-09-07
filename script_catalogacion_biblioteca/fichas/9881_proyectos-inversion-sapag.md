@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9881
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Proyectos de inversion: formulacion y evaluacion». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9881
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Proyectos de inversion.Formulacion y Evaluacion (9881)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Nassir, Sapag Chain/Proyectos de inversion_ formulacion y evaluacion (9881)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Libro de texto con autor, segunda edicion, editorial (Pearson Educacion de Chile), ISBN y datos de catalogacion verificados en la pagina legal del PDF; corresponde al tipo `Book`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                                |
 | --------------- | ---------------------------------------------------- |
@@ -42,9 +54,7 @@
 | Rights          |                                                      |
 | Extra           |                                                      |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -71,16 +81,10 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Nassir, Sapag Chain - Proyectos de inversion: formulacion y evaluacion - # - 9789563431070 - Pearson Educacion - 2011 - Libro (Ed 2).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `proyectos_inversion; formulacion_proyectos; evaluacion_privada`
 **Calibre**: `proyectos_inversion, formulacion_proyectos, evaluacion_privada`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: alta.** Evidencia: pagina legal del PDF ("Nassir Sapag Chain. Proyectos de inversion. Formulacion y evaluacion 2a edicion. Pearson Educacion, Chile, 2011. ISBN: 978-956-343-107-0. Paginas: 544").
+**Confianza: alta.** Evidencia: pagina legal del PDF ("Nassir Sapag Chain. Proyectos de inversion. Formulacion y evaluacion 2a edicion. Pearson Educacion, Chile, 2011. ISBN: 978-956-343-107-0. Paginas: 544").
 - Se registro el ISBN de la version impresa; la contraportada muestra ademas el ISBN del e-book (978-956-34-3106-3).

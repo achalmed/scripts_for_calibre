@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9995
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «ENAHO 2014. Diccionario de datos: condiciones de vida y pobreza». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9995
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Instituto Nacional de Estadistica e Informatica/ENAHO 2014. Diccionario de datos_ condiciones de vida y pobreza (9995)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Report
 **Justificacion**: Encuesta continua 2014; ficha técnica y nomenclatura de archivos SPSS; Lima, abril de 2015.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | --- | --- |
@@ -24,9 +36,7 @@
 | # of Pages | 228 |
 | Language | es |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | --- | --- |
@@ -43,14 +53,10 @@
 | Paginas | 228 |
 | Item type | Report |
 
----
-
-### TAGS
-
 **Zotero**: `estadistica; pobreza; muestreo`
 **Calibre**: `estadistica, pobreza, muestreo`
 
-### NOTAS
+## Notas
 
-- Confianza: **alta**. Encuesta continua 2014; ficha técnica y nomenclatura de archivos SPSS; Lima, abril de 2015.
+Confianza: **alta**. Encuesta continua 2014; ficha técnica y nomenclatura de archivos SPSS; Lima, abril de 2015.
 - Origen: `10 Class/areas/Academic_Class-python/course_00_curso_base/08_INVESTIGACION/referencias/diccionario2014.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).

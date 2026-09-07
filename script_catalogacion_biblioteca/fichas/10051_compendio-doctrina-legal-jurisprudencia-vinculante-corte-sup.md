@@ -1,8 +1,20 @@
-# Ficha de catalogación — Compendio doctrina legal jurisprudencia vinculante corte suprema penal t2
+---
+tipo: ficha-catalogacion
+calibre-id: 10051
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Compendio doctrina legal jurisprudencia vinculante corte suprema penal t2». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/17_jurisprudencia/compendio_doctrina_legal_jurisprudencia_vinculante_corte_suprema_penal_t2.pdf` · SHA-256 `eb6424c19c6e1490…` · 306 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/17_jurisprudencia/compendio_doctrina_legal_jurisprudencia_vinculante_corte_suprema_penal_t2.pdf` · SHA-256 `eb6424c19c6e1490…` · 306 págs · con texto
 
 ## Zotero
 | Campo | Valor |

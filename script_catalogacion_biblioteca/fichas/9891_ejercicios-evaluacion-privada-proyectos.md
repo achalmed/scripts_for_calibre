@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9891
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Ejercicios de evaluacion privada de proyectos». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9891
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/EJERCICIOS DE EVALUACION PRIVADA DE PROYECTOS (1) (9891)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Arlette, Beltran/Ejercicios de evaluacion privada de proyectos (9891)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: Libro de ejercicios publicado por el Centro de Investigacion de la Universidad del Pacifico con autoras, edicion, ISBN y ficha catalografica verificadas por OCR (el PDF es un escaneo sin capa de texto); corresponde al tipo `Book`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero    | Valor                                            |
 | --------------- | ------------------------------------------------ |
@@ -42,9 +54,7 @@
 | Rights          |                                                  |
 | Extra           |                                                  |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor                                                        |
 | ------------- | ------------------------------------------------------------ |
@@ -71,17 +81,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Arlette, Beltran & Hanny, Cueva - Ejercicios de evaluacion privada de proyectos - # - 9972603431 - Universidad del Pacifico, Centro de Investigacion - 2002 - Ejercicios resueltos (Ed 3).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `evaluacion_privada; proyectos_inversion; formulacion_proyectos`
 **Calibre**: `evaluacion_privada, proyectos_inversion, formulacion_proyectos`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media.** El PDF es un escaneo sin capa de texto; los datos provienen del OCR de la portada y la pagina legal (autoras Arlette Beltran y Hanny Cueva; Universidad del Pacifico, Centro de Investigacion, Lima; 3a edicion; ISBN 9972-603-43-1; Deposito Legal 2002). El OCR es claro pero no es texto nativo.
+**Confianza: media.** El PDF es un escaneo sin capa de texto; los datos provienen del OCR de la portada y la pagina legal (autoras Arlette Beltran y Hanny Cueva; Universidad del Pacifico, Centro de Investigacion, Lima; 3a edicion; ISBN 9972-603-43-1; Deposito Legal 2002). El OCR es claro pero no es texto nativo.
 - La ficha catalografica registra a la primera autora como "Beltran Barco, Arlette"; en portada figura como "Arlette Beltran".
 - La fecha 2002 corresponde a la ultima reimpresion de la 3a edicion segun el deposito legal.

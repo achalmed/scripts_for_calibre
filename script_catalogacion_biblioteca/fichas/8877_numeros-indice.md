@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 8877
+zotero-key: JJWH2ZHT
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Numeros indice». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 8877
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Numeros indice (8877)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Numeros indice (8877)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Presentation
 **Justificacion**: Es un juego de diapositivas (38 laminas creadas con LibreOffice Impress) sobre numeros indice (indices de precios, cantidades y valores), sin autor, fecha ni institucion. Corresponde a material docente tipo diapositivas de clase, por lo que `Presentation` con Type `Class slides` es el tipo mas especifico.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -32,9 +44,7 @@
 | Rights       |                |
 | Extra        |                |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -64,17 +74,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Numeros indice - # -  -  -  - Diapositiva.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `estadistica; economia_descriptiva`
 **Calibre**: `estadistica, economia_descriptiva`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- Nivel de confianza: baja.
+Nivel de confianza: baja.
 - Evidencia usada: texto de las laminas (definiciones de numeros indice, distincion entre precios y valores) y metadatos incrustados (LibreOffice Impress 25.8, fecha de creacion invalida).
 - Tema muy similar al item 9590 ("Numeros indices", 21 laminas); revisar si son versiones distintas del mismo material antes de importar para evitar duplicados.

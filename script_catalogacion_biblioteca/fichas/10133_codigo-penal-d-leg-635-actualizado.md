@@ -1,8 +1,20 @@
-# Ficha de catalogación — Código penal D.Leg. 635 actualizado
+---
+tipo: ficha-catalogacion
+calibre-id: 10133
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Código penal D.Leg. 635 actualizado». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/codigo_penal_dleg_635_actualizado.pdf` · SHA-256 `eedeeffbf5b76f3a…` · 116 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/01_normativa_fundamental/02_codigos/codigo_penal_dleg_635_actualizado.pdf` · SHA-256 `eedeeffbf5b76f3a…` · 116 págs · con texto
 
 ## Zotero
 | Campo | Valor |

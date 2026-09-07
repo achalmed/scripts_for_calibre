@@ -1,8 +1,20 @@
-# Ficha de catalogación — Tracking sdg7 2025
+---
+tipo: ficha-catalogacion
+calibre-id: 10261
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Tracking sdg7 2025». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `/home/achalmaedison/Documents/02 analysis/data/raw/peru/world_bank/tracking_sdg7_2025/tracking_sdg7_2025_v001_2026-09-04.pdf` · SHA-256 `de5e88662ec7e42f…` · 188 págs · con texto
+## Origen
+
+`/home/achalmaedison/Documents/02 analysis/data/raw/peru/world_bank/tracking_sdg7_2025/tracking_sdg7_2025_v001_2026-09-04.pdf` · SHA-256 `de5e88662ec7e42f…` · 188 págs · con texto
 
 ## Zotero
 | Campo | Valor |

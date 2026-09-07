@@ -1,8 +1,20 @@
-# Ficha de catalogación — Decreto Supremo N.° 011-2012-ED. Reglamento ley general de educacion
+---
+tipo: ficha-catalogacion
+calibre-id: 10024
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Supremo N.° 011-2012-ED. Reglamento ley general de educacion». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/12_educacion/ds_011_2012_ed_reglamento_ley_general_de_educacion.pdf` · SHA-256 `bcc42a1e602f8a04…` · 97 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/12_educacion/ds_011_2012_ed_reglamento_ley_general_de_educacion.pdf` · SHA-256 `bcc42a1e602f8a04…` · 97 págs · con texto
 
 ## Zotero
 | Campo | Valor |

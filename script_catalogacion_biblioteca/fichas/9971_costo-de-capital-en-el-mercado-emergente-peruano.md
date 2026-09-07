@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9971
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Costo de capital en el mercado emergente peruano». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9971
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Tony, Hinojosa Vivanco/Costo de capital en el mercado emergente peruano (9971)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Lectura 8 del curso; completa el hueco 8.0 de la serie ya catalogada (lecturas 1-7 y 9-11 existían).
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | --- | --- |
@@ -24,9 +36,7 @@
 | # of Pages | 22 |
 | Language | es |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | --- | --- |
@@ -43,14 +53,10 @@
 | Paginas | 22 |
 | Item type | Manuscript |
 
----
-
-### TAGS
-
 **Zotero**: `evaluacion_privada`
 **Calibre**: `evaluacion_privada`
 
-### NOTAS
+## Notas
 
-- Confianza: **alta**. Lectura 8 del curso; completa el hueco 8.0 de la serie ya catalogada (lecturas 1-7 y 9-11 existían).
+Confianza: **alta**. Lectura 8 del curso; completa el hueco 8.0 de la serie ya catalogada (lecturas 1-7 y 9-11 existían).
 - Origen: `10 Class/areas/Academic_Class-Gestion-empresarial/course_00_curso_base/06_RECURSOS/curso_base/unidades/unidad 2 insumos para la evaluacion de proyectos/lectura 8 costo de capital en el mercado emergente peruano.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 1659
+zotero-key: TGFGKUFI
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Introduccion a la investigacion operativa». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 1659
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Introduccion a la investigacion operativa (1659)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Universidad de la Republica (Uruguay), Facultad de Ingenieria/Introduccion a la investigacion operativa (1659)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Es el material completo de un curso de investigacion de operaciones (164 paginas; el propio texto declara "El objetivo del curso es que el estudiante aprenda a reconocer los problemas tipo de la Investigacion de Operaciones"), sin autor, editorial ni ISBN. Corresponde a `Manuscript` con Type `Lecture notes`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -36,9 +48,7 @@
 | Rights          |                                           |
 | Extra           |                                           |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -68,26 +78,15 @@
  - Introduccion a la investigacion operativa - # -  -  -  - Apuntes de clase.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `investigacion_operativa; simulacion`
 **Calibre**: `investigacion_operativa, simulacion`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media** para tipo y contenido (indice y texto del PDF); **baja** para autoria y fecha: no se encontro universidad, autor ni ano en el texto buscado, y el metadato de fecha es invalido (ano 0101).
+**Confianza: media** para tipo y contenido (indice y texto del PDF); **baja** para autoria y fecha: no se encontro universidad, autor ni ano en el texto buscado, y el metadato de fecha es invalido (ano 0101).
 - La cabecera corrida del cuerpo es "Introduccion a la Investigacion de Operaciones"; el titulo se mantuvo como en la portada/indice del archivo.
 - El nombre de archivo comienza con el campo autor vacio seguido del separador, conforme a la regla de campos vacios.
-
----
-
-### ACTUALIZACIÓN (2026-07-27) — Identificación por búsqueda web
-
-**Autor(es)**: Universidad de la República (Uruguay), Facultad de Ingeniería (material institucional del curso "Introducción a la Investigación de Operaciones"; sin autor personal acreditado)
+**ACTUALIZACIÓN (2026-07-27) — Identificación por búsqueda web.** **Autor(es)**: Universidad de la República (Uruguay), Facultad de Ingeniería (material institucional del curso "Introducción a la Investigación de Operaciones"; sin autor personal acreditado)
 **Obra contenedora / datos nuevos**: Apunte teórico oficial del curso "Introducción a la Investigación de Operaciones" (IIO) de la Facultad de Ingeniería, UdelaR (archivo fuente "teoricoIIO.doc"). El curso figura en fing.edu.uy y OpenFing.
 **Evidencia**: https://eva.interior.udelar.edu.uy/pluginfile.php/21186/mod_resource/content/1/IO%20Teorico.pdf — copia idéntica (164 pp., mismo índice completo, título interno "Microsoft Word - teoricoIIO.doc") alojada en el EVA de la UdelaR como teórico del curso; página del curso: https://www.fing.edu.uy/es/curso/grado/2020/introduccion-la-investigacion-de-operaciones
 **Confianza**: media

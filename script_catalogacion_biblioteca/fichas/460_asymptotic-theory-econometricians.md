@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 460
+zotero-key: NJCPYQAF
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Asymptotic theory for econometricians». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 460
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Asymptotic theory for econometricians (460)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Halbert, White/Asymptotic theory for econometricians (460)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Book
 **Justificacion**: PDF escaneado (272 paginas) del libro completo "Asymptotic Theory for Econometricians", con pagina legal que registra editorial (Academic Press, Harcourt), copyright "2001, 1984", ISBN 0-12-746652-5 y numero de Library of Congress 00-107735. Es una monografia academica publicada, por lo que `Book` es el tipo correcto.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -43,9 +55,7 @@
 | Extra        | LCCN: 00-107735 |
 |              | Original Date: 1984 |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -72,17 +82,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
 Halbert, White - Asymptotic theory for econometricians - # - 0124766525 - Academic Press - 2001 - Libro (Ed 2).pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `fundamentos_econometria; inferencia_estadistica; series_tiempo`
 **Calibre**: `fundamentos_econometria, inferencia_estadistica, series_tiempo`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: media-alta.** Evidencia: pagina legal del PDF (Academic Press, copyright 2001/1984, ISBN 0-12-746652-5, LCCN 00-107735) y prefacio que menciona "this second edition". El nombre del autor no es legible en el OCR de la portada; se identifico a Halbert White a partir del ISBN y del titulo (obra estandar de la econometria; el prefacio y las referencias internas a White son consistentes). Verificar el nombre en la portada fisica antes de citar.
+**Confianza: media-alta.** Evidencia: pagina legal del PDF (Academic Press, copyright 2001/1984, ISBN 0-12-746652-5, LCCN 00-107735) y prefacio que menciona "this second edition". El nombre del autor no es legible en el OCR de la portada; se identifico a Halbert White a partir del ISBN y del titulo (obra estandar de la econometria; el prefacio y las referencias internas a White son consistentes). Verificar el nombre en la portada fisica antes de citar.
 - Edition = 2 se basa en la frase "the reader of this second edition" del prefacio a la edicion revisada.
 - El PDF es un escaneo (Adobe Paper Capture); el texto OCR tiene errores menores.

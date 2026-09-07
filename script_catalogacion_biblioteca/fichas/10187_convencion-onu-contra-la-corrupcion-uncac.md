@@ -1,8 +1,20 @@
-# Ficha de catalogación — Convención ONU contra la corrupcion UNCAC
+---
+tipo: ficha-catalogacion
+calibre-id: 10187
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-06 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Convención ONU contra la corrupcion UNCAC». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/marco_legal/16_derechos_humanos/convencion_onu_contra_la_corrupcion_uncac.pdf` · SHA-256 `a1aae2064493ad55…` · 67 págs · con texto
+## Origen
+
+`02_investigacion/marco_legal/16_derechos_humanos/convencion_onu_contra_la_corrupcion_uncac.pdf` · SHA-256 `a1aae2064493ad55…` · 67 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 9998
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Data analysis with Stata: cheat sheet». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 9998
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Tim, Essam/Data analysis with Stata_ cheat sheet (9998)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Document
 **Justificacion**: geocenter.github.io/StataTraining; CC BY 4.0; versión analysis_2021_rd2.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | --- | --- |
@@ -24,9 +36,7 @@
 | # of Pages | 6 |
 | Language | en |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | --- | --- |
@@ -43,14 +53,10 @@
 | Paginas | 6 |
 | Item type | Document |
 
----
-
-### TAGS
-
 **Zotero**: `stata`
 **Calibre**: `stata`
 
-### NOTAS
+## Notas
 
-- Confianza: **alta**. geocenter.github.io/StataTraining; CC BY 4.0; versión analysis_2021_rd2.
+Confianza: **alta**. geocenter.github.io/StataTraining; CC BY 4.0; versión analysis_2021_rd2.
 - Origen: `10 Class/areas/Academic_Class-Stata/course_00_curso_base/06_RECURSOS/presentaciones/slide stata cheatsheets.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).

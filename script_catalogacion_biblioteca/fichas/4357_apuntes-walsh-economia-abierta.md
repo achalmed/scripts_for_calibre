@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 4357
+zotero-key: GDKG2TTZ
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Walsh small open economics». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 4357
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Walsh small open economics (4357)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Walsh small open economics (4357)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Son notas de clase en espanol que exponen "el modelo de la sección 6.5 de la segunda edición" del texto de Walsh (modelo neokeynesiano de economia pequena y abierta), redactadas por un docente no identificado ("...que estudiamos del texto de Walsh"). No es obra de Walsh ni una publicacion formal, por lo que corresponde `Manuscript` con Type `Lecture notes`.
-
----
-
-### SALIDA PARA ZOTERO
 
 > Ingresar estos campos manualmente en la interfaz de Zotero.
 > Campos vacios indican que el dato no esta disponible en los datos proporcionados.
@@ -36,9 +48,7 @@
 | Rights          |                            |
 | Extra           |                            |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 > Ingresar estos campos manualmente en la interfaz de Calibre.
 > El campo Leido no se modifica; siempre es Undefined.
@@ -68,18 +78,12 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Walsh small open economics - # -  -  -  - Apuntes de clase.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `macroeconomia_avanzada; politica_monetaria; economia_internacional`
 **Calibre**: `macroeconomia_avanzada, politica_monetaria, economia_internacional`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja** en datos bibliograficos (sin autor, fecha ni institucion); **media** en tipo y contenido. Evidencia usada: texto del PDF ("Este modelo es una extensión natural del modelo básico... que estudiamos del texto de Walsh. ... corresponde al modelo de la sección 6.5 de la segunda edición de su libro") y pdfinfo (16 paginas, Acrobat Distiller 5.0.5, sin fecha valida).
+**Confianza: baja** en datos bibliograficos (sin autor, fecha ni institucion); **media** en tipo y contenido. Evidencia usada: texto del PDF ("Este modelo es una extensión natural del modelo básico... que estudiamos del texto de Walsh. ... corresponde al modelo de la sección 6.5 de la segunda edición de su libro") y pdfinfo (16 paginas, Acrobat Distiller 5.0.5, sin fecha valida).
 - El titulo se mantiene tal cual figura en el archivo por falta de un titulo interno formal; una alternativa descriptiva seria "Modelo neokeynesiano de economia pequena y abierta (Walsh, seccion 6.5)", que puede adoptarse manualmente si se prefiere.
 - La obra de referencia es Walsh, Monetary Theory and Policy, 2.a ed. (MIT Press); no se registra como contenedora porque estas notas no son parte de ese libro.
 - El nombre de archivo comienza con ` - ` porque el campo Autor esta vacio.

@@ -1,8 +1,20 @@
-# Ficha de catalogación — SERVIR — Caracteristicas servicio civil peruano 2025
+---
+tipo: ficha-catalogacion
+calibre-id: 9931
+zotero-key:
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
 
-> Generada por `00_ingesta/lib/identificar.py` el 2026-09-02 (formato del `prompt_para_zotero_1_catalogacion.md`). Confianza: **media**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «SERVIR — Caracteristicas servicio civil peruano 2025». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **media**. Revisar antes de aplicar si es media/baja.
 
-**Origen:** `02_investigacion/informes/2026-09-02-delegacion-facultades-2026/servir_caracteristicas_servicio_civil_peruano_2025.pdf` · SHA-256 `9e7d5a55d4ff75e5…` · 85 págs · con texto
+## Origen
+
+`02_investigacion/informes/2026-09-02-delegacion-facultades-2026/servir_caracteristicas_servicio_civil_peruano_2025.pdf` · SHA-256 `9e7d5a55d4ff75e5…` · 85 págs · con texto
 
 ## Zotero
 | Campo | Valor |

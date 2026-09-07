@@ -1,16 +1,28 @@
+---
+tipo: ficha-catalogacion
+calibre-id: 3074
+zotero-key: PLB6D539
+clave-bibtex:
+proyecto:
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Combinatoria». Formato anterior (prompt de catalogación, 2026-07), migrado al formato único el 2026-09-07.
+
+## Origen
+
 **ID Calibre**: 3074
 **Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Combinatoria (3074)
 
----
+Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Combinatoria (3074)`
 
-### TIPO DE ELEMENTO IDENTIFICADO
+## Zotero
 
 **Tipo Zotero**: Manuscript
 **Justificacion**: Documento LaTeX de 7 paginas, "Capitulo 1. Combinatoria", perteneciente a unos apuntes de probabilidad y estadistica en espanol (los ejemplos usan quinielas y loteria primitiva, contexto de Espana), sin autor ni datos editoriales. Son apuntes de estudio ineditos, por lo que corresponde `Manuscript` con Type `Lecture notes`.
-
----
-
-### SALIDA PARA ZOTERO
 
 | Campo Zotero | Valor |
 | ------------ | ----- |
@@ -33,9 +45,7 @@
 | Rights       | |
 | Extra        | Chapter Number: 1 |
 
----
-
-### SALIDA PARA CALIBRE
+## Calibre
 
 | Campo Calibre | Valor |
 | ------------- | ----- |
@@ -62,17 +72,11 @@ NOMBRE DE ARCHIVO PARA IMPORTAR EN CALIBRE
  - Combinatoria - # -  -  - 2004 - Apuntes de estudio.pdf
 ```
 
----
-
-### TAGS
-
 **Zotero**: `estadistica; probabilidad_estadistica; matematica_discreta`
 **Calibre**: `estadistica, probabilidad_estadistica, matematica_discreta`
 
----
+## Notas
 
-### NOTAS ADICIONALES
-
-- **Confianza: baja.** Evidencia: texto del capitulo y metadatos incrustados (Acrobat Distiller 4.0 para Macintosh, CreationDate 2004-01-31). Sin autor ni institucion.
+**Confianza: baja.** Evidencia: texto del capitulo y metadatos incrustados (Acrobat Distiller 4.0 para Macintosh, CreationDate 2004-01-31). Sin autor ni institucion.
 - La fecha 2004 proviene unicamente de la fecha de creacion del PDF incrustada.
 - Mismo origen (mismo productor, misma fecha y misma coleccion de apuntes) que el item 3084 "Distribucion binomial y normal" (Capitulo 3 de los mismos apuntes).
