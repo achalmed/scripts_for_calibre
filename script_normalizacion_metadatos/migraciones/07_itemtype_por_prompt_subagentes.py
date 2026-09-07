@@ -2,9 +2,10 @@
 """Aplica los res_it_*.tsv (id, item_type) al Item type de Calibre.
 Valida ANTES de escribir: tipo debe existir en el enum custom_column_39 y el
 libro debe estar REALMENTE sin item type. Uso: aplicar_itype.py [--apply]"""
+import os
 import glob, sqlite3, sys
 from collections import Counter
-DB="/home/achalmaedison/Documents/biblioteca/metadata.db"
+DB = os.environ.get("CALIBRE_DB", os.path.expanduser("~/Documents/biblioteca/metadata.db"))  # FS2: sin ruta literal
 S="/tmp/claude-1000/-home-achalmaedison-Documents-biblioteca/07e95f6c-2ea4-43cc-a8d4-62fab1b16986/scratchpad"
 apply="--apply" in sys.argv
 con=sqlite3.connect(DB); cur=con.cursor()

@@ -7,12 +7,13 @@ invalida se rechaza y se reporta; no se inventan valores nuevos.
 
 Uso: aplicar.py [--apply]
 """
+import os
 import glob
 import sqlite3
 import sys
 from collections import Counter
 
-DB = "/home/achalmaedison/Documents/biblioteca/metadata.db"
+DB = os.environ.get("CALIBRE_DB", os.path.expanduser("~/Documents/biblioteca/metadata.db"))  # FS2: sin ruta literal
 S = "/tmp/claude-1000/-home-achalmaedison-Documents-biblioteca/07e95f6c-2ea4-43cc-a8d4-62fab1b16986/scratchpad"
 
 apply = "--apply" in sys.argv

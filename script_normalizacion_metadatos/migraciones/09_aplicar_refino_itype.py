@@ -2,9 +2,10 @@
 """Aplica refinar_prop.tsv: reclasifica Item type y, si el destino es Book por
 OpenLibrary, rellena editorial/ISBN donde esten vacios (bonus, aditivo).
 Uso: aplicar_refino.py [--apply]"""
+import os
 import sqlite3, sys, re
 from collections import Counter
-DB="/home/achalmaedison/Documents/biblioteca/metadata.db"
+DB = os.environ.get("CALIBRE_DB", os.path.expanduser("~/Documents/biblioteca/metadata.db"))  # FS2: sin ruta literal
 PROP="/tmp/claude-1000/-home-achalmaedison-Documents-biblioteca/07e95f6c-2ea4-43cc-a8d4-62fab1b16986/scratchpad/refinar_prop.tsv"
 apply="--apply" in sys.argv
 con=sqlite3.connect(DB); cur=con.cursor()

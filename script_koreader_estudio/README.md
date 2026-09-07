@@ -7,7 +7,7 @@ Convierte Calibre en tablero de estudio: progreso, tiempo y anotaciones de KORea
 
 - Escribe en: calibre · simula por defecto: sí
 - Entrada: statistics.sqlite3 de KOReader
-- Depende de: calibredb, koreader, lib_comun
+- Depende de: calibredb, koreader, core/shell-lib
 - Timer: `koreader-calibre-sync.timer`
 
 Comandos:

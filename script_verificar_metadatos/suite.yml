@@ -12,4 +12,4 @@ estado: activo
 depende_de:
 - curl
 - python3
-- lib_comun
+- core/shell-lib

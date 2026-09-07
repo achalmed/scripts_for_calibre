@@ -13,5 +13,5 @@ estado: activo
 depende_de:
 - calibredb
 - zotero.sqlite
-- lib_comun
+- core/shell-lib
 timer: ecosistema-lectura.timer · ecosistema-metadatos.timer

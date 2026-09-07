@@ -8,9 +8,9 @@ readonly VERSION="1.0.0"
 readonly TOOL_NAME="sincronizar-zotero"
 
 # --- Databases ----------------------------------------------------------
-readonly CALIBRE_LIBRARY="/home/achalmaedison/Documents/biblioteca"
+readonly CALIBRE_LIBRARY="${BIBLIOTECA_DIR:-$HOME/Documents/biblioteca}"
 readonly CALIBRE_DB="$CALIBRE_LIBRARY/metadata.db"
-readonly ZOTERO_DIR="/home/achalmaedison/Zotero"
+readonly ZOTERO_DIR="${ZOTERO_DIR:-$HOME/Zotero}"
 readonly ZOTERO_DB="$ZOTERO_DIR/zotero.sqlite"
 
 # Zotero resolves linked attachments ("attachments:...") against this base

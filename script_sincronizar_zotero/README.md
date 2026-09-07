@@ -6,7 +6,7 @@
 Sincroniza en las dos direcciones los metadatos de los libros enlazados por #zotero_key entre Calibre y Zotero, con backups e integridad.
 
 - Escribe en: calibre, zotero · simula por defecto: sí
-- Depende de: calibredb, zotero.sqlite, lib_comun
+- Depende de: calibredb, zotero.sqlite, core/shell-lib
 
 Comandos:
 

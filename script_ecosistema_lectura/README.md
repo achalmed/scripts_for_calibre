@@ -6,7 +6,7 @@
 Lleva el tiempo de lectura de Zotero (readingTime) y los metadatos de estudio a las columnas de Calibre.
 
 - Escribe en: calibre · simula por defecto: sí
-- Depende de: calibredb, zotero.sqlite, lib_comun
+- Depende de: calibredb, zotero.sqlite, core/shell-lib
 - Timer: `ecosistema-lectura.timer · ecosistema-metadatos.timer`
 
 Comandos:

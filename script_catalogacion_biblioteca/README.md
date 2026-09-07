@@ -7,7 +7,7 @@ Aplica a Calibre los metadatos catalogados en resumen_catalogacion.tsv (autor «
 
 - Escribe en: calibre · simula por defecto: sí
 - Entrada: resumen_catalogacion.tsv (lo alimentan ingesta e ingesta_cursos)
-- Depende de: calibredb, lib_comun
+- Depende de: calibredb, core/shell-lib
 - Método Documental: paso 02
 
 Comandos:

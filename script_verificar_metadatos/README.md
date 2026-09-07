@@ -6,7 +6,7 @@
 Coteja los metadatos de Calibre contra bases bibliográficas públicas y escribe un informe de discrepancias; nunca modifica la biblioteca.
 
 - Escribe en: ninguno · simula por defecto: sí
-- Depende de: curl, python3, lib_comun
+- Depende de: curl, python3, core/shell-lib
 
 Comandos:
 

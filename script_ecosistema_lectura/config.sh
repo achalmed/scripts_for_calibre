@@ -1,7 +1,7 @@
 # config.sh — Configuración de script_ecosistema_lectura (Fase 2 del DISEÑO)
 # Zotero (Ethereal Style readingTime) → Calibre. Todo lo editable vive aquí.
 
-BIBLIOTECA="${QEL_BIBLIOTECA:-/home/achalmaedison/Documents/biblioteca}"
+BIBLIOTECA="${QEL_BIBLIOTECA:-${BIBLIOTECA_DIR:-$HOME/Documents/biblioteca}}"
 ZOTERO_DB="${QEL_ZOTERO_DB:-$HOME/Zotero/zotero.sqlite}"
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"

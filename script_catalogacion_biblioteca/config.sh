@@ -8,7 +8,7 @@ readonly VERSION="1.0.0"
 readonly TOOL_NAME="aplicar-metadatos"
 
 # Calibre library that will receive the metadata.
-readonly CALIBRE_LIBRARY="/home/achalmaedison/Documents/biblioteca"
+readonly CALIBRE_LIBRARY="${BIBLIOTECA_DIR:-$HOME/Documents/biblioteca}"
 
 # Input TSV (one row per book). Resolved relative to the project directory.
 readonly TSV_BASENAME="resumen_catalogacion.tsv"

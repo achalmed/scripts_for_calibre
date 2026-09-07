@@ -2,7 +2,7 @@
 # Todas las rutas y nombres editables viven aquí; lib/ nunca hardcodea valores.
 
 # ── Rutas principales ────────────────────────────────────────────────────────
-BIBLIOTECA="${QKO_BIBLIOTECA:-/home/achalmaedison/Documents/biblioteca}"
+BIBLIOTECA="${QKO_BIBLIOTECA:-${BIBLIOTECA_DIR:-$HOME/Documents/biblioteca}}"
 KOREADER_CONFIG="${QKO_KOREADER_CONFIG:-$HOME/.config/koreader}"
 STATS_DB="$KOREADER_CONFIG/settings/statistics.sqlite3"
 

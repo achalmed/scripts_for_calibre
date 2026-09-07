@@ -13,4 +13,4 @@ estado: activo
 depende_de:
 - calibredb
 - zotero.sqlite
-- lib_comun
+- core/shell-lib

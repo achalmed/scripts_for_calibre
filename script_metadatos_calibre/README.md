@@ -6,7 +6,7 @@
 Incrusta los metadatos OPF de Calibre en los PDF (XMP con exiftool) y registra PDF sueltos como libros.
 
 - Escribe en: calibre, archivos · simula por defecto: sí
-- Depende de: calibredb, exiftool, lib_comun
+- Depende de: calibredb, exiftool, core/shell-lib
 
 Comandos:
 

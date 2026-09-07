@@ -16,4 +16,4 @@ estado: activo
 depende_de:
 - calibredb
 - exiftool
-- lib_comun
+- core/shell-lib

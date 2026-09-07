@@ -14,5 +14,5 @@ entrada: statistics.sqlite3 de KOReader
 depende_de:
 - calibredb
 - koreader
-- lib_comun
+- core/shell-lib
 timer: koreader-calibre-sync.timer

@@ -4,10 +4,11 @@
 Uso: merge_tags.py [--apply]
 Sin --apply solo simula (dry-run), segun la convencion del repo.
 """
+import os
 import sqlite3
 import sys
 
-DB = "/home/achalmaedison/Documents/biblioteca/metadata.db"
+DB = os.environ.get("CALIBRE_DB", os.path.expanduser("~/Documents/biblioteca/metadata.db"))  # FS2: sin ruta literal
 
 # (etiqueta_origen, etiqueta_destino)
 MERGES = [

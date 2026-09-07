@@ -4,11 +4,12 @@
 Solo escribe en libros cuyo Generos esta VACIO; los ya definidos no se tocan.
 Uso: genres.py [--apply]
 """
+import os
 import sqlite3
 import sys
 from collections import Counter
 
-DB = "/home/achalmaedison/Documents/biblioteca/metadata.db"
+DB = os.environ.get("CALIBRE_DB", os.path.expanduser("~/Documents/biblioteca/metadata.db"))  # FS2: sin ruta literal
 
 # tag -> genero. Las etiquetas NEUTRAS (formato/metodologia) no votan.
 NEUTRAL = {

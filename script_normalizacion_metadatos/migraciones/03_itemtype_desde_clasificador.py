@@ -5,11 +5,12 @@ Solo actua sobre libros con Item type VACIO y cuyo Clasificador tiene un
 mapeo dominante e inequivoco observado en los datos ya catalogados.
 Uso: itemtype.py [--apply]
 """
+import os
 import sqlite3
 import sys
 from collections import Counter
 
-DB = "/home/achalmaedison/Documents/biblioteca/metadata.db"
+DB = os.environ.get("CALIBRE_DB", os.path.expanduser("~/Documents/biblioteca/metadata.db"))  # FS2: sin ruta literal
 
 # Clasificador -> Item type Zotero (solo mapeos de alta confianza)
 MAP = {

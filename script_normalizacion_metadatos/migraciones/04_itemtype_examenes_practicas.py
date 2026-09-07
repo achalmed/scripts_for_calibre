@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """Completa Item type del residuo, decidido por familia de Clasificador.
 Solo actua sobre libros con Item type VACIO. Uso: itemtype2.py [--apply]"""
+import os
 import sqlite3, sys
 from collections import Counter
-DB = "/home/achalmaedison/Documents/biblioteca/metadata.db"
+DB = os.environ.get("CALIBRE_DB", os.path.expanduser("~/Documents/biblioteca/metadata.db"))  # FS2: sin ruta literal
 
 MAP = {
     # material de aula inedito (examenes, practicas, ejercicios, apuntes) -> Manuscript

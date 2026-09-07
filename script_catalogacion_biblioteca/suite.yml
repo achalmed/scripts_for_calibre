@@ -14,5 +14,5 @@ estado: activo
 entrada: resumen_catalogacion.tsv (lo alimentan ingesta e ingesta_cursos)
 depende_de:
 - calibredb
-- lib_comun
+- core/shell-lib
 metodo_documental: paso 02

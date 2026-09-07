@@ -5,9 +5,10 @@ estrictamente por señal fuerte:
   2) sin serie pero con ISBN -> Book (el prompt: ISBN = libro publicado)
 Todo lo demas queda SIN resolver (para subagentes/manual).
 """
+import os
 import sqlite3
 from collections import Counter, defaultdict
-DB="/home/achalmaedison/Documents/biblioteca/metadata.db"
+DB = os.environ.get("CALIBRE_DB", os.path.expanduser("~/Documents/biblioteca/metadata.db"))  # FS2: sin ruta literal
 con=sqlite3.connect(f"file:{DB}?mode=ro",uri=True); cur=con.cursor()
 
 itype={}   # book -> item_type actual
