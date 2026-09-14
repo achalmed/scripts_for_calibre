@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 8876
-zotero-key: 5683NIKE
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 8876
+zotero_key: 5683NIKE
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

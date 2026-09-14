@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 478
-zotero-key: IGY67YLP
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 478
+zotero_key: IGY67YLP
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

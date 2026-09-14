@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 123
-zotero-key: 2Q3853HM
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 123
+zotero_key: 2Q3853HM
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

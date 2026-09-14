@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 112
-zotero-key: 4H8BCAQS
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 112
+zotero_key: 4H8BCAQS
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

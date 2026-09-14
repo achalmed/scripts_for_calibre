@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 9590
-zotero-key: XC4I3BL8
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 9590
+zotero_key: XC4I3BL8
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

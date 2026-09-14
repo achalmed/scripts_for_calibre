@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3328
-zotero-key: H3ME6G75
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3328
+zotero_key: H3ME6G75
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

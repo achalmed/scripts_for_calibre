@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3326
-zotero-key: RBSHHC2P
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3326
+zotero_key: RBSHHC2P
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

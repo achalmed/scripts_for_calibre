@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 9594
-zotero-key: KZKU7VZD
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 9594
+zotero_key: KZKU7VZD
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

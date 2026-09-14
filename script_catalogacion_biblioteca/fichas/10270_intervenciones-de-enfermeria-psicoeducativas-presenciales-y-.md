@@ -1,9 +1,9 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 10270
-zotero-key:
-clave-bibtex: martinez2022
-proyecto: 03 writing/monographs/2026-07-18-ansiedad-e-intervencion-del-enfermero
+tipo: ficha_catalogacion
+calibre_id: 10270
+zotero_key:
+clave_bibtex: martinez2022
+proyecto: 2026-07-18-ansiedad-e-intervencion-del-enfermero
 verificacion:
   estado: pendiente
   metodo:

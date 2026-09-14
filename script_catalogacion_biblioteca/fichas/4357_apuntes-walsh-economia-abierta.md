@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 4357
-zotero-key: GDKG2TTZ
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 4357
+zotero_key: GDKG2TTZ
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3079
-zotero-key: PCIHAR9M
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3079
+zotero_key: PCIHAR9M
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

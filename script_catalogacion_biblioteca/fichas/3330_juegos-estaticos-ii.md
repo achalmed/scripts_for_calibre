@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3330
-zotero-key: E6TBDUZD
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3330
+zotero_key: E6TBDUZD
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

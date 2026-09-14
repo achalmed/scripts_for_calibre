@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1655
-zotero-key: MNCWGTBM
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1655
+zotero_key: MNCWGTBM
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

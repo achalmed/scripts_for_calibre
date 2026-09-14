@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1615
-zotero-key: VLNU6DKI
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1615
+zotero_key: VLNU6DKI
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

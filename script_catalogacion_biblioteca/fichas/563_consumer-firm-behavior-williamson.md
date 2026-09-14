@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 563
-zotero-key: TC7HNAP4
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 563
+zotero_key: TC7HNAP4
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

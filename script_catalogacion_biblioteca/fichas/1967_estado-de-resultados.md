@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1967
-zotero-key: 8QBTG3MM
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1967
+zotero_key: 8QBTG3MM
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

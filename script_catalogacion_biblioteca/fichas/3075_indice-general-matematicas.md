@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3075
-zotero-key: 7I7XP6LL
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3075
+zotero_key: 7I7XP6LL
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

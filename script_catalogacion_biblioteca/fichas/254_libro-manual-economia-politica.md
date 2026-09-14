@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 254
-zotero-key: 7BZWSC5A
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 254
+zotero_key: 7BZWSC5A
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

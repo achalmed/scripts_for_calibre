@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 8873
-zotero-key: BCJAZIIL
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 8873
+zotero_key: BCJAZIIL
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

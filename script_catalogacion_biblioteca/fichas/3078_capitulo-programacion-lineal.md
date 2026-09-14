@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3078
-zotero-key: GWA67TXP
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3078
+zotero_key: GWA67TXP
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

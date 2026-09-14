@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 4463
-zotero-key: WHB2IEE5
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 4463
+zotero_key: WHB2IEE5
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

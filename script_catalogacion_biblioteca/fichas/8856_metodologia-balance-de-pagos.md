@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 8856
-zotero-key: CAPP6TY3
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 8856
+zotero_key: CAPP6TY3
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

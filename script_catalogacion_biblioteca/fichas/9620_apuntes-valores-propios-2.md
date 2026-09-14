@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 9620
-zotero-key: SKEWWT8B
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 9620
+zotero_key: SKEWWT8B
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

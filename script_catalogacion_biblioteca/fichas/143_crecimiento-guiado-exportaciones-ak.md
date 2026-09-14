@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 143
-zotero-key: DDEXP5NP
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 143
+zotero_key: DDEXP5NP
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

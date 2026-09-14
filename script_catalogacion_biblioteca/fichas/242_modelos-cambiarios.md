@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 242
-zotero-key: CLLFGR6A
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 242
+zotero_key: CLLFGR6A
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

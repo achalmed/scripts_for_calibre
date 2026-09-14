@@ -1,9 +1,9 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 10266
-zotero-key:
-clave-bibtex: cardenas2025
-proyecto: 03 writing/monographs/2026-07-18-ansiedad-e-intervencion-del-enfermero
+tipo: ficha_catalogacion
+calibre_id: 10266
+zotero_key:
+clave_bibtex: cardenas2025
+proyecto: 2026-07-18-ansiedad-e-intervencion-del-enfermero
 verificacion:
   estado: pendiente
   metodo:

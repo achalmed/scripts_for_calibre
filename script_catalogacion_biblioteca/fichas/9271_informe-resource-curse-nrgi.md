@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 9271
-zotero-key: FJSGIWFI
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 9271
+zotero_key: FJSGIWFI
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

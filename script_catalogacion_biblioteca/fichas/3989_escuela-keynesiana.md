@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3989
-zotero-key: GLCXXYNF
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3989
+zotero_key: GLCXXYNF
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

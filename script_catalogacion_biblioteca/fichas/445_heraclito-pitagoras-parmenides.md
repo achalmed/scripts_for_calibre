@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 445
-zotero-key: X4I68QMR
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 445
+zotero_key: X4I68QMR
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

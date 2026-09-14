@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 334
-zotero-key: NVGHMPDV
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 334
+zotero_key: NVGHMPDV
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

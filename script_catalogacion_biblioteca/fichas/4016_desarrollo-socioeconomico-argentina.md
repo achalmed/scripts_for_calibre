@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 4016
-zotero-key: 3TCMJSTN
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 4016
+zotero_key: 3TCMJSTN
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

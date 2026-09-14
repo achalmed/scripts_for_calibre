@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 4392
-zotero-key: GLDZXGZQ
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 4392
+zotero_key: GLDZXGZQ
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

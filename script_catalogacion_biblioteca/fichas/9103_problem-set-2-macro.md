@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 9103
-zotero-key: SNW6WUCY
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 9103
+zotero_key: SNW6WUCY
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

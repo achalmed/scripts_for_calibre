@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 136
-zotero-key: BAAYUE9D
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 136
+zotero_key: BAAYUE9D
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

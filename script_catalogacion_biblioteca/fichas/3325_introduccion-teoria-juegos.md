@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3325
-zotero-key: WFKZJTIA
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3325
+zotero_key: WFKZJTIA
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

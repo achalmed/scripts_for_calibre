@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1767
-zotero-key: HVGI4FGM
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1767
+zotero_key: HVGI4FGM
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

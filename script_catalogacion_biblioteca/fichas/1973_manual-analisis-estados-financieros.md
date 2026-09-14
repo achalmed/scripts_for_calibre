@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1973
-zotero-key: FI6BXCBZ
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1973
+zotero_key: FI6BXCBZ
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

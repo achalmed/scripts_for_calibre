@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1717
-zotero-key: BP98AVTE
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1717
+zotero_key: BP98AVTE
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

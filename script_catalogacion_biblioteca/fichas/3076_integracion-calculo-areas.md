@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3076
-zotero-key: FRGVN4PT
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3076
+zotero_key: FRGVN4PT
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

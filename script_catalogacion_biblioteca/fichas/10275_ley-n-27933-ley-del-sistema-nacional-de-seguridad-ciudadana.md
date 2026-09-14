@@ -1,9 +1,9 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 10275
-zotero-key:
-clave-bibtex: ley27933_2003
-proyecto: 03 writing/essays/2026-08-25-tecnicas-identificacion-zonas-alto-riesgo
+tipo: ficha_catalogacion
+calibre_id: 10275
+zotero_key:
+clave_bibtex: ley27933_2003
+proyecto: 2026-08-25-tecnicas-identificacion-zonas-alto-riesgo
 verificacion:
   estado: pendiente
   metodo:

@@ -61,7 +61,7 @@ Componentes:
 
 | Elemento | Descripción |
 |---|---|
-| `fichas/` | Una ficha Markdown por libro (`<id_calibre>_<slug>.md`) con el frontmatter único (`tipo: ficha-catalogacion`, `calibre-id`, `zotero-key`; norma `prompts/00 metodo/fichas_formato_y_voz.md`) y secciones Origen · Zotero · Calibre · Notas. Migradas al formato único el 2026-09-07 (FD3); las nuevas las escribe `scripts_for_fuentes/ingesta` |
+| `fichas/` | Una ficha Markdown por libro (`<id_calibre>_<slug>.md`) con el frontmatter único (`tipo: ficha_catalogacion`, `calibre_id`, `zotero_key`; norma `prompts/00 metodo/fichas_formato_y_voz.md`) y secciones Origen · Zotero · Calibre · Notas. Migradas al formato único el 2026-09-07 (FD3); las nuevas las escribe `scripts_for_fuentes/ingesta` |
 | `resumen_catalogacion.tsv` | Tabla resumen (una fila por libro) — **fuente de verdad** para `main.sh` |
 | `main.sh` + `config.sh` + `lib/` | Herramienta que aplica el TSV a Calibre con `calibredb set_metadata` |
 

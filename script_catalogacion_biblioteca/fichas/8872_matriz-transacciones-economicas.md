@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 8872
-zotero-key: NV6JPE6Q
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 8872
+zotero_key: NV6JPE6Q
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

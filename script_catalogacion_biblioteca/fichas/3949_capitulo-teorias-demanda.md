@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3949
-zotero-key: IHKXBD5A
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3949
+zotero_key: IHKXBD5A
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

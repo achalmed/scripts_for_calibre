@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 4367
-zotero-key: AGXANY35
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 4367
+zotero_key: AGXANY35
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

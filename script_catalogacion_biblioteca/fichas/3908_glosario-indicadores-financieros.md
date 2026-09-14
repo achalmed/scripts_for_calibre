@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3908
-zotero-key: MNETVTVG
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3908
+zotero_key: MNETVTVG
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

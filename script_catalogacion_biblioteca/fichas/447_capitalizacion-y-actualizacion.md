@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 447
-zotero-key: 2FGBPAFH
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 447
+zotero_key: 2FGBPAFH
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

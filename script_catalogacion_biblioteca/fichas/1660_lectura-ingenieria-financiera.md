@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1660
-zotero-key: 2IXSD7SV
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1660
+zotero_key: 2IXSD7SV
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

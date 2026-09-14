@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 9941
-zotero-key:
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 9941
+zotero_key:
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

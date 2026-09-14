@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 449
-zotero-key: YBPZ866Z
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 449
+zotero_key: YBPZ866Z
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

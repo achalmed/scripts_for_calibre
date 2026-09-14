@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1658
-zotero-key: 7W623WND
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1658
+zotero_key: 7W623WND
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

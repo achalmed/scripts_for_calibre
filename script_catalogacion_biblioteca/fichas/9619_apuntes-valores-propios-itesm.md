@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 9619
-zotero-key: FWTHQMCH
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 9619
+zotero_key: FWTHQMCH
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1659
-zotero-key: TGFGKUFI
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1659
+zotero_key: TGFGKUFI
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

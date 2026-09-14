@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 8865
-zotero-key: 66QIC8BD
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 8865
+zotero_key: 66QIC8BD
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

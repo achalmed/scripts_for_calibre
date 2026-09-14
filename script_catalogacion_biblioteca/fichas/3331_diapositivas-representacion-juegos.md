@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3331
-zotero-key: RQC8L7BS
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3331
+zotero_key: RQC8L7BS
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

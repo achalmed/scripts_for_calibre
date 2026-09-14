@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 10198
-zotero-key:
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 10198
+zotero_key:
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

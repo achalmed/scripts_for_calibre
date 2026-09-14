@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 436
-zotero-key: LRAL64KG
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 436
+zotero_key: LRAL64KG
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

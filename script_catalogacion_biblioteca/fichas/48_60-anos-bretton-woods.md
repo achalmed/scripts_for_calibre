@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 48
-zotero-key: XKNFW94X
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 48
+zotero_key: XKNFW94X
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

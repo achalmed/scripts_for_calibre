@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 167
-zotero-key: K6P6MTU8
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 167
+zotero_key: K6P6MTU8
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

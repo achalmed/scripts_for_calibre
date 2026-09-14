@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3329
-zotero-key: V4VTZ7RT
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3329
+zotero_key: V4VTZ7RT
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

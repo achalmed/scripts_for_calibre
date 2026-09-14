@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 78
-zotero-key: 6MUHZTZT
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 78
+zotero_key: 6MUHZTZT
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

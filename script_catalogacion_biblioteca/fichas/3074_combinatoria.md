@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3074
-zotero-key: PLB6D539
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3074
+zotero_key: PLB6D539
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

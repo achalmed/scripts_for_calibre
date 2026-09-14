@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1544
-zotero-key: 5ZU4B23K
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1544
+zotero_key: 5ZU4B23K
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

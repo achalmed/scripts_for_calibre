@@ -1,9 +1,9 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 10276
-zotero-key:
-clave-bibtex: ley30714_2017
-proyecto: 03 writing/essays/2026-08-25-tecnicas-identificacion-zonas-alto-riesgo
+tipo: ficha_catalogacion
+calibre_id: 10276
+zotero_key:
+clave_bibtex: ley30714_2017
+proyecto: 2026-08-25-tecnicas-identificacion-zonas-alto-riesgo
 verificacion:
   estado: pendiente
   metodo:

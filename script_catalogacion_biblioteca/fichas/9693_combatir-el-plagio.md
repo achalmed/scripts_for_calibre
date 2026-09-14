@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 9693
-zotero-key: ZCD7SBMN
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 9693
+zotero_key: ZCD7SBMN
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

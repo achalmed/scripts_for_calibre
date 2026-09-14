@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 9090
-zotero-key: VA6PCHKA
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 9090
+zotero_key: VA6PCHKA
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

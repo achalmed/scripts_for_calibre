@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3077
-zotero-key: TWIZ4SKE
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3077
+zotero_key: TWIZ4SKE
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 460
-zotero-key: NJCPYQAF
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 460
+zotero_key: NJCPYQAF
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

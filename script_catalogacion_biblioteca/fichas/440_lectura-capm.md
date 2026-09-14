@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 440
-zotero-key: WFLL27UI
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 440
+zotero_key: WFLL27UI
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

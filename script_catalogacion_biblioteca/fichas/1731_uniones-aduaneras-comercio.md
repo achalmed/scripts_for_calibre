@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1731
-zotero-key: MUYDWZ9P
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1731
+zotero_key: MUYDWZ9P
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

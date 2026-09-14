@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1493
-zotero-key: KM39Q8KM
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1493
+zotero_key: KM39Q8KM
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 210
-zotero-key: 3ZAJ2Z8I
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 210
+zotero_key: 3ZAJ2Z8I
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

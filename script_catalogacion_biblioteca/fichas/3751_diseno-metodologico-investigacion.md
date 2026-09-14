@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3751
-zotero-key: D9BXAUMD
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3751
+zotero_key: D9BXAUMD
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 9131
-zotero-key: ETZXH4H7
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 9131
+zotero_key: ETZXH4H7
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

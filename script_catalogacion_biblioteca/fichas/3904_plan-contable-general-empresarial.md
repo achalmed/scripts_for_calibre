@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3904
-zotero-key: UEBZBDKB
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3904
+zotero_key: UEBZBDKB
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

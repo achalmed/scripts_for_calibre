@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 8881
-zotero-key: 9U9B4ZD3
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 8881
+zotero_key: 9U9B4ZD3
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

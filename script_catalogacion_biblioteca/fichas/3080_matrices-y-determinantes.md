@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3080
-zotero-key: 2PJH5UVL
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3080
+zotero_key: 2PJH5UVL
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

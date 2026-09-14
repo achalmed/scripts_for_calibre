@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 391
-zotero-key: CI3TW4MU
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 391
+zotero_key: CI3TW4MU
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1933
-zotero-key: NR3Z2IV7
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1933
+zotero_key: NR3Z2IV7
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

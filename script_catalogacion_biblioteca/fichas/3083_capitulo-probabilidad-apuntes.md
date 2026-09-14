@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3083
-zotero-key: T6CDX8R9
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3083
+zotero_key: T6CDX8R9
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

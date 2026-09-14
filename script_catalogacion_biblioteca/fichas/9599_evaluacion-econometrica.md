@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 9599
-zotero-key: MIYXX87B
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 9599
+zotero_key: MIYXX87B
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

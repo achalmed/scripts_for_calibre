@@ -1,9 +1,9 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 10274
-zotero-key:
-clave-bibtex: dl1186_2015
-proyecto: 03 writing/essays/2026-08-25-tecnicas-identificacion-zonas-alto-riesgo
+tipo: ficha_catalogacion
+calibre_id: 10274
+zotero_key:
+clave_bibtex: dl1186_2015
+proyecto: 2026-08-25-tecnicas-identificacion-zonas-alto-riesgo
 verificacion:
   estado: pendiente
   metodo:

@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3084
-zotero-key: 3CE7U7QE
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3084
+zotero_key: 3CE7U7QE
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

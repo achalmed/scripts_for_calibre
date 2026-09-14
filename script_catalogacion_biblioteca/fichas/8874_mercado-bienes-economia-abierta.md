@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 8874
-zotero-key: STCVEDB2
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 8874
+zotero_key: STCVEDB2
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

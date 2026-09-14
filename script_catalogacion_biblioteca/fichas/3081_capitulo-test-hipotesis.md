@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3081
-zotero-key: TUE7XL2C
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3081
+zotero_key: TUE7XL2C
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

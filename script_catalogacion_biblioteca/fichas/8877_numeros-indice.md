@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 8877
-zotero-key: JJWH2ZHT
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 8877
+zotero_key: JJWH2ZHT
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

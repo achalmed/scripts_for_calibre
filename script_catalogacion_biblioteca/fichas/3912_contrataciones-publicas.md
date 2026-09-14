@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 3912
-zotero-key: 579GWISF
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 3912
+zotero_key: 579GWISF
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

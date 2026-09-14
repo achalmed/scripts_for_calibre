@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 568
-zotero-key: ASLTUTK8
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 568
+zotero_key: ASLTUTK8
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 9582
-zotero-key: E77SI94G
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 9582
+zotero_key: E77SI94G
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

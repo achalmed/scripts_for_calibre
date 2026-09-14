@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 444
-zotero-key: J93SX5IV
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 444
+zotero_key: J93SX5IV
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

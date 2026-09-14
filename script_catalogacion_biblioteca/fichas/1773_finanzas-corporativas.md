@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1773
-zotero-key: GZLXX6T4
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1773
+zotero_key: GZLXX6T4
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

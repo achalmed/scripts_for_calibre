@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1430
-zotero-key: SINKS4D8
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1430
+zotero_key: SINKS4D8
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

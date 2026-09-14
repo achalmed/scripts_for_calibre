@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 4389
-zotero-key: A3BIKYDS
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 4389
+zotero_key: A3BIKYDS
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

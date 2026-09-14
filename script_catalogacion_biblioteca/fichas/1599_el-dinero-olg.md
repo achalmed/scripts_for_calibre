@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 1599
-zotero-key: 29UQ2MWZ
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 1599
+zotero_key: 29UQ2MWZ
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente

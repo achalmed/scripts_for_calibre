@@ -1,8 +1,8 @@
 ---
-tipo: ficha-catalogacion
-calibre-id: 8875
-zotero-key: ASBUQS23
-clave-bibtex:
+tipo: ficha_catalogacion
+calibre_id: 8875
+zotero_key: ASBUQS23
+clave_bibtex:
 proyecto:
 verificacion:
   estado: pendiente
