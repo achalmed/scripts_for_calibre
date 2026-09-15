@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lib/report.sh - Report path setup and the final on-screen summary.
+# script_verificar_metadatos/lib/report.sh — Report path setup and the final on-screen summary
 
 # prepare_report_paths()
 # Creates the timestamped output paths and exports them for the Python core.

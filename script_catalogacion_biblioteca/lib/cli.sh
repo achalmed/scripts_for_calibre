@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lib/cli.sh - Argument parsing and help text.
+# script_catalogacion_biblioteca/lib/cli.sh — Argument parsing and help text
 
 # show_help()
 # Prints usage information (Spanish, per project convention).

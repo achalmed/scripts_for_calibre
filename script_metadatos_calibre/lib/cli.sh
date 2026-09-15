@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# lib/cli.sh
+#  script_metadatos_calibre/lib/cli.sh — Argument parsing, help text, and interactive menu
 # Argument parsing, help text, and interactive menu.
 # Separating CLI concerns from business logic keeps main.sh readable and
 # makes it trivial to add new flags without touching domain modules.

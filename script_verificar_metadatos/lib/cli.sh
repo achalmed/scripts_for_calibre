@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lib/cli.sh - Argument parsing, dependency checks and --help text.
+# script_verificar_metadatos/lib/cli.sh — Argument parsing, dependency checks and --help text
 
 # show_help()
 # Prints usage and exits.

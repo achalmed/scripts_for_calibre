@@ -58,7 +58,7 @@ while [ $# -gt 0 ]; do
     shift
 done
 
-# ── Acción: enlace de apuntes ────────────────────────────────────────────────
+# --- Acción: enlace de apuntes ---------------------------------------------
 accion_apuntes() {
     # Lock compartido (auditoría C5): calibredb set_custom escribe metadata.db
     # y debe serializar con los timers, igual que accion_sync.
@@ -83,7 +83,7 @@ EOF
     echo "✓ #$COL_APUNTES del libro $APUNTES_ID → enlace a: $abs"
 }
 
-# ── Acción: timer systemd de usuario ────────────────────────────────────────
+# --- Acción: timer systemd de usuario --------------------------------------
 accion_timer_on() {
     mkdir -p "$HOME/.config/systemd/user"
     sed "s|@MAIN@|$SCRIPT_DIR/main.sh|" \
@@ -104,7 +104,7 @@ accion_timer_off() {
     echo "✓ Timer desinstalado."
 }
 
-# ── Acción: migrar sidecars .sdr a la ubicación hash de KOReader ────────────
+# --- Acción: migrar sidecars .sdr a la ubicación hash de KOReader ----------
 accion_migrar() {
     comprobar_entorno
     exigir_koreader_cerrado
@@ -139,7 +139,7 @@ accion_migrar() {
     fi
 }
 
-# ── Acción principal: setup + sync ──────────────────────────────────────────
+# --- Acción principal: setup + sync ----------------------------------------
 accion_sync() {
     # Lock COMPARTIDO entre las herramientas que escriben metadata.db
     # (script_koreader_estudio y script_ecosistema_lectura): nunca a la vez.

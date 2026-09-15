@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lib/clasificador.sh - Handling of the #clasificador enumerated custom
+# script_catalogacion_biblioteca/lib/clasificador.sh — Handling of the #clasificador enumerated custom
 # column: live enum loading, accent normalization and validation.
 # Calibre rejects enum values not present in the column definition, so
 # invalid values must be filtered out before calling calibredb.

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lib/validator.sh - Pre-flight checks: dependencies, input file and
+# script_catalogacion_biblioteca/lib/validator.sh — Pre-flight checks: dependencies, input file and
 # Calibre state. Everything is validated before any logic runs.
 
 # check_dependencies()

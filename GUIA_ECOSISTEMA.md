@@ -1,7 +1,12 @@
+---
+tipo: doc
+titulo: "Guía de uso del ecosistema de lectura y estudio (Calibre ⇄ KOReader ⇄ Zotero)"
+estado: activo
+---
 # 📚 GUÍA DE USO — Ecosistema de lectura y estudio (Calibre ⇄ KOReader ⇄ Zotero)
 
-#guía · La referencia práctica de todo lo montado el 2026-08-09. El diseño
-técnico vive en [`script_ecosistema_lectura/DISENO.md`](script_ecosistema_lectura/DISENO.md);
+La referencia práctica de todo lo montado el 2026-08-09. El diseño
+técnico vive en [`script_ecosistema_lectura/diseno.md`](script_ecosistema_lectura/diseno.md);
 cada herramienta tiene su README con el detalle. **Esta página responde: ¿qué es
 automático, qué hago yo, y qué comando uso para cada cosa?**
 

@@ -5,7 +5,7 @@ lib/sync_zotero_lectura.py — Fase 2: Read Time de Zotero → Calibre.
 
 Se ejecuta con:  calibre-debug -e sync_zotero_lectura.py  (lo orquesta main.sh)
 
-Fuente (verificada por inspección, ver ../DISENO.md): el plugin Ethereal Style
+Fuente (verificada por inspección, ver ../diseno.md): el plugin Ethereal Style
 guarda registros de lectura como notas hijas de un ítem "Addon Item" en
 zotero.sqlite. Cada nota:
 

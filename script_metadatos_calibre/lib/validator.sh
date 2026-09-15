@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# lib/validator.sh
+#  script_metadatos_calibre/lib/validator.sh — Input and environment validation
 # Input and environment validation.
 # All checks that must pass before business logic runs live here,
 # keeping main.sh and domain modules free of defensive boilerplate.

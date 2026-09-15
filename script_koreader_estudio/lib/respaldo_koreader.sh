@@ -1,5 +1,5 @@
 # lib/respaldo_koreader.sh — Respaldo de los datos valiosos de KOReader hacia
-# el repo de dotfiles (~/.dotfiles/koreader-data), TODO EN TEXTO para que git
+# el repo de dotfiles (~/.dotfiles/koreader-data), todo en texto para que git
 # lo versione bien: dump SQL de las estadísticas + sidecars .lua + historial.
 # Los datos vivos siguen en ~/.config/koreader (principio de mínima captura);
 # esto es un respaldo versionado. Publicar al remoto = `dotfiles sync-push`.

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# lib/register_formats.sh
+#  script_metadatos_calibre/lib/register_formats.sh — Registra con calibredb los PDF que ya están en la carpeta de Calibre como formatos de su libro
 # Registers PDF files that already exist inside Calibre's folder structure
 # as additional formats of their corresponding book record, using calibredb.
 #

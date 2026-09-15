@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lib/validator.sh - Write preconditions: apps closed, databases sane,
+# script_sincronizar_zotero/lib/validator.sh — Write preconditions: apps closed, databases sane,
 # backups taken. All writes are gated through ensure_safe_to_apply().
 
 # validate_database()

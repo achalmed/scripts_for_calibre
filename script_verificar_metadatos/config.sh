@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# config.sh - Central configuration for verificar-metadatos.
+# script_verificar_metadatos/config.sh — Central configuration for verificar-metadatos
 # Every user-editable value lives here; lib/ modules never hardcode paths.
 
 # shellcheck disable=SC2034  # variables are consumed by main.sh and lib/ modules

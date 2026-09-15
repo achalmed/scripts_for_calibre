@@ -18,7 +18,7 @@ main.sh register --aplicar
 main.sh limpiar-json --aplicar
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-07); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-15); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 > Herramienta de línea de comandos que unifica dos operaciones esenciales

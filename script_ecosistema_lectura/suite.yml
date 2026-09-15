@@ -1,5 +1,6 @@
-# suite.yml — contrato de la suite (esquema en core/suite.schema.yml); core/suites.py generar escribe los índices y READMEs.
-nombre: ecosistema_lectura
+# script_ecosistema_lectura/suite.yml — suite ecosistema_lectura: Lleva el tiempo de lectura de Zotero (readingTime) y los metadatos de estudio a las columnas de Calibre.
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: ecosistema_lectura
 objetivo: biblioteca
 resumen: Lleva el tiempo de lectura de Zotero (readingTime) y los metadatos de estudio a las columnas de Calibre.
 escribe_en:

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# config.sh
+#  script_metadatos_calibre/config.sh — Global configuration, constants, and default values
 # Global configuration, constants, and default values.
 # All tuneable parameters live here so operators never need to touch
 # business-logic files.

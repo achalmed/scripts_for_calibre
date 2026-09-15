@@ -17,12 +17,12 @@ main.sh --aplicar
 main.sh --metadatos --desde-timer
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-07); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-15); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 #readme
 
-**Fase 2 del ecosistema de lectura** (ver [DISENO.md](DISENO.md)): lleva a
+**Fase 2 del ecosistema de lectura** (ver [diseno.md](diseno.md)): lleva a
 Calibre el tiempo de lectura que registra **Ethereal Style** en Zotero, y lo
 agrega al de KOReader sin posibilidad de doble conteo.
 
@@ -77,7 +77,7 @@ confirma a mano pegando la clave en la columna ZKey.
   (`../.lock_calibre_write`): las dos herramientas nunca escriben a la vez.
 - Simulación por defecto, backups rotados (5), reporte TSV por pasada.
 
-## Fuente de datos (verificada por inspección — no tocar sin releer DISENO.md)
+## Fuente de datos (verificada por inspección — no tocar sin releer diseno.md)
 
 Nota hija del ítem "Addon Item" en `~/Zotero/zotero.sqlite` → `itemNotes`:
 
@@ -90,7 +90,7 @@ Nota hija del ítem "Addon Item" en `~/Zotero/zotero.sqlite` → `itemNotes`:
 `script_sincronizar_zotero`). Si hay más de una nota por ítem, gana la de
 `dateModified` más reciente.
 
-## Pendientes de fases siguientes (DISENO.md §6)
+## Pendientes de fases siguientes (diseno.md §6)
 
 - **2b:** progreso desde Zotero — `syncedSettings.lastPageIndex_u_<KEY>` existe
   en esta instalación; falta mapear adjunto→ítem padre y páginas totales.

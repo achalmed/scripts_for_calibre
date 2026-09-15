@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lib/metadata.sh - Domain logic: TSV row processing, calibredb argument
+# script_catalogacion_biblioteca/lib/metadata.sh — Domain logic: TSV row processing, calibredb argument
 # construction and execution/simulation, plus the final summary.
 
 # Run counters (read by print_summary).

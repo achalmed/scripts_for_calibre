@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# main.sh - Entry point: orchestration only.
+# script_sincronizar_zotero/main.sh — Entry point: orchestration only
 # Bidirectional metadata sync between the Calibre library and Zotero for
 # ZMI-linked books. Simulates by default; --aplicar writes to BOTH
 # databases (with both apps closed, backups and integrity checks).

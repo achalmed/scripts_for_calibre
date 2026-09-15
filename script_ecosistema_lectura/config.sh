@@ -13,7 +13,7 @@ BACKUPS_CONSERVAR=5
 # nunca deben correr a la vez (los timers reintentan a los 30 min).
 LOCK_ESCRITURA_CALIBRE="$SCRIPT_DIR/../.lock_calibre_write"
 
-# ── Columnas de Calibre (labels sin #) ───────────────────────────────────────
+# --- Columnas de Calibre (labels sin #) ------------------------------------
 COL_ZKEY="zotero_key"        # puente Calibre↔Zotero (ya existente, de ZMI)
 COL_ZTIEMPO="zot_tiempo"     # minutos leídos según Zotero/Ethereal Style (nueva)
 COL_ZULTIMA="zot_ultima"     # última actividad de lectura en Zotero (nueva)
@@ -21,6 +21,6 @@ COL_ZPROG="zot_progreso"     # fracción 0–1 leída según el lector de Zotero
 COL_TTOTAL="tiempo_estudio"  # composite: ko_tiempo + zot_tiempo (nueva)
 COL_KOTIEMPO="ko_tiempo"     # minutos según KOReader (de script_koreader_estudio)
 
-# ── Fase 3: orquestación de metadatos/etiquetas (sincronizar_zotero) ─────────
+# --- Fase 3: orquestación de metadatos/etiquetas (sincronizar_zotero) ------
 SINCRONIZAR_ZOTERO_DIR="$SCRIPT_DIR/../script_sincronizar_zotero"
 ESTADO_DIR="$SCRIPT_DIR/estado"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# lib/limpiar_json_huerfanos.sh
+#  script_metadatos_calibre/lib/limpiar_json_huerfanos.sh — Localiza y (con --aplicar) borra los sidecar zotero_metadata.json huérfanos junto a los PDF de la biblioteca
 # Localiza y (con --aplicar) borra los sidecar 'zotero_metadata.json' que el
 # incrustador rival (scripts_for_zotero/script_inscrustar_metadatos_pdf)
 # sembraba junto a los PDFs de la biblioteca. Con la política "Calibre manda"

@@ -1,5 +1,6 @@
-# suite.yml — contrato de la suite (esquema en core/suite.schema.yml); core/suites.py generar escribe los índices y READMEs.
-nombre: sincronizar_zotero
+# script_sincronizar_zotero/suite.yml — suite sincronizar_zotero: Sincroniza en las dos direcciones los metadatos de los libros enlazados por #zotero_key entre Calibre y Zotero, con backups e integridad.
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: sincronizar_zotero
 objetivo: biblioteca
 resumen: 'Sincroniza en las dos direcciones los metadatos de los libros enlazados por #zotero_key entre Calibre y Zotero, con backups e integridad.'
 escribe_en:

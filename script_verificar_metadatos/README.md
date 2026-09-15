@@ -15,7 +15,7 @@ main.sh                      # informe en reportes/
 main.sh --modo isbn
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-07); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-15); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 Verifica los metadatos de la biblioteca **Calibre** contra bases

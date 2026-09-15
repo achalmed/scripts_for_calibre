@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# main.sh - Entry point: orchestration only.
+# script_verificar_metadatos/main.sh — Entry point: orchestration only
 # Verifies Calibre metadata against public bibliographic APIs and writes a
 # discrepancy report. READ-ONLY: it never modifies the Calibre library.
 

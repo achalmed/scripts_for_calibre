@@ -1,6 +1,11 @@
+---
+tipo: doc
+titulo: "Diseño del ecosistema de lectura sincronizado: Calibre ⇄ KOReader ⇄ Zotero"
+estado: activo
+---
 # DISEÑO — Ecosistema de lectura sincronizado: Calibre ⇄ KOReader ⇄ Zotero
 
-#diseño · Estado: **investigación completada, fases 1 hechas, fases 2+ por implementar**
+Estado: **investigación completada, fases 1 hechas, fases 2+ por implementar**
 Fecha: 2026-08-09 · Basado en inspección real de las tres instalaciones (no en supuestos).
 
 ## 1. Hallazgos de la investigación

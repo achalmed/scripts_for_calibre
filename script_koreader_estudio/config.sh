@@ -1,12 +1,12 @@
 # config.sh — Configuración de script_koreader_estudio
 # Todas las rutas y nombres editables viven aquí; lib/ nunca hardcodea valores.
 
-# ── Rutas principales ────────────────────────────────────────────────────────
+# --- Rutas principales -----------------------------------------------------
 BIBLIOTECA="${QKO_BIBLIOTECA:-${BIBLIOTECA_DIR:-$HOME/Documents/biblioteca}}"
 KOREADER_CONFIG="${QKO_KOREADER_CONFIG:-$HOME/.config/koreader}"
 STATS_DB="$KOREADER_CONFIG/settings/statistics.sqlite3"
 
-# ── Carpetas de trabajo del script ───────────────────────────────────────────
+# --- Carpetas de trabajo del script ----------------------------------------
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPORTES_DIR="$SCRIPT_DIR/reportes"
 BACKUPS_DIR="$SCRIPT_DIR/backups"
@@ -16,7 +16,7 @@ BACKUPS_CONSERVAR=5          # cuántos backups de metadata.db conservar
 # (script_ecosistema_lectura, script_sincronizar_zotero): nunca a la vez (C5).
 LOCK_ESCRITURA_CALIBRE="$SCRIPT_DIR/../.lock_calibre_write"
 
-# ── Columnas de Calibre (labels sin #) ───────────────────────────────────────
+# --- Columnas de Calibre (labels sin #) ------------------------------------
 # Existentes (creadas por el plugin KOReader Sync) que este script POBLA:
 COL_MD5="ko_md5"             # MD5 parcial (algoritmo KOReader)
 COL_PROGFLOAT="ko_progfloat" # progreso como fracción 0–1 (convención del plugin)
@@ -35,10 +35,10 @@ COL_ESTADO="estado_estudio"  # composite: Pendiente/En proceso/Finalizado/Abando
 COL_BARRA="barra"            # composite: barra de progreso ▰▰▰▱▱ 42%
 COL_APUNTES="apuntes"        # comments: enlace clicable al .md de apuntes
 
-# ── Comportamiento ───────────────────────────────────────────────────────────
+# --- Comportamiento --------------------------------------------------------
 FORMATOS_LEIBLES="PDF EPUB DJVU MOBI AZW3 FB2 CBZ CBR"  # formatos que KOReader abre
 
-# ── Respaldo continuo de los datos de KOReader ───────────────────────────────
+# --- Respaldo continuo de los datos de KOReader ----------------------------
 # Los datos VIVOS quedan en ~/.config/koreader (filosofía de mínima captura de
 # los dotfiles); aquí se respaldan EN TEXTO (dump SQL + sidecars .lua) dentro
 # del repo de dotfiles, con commit local automático. Publicar = dotfiles

@@ -1,5 +1,6 @@
-# suite.yml — contrato de la suite (esquema en core/suite.schema.yml); core/suites.py generar escribe los índices y READMEs.
-nombre: catalogacion_biblioteca
+# script_catalogacion_biblioteca/suite.yml — suite catalogacion_biblioteca: Aplica a Calibre los metadatos catalogados en resumen_catalogacion.tsv (autor «Nombre, Apellidos», vocabulario cerrado, serie, identificadores); registro canónico de lo catalogado.
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: catalogacion_biblioteca
 objetivo: fuentes
 resumen: Aplica a Calibre los metadatos catalogados en resumen_catalogacion.tsv (autor «Nombre, Apellidos», vocabulario cerrado, serie, identificadores); registro
   canónico de lo catalogado.

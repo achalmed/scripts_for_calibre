@@ -15,7 +15,7 @@ main.sh                      # simula y reporta
 main.sh --aplicar            # ambas apps cerradas
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-07); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-15); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 Sincronizador **bidireccional** de metadatos entre la biblioteca **Calibre**

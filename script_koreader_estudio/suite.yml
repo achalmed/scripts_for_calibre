@@ -1,5 +1,6 @@
-# suite.yml — contrato de la suite (esquema en core/suite.schema.yml); core/suites.py generar escribe los índices y READMEs.
-nombre: koreader_estudio
+# script_koreader_estudio/suite.yml — suite koreader_estudio: Convierte Calibre en tablero de estudio: progreso, tiempo y anotaciones de KOReader hacia las columnas del libro.
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: koreader_estudio
 objetivo: biblioteca
 resumen: 'Convierte Calibre en tablero de estudio: progreso, tiempo y anotaciones de KOReader hacia las columnas del libro.'
 escribe_en:

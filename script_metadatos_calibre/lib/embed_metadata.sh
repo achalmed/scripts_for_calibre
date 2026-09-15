@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# lib/embed_metadata.sh
+#  script_metadatos_calibre/lib/embed_metadata.sh — Reads Calibre metadata.opf files and embeds their fields into companion PDFs using exiftool
 # Reads Calibre metadata.opf files and embeds their fields into companion PDFs
 # using exiftool. Processes the library recursively; each directory that
 # contains a metadata.opf is treated as one "book folder".

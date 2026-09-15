@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lib/db.sh - The single place that reads metadata.db. Emits a candidate
+# script_verificar_metadatos/lib/db.sh — The single place that reads metadata.db. Emits a candidate
 # TSV that lib/verificador.py consumes. Keeping all SQL here means the
 # Python side never needs to know the Calibre schema.
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# config.sh - Central configuration for aplicar-metadatos.
+# script_catalogacion_biblioteca/config.sh — Central configuration for aplicar-metadatos
 # Every user-editable value lives here; lib/ modules never hardcode paths.
 
 # shellcheck disable=SC2034  # variables are consumed by main.sh and lib/ modules

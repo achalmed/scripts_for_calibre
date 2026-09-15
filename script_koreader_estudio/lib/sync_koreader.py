@@ -27,7 +27,7 @@ import hashlib
 import sqlite3
 from datetime import datetime, timezone
 
-# ── Configuración por entorno (la exporta main.sh desde config.sh) ──────────
+# --- Configuración por entorno (la exporta main.sh desde config.sh) --------
 BIBLIOTECA = os.environ.get("QKO_BIBLIOTECA", "")
 KOREADER_CONFIG = os.environ.get("QKO_KOREADER_CONFIG", "")
 HASH_DIR = os.path.join(KOREADER_CONFIG, "hashdocsettings") if KOREADER_CONFIG else ""
@@ -273,7 +273,7 @@ def main():
                 "campos": ",".join(sorted(k for k in plan if k != "LASTSYNC")),
             })
 
-    # ── Reporte TSV ──────────────────────────────────────────────────────────
+    # --- Reporte TSV -------------------------------------------------------
     filas_reporte.sort(key=lambda r: str(r["ultima"]), reverse=True)
     os.makedirs(os.path.dirname(REPORTE), exist_ok=True)
     with open(REPORTE, "w", newline="", encoding="utf-8") as f:
@@ -281,14 +281,14 @@ def main():
         w.writeheader()
         w.writerows(filas_reporte)
 
-    # ── Aplicar ──────────────────────────────────────────────────────────────
+    # --- Aplicar -----------------------------------------------------------
     n_cambios = sum(len(v) for v in updates.values())
     if APLICAR and n_cambios:
         for campo, valores in updates.items():
             if valores:
                 api.set_field(C[campo], valores)
 
-    # ── Resumen ──────────────────────────────────────────────────────────────
+    # --- Resumen -----------------------------------------------------------
     modo = "APLICADO" if APLICAR else "SIMULACIÓN (nada escrito)"
     print("── Sincronización KOReader → Calibre ─────────────────────")
     print("  Modo               : %s" % modo)

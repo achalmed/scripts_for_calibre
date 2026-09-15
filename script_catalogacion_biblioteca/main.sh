@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# main.sh - Entry point: orchestration only.
+# script_catalogacion_biblioteca/main.sh — Entry point: orchestration only
 # Applies the cataloged metadata from resumen_catalogacion.tsv to the
 # Calibre library via calibredb. Simulates by default; see --help.
 
