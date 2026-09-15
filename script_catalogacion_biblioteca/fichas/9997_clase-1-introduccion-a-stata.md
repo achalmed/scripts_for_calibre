@@ -59,4 +59,4 @@ Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Ricardo A.,
 ## Notas
 
 Confianza: **alta**. Econometría, Maestría en Economía Urbana (UTDT), marzo de 2012.
-- Origen: `10 Class/areas/Academic_Class-Stata/course_00_curso_base/06_RECURSOS/presentaciones/slide sesion 01 c intro a stata ricardo pasquini.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).
+- Origen: `10 Class/docencia/cursos/stata/05-recursos/presentaciones/slide sesion 01 c intro a stata ricardo pasquini.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).

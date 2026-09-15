@@ -59,4 +59,4 @@ Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Christopher
 ## Notas
 
 Confianza: **alta**. Fecha impresa en las diapositivas (11 de diciembre de 2025).
-- Origen: `10 Class/areas/Academic_Class-Metodologia-investigacion/course_00_sistema_apa/06_RECURSOS/talleres/taller 41 parafrasis con ia sin perder tu estilo.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).
+- Origen: `10 Class/docencia/cursos/sistema-apa/05-recursos/talleres/taller 41 parafrasis con ia sin perder tu estilo.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).
