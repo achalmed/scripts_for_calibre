@@ -124,20 +124,21 @@ Los `.sdr` ya **no** viven junto a los libros: se migraron con `--migrar-sdr` a
 ## Respaldo continuo (no volver a perder lecturas)
 
 Cada sincronización (y el timer cada 30 min) espeja **en texto** las
-estadísticas (dump SQL), los sidecars hash y el historial al repo de dotfiles,
-con commit local automático (publicar = `dotfiles sync-push`):
+estadísticas (dump SQL), los sidecars hash y el historial a un repo git propio de
+datos de lectura (`KOREADER_RESPALDO_DIR` en `core/env.sh`; hasta FG3, 2026-09-15,
+fue `~/.dotfiles/koreader-data`), con commit local automático (publicar =
+`git push` desde ese repo, remoto privado):
 
 ```
-~/.dotfiles/koreader-data/         ← versionado en git (dotfiles)
+~/.local/share/koreader-respaldo/  ← repo git propio (datos, no configuración)
 ├── statistics.sql     (dump SQL de statistics.sqlite3, restaurable)
 ├── hashdocsettings/   (todos los sidecars .lua de texto)
 └── history.lua
 ```
 
-Los datos **vivos** siguen en `~/.config/koreader/` (principio de mínima
-captura de los dotfiles); esto es un respaldo versionado, no la copia de
-trabajo. **`settings.reader.lua` se EXCLUYE a propósito**: contiene el bloque
-`kosync` con credenciales y el escáner de sensibles de los dotfiles lo vetaría.
+Los datos **vivos** siguen en `~/.config/koreader/`; esto es un respaldo
+versionado, no la copia de trabajo. **`settings.reader.lua` se EXCLUYE a
+propósito**: contiene el bloque `kosync` con credenciales.
 
 **Restaurar en una laptop nueva:** instalar KOReader y reconstruir desde el
 repo — `sqlite3 ~/.config/koreader/settings/statistics.sqlite3 < statistics.sql`
@@ -165,7 +166,7 @@ script_koreader_estudio/
 │   ├── setup_columnas.sh# creación idempotente de columnas y plantillas
 │   ├── sync_koreader.py # núcleo (calibre-debug): sidecars + stats → columnas
 │   ├── migrar_sdr.py    # migración .sdr → hashdocsettings (una vez)
-│   ├── respaldo_koreader.sh # espejo continuo (texto) a ~/.dotfiles/koreader-data
+│   ├── respaldo_koreader.sh # espejo continuo (texto) al repo KOREADER_RESPALDO_DIR
 │   └── systemd/         # unidades service + timer (usuario)
 ├── reportes/            # TSV de cada pasada
 └── backups/             # metadata.db rotados (5) + tars pre-migración

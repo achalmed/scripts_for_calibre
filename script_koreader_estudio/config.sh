@@ -39,9 +39,10 @@ COL_APUNTES="apuntes"        # comments: enlace clicable al .md de apuntes
 FORMATOS_LEIBLES="PDF EPUB DJVU MOBI AZW3 FB2 CBZ CBR"  # formatos que KOReader abre
 
 # --- Respaldo continuo de los datos de KOReader ----------------------------
-# Los datos VIVOS quedan en ~/.config/koreader (filosofía de mínima captura de
-# los dotfiles); aquí se respaldan EN TEXTO (dump SQL + sidecars .lua) dentro
-# del repo de dotfiles, con commit local automático. Publicar = dotfiles
-# sync-push. settings.reader.lua se excluye (contiene bloque kosync/credenciales).
-DOTFILES_DIR="$HOME/.dotfiles"
-RESPALDO_KOREADER_DIR="$DOTFILES_DIR/koreader-data"
+# Los datos VIVOS quedan en ~/.config/koreader; aquí se respaldan EN TEXTO (dump
+# SQL + sidecars .lua) en un repo git PROPIO de datos de lectura, con commit local
+# automático. Desde FG3 (2026-09-15) ya no es ~/.dotfiles/koreader-data: los dotfiles
+# reproducen la máquina y no reciben escrituras de suites. Ruta única en core/env.sh
+# (KOREADER_RESPALDO_DIR). Publicar = git push desde ese repo (remoto privado).
+# settings.reader.lua se excluye (contiene bloque kosync/credenciales).
+RESPALDO_KOREADER_DIR="${KOREADER_RESPALDO_DIR:-$HOME/.local/share/koreader-respaldo}"
