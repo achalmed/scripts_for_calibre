@@ -119,7 +119,7 @@ marca de agua de última exportación; por eso es opcional y va al final.)
 - **Fase 1 — HECHA (2026-08-09):** KOReader→Calibre (progreso/estado/tiempo/fechas),
   barra y estado composite, `#apuntes` clicable, sidecars migrados a hash (con
   rescate de huérfanos renombrados), respaldo continuo versionado en
-  `~/.dotfiles/koreader-data/` (texto: statistics.sql + luas; commit local
+  `~/.local/share/koreader-respaldo/` (repo de datos, FG3; antes `~/.dotfiles/koreader-data/`) (texto: statistics.sql + luas; commit local
   automático, publicar con `dotfiles sync-push`), timer 30 min.
 - **Fase 2 — HECHA (2026-08-09):** `script_ecosistema_lectura/` lee
   `zotero.sqlite` (ro) → `#zot_tiempo` + `#zot_ultima` en 122 libros enlazados
