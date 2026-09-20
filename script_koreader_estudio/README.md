@@ -18,7 +18,7 @@ main.sh --aplicar
 main.sh --desde-timer
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-15); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 #readme
