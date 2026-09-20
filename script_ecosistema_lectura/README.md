@@ -1,4 +1,8 @@
-# script_ecosistema_lectura — Zotero (Read Time) → Calibre
+---
+tipo: readme
+estado: activo
+---
+# script_ecosistema_lectura/ — Zotero (Read Time) → Calibre y orquestación del sync de metadatos
 
 <!-- suite:inicio -->
 **Suite `ecosistema_lectura`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
@@ -20,9 +24,8 @@ main.sh --metadatos --desde-timer
 <sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
 <!-- suite:fin -->
 
-#readme
-
-**Fase 2 del ecosistema de lectura** (ver [diseno.md](diseno.md)): lleva a
+**Zotero → Calibre** (diseño de 2026-08: `../docs/historial/diseno-ecosistema-lectura-2026-08.md`;
+operación: `../docs/operacion.md`): lleva a
 Calibre el tiempo de lectura que registra **Ethereal Style** en Zotero, y lo
 agrega al de KOReader sin posibilidad de doble conteo.
 
@@ -77,7 +80,7 @@ confirma a mano pegando la clave en la columna ZKey.
   (`../.lock_calibre_write`): las dos herramientas nunca escriben a la vez.
 - Simulación por defecto, backups rotados (5), reporte TSV por pasada.
 
-## Fuente de datos (verificada por inspección — no tocar sin releer diseno.md)
+## Fuente de datos (verificada por inspección; no tocar sin releer el diseño de 2026-08 en ../docs/historial/)
 
 Nota hija del ítem "Addon Item" en `~/Zotero/zotero.sqlite` → `itemNotes`:
 
@@ -90,11 +93,18 @@ Nota hija del ítem "Addon Item" en `~/Zotero/zotero.sqlite` → `itemNotes`:
 `script_sincronizar_zotero`). Si hay más de una nota por ítem, gana la de
 `dateModified` más reciente.
 
-## Pendientes de fases siguientes (diseno.md §6)
+## Estructura
 
-- **2b:** progreso desde Zotero — `syncedSettings.lastPageIndex_u_<KEY>` existe
-  en esta instalación; falta mapear adjunto→ítem padre y páginas totales.
-- **3:** orquestar `script_sincronizar_zotero` (tags/metadatos) al detectar
-  Calibre+Zotero cerrados.
-- **4:** enlazador de libros sin `#zotero_key` (ISBN/DOI, con confirmación).
-- **5 (opcional):** exportar sesiones de KOReader al registro de Ethereal Style.
+`main.sh` (orquestación y CLI) · `config.sh` (rutas, columnas, lock compartido) · `lib/`: `checks.sh`
+(entorno y apps cerradas), `setup_columnas.sh` (columnas y plantillas, idempotente), `sync_zotero_lectura.py`
+(núcleo: zotero.sqlite en solo lectura → columnas, vía calibre-debug), `orquestar_metadatos.sh` (fase 3),
+`enlazar_reporte.py` (fase 4), `systemd/` (plantillas de las dos unidades) · `reportes/`, `backups/` y
+`estado/` son runtime ignorado.
+
+## Límite honesto
+
+- **Las fases 2b, 3 y 4 del diseño de 2026-08 están hechas**; la única pendiente es la 5 (exportar sesiones de KOReader al registro de Ethereal Style), opcional y de riesgo: no está planificada.
+- **`#zot_progreso` solo se calcula cuando existen la página del lector y el total de páginas**; los localizadores no numéricos (EPUB) se omiten: no se inventa el dato.
+- **Zotero solo se lee**, nunca se escribe desde aquí; escribir en `zotero.sqlite` es de `../script_sincronizar_zotero/`, y solo con ambas apps cerradas.
+- **`--metadatos` corre solo si alguna base cambió** desde la última pasada aplicada (marca en `estado/`); `--enlazar` nunca escribe: el enlace se pega a mano en la columna ZKey.
+- **Calibre cerrado para escribir**; el timer que se salta reintenta a los 30 minutos y no avisa a nadie: la verificación es `journalctl --user -u ecosistema-lectura`.

@@ -1,4 +1,8 @@
-# script_verificar_metadatos
+---
+tipo: readme
+estado: activo
+---
+# script_verificar_metadatos/ — coteja los metadatos de Calibre contra OpenLibrary y Crossref e informa discrepancias (solo lectura)
 
 <!-- suite:inicio -->
 **Suite `verificar_metadatos`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
@@ -54,14 +58,14 @@ añade una búsqueda aproximada por título+autor para los libros publicados
 que no tengan ISBN (útil para los ~228 `Book` sin identificador), marcando
 siempre el nivel de confianza.
 
-## Arquitectura (patrón modular del repo)
+## Estructura (patrón modular del repo)
 
 ```
 script_verificar_metadatos/
 ├── main.sh              # orquestación únicamente
 ├── config.sh            # TODO lo editable: rutas, endpoints, umbrales
 ├── lib/
-│   ├── logger.sh        # logging centralizado (INFO/WARN/ERROR/DEBUG)
+│   │   (logger: ../lib_comun/logger.sh → core/shell-lib/logger.sh, sin copia propia)
 │   ├── cli.sh           # parseo de flags, --help, chequeo de dependencias
 │   ├── db.sh            # ÚNICO lugar que lee metadata.db (sqlite3)
 │   ├── verificador.py   # núcleo: red (urllib) + comparación difusa
@@ -126,3 +130,11 @@ se descarta para no generar falsos positivos.
 - Ninguna corrección se aplica automáticamente: revisa el reporte y edita en
   Calibre lo que consideres. Tras editar en Calibre, recuerda regenerar los
   OPF (`calibredb backup_metadata --all`) para que ZMI/Zotero lo vean.
+
+## Límite honesto
+
+- **Nunca escribe en Calibre**: produce un informe en `reportes/` y las correcciones se aplican a mano.
+- **Solo cubre lo verificable** (~132 libros con ISBN y ~90 con Google/Amazon/Goodreads); los ~4 300 documentos de aula no existen en ninguna base y no se buscan.
+- **Título y autor se muestran como contexto, jamás como sugerencia de cambio**: cambiarlos rompería el vínculo con Zotero.
+- **Depende de internet y de cuotas ajenas**: OpenLibrary primario, Crossref de respaldo en `--modo titulo` (desactivable con `USE_CROSSREF`); Google Books queda de referencia porque su cuota anónima devuelve `429`.
+- **En `--modo titulo` un candidato se acepta solo con similitud ≥ 0,80**; por debajo se descarta para no generar falsos positivos, aunque fuera el libro correcto.

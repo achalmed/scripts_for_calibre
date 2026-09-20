@@ -1,11 +1,13 @@
 ---
-tipo: doc
+tipo: plan
 titulo: "Diseño del ecosistema de lectura sincronizado: Calibre ⇄ KOReader ⇄ Zotero"
-estado: activo
+estado: hecho
 ---
 # DISEÑO — Ecosistema de lectura sincronizado: Calibre ⇄ KOReader ⇄ Zotero
 
-Estado: **investigación completada, fases 1 hechas, fases 2+ por implementar**
+> Superado por `../operacion.md` y por los README de `script_koreader_estudio`, `script_ecosistema_lectura` y `script_sincronizar_zotero` (DOC6, 2026-09-20): las fases 1, 2, 2b, 3 y 4 están en producción; solo la 5 (opcional) sigue sin hacerse.
+
+Estado al cierre: **investigación completada; fases 1, 2, 2b, 3 y 4 hechas (§6); fase 5 opcional, no planificada**
 Fecha: 2026-08-09 · Basado en inspección real de las tres instalaciones (no en supuestos).
 
 ## 1. Hallazgos de la investigación

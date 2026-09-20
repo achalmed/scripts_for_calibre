@@ -1,14 +1,19 @@
-# Catalogación de libros sin autor — biblioteca Calibre
+---
+tipo: readme
+estado: activo
+---
+# script_catalogacion_biblioteca/ — aplica a Calibre lo catalogado en resumen_catalogacion.tsv y guarda las fichas como registro
 
 <!-- suite:inicio -->
 **Suite `catalogacion_biblioteca`** · objetivo *fuentes* · estado *activo* · bash · interfaz cli
 
 Aplica a Calibre los metadatos catalogados en resumen_catalogacion.tsv (autor «Nombre, Apellidos», vocabulario cerrado, serie, identificadores); registro canónico de lo catalogado.
 
-- Escribe en: calibre · simula por defecto: sí
+- Escribe en: calibre, archivos · simula por defecto: sí
 - Entrada: resumen_catalogacion.tsv (lo alimentan ingesta e ingesta_cursos)
 - Depende de: calibredb, core/shell-lib
 - Método Documental: paso 02
+- Nota: fichas/ y resumen_catalogacion.tsv son el registro de esta suite (D12): las fichas nuevas y sus filas las escriben scripts_for_fuentes/ingesta e ingesta_cursos con su calibre_id; aquí se aplican a Calibre
 
 Comandos:
 
@@ -21,9 +26,11 @@ main.sh --aplicar --ids 10265,10266
 <sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
 <!-- suite:fin -->
 
-> Fichas de catalogación (dual Zotero + Calibre) para los 113 libros sin autor
-> de `~/Documents/biblioteca`, y herramienta modular `main.sh` que aplica esos
-> metadatos a Calibre vía `calibredb` (simulación por defecto).
+> Registro de catalogación de la biblioteca —540 fichas en `fichas/` el 2026-09-20, una por libro, con
+> su `calibre_id`, y el índice `resumen_catalogacion.tsv`— y herramienta modular `main.sh` que aplica
+> esos metadatos a Calibre vía `calibredb` (simulación por defecto). La campaña original (2026-07)
+> cubrió los 113 libros sin autor; desde entonces las fichas nuevas y sus filas las escriben
+> `scripts_for_fuentes/ingesta` (`scripts_for_fuentes/ingesta/lib/catalogar.py`) e `ingesta_cursos` (D12).
 >
 > **Hogar canónico de la salida del prompt 1.** El formato de cada ficha lo define
 > `~/Documents/prompts/01 fuentes/prompt_02_catalogar.md` (antes `prompt_para_zotero_1`)
@@ -35,8 +42,6 @@ main.sh --aplicar --ids 10265,10266
 > Mapa del ecosistema y contrato de complementariedad prompt ⇄ scripts:
 > `~/Documents/prompts/ECOSISTEMA_APRENDIZAJE.md`.
 
-#catalogacion #calibre #zotero
-
 ## 📋 Tabla de Contenidos
 
 - [Descripción](#-descripción)
@@ -44,7 +49,7 @@ main.sh --aplicar --ids 10265,10266
 - [Requisitos](#%EF%B8%8F-requisitos)
 - [Instalación](#-instalación)
 - [Uso](#-uso)
-- [Arquitectura](#%EF%B8%8F-arquitectura)
+- [Estructura](#estructura)
 - [Bugs Corregidos](#-bugs-corregidos)
 - [Solución de Problemas](#-solución-de-problemas)
 - [Cómo Contribuir](#-cómo-contribuir--agregar-nuevas-funcionalidades)
@@ -179,17 +184,16 @@ enum de respaldo) vive en `config.sh`.
 6. Opcional: incrustar los metadatos en los PDFs con
    `../script_metadatos_calibre/`.
 
-## 🗂️ Arquitectura
+## Estructura
 
 ```
 script_catalogacion_biblioteca/
 ├── main.sh                    # Punto de entrada — solo orquestación
 ├── config.sh                  # Configuración: rutas, defaults, enum de respaldo
 ├── resumen_catalogacion.tsv   # Datos de entrada (una fila por libro)
-├── fichas/                    # 113 fichas de catalogación (datos, no código)
+├── fichas/                    # registro: una ficha por libro (540 el 2026-09-20); las escribe scripts_for_fuentes/ingesta
 └── lib/
-    ├── logger.sh              # Logging INFO/WARN/ERROR/DEBUG (WARN/ERROR → stderr)
-    ├── validator.sh           # Dependencias, TSV existente, Calibre cerrado
+        ├── validator.sh           # Dependencias, TSV existente, Calibre cerrado
     ├── cli.sh                 # parse_arguments + show_help
     ├── clasificador.sh        # Enum #clasificador: carga en vivo, tildes, validación
     └── metadata.sh            # Dominio: filas TSV → comandos calibredb + resumen
@@ -199,7 +203,7 @@ script_catalogacion_biblioteca/
 |---|---|
 | `main.sh` | Orquestar: parsear args → validar → cargar enum → procesar → resumen |
 | `config.sh` | Todo valor editable (ruta biblioteca, TSV, defaults, enum snapshot) |
-| `lib/logger.sh` | Formato de log único; stdout limpio para pipelines |
+| `../lib_comun/logger.sh` | logger de `core/shell-lib/logger.sh` (envoltorio FS2): formato único, stdout limpio para pipelines |
 | `lib/validator.sh` | Fallar temprano y con mensaje claro antes de tocar nada |
 | `lib/cli.sh` | Flags, ayuda, conflictos (`--aplicar` + `--dry-run`) |
 | `lib/clasificador.sh` | Que Calibre nunca reciba un valor de enum inválido |
@@ -253,7 +257,7 @@ chmod +x main.sh
 
 ## 🤝 Cómo Contribuir / Agregar Nuevas Funcionalidades
 
-1. Crea un módulo `lib/nuevo_modulo.sh` con funciones de responsabilidad única
+1. Crea un módulo en `lib/` (por ejemplo lib/nuevo_modulo.sh) con funciones de responsabilidad única
    (≤ 30 líneas por función).
 2. Inclúyelo (`source`) en `main.sh`.
 3. Añade las flags necesarias en `lib/cli.sh` y sus defaults en `config.sh`.
@@ -279,3 +283,12 @@ chmod +x main.sh
   `bash -n`, `--help`, `--version`, dry-run completo (113 comandos, paridad
   100 % con la versión anterior salvo el Bug #2) y códigos de salida 2 en
   flags inválidas/conflictivas.
+
+## Límite honesto
+
+- **Sin `--aplicar` nunca escribe**; con `--aplicar` exige Calibre cerrado y toma el lock compartido del repo.
+- **El TSV es la fuente de verdad, no las fichas**: corregir una ficha sin reflejarlo en `resumen_catalogacion.tsv` no cambia nada en Calibre.
+- **Un campo vacío del TSV no borra metadatos existentes**, y los campos ricos (`#edition`, `#pages`, `#genres`, `#sub_tipo`) no pasan por aquí: se ponen a mano.
+- **El enum `Clasificador` real de Calibre y la lista del prompt están desincronizados** (tildes, 8 valores de menos): lo que el enum rechaza se omite y se reporta, no se inventa.
+- **No genera fichas ni filas**: las escriben `scripts_for_fuentes/ingesta` e `ingesta_cursos` (D12); aquí solo se aplican al catálogo y se conserva el registro.
+- **Sin `shellcheck` en el entorno**: la comprobación es `bash -n`, `--help`, `--version` y el dry-run completo.

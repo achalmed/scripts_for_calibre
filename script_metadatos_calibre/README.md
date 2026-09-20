@@ -1,4 +1,8 @@
-# calibre-metadata-manager
+---
+tipo: readme
+estado: activo
+---
+# script_metadatos_calibre/ — incrusta los metadatos OPF de Calibre en los PDF (exiftool) y registra PDF sueltos como formato (calibre-metadata-manager)
 
 <!-- suite:inicio -->
 **Suite `metadatos_calibre`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
@@ -32,7 +36,7 @@ main.sh limpiar-json --aplicar
 - [Requisitos](#-requisitos)
 - [Instalación](#-instalación)
 - [Uso](#-uso)
-- [Arquitectura](#-arquitectura)
+- [Estructura](#estructura)
 - [Bugs Corregidos](#-bugs-corregidos)
 - [Solución de Problemas](#-solución-de-problemas)
 - [Cómo Contribuir](#-cómo-contribuir)
@@ -210,7 +214,7 @@ cat /tmp/calibre-metadata-manager_*.log
 
 ---
 
-## 🗂️ Arquitectura
+## Estructura
 
 ```
 script_metadatos_calibre/
@@ -375,7 +379,7 @@ Calibre**. Para actualizar los campos en Calibre, usa la función de Calibre
 
 ### Para añadir un nuevo módulo de operación:
 
-1. Crea `lib/mi_operacion.sh` siguiendo el patrón de `embed_metadata.sh`:
+1. Crea un módulo nuevo en `lib/` (por ejemplo lib/mi_operacion.sh) siguiendo el patrón de `embed_metadata.sh`:
    - Una función pública `run_mi_operacion()` como punto de entrada
    - Funciones auxiliares privadas con `_prefijo()`
    - Guard de doble-source al inicio
@@ -436,3 +440,12 @@ Calibre**. Para actualizar los campos en Calibre, usa la función de Calibre
 - Requiere Bash 4.0+ por el uso de arrays asociativos (`declare -A`) y
   `mapfile`. La versión de Bash incluida en macOS (3.2) **no es compatible**.
   En macOS instala Bash 5 vía Homebrew: `brew install bash`.
+
+## Límite honesto
+
+- **`embed` es redundante para los PDF que Calibre ya envió a un dispositivo** (Calibre incrusta al enviar): sirve para los que nunca «salieron».
+- **El OPF se parsea con `grep` + `sed`**, sin `xmllint`: vale para el OPF estándar de Calibre; elementos multilínea o namespaces propios pueden leerse mal.
+- **`register` exige Calibre cerrado**: con Calibre abierto `calibredb` puede fallar o, en casos raros, corromper la base. Su heurística de carpeta de autor (hijos con `(ID)`) cubre el caso estándar, no todos.
+- **`embed` modifica los archivos PDF de la biblioteca** (InfoDict + XMP-dc): no hay deshacer más allá del `--dry-run` previo y del log en `/tmp`.
+- **`limpiar-json` solo lista por defecto**; borra únicamente con `--aplicar`.
+- **Bash ≥ 4** (arrays asociativos, `mapfile`): el Bash 3.2 de macOS no vale.

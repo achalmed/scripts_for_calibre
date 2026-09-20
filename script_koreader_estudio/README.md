@@ -1,4 +1,8 @@
-# script_koreader_estudio — KOReader → Calibre como gestor de estudio
+---
+tipo: readme
+estado: activo
+---
+# script_koreader_estudio/ — KOReader → Calibre: progreso, tiempo, estado y apuntes en las columnas del libro
 
 <!-- suite:inicio -->
 **Suite `koreader_estudio`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
@@ -20,8 +24,6 @@ main.sh --desde-timer
 
 <sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
 <!-- suite:fin -->
-
-#readme
 
 Convierte Calibre en un **tablero de seguimiento de estudio**: KOReader (en este
 mismo Linux) es el lector; este script vuelca automáticamente su progreso,
@@ -76,11 +78,9 @@ Las composite se calculan solas: no hay información duplicada almacenada.
 ./main.sh --migrar-sdr     # simula la migración de .sdr → hash central
 ./main.sh --migrar-sdr --aplicar   # migra de verdad (KOReader cerrado)
 
-# Enlazar apuntes de un libro (clic en Detalles del libro → panel derecho):
-./main.sh --apuntes 3694 "/ruta/a/clase 01 introduccion conceptos basicos.md" "Clase 01"
+./main.sh --apuntes 3694 "/ruta/a/clase 01 introduccion conceptos basicos.md" "Clase 01"   # enlazar apuntes (clic en Detalles del libro → panel derecho)
 
-# Automatización (systemd de usuario, cada 30 min):
-./main.sh --instalar-timer
+./main.sh --instalar-timer         # systemd de usuario, cada 30 min; unidades en ~/.config/systemd/user/ (../docs/operacion.md §1.1)
 ./main.sh --desinstalar-timer
 ```
 
@@ -126,7 +126,7 @@ Los `.sdr` ya **no** viven junto a los libros: se migraron con `--migrar-sdr` a
 Cada sincronización (y el timer cada 30 min) espeja **en texto** las
 estadísticas (dump SQL), los sidecars hash y el historial a un repo git propio de
 datos de lectura (`KOREADER_RESPALDO_DIR` en `core/env.sh`; hasta FG3, 2026-09-15,
-fue `~/.dotfiles/koreader-data`), con commit local automático (publicar =
+fue ~/.dotfiles/koreader-data), con commit local automático (publicar =
 `git push` desde ese repo, remoto privado):
 
 ```
@@ -171,3 +171,12 @@ script_koreader_estudio/
 ├── reportes/            # TSV de cada pasada
 └── backups/             # metadata.db rotados (5) + tars pre-migración
 ```
+
+## Límite honesto
+
+- **Calibre cerrado para escribir**: el timer que lo encuentra abierto se salta la pasada y reintenta a los 30 minutos; solo una ejecución manual avisa.
+- **No es instantáneo**: KOReader vuelca sidecar y estadísticas al cerrar el libro (y en pausas); el progreso de la sesión en curso aparece en la pasada siguiente.
+- **Solo escribe valores que cambiaron** y jamás toca `#estudio`, etiquetas ni series; `#leído` marcado a mano promueve a Finalizado, nunca degrada.
+- **El respaldo excluye `settings.reader.lua` a propósito** (credenciales `kosync`): restaurar en otra máquina exige reconfigurar la cuenta.
+- **`--migrar-sdr` fue una migración de una vez** (2026-08-09); vuelve a tener sentido solo si aparecen `.sdr` nuevos junto a los libros.
+- **Mover la suite de carpeta rompe el timer**: la unidad instalada lleva la ruta absoluta de `main.sh`; se reinstala con `--instalar-timer`.

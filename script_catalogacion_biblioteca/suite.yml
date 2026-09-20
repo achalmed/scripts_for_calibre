@@ -6,6 +6,7 @@ resumen: Aplica a Calibre los metadatos catalogados en resumen_catalogacion.tsv 
   canónico de lo catalogado.
 escribe_en:
 - calibre
+- archivos
 simula_por_defecto: true
 comandos:
 - 'main.sh                      # simula sobre resumen_catalogacion.tsv'
@@ -17,3 +18,4 @@ depende_de:
 - calibredb
 - core/shell-lib
 metodo_documental: paso 02
+nota: 'fichas/ y resumen_catalogacion.tsv son el registro de esta suite (D12): las fichas nuevas y sus filas las escriben scripts_for_fuentes/ingesta e ingesta_cursos con su calibre_id; aquí se aplican a Calibre'

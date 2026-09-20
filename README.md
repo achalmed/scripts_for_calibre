@@ -1,11 +1,15 @@
-# scripts_for_calibre
+---
+tipo: readme
+estado: activo
+---
+# scripts_for_calibre/ — las herramientas que mantienen coherentes Calibre, KOReader y Zotero (7 suites, 3 timers)
 
 <!-- suites:inicio -->
 Suites de esta carpeta (7); índice global en `meta/INDICE_SCRIPTS.md`. Patrón: M main · C config · L lib.
 
 | Suite | Carpeta | Objetivo | Escribe en | Simula | Timer | Estado | Patrón |
 |---|---|---|---|---|---|---|---|
-| `catalogacion_biblioteca` | [scripts_for_calibre/script_catalogacion_biblioteca](script_catalogacion_biblioteca/) | fuentes | calibre | sí |  | activo | `MCL` |
+| `catalogacion_biblioteca` | [scripts_for_calibre/script_catalogacion_biblioteca](script_catalogacion_biblioteca/) | fuentes | calibre, archivos | sí |  | activo | `MCL` |
 | `ecosistema_lectura` | [scripts_for_calibre/script_ecosistema_lectura](script_ecosistema_lectura/) | biblioteca | calibre | sí | ecosistema-lectura.timer · ecosistema-metadatos.timer | activo | `MCL` |
 | `koreader_estudio` | [scripts_for_calibre/script_koreader_estudio](script_koreader_estudio/) | biblioteca | calibre | sí | koreader-calibre-sync.timer | activo | `MCL` |
 | `metadatos_calibre` | [scripts_for_calibre/script_metadatos_calibre](script_metadatos_calibre/) | biblioteca | calibre, archivos | sí |  | activo | `MCL` |
@@ -16,94 +20,97 @@ Suites de esta carpeta (7); índice global en `meta/INDICE_SCRIPTS.md`. Patrón:
 <sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
 <!-- suites:fin -->
 
-![Calibre](https://img.shields.io/badge/Calibre-v7%2B-blue) ![bash](https://img.shields.io/badge/bash-script-green) ![exiftool](https://img.shields.io/badge/exiftool-opcional-orange)
+## Qué es
 
-#readme
+Siete herramientas de línea de comandos (Bash + Python) alrededor de la biblioteca Calibre
+(`biblioteca/`, la autoridad bibliográfica del workspace): catalogación desde fichas, normalización
+y verificación de metadatos, incrustación en los PDF, y la plomería que une Calibre con KOReader
+(lectura) y con Zotero (referencias y citas). Tres de ellas corren solas con timers systemd de
+usuario: KOReader → Calibre y Zotero → Calibre cada 30 minutos, y la sincronización bidireccional de
+metadatos a diario a las 04:30. La regla de oro de todo el repo: **Calibre manda** en los metadatos
+bibliográficos, Zotero solo rellena vacíos, y los relojes de lectura de KOReader y de Zotero **nunca se
+copian entre sí**: Calibre los agrega en `#tiempo_estudio`.
 
-Colección de herramientas modulares (Bash + Python) alrededor de la biblioteca
-**Calibre** (`~/Documents/biblioteca`): catalogación y normalización de
-metadatos, verificación contra bases bibliográficas, incrustación en PDF y la
-**plomería de sincronización** que une Calibre con **KOReader** (lectura) y
-**Zotero** (referencias/citas).
+**No es** la biblioteca (esa es `biblioteca/`, con su `metadata.db`), ni el sitio donde nacen las
+fichas de catalogación nuevas (`scripts_for_fuentes/ingesta` las escribe aquí, en
+`script_catalogacion_biblioteca/fichas/`, que es el registro de esa suite), ni una biblioteca de código:
+`lib_comun/` son envoltorios de compatibilidad de `core/shell-lib` y `core/py-common`, no módulos
+propios. Depende de `core/` (raíz, logger, lock, resolutor de la biblioteca), de `biblioteca/`, de
+`~/Zotero/zotero.sqlite` y del repo de datos `~/.local/share/koreader-respaldo/` (`meta/workspace.yml`).
+La autoridad de cada dato y la dirección de cada sincronización están en `meta/MODELO_METADATOS.md`
+§2 y §4 y en `meta/SINCRONIZACION.md`.
 
-Este repo es una de las 7 piezas del ecosistema personal. El contrato
-arquitectónico global —capas, responsabilidades, dependencias, sincronización—
-vive en `~/Documents/meta/` (`ARQUITECTURA.md`, `SINCRONIZACION.md`,
-`MODELO_METADATOS.md`); el `doctor/` de esa carpeta diagnostica el conjunto.
+## Uso
 
-> 📖 **Guía práctica del ecosistema de lectura/estudio** (qué es automático, qué
-> es manual, chuleta de comandos, solución de problemas):
-> [`GUIA_ECOSISTEMA.md`](GUIA_ECOSISTEMA.md).
+```bash
+script_koreader_estudio/main.sh                          # simula KOReader → Calibre (progreso, tiempo, estado)
+script_koreader_estudio/main.sh --aplicar                # escribe: Calibre cerrado; toma el lock y respalda metadata.db
+script_ecosistema_lectura/main.sh --aplicar              # Zotero (readingTime) → Calibre; Zotero puede estar abierto
+script_ecosistema_lectura/main.sh --metadatos            # orquesta sincronizar_zotero (simula; --aplicar con ambas cerradas)
+script_ecosistema_lectura/main.sh --enlazar              # informe de libros sin #zotero_key (nunca escribe)
+script_sincronizar_zotero/main.sh --limite 20 --aplicar  # canario de la sync bidireccional; ambas apps cerradas
+script_verificar_metadatos/main.sh --limite 5            # solo lectura: discrepancias contra OpenLibrary/Crossref en reportes/
+script_metadatos_calibre/main.sh embed --dry-run         # OPF → PDF con exiftool; register --aplicar registra PDF sueltos
+script_catalogacion_biblioteca/main.sh --ids 10265,10266 # aplica filas de resumen_catalogacion.tsv (simula; --aplicar escribe)
+script_koreader_estudio/main.sh --instalar-timer         # timers systemd de usuario (también script_ecosistema_lectura)
+systemctl --user list-timers | grep -E "koreader|ecosistema"   # ¿cuándo corren?
+```
 
-## Las 7 suites (y una migrada)
+Simulación por defecto en las siete; se escribe solo con `--aplicar` (`--apply` en las migraciones
+archivadas). Requisitos: Calibre con `calibredb` y `calibre-debug` en el PATH, `python3` (biblioteca
+estándar), `sqlite3`, y `exiftool` solo para `script_metadatos_calibre`; todo corre sin sudo. Qué es
+automático, qué es manual y cómo saber si funciona: `docs/operacion.md`.
 
-| Suite | Rol | Escribe | Estado |
-|---|---|---|---|
-| `script_catalogacion_biblioteca/` | Cataloga libros **sin autor** (`Unknown`/`Desconocido`): fichas duales Zotero+Calibre por libro y aplicación de metadatos vía `calibredb`. | metadata.db (vía `calibredb`) | **Campaña terminada** (2026-07-27); herramienta reutilizable |
-| `script_normalizacion_metadatos/` | Migraciones que normalizaron en bloque **etiquetas, Géneros, Item type y Clasificador** de ~4 484 libros desde los metadatos existentes. | metadata.db (SQLite directo) | **Campaña terminada** (2026-07-28); registro histórico (ver su README §Reproducibilidad) |
-| `script_verificar_metadatos/` | Verifica metadatos contra **OpenLibrary/Crossref** (ISBN o título+autor) y reporta discrepancias. **Solo lectura.** | — (nunca escribe) | Herramienta de auditoría, a demanda |
-| `script_metadatos_calibre/` | Incrustador **canónico** de metadatos en PDF (OPF → InfoDict + XMP-dc vía exiftool), registro de PDFs como formato en Calibre, y limpieza de `zotero_metadata.json` huérfanos. | PDFs (exiftool) / metadata.db (`add_format`) | Activo; incrustador único (el de `scripts_for_zotero` quedó deprecado, auditoría A7) |
-| `script_sincronizar_zotero/` | Sincroniza **bidireccionalmente** metadatos/etiquetas entre Calibre y Zotero para los libros enlazados por ZMI (`#zotero_key`). Política "Calibre manda"; rellena vacíos, repara adjuntos, puebla `#zotero_*`. | metadata.db + zotero.sqlite | Activo; orquestado a diario (04:30) |
-| `script_koreader_estudio/` | KOReader → Calibre: progreso, estado, minutos y fechas de lectura (`#barra`, `#estado_estudio`…), enlace clicable a apuntes (`#apuntes`), migración de sidecars a hash y respaldo continuo al repo de datos `KOREADER_RESPALDO_DIR` (`~/.local/share/koreader-respaldo`, FG3). | metadata.db (columnas `ko_*`) | Activo; **timer 30 min** |
-| *(ingesta de material de cursos)* | Migrada el 2026-09-06 a `~/Documents/scripts_for_fuentes/ingesta_cursos/` (único lugar de fuentes); usa `lib_comun`, el lock y `script_catalogacion_biblioteca` de aquí. |
-| `script_ecosistema_lectura/` | Zotero (Ethereal Style) → Calibre: tiempo (`#zot_tiempo`), progreso (`#zot_progreso`), `#tiempo_estudio`; **orquesta** `script_sincronizar_zotero` y reporta libros sin `#zotero_key`. | metadata.db (columnas `zot_*`) | Activo; **timers** (lectura 30 min; metadatos 04:30) |
+## Estructura
 
-Dirección de cada dato y autoridad de cada campo: `MODELO_METADATOS.md` y
-`SINCRONIZACION.md` en `~/Documents/meta/`. Regla de oro: los relojes de
-lectura (KOReader vs Zotero) nunca se copian entre sí; el único canal
-bidireccional (metadatos) es asimétrico (Calibre gana todo diff; Zotero solo
-rellena vacíos).
-
-## Código compartido: `lib_comun/`
-
-Módulos de única responsabilidad consumidos por varias suites (auditoría M1),
-para no duplicar plomería:
-
-| Módulo | Aporta | Consumido por |
+| carpeta | qué es | dueño / generador |
 |---|---|---|
-| `lib_comun/logger.sh` | logger canónico `[LEVEL] YYYY-MM-DD HH:MM:SS - msg` | catalogacion, sincronizar, verificar |
-| `lib_comun/detectar_apps.sh` | `calibre_abierto()` / `zotero_abierto()` (detección robusta `ps -eo comm`) | sincronizar, koreader_estudio, ecosistema_lectura |
-| `lib_comun/lock.sh` | `tomar_lock_calibre()` (flock sobre `.lock_calibre_write`) | sincronizar, koreader_estudio, ecosistema_lectura |
-| `lib_comun/biblioteca.py` | **Resolutor único de la biblioteca (solo lectura, FD2):** `datos`, `ruta`, `anexos`, `texto` (páginas con caché) y `existe` (identificador → huella → título por tokens). Los proyectos referencian por `calibre_id` y piden aquí la ruta física; ningún script fuera de esta lib abre `metadata.db` para resolver rutas | `scripts_for_fuentes` (verificar, ingesta, ingesta_cursos, fichas, lecturas), datafw, doctor |
-| `lib_comun/backup_rotado.sh` | `backup_metadata_db RUTA DIR N` (cp + rotación) | koreader_estudio, ecosistema_lectura |
+| `script_koreader_estudio/` | KOReader → Calibre: columnas `#ko_*`, `#barra`, `#estado_estudio`, `#apuntes`; sidecars por hash; respaldo continuo al repo de datos | a mano; timer `koreader-calibre-sync` |
+| `script_ecosistema_lectura/` | Zotero (Ethereal Style) → Calibre: `#zot_*`, `#tiempo_estudio`; orquesta `sincronizar_zotero`; informe de enlaces | a mano; timers `ecosistema-lectura`, `ecosistema-metadatos` |
+| `script_sincronizar_zotero/` | metadatos y etiquetas Calibre ⇄ Zotero para los libros con `#zotero_key`; política «Calibre manda» | a mano |
+| `script_verificar_metadatos/` | coteja Calibre contra OpenLibrary y Crossref; solo lectura | a mano |
+| `script_metadatos_calibre/` | incrustador canónico OPF → PDF (InfoDict + XMP-dc), registro de PDF, limpieza de `zotero_metadata.json` huérfanos | a mano |
+| `script_catalogacion_biblioteca/` | aplica `resumen_catalogacion.tsv` a Calibre; `fichas/` y el TSV son su registro (los escriben `scripts_for_fuentes/ingesta` e `ingesta_cursos`) | a mano; registro versionado |
+| `script_normalizacion_metadatos/` | migraciones de una sola vez (2026-07-28) que normalizaron etiquetas, géneros y tipos; archivado | bitácora, no se ejecuta en bloque |
+| `lib_comun/` | envoltorios de 2–4 líneas hacia `core/shell-lib/` y `core/py-common/` (FS2) para quien todavía hace `source ../lib_comun/x.sh` | derivado de `core/`; el código nuevo carga `core/` directamente |
+| `docs/` | operación (timers, rutina manual, verificación) e historial (diseño de 2026-08) | a mano; índice por `core/docs.py indice` |
+| `suite.yml` (uno por suite) | manifiesto de cada herramienta (`core/suite.schema.yml`) | a mano; los bloques de README los genera `core/suites.py generar --aplicar` |
+| `.lock_calibre_write` | candado `flock` que comparten todos los escritores de `metadata.db` (`LOCK_CALIBRE` en `core/env.sh`) | runtime, ignorado |
+| `*/reportes/`, `*/backups/`, `*/estado/` | informes de cada pasada, `metadata.db` rotados, marcas de la última pasada | runtime, ignorados (`.gitignore` por clase) |
 
-Las suites hacen `source "$PROJECT_DIR/../lib_comun/<módulo>.sh"`.
+## Documentación
 
-## Estándares comunes
+| documento | para qué leerlo |
+|---|---|
+| `CLAUDE.md` | reglas para el asistente: autoridad de campo, lock, timers, qué no se toca |
+| `docs/operacion.md` | lo automático (timers), lo manual, chuleta de comandos, verificación y problemas |
+| `docs/historial/diseno-ecosistema-lectura-2026-08.md` | por qué el ecosistema es así (hallazgos de inspección, opción elegida, fases cumplidas) |
+| `script_koreader_estudio/README.md` | columnas, sidecars por hash, respaldo continuo, trampas de Calibre |
+| `script_ecosistema_lectura/README.md` | fuente de datos de Zotero, columnas `#zot_*`, orquestación |
+| `script_sincronizar_zotero/README.md` | política de sincronización campo a campo y reglas duras |
+| `script_verificar_metadatos/README.md` | alcance realista y criterios de comparación |
+| `script_metadatos_calibre/README.md` | operaciones `embed`, `register`, `limpiar-json` |
+| `script_catalogacion_biblioteca/README.md` | flujo prompt → ficha → TSV → Calibre y el registro de fichas |
+| `script_normalizacion_metadatos/README.md` | bitácora de las migraciones de 2026-07-28 y el gotcha del OPF |
+| `meta/MODELO_METADATOS.md`, `meta/SINCRONIZACION.md` | autoridad por dato y arquitectura de sincronización (frontera con `meta`) |
+| `meta/INDICE_SCRIPTS.md` | las 7 suites entre las del workspace (generado) |
 
-Se siguen las convenciones del ecosistema (`~/Documents/meta/ARQUITECTURA.md`
-**§5**). En resumen:
+## Límite honesto
 
-1. **Patrón de suite**: `main.sh` (orquestación) + `config.sh` (todo lo
-   tunable) + `lib/` (módulos de única responsabilidad) + `README.md` honesto.
-   Los tunables nuevos van al `config.sh`, nunca hardcodeados en `lib/`.
-2. **Simulación por defecto**; escritura solo con `--aplicar` (o `--apply` en
-   las migraciones). Correr siempre en simulación antes de un cambio masivo.
-3. **Backups rotados** antes de escribir un almacén (5 para metadata.db; 2
-   pares para el sincronizador bidireccional), en el `backups/` de la suite.
-4. **Locking**: todo escritor de metadata.db toma `.lock_calibre_write`
-   (flock, `lib_comun/lock.sh`); detección de apps con `ps -eo comm`.
-5. **Idioma español** en código nuevo, docs y CLI.
-6. **Sanity-check sin efectos**: `bash -n <archivo>.sh`.
-
-Artefactos de ejecución (`*/backups/`, `*/reportes/`, `.lock_calibre_write`,
-`estado/` runtime) están gitignorados: rotan/cambian en cada pasada.
-
-## Requisitos
-
-- Calibre con `calibredb` y `calibre-debug` en el PATH.
-- `python3` (biblioteca estándar) y `sqlite3`.
-- **exiftool** solo para `script_metadatos_calibre` (incrustar en PDF):
-  ```bash
-  sudo apt install libimage-exiftool-perl   # Debian/Ubuntu
-  brew install exiftool                     # macOS
-  ```
-- Pensadas para ejecutarse **sin sudo**.
-
-## Licencia
-
-MIT License — usar, modificar y distribuir libremente.
-
-## Autor
-
-Edison Achalma B.Sc. Econ.
+- **No hay pruebas automáticas**: la comprobación es la simulación de cada `main.sh`, `bash -n`,
+  `py_compile`, el informe de `reportes/` y mirar Calibre.
+- **Escribir exige Calibre cerrado** (y Zotero cerrado para `sincronizar_zotero`); los timers no fallan
+  por eso, reintentan en la siguiente pasada.
+- **Zotero se escribe por SQL directo** (como hace el plugin ZMI): método no soportado por Zotero; cada
+  ítem tocado queda `synced=0` para que la cuenta lo suba. Sin backup previo no se aplica.
+- **Título y autor jamás se escriben en Calibre**: Zotero enlaza los adjuntos por la ruta
+  `Autor/Título (id)`; cambiarlos rompería el vínculo. Solo van Calibre → Zotero.
+- **El progreso de lectura tiene una sola fuente por reloj**: KOReader y Zotero no se deduplican porque
+  ningún segundo entra dos veces al mismo contador; la fase 5 del diseño (exportar sesiones de KOReader
+  a Ethereal Style) no está hecha ni planificada.
+- **`verificar_metadatos` solo cubre lo verificable** (unos 220 libros con identificador); los ~4 300
+  documentos de aula no existen en ninguna base.
+- **`normalizacion_metadatos` no se re-ejecuta en bloque**: cuatro de sus nueve migraciones leían un
+  scratchpad extinto; se conservan como historia.
+- **Los `reportes/` no rotan solos**: la poda (30 días) la aplica una fase de higiene, no las suites.
+- Licencia MIT declarada en el remoto público; no hay archivo `LICENSE` en el repo.

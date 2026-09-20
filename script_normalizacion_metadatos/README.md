@@ -1,4 +1,8 @@
-# script_normalizacion_metadatos
+---
+tipo: readme
+estado: archivado
+---
+# script_normalizacion_metadatos/ — bitácora de las migraciones que normalizaron la biblioteca el 2026-07-28 (archivado)
 
 <!-- suite:inicio -->
 **Suite `normalizacion_metadatos`** · objetivo *biblioteca* · estado *archivado* · - · interfaz cli
@@ -88,8 +92,7 @@ plugin **ZMI** lee para exportar a Zotero— quedan **desactualizados**. Tras
 aplicar cualquiera de ellas hay que regenerarlos, con **Calibre cerrado**:
 
 ```bash
-calibredb --with-library /home/achalmaedison/Documents/biblioteca \
-          backup_metadata --all
+calibredb --with-library "$BIBLIOTECA_DIR" backup_metadata --all   # BIBLIOTECA_DIR la resuelve core/env.sh
 ```
 
 `backup_metadata` **solo reescribe los OPF**, no toca los PDFs. **No usar
@@ -108,3 +111,17 @@ calibredb --with-library /home/achalmaedison/Documents/biblioteca \
   (fichas duales Zotero+Calibre).
 - `../script_verificar_metadatos/` — verifica los metadatos ya existentes
   contra OpenLibrary y reporta discrepancias (solo lectura).
+
+## Estructura
+
+`migraciones/` (nueve scripts `NN_*.py`, uno por migración, en orden de ejecución) · `vocabulario_etiquetas.txt`
+(lista blanca de etiquetas) · `itemtype_lote_sin_catalogar.tsv` (insumo de la migración 07) · `suite.yml`. Sin
+`main.sh`, `config` ni `lib/`: cada migración es autónoma y lleva su ruta y su `--apply`.
+
+## Límite honesto
+
+- **No es un pipeline re-ejecutable en bloque**: 05, 07, 08 y 09 leían TSV de un scratchpad de sesión ya extinto; hoy no encuentran sus insumos. Solo 01–04 y 06 se pueden volver a correr sobre la base actual.
+- **Escriben directo en `metadata.db` por SQLite**: tras un `--apply` los OPF quedan rancios y hay que regenerarlos con `calibredb backup_metadata --all` y Calibre cerrado; nunca `embed_metadata`.
+- **La ruta de la biblioteca está fijada dentro de cada script** (`DB = …`), no la resuelve `core/env.sh`: son historia, no herramienta viva.
+- **Ninguna migración inventa etiquetas** (lista blanca) ni toca título ni autor; lo que no cabía en un enum se rechazó antes de escribir.
+- **Archivado**: una normalización nueva parte de 01–04/06 y regenera sus insumos con las herramientas actuales.

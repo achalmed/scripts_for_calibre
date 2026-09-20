@@ -1,4 +1,8 @@
-# script_sincronizar_zotero
+---
+tipo: readme
+estado: activo
+---
+# script_sincronizar_zotero/ — sincronización bidireccional de metadatos Calibre ⇄ Zotero para los libros enlazados por #zotero_key
 
 <!-- suite:inicio -->
 **Suite `sincronizar_zotero`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
@@ -77,14 +81,14 @@ que define el contrato de campos RIS de ZMI que esta herramienta implementa).
   estrellas de Zotero (`⭐`-`⭐⭐⭐⭐⭐`), en ambas direcciones; Calibre manda en
   conflicto.
 
-## Arquitectura (patron modular del repo)
+## Estructura (patrón modular del repo)
 
 ```
 script_sincronizar_zotero/
 ├── main.sh              # orquestacion unicamente
 ├── config.sh            # TODO lo editable: rutas, columna clave, politica
 ├── lib/
-│   ├── logger.sh        # logging (identico al canonico del repo)
+│   │   (logger: ../lib_comun/logger.sh → core/shell-lib/logger.sh, sin copia propia)
 │   ├── cli.sh           # flags, --help, chequeo de dependencias
 │   ├── validator.sh     # apps cerradas + backups + integrity_check
 │   └── sincronizador.py # nucleo: lee ambas bases, planifica, reporta, aplica
@@ -148,3 +152,12 @@ duplicado del 28) para revision manual.
   nombres quedan **absorbidas** por la politica de este sync; ejecutarlas
   sueltas reintroduce divergencia. `series_organizer` puede correr despues
   como organizador de subcolecciones.
+
+## Límite honesto
+
+- **Ambas apps cerradas para `--aplicar`** (lo verifica y aborta); Zotero se escribe por **SQL directo**, método no soportado por Zotero (el mismo terreno que ZMI): cada ítem tocado queda `synced=0` y la cuenta lo sube en el siguiente sync.
+- **Título y autor jamás se escriben en Calibre** (solo Calibre → Zotero): Zotero enlaza los adjuntos por la ruta `Autor/Título (id)`.
+- **Vacío en el origen nunca borra en el destino**; `Leído` y `Géneros` de Calibre no se propagan; las etiquetas personales de Zotero (⭐, emojis, `#hashtags`) no se tocan.
+- **Las acciones `reporte (...)` no se aplican**: conflictos de idioma, autores donde Zotero es más completo y adjuntos irrecuperables quedan para revisión manual en `reportes/`.
+- **Deshacer = restaurar los backups** de ambas bases que deja en `estado/` (carpeta backups) con las apps cerradas; si `PRAGMA integrity_check` falla, la herramienta lo pide.
+- **Los `.js` de `scripts_for_zotero` quedan absorbidos** por esta política: ejecutarlos reintroduce divergencia; solo `series_organizer` es compatible, después del sync.
