@@ -47,6 +47,7 @@ autor.
 | 07 | `migraciones/07_itemtype_por_prompt_subagentes.py` | Valida y aplica los TSV `id,item_type` que produjeron 6 subagentes al clasificar los 950 libros restantes **leyendo los criterios del prompt de catalogación** (líneas 84-848). Rechaza cualquier tipo fuera del enum antes de escribir. Con `--apply`. Dejó el Item type al 100%. |
 | 08 | `migraciones/08_refinar_itype_openlibrary_crossref.py` | Pasada de **refinamiento**: los libros inciertos (Manuscript/Journal Article sin serie ni editorial) se verifican en OpenLibrary y Crossref (difuso 0.92). Solo lectura; escribe una propuesta TSV. Halla libros publicados mal marcados como Manuscript. |
 | 09 | `migraciones/09_aplicar_refino_itype.py` | Valida y aplica la propuesta del 08: reclasifica el Item type y, de regalo, rellena editorial/ISBN hallados donde estaban vacíos (aditivo). Con `--apply`. Refinó 48 libros (+34 editoriales, +30 ISBN). |
+| 2026-09-30 | `migraciones/grafias_autores_2026-09-30/` | **Única que toca autores.** Corrige 80 grafías fuera de «Nombre, Apellidos» y 10 listas de autores (`propuesta.tsv`, del diagnóstico `meta/diagnosticos/GRAFIAS_AUTORES_CALIBRE_2026-09.md`). No usa SQLite: va por la API de Calibre (`rename_items`, como «Gestionar autores»), que mueve carpeta y archivos, y reescribe en la misma operación las rutas `attachments:` de Zotero y sus creadores. `main.sh` (respaldo en `backups/`, lock, Calibre y Zotero cerrados) · `verificar.py` · `deshacer.sh`, ensayado sobre copia: deja todo idéntico. Aplicada: 64 carpetas, 36 enlaces de Zotero, 50 ítems, 0 enlaces rotos. |
 
 `vocabulario_etiquetas.txt` es el vocabulario cerrado de etiquetas usado como
 lista blanca (ninguna migración inventa etiquetas nuevas).
@@ -114,7 +115,9 @@ calibredb --with-library "$BIBLIOTECA_DIR" backup_metadata --all   # BIBLIOTECA_
 
 ## Estructura
 
-`migraciones/` (nueve scripts `NN_*.py`, uno por migración, en orden de ejecución) · `vocabulario_etiquetas.txt`
+`migraciones/` (nueve scripts `NN_*.py`, uno por migración, en orden de ejecución, y la carpeta
+`grafias_autores_2026-09-30/` con sus scripts y sus tablas `hechos.tsv`, `carpetas.tsv`, `autores.tsv` y
+`zotero.tsv`, que son el registro de lo hecho y lo que lee el `deshacer.sh`) · `backups/` (respaldos, fuera de git) · `vocabulario_etiquetas.txt`
 (lista blanca de etiquetas) · `itemtype_lote_sin_catalogar.tsv` (insumo de la migración 07) · `suite.yml`. Sin
 `main.sh`, `config` ni `lib/`: cada migración es autónoma y lleva su ruta y su `--apply`.
 
@@ -123,5 +126,5 @@ calibredb --with-library "$BIBLIOTECA_DIR" backup_metadata --all   # BIBLIOTECA_
 - **No es un pipeline re-ejecutable en bloque**: 05, 07, 08 y 09 leían TSV de un scratchpad de sesión ya extinto; hoy no encuentran sus insumos. Solo 01–04 y 06 se pueden volver a correr sobre la base actual.
 - **Escriben directo en `metadata.db` por SQLite**: tras un `--apply` los OPF quedan rancios y hay que regenerarlos con `calibredb backup_metadata --all` y Calibre cerrado; nunca `embed_metadata`.
 - **La ruta de la biblioteca está fijada dentro de cada script** (`DB = …`), no la resuelve `core/env.sh`: son historia, no herramienta viva.
-- **Ninguna migración inventa etiquetas** (lista blanca) ni toca título ni autor; lo que no cabía en un enum se rechazó antes de escribir.
+- **Ninguna migración inventa etiquetas** (lista blanca) ni toca título; lo que no cabía en un enum se rechazó antes de escribir. Autor, solo la de 2026-09-30, porque el autor es la carpeta y Zotero enlaza por ella: renombrar sin reescribir Zotero rompe sus PDF.
 - **Archivado**: una normalización nueva parte de 01–04/06 y regenera sus insumos con las herramientas actuales.
