@@ -519,8 +519,10 @@ def plan_pair(plan, bid, cal, zot):
     prim_creator = PRIMARY_CREATOR.get(final_type)
 
     # --- titulo (Calibre manda; Zotero se ajusta) ---
+    # comparación exacta: con norm() una corrección de tildes o mayúsculas en Calibre nunca llegaba a
+    # Zotero (133 ítems desfasados el 2026-10-01; ver migraciones/titulos_zotero_2026-10-01)
     ct, zt = cal.get("title", ""), zot.get("title", "")
-    if norm(ct) and norm(ct) != norm(zt):
+    if norm(ct) and " ".join(ct.split()) != " ".join(zt.split()):
         plan.add(bid, zkey, "titulo", "calibre->zotero", zt, ct)
         plan.zot_writes.append(lambda c, i=iid, v=ct: z_set_field(c, i, "title", v))
 
