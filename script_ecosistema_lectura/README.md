@@ -19,9 +19,11 @@ Comandos:
 main.sh                      # simula
 main.sh --aplicar
 main.sh --metadatos --desde-timer
+main.sh --enlazar --ris          # informe y .ris de lo que falta en Zotero
+main.sh --enlazar --aplicar      # escribe las claves «adjunto»
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-01); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 **Zotero → Calibre** (diseño de 2026-08: `../docs/historial/diseno-ecosistema-lectura-2026-08.md`;
