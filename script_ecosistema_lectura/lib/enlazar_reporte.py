@@ -96,6 +96,16 @@ def main():
         m = re.search(r"\((\d+)\)/[^/]*$", path)
         if m:
             zot_adjunto.setdefault(int(m.group(1)), set()).add(padre)
+    # Desempate de una importación repetida: si un libro tiene varios ítems y algunos solo están en
+    # colecciones que se mandaron a la papelera, esos son el duplicado descartado; cuenta el de la viva.
+    descartados = {k for (k,) in zot.execute(
+        "SELECT i.key FROM items i WHERE i.itemID IN (SELECT itemID FROM collectionItems) "
+        "AND i.itemID NOT IN (SELECT ci.itemID FROM collectionItems ci "
+        "                     WHERE ci.collectionID NOT IN (SELECT collectionID FROM deletedCollections))")}
+    for b, ks in zot_adjunto.items():
+        vivos_b = ks - descartados
+        if len(ks) > 1 and vivos_b:
+            zot_adjunto[b] = vivos_b
 
     # Un ítem que ya enlaza el archivo de OTRO libro es de ese libro (otra edición, o un duplicado de
     # Calibre): no es candidato por ISBN ni por título, y el libro necesita su propio ítem (va al RIS).

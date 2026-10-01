@@ -77,6 +77,8 @@ aplicada (marca en `estado/`). El timer diario de las 04:30 la ejecuta con
 
 - **`adjunto`**: el ítem que enlaza un archivo de la carpeta «… (id)/» del libro. Es determinista y
   es el único que `--aplicar` escribe (con lock, respaldo y `calibredb set_custom`).
+  Si una importación se repitió, cuenta el ítem de la colección viva y no el que solo está en una
+  colección mandada a la papelera.
 - **ISBN exacto** o **título único**: se confirman a mano, pegando la clave en la columna ZKey.
 - **`ya_de_otro_libro`**: el único candidato enlaza el archivo de otro libro (otra edición o un
   duplicado de Calibre), así que este libro necesita su propio ítem.
