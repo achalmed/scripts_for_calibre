@@ -15,6 +15,7 @@ source "$SCRIPT_DIR/lib/orquestar_metadatos.sh"
 MODO="simulacion"
 DESDE_TIMER=0
 ACCION="sync"
+RIS=0
 
 ayuda() {
     cat <<'EOF'
@@ -26,8 +27,12 @@ Uso: ./main.sh [opciones]
   --metadatos           Fase 3: orquesta script_sincronizar_zotero (metadatos y
                         etiquetas bidireccionales) si Calibre Y Zotero están
                         cerrados y alguna base cambió. Con --aplicar escribe.
-  --enlazar             Fase 4: SOLO REPORTE de libros sin #zotero_key con su
-                        candidato en Zotero (ISBN/título). Nunca escribe.
+  --enlazar             Fase 4: reporte de libros sin #zotero_key con su candidato
+                        en Zotero (adjunto/ISBN/título) y de las claves anómalas.
+                        Con --ris escribe además el .ris de los libros sin ningún
+                        candidato (para Zotero: Archivo → Importar, enlazar).
+                        Con --aplicar escribe #zotero_key SOLO de los candidatos
+                        «adjunto» (el ítem enlaza el PDF del libro); Calibre cerrado.
   --instalar-timer      Activa los timers (lectura 30 min; metadatos 04:30).
   --desinstalar-timer   Los detiene y elimina.
   --desde-timer         (interno) usado por los servicios systemd.
@@ -41,6 +46,7 @@ while [ $# -gt 0 ]; do
         --desde-timer) DESDE_TIMER=1; MODO="aplicar" ;;
         --metadatos) ACCION="metadatos" ;;
         --enlazar) ACCION="enlazar" ;;
+        --ris) RIS=1 ;;
         --instalar-timer) ACCION="timer_on" ;;
         --desinstalar-timer) ACCION="timer_off" ;;
         --ayuda|-h|--help) ayuda; exit 0 ;;
@@ -83,9 +89,29 @@ accion_metadatos() {
 accion_enlazar() {
     comprobar_entorno
     mkdir -p "$REPORTES_DIR"
+    local ts pares ris=""
+    ts="$(date +%Y%m%d_%H%M%S)"
+    pares="$REPORTES_DIR/enlazar_${ts}_pares.tsv"
+    [ "$RIS" = 1 ] && ris="$REPORTES_DIR/enlazar_${ts}.ris"
     QEL_BIBLIOTECA="$BIBLIOTECA" QEL_ZOTERO_DB="$ZOTERO_DB" \
-    QEL_REPORTE="$REPORTES_DIR/enlazar_$(date +%Y%m%d_%H%M%S).tsv" \
+    QEL_REPORTE="$REPORTES_DIR/enlazar_${ts}.tsv" QEL_PARES="$pares" QEL_RIS="$ris" \
         python3 "$SCRIPT_DIR/lib/enlazar_reporte.py"
+    local n; n="$(wc -l < "$pares")"
+    if [ "$MODO" != "aplicar" ]; then
+        echo "· Simulación: --enlazar --aplicar escribiría $n claves «adjunto» (lista: $pares)."
+        return 0
+    fi
+    [ "$n" -gt 0 ] || { echo "· Nada que enlazar por adjunto."; return 0; }
+    tomar_lock_calibre
+    exigir_calibre_cerrado
+    backup_metadata_db "$BIBLIOTECA/metadata.db" "$BACKUPS_DIR" "$BACKUPS_CONSERVAR"
+    local bid key hechas=0
+    while IFS=$'\t' read -r bid key; do
+        calibredb --with-library "$BIBLIOTECA" set_custom "$COL_ZKEY" "$bid" "$key" >/dev/null
+        hechas=$((hechas + 1))
+    done < "$pares"
+    echo "· $hechas claves escritas en #$COL_ZKEY (respaldo previo en $BACKUPS_DIR)."
+    return 0
 }
 
 accion_sync() {

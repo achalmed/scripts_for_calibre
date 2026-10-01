@@ -60,7 +60,7 @@ del `lib/` de cada suite.
 | Estado de ESTUDIO (≠ lectura) | Edita a mano la columna **`#estudio`** (⬜/📖/🔁/✅). Ningún script la toca |
 | Creamos una nota de clase nueva | `../script_koreader_estudio/main.sh --apuntes <id_libro> "<ruta.md>" "<texto>"` (el asistente lo hace en la sesión de estudio) |
 | Quieres publicar los respaldos al remoto | `git -C ~/.local/share/koreader-respaldo push` (los commits locales ya están hechos) |
-| Enlazar libros nuevos a Zotero | `../script_ecosistema_lectura/main.sh --enlazar` → revisa el TSV → pega la clave en la columna ZKey del libro |
+| Llevar a Zotero los libros que no están | `../script_ecosistema_lectura/main.sh --enlazar --ris` → importar el `.ris` en Zotero (enlazar archivos) → `--enlazar --aplicar` (escribe las claves «adjunto») → los de ISBN o título, pegar la clave en ZKey |
 | Ver los apuntes desde Calibre | Selecciona el libro → panel **Detalles del libro** (derecha) → clic en «📝 …» (abre en **Obsidian**) o «abrir como archivo» (MarkText). El **doble clic** sobre el libro siempre abre el PDF: es el comportamiento normal de Calibre, no un error |
 
 ## 3. Chuleta de comandos
@@ -77,7 +77,7 @@ cd "$SCRIPTS_CALIBRE/script_ecosistema_lectura"
 ./main.sh --aplicar                    # forzar pasada YA (Calibre cerrado; Zotero puede estar abierto)
 ./main.sh --metadatos                  # ensayo de etiquetas/metadatos (simulación)
 ./main.sh --metadatos --aplicar        # correr YA la sync de etiquetas/metadatos (AMBOS cerrados)
-./main.sh --enlazar                    # informe de libros sin #zotero_key
+./main.sh --enlazar [--ris] [--aplicar] # informe de libros sin #zotero_key; .ris; claves «adjunto»
 
 ./main.sh --instalar-timer             # en cualquiera de los dos main.sh; --desinstalar-timer lo revierte
 ```

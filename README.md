@@ -47,7 +47,7 @@ script_koreader_estudio/main.sh                          # simula KOReader → C
 script_koreader_estudio/main.sh --aplicar                # escribe: Calibre cerrado; toma el lock y respalda metadata.db
 script_ecosistema_lectura/main.sh --aplicar              # Zotero (readingTime) → Calibre; Zotero puede estar abierto
 script_ecosistema_lectura/main.sh --metadatos            # orquesta sincronizar_zotero (simula; --aplicar con ambas cerradas)
-script_ecosistema_lectura/main.sh --enlazar              # informe de libros sin #zotero_key (nunca escribe)
+script_ecosistema_lectura/main.sh --enlazar --ris        # informe de libros sin #zotero_key y .ris para importarlos en Zotero
 script_sincronizar_zotero/main.sh --limite 20 --aplicar  # canario de la sync bidireccional; ambas apps cerradas
 script_verificar_metadatos/main.sh --limite 5            # solo lectura: discrepancias contra OpenLibrary/Crossref en reportes/
 script_metadatos_calibre/main.sh embed --dry-run         # OPF → PDF con exiftool; register --aplicar registra PDF sueltos

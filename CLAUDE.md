@@ -16,7 +16,9 @@ manual), el `suite.yml` y el README de la suite que se toque, y `meta/MODELO_MET
   rellena vacíos** en Calibre (año placeholder, ISBN ausente) y puebla las columnas espejo `#zotero_*`.
   Vacío en el origen nunca borra en el destino. Política completa: `script_sincronizar_zotero/README.md`.
 - **Título y autor jamás se escriben en Calibre** (ni por sync ni por verificación): Zotero enlaza los
-  adjuntos por la ruta `Autor/Título (id)` y cambiarlos rompe el vínculo. Solo van Calibre → Zotero.
+  adjuntos por la ruta `Autor/Título (id)` y cambiarlos rompe el vínculo. Solo van Calibre → Zotero. La
+  única excepción es una campaña que reescriba Zotero en la misma operación, como
+  `script_normalizacion_metadatos/migraciones/grafias_autores_2026-09-30/`.
 - **Los relojes de lectura nunca se copian entre sí.** `#ko_tiempo` es de KOReader, `#zot_tiempo` de
   Zotero (Ethereal Style); `#tiempo_estudio` es una composite que los suma. No existe deduplicación
   porque ningún segundo entra dos veces al mismo contador; no se implementa ninguna.
@@ -92,7 +94,8 @@ cerrada, se lee el informe en `reportes/` y se abre Calibre a mirar. Deshacer un
   modo solo lectura, seguro con Zotero abierto. Si hay varias notas por ítem gana la de `dateModified`
   más reciente. `#zot_progreso` solo se calcula cuando existen página y total: no se inventa.
 - **`--metadatos` solo corre si alguna base cambió** desde la última pasada aplicada (mtime contra la
-  marca en `script_ecosistema_lectura/estado/`); `--enlazar` nunca escribe: el enlace se pega a mano.
+  marca en `script_ecosistema_lectura/estado/`); `--enlazar` solo escribe con `--aplicar` y solo los enlaces «adjunto» (el ítem enlaza el PDF del libro);
+  los de ISBN o título se pegan a mano. El RIS de lo que falta en Zotero lo da `--enlazar --ris`.
 - **El respaldo de KOReader excluye `settings.reader.lua` a propósito** (contiene credenciales `kosync`);
   el repo de datos es `KOREADER_RESPALDO_DIR` (`~/.local/share/koreader-respaldo/`), no `~/.dotfiles`.
 - **`IFS=$'\t'` colapsa campos vacíos de un TSV en Bash**: `script_catalogacion_biblioteca` usa
