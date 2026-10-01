@@ -1,0 +1,194 @@
+# grupo	veredicto	similitud	libro	título	páginas	formatos	serie	ko_progreso	estudio	notas+anot zotero	añadido
+0	DUPLICADO	1.0	131	El arte de la guerra ii	4	PDF:14175		None	None	0	2025-02-19
+0	DUPLICADO	1.0	1546	El arte de la guerra ii	4	PDF:17866		None	None	0	2025-02-28
+1	distinto (páginas)	0.11	186	Política monetaria bajo incertidumbre	28	PDF:274231	Pontificia Universidad Católica de Chile - Documento de trabajo	None	None	0	2025-02-19
+1	distinto (páginas)	0.11	372	Política monetaria bajo incertidumbre	23	PDF:96825	Estudios públicos	None	None	0	2025-02-23
+2	distinto (páginas)	1.0	204	Macroeconomía avanzada i	217	PDF:27279229		None	None	0	2025-02-19
+2	distinto (páginas)	1.0	208	Macroeconomía avanzada i	165	PDF:5259447		None	None	0	2025-02-19
+3	DUPLICADO	0.95	226	El modelo de demanda y oferta agregada de una economía abierta con tipo de cambio fijo	23	PDF:229517		None	None	0	2025-02-22
+3	DUPLICADO	0.95	3374	El modelo de demanda y oferta agregada de una economía abierta con tipo de cambio fijo	23	PDF:200366	Roca - Macroeconomia 02	None	None	0	2025-06-08
+4	distinto (páginas)	0.8	322	International macroeconomics	194	PDF:2438693		None	None	0	2025-02-23
+4	distinto (páginas)	0.8	523	International macroeconomics	180	PDF:2448296		None	None	0	2025-02-23
+5	distinto (páginas)	0.05	352	Preparación y evaluación de proyectos	370	PDF:4125256		None	None	0	2025-02-23
+5	distinto (páginas)	0.05	665	Preparación y evaluación de proyectos	463	PDF:4516324		None	None	1	2025-02-23
+5	distinto (páginas)	0.05	9888	Preparación y evaluación de proyectos	370	PDF:4100381		None	None	0	2026-06-15
+6	DUPLICADO	1.0	353	Proyectos de inversión. formulación y evaluación	548	PDF:10083953		None	None	0	2025-02-23
+6	DUPLICADO	1.0	9881	Proyectos de inversión: formulación y evaluación	546	PDF:9901350		None	None	0	2026-06-15
+7	distinto (páginas)	0.23	399	50 años de derecho penal del enemigo ¿hasta cuando?	48	PDF:763316		None	None	0	2025-02-23
+7	distinto (páginas)	0.23	461	50 años de derecho penal del enemigo ¿hasta cuando?	264	PDF:4610707		None	None	0	2025-02-23
+8	DUPLICADO	1.0	455	Econometric theory and methods	712	PDF:5703031		None	None	0	2025-02-23
+8	DUPLICADO	1.0	560	Econometric theory and methods	692	PDF:5820661		None	None	0	2025-02-23
+9	distinto (páginas)	0.01	458	Teoría de la regulación económica	332	PDF:7902522		None	None	0	2025-02-23
+9	distinto (páginas)	0.01	9175	Teoría de la regulación económica	89	PDF:17729443		31	None	0	2025-12-02
+10	distinto (páginas)	0.11	492	Bayesian data analysis	656	PDF:14498524		None	None	0	2025-02-23
+10	distinto (páginas)	0.11	9801	Bayesian Data Analysis	677	PDF:55911785		None	None	1	2026-05-08
+11	DUPLICADO	0.9	525	Microeconomía	20	PDF:5403433	Infox Microeconomia	None	None	0	2025-02-23
+11	DUPLICADO	0.9	618	Microeconomía	18	PDF:356453	Infox Microeconomia	None	None	0	2025-02-23
+11	DUPLICADO	0.9	619	Microeconomía	20	PDF:5000100	Infox Microeconomia	None	None	0	2025-02-23
+12	DUPLICADO	1.0	529	Ejercicios de macroeconomía avanzada	216	PDF:635013		None	None	0	2025-02-23
+12	DUPLICADO	1.0	3462	Ejercicios de macroeconomía avanzada	216	PDF:629622		None	None	0	2025-06-08
+13	DUPLICADO	1.0	742	Manual de matemática financiera: texto, problemas y casos	507	PDF:12157847		None	None	1	2025-02-24
+13	DUPLICADO	1.0	9880	Manual de matemática financiera: texto, problemas y casos	507	PDF:18441546		None	None	0	2026-06-15
+14	distinto (páginas)	0.02	1093	Macroeconomía	683	PDF:23471679		1	None	1	2025-02-24
+14	distinto (páginas)	0.02	9910	Macroeconomía	576	PDF:20721445		3	None	0	2026-08-31
+15	distinto (páginas)	0.02	1161	Regímenes cambiarios y desempeño macroeconómico: una evaluación de la literatura	31	PDF:1164470	Pontificia Universidad Católica del Perú - Documento de trabajo	None	None	0	2025-02-24
+15	distinto (páginas)	0.02	10379	Regímenes cambiarios y desempeño macroeconómico: una evaluación de la literatura	19	PDF:308607	Huaman - Finanzas Internacionales	None	None	0	2026-09-17
+16	distinto (texto)	0.15	1180	Teorías del consumo y el ahorro	32	PDF:545268		None	None	0	2025-02-24
+16	distinto (texto)	0.15	3372	Teorías del consumo y el ahorro	31	PDF:483814	Roca - Macroeconomia 02	None	None	0	2025-06-08
+17	distinto (páginas)	0.02	1187	Introducción a la macroeconomía	50	PDF:629806		8	None	0	2025-02-24
+17	distinto (páginas)	0.02	3394	Introducción a la macroeconomía	1	PDF:487944	Roca - Macroeconomia 01	None	None	0	2025-06-08
+18	distinto (páginas)	0.3	1204	Introductory econometrics: a modern approach	886	PDF:6252683		None	None	0	2025-02-24
+18	distinto (páginas)	0.3	1208	Introductory econometrics: a modern approach	818	PDF:6323220		None	None	0	2025-02-24
+19	distinto (páginas)	1.0	1687	Álgebra lineal	247	PDF:43222705		None	None	0	2025-02-28
+19	distinto (páginas)	1.0	9847	Álgebra lineal	786	PDF:6143466		None	None	0	2026-05-16
+20	distinto (páginas)	1.0	1941	Cien ejercicios de econometría	145	PDF:8118555	Pena - Cien ejercicios de econometría	None	None	0	2025-02-28
+20	distinto (páginas)	1.0	1942	Cien ejercicios de econometría	162	PDF:8683310	Pena - Cien ejercicios de econometría	None	None	0	2025-02-28
+20	distinto (páginas)	1.0	1943	Cien ejercicios de econometría	141	PDF:7964566	Pena - Cien ejercicios de econometría	None	None	0	2025-02-28
+20	distinto (páginas)	1.0	1944	Cien ejercicios de econometría	163	PDF:9133738	Pena - Cien ejercicios de econometría	None	None	0	2025-02-28
+21	DUPLICADO	1.0	1957	Notas sobre el método de la economía	25	PDF:428491		None	None	0	2025-02-28
+21	DUPLICADO	1.0	9812	Notas sobre el método de la economía	25	PDF:428666	Documento de Trabajo	None	None	1	2026-05-08
+22	distinto (páginas)	0.63	2196	Principios del modelo de regresión lineal general	25	PDF:875336	CAF 13 - Econometria I	None	None	0	2025-03-07
+22	distinto (páginas)	0.63	2197	Principios del modelo de regresión lineal general	30	PDF:927268	CAF 13 - Econometria I	None	None	0	2025-03-07
+23	REVISAR	0.54	2198	Contrastes de hipótesis e intervalos de confianza en regresión simple	19	PDF:764168	CAF 13 - Econometria I	None	None	0	2025-03-07
+23	REVISAR	0.54	2199	Contrastes de hipótesis e intervalos de confianza en regresión simple	18	PDF:845408	CAF 13 - Econometria I	None	None	0	2025-03-07
+24	REVISAR	0.58	2200	Principios del modelo de regresión lineal simple	20	PDF:887023	CAF 13 - Econometria I	None	None	0	2025-03-07
+24	REVISAR	0.58	2201	Principios del modelo de regresión lineal simple	18	PDF:799593	CAF 13 - Econometria I	None	None	0	2025-03-07
+25	distinto (páginas)	0.67	2275	Códigos del curso economía computacional	8	PDF:65740	CAF 18 - Economia computacional	None	None	0	2025-03-07
+25	distinto (páginas)	0.67	2276	Códigos del curso economía computacional	3	PDF:46671	CAF 18 - Economia computacional	None	None	0	2025-03-07
+26	distinto (páginas)	0.49	2281	El modelo neoclásico	49	PDF:2976711	CAF 18 - Economia computacional	None	None	0	2025-03-07
+26	distinto (páginas)	0.49	2282	El modelo neoclásico	54	PDF:2578146	CAF 18 - Economia computacional	None	None	0	2025-03-07
+26	distinto (páginas)	0.49	2283	El modelo neoclásico	42	PDF:3091713	CAF 18 - Economia computacional	None	None	0	2025-03-07
+27	distinto (texto)	0.13	2288	Introducción	19	PDF:588871	CAF 18 - Economia computacional	None	None	0	2025-03-07
+27	distinto (texto)	0.13	2725	Introducción	18	PDF:354860	CAF 07 - Macroeconomia II	None	None	0	2025-03-07
+28	distinto (páginas)	0.65	2684	El medio plazo el mercado de trabajo	14	PDF:487252	CAF 04 - Macroeconomia I	None	None	0	2025-03-07
+28	distinto (páginas)	0.65	2685	El medio plazo el mercado de trabajo	26	PDF:711073	CAF 04 - Macroeconomia I	None	None	0	2025-03-07
+29	distinto (páginas)	0.69	2687	El corto plazo los mercados de bienes y financieros el modelo is lm	14	PDF:459989	CAF 04 - Macroeconomia I	None	None	0	2025-03-07
+29	distinto (páginas)	0.69	2688	El corto plazo los mercados de bienes y financieros el modelo is lm	29	PDF:1226509	CAF 04 - Macroeconomia I	None	None	0	2025-03-07
+30	distinto (páginas)	0.57	2911	Intervenciones del estado en un mercado de competencia perfecta	40	PDF:1134246	CAF 02 - Microeconomia I	None	None	0	2025-03-07
+30	distinto (páginas)	0.57	2912	Intervenciones del estado en un mercado de competencia perfecta	70	PDF:1262284	CAF 02 - Microeconomia I	None	None	0	2025-03-07
+31	distinto (texto)	0.38	2913	Las decisiones de la empresa en un mercado de competencia perfecta	54	PDF:1043388	CAF 02 - Microeconomia I	None	None	0	2025-03-07
+31	distinto (texto)	0.38	2914	Las decisiones de la empresa en un mercado de competencia perfecta	54	PDF:897907	CAF 02 - Microeconomia I	None	None	0	2025-03-07
+32	REVISAR	0.85	3103	Guía general para la identificación, formulación y evaluación de proyectos de inversión	200	PDF:4292459		None	None	0	2025-05-19
+32	REVISAR	0.85	3104	Guía general para la identificación, formulación y evaluación de proyectos de inversión	200	PDF:4846858		None	None	0	2025-05-19
+33	DUPLICADO	1.0	3154	Equilibrio general competitivo	61	PDF:727942	BCRP 2024 Macroeconomia	None	None	0	2025-06-08
+33	DUPLICADO	1.0	3159	Equilibrio general competitivo	61	PDF:1427918	BCRP 2024 Macroeconomia	None	None	0	2025-06-08
+34	DUPLICADO	1.0	3156	Introducción a métodos numéricos	43	PDF:657884	BCRP 2024 Macroeconomia	None	None	0	2025-06-08
+34	DUPLICADO	1.0	3160	Introducción a métodos numéricos	43	PDF:917422	BCRP 2024 Macroeconomia	None	None	0	2025-06-08
+35	DUPLICADO	1.0	3157	Modelos de crecimiento neoclásico y rbc	40	PDF:712599	BCRP 2024 Macroeconomia	None	None	0	2025-06-08
+35	DUPLICADO	1.0	3161	Modelos de crecimiento neoclásico y rbc	40	PDF:973862	BCRP 2024 Macroeconomia	None	None	0	2025-06-08
+36	DUPLICADO	1.0	3158	Programación dinámica	58	PDF:395671	BCRP 2024 Macroeconomia	None	None	0	2025-06-08
+36	DUPLICADO	1.0	3162	Programación dinámica	58	PDF:734980	BCRP 2024 Macroeconomia	None	None	0	2025-06-08
+37	distinto (texto)	0.15	3177	Elementos de una planificación estratégica	5	PDF:3389492	Cousera planificacion y gestion ostrategica para pymes	None	None	0	2025-06-08
+37	distinto (texto)	0.15	3178	Elementos de una planificación estratégica	3	PDF:1776453	Cousera planificacion y gestion ostrategica para pymes	None	None	0	2025-06-08
+38	distinto (texto)	0.1	3179	Elementos de una planificación estratégica	8	PDF:3834090	Cousera planificacion y gestion ostrategica para pymes	None	None	0	2025-06-08
+38	distinto (texto)	0.1	3181	Elementos de una planificación estratégica	7	PDF:4757883	Cousera planificacion y gestion ostrategica para pymes	None	None	0	2025-06-08
+39	distinto (páginas)	0.25	3183	Econometría	45	PDF:431214	Infox 00 econometria	None	None	0	2025-06-08
+39	distinto (páginas)	0.25	3184	Econometría	55	PDF:854994	Infox 00 econometria	None	None	0	2025-06-08
+39	distinto (páginas)	0.25	3185	Econometría	59	PDF:884934	Infox 00 econometria	None	None	0	2025-06-08
+39	distinto (páginas)	0.25	3186	Econometría	16	PDF:172897	Infox 00 econometria	None	None	0	2025-06-08
+40	distinto (páginas)	0.28	3241	Eg i 2012	18	PDF:431703	Lezama - Economia general	None	None	0	2025-06-08
+40	distinto (páginas)	0.28	3242	Eg i 2012	11	PDF:1305740	Lezama - Economia general	None	None	0	2025-06-08
+40	distinto (páginas)	0.28	3244	Eg i 2012	17	PDF:2056635	Lezama - Economia general	None	None	0	2025-06-08
+40	distinto (páginas)	0.28	3245	Eg i 2012	28	PDF:1023912	Lezama - Economia general	None	None	0	2025-06-08
+40	distinto (páginas)	0.28	3247	Eg i 2012	46	PDF:13406811	Lezama - Economia general	None	None	0	2025-06-08
+40	distinto (páginas)	0.28	3248	Eg i 2012	14	PDF:1003055	Lezama - Economia general	None	None	0	2025-06-08
+40	distinto (páginas)	0.28	3249	Eg i 2012	47	PDF:13812048	Lezama - Economia general	None	None	0	2025-06-08
+40	distinto (páginas)	0.28	3250	Eg i 2012	19	PDF:1820248	Lezama - Economia general	None	None	0	2025-06-08
+40	distinto (páginas)	0.28	3251	Eg i 2012	16	PDF:606606	Lezama - Economia general	None	None	0	2025-06-08
+40	distinto (páginas)	0.28	3252	Eg i 2012	18	PDF:1000255	Lezama - Economia general	None	None	0	2025-06-08
+40	distinto (páginas)	0.28	3253	Eg i 2012	20	PDF:1957462	Lezama - Economia general	None	None	0	2025-06-08
+40	distinto (páginas)	0.28	3254	Eg i 2012	11	PDF:450362	Lezama - Economia general	None	None	0	2025-06-08
+41	DUPLICADO	0.99	3379	Índice	3	PDF:161920	Roca - Macroeconomia 02	100	None	0	2025-06-08
+41	DUPLICADO	0.99	3393	Índice	3	PDF:192659	Roca - Macroeconomia 01	67	None	0	2025-06-08
+42	DUPLICADO	0.88	3554	Ecuaciones simultaneas	32	PDF:2111484	infox 03 microeconometria	None	None	0	2025-06-10
+42	DUPLICADO	0.88	3555	Ecuaciones simultaneas	34	PDF:2245819	infox 03 microeconometria	None	None	0	2025-06-10
+43	distinto (páginas)	1.0	3578	Modelo de emparejamiento implementación del psm	19	PDF:953845	infox 06 evaluacion de impacto	None	None	0	2025-06-12
+43	distinto (páginas)	1.0	3580	Modelo de emparejamiento implementación del psm	11	PDF:497640	infox 06 evaluacion de impacto	None	None	0	2025-06-12
+44	distinto (páginas)	0.57	3707	Economía monetaria i	66	PDF:2081002	Infox Macroeconomia	2	None	0	2025-07-05
+44	distinto (páginas)	0.57	3710	Economía monetaria i	43	PDF:827812	Infox Macroeconomia	2	None	0	2025-07-05
+45	distinto (páginas)	0.93	3708	Economía monetaria ii	46	PDF:937348	Infox Macroeconomia	None	None	0	2025-07-05
+45	distinto (páginas)	0.93	3709	Economía monetaria ii	69	PDF:2195505	Infox Macroeconomia	None	None	0	2025-07-05
+46	distinto (páginas)	0.27	3714	Teoría del consumidor	29	PDF:355036	Infox Microeconomia	None	None	0	2025-07-05
+46	distinto (páginas)	0.27	3715	Teoría del consumidor	21	PDF:263589	Infox Microeconomia	None	None	0	2025-07-05
+47	distinto (texto)	0.43	3717	Teoría del productor	23	PDF:321752	Infox Microeconomia	None	None	0	2025-07-05
+47	distinto (texto)	0.43	3718	Teoría del productor	23	PDF:376462	Infox Microeconomia	None	None	0	2025-07-05
+47	distinto (texto)	0.43	3719	Teoría del productor	11	PDF:143828	Infox Microeconomia	None	None	0	2025-07-05
+48	distinto (páginas)	0.22	3738	Visualización de datos	19	PDF:1219471	Infox Power BI	None	None	0	2025-07-05
+48	distinto (páginas)	0.22	3739	Visualización de datos	23	PDF:1856087	Infox Power BI	None	None	0	2025-07-05
+49	distinto (páginas)	0.22	3808	Demanda agregada: economía cerrada (is-lm)	47	PDF:563286	BCRP 2012 Macroeconomía	None	None	0	2025-07-07
+49	distinto (páginas)	0.22	3809	Demanda agregada: economía cerrada (is-lm)	40	PDF:665234	BCRP 2012 Macroeconomía	None	None	0	2025-07-07
+50	distinto (páginas)	0.3	3813	Crecimiento económico	41	PDF:461497	BCRP 2012 Macroeconomía	None	None	0	2025-07-07
+50	distinto (páginas)	0.3	3814	Crecimiento económico	49	PDF:510186	BCRP 2012 Macroeconomía	None	None	0	2025-07-07
+51	distinto (texto)	0.27	3839	Modelo lineal general - inferencia	4	PDF:117989	Ricci - Econometría I	None	None	0	2025-07-07
+51	distinto (texto)	0.27	3840	Modelo lineal general - inferencia	6	PDF:315236	Ricci - Econometría I	None	None	0	2025-07-07
+52	distinto (páginas)	1.0	3915	El valor del dinero a través del tiempo	16	PDF:1877979	Coral - Gerencia Financiera	None	None	0	2025-07-07
+52	distinto (páginas)	1.0	3916	El valor del dinero a través del tiempo	9	PDF:1543450	Coral - Gerencia Financiera	None	None	0	2025-07-07
+53	distinto (texto)	0.29	3942	Análisis de regresión múltiple	33	PDF:878267	Hisgen Econometría	None	None	0	2025-07-07
+53	distinto (texto)	0.29	3943	Análisis de regresión múltiple	35	PDF:911795	Hisgen Econometría	None	None	0	2025-07-07
+54	distinto (páginas)	0.18	3945	Series de tiempo	8	PDF:260850	Hisgen Econometría	None	None	0	2025-07-07
+54	distinto (páginas)	0.18	3947	Series de tiempo	12	PDF:300159	Hisgen Econometría	None	None	0	2025-07-07
+55	distinto (páginas)	0.0	4043	Economía regional	132	PDF:25920736		None	None	0	2025-07-07
+55	distinto (páginas)	0.0	4044	Economía regional	74	PDF:1114619		None	None	0	2025-07-07
+56	distinto (páginas)	0.07	4047	El modelo de harrod domar	9	PDF:68959	Gonzales - Crecimiento Económico	None	None	0	2025-07-07
+56	distinto (páginas)	0.07	4052	El modelo de harrod domar	4	PDF:5634229	Gonzales - Crecimiento Económico	None	None	0	2025-07-07
+57	distinto (texto)	0.0	4264	Teoría monetaria	71	PDF:7160737		None	None	0	2025-07-14
+57	distinto (texto)	0.0	4377	Teoría monetaria	70	PDF:889564		None	None	0	2025-07-14
+58	DUPLICADO	1.0	4265	La política monetaria del banco central de reserva del Perú	55	PDF:2186771		None	None	0	2025-07-14
+58	DUPLICADO	1.0	8529	La política monetaria del banco central de reserva del Perú	55	PDF:2186771		None	None	0	2025-11-06
+59	distinto (texto)	0.01	4318	Introducción a la sociología, economía y ciencias políticas	10	PDF:853656	Padilla - Introducion a la sociologia econonomia y ciencias politicas	None	None	0	2025-07-14
+59	distinto (texto)	0.01	4319	Introducción a la sociología, economía y ciencias políticas	10	PDF:1393600	Padilla - Introducion a la sociologia econonomia y ciencias politicas	None	None	0	2025-07-14
+59	distinto (texto)	0.01	4320	Introducción a la sociología, economía y ciencias políticas	10	PDF:1354980	Padilla - Introducion a la sociologia econonomia y ciencias politicas	None	None	0	2025-07-14
+59	distinto (texto)	0.01	4321	Introducción a la sociología, economía y ciencias políticas	10	PDF:1216255	Padilla - Introducion a la sociologia econonomia y ciencias politicas	None	None	0	2025-07-14
+60	distinto (páginas)	0.67	4331	Teoría del crecimiento dirigido por la demanda	18	PDF:474747	Jiménez - Crecimiento Económico	None	None	0	2025-07-14
+60	distinto (páginas)	0.67	4344	Teoría del crecimiento dirigido por la demanda	10	PDF:380307	Jiménez - Crecimiento Económico	None	None	0	2025-07-14
+61	distinto (páginas)	0.33	4526	Regresiones	47	PDF:3039686	Infox Stata	None	None	0	2025-07-30
+61	distinto (páginas)	0.33	4527	Regresiones	35	PDF:1433472	Infox Stata	None	None	0	2025-07-30
+62	distinto (texto)	0.47	4529	Series de tiempo	44	PDF:4007058	Infox Stata	None	None	0	2025-07-30
+62	distinto (texto)	0.47	4530	Series de tiempo	46	PDF:3024621	Infox Stata	None	None	0	2025-07-30
+62	distinto (texto)	0.47	4531	Series de tiempo	63	PDF:4637468	Infox Stata	None	None	0	2025-07-30
+63	distinto (páginas)	0.07	8664	Balanza de pagos	50	PDF:177729	Perez - Economía descriptiva	None	None	0	2025-11-28
+63	distinto (páginas)	0.07	8683	Balanza de pagos	27	PDF:165874	Perez - Economía descriptiva	None	None	0	2025-11-28
+64	distinto (páginas)	0.22	8676	Indicadores del mercado de trabajo	34	PDF:139129	Perez - Economía descriptiva	None	None	0	2025-11-28
+64	distinto (páginas)	0.22	8678	Indicadores del mercado de trabajo	49	PDF:765340	Perez - Economía descriptiva	None	None	0	2025-11-28
+65	distinto (páginas)	0.6	8723	Gerencia social en el Perú	32	PDF:697116	Navarro - Gerencia social	None	None	0	2025-11-29
+65	distinto (páginas)	0.6	8725	Gerencia social en el Perú	43	PDF:2484123	Navarro - Gerencia social	2	None	0	2025-11-29
+65	distinto (páginas)	0.6	8726	Gerencia social en el Perú	30	PDF:779696	Navarro - Gerencia social	83	None	0	2025-11-29
+65	distinto (páginas)	0.6	8727	Gerencia social en el Perú	21	PDF:177779	Navarro - Gerencia social	29	None	0	2025-11-29
+65	distinto (páginas)	0.6	8728	Gerencia social en el Perú	105	PDF:942043	Navarro - Gerencia social	None	None	0	2025-11-29
+65	distinto (páginas)	0.6	8729	Gerencia social en el Perú	15	PDF:276585	Navarro - Gerencia social	None	None	0	2025-11-29
+65	distinto (páginas)	0.6	8730	Gerencia social en el Perú	11	PDF:192657	Navarro - Gerencia social	None	None	0	2025-11-29
+65	distinto (páginas)	0.6	8731	Gerencia social en el Perú	22	PDF:1231551	Navarro - Gerencia social	None	None	0	2025-11-29
+65	distinto (páginas)	0.6	8732	Gerencia social en el Perú	10	PDF:181106	Navarro - Gerencia social	None	None	0	2025-11-29
+65	distinto (páginas)	0.6	8733	Gerencia social en el Perú	18	PDF:447946	Navarro - Gerencia social	None	None	0	2025-11-29
+65	distinto (páginas)	0.6	8734	Gerencia social en el Perú	14	PDF:150811	Navarro - Gerencia social	None	None	0	2025-11-29
+65	distinto (páginas)	0.6	8735	Gerencia social en el Perú	21	PDF:220996	Navarro - Gerencia social	None	None	0	2025-11-29
+65	distinto (páginas)	0.6	8736	Gerencia social en el Perú	14	PDF:154139	Navarro - Gerencia social	None	None	0	2025-11-29
+65	distinto (páginas)	0.6	8737	Gerencia social en el Perú	8	PDF:135905	Navarro - Gerencia social	None	None	0	2025-11-29
+66	DUPLICADO	0.93	8776	Laboratorios de pruebas	18	PDF:2726592	PIT 2024 - CyberSOC	None	None	0	2025-11-30
+66	DUPLICADO	0.93	8780	Laboratorios de pruebas	15	PDF:1674818	PIT 2024 - Ethical hacking	None	None	0	2025-11-30
+67	DUPLICADO	0.92	8777	Bitácora del curso	13	PDF:1104464	PIT 2024 - CyberSOC	None	None	0	2025-11-30
+67	DUPLICADO	0.92	8782	Bitácora del curso	14	PDF:1691356	PIT 2024 - Ethical hacking	None	None	0	2025-11-30
+68	distinto (páginas)	0.83	8789	Fase de formulación y evaluación	114	PDF:5351426	PIT 2024 - Fundamentos de proyectos de inversión pública	None	None	0	2025-11-30
+68	distinto (páginas)	0.83	8790	Fase de formulación y evaluación	144	PDF:5684347	PIT 2024 - Fundamentos de proyectos de inversión pública	None	None	0	2025-11-30
+69	distinto (páginas)	0.83	8836	El rol del estado	95	PDF:1492568	Taipe - Economía pública	None	None	0	2025-11-30
+69	distinto (páginas)	0.83	8837	El rol del estado	46	PDF:478544	Taipe - Economía pública	None	None	0	2025-11-30
+69	distinto (páginas)	0.83	8838	El rol del estado	66	PDF:742746	Taipe - Economía pública	None	None	0	2025-11-30
+70	distinto (páginas)	0.01	9043	Introducción a las finanzas	281	PDF:2717273	Mejia - Finanzas	None	None	0	2025-12-01
+70	distinto (páginas)	0.01	9044	Introducción a las finanzas	150	PDF:1956002	Mejia - Finanzas	None	None	0	2025-12-01
+71	REVISAR	0.74	9057	Investigación operativa	13	PDF:348462	Valenzuela - Investigacion operativa	None	None	0	2025-12-02
+71	REVISAR	0.74	9058	Investigación operativa	12	PDF:381877	Valenzuela - Investigacion operativa	17	None	0	2025-12-02
+71	REVISAR	0.74	9061	Investigación operativa	14	PDF:2665924	Valenzuela - Investigacion operativa	None	None	0	2025-12-02
+72	distinto (texto)	0.03	9109	Temario	2	PDF:113023	Alvarado - Siga y siaf	None	None	0	2025-12-02
+72	distinto (texto)	0.03	9110	Temario	1	PDF:43032	Alvarado - Siga y siaf	None	None	0	2025-12-02
+73	distinto (páginas)	0.1	9114	Aplicaciones siaf en la gestión financiera	21	PDF:652529	Alvarado - Siga y siaf	None	None	0	2025-12-02
+73	distinto (páginas)	0.1	9116	Aplicaciones siaf en la gestión financiera	28	PDF:2112162	Alvarado - Siga y siaf	None	None	0	2025-12-02
+74	distinto (páginas)	0.95	9156	Las decisiones de inversión como opciones reales: un enfoque conceptual	25	PDF:343964		None	None	0	2025-12-02
+74	distinto (páginas)	0.95	9161	Las decisiones de inversión como opciones reales: un enfoque conceptual	30	PDF:235315		None	None	0	2025-12-02
+75	distinto (páginas)	0.06	9220	Integración económica	2	PDF:131733	Atao - Comercio internacional	None	None	0	2025-12-03
+75	distinto (páginas)	0.06	9222	Integración económica	28	PDF:2141774	Atao - Comercio internacional	None	None	0	2025-12-03
+76	distinto (páginas)	0.62	9612	Stationary time-series models	80	PDF:798354	Enders - Applied econometric time series	None	None	0	2025-12-04
+76	distinto (páginas)	0.62	9616	Stationary time-series models	73	PDF:662241	Enders - Applied econometric time series	None	None	0	2025-12-04
+77	distinto (páginas)	0.0	9813	Problems Book to Accompany Mathematics for Economists	67	PDF:483397		None	None	1	2026-05-08
+77	distinto (páginas)	0.0	9815	Problems Book to Accompany Mathematics for Economists	625	PDF:93924878		None	None	1	2026-05-08
+78	distinto (páginas)	0.07	9850	Applied Partial Differential Equations: with Fourier Series and Boundary Value Problems	784	PDF:15027565		None	None	0	2026-05-16
+78	distinto (páginas)	0.07	9853	Applied partial differential equations with Fourier series and boundary value problems	578	PDF:33655294		None	None	0	2026-05-16
