@@ -13,7 +13,7 @@ vivía en la raíz del repo). El diseño técnico y sus fases cumplidas están e
 > **Ecosistema de aprendizaje:** esta guía es la dueña de la *plomería* (timers, sync, `#apuntes`).
 > Cómo se integra con los apuntes de estudio (learning-skill), las fichas de investigación
 > (`prompts/01 fuentes/`) y el vault (`meta/`) está en el mapa único
-> `prompts/ECOSISTEMA_APRENDIZAJE.md`; cómo se lee cada material, en `prompts/ECOSISTEMA_LECTURA.md`.
+> `prompts/docs/dominios/aprendizaje.md`; cómo se lee cada material, en `prompts/docs/dominios/lectura.md`.
 
 ## 1. Lo AUTOMÁTICO (no tienes que hacer nada)
 

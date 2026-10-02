@@ -40,7 +40,7 @@ main.sh --aplicar --ids 10265,10266
 > herramienta es **reutilizable para cualquier libro nuevo** (ver
 > [«Reutilización para libros nuevos»](#-reutilización-para-libros-nuevos-flujo-prompt--ficha--tsv--calibre)).
 > Mapa del ecosistema y contrato de complementariedad prompt ⇄ scripts:
-> `~/Documents/prompts/ECOSISTEMA_APRENDIZAJE.md`.
+> `~/Documents/prompts/docs/dominios/aprendizaje.md`.
 
 ## 📋 Tabla de Contenidos
 
