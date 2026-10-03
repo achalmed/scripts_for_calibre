@@ -2,7 +2,7 @@
 tipo: readme
 estado: activo
 ---
-# script_sincronizar_zotero/ — sincronización bidireccional de metadatos Calibre ⇄ Zotero para los libros enlazados por #zotero_key
+# script_sincronizar_zotero/ — metadatos Calibre ⇄ Zotero de los libros enlazados por #zotero_key
 
 <!-- suite:inicio -->
 **Suite `sincronizar_zotero`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
@@ -22,142 +22,84 @@ main.sh --aplicar            # ambas apps cerradas
 <sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
 <!-- suite:fin -->
 
-Sincronizador **bidireccional** de metadatos entre la biblioteca **Calibre**
-(`biblioteca/metadata.db`) y **Zotero** (`~/Zotero/zotero.sqlite`) para los
-libros enlazados por el plugin **ZMI** (columna Calibre `#zotero_key` = clave
-del item padre en Zotero). Deja los metadatos **completos y coherentes en
-ambos lados**. Simulacion por defecto; escribe solo con `--aplicar`.
-
-Es la pieza que faltaba en el flujo del ecosistema
-**catalogar → normalizar → verificar → sincronizar → incrustar → fichas**
-(ver `../script_verificar_metadatos`, `../script_normalizacion_metadatos`,
-`../script_catalogacion_biblioteca` y
-`prompts/01 fuentes/prompt_02_catalogar.md`,
-que define el contrato de campos RIS de ZMI que esta herramienta implementa).
-
-## Politica de sincronizacion (decidida por el usuario)
-
-- **"Calibre manda"**: en conflicto de un campo bibliografico, gana Calibre
-  (recien normalizado en 4 sesiones de limpieza). Se propaga a Zotero:
-  titulo, fecha, editorial, ISBN, serie y numero de serie, paginas, edicion,
-  idioma (normalizado), tags y abstract.
-- **Calibre → Zotero solamente** para titulo y autores. Titulo y autor
-  **JAMAS** se escriben en Calibre: Zotero enlaza los adjuntos por la ruta de
-  carpeta `Autor/Titulo (id)` y cambiarlos romperia el vinculo.
-- **Zotero → Calibre**: solo relleno de vacios (año en placeholder `0101`,
-  ISBN ausente) y poblacion de las columnas espejo `#zotero_*`.
-- **Reparacion**: rutas de adjuntos rotas en Zotero (carpetas ya renombradas)
-  y la linea de ruta dentro del campo `Extra`.
-
-### Reglas duras (no configurables)
-
-- **Formato de autor por sistema, nunca homogenizar**: Zotero
-  `Apellido, Nombre` (campos separados) / Calibre `Nombre, Apellido` (coma
-  interna). El sync convierte al cruzar, no unifica.
-- **Autores por comparacion semantica** (conjuntos de tokens): tolera el
-  intercambio nombre/apellido que dejo la vieja herramienta `invertir_nombres`.
-  Si Zotero tiene MAS autores (coautores/editores/traductores) se **conservan**
-  y solo se reporta; nunca se borran co-creadores.
-- **Etiquetas personales de Zotero intocables**: valoraciones `⭐`, emojis y
-  `#hashtags` se preservan siempre. Las variantes ortograficas obsoletas de
-  vocabulario (`Ciencias sociales`, `economía_ambiental`, `programming_R`, el
-  typo `ecuacione s_lineales`) SI se reemplazan por la version limpia de
-  Calibre para no reintroducir duplicados ya fusionados.
-- **Idioma: Calibre manda SIEMPRE** (decision del usuario: Zotero quedo mal
-  poblado, casi todo como ingles). Se escribe el codigo ISO 639-1 normalizado
-  (`spa`→`es`, `English`→`en`); los codigos regionales validos se respetan.
-- **Campo `Extra`**: se edita **linea a linea**; solo se actualiza la linea de
-  ruta `{path}`, las lineas `CSL Variable: Value` se preservan.
-- **Vacio en el origen nunca borra en el destino.** `Leido` y `Generos` de
-  Calibre jamas se propagan.
-- **El tipo de item se sincroniza de verdad**: manda el `Item type` de
-  Calibre (`book` solo cuando realmente es libro; `presentation`, `manuscript`,
-  `report`, `bookSection`, `journalArticle`...). El cambio migra los campos via
-  `baseFieldMappings` de Zotero, lo que no cabe en el tipo nuevo se preserva en
-  `Extra` como linea CSL, y los creadores pasan al rol primario del tipo
-  (`presenter` en presentaciones). Para articulos, la serie de Calibre va a
-  `publicationTitle` (contrato RIS `T2`).
-- **Valoracion en estrellas sincronizada**: Calibre `rating` (2-10) ⇄ tag de
-  estrellas de Zotero (`⭐`-`⭐⭐⭐⭐⭐`), en ambas direcciones; Calibre manda en
-  conflicto.
-
-## Estructura (patrón modular del repo)
-
-```
-script_sincronizar_zotero/
-├── main.sh              # orquestacion unicamente
-├── config.sh            # TODO lo editable: rutas, columna clave, politica
-├── lib/
-│   │   (logger: ../lib_comun/logger.sh → core/shell-lib/logger.sh, sin copia propia)
-│   ├── cli.sh           # flags, --help, chequeo de dependencias
-│   ├── validator.sh     # apps cerradas + backups + integrity_check
-│   └── sincronizador.py # nucleo: lee ambas bases, planifica, reporta, aplica
-├── reportes/            # sync_<fecha>.{tsv,md} (generado)
-└── estado/              # backups/ + ultimo_sync.json (snapshot para diffs)
-```
-
-## Seguridad de escritura
-
-- **Calibre y Zotero deben estar CERRADOS** para `--aplicar`. La herramienta
-  lo verifica (`pgrep`) y aborta si alguno esta abierto.
-- **Backup previo** de ambas bases en `estado/backups/` antes de tocar nada.
-- Escrituras a Zotero por **SQL directo** (metodo no soportado oficialmente por
-  Zotero, el mismo terreno que ZMI): cada item modificado queda con `synced=0`
-  y `dateModified` actualizado, para que tu cuenta zotero.org **suba** los
-  cambios en el siguiente sync.
-- Tras aplicar: `PRAGMA integrity_check` en ambas bases y regeneracion de los
-  OPF de Calibre (`calibredb backup_metadata --all`) para que ZMI y los
-  incrustadores de PDF (`script_metadatos_calibre`) no lean metadatos rancios.
-- Si el integrity_check falla, la herramienta te dice que restaures los backups.
+Sincronizador **bidireccional** de metadatos entre Calibre (`biblioteca/metadata.db`) y Zotero
+(`~/Zotero/zotero.sqlite`) para los libros enlazados por la columna `#zotero_key` (la clave del ítem
+padre en Zotero, que puebla ZMI o `../script_ecosistema_lectura/main.sh --enlazar`). Deja los
+metadatos completos y coherentes en ambos lados. El contrato de campos RIS que implementa lo define
+`prompts/01 fuentes/prompt_02_catalogar.md`. Lo corre a diario el timer `ecosistema-metadatos`, a
+través de `../script_ecosistema_lectura/main.sh --metadatos`.
 
 ## Uso
 
 ```bash
-./main.sh                    # SIMULACION completa: solo genera reportes
-./main.sh --limite 20        # simulacion sobre 20 pares (prueba)
-./main.sh --ids 2,3075       # solo esos libros de Calibre (depuracion)
-./main.sh --limite 20 --aplicar   # aplicar SOLO a 20 pares (canario)
-./main.sh --aplicar          # aplicar a los 4420 pares (apps cerradas)
+main.sh                       # simulación completa: solo reportes
+main.sh --limite 20           # simulación sobre 20 pares
+main.sh --ids 2,3075          # solo esos libros de Calibre
+main.sh --limite 20 --aplicar # canario: aplica a 20 pares (Calibre y Zotero cerrados)
+main.sh --aplicar             # todos los pares
+main.sh --help                # opciones; --verbose da más detalle
 ```
 
-**Recomendado la primera vez**: cerrar ambas apps, correr
-`./main.sh --limite 20 --aplicar`, abrir Zotero y verificar esos 20 items,
-y solo entonces la corrida completa.
+Un cambio de política se prueba con el canario: aplicar a 20, abrir Zotero y mirar esos ítems, y
+solo entonces la corrida completa. Cada pasada deja en `reportes/` un `sync_<fecha>.tsv` (una fila
+por acción: `book_id, zotero_key, campo, accion, antes, despues`) y un `sync_<fecha>.md` (resumen y
+claves huérfanas). Las acciones `reporte (...)` no se aplican: son para revisión manual.
 
-### Salida
+## Política de sincronización
 
-- `reportes/sync_<fecha>.tsv` — una fila por accion
-  (`book_id, zotero_key, campo, accion, antes, despues`).
-- `reportes/sync_<fecha>.md` — resumen por accion + claves huerfanas.
-- Las acciones `reporte (...)` NO se aplican: son para tu revision manual
-  (conflictos de idioma, autores donde Zotero es mas completo, adjuntos que
-  no se pudieron recalcular).
+- **Calibre manda**: en conflicto gana Calibre y se propaga a Zotero: título, fecha, editorial,
+  ISBN, serie y número, páginas, edición, idioma, etiquetas y resumen. El título se compara exacto;
+  los demás campos, normalizados.
+- **Título y autores, solo Calibre → Zotero**: jamás se escriben en Calibre, porque Zotero enlaza
+  los adjuntos por la ruta `Autor/Título (id)`.
+- **Zotero → Calibre, solo relleno de vacíos** (año de relleno `0101`, ISBN ausente) y las columnas
+  espejo `#zotero_*`.
+- **Reparación**: rutas de adjunto rotas en Zotero (carpetas renombradas) y la línea de ruta del
+  campo `Extra`.
 
-## Estado actual de la biblioteca (APLICADO 2026-07-28)
+Reglas duras, no configurables:
 
-Corrida completa aplicada y verificada: 4420 pares · 9414 escrituras a Zotero
-(3032 cambios de tipo con migracion de campos, idioma normalizado a `es`/`en`,
-tags saneados, estrellas en ambas direcciones, 286 abstracts, 66 rutas de
-adjunto reparadas, 40 titulos, 38 autores `Unknown`, editoriales y fechas) ·
-44917 celdas espejo pobladas en Calibre (zotero_* al 100%) · idempotente
-(re-simulacion: 0 escrituras) · 4451 items con `synced=0` listos para subir a
-zotero.org · 13 claves huerfanas y 1 adjunto fantasma (libro 1667 borrado,
-duplicado del 28) para revision manual.
+- **El formato de autor es propio de cada sistema**: Calibre «Nombre, Apellido» (o separador `|`),
+  Zotero `firstName`/`lastName`; se convierte al cruzar, no se unifica. Los autores se comparan como
+  conjuntos de tokens; si Zotero tiene más creadores (coautores, editores, traductores) se conservan
+  y se reporta.
+- **Las etiquetas personales de Zotero no se tocan** (`⭐`, emojis, `#hashtags`); las variantes
+  obsoletas del vocabulario sí se reemplazan por la versión limpia de Calibre.
+- **Idioma: Calibre manda siempre**, como código ISO 639-1 (`spa` → `es`, `English` → `en`); los
+  códigos regionales válidos se respetan.
+- **`Extra` se edita línea a línea**: solo la línea de ruta; las líneas `CSL Variable: Value` se
+  conservan.
+- **Vacío en el origen nunca borra en el destino**; `Leído` y `Géneros` de Calibre no se propagan.
+- **El tipo de ítem se sincroniza**: manda el `Item type` de Calibre; los campos migran por
+  `baseFieldMappings` de Zotero, lo que no cabe va a `Extra` como línea CSL y los creadores pasan al
+  rol primario del tipo. En artículos, la serie de Calibre va a `publicationTitle` (RIS `T2`).
+- **Valoración**: `rating` de Calibre (2–10) ⇄ etiqueta de estrellas de Zotero, en ambos sentidos;
+  Calibre manda en conflicto.
 
-## Herramientas relacionadas (complementarias, no duplicar)
+## Escritura segura
 
-- `../script_verificar_metadatos` — motor de diff reutilizado como base.
-- `scripts_for_zotero/` (`capitalizar_tags`, `traducir_tags_español`,
-  `invertir_nombres`): herramientas viejas cuyas transformaciones de tags y
-  nombres quedan **absorbidas** por la politica de este sync; ejecutarlas
-  sueltas reintroduce divergencia. `series_organizer` puede correr despues
-  como organizador de subcolecciones.
+`--aplicar` verifica con `pgrep` que Calibre y Zotero estén cerrados, toma el candado
+`.lock_calibre_write` (o lo hereda del timer), respalda ambas bases en `estado/backups/`, escribe en
+Zotero por SQL directo dejando cada ítem tocado con `synced=0` y `dateModified` al día para que la
+cuenta lo suba, corre `PRAGMA integrity_check` en las dos bases y regenera los OPF de Calibre
+(`calibredb backup_metadata --all`). Si la comprobación falla, pide restaurar los respaldos.
+
+## Estructura
+
+`main.sh` (orquestación) · `config.sh` (rutas, columna clave, política) · `lib/`: `cli.sh`
+(opciones, ayuda, dependencias), `validator.sh` (apps cerradas, respaldos, `integrity_check`),
+`sincronizador.py` (núcleo: lee ambas bases, planifica, reporta y aplica) · `reportes/` y `estado/`
+(respaldos y `ultimo_sync.json`, la foto para los diffs) son runtime ignorado. El motor de
+comparación partió del de `../script_verificar_metadatos`. La primera corrida completa (2026-07-28)
+está en `../docs/historial/campanas-sobre-la-biblioteca.md` §3.
 
 ## Límite honesto
 
-- **Ambas apps cerradas para `--aplicar`** (lo verifica y aborta); Zotero se escribe por **SQL directo**, método no soportado por Zotero (el mismo terreno que ZMI): cada ítem tocado queda `synced=0` y la cuenta lo sube en el siguiente sync.
-- **Título y autor jamás se escriben en Calibre** (solo Calibre → Zotero): Zotero enlaza los adjuntos por la ruta `Autor/Título (id)`.
-- **Vacío en el origen nunca borra en el destino**; `Leído` y `Géneros` de Calibre no se propagan; las etiquetas personales de Zotero (⭐, emojis, `#hashtags`) no se tocan.
-- **Las acciones `reporte (...)` no se aplican**: conflictos de idioma, autores donde Zotero es más completo y adjuntos irrecuperables quedan para revisión manual en `reportes/`.
-- **Deshacer = restaurar los backups** de ambas bases que deja en `estado/` (carpeta backups) con las apps cerradas; si `PRAGMA integrity_check` falla, la herramienta lo pide.
-- **Los `.js` de `scripts_for_zotero` quedan absorbidos** por esta política: ejecutarlos reintroduce divergencia; solo `series_organizer` es compatible, después del sync.
+- **Zotero se escribe por SQL directo**, método no soportado por Zotero (el mismo terreno que ZMI);
+  por eso exige ambas apps cerradas y deja `synced=0`.
+- **Deshacer es restaurar los respaldos** de `estado/backups/` con las apps cerradas.
+- **Las acciones `reporte (...)` quedan para revisión manual**: conflictos de idioma, autores donde
+  Zotero es más completo y adjuntos que no se pudieron recalcular.
+- **Los `.js` de `scripts_for_zotero` quedan absorbidos** por esta política (`capitalizar_tags`,
+  `traducir_tags_español`, `invertir_nombres`): ejecutarlos reintroduce divergencia; solo
+  `series_organizer` es compatible, después del sync.

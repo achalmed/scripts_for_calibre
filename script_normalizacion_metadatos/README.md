@@ -2,7 +2,7 @@
 tipo: readme
 estado: archivado
 ---
-# script_normalizacion_metadatos/ — bitácora de las migraciones que normalizaron la biblioteca el 2026-07-28 (archivado)
+# script_normalizacion_metadatos/ — las campañas de una sola vez sobre la biblioteca (archivado)
 
 <!-- suite:inicio -->
 **Suite `normalizacion_metadatos`** · objetivo *biblioteca* · estado *archivado* · - · interfaz cli
@@ -22,109 +22,56 @@ python3 migraciones/02_genres.py --apply    # escribe
 <sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
 <!-- suite:fin -->
 
-Migraciones puntuales que normalizaron en bloque los metadatos de la
-biblioteca **Calibre** el **2026-07-28**: etiquetas, Géneros, Item type y
-Clasificador de los 4 484 libros, derivados **solo de los metadatos ya
-existentes** (sin abrir PDFs), respetando la regla de no tocar título ni
-autor.
+Las **campañas de una sola vez** sobre la biblioteca: el código que las aplicó, las tablas que dicen
+qué cambió y, desde 2026-09-30, cómo deshacerlas. No es una herramienta que se corra con
+regularidad: cada campaña se aprobó, se aplicó y queda aquí como registro. Qué hizo cada una y con
+qué resultado: `../docs/historial/campanas-sobre-la-biblioteca.md`; la regla del patrón:
+`../docs/decisiones.md` §4.2.
 
-> Estos scripts **ya se aplicaron** (campaña terminada el 2026-07-28). Se
-> conservan como **registro histórico**, no como pipeline re-ejecutable en
-> bloque. Todos escriben **directo en `metadata.db` vía SQLite** y son
-> **dry-run por defecto** (requieren `--apply` para escribir). Ver
-> "Reproducibilidad" y "Gotcha del OPF" más abajo.
-
-## Orden de ejecución
-
-| # | Script | Qué hace |
-| --- | --- | --- |
-| 01 | `migraciones/01_merge_tags.py` | Fusiona/renombra etiquetas duplicadas (`mathematics→matematicas`, `ethics/etica`, `economía_*→economia_*`, el typo `ecuacione s_lineales`, etc.). 245 → 222 etiquetas. |
-| 02 | `migraciones/02_genres.py` | Deriva el campo **Géneros** por voto de las etiquetas (mapa tag→género, ~15 géneros). Desempate por especificidad (gana el género menos frecuente). 13 etiquetas neutras no votan. |
-| 03 | `migraciones/03_itemtype_desde_clasificador.py` | Rellena **Item type** desde el Clasificador con el mapeo dominante de alta confianza (Sesión→Presentation, Libro→Book, …). |
-| 04 | `migraciones/04_itemtype_examenes_practicas.py` | Item type del material de examen/práctica/ejercicio → **Manuscript** (docs de aula inéditos), Capítulo/Parte → Book Section, Documento de trabajo/etc. → Report. |
-| 05 | `migraciones/05_aplicar_tags_por_titulo.py` | Aplica los TSV `id,tags,genero,clasificador,item_type` producidos al clasificar por título los 739 libros sin etiquetas. Valida cada valor contra el vocabulario/enums **antes** de escribir. |
-| 06 | `migraciones/06_itemtype_por_serie_isbn.py` | Completa **Item type** por señal fuerte determinista: misma **serie** que hermanos ya catalogados → tipo dominante; sin serie pero con **ISBN** → Book. Dry-run (imprime plan). Cubrió 201 libros. |
-| 07 | `migraciones/07_itemtype_por_prompt_subagentes.py` | Valida y aplica los TSV `id,item_type` que produjeron 6 subagentes al clasificar los 950 libros restantes **leyendo los criterios del prompt de catalogación** (líneas 84-848). Rechaza cualquier tipo fuera del enum antes de escribir. Con `--apply`. Dejó el Item type al 100%. |
-| 08 | `migraciones/08_refinar_itype_openlibrary_crossref.py` | Pasada de **refinamiento**: los libros inciertos (Manuscript/Journal Article sin serie ni editorial) se verifican en OpenLibrary y Crossref (difuso 0.92). Solo lectura; escribe una propuesta TSV. Halla libros publicados mal marcados como Manuscript. |
-| 09 | `migraciones/09_aplicar_refino_itype.py` | Valida y aplica la propuesta del 08: reclasifica el Item type y, de regalo, rellena editorial/ISBN hallados donde estaban vacíos (aditivo). Con `--apply`. Refinó 48 libros (+34 editoriales, +30 ISBN). |
-| 2026-09-30 | `migraciones/grafias_autores_2026-09-30/` | **Única que toca autores.** Corrige 80 grafías fuera de «Nombre, Apellidos» y 10 listas de autores (`propuesta.tsv`, del diagnóstico `meta/diagnosticos/GRAFIAS_AUTORES_CALIBRE_2026-09.md`). No usa SQLite: va por la API de Calibre (`rename_items`, como «Gestionar autores»), que mueve carpeta y archivos, y reescribe en la misma operación las rutas `attachments:` de Zotero y sus creadores. `main.sh` (respaldo en `backups/`, lock, Calibre y Zotero cerrados) · `verificar.py` · `deshacer.sh`, ensayado sobre copia: deja todo idéntico. Aplicada: 64 carpetas, 36 enlaces de Zotero, 50 ítems, 0 enlaces rotos. |
-
-`vocabulario_etiquetas.txt` es el vocabulario cerrado de etiquetas usado como
-lista blanca (ninguna migración inventa etiquetas nuevas).
-
-## Reproducibilidad (honesta)
-
-Hay que distinguir dos grupos:
-
-- **Re-ejecutables** (01, 02, 03, 04, 06): derivan sus decisiones **solo de
-  `metadata.db`** (etiquetas, Clasificador, serie, ISBN ya presentes). Se
-  pueden volver a correr tal cual sobre la base actual — son idempotentes en
-  la práctica (re-aplicar no cambia lo ya normalizado).
-
-- **NO re-ejecutables — registro histórico** (05, 07, 08, 09): leen/escriben
-  archivos `res_*.tsv` / `refinar_prop.tsv` desde un **scratchpad de sesión ya
-  extinto** (`/tmp/claude-1000/.../07e95f6c-.../scratchpad`, hardcodeado en
-  cada uno). Esos TSV eran salidas efímeras de subagentes/consultas de una
-  corrida concreta; **ya no existen**. Correr estos scripts hoy no hace nada
-  útil (no encuentran sus insumos). Se conservan para **documentar qué lógica
-  de validación** se aplicó (rechazo contra enum/vocabulario antes de escribir)
-  y con qué criterios se reclasificó, no para re-ejecutar.
-
-Para una nueva normalización en bloque tras una importación grande: partir de
-01–04/06 (que sí leen la base) y regenerar los insumos de clasificación por
-título/tipo con las herramientas actuales, no reutilizar los `/tmp` muertos.
-
-## Uso (patrón dry-run)
+## Uso
 
 ```bash
-python3 migraciones/02_genres.py            # SIMULACIÓN: imprime el plan
-python3 migraciones/02_genres.py --apply    # escribe en metadata.db
+ls migraciones/                                  # NN_*.py (2026-07-28) y <tema>_<fecha>/
+head -6 migraciones/<campaña>/main.sh            # su uso exacto, en la cabecera
+python3 migraciones/02_genres.py                 # las NN_*.py simulan; --apply escribe
+migraciones/<campaña>/deshacer.sh                # revierte una campaña con carpeta propia
 ```
 
-Todas siguen la misma convención: sin `--apply` solo reportan; con `--apply`
-hacen commit en la base. La ruta de la biblioteca está fijada arriba en cada
-script (`DB = ".../biblioteca/metadata.db"`).
+**Una carpeta de campaña no simula siempre por defecto.** Las de títulos aplican sobre las bases
+reales al invocarse y ensayan con `--simular <biblioteca> <zotero.sqlite>` sobre una copia; la de
+autores aplica sin más; la de duplicados simula y escribe con `--aplicar`. Todas exigen Calibre y
+Zotero cerrados, toman el candado `.lock_calibre_write`, respaldan antes y se niegan a repetir si ya
+existe su `hechos.tsv`.
 
-## Gotcha del OPF (IMPORTANTE)
-
-Como estas migraciones escriben **directo en SQLite** (evitando `calibredb`
-para leer/escribir barato), los `metadata.opf` de cada carpeta —lo que el
-plugin **ZMI** lee para exportar a Zotero— quedan **desactualizados**. Tras
-aplicar cualquiera de ellas hay que regenerarlos, con **Calibre cerrado**:
+Las `NN_*.py` escriben directo en `metadata.db` por SQLite (ruta en `CALIBRE_DB`, con respaldo a
+`~/Documents/biblioteca/metadata.db`). Después de cualquiera, con Calibre cerrado:
 
 ```bash
-calibredb --with-library "$BIBLIOTECA_DIR" backup_metadata --all   # BIBLIOTECA_DIR la resuelve core/env.sh
+calibredb --with-library "$BIBLIOTECA_DIR" backup_metadata --all   # OPF; nunca embed_metadata
+sqlite3 "$BIBLIOTECA_DIR/metadata.db" "PRAGMA integrity_check;"
 ```
-
-`backup_metadata` **solo reescribe los OPF**, no toca los PDFs. **No usar
-`embed_metadata`** (ese sí modifica el archivo del ebook).
-
-## Precauciones
-
-- Hacer copia de `metadata.db` antes de un `--apply` masivo.
-- Ejecutar con **Calibre cerrado** (si está abierto, su caché en memoria
-  puede pisar los cambios).
-- Verificar después: `sqlite3 metadata.db "PRAGMA integrity_check;"`.
-
-## Relación con las otras herramientas
-
-- `../script_catalogacion_biblioteca/` — catalogación de libros sin autor
-  (fichas duales Zotero+Calibre).
-- `../script_verificar_metadatos/` — verifica los metadatos ya existentes
-  contra OpenLibrary y reporta discrepancias (solo lectura).
 
 ## Estructura
 
-`migraciones/` (nueve scripts `NN_*.py`, uno por migración, en orden de ejecución, y la carpeta
-`grafias_autores_2026-09-30/` con sus scripts y sus tablas `hechos.tsv`, `carpetas.tsv`, `autores.tsv` y
-`zotero.tsv`, que son el registro de lo hecho y lo que lee el `deshacer.sh`) · `backups/` (respaldos, fuera de git) · `vocabulario_etiquetas.txt`
-(lista blanca de etiquetas) · `itemtype_lote_sin_catalogar.tsv` (insumo de la migración 07) · `suite.yml`. Sin
-`main.sh`, `config` ni `lib/`: cada migración es autónoma y lleva su ruta y su `--apply`.
+| ruta | qué es |
+|---|---|
+| `migraciones/NN_*.py` | la normalización de etiquetas, géneros y tipos de 2026-07-28, una migración por script en orden |
+| `migraciones/<tema>_<fecha>/` | una campaña: `main.sh`, `aplicar*.py`, `hechos.tsv` (lo hecho, que lee el deshacer) y `deshacer.sh`; las de autores y títulos añaden `propuesta.tsv` (lo aprobado), `carpetas.tsv` y `zotero.tsv`, y las de títulos `foto.py` y `foto_antes.tsv` (estado previo); la de duplicados, `auditar.py` y sus tablas de candidatos |
+| `vocabulario_etiquetas.txt` | vocabulario cerrado de etiquetas: ninguna migración inventa una |
+| `itemtype_lote_sin_catalogar.tsv` | insumo de la migración 07 |
+| `backups/` | respaldos de las bases; fuera de git |
+| `suite.yml` | manifiesto (`core/suite.schema.yml`) |
+
+Una campaña nueva copia el patrón de la más reciente parecida, nace de un diagnóstico aprobado en
+`meta/diagnosticos/` y se ensaya sobre una copia antes de tocar las bases reales.
 
 ## Límite honesto
 
-- **No es un pipeline re-ejecutable en bloque**: 05, 07, 08 y 09 leían TSV de un scratchpad de sesión ya extinto; hoy no encuentran sus insumos. Solo 01–04 y 06 se pueden volver a correr sobre la base actual.
-- **Escriben directo en `metadata.db` por SQLite**: tras un `--apply` los OPF quedan rancios y hay que regenerarlos con `calibredb backup_metadata --all` y Calibre cerrado; nunca `embed_metadata`.
-- **La ruta de la biblioteca está fijada dentro de cada script** (`DB = …`), no la resuelve `core/env.sh`: son historia, no herramienta viva.
-- **Ninguna migración inventa etiquetas** (lista blanca) ni toca título; lo que no cabía en un enum se rechazó antes de escribir. Autor, solo la de 2026-09-30, porque el autor es la carpeta y Zotero enlaza por ella: renombrar sin reescribir Zotero rompe sus PDF.
-- **Archivado**: una normalización nueva parte de 01–04/06 y regenera sus insumos con las herramientas actuales.
+- **No se re-ejecuta en bloque**: 05, 07, 08 y 09 leían TSV de un scratchpad de sesión que ya no
+  existe; solo 01–04 y 06 se pueden volver a correr sobre la base actual.
+- **Las `NN_*.py` dejan los OPF rancios** hasta `backup_metadata --all`, y no tienen deshacer más
+  allá del respaldo de `metadata.db`.
+- **Título y autor solo se tocan en campañas que reescriben Zotero en la misma operación**, porque
+  Zotero enlaza los PDF por la ruta `Autor/Título (id)`.
+- **El `suite.yml` se quedó corto** («sin main.sh», solo géneros y tipos): `../docs/decisiones.md`,
+  Pendientes P3.
