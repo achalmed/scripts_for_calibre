@@ -12,12 +12,12 @@ Suites de esta carpeta (7); índice global en `meta/INDICE_SCRIPTS.md`. Patrón:
 | `catalogacion_biblioteca` | [scripts_for_calibre/script_catalogacion_biblioteca](script_catalogacion_biblioteca/) | fuentes | calibre, archivos | sí |  | activo | `MCL` |
 | `ecosistema_lectura` | [scripts_for_calibre/script_ecosistema_lectura](script_ecosistema_lectura/) | biblioteca | calibre | sí | ecosistema-lectura.timer · ecosistema-metadatos.timer | activo | `MCL` |
 | `koreader_estudio` | [scripts_for_calibre/script_koreader_estudio](script_koreader_estudio/) | biblioteca | calibre | sí | koreader-calibre-sync.timer | activo | `MCL` |
-| `metadatos_calibre` | [scripts_for_calibre/script_metadatos_calibre](script_metadatos_calibre/) | biblioteca | calibre, archivos | sí |  | activo | `MCL` |
-| `normalizacion_metadatos` | [scripts_for_calibre/script_normalizacion_metadatos](script_normalizacion_metadatos/) | biblioteca | calibre | sí |  | archivado | `···` |
+| `metadatos_calibre` | [scripts_for_calibre/script_metadatos_calibre](script_metadatos_calibre/) | biblioteca | calibre, archivos | no |  | activo | `MCL` |
+| `normalizacion_metadatos` | [scripts_for_calibre/script_normalizacion_metadatos](script_normalizacion_metadatos/) | biblioteca | calibre, zotero, archivos | no |  | archivado | `···` |
 | `sincronizar_zotero` | [scripts_for_calibre/script_sincronizar_zotero](script_sincronizar_zotero/) | biblioteca | calibre, zotero | sí |  | activo | `MCL` |
 | `verificar_metadatos` | [scripts_for_calibre/script_verificar_metadatos](script_verificar_metadatos/) | biblioteca | ninguno | sí |  | activo | `MCL` |
 
-<sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
+<sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-10-04); no se edita a mano.</sub>
 <!-- suites:fin -->
 
 Herramientas de línea de comandos (Bash y Python) alrededor de la biblioteca Calibre (`biblioteca/`,

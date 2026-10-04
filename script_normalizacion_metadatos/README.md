@@ -7,19 +7,21 @@ estado: archivado
 <!-- suite:inicio -->
 **Suite `normalizacion_metadatos`** · objetivo *biblioteca* · estado *archivado* · - · interfaz cli
 
-Migraciones puntuales (2026) que normalizaron en bloque géneros, tipos de ítem y vocabulario de etiquetas de la biblioteca.
+Campañas de una sola vez sobre la biblioteca: las migraciones NN_*.py de etiquetas, géneros y tipos de ítem, y las campañas con carpeta propia (autores, títulos, duplicados) que tocan Calibre y Zotero con respaldo y deshacer.
 
-- Escribe en: calibre · simula por defecto: sí
-- Nota: sin main.sh: son scripts de una sola vez; se conservan como historia de la biblioteca
+- Escribe en: calibre, zotero, archivos · simula por defecto: no
+- Nota: Sin main.sh de suite: las NN_*.py simulan sin --apply; las campañas con main.sh propio (no todas simulan por defecto: lo dice su cabecera) exigen Calibre y Zotero cerrados, toman el candado, respaldan y dejan hechos.tsv y deshacer.sh; la campaña de un solo script toca solo Zotero, simula sin --aplicar y se deshace con su respaldo.
 
 Comandos:
 
 ```bash
 python3 migraciones/02_genres.py            # imprime el plan
 python3 migraciones/02_genres.py --apply    # escribe
+migraciones/<campaña>/main.sh                # su modo, en la cabecera del main.sh
+migraciones/<campaña>/deshacer.sh
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-04); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 Las **campañas de una sola vez** sobre la biblioteca: el código que las aplicó, las tablas que dicen

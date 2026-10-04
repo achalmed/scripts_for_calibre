@@ -7,7 +7,7 @@ estado: activo
 <!-- suite:inicio -->
 **Suite `catalogacion_biblioteca`** · objetivo *fuentes* · estado *activo* · bash · interfaz cli
 
-Aplica a Calibre los metadatos catalogados en resumen_catalogacion.tsv (autor «Nombre, Apellidos», vocabulario cerrado, serie, identificadores); registro canónico de lo catalogado.
+Aplica a Calibre los metadatos catalogados en resumen_catalogacion.tsv (autor «Nombre, Apellidos», vocabulario cerrado, identificadores); registro canónico de lo catalogado.
 
 - Escribe en: calibre, archivos · simula por defecto: sí
 - Entrada: resumen_catalogacion.tsv (lo alimentan ingesta e ingesta_cursos)
@@ -19,11 +19,11 @@ Comandos:
 
 ```bash
 main.sh                      # simula sobre resumen_catalogacion.tsv
-main.sh --aplicar            # escribe (Calibre cerrado, lock)
+main.sh --aplicar            # escribe (con Calibre cerrado)
 main.sh --aplicar --ids 10265,10266
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-04); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 Dos cosas en una carpeta: el **registro de catalogación** de la biblioteca —una ficha por libro en

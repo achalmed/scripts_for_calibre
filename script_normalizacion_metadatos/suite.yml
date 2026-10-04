@@ -1,13 +1,17 @@
-# script_normalizacion_metadatos/suite.yml — suite normalizacion_metadatos: Migraciones puntuales (2026) que normalizaron en bloque géneros, tipos de ítem y vocabulario de etiquetas de la biblioteca.
+# script_normalizacion_metadatos/suite.yml — suite normalizacion_metadatos: Campañas de una sola vez sobre la biblioteca: las migraciones NN_*.py de etiquetas, géneros y tipos de ítem, y las campañas con carpeta propia (autores, títulos, duplicados) que tocan Calibre y Zotero con respaldo y deshacer.
 # Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
 id: normalizacion_metadatos
 objetivo: biblioteca
-resumen: Migraciones puntuales (2026) que normalizaron en bloque géneros, tipos de ítem y vocabulario de etiquetas de la biblioteca.
+resumen: 'Campañas de una sola vez sobre la biblioteca: las migraciones NN_*.py de etiquetas, géneros y tipos de ítem, y las campañas con carpeta propia (autores, títulos, duplicados) que tocan Calibre y Zotero con respaldo y deshacer.'
 escribe_en:
 - calibre
-simula_por_defecto: true
+- zotero
+- archivos
+simula_por_defecto: false
 comandos:
 - 'python3 migraciones/02_genres.py            # imprime el plan'
 - 'python3 migraciones/02_genres.py --apply    # escribe'
+- 'migraciones/<campaña>/main.sh                # su modo, en la cabecera del main.sh'
+- migraciones/<campaña>/deshacer.sh
 estado: archivado
-nota: 'sin main.sh: son scripts de una sola vez; se conservan como historia de la biblioteca'
+nota: 'Sin main.sh de suite: las NN_*.py simulan sin --apply; las campañas con main.sh propio (no todas simulan por defecto: lo dice su cabecera) exigen Calibre y Zotero cerrados, toman el candado, respaldan y dejan hechos.tsv y deshacer.sh; la campaña de un solo script toca solo Zotero, simula sin --aplicar y se deshace con su respaldo.'

@@ -9,20 +9,21 @@ estado: activo
 
 Incrusta los metadatos OPF de Calibre en los PDF (XMP con exiftool) y registra PDF sueltos como libros.
 
-- Escribe en: calibre, archivos · simula por defecto: sí
+- Escribe en: calibre, archivos · simula por defecto: no
 - Depende de: calibredb, exiftool, core/shell-lib
+- Nota: embed y register escriben salvo --dry-run; --aplicar solo lo lee limpiar-json, que sin él lista los huérfanos y no borra.
 
 Comandos:
 
 ```bash
 main.sh                      # menú interactivo
 main.sh embed --dry-run
-main.sh embed --aplicar
-main.sh register --aplicar
+main.sh embed
+main.sh register --dry-run
 main.sh limpiar-json --aplicar
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-04); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 Lleva a los PDF de la biblioteca los metadatos que Calibre guarda en cada `metadata.opf` y registra
