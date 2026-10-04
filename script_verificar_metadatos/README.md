@@ -10,7 +10,7 @@ estado: activo
 Coteja los metadatos de Calibre contra bases bibliográficas públicas y escribe un informe de discrepancias; nunca modifica la biblioteca.
 
 - Escribe en: ninguno · simula por defecto: sí
-- Depende de: curl, python3, core/shell-lib
+- Depende de: python3, core/shell-lib
 
 Comandos:
 
@@ -19,7 +19,7 @@ main.sh                      # informe en reportes/
 main.sh --modo isbn
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-04); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 Coteja los metadatos de Calibre con bases bibliográficas públicas (OpenLibrary y, de respaldo,
