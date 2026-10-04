@@ -73,7 +73,7 @@ funciona: `docs/operacion.md`.
 | `script_metadatos_calibre/` | incrustador OPF → PDF (InfoDict y XMP-dc), registro de PDF sueltos, limpieza de `zotero_metadata.json` huérfanos | a mano |
 | `script_catalogacion_biblioteca/` | aplica `resumen_catalogacion.tsv` a Calibre; `fichas/` y el TSV son su registro | a mano; el registro lo escriben `scripts_for_fuentes/ingesta` e `ingesta_cursos` |
 | `script_normalizacion_metadatos/` | las campañas de una sola vez sobre la biblioteca, con su registro y su deshacer; archivado | una carpeta por campaña |
-| `lib_comun/` | envoltorios de 2–4 líneas hacia `core/shell-lib/` y `core/py-common/` | derivado de `core/`; el código nuevo carga `core/` directamente |
+| `lib_comun/` | envoltorios de 2–4 líneas hacia `core/shell-lib/` y `core/py-common/`; los usa `scripts_for_fuentes` (`docs/consumidores.md`) | derivado de `core/`; el código nuevo carga `core/` directamente |
 | `docs/` | operación, decisiones e historial | a mano; índice por `core/docs.py indice` |
 | `suite.yml` (uno por suite) | manifiesto de cada herramienta (`core/suite.schema.yml`) | a mano; los bloques de README los genera `core/suites.py generar --aplicar` |
 | `.lock_calibre_write` | candado `flock` de los escritores de `metadata.db` (`LOCK_CALIBRE` en `core/env.sh`) | runtime, ignorado |
@@ -84,6 +84,7 @@ funciona: `docs/operacion.md`.
 | documento | para qué leerlo |
 |---|---|
 | [`docs/operacion.md`](docs/operacion.md) | lo automático (timers), lo manual, chuleta de comandos, verificación y qué no tocar |
+| [`docs/consumidores.md`](docs/consumidores.md) | lo que otros repos usan de aquí (`lib_comun/`, fichas y TSV, candado) y lo que no se cambia sin avisarles |
 | [`docs/decisiones.md`](docs/decisiones.md) | por qué es así (autoridad, escritura segura, campañas) y qué está pendiente |
 | [`docs/README.md`](docs/README.md) | el mapa por lector y el índice de `docs/`, con el historial |
 | [`script_koreader_estudio/README.md`](script_koreader_estudio/README.md) | columnas `#ko_*`, sidecars por hash, respaldo continuo, restaurar en otra máquina |
@@ -114,4 +115,5 @@ funciona: `docs/operacion.md`.
   ninguna base.
 - **Los `reportes/` no rotan solos**: la poda (30 días) la aplica una fase de higiene, no las
   suites.
-- Licencia MIT declarada en el remoto público; no hay archivo `LICENSE` en el repo.
+- **Sin `LICENSE`**: el repo es público y la licencia está pendiente del autor
+  (`docs/decisiones.md`, Pendientes P7).

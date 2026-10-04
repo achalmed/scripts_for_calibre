@@ -1,5 +1,0 @@
-# Salidas generadas y backups (datos, no codigo)
-reportes/
-estado/
-__pycache__/
-*.pyc

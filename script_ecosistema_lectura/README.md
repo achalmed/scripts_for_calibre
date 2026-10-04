@@ -47,33 +47,33 @@ Zotero (zotero.sqlite, solo lectura)          KOReader (script_koreader_estudio)
 |---|---|---|
 | `#zot_tiempo` | int | minutos leídos según Zotero (Σ segundos por página, techo al minuto) |
 | `#zot_ultima` | fecha | última modificación del registro de lectura en Zotero |
-| `#zot_progreso` | float 0–1 | (Fase 2b) `(lastPageIndex+1) / páginas` del lector de Zotero; solo cuando ambos datos existen — no se inventa |
+| `#zot_progreso` | float 0–1 | `(lastPageIndex+1) / páginas` del lector de Zotero; solo cuando ambos datos existen — no se inventa |
 | `#tiempo_estudio` | composite | `#ko_tiempo + #zot_tiempo` — **cada app es dueña de su reloj; Calibre solo agrega**, por eso nunca hay doble conteo |
 
 Además, `#barra` y `#estado_estudio` (de `script_koreader_estudio`) muestran **max(progreso
 KOReader, progreso Zotero)** y consideran el tiempo Zotero para el estado — regla de conflicto del
-DISEÑO §5.
+diseño (`../docs/historial/diseno-ecosistema-lectura-2026-08.md` §5).
 
 ## Uso
 
 ```bash
 ./main.sh                # SIMULACIÓN (no escribe)
 ./main.sh --aplicar      # columnas + backup metadata.db + escritura real
-./main.sh --metadatos            # Fase 3: orquesta sincronizar_zotero (simulación)
+./main.sh --metadatos            # metadatos: orquesta sincronizar_zotero (simulación)
 ./main.sh --metadatos --aplicar  #   …con escritura (Calibre Y Zotero cerrados)
-./main.sh --enlazar              # Fase 4: reporte de libros sin #zotero_key y de claves anómalas
+./main.sh --enlazar              # enlazador: reporte de libros sin #zotero_key y de claves anómalas
 ./main.sh --enlazar --ris        #   …y el .ris de los que no tienen ítem en Zotero
 ./main.sh --enlazar --aplicar    #   …y escribe #zotero_key de los «adjunto» (Calibre cerrado)
 ./main.sh --instalar-timer       # timers: lectura 30 min + metadatos 04:30
 ./main.sh --desinstalar-timer
 ```
 
-**Fase 3 (metadatos/etiquetas):** corre `script_sincronizar_zotero` solo si Calibre y Zotero están
+**Metadatos y etiquetas (`--metadatos`):** corre `script_sincronizar_zotero` solo si Calibre y Zotero están
 cerrados **y** alguna base cambió desde la última pasada aplicada (marca en `estado/`). El timer
 diario de las 04:30 la ejecuta con `--aplicar`; la herramienta orquestada trae sus propios backups y
 reportes.
 
-**Fase 4 (enlazador):** genera `reportes/enlazar_*.tsv` con el candidato Zotero de cada libro sin
+**Enlazador (`--enlazar`):** genera `reportes/enlazar_*.tsv` con el candidato Zotero de cada libro sin
 `#zotero_key`, del más firme al más débil:
 
 - **`adjunto`**: el ítem que enlaza un archivo de la carpeta «… (id)/» del libro. Es determinista y
@@ -119,13 +119,13 @@ más de una nota por ítem, gana la de `dateModified` más reciente.
 `main.sh` (orquestación y CLI) · `config.sh` (rutas, columnas, lock compartido) · `lib/`:
 `checks.sh` (entorno y apps cerradas), `setup_columnas.sh` (columnas y plantillas, idempotente),
 `sync_zotero_lectura.py` (núcleo: zotero.sqlite en solo lectura → columnas, vía calibre-debug),
-`orquestar_metadatos.sh` (fase 3), `enlazar_reporte.py` (fase 4), `systemd/` (plantillas de las dos
+`orquestar_metadatos.sh` (`--metadatos`), `enlazar_reporte.py` (`--enlazar`), `systemd/` (plantillas de las dos
 unidades) · `reportes/`, `backups/` y `estado/` son runtime ignorado.
 
 ## Límite honesto
 
-- **Las fases 2b, 3 y 4 del diseño de 2026-08 están hechas**; la única pendiente es la 5 (exportar
-  sesiones de KOReader al registro de Ethereal Style), opcional y de riesgo: no está planificada.
+- **No exporta sesiones de KOReader al registro de Ethereal Style**: es opcional y de riesgo, y no
+  está planificado (`../docs/decisiones.md`, Pendientes P5).
 - **`#zot_progreso` solo se calcula cuando existen la página del lector y el total de páginas**; los
   localizadores no numéricos (EPUB) se omiten: no se inventa el dato.
 - **Zotero solo se lee**, nunca se escribe desde aquí; escribir en `zotero.sqlite` es de

@@ -12,6 +12,20 @@ sistema manda sobre un campo.
 
 ## Reglas que no se negocian
 
+- **Dónde va cada cosa nueva** (NORMATIVA §15.11). En la raíz solo `README.md`, `CLAUDE.md`,
+  `AGENTS.md` y, cuando el autor la decida, `LICENSE`; ningún otro `.md`.
+
+  | lo que apareció | va a | nunca a |
+  |---|---|---|
+  | cómo se usa una suite | el README de la suite (§Uso) | un `.md` suelto |
+  | operación transversal (timers, rutina, verificación) | `docs/operacion.md` | la raíz |
+  | por qué se decidió algo; un pendiente | `docs/decisiones.md` (§Pendientes con fecha y dueño) | `TODO.md`, `DECISION_<fecha>.md` |
+  | lo que otro repo usa de aquí | `docs/consumidores.md` | una copia en el consumidor |
+  | una campaña nueva | su carpeta en `script_normalizacion_metadatos/migraciones/` y el commit | la bitácora cerrada de `docs/historial/` |
+  | una ficha de catalogación | la escribe `scripts_for_fuentes/ingesta` | a mano aquí |
+
+  Lo que hiciste en esta sesión va al mensaje de commit, no a un archivo. Si nada encaja, pregunta
+  antes de crear un documento.
 - **Calibre manda en los metadatos bibliográficos.** En conflicto gana Calibre y se propaga a Zotero
   (título, fecha, editorial, ISBN, serie, páginas, edición, idioma, tags, abstract). **Zotero solo
   rellena vacíos** en Calibre (año placeholder, ISBN ausente) y puebla las columnas espejo
@@ -48,9 +62,10 @@ sistema manda sobre un campo.
 - **Escribir en SQLite directo deja los OPF rancios**: tras cualquier escritura que no pase por
   `calibredb`, `calibredb backup_metadata --all` con Calibre cerrado (solo reescribe OPF); nunca
   `embed_metadata`, que modifica el archivo del libro.
-- **`lib_comun/` no se amplía.** Son envoltorios de `core/shell-lib` y `core/py-common` (FS2); el
-  código nuevo carga `core/env.sh` o `core/env.py` y sus módulos directamente, sin `$HOME/Documents`
-  ni rutas de máquina. El único logger propio (`script_metadatos_calibre/lib/logger.sh`) es a su vez
+- **`lib_comun/` no se amplía, ni se borra ni se renombra**: lo consume `scripts_for_fuentes`
+  (`docs/consumidores.md`, con el resto de la interfaz que otros usan). Son envoltorios de
+  `core/shell-lib` y `core/py-common` (FS2); el código nuevo carga `core/env.sh` o `core/env.py` y
+  sus módulos directamente, sin `$HOME/Documents` ni rutas de máquina. El único logger propio (`script_metadatos_calibre/lib/logger.sh`) es a su vez
   envoltorio del de `core/`.
 - **Los timers se instalan con la herramienta**, no a mano: `--instalar-timer` escribe las unidades
   en `~/.config/systemd/user/` desde las plantillas `script_koreader_estudio/lib/systemd/` y
@@ -86,14 +101,11 @@ cerrada, se lee el informe en `reportes/` y se abre Calibre a mirar. Deshacer un
 
 ## Detalles que cuesta redescubrir
 
-- **`calibredb set_custom`** (no `set_custom_column`) escribe columnas en Calibre 9. En plantillas
-  composite `field()` devuelve el valor formateado (`'4.35%'`): aritmética con `raw_field()`;
-  `substr(s, 0, 0)` devuelve la cadena entera (por eso `#barra` trata n=0 y n=10 aparte).
-- **`#ko_progfloat` guarda fracción 0–1**, no porcentaje: convención heredada del plugin KOReader Sync
-  y respetada por compatibilidad; `#ko_progint` es el 0–100.
+- **Trampas de Calibre 9 y de las columnas `#ko_*`** (`set_custom`, `field()` frente a `raw_field()`,
+  `substr`, `#ko_progfloat` en fracción 0–1): `script_koreader_estudio/README.md` §Trampas conocidas.
 - **KOReader ↔ Calibre se emparejan por el MD5 parcial de KOReader** (bloques de 1 KB en offsets
   0 y 1024·4^i), cacheado en `#ko_md5`; los sidecars viven en `~/.config/koreader/hashdocsettings/`
-  (modo `hash`, migrado el 2026-08-09), así que renombrar en Calibre no rompe nada.
+  (modo `hash`), así que renombrar en Calibre no rompe nada.
 - **KOReader vuelca sidecar y estadísticas al cerrar el libro**: el progreso de la sesión aparece en la
   pasada siguiente. Marcar *Terminado* en KOReader pone ✅, `#leído`, `#read_date` y `#ko_finish`;
   `#leído` a mano solo promueve, nunca degrada.
@@ -121,9 +133,10 @@ cerrada, se lee el informe en `reportes/` y se abre Calibre a mirar. Deshacer un
 | pregunta | documento |
 |---|---|
 | qué es automático, qué hago yo, comandos, verificación, qué no tocar | `docs/operacion.md` |
+| qué usan otros repos de aquí (`lib_comun/`, fichas y TSV, candado) | `docs/consumidores.md` |
 | por qué es así y qué está pendiente | `docs/decisiones.md` |
 | por qué el ecosistema de lectura es así (fases 1–4) | `docs/historial/diseno-ecosistema-lectura-2026-08.md` |
-| qué hizo cada campaña sobre la biblioteca y cómo se monta una | `docs/historial/campanas-sobre-la-biblioteca.md`, `script_normalizacion_metadatos/README.md` |
+| qué hizo cada campaña y cómo se monta una | `docs/historial/campanas-sobre-la-biblioteca.md` (hasta 2026-10-01), la carpeta de la campaña y su commit, `script_normalizacion_metadatos/README.md` |
 | autoridad por dato y dirección de cada sync | `meta/MODELO_METADATOS.md`, `meta/SINCRONIZACION.md` |
 | política campo a campo Calibre ⇄ Zotero | `script_sincronizar_zotero/README.md` |
 | columnas `#ko_*`, sidecars por hash, respaldo continuo | `script_koreader_estudio/README.md` |

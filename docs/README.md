@@ -16,7 +16,7 @@ se lee para saber por qué, no para saber cómo.
 | **quien cataloga o corrige metadatos** | [`../script_catalogacion_biblioteca/README.md`](../script_catalogacion_biblioteca/README.md) → [`../script_verificar_metadatos/README.md`](../script_verificar_metadatos/README.md) → [`../script_sincronizar_zotero/README.md`](../script_sincronizar_zotero/README.md) |
 | **quien mantiene o amplía las suites** | [`../CLAUDE.md`](../CLAUDE.md) → [decisiones.md](decisiones.md) → [operacion.md](operacion.md) §1.1 y §4 → el `README.md` y el `suite.yml` de la suite |
 | **quien prepara una campaña sobre la biblioteca** | [`../script_normalizacion_metadatos/README.md`](../script_normalizacion_metadatos/README.md) → [historial/campanas-sobre-la-biblioteca.md](historial/campanas-sobre-la-biblioteca.md) → `meta/diagnosticos/` |
-| **otro repositorio** (`scripts_for_fuentes`, `prompts`, `meta`) | [`../README.md`](../README.md) → `meta/MODELO_METADATOS.md` y `meta/SINCRONIZACION.md` (la frontera) |
+| **otro repositorio** (`scripts_for_fuentes`, `prompts`, `meta`) | [consumidores.md](consumidores.md) (lo que se usa de aquí) → `meta/MODELO_METADATOS.md` y `meta/SINCRONIZACION.md` (la frontera) |
 
 ## Cómo se mantiene
 
@@ -25,9 +25,8 @@ se lee para saber por qué, no para saber cómo.
   §Pendientes.
 - Las cantidades que cambian (libros, fichas, pares enlazados) no se escriben: se nombra la orden
   que las cuenta.
-- Una campaña cerrada se resume en
-  [historial/campanas-sobre-la-biblioteca.md](historial/campanas-sobre-la-biblioteca.md); su código
-  y sus tablas se quedan en su carpeta.
+- Una campaña nueva deja su crónica en su carpeta (cabecera del `main.sh`, tablas) y en el mensaje
+  de commit ([decisiones.md](decisiones.md) §4.6); la bitácora de `historial/` está cerrada.
 - La tabla de abajo la genera `python3 core/docs.py indice scripts_for_calibre --aplicar` (desde
   `~/Documents`); no se edita a mano.
 
@@ -36,6 +35,7 @@ se lee para saber por qué, no para saber cómo.
 <!-- docs:inicio -->
 | documento | tipo | estado | qué es |
 |---|---|---|---|
+| [consumidores.md](consumidores.md) | `doc` | `activo` | Consumidores de scripts_for_calibre: lo que otros repos usan de aquí y lo que no se cambia sin avisarles |
 | [decisiones.md](decisiones.md) | `decision` | `activo` | Decisiones de scripts_for_calibre: autoridad de los datos, escritura segura, campañas y pendientes |
 | [operacion.md](operacion.md) | `doc` | `activo` | Operación del ecosistema de lectura y estudio (Calibre ⇄ KOReader ⇄ Zotero): qué es automático, qué es manual, cómo se verifica |
 | [historial/README.md](historial/README.md) | `readme` | `activo` | docs/historial/ — lo cumplido: el diseño del ecosistema de lectura, campañas y refactorizaciones |
@@ -43,5 +43,5 @@ se lee para saber por qué, no para saber cómo.
 | [historial/diseno-ecosistema-lectura-2026-08.md](historial/diseno-ecosistema-lectura-2026-08.md) | `plan` | `hecho` | Diseño del ecosistema de lectura sincronizado: Calibre ⇄ KOReader ⇄ Zotero |
 | [historial/refactorizacion-modular.md](historial/refactorizacion-modular.md) | `bitacora` | `hecho` | Refactorización modular de metadatos_calibre y catalogacion_biblioteca: los defectos del código original y cómo se corrigieron |
 
-<sub>Bloque generado por `core/docs.py indice` desde el frontmatter de docs/ (2026-10-03); no se edita a mano.</sub>
+<sub>Bloque generado por `core/docs.py indice` desde el frontmatter de docs/ (2026-10-04); no se edita a mano.</sub>
 <!-- docs:fin -->

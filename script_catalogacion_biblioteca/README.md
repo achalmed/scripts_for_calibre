@@ -65,6 +65,9 @@ por aquí. Cuántas fichas y filas hay: `ls fichas | wc -l` y `wc -l < resumen_c
 | `lib/cli.sh` · `lib/validator.sh` | opciones (`--aplicar` y `--dry-run` son incompatibles: salida 2); dependencias, TSV y Calibre cerrado | a mano |
 | `lib/clasificador.sh` · `lib/metadata.sh` | enum `#clasificador` leído en vivo, tildes y validación; fila → `calibredb set_metadata` | a mano |
 
+El nombre de la ficha, su frontmatter y las columnas del TSV son contrato con `scripts_for_fuentes`:
+`../docs/consumidores.md`.
+
 Para añadir una opción: el valor por defecto en `config.sh`, la bandera en `lib/cli.sh`, la lógica
 en un módulo de `lib/` cargado desde `main.sh`, y `bash -n` sobre cada archivo tocado. La campaña de
 los libros sin autor que dio origen a la suite y los defectos que corrigió su refactorización están

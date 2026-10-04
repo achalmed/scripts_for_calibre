@@ -81,6 +81,13 @@ con InfoDict y XMP Dublin Core; el de `scripts_for_zotero` quedó absorbido.
 versionadas en `../script_koreader_estudio/lib/systemd/` y
 `../script_ecosistema_lectura/lib/systemd/`; `~/.dotfiles` no los gestiona (2026-09-20).
 
+4.6. **La crónica de una campaña nueva va a su carpeta y al commit** (2026-10-04): la cabecera de
+su `main.sh`, sus tablas (`propuesta.tsv`, `hechos.tsv`) y el mensaje de commit. La bitácora
+`historial/campanas-sobre-la-biblioteca.md` cubre hasta 2026-10-01, está cerrada y no se reabre.
+
+4.7. **La interfaz que usan otros repos vive en `consumidores.md`** (2026-10-04): `lib_comun/`, el
+registro de catalogación y el candado. `lib_comun/` se conserva mientras tenga consumidores.
+
 ## Pendientes
 
 - **P1. El candado no lo toman todos los escritores.** `script_catalogacion_biblioteca` (con
@@ -102,4 +109,19 @@ versionadas en `../script_koreader_estudio/lib/systemd/` y
 - **P5. Fase 5 del diseño** (exportar sesiones de KOReader al registro de Ethereal Style): opcional,
   no planificada.
 - **P6. `reportes/` no rota sola**: la poda de más de 30 días la hace una fase de higiene.
-- **P7. Licencia**: MIT declarada en el remoto público, sin archivo `LICENSE` en el repo.
+- **P7. Licencia** (2026-10-04, autor): el repo es público y no tiene `LICENSE`; GitHub no detecta
+  ninguna. El primer README decía «MIT License», sin archivo. Pregunta: ¿MIT u otra? El archivo lo
+  crea el autor o se crea con su respuesta.
+- **P8. Plantillas systemd con ruta de máquina** (2026-10-04, autor): los tres `.service` de
+  `script_koreader_estudio/lib/systemd/` y `script_ecosistema_lectura/lib/systemd/` fijan un `PATH` con el directorio personal; solo `@MAIN@` se renderiza al instalar.
+- **P9. Rutas de máquina en las fichas** (2026-10-04, autor): la sección «Origen» de muchas fichas de
+  catalogación lleva la ruta absoluta del archivo de entrada, y el repo es público. Son registro:
+  se limpian con la herramienta que las escribe (`scripts_for_fuentes/ingesta`), no a mano.
+- **P10. Filas sin ficha** (2026-10-04, autor): 10423–10425 están en `resumen_catalogacion.tsv` y no
+  en `fichas/`.
+- **P11. Ayuda de CLI fuera de la norma de idioma** (2026-10-04, autor): `script_metadatos_calibre`
+  (en inglés, también `script_verificar_metadatos/lib/db.sh`), `script_sincronizar_zotero` y
+  `script_verificar_metadatos` (sin tildes).
+- **P12. `script_normalizacion_metadatos/migraciones/zotero_alta_2026-09-30/` sin aplicar** (2026-10-04, autor): un solo script que
+  manda a la papelera de Zotero la segunda importación del RIS de `--enlazar`; no sigue el patrón de
+  §4.2 (sin `hechos.tsv` ni `deshacer.sh`) y no hay respaldo que pruebe que se aplicó.

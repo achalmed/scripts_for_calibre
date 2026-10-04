@@ -23,9 +23,10 @@ python3 migraciones/02_genres.py --apply    # escribe
 <!-- suite:fin -->
 
 Las **campañas de una sola vez** sobre la biblioteca: el código que las aplicó, las tablas que dicen
-qué cambió y, desde 2026-09-30, cómo deshacerlas. No es una herramienta que se corra con
-regularidad: cada campaña se aprobó, se aplicó y queda aquí como registro. Qué hizo cada una y con
-qué resultado: `../docs/historial/campanas-sobre-la-biblioteca.md`; la regla del patrón:
+qué cambió y, en las que llevan `deshacer.sh`, cómo deshacerlas. No es una herramienta que se
+corra con regularidad: cada campaña se aprueba antes de aplicarse y queda aquí como registro. Qué
+hicieron las aplicadas hasta 2026-10-01: `../docs/historial/campanas-sobre-la-biblioteca.md`; las
+posteriores, su carpeta y su commit (`../docs/decisiones.md` §4.6); la regla del patrón:
 `../docs/decisiones.md` §4.2.
 
 ## Uso
@@ -39,9 +40,14 @@ migraciones/<campaña>/deshacer.sh                # revierte una campaña con ca
 
 **Una carpeta de campaña no simula siempre por defecto.** Las de títulos aplican sobre las bases
 reales al invocarse y ensayan con `--simular <biblioteca> <zotero.sqlite>` sobre una copia; la de
-autores aplica sin más; la de duplicados simula y escribe con `--aplicar`. Todas exigen Calibre y
+autores aplica sin más; la de duplicados simula y escribe con `--aplicar`. Todas las que tienen `main.sh` exigen Calibre y
 Zotero cerrados, toman el candado `.lock_calibre_write`, respaldan antes y se niegan a repetir si ya
 existe su `hechos.tsv`.
+
+**Una campaña de un solo script** (`migraciones/zotero_alta_2026-09-30/papelera_duplicado.py`) solo toca Zotero:
+simula por defecto, escribe con `--aplicar` y Zotero cerrado, respalda `zotero.sqlite` en `backups/`
+y no lleva `hechos.tsv` ni `deshacer.sh` (se deshace restaurando el respaldo o desde la papelera de
+Zotero). No consta aplicada (`../docs/decisiones.md`, Pendientes P12).
 
 Las `NN_*.py` escriben directo en `metadata.db` por SQLite (ruta en `CALIBRE_DB`, con respaldo a
 `~/Documents/biblioteca/metadata.db`). Después de cualquiera, con Calibre cerrado:
@@ -57,6 +63,7 @@ sqlite3 "$BIBLIOTECA_DIR/metadata.db" "PRAGMA integrity_check;"
 |---|---|
 | `migraciones/NN_*.py` | la normalización de etiquetas, géneros y tipos de 2026-07-28, una migración por script en orden |
 | `migraciones/<tema>_<fecha>/` | una campaña: `main.sh`, `aplicar*.py`, `hechos.tsv` (lo hecho, que lee el deshacer) y `deshacer.sh`; las de autores y títulos añaden `propuesta.tsv` (lo aprobado), `carpetas.tsv` y `zotero.tsv`, y las de títulos `foto.py` y `foto_antes.tsv` (estado previo); la de duplicados, `auditar.py` y sus tablas de candidatos |
+| `migraciones/<tema>_<fecha>/<script>.py` | una campaña de un solo script, con su uso y su deshacer en el docstring |
 | `vocabulario_etiquetas.txt` | vocabulario cerrado de etiquetas: ninguna migración inventa una |
 | `itemtype_lote_sin_catalogar.tsv` | insumo de la migración 07 |
 | `backups/` | respaldos de las bases; fuera de git |
