@@ -26,7 +26,7 @@ Sincronizador **bidireccional** de metadatos entre Calibre (`biblioteca/metadata
 (`~/Zotero/zotero.sqlite`) para los libros enlazados por la columna `#zotero_key` (la clave del ítem
 padre en Zotero, que puebla ZMI o `../script_ecosistema_lectura/main.sh --enlazar`). Deja los
 metadatos completos y coherentes en ambos lados. El contrato de campos RIS que implementa lo define
-`prompts/01 fuentes/prompt_02_catalogar.md`. Lo corre a diario el timer `ecosistema-metadatos`, a
+`prompts/01 fuentes/prompt_03_zotero.md`. Lo corre a diario el timer `ecosistema-metadatos`, a
 través de `../script_ecosistema_lectura/main.sh --metadatos`.
 
 ## Uso
@@ -78,7 +78,8 @@ Reglas duras, no configurables:
 
 ## Escritura segura
 
-`--aplicar` verifica con `pgrep` que Calibre y Zotero estén cerrados, toma el candado
+`--aplicar` comprueba por el nombre del proceso (`detectar_apps.sh` de `core/shell-lib/`) que
+Calibre y Zotero estén cerrados, toma el candado
 `.lock_calibre_write` (o lo hereda del timer), respalda ambas bases en `estado/backups/`, escribe en
 Zotero por SQL directo dejando cada ítem tocado con `synced=0` y `dateModified` al día para que la
 cuenta lo suba, corre `PRAGMA integrity_check` en las dos bases y regenera los OPF de Calibre

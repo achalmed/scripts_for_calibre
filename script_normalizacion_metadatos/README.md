@@ -36,7 +36,7 @@ posteriores, su carpeta y su commit (`../docs/decisiones.md` §4.6); la regla de
 ```bash
 ls migraciones/                                  # NN_*.py (2026-07-28) y <tema>_<fecha>/
 head -6 migraciones/<campaña>/main.sh            # su uso exacto, en la cabecera
-python3 migraciones/02_genres.py                 # las NN_*.py simulan; --apply escribe
+python3 migraciones/02_genres.py                 # las NN_*.py simulan; --apply escribe (06 y 08 solo leen)
 migraciones/<campaña>/deshacer.sh                # revierte una campaña con carpeta propia
 ```
 
@@ -82,5 +82,3 @@ Una campaña nueva copia el patrón de la más reciente parecida, nace de un dia
   allá del respaldo de `metadata.db`.
 - **Título y autor solo se tocan en campañas que reescriben Zotero en la misma operación**, porque
   Zotero enlaza los PDF por la ruta `Autor/Título (id)`.
-- **El `suite.yml` se quedó corto** («sin main.sh», solo géneros y tipos): `../docs/decisiones.md`,
-  Pendientes P3.

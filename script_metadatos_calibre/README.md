@@ -78,5 +78,6 @@ refactorización modular están en `../docs/historial/refactorizacion-modular.md
   a un dispositivo.
 - **El OPF se lee con `grep` y `sed`**, sin `xmllint`: vale para el OPF estándar de Calibre;
   elementos multilínea o espacios de nombres propios pueden leerse mal.
-- **`register` exige Calibre cerrado** y decide por heurística si la raíz es una carpeta de autor
-  (hijos que terminan en `(id)`) o la biblioteca entera.
+- **`register` necesita Calibre cerrado pero no lo comprueba** (lo exige `calibredb`), y decide por
+  heurística si la raíz es una carpeta de autor (hijos que terminan en `(id)`) o la biblioteca
+  entera.

@@ -44,7 +44,8 @@ en las búsquedas por identificador y `aprox:<ratio>` en las de título y autor.
 Calibre, `calibredb backup_metadata --all` (Calibre cerrado) para que ZMI y Zotero vean el cambio.
 
 Requisitos: `python3` (solo biblioteca estándar, HTTP por `urllib`), `sqlite3` e internet; no hace
-falta clave de API.
+falta clave de API ni `curl`, aunque el manifiesto aún lo declare (`../docs/decisiones.md`,
+Pendientes P13).
 
 ## Alcance y criterios
 

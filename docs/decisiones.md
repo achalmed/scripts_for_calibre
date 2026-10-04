@@ -6,8 +6,9 @@ estado: activo
 # Decisiones de `scripts_for_calibre`
 
 Registro acumulativo, por tema y con la fecha de cada decisión. Los números de sección no se
-renumeran: se añaden al final. Lo pendiente va a §Pendientes. La crónica de cada campaña, en
-`historial/campanas-sobre-la-biblioteca.md`.
+renumeran: se añaden al final. Lo pendiente va a §Pendientes. La crónica de las campañas hasta
+2026-10-01, en `historial/campanas-sobre-la-biblioteca.md`; la de las posteriores, en su carpeta y
+en su commit (§4.6).
 
 ## 1. Autoridad de los datos
 
@@ -95,17 +96,16 @@ registro de catalogación y el candado. `lib_comun/` se conserva mientras tenga 
   `tomar_lock_calibre`; solo comprueban (la primera) que Calibre esté cerrado. Su `suite.yml` o su
   README decían lo contrario.
 - **P2. `script_metadatos_calibre` escribe por defecto.** `embed` y `register` modifican los PDF y
-  `metadata.db` salvo que se pase `--dry-run`; `--aplicar` solo lo lee `limpiar-json`. Su
-  `suite.yml` declara `simula_por_defecto: true` y anuncia `embed --aplicar` y `register --aplicar`,
-  que no cambian nada. Además, sin `--root`, la raíz es el directorio actual.
-- **P3. Manifiestos que se quedaron cortos.** El `suite.yml` de `normalizacion_metadatos` dice
-  «géneros, tipos de ítem y vocabulario de etiquetas» y «sin main.sh»: no cuenta las campañas de
-  autores, títulos y duplicados, que sí tienen `main.sh`. El de `catalogacion_biblioteca` promete
-  «serie» (el TSV no tiene esa columna) y «lock» en `--aplicar` (P1). Al corregir un `suite.yml` hay
-  que regenerar los bloques con `core/suites.py generar --aplicar`.
-- **P4. Respaldos de ruta literal.** `config.sh` de `catalogacion_biblioteca`, `verificar_metadatos`
-  y `metadatos_calibre` y las migraciones `01`–`09` caen a `~/Documents/biblioteca` si no reciben
-  `BIBLIOTECA_DIR` o `CALIBRE_DB`, en vez de cargar `core/env.sh`.
+  `metadata.db` salvo que se pase `--dry-run`; `--aplicar` solo lo lee `limpiar-json`. Además, sin
+  `--root`, la raíz es el directorio actual, y `register` no comprueba que Calibre esté cerrado
+  (lo exige `calibredb`). Desde 2026-10-04 su `suite.yml` lo declara así; lo pendiente es el código.
+- ~~**P3. Manifiestos que se quedaron cortos.**~~ *Cerrado el 2026-10-04:* los `suite.yml` de
+  `normalizacion_metadatos`, `catalogacion_biblioteca` y `metadatos_calibre` dicen lo que hace el
+  código y los bloques se regeneraron con `core/suites.py generar --aplicar`.
+- **P4. Respaldos de ruta literal.** Los `config.sh` de las seis suites con `main.sh` y las
+  migraciones `01`–`09` caen a `~/Documents/biblioteca` (y las dos que leen Zotero, a `~/Zotero`)
+  si no reciben la ruta por variable (`BIBLIOTECA_DIR`, `CALIBRE_DB`, `ZOTERO_DIR` o la propia de
+  la suite), en vez de cargar `core/env.sh`.
 - **P5. Fase 5 del diseño** (exportar sesiones de KOReader al registro de Ethereal Style): opcional,
   no planificada.
 - **P6. `reportes/` no rota sola**: la poda de más de 30 días la hace una fase de higiene.
@@ -124,3 +124,9 @@ registro de catalogación y el candado. `lib_comun/` se conserva mientras tenga 
 - **P12. `script_normalizacion_metadatos/migraciones/zotero_alta_2026-09-30/` sin aplicar** (2026-10-04, autor): un solo script que
   manda a la papelera de Zotero la segunda importación del RIS de `--enlazar`; no sigue el patrón de
   §4.2 (sin `hechos.tsv` ni `deshacer.sh`) y no hay respaldo que pruebe que se aplicó.
+- **P13. El `suite.yml` de `verificar_metadatos` declara `curl`** (2026-10-04, autor): el código hace
+  las peticiones con `urllib` y `script_verificar_metadatos/lib/cli.sh` no comprueba `curl`; el
+  bloque generado del README lo repite. Al corregirlo, `core/suites.py generar --aplicar`.
+- **P14. Un correo personal en `script_verificar_metadatos/config.sh`** (2026-10-04, autor): el
+  contacto del «polite pool» de Crossref está escrito como valor por defecto en un repo público;
+  cabe moverlo a `core/env.sh` o exigir la variable de entorno.
