@@ -109,9 +109,8 @@ registro de catalogación y el candado. `lib_comun/` se conserva mientras tenga 
 - **P5. Fase 5 del diseño** (exportar sesiones de KOReader al registro de Ethereal Style): opcional,
   no planificada.
 - **P6. `reportes/` no rota sola**: la poda de más de 30 días la hace una fase de higiene.
-- **P7. Licencia** (2026-10-04, autor): el repo es público y no tiene `LICENSE`; GitHub no detecta
-  ninguna. El primer README decía «MIT License», sin archivo. Pregunta: ¿MIT u otra? El archivo lo
-  crea el autor o se crea con su respuesta.
+- ~~**P7. Licencia**~~ *Cerrado el 2026-10-04 por decisión del autor:* MIT (`LICENSE`), la del resto
+  del código del ecosistema y la que anunciaba el primer README.
 - **P8. Plantillas systemd con ruta de máquina** (2026-10-04, autor): los tres `.service` de
   `script_koreader_estudio/lib/systemd/` y `script_ecosistema_lectura/lib/systemd/` fijan un `PATH` con el directorio personal; solo `@MAIN@` se renderiza al instalar.
 - **P9. Rutas de máquina en las fichas** (2026-10-04, autor): la sección «Origen» de muchas fichas de

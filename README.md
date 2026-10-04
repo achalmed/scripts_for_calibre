@@ -115,5 +115,4 @@ funciona: `docs/operacion.md`.
   ninguna base.
 - **Los `reportes/` no rotan solos**: la poda (30 días) la aplica una fase de higiene, no las
   suites.
-- **Sin `LICENSE`**: el repo es público y la licencia está pendiente del autor
-  (`docs/decisiones.md`, Pendientes P7).
+- **Licencia MIT** (`LICENSE`), como el resto del código del ecosistema.

@@ -13,7 +13,7 @@ sistema manda sobre un campo.
 ## Reglas que no se negocian
 
 - **Dónde va cada cosa nueva** (NORMATIVA §15.11). En la raíz solo `README.md`, `CLAUDE.md`,
-  `AGENTS.md` y, cuando el autor la decida, `LICENSE`; ningún otro `.md`.
+  `AGENTS.md` y `LICENSE`; ningún otro `.md`.
 
   | lo que apareció | va a | nunca a |
   |---|---|---|
