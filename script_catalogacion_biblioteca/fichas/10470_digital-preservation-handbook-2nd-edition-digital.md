@@ -1,0 +1,46 @@
+---
+tipo: ficha_catalogacion
+calibre_id: 10470
+zotero_key:
+clave_bibtex:
+proyecto: meta/programa (Fase 1, unidad 0)
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Digital Preservation Handbook, 2nd edition. Digital Preservation Briefing». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` y completada a mano (Bibliotecólogo del programa) el 2026-10-04 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**.
+
+## Origen
+
+`programa-2026/dpc-handbook-digital-preservation-briefing.pdf` · SHA-256 `8998327f37eb7d31…` · fuente de libre acceso del programa de reingeniería (`meta/programa/00-descubrimiento/fundamentacion-del-metodo.md` §6).
+
+## Zotero
+| Campo | Valor |
+|---|---|
+| Item Type | Document |
+| Title | Digital Preservation Handbook, 2nd edition. Digital Preservation Briefing |
+| Author | Digital Preservation Coalition |
+| Date | 2015 |
+| Publisher / Institution | Digital Preservation Coalition |
+| Language | en |
+| Extra | url:https://www.dpconline.org/handbook/digital-preservation |
+| Tags | preservacion_digital, programa-2026 |
+
+## Calibre
+| Campo | Valor |
+|---|---|
+| Title | Digital Preservation Handbook, 2nd edition. Digital Preservation Briefing |
+| Authors | Digital Preservation Coalition |
+| Publisher | Digital Preservation Coalition |
+| Pubdate | 2015 |
+| Languages | eng |
+| Identifiers | url:https://www.dpconline.org/handbook/digital-preservation |
+| Series | Fundamentación del método - Preservación digital [3] |
+| Tags | preservacion_digital, programa-2026 |
+| #clasificador | Guía |
+| #item_type | document |
+
+## Notas
+- capítulo introductorio en PDF oficial (autora del capítulo: Sharon McMeekin); el Handbook completo es web (ver índice catalogado aparte)
