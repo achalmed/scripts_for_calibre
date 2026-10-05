@@ -14,7 +14,7 @@ import sys
 from collections import Counter
 
 DB = os.environ.get("CALIBRE_DB", os.path.expanduser("~/Documents/biblioteca/metadata.db"))  # FS2: sin ruta literal
-S = "/tmp/claude-1000/-home-achalmaedison-Documents-biblioteca/07e95f6c-2ea4-43cc-a8d4-62fab1b16986/scratchpad"
+S = os.environ.get("MIGRACION_TRABAJO") or os.getcwd()  # carpeta de trabajo con los TSV: MIGRACION_TRABAJO o la actual (era el scratchpad de la sesión que la corrió; normativa 5.5)
 
 apply = "--apply" in sys.argv
 con = sqlite3.connect(DB)

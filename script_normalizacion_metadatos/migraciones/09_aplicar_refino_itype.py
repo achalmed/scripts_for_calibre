@@ -6,7 +6,7 @@ import os
 import sqlite3, sys, re
 from collections import Counter
 DB = os.environ.get("CALIBRE_DB", os.path.expanduser("~/Documents/biblioteca/metadata.db"))  # FS2: sin ruta literal
-PROP="/tmp/claude-1000/-home-achalmaedison-Documents-biblioteca/07e95f6c-2ea4-43cc-a8d4-62fab1b16986/scratchpad/refinar_prop.tsv"
+PROP = os.path.join(os.environ.get("MIGRACION_TRABAJO") or os.getcwd(), "refinar_prop.tsv")  # carpeta de trabajo con los TSV: MIGRACION_TRABAJO o la actual (era el scratchpad de la sesión que la corrió; normativa 5.5)
 apply="--apply" in sys.argv
 con=sqlite3.connect(DB); cur=con.cursor()
 enum={v:i for i,v in cur.execute("SELECT id,value FROM custom_column_39")}

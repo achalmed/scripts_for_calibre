@@ -11,7 +11,7 @@ import os
 import sqlite3, json, time, re, unicodedata, urllib.parse, urllib.request
 from difflib import SequenceMatcher
 DB = os.environ.get("CALIBRE_DB", os.path.expanduser("~/Documents/biblioteca/metadata.db"))  # FS2: sin ruta literal
-OUT="/tmp/claude-1000/-home-achalmaedison-Documents-biblioteca/07e95f6c-2ea4-43cc-a8d4-62fab1b16986/scratchpad/refinar_prop.tsv"
+OUT = os.path.join(os.environ.get("MIGRACION_TRABAJO") or os.getcwd(), "refinar_prop.tsv")  # carpeta de trabajo con los TSV: MIGRACION_TRABAJO o la actual (era el scratchpad de la sesión que la corrió; normativa 5.5)
 UA={"User-Agent":"biblioteca-personal/1.0 (refine item type)"}
 JUNK=re.compile(r"createspace|independent publishing|lulu\.com|\bpublishing platform\b|scribd|z-library|academia\.edu", re.I)
 
