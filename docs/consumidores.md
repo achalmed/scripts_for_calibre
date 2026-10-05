@@ -29,5 +29,5 @@ Una interfaz que deja de tener consumidores se retira con una entrada en
 - La biblioteca Calibre (`BIBLIOTECA_DIR`, `CALIBRE_DB`): `core/docs/biblioteca.md`.
 - Zotero (`ZOTERO_DB`): solo `script_sincronizar_zotero` y las campañas lo escriben (`decisiones.md` §2.4).
 - `core/` (raíz, logger, candado, respaldo, resolutor): `core/docs/consumidores.md`.
-- La autoridad por dato y la dirección de cada sincronización: `meta/MODELO_METADATOS.md` y
-  `meta/SINCRONIZACION.md`.
+- La autoridad por dato y la dirección de cada sincronización: `meta/docs/historial/MODELO_METADATOS.md` y
+  `meta/docs/historial/SINCRONIZACION.md`.

@@ -35,8 +35,8 @@ fichas de catalogación (las escribe `scripts_for_fuentes/ingesta` en
 código: `lib_comun/` son envoltorios de `core/shell-lib` y `core/py-common`. Depende de `core/`
 (raíz, logger, candado, respaldo, resolutor de la biblioteca), de `biblioteca/`, de
 `~/Zotero/zotero.sqlite` y del repo de datos `~/.local/share/koreader-respaldo/`. La autoridad de
-cada dato y la dirección de cada sincronización están en `meta/MODELO_METADATOS.md` y
-`meta/SINCRONIZACION.md`.
+cada dato y la dirección de cada sincronización están en `meta/docs/historial/MODELO_METADATOS.md` y
+`meta/docs/historial/SINCRONIZACION.md`.
 
 ## Uso
 
@@ -95,7 +95,7 @@ funciona: `docs/operacion.md`.
 | [`script_catalogacion_biblioteca/README.md`](script_catalogacion_biblioteca/README.md) | el registro de fichas y el circuito ficha → TSV → Calibre |
 | [`script_normalizacion_metadatos/README.md`](script_normalizacion_metadatos/README.md) | el patrón de una campaña y cómo se deshace |
 | [`CLAUDE.md`](CLAUDE.md) | reglas para el asistente: autoridad de campo, candado, timers, qué no se toca |
-| `meta/MODELO_METADATOS.md`, `meta/SINCRONIZACION.md` | autoridad por dato y arquitectura de sincronización (frontera con `meta`) |
+| `meta/docs/historial/MODELO_METADATOS.md`, `meta/docs/historial/SINCRONIZACION.md` | autoridad por dato y arquitectura de sincronización (frontera con `meta`) |
 | `meta/INDICE_SCRIPTS.md` | estas suites entre las del workspace (generado) |
 
 ## Límite honesto

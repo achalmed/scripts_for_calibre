@@ -16,7 +16,7 @@ en su commit (§4.6).
 propaga a Zotero; Zotero solo rellena vacíos en Calibre y puebla las columnas espejo `#zotero_*`.
 Vacío en el origen nunca borra en el destino. Política campo a campo:
 `../script_sincronizar_zotero/README.md`; autoridad por dato en el workspace:
-`meta/MODELO_METADATOS.md`.
+`meta/docs/historial/MODELO_METADATOS.md`.
 
 1.2. **Título y autor no se escriben en Calibre por sincronización ni verificación** (2026-07-28):
 Zotero enlaza los adjuntos por la ruta `Autor/Título (id)`. Desde 2026-09-30 se admite una

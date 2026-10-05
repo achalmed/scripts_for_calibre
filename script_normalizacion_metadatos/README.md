@@ -72,7 +72,7 @@ sqlite3 "$BIBLIOTECA_DIR/metadata.db" "PRAGMA integrity_check;"
 | `suite.yml` | manifiesto (`core/suite.schema.yml`) |
 
 Una campaña nueva copia el patrón de la más reciente parecida, nace de un diagnóstico aprobado en
-`meta/diagnosticos/` y se ensaya sobre una copia antes de tocar las bases reales.
+`meta/docs/historial/diagnosticos/` y se ensaya sobre una copia antes de tocar las bases reales.
 
 ## Límite honesto
 

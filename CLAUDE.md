@@ -7,7 +7,7 @@ estado: activo
 Guía para el asistente. En español, como todo el ecosistema. `AGENTS.md` es un enlace a este
 archivo. Léase antes: `README.md` (qué es, uso, estructura), `docs/README.md` (el mapa por lector),
 `docs/decisiones.md` (por qué y qué está pendiente), el `suite.yml` y el README de la suite que se
-toque, y `meta/MODELO_METADATOS.md` §2 y §4 (autoridad por dato) cuando el cambio afecte a qué
+toque, y `meta/docs/historial/MODELO_METADATOS.md` §2 y §4 (autoridad por dato) cuando el cambio afecte a qué
 sistema manda sobre un campo.
 
 ## Reglas que no se negocian
@@ -137,7 +137,7 @@ cerrada, se lee el informe en `reportes/` y se abre Calibre a mirar. Deshacer un
 | por qué es así y qué está pendiente | `docs/decisiones.md` |
 | por qué el ecosistema de lectura es así (fases 1–4) | `docs/historial/diseno-ecosistema-lectura-2026-08.md` |
 | qué hizo cada campaña y cómo se monta una | `docs/historial/campanas-sobre-la-biblioteca.md` (hasta 2026-10-01), la carpeta de la campaña y su commit, `script_normalizacion_metadatos/README.md` |
-| autoridad por dato y dirección de cada sync | `meta/MODELO_METADATOS.md`, `meta/SINCRONIZACION.md` |
+| autoridad por dato y dirección de cada sync | `meta/docs/historial/MODELO_METADATOS.md`, `meta/docs/historial/SINCRONIZACION.md` |
 | política campo a campo Calibre ⇄ Zotero | `script_sincronizar_zotero/README.md` |
 | columnas `#ko_*`, sidecars por hash, respaldo continuo | `script_koreader_estudio/README.md` |
 | columnas `#zot_*`, fuente de datos en Zotero, orquestación | `script_ecosistema_lectura/README.md` |
@@ -145,4 +145,4 @@ cerrada, se lee el informe en `reportes/` y se abre Calibre a mirar. Deshacer un
 | formato de una ficha de catalogación (prompt 02) | `prompts/01 fuentes/prompt_02_catalogar.md` |
 | lock, logger, backup rotado, detección de apps | `core/shell-lib/`, `core/README.md` |
 | contrato de suite y bloques generados | `core/suite.schema.yml`, `core/suites.py` |
-| normativa de archivos y documentación | `meta/NORMATIVA_ARCHIVOS.md` §15 |
+| normativa de archivos y documentación | `meta/docs/historial/NORMATIVA_ARCHIVOS.md` §15 |
