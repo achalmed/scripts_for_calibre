@@ -1,8 +1,7 @@
 # lib/setup_columnas.sh — Crea las columnas de la Fase 2 si faltan (idempotente)
 
 columna_existe() {
-    sqlite3 "file:$BIBLIOTECA/metadata.db?mode=ro" \
-        "SELECT label FROM custom_columns;" 2>/dev/null | grep -qx "$1"
+    etiquetas_calibre "$BIBLIOTECA" 2>/dev/null | grep -qx "$1"   # lib/leer.sh (CORE_PYTHON, solo lectura)
 }
 
 crear_columna() {
@@ -44,7 +43,7 @@ setup_columnas() {
     # el valor FORMATEADO ('19 min') → raw_field() para aritmética; el test de
     # vacío se hace con field().
     local tpl
-    tpl=$(python3 -c "
+    tpl=$("$CORE_PYTHON" -c "
 import json
 tpl = (\"program:\n\"
        \"\ta = field('#${COL_KOTIEMPO}');\n\"

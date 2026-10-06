@@ -1,20 +1,20 @@
 # config.sh — Configuración de script_koreader_estudio
 # Todas las rutas y nombres editables viven aquí; lib/ nunca hardcodea valores.
 
-# --- Rutas principales -----------------------------------------------------
-BIBLIOTECA="${QKO_BIBLIOTECA:-${BIBLIOTECA_DIR:-$HOME/Documents/biblioteca}}"
-KOREADER_CONFIG="${QKO_KOREADER_CONFIG:-$HOME/.config/koreader}"
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../../core/env.sh"   # rutas: core/env (K6, P217)
+
+# --- Rutas principales (core/env; QKO_* las cambia solo para esta suite) -----
+BIBLIOTECA="${QKO_BIBLIOTECA:-$BIBLIOTECA_DIR}"
+KOREADER_CONFIG="${QKO_KOREADER_CONFIG:-$(dirname "$(dirname "$KOREADER_STATS")")}"
 STATS_DB="$KOREADER_CONFIG/settings/statistics.sqlite3"
 
 # --- Carpetas de trabajo del script ----------------------------------------
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPORTES_DIR="$SCRIPT_DIR/reportes"
-BACKUPS_DIR="$SCRIPT_DIR/backups"
-BACKUPS_CONSERVAR=5          # cuántos backups de metadata.db conservar
-
-# Lock COMPARTIDO con las demás herramientas que escriben metadata.db
-# (script_ecosistema_lectura, script_sincronizar_zotero): nunca a la vez (C5).
-LOCK_ESCRITURA_CALIBRE="$SCRIPT_DIR/../.lock_calibre_write"
+# Respaldos de metadata.db: los hace la puerta (lib/escribir.sh), fuera del repo; el candado es
+# LOCK_CALIBRE de core/env, compartido con los demás escritores. Los de --migrar-sdr (config y .sdr
+# de KOReader) van también al estado de usuario:
+BACKUPS_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/biblioteca/respaldos/koreader_estudio/koreader"
 
 # --- Columnas de Calibre (labels sin #) ------------------------------------
 # Existentes (creadas por el plugin KOReader Sync) que este script POBLA:
@@ -45,4 +45,4 @@ FORMATOS_LEIBLES="PDF EPUB DJVU MOBI AZW3 FB2 CBZ CBR"  # formatos que KOReader 
 # reproducen la máquina y no reciben escrituras de suites. Ruta única en core/env.sh
 # (KOREADER_RESPALDO_DIR). Publicar = git push desde ese repo (remoto privado).
 # settings.reader.lua se excluye (contiene bloque kosync/credenciales).
-RESPALDO_KOREADER_DIR="${KOREADER_RESPALDO_DIR:-$HOME/.local/share/koreader-respaldo}"
+RESPALDO_KOREADER_DIR="$KOREADER_RESPALDO_DIR"

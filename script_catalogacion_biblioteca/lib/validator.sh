@@ -3,7 +3,7 @@
 # Calibre state. Everything is validated before any logic runs.
 
 # check_dependencies()
-# Verifies required binaries. sqlite3/python3 are optional (the enum
+# Verifies required binaries. CORE_PYTHON is optional (the enum
 # falls back to the snapshot in config.sh without them).
 #
 # Returns:
@@ -13,8 +13,8 @@ check_dependencies() {
         log_error "calibredb no está instalado o no está en el PATH."
         exit 5
     fi
-    if ! command -v sqlite3 >/dev/null 2>&1 || ! command -v python3 >/dev/null 2>&1; then
-        log_warn "sqlite3/python3 no disponibles: se usará la lista fija de clasificadores (snapshot 2026-07-27)."
+    if [[ ! -x "$CORE_PYTHON" ]]; then
+        log_warn "CORE_PYTHON no disponible: se usará la lista fija de clasificadores (snapshot 2026-07-27)."
     fi
 }
 

@@ -13,6 +13,8 @@ source "$PROJECT_DIR/config.sh"
 source "$PROJECT_DIR/../lib/escribir.sh"     # la puerta de escritura en metadata.db (K5)
 # shellcheck source=../../core/shell-lib/logger.sh
 source "$SHELL_LIB/logger.sh"
+# shellcheck source=../lib/leer.sh
+source "$PROJECT_DIR/../lib/leer.sh"        # lecturas en solo lectura con CORE_PYTHON (K6)
 # shellcheck source=lib/validator.sh
 source "$PROJECT_DIR/lib/validator.sh"
 # shellcheck source=lib/cli.sh

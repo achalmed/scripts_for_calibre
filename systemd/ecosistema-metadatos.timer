@@ -1,5 +1,5 @@
 [Unit]
-Description=Timer: metadatos/etiquetas Calibre-Zotero, diario 04:30
+Description=Timer: metadatos y etiquetas Calibre-Zotero, diario a las 04:30
 
 [Timer]
 OnCalendar=*-*-* 04:30:00

@@ -7,11 +7,12 @@
 readonly VERSION="1.0.0"
 readonly TOOL_NAME="sincronizar-zotero"
 
-# --- Databases ----------------------------------------------------------
-readonly CALIBRE_LIBRARY="${BIBLIOTECA_DIR:-$HOME/Documents/biblioteca}"
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../../core/env.sh"   # rutas: core/env (K6, P217)
+
+# --- Databases (core/env: BIBLIOTECA_DIR, ZOTERO_DB) ------------------------
+readonly CALIBRE_LIBRARY="$BIBLIOTECA_DIR"
 readonly CALIBRE_DB="$CALIBRE_LIBRARY/metadata.db"
-readonly ZOTERO_DIR="${ZOTERO_DIR:-$HOME/Zotero}"
-readonly ZOTERO_DB="$ZOTERO_DIR/zotero.sqlite"
+readonly ZOTERO_DB
 
 # Zotero resolves linked attachments ("attachments:...") against this base
 # directory (extensions.zotero.baseAttachmentPath). It must equal the
@@ -42,6 +43,8 @@ readonly POPULATE_MIRROR="true"
 # --- Output -------------------------------------------------------------
 readonly REPORT_DIR_BASENAME="reportes"
 readonly STATE_DIR_BASENAME="estado"
+# El estado (último sync, plan de Calibre) vive en el estado de usuario, fuera del repo (K6).
+readonly STATE_DIR="${XDG_STATE_HOME:-$HOME/.local/state}/biblioteca/sincronizar_zotero"
 
 # --- Runtime option defaults (overridden by CLI flags in lib/cli.sh) ----
 APPLY_CHANGES=false   # false = simulation; true only with --aplicar

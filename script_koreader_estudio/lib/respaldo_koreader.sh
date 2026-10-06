@@ -11,9 +11,9 @@ respaldar_koreader() {
     mkdir -p "$RESPALDO_KOREADER_DIR/hashdocsettings"
 
     # 1) Estadísticas → dump SQL (texto, restaurable con: sqlite3 nueva.db < statistics.sql)
-    if [ -f "$STATS_DB" ] && command -v sqlite3 >/dev/null 2>&1; then
-        sqlite3 "file:$STATS_DB?mode=ro" .dump \
-            > "$RESPALDO_KOREADER_DIR/statistics.sql" 2>/dev/null || true
+    #    Con CORE_PYTHON (lib/leer.sh, K6): los timers no llevan sqlite3 en el PATH.
+    if [ -f "$STATS_DB" ]; then
+        volcar_sqlite "$STATS_DB" > "$RESPALDO_KOREADER_DIR/statistics.sql" 2>/dev/null || true
     fi
 
     # 2) Sidecars hash (lua de texto) + historial

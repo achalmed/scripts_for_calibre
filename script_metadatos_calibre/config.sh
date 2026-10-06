@@ -6,6 +6,8 @@
 # business-logic files.
 # ==============================================================================
 
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../../core/env.sh"   # rutas: core/env (K6, P217)
+
 # --- Script identity ----------------------------------------------------------
 readonly SCRIPT_NAME="calibre-metadata-manager"
 readonly SCRIPT_VERSION="2.0.0"
@@ -39,7 +41,7 @@ readonly CALIBRE_DB_FILENAME="metadata.db"
 # sembraba un sidecar JSON junto a cada PDF. Con "Calibre manda" el estado de
 # Zotero es derivado y esos JSON son basura; esta acción los localiza y borra.
 # ORPHAN_JSON_ROOT: biblioteca Calibre donde buscar (override con --root).
-ORPHAN_JSON_ROOT="${BIBLIOTECA_DIR:-$HOME/Documents/biblioteca}"
+ORPHAN_JSON_ROOT="$BIBLIOTECA_DIR"   # de core/env (K6, P217)
 readonly ORPHAN_JSON_NAME="zotero_metadata.json"
 
 # --- exiftool field mapping ---------------------------------------------------

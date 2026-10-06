@@ -1,5 +1,5 @@
 [Unit]
-Description=Timer: KOReader -> Calibre cada 30 minutos
+Description=Timer: KOReader → Calibre cada 30 minutos
 
 [Timer]
 OnBootSec=5min

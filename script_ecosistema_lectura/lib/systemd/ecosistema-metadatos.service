@@ -1,8 +1,0 @@
-[Unit]
-Description=Orquestar sincronizacion de metadatos/etiquetas Calibre-Zotero (si ambos cerrados y hubo cambios)
-
-[Service]
-Environment="PATH=/home/achalmaedison/anaconda3/bin:/usr/local/bin:/usr/bin:/bin"
-Type=oneshot
-ExecStart=@MAIN@ --metadatos --desde-timer
-Nice=10

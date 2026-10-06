@@ -9,8 +9,10 @@ readonly PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=config.sh
 source "$PROJECT_DIR/config.sh"
-# shellcheck source=../lib_comun/logger.sh
-source "$PROJECT_DIR/../lib_comun/logger.sh"
+# shellcheck source=../../core/shell-lib/logger.sh
+source "$SHELL_LIB/logger.sh"
+# shellcheck source=../lib/leer.sh
+source "$PROJECT_DIR/../lib/leer.sh"        # lecturas en solo lectura con CORE_PYTHON (K6)
 # shellcheck source=lib/cli.sh
 source "$PROJECT_DIR/lib/cli.sh"
 # shellcheck source=lib/db.sh
@@ -36,7 +38,7 @@ main() {
 
     # Pipe the candidate TSV through the Python core; capture its summary.
     local summary
-    summary="$(select_candidates | python3 "$PROJECT_DIR/lib/verificador.py")"
+    summary="$(select_candidates | "$CORE_PYTHON" "$PROJECT_DIR/lib/verificador.py")"
 
     print_summary "$summary"
 }

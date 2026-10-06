@@ -7,8 +7,10 @@
 readonly VERSION="1.0.0"
 readonly TOOL_NAME="verificar-metadatos"
 
-# Calibre library whose metadata will be checked (read-only).
-readonly CALIBRE_LIBRARY="${BIBLIOTECA_DIR:-$HOME/Documents/biblioteca}"
+source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../../core/env.sh"   # rutas: core/env (K6, P217)
+
+# Calibre library whose metadata will be checked (read-only; BIBLIOTECA_DIR de core/env).
+readonly CALIBRE_LIBRARY="$BIBLIOTECA_DIR"
 readonly METADATA_DB="$CALIBRE_LIBRARY/metadata.db"
 
 # --- Providers (public bibliographic APIs, no API key required) ---------

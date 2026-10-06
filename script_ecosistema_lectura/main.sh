@@ -6,6 +6,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/config.sh"
 source "$SCRIPT_DIR/../lib/escribir.sh"     # la puerta de escritura (K2): core/env, detección, candado, respaldo
+source "$SCRIPT_DIR/../lib/leer.sh"         # lecturas de SQLite con CORE_PYTHON (K6)
 source "$SCRIPT_DIR/lib/checks.sh"
 source "$SCRIPT_DIR/lib/setup_columnas.sh"
 source "$SCRIPT_DIR/lib/orquestar_metadatos.sh"
@@ -31,8 +32,9 @@ Uso: ./main.sh [opciones]
                         candidato (para Zotero: Archivo → Importar, enlazar).
                         Con --aplicar escribe #zotero_key SOLO de los candidatos
                         «adjunto» (el ítem enlaza el PDF del libro); Calibre cerrado.
-  --instalar-timer      Activa los timers (lectura 30 min; metadatos 04:30).
-  --desinstalar-timer   Los detiene y elimina.
+  --instalar-timer      Activa los timers (lectura 30 min; metadatos 04:30) desde las
+                        plantillas de systemd/ (systemd/instalar.sh --aplicar).
+  --desinstalar-timer   Los detiene y retira (systemd/instalar.sh --desinstalar --aplicar).
   --desde-timer         (interno) usado por los servicios systemd.
   --ayuda               Esta ayuda.
 EOF
@@ -53,27 +55,13 @@ while [ $# -gt 0 ]; do
     shift
 done
 
+# Los timers se instalan desde las plantillas versionadas de systemd/ (K6): %h, sin anaconda en el PATH.
 accion_timer_on() {
-    mkdir -p "$HOME/.config/systemd/user"
-    local u
-    for u in ecosistema-lectura ecosistema-metadatos; do
-        sed "s|@MAIN@|$SCRIPT_DIR/main.sh|" \
-            "$SCRIPT_DIR/lib/systemd/$u.service" \
-            > "$HOME/.config/systemd/user/$u.service"
-        cp "$SCRIPT_DIR/lib/systemd/$u.timer" \
-            "$HOME/.config/systemd/user/$u.timer"
-    done
-    systemctl --user daemon-reload
-    systemctl --user enable --now ecosistema-lectura.timer ecosistema-metadatos.timer
-    echo "✓ Timers activados: lectura (cada 30 min) y metadatos (diario 04:30)."
+    "$SCRIPT_DIR/../systemd/instalar.sh" --aplicar --unidades "ecosistema-lectura ecosistema-metadatos"
 }
 
 accion_timer_off() {
-    systemctl --user disable --now ecosistema-lectura.timer ecosistema-metadatos.timer 2>/dev/null || true
-    rm -f "$HOME/.config/systemd/user/ecosistema-lectura".{service,timer} \
-          "$HOME/.config/systemd/user/ecosistema-metadatos".{service,timer}
-    systemctl --user daemon-reload
-    echo "✓ Timers desinstalados."
+    "$SCRIPT_DIR/../systemd/instalar.sh" --desinstalar --aplicar --unidades "ecosistema-lectura ecosistema-metadatos"
 }
 
 accion_metadatos() {
@@ -93,7 +81,7 @@ accion_enlazar() {
     [ "$RIS" = 1 ] && ris="$REPORTES_DIR/enlazar_${ts}.ris"
     QEL_BIBLIOTECA="$BIBLIOTECA" QEL_ZOTERO_DB="$ZOTERO_DB" \
     QEL_REPORTE="$REPORTES_DIR/enlazar_${ts}.tsv" QEL_PARES="$pares" QEL_RIS="$ris" \
-        python3 "$SCRIPT_DIR/lib/enlazar_reporte.py"
+        "$CORE_PYTHON" "$SCRIPT_DIR/lib/enlazar_reporte.py"
     local n; n="$(wc -l < "$pares")"
     if [ "$MODO" != "aplicar" ]; then
         echo "· Simulación: --enlazar --aplicar escribiría $n claves «adjunto» (lista: $pares)."

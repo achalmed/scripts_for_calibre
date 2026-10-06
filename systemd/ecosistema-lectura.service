@@ -1,0 +1,11 @@
+[Unit]
+Description=Sincronizar el tiempo de lectura de Zotero hacia Calibre (ecosistema de lectura)
+
+[Service]
+Type=oneshot
+# PATH mínimo: las suites corren con CORE_PYTHON (core/env) y las herramientas del sistema, sin anaconda (P221).
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+ExecStart=@RAIZ@/script_ecosistema_lectura/main.sh --desde-timer
+# 75 = candado ocupado u otra herramienta escribiendo: «reintentar luego», no es un fallo (core/shell-lib/lock.sh).
+SuccessExitStatus=75
+Nice=10

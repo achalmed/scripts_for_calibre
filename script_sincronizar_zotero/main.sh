@@ -33,8 +33,8 @@ prepare_output_paths() {
     stamp="$(date '+%Y%m%d-%H%M%S')"
     REPORT_TSV="$rdir/sync_${stamp}.tsv"
     REPORT_MD="$rdir/sync_${stamp}.md"
-    STATE_JSON="$PROJECT_DIR/$STATE_DIR_BASENAME/ultimo_sync.json"
-    PLAN_CALIBRE="$PROJECT_DIR/$STATE_DIR_BASENAME/plan_calibre.json"
+    STATE_JSON="$STATE_DIR/ultimo_sync.json"
+    PLAN_CALIBRE="$STATE_DIR/plan_calibre.json"
     rm -f -- "$PLAN_CALIBRE"
     export REPORT_TSV REPORT_MD STATE_JSON PLAN_CALIBRE
 }

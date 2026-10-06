@@ -16,12 +16,12 @@ CLASIF_ENUM=""
 #   Sets the global CLASIF_ENUM as "|value1|value2|...|"
 load_clasificador_enum() {
     local live=""
-    if command -v sqlite3 >/dev/null 2>&1 && command -v python3 >/dev/null 2>&1; then
-        # The enum lives as JSON inside custom_columns.display; python3
-        # parses it reliably (values contain accents and spaces).
-        live=$(sqlite3 -readonly "$CALIBRE_LIBRARY/metadata.db" \
+    if [[ -x "$CORE_PYTHON" ]]; then
+        # The enum lives as JSON inside custom_columns.display; python
+        # parses it reliably (values contain accents and spaces). sql_ro: lib/leer.sh.
+        live=$(sql_ro "$CALIBRE_LIBRARY/metadata.db" \
             "SELECT display FROM custom_columns WHERE label='clasificador';" \
-            | python3 -c 'import sys,json; print("|".join(json.load(sys.stdin)["enum_values"]))' \
+            | "$CORE_PYTHON" -c 'import sys,json; print("|".join(json.load(sys.stdin)["enum_values"]))' \
             2>/dev/null) || live=""  # unreadable DB → silent fallback below
     fi
     if [[ -n "$live" ]]; then

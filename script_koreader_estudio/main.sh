@@ -7,6 +7,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/config.sh"
 source "$SCRIPT_DIR/../lib/escribir.sh"     # la puerta de escritura (K2): core/env, detección, candado, respaldo
+source "$SCRIPT_DIR/../lib/leer.sh"         # lecturas de SQLite con CORE_PYTHON (K6)
 source "$SCRIPT_DIR/lib/checks.sh"
 source "$SCRIPT_DIR/lib/setup_columnas.sh"
 source "$SCRIPT_DIR/lib/respaldo_koreader.sh"
@@ -64,7 +65,7 @@ accion_apuntes() {
     local abs texto html
     abs="$(readlink -f "$APUNTES_RUTA")"
     texto="${APUNTES_TEXTO:-$(basename "$APUNTES_RUTA" .md)}"
-    html="$(python3 - "$abs" "$texto" <<'EOF'
+    html="$("$CORE_PYTHON" - "$abs" "$texto" <<'EOF'
 import sys, urllib.parse
 ruta, texto = sys.argv[1], sys.argv[2]
 obs = "obsidian://open?path=" + urllib.parse.quote(ruta, safe="")
@@ -79,24 +80,13 @@ EOF
 }
 
 # --- Acción: timer systemd de usuario --------------------------------------
+# El timer se instala desde la plantilla versionada de systemd/ (K6): %h, sin anaconda en el PATH.
 accion_timer_on() {
-    mkdir -p "$HOME/.config/systemd/user"
-    sed "s|@MAIN@|$SCRIPT_DIR/main.sh|" \
-        "$SCRIPT_DIR/lib/systemd/koreader-calibre-sync.service" \
-        > "$HOME/.config/systemd/user/koreader-calibre-sync.service"
-    cp "$SCRIPT_DIR/lib/systemd/koreader-calibre-sync.timer" \
-        "$HOME/.config/systemd/user/koreader-calibre-sync.timer"
-    systemctl --user daemon-reload
-    systemctl --user enable --now koreader-calibre-sync.timer
-    echo "✓ Timer activado (cada 30 min). Ver: systemctl --user list-timers"
+    "$SCRIPT_DIR/../systemd/instalar.sh" --aplicar --unidades koreader-calibre-sync
 }
 
 accion_timer_off() {
-    systemctl --user disable --now koreader-calibre-sync.timer 2>/dev/null || true
-    rm -f "$HOME/.config/systemd/user/koreader-calibre-sync.service" \
-          "$HOME/.config/systemd/user/koreader-calibre-sync.timer"
-    systemctl --user daemon-reload
-    echo "✓ Timer desinstalado."
+    "$SCRIPT_DIR/../systemd/instalar.sh" --desinstalar --aplicar --unidades koreader-calibre-sync
 }
 
 # --- Acción: migrar sidecars .sdr a la ubicación hash de KOReader ----------
@@ -114,7 +104,7 @@ accion_migrar() {
     fi
     QKO_BIBLIOTECA="$BIBLIOTECA" QKO_KOREADER_CONFIG="$KOREADER_CONFIG" \
     QKO_APLICAR="$([ "$MODO" = "aplicar" ] && echo 1 || echo 0)" \
-        python3 "$SCRIPT_DIR/lib/migrar_sdr.py"
+        "$CORE_PYTHON" "$SCRIPT_DIR/lib/migrar_sdr.py"
     if [ "$MODO" = "aplicar" ]; then
         local cfg="$KOREADER_CONFIG/settings.reader.lua"
         if grep -q '\["document_metadata_folder"\] = "hash"' "$cfg" 2>/dev/null; then

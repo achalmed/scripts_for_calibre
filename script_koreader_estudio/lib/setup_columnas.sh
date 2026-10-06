@@ -2,8 +2,7 @@
 
 # Devuelve los labels de columnas personalizadas existentes (lectura sqlite ro).
 columnas_existentes() {
-    sqlite3 "file:$BIBLIOTECA/metadata.db?mode=ro" \
-        "SELECT label FROM custom_columns;" 2>/dev/null
+    etiquetas_calibre "$BIBLIOTECA" 2>/dev/null   # lib/leer.sh (CORE_PYTHON, solo lectura)
 }
 
 columna_existe() {
@@ -58,7 +57,7 @@ setup_columnas() {
     # Progreso mostrado = max(KOReader, Zotero): regla de conflicto del DISEÑO.
     # Requiere que #zot_progreso exista (la crea script_ecosistema_lectura).
     local tpl_barra
-    tpl_barra=$(python3 -c "
+    tpl_barra=$("$CORE_PYTHON" -c "
 import json
 tpl = (\"program:\n\"
        \"\ta = field('#${COL_PROGFLOAT}');\n\"
@@ -86,7 +85,7 @@ print(json.dumps({'composite_template': tpl, 'composite_sort': 'text',
 
     # Estado de estudio (composite sobre #ko_status y #ko_progfloat)
     local tpl_estado
-    tpl_estado=$(python3 -c "
+    tpl_estado=$("$CORE_PYTHON" -c "
 import json
 tpl = (\"program:\n\"
        \"\tst = field('#${COL_STATUS}');\n\"

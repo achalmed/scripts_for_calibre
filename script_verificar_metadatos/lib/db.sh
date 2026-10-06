@@ -56,7 +56,7 @@ select_candidates() {
             WHERE l.book=b.id)"
     fi
 
-    sqlite3 -readonly -noheader -separator $'\t' "$METADATA_DB" "
+    sql_ro "$METADATA_DB" "
       SELECT b.id,
              COALESCE($id_expr, ''),
              REPLACE(b.title, char(9), ' '),

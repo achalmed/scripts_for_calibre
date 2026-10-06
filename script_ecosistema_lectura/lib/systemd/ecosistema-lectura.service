@@ -1,8 +1,0 @@
-[Unit]
-Description=Sincronizar Read Time de Zotero hacia Calibre (ecosistema de lectura)
-
-[Service]
-Environment="PATH=/home/achalmaedison/anaconda3/bin:/usr/local/bin:/usr/bin:/bin"
-Type=oneshot
-ExecStart=@MAIN@ --desde-timer
-Nice=10
