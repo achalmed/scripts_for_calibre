@@ -8,11 +8,28 @@ Límite: ver `calibre_apoyo.py`.
 """
 from __future__ import annotations
 
+import os
 import sys
 from dataclasses import dataclass
 from pathlib import Path
 
 import pytest
+
+REPO = Path(__file__).resolve().parents[1]
+BASETEMP = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "pytest" / "scripts_for_calibre" / "basetemp"
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_configure(config):
+    """El temporal de las pruebas va al disco ($XDG_CACHE_HOME), no a /tmp: /tmp es tmpfs (RAM) y cada corrida
+    deja copias de las bases (≈40 MB por corrida aislada). Solo si nadie pidió otro --basetemp y si la corrida
+    es de este repo (en una corrida conjunta del workspace no se toca el temporal de los demás)."""
+    if config.option.basetemp:
+        return
+    args = [Path(a.split("::")[0]).resolve() for a in (config.args or [])]
+    if args and all(REPO in a.parents or a == REPO for a in args):
+        BASETEMP.parent.mkdir(parents=True, exist_ok=True)
+        config.option.basetemp = str(BASETEMP)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import calibre_apoyo as ap  # noqa: E402

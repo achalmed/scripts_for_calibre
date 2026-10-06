@@ -131,7 +131,9 @@ def entorno(corrida: Path, biblioteca: Path, zotero_db: Path, koreader: Path) ->
         p.chmod(0o755)
     home = corrida / "home"
     home.mkdir(exist_ok=True)
+    (corrida / "tmp").mkdir(exist_ok=True)
     e = {
+        "TMPDIR": str(corrida / "tmp"),          # los temporales de Calibre y de las suites, al disco, no a /tmp
         "PATH": f"{bin_falso}:{os.environ['PATH']}",
         "HOME": str(home),
         "USER": os.environ.get("USER", "prueba"),
