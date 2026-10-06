@@ -39,6 +39,7 @@ ESCRIBIR = REPO / "lib" / "escribir.py"
 sys.path.insert(0, str(REPO / "lib"))
 import escribir  # noqa: E402  (la puerta)
 LEER = AQUI / "leer_campos.py"
+_PASO_ACTUAL = None
 CACHE = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "migraciones"
 
 
@@ -81,6 +82,9 @@ def _verificar(biblioteca: Path, plan: dict, antes: dict, mueve: bool, trabajo: 
     movidas = [b for b, r in antes["rutas"].items() if despues["rutas"].get(b) != r]
     if movidas and not mueve:
         errores.append(f"{len(movidas)} carpetas de libro cambiaron en un paso que no las mueve (p. ej. {movidas[:5]})")
+    extra = getattr(_PASO_ACTUAL, "verificar", None)
+    if extra:
+        errores += extra(biblioteca / "metadata.db")
     if plan.get("columnas_borrar"):
         c = sqlite3.connect(f"file:{biblioteca / 'metadata.db'}?mode=ro", uri=True)
         quedan = {r[0] for r in c.execute("select label from custom_columns")} & {x.lstrip("#") for x in plan["columnas_borrar"]}
@@ -114,6 +118,8 @@ def main(argv=None) -> int:
     ap.add_argument("--aplicar", action="store_true")
     a = ap.parse_args(argv)
     paso = _paso(a.paso)
+    global _PASO_ACTUAL
+    _PASO_ACTUAL = paso
     hoy = date.today().isoformat()
     real_bib = Path(env.BIBLIOTECA_DIR)
     trabajo = CACHE / a.paso

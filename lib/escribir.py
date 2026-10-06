@@ -234,6 +234,10 @@ def aplicar_campana(biblioteca, plan_json) -> int:
         if v:
             api.set_field(campo, v)
             n += len(v)
+    renombres = {int(i): nombre for i, nombre in (plan.get("autores_renombrar") or {}).items()}
+    if renombres:   # la fila del autor misma (P2a): Calibre reutiliza la fila existente al escribir los autores de un libro
+        api.rename_items("authors", renombres)
+        n += len(renombres)
     enumeracion(legacy, plan.get("enum_despues"))
     for etiqueta in plan.get("columnas_borrar") or []:
         legacy.delete_custom_column(label=etiqueta.lstrip("#"))
