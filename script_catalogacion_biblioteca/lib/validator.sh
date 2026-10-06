@@ -32,14 +32,13 @@ validate_input_file() {
 }
 
 # ensure_calibre_closed()
-# calibredb corrupts nothing but refuses concurrent writes; failing early
-# with a clear message beats 113 half-applied rows.
+# Con --aplicar abre la puerta (K5, P1): Calibre cerrado (detección canónica `ps -eo comm`, que ve
+# también los procesos que arrancan), el candado compartido con los timers y un respaldo verificado
+# de metadata.db, todo antes de la primera fila: mejor fallar pronto que dejar 113 filas a medias.
 #
 # Returns:
-#   0 on success; exits 1 when applying while the Calibre GUI is running
+#   0 on success; exits 1 with Calibre open or without backup; 75 with the lock taken
 ensure_calibre_closed() {
-    if [[ "$APPLY_CHANGES" == true ]] && pgrep -x calibre >/dev/null 2>&1; then
-        log_error "Calibre está abierto. Ciérralo antes de ejecutar con --aplicar."
-        exit 1
-    fi
+    [[ "$APPLY_CHANGES" == true ]] || return 0
+    puerta_calibre_abrir catalogacion_biblioteca "$CALIBRE_LIBRARY" || exit 1
 }

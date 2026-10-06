@@ -22,8 +22,6 @@ FUERA = ("tests/", "script_normalizacion_metadatos/")   # normalización: campa�
 
 # archivo → ítem de la ola 2a que lo pasa por la puerta
 PENDIENTES = {
-    "script_catalogacion_biblioteca/lib/metadata.sh": "K5",
-    "script_metadatos_calibre/lib/register_formats.sh": "K5",
 }
 
 SUB_ESCRITURA = (r"add|add_format|remove|remove_format|set_metadata|set_custom|add_custom_column|"

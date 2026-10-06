@@ -25,6 +25,7 @@ parse_arguments() {
     ROOT_DIR_EXPLICITO=false
     LIBRARY_PATH=""
     APPLY=false
+    DRY_RUN_PEDIDO=false
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
@@ -51,6 +52,7 @@ parse_arguments() {
                 ;;
             --aplicar)
                 APPLY=true
+                DRY_RUN=false
                 shift
                 ;;
             --library|-l)
@@ -62,7 +64,7 @@ parse_arguments() {
                 shift
                 ;;
             --dry-run|-n)
-                DRY_RUN=true
+                DRY_RUN_PEDIDO=true
                 shift
                 ;;
             --force|-f)
@@ -86,6 +88,10 @@ parse_arguments() {
                 ;;
         esac
     done
+    if [[ "$DRY_RUN_PEDIDO" == true && "$APPLY" == true ]]; then
+        log_error "--dry-run y --aplicar son incompatibles."
+        exit "${EXIT_USAGE}"
+    fi
 }
 
 # show_help()
@@ -116,9 +122,10 @@ OPTIONS:
   -l, --library PATH    Calibre library root path
                         (default: parent of current directory)
   -v, --verbose         Print debug-level messages
-  -n, --dry-run         Simulate all operations without making any changes
+  -n, --dry-run         Simula (es lo predeterminado desde la ola 2a; se admite por compatibilidad)
   -f, --force           Overwrite existing PDF formats in Calibre
-      --aplicar         For limpiar-json: actually delete (default is list-only)
+      --aplicar         Escribe de verdad: embed modifica los PDF; register escribe metadata.db por la
+                        puerta (Calibre cerrado, candado y respaldo verificado); limpiar-json borra
       --version         Show version information
   -h, --help            Show this help
 
@@ -132,14 +139,14 @@ EXAMPLES:
   # Register PDFs inside ~/Books/Author Name into Calibre at ~/Calibre
   $(basename "$0") register --library ~/Calibre
 
-  # Full pipeline, dry-run first to preview changes
-  $(basename "$0") all --root ~/Books --library ~/Calibre --dry-run
+  # Full pipeline, simulated (the default)
+  $(basename "$0") all --root ~/Books --library ~/Calibre
 
   # Full pipeline for real, with verbose output
-  $(basename "$0") all --root ~/Books --library ~/Calibre --verbose
+  $(basename "$0") all --root ~/Books --library ~/Calibre --aplicar --verbose
 
 NOTES:
-  • Run with --dry-run before any bulk operation on a large library.
+  • Sin --aplicar todo es simulación: revisa la salida antes de aplicar.
   • 'embed' requires exiftool to be installed.
   • 'register' requires calibredb to be installed and Calibre to be CLOSED.
   • Log file is written to: /tmp/${SCRIPT_NAME}_YYYYMMDD_HHMMSS.log

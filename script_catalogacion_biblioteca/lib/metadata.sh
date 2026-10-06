@@ -70,15 +70,16 @@ append_clasificador_argument() {
 }
 
 # run_calibredb()
-# Executes the command, or prints it quoted when simulating.
+# Ejecuta el subcomando de calibredb por la puerta, o lo imprime entre comillas al simular.
 #
 # Arguments:
-#   $@ - Full calibredb command
+#   $1 - calibredb subcommand; $@ - its arguments (without --with-library)
 run_calibredb() {
+    local sub=$1; shift
     if [[ "$APPLY_CHANGES" == true ]]; then
-        "$@"
+        calibredb_escribe "$sub" "$@"      # por la puerta (K5)
     else
-        printf '[SIMULACIÓN] '; printf '%q ' "$@"; printf '\n'
+        printf '[SIMULACIÓN] '; printf '%q ' calibredb "$sub" --with-library "$CALIBRE_LIBRARY" "$@"; printf '\n'
     fi
 }
 
@@ -107,8 +108,7 @@ process_tsv_rows() {
         build_field_arguments "$id" "$autores" "$titulo" "$tipo_zotero" \
             "$clasificador" "$editorial" "$fecha" "$identificador" "$idioma" "$tags"
         [[ ${#FIELD_ARGS[@]} -eq 0 ]] && continue
-        run_calibredb calibredb set_metadata --with-library "$CALIBRE_LIBRARY" \
-            "$id" "${FIELD_ARGS[@]}"
+        run_calibredb set_metadata "$id" "${FIELD_ARGS[@]}"
         APPLIED_ROWS=$((APPLIED_ROWS + 1))
     done < <(tr '\t' '\037' < "$tsv_path")
 }

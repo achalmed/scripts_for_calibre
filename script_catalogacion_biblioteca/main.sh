@@ -9,8 +9,10 @@ readonly PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=config.sh
 source "$PROJECT_DIR/config.sh"
-# shellcheck source=../lib_comun/logger.sh
-source "$PROJECT_DIR/../lib_comun/logger.sh"
+# shellcheck source=../lib/escribir.sh
+source "$PROJECT_DIR/../lib/escribir.sh"     # la puerta de escritura en metadata.db (K5)
+# shellcheck source=../../core/shell-lib/logger.sh
+source "$SHELL_LIB/logger.sh"
 # shellcheck source=lib/validator.sh
 source "$PROJECT_DIR/lib/validator.sh"
 # shellcheck source=lib/cli.sh

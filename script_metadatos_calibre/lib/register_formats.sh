@@ -68,17 +68,18 @@ add_pdf_format() {
     local pdf_path="$3"
 
     if [[ "$DRY_RUN" == "true" ]]; then
-        log_info "[DRY-RUN] Would run: calibredb add_format --library-path '${library}' ${book_id} '${pdf_path}'"
+        log_info "[SIMULACIÓN] calibredb add_format --with-library '${library}' ${book_id} '${pdf_path}'"
         return 2
     fi
 
-    local add_flags=(--library-path "$library" "$book_id" "$pdf_path")
+    local add_flags=("$book_id" "$pdf_path")
 
     # --dont-replace prevents overwriting when FORCE is not set.
     # When FORCE=true we omit it, letting calibredb replace the existing format.
     [[ "$FORCE" == "false" ]] && add_flags+=(--dont-replace)
 
-    calibredb add_format "${add_flags[@]}" >/dev/null 2>&1
+    # Por la puerta (K5): la abrió run_register_formats (Calibre cerrado, candado, respaldo verificado).
+    calibredb_escribe add_format "${add_flags[@]}" >/dev/null 2>&1
 }
 
 # process_author_folder()
@@ -191,6 +192,11 @@ run_register_formats() {
 
     validate_calibre_library "$LIBRARY_PATH" || exit "${EXIT_NOT_FOUND}"
 
+    # La puerta antes de la primera escritura (K5, P1): Calibre cerrado, candado y respaldo verificado.
+    if [[ "$DRY_RUN" != "true" ]]; then
+        puerta_calibre_abrir metadatos_calibre "$LIBRARY_PATH" || exit "${EXIT_ERROR}"
+    fi
+
     # The "root" for register is where author folders live.
     # If ROOT_DIR is set (e.g. from the menu), use it; otherwise use current dir.
     local scan_root="${ROOT_DIR:-$(pwd)}"
@@ -252,7 +258,7 @@ run_register_formats() {
         done
     fi
 
-    printf '\n  ⚠  Remember to CLOSE Calibre before running this operation.\n'
+    [[ "$DRY_RUN" == "true" ]] && printf '\n  · Simulación: nada se escribió. Con --aplicar (Calibre cerrado) se registran.\n'
 
     [[ $((REG_ADDED + REG_ALREADY)) -gt 0 ]] && return "${EXIT_SUCCESS}" || return "${EXIT_ERROR}"
 }

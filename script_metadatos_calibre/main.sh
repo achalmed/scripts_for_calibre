@@ -36,6 +36,9 @@ source "${SCRIPT_DIR}/config.sh"
 # shellcheck source=lib/logger.sh
 source "${SCRIPT_DIR}/lib/logger.sh"
 
+# shellcheck source=../lib/escribir.sh
+source "${SCRIPT_DIR}/../lib/escribir.sh"   # la puerta de escritura en metadata.db (K5)
+
 # shellcheck source=lib/validator.sh
 source "${SCRIPT_DIR}/lib/validator.sh"
 

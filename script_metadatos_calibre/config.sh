@@ -21,7 +21,7 @@ readonly EXIT_MISSING_DEP=5
 
 # --- Runtime defaults (can be overridden by CLI flags) -----------------------
 VERBOSE=false
-DRY_RUN=false
+DRY_RUN=true          # simula por defecto (P2, D3 de la ola 2); --aplicar escribe
 FORCE=false           # Overwrite even if book already has PDF registered
 
 # --- Paths --------------------------------------------------------------------

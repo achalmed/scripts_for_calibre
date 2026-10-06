@@ -29,6 +29,7 @@ SUITES = {
 }
 # el timer ecosistema-metadatos: ecosistema_lectura --metadatos orquesta sincronizar_zotero (candado heredado)
 ORQUESTADOR = ("script_ecosistema_lectura", "../script_sincronizar_zotero/reportes", "sync_*.tsv")
+OTRAS = {}   # otras suites que comparan otros módulos de prueba (test_escritores_k5.py)
 
 
 def _cal_rw(db):
@@ -153,7 +154,7 @@ def perturbar_lectura(c: "Corrida") -> None:  # noqa: F821
 
 def _comparar(arboles, corrida, nombre, args, perturbacion=None, exigir_exito=True):
     """Corre referencia y árbol actual a la vez sobre copias idénticas y compara reporte y deltas."""
-    suite, sub, patron = SUITES.get(nombre) or ORQUESTADOR
+    suite, sub, patron = SUITES.get(nombre) or OTRAS.get(nombre) or ORQUESTADOR
     estado = {}
     for impl in ("ref", "act"):
         c = corrida(impl)
