@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3989
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Escuela keynesiana (3989)
+**Carpeta**: biblioteca/Unknown/Escuela keynesiana (3989)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Escuela keynesiana (3989)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Escuela keynesiana (3989)`
 
 ## Zotero
 

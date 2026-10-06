@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/dl1186_2015.pdf` · SHA-256 `c4f8d82228772bf3…` · entrada BibTeX `@misc{dl1186_2015}`
+`scripts_for_fuentes/entrada/dl1186_2015.pdf` · SHA-256 `c4f8d82228772bf3…` · entrada BibTeX `@misc{dl1186_2015}`
 
 ## Zotero
 | Campo | Valor |

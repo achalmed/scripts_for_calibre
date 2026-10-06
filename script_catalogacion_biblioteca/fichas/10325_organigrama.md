@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/MEF_Organigrama_2023-09-27.pdf` · SHA-256 `ede4e8768cdda05d…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/MEF_Organigrama_2023-09-27.pdf` · SHA-256 `ede4e8768cdda05d…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

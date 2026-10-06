@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/RREE_Organigrama_RM-0516-2025-RE.pdf` · SHA-256 `f766237c900dfecd…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/RREE_Organigrama_RM-0516-2025-RE.pdf` · SHA-256 `f766237c900dfecd…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

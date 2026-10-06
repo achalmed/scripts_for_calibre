@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/CONGRESO_Organigrama_Acuerdo-Mesa-059-2023-2024.pdf` · SHA-256 `7f5e92297b369dc1…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/CONGRESO_Organigrama_Acuerdo-Mesa-059-2023-2024.pdf` · SHA-256 `7f5e92297b369dc1…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

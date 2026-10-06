@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 242
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Modelos cambiarios (242)
+**Carpeta**: biblioteca/Unknown/Modelos cambiarios (242)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Antonio, Martin Arroyo/Modelos cambiarios (242)`
+Carpeta actual en Calibre: `biblioteca/Antonio, Martin Arroyo/Modelos cambiarios (242)`
 
 ## Zotero
 

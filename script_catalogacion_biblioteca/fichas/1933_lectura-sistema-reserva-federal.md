@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1933
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Sistema de reserva federal (1933)
+**Carpeta**: biblioteca/Unknown/Sistema de reserva federal (1933)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Efxto/_Que es el FED (Sistema de Reserva Federal)_ (1933)`
+Carpeta actual en Calibre: `biblioteca/Efxto/_Que es el FED (Sistema de Reserva Federal)_ (1933)`
 
 ## Zotero
 

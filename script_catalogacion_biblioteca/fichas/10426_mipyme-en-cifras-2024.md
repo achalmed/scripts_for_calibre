@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/produce/mipyme_en_cifras_2024/mipyme_en_cifras_2024_v001_bajado-2026-09-29.pdf` · SHA-256 `83dbff49bc671225…` · 220 págs · con texto
+`02 analysis/data/raw/produce/mipyme_en_cifras_2024/mipyme_en_cifras_2024_v001_bajado-2026-09-29.pdf` · SHA-256 `83dbff49bc671225…` · 220 págs · con texto
 
 ## Zotero
 | Campo | Valor |

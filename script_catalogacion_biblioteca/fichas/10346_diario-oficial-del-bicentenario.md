@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/Reglamento Congreso 2026.pdf` · SHA-256 `8030f65434538ed9…` · 24 págs · con texto
+`scripts_for_fuentes/entrada/Reglamento Congreso 2026.pdf` · SHA-256 `8030f65434538ed9…` · 24 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9878
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/guia fundamentos python mouredevpro (9878)
+**Carpeta**: biblioteca/Unknown/guia fundamentos python mouredevpro (9878)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/MoureDev Pro/Guia rapida de fundamentos en Python (9878)`
+Carpeta actual en Calibre: `biblioteca/MoureDev Pro/Guia rapida de fundamentos en Python (9878)`
 
 ## Zotero
 

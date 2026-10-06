@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/Discurso PGG 2026 2031 20 AGO.pdf` · SHA-256 `5bb157f19a6a4d50…` · 18 págs · con texto
+`scripts_for_fuentes/entrada/Discurso PGG 2026 2031 20 AGO.pdf` · SHA-256 `5bb157f19a6a4d50…` · 18 págs · con texto
 
 ## Zotero
 | Campo | Valor |

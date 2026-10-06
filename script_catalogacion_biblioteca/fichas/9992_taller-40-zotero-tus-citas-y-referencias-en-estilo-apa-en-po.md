@@ -17,7 +17,7 @@ verificacion:
 **ID Calibre**: 9992
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Christopher, Hernandez Amesquita/Taller 40. Zotero_ tus citas y referencias en estilo APA en pocos clics (practica) (9992)`
+Carpeta actual en Calibre: `biblioteca/Christopher, Hernandez Amesquita/Taller 40. Zotero_ tus citas y referencias en estilo APA en pocos clics (practica) (9992)`
 
 ## Zotero
 

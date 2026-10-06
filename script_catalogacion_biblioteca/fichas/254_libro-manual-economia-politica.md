@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 254
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Varios autores/Manual de economia politica del capitalismo (254)
+**Carpeta**: biblioteca/Varios autores/Manual de economia politica del capitalismo (254)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Varios autores/Manual de economia politica del capitalismo (254)`
+Carpeta actual en Calibre: `biblioteca/Varios autores/Manual de economia politica del capitalismo (254)`
 
 ## Zotero
 

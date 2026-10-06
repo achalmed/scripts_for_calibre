@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_malpartida2020.pdf` · SHA-256 `d109a5ed1450e4a7…` · entrada BibTeX `@report{lect_malpartida2020}`
+`scripts_for_fuentes/entrada/lect_malpartida2020.pdf` · SHA-256 `d109a5ed1450e4a7…` · entrada BibTeX `@report{lect_malpartida2020}`
 
 ## Zotero
 | Campo | Valor |

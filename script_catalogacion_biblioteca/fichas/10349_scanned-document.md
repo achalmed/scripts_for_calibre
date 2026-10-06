@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/Reglamento interno de trabajo Congreso 2024.pdf` · SHA-256 `3ff43bb4b7f471ac…` · 70 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`scripts_for_fuentes/entrada/Reglamento interno de trabajo Congreso 2024.pdf` · SHA-256 `3ff43bb4b7f471ac…` · 70 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

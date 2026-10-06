@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/presupuesto/proyecto/2024/PL_Endeudamiento_2024.pdf` · SHA-256 `52f09aecb06414c0…` · 12 págs · con texto
+`02 analysis/data/raw/peru/mef/presupuesto/proyecto/2024/PL_Endeudamiento_2024.pdf` · SHA-256 `52f09aecb06414c0…` · 12 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9880
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Manual de Matematica Financiera Carlos Aliaga Valdez (9880)
+**Carpeta**: biblioteca/Desconocido/Manual de Matematica Financiera Carlos Aliaga Valdez (9880)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Carlos, Aliaga Valdez/Manual de matematica financiera_ texto, problemas y casos (9880)`
+Carpeta actual en Calibre: `biblioteca/Carlos, Aliaga Valdez/Manual de matematica financiera_ texto, problemas y casos (9880)`
 
 ## Zotero
 

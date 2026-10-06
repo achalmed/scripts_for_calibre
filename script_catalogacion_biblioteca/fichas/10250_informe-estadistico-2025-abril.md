@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/inpe/informe_estadistico_2025_abril/informe_estadistico_2025_abril_v001_2026-09-02.pdf` · SHA-256 `1d29575b906cdde9…` · 129 págs · con texto
+`02 analysis/data/raw/peru/inpe/informe_estadistico_2025_abril/informe_estadistico_2025_abril_v001_2026-09-02.pdf` · SHA-256 `1d29575b906cdde9…` · 129 págs · con texto
 
 ## Zotero
 | Campo | Valor |

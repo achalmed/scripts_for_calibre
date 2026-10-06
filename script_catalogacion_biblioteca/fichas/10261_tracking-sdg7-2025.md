@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/world_bank/tracking_sdg7_2025/tracking_sdg7_2025_v001_2026-09-04.pdf` · SHA-256 `de5e88662ec7e42f…` · 188 págs · con texto
+`02 analysis/data/raw/peru/world_bank/tracking_sdg7_2025/tracking_sdg7_2025_v001_2026-09-04.pdf` · SHA-256 `de5e88662ec7e42f…` · 188 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/ley27933_2003.pdf` · SHA-256 `d08d4969c629cb55…` · entrada BibTeX `@misc{ley27933_2003}`
+`scripts_for_fuentes/entrada/ley27933_2003.pdf` · SHA-256 `d08d4969c629cb55…` · entrada BibTeX `@misc{ley27933_2003}`
 
 ## Zotero
 | Campo | Valor |

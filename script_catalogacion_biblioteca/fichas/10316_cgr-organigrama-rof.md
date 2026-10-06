@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/CGR_Organigrama_ROF.pdf` · SHA-256 `aa66a70ac28857b3…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`scripts_for_fuentes/entrada/organigramas/CGR_Organigrama_ROF.pdf` · SHA-256 `aa66a70ac28857b3…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

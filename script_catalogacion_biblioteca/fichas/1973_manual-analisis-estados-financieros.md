@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1973
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Manual de analisis estados financieros (1973)
+**Carpeta**: biblioteca/Unknown/Manual de analisis estados financieros (1973)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Instituto Europeo de Gestion Empresarial/Manual de analisis de estados financieros (1973)`
+Carpeta actual en Calibre: `biblioteca/Instituto Europeo de Gestion Empresarial/Manual de analisis de estados financieros (1973)`
 
 ## Zotero
 

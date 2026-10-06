@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/SUNEDU_Organigrama_2024.pdf` · SHA-256 `2191ac2574abd7ab…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/SUNEDU_Organigrama_2024.pdf` · SHA-256 `2191ac2574abd7ab…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

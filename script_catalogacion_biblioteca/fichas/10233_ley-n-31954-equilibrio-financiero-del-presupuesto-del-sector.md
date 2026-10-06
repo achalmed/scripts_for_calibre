@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/presupuesto/aprobado/2024/Ley_31954_Equilibrio_Financiero_del_Presupuesto_del_Sector_Publico_para_el_Anio_Fiscal_2024.pdf` · SHA-256 `90ed9f3a8f5a0e5c…` · 5 págs · con texto
+`02 analysis/data/raw/peru/mef/presupuesto/aprobado/2024/Ley_31954_Equilibrio_Financiero_del_Presupuesto_del_Sector_Publico_para_el_Anio_Fiscal_2024.pdf` · SHA-256 `90ed9f3a8f5a0e5c…` · 5 págs · con texto
 
 ## Zotero
 | Campo | Valor |

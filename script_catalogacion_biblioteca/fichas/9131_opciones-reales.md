@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9131
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Opciones reales (9131)
+**Carpeta**: biblioteca/Unknown/Opciones reales (9131)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Opciones reales (9131)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Opciones reales (9131)`
 
 ## Zotero
 

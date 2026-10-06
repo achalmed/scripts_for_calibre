@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/2718155-organigrama-poder-ejecutivo.pdf` · SHA-256 `31680ddc726bbfa8…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/2718155-organigrama-poder-ejecutivo.pdf` · SHA-256 `31680ddc726bbfa8…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

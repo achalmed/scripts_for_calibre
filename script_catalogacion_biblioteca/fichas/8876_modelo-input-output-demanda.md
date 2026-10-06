@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 8876
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Modelo input - output modelo de demanda (8876)
+**Carpeta**: biblioteca/Unknown/Modelo input - output modelo de demanda (8876)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Modelo input-output_ modelo de demanda (8876)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Modelo input-output_ modelo de demanda (8876)`
 
 ## Zotero
 

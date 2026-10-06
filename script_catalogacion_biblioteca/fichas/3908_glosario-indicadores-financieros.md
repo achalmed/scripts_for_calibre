@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3908
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Glosario de indicadores financieros (3908)
+**Carpeta**: biblioteca/Unknown/Glosario de indicadores financieros (3908)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Superintendencia de Banca, Seguros y AFP (Peru)/Glosario de indicadores financieros (3908)`
+Carpeta actual en Calibre: `biblioteca/Superintendencia de Banca, Seguros y AFP (Peru)/Glosario de indicadores financieros (3908)`
 
 ## Zotero
 

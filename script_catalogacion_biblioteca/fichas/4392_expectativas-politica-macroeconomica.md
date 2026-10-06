@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 4392
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Expectativas y politica macroeconomicas (4392)
+**Carpeta**: biblioteca/Unknown/Expectativas y politica macroeconomicas (4392)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/A., Novales/Expectativas y politica macroeconomica (4392)`
+Carpeta actual en Calibre: `biblioteca/A., Novales/Expectativas y politica macroeconomica (4392)`
 
 ## Zotero
 

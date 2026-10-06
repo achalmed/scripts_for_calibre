@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/ANSI-NISO-Z39.18-2005-R2010-scientific-and-technical-reports.pdf` · SHA-256 `5a4af6d7eb634c5e…` · 96 págs · con texto
+`scripts_for_fuentes/entrada/ANSI-NISO-Z39.18-2005-R2010-scientific-and-technical-reports.pdf` · SHA-256 `5a4af6d7eb634c5e…` · 96 págs · con texto
 
 ## Zotero
 | Campo | Valor |

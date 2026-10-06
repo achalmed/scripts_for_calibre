@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3327
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Juegos repetidos (3327)
+**Carpeta**: biblioteca/Unknown/Juegos repetidos (3327)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Juegos repetidos (3327)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Juegos repetidos (3327)`
 
 ## Zotero
 

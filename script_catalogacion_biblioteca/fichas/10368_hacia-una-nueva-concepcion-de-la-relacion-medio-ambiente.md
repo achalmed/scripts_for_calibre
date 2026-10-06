@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_porter1995es.pdf` · SHA-256 `86efdd73b1ce0c31…` · entrada BibTeX `@article{lect_porter1995es}`
+`scripts_for_fuentes/entrada/lect_porter1995es.pdf` · SHA-256 `86efdd73b1ce0c31…` · entrada BibTeX `@article{lect_porter1995es}`
 
 ## Zotero
 | Campo | Valor |

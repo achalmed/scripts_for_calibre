@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_ortega2019.pdf` · SHA-256 `5d8ee241f6b89fa6…` · entrada BibTeX `@online{lect_ortega2019}`
+`scripts_for_fuentes/entrada/lect_ortega2019.pdf` · SHA-256 `5d8ee241f6b89fa6…` · entrada BibTeX `@online{lect_ortega2019}`
 
 ## Zotero
 | Campo | Valor |

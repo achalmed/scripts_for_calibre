@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9913
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Sara Beatriz, Guardia/Cesar Guardia Mayorga. Insigne maestro (9913)
+**Carpeta**: biblioteca/Sara Beatriz, Guardia/Cesar Guardia Mayorga. Insigne maestro (9913)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Sara Beatriz, Guardia/Cesar Guardia Mayorga. Insigne maestro (9913)`
+Carpeta actual en Calibre: `biblioteca/Sara Beatriz, Guardia/Cesar Guardia Mayorga. Insigne maestro (9913)`
 
 ## Zotero
 

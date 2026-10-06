@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/PROMPERU_Organigrama_ROF.pdf` · SHA-256 `4f1eb460f87abd2e…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/PROMPERU_Organigrama_ROF.pdf` · SHA-256 `4f1eb460f87abd2e…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/MPH-HUAMANGA_Organigrama_OM-013-2021.pdf` · SHA-256 `c5d6b3977f63a864…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/MPH-HUAMANGA_Organigrama_OM-013-2021.pdf` · SHA-256 `c5d6b3977f63a864…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

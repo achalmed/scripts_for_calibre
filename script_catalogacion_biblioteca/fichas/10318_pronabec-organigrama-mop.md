@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/PRONABEC_Organigrama_MOP.pdf` · SHA-256 `de3358c3ad920f0d…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/PRONABEC_Organigrama_MOP.pdf` · SHA-256 `de3358c3ad920f0d…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

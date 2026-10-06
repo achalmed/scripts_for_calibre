@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1967
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Estado de resultados (1967)
+**Carpeta**: biblioteca/Unknown/Estado de resultados (1967)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Estado de resultados (1967)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Estado de resultados (1967)`
 
 ## Zotero
 

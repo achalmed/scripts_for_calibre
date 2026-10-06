@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/dialnet inversionpublicaeninfraestructuraycrecimientoregio 9863020.pdf` · SHA-256 `0b25ffc2faae59a4…` · 28 págs · con texto
+`03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/dialnet inversionpublicaeninfraestructuraycrecimientoregio 9863020.pdf` · SHA-256 `0b25ffc2faae59a4…` · 28 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/SUNAT_Estructura-Organica_ROF-Anexo1-RS-149-2024.pdf` · SHA-256 `e8df763991d68af3…` · 8 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/SUNAT_Estructura-Organica_ROF-Anexo1-RS-149-2024.pdf` · SHA-256 `e8df763991d68af3…` · 8 págs · con texto
 
 ## Zotero
 | Campo | Valor |

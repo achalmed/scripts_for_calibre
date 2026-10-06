@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9895
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para ser humano pdf (9895)
+**Carpeta**: biblioteca/Desconocido/Cuentos para ser humano pdf (9895)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Luis M., Benavides/Cuentos para ser humano_ cuentos, peliculas y canciones con valores (9895)`
+Carpeta actual en Calibre: `biblioteca/Luis M., Benavides/Cuentos para ser humano_ cuentos, peliculas y canciones con valores (9895)`
 
 ## Zotero
 

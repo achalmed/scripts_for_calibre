@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_palmer1995en.pdf` · SHA-256 `dd698b02a62fd7c0…` · entrada BibTeX `@article{lect_palmer1995en}`
+`scripts_for_fuentes/entrada/lect_palmer1995en.pdf` · SHA-256 `dd698b02a62fd7c0…` · entrada BibTeX `@article{lect_palmer1995en}`
 
 ## Zotero
 | Campo | Valor |

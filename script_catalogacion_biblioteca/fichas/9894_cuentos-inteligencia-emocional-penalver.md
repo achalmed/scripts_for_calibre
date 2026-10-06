@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9894
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para educar con inteligencia emocional by Clara Penalver (9894)
+**Carpeta**: biblioteca/Desconocido/Cuentos para educar con inteligencia emocional by Clara Penalver (9894)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Clara, Penalver/Cuentos para educar con inteligencia emocional (9894)`
+Carpeta actual en Calibre: `biblioteca/Clara, Penalver/Cuentos para educar con inteligencia emocional (9894)`
 
 ## Zotero
 

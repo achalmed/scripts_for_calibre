@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 78
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/El sistema financiero internacional (78)
+**Carpeta**: biblioteca/Unknown/El sistema financiero internacional (78)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Camara de Diputados de Mexico. Division de Economia y Comercio/El sistema financiero internacional. Consideraciones sobre el reto de insertar a las economias p (78)`
+Carpeta actual en Calibre: `biblioteca/Camara de Diputados de Mexico. Division de Economia y Comercio/El sistema financiero internacional. Consideraciones sobre el reto de insertar a las economias p (78)`
 
 ## Zotero
 

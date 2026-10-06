@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/TC_ROF_Estructura-Organica.pdf` · SHA-256 `958f6044f7a5c0fc…` · 28 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/TC_ROF_Estructura-Organica.pdf` · SHA-256 `958f6044f7a5c0fc…` · 28 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 436
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Bretton woods, el bm y el fmi (436)
+**Carpeta**: biblioteca/Unknown/Bretton woods, el bm y el fmi (436)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Bretton Woods, el BM y el FMI (436)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Bretton Woods, el BM y el FMI (436)`
 
 ## Zotero
 

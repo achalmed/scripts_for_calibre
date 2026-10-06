@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9890
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/libro evaluacion-financiera-de-proyectos-de-inversion (9890)
+**Carpeta**: biblioteca/Desconocido/libro evaluacion-financiera-de-proyectos-de-inversion (9890)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Mauricio M., Virreira Avila/Evaluacion financiera de proyectos de inversion_ metodos y aplicaciones (9890)`
+Carpeta actual en Calibre: `biblioteca/Mauricio M., Virreira Avila/Evaluacion financiera de proyectos de inversion_ metodos y aplicaciones (9890)`
 
 ## Zotero
 

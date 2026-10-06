@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9883
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Estadistica-no-parametrica-aplicada (9883)
+**Carpeta**: biblioteca/Desconocido/Estadistica-no-parametrica-aplicada (9883)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Adrian, Quispe Andia/Estadistica no parametrica aplicada a la investigacion cientifica con software SPSS, MINITAB y (9883)`
+Carpeta actual en Calibre: `biblioteca/Adrian, Quispe Andia/Estadistica no parametrica aplicada a la investigacion cientifica con software SPSS, MINITAB y (9883)`
 
 ## Zotero
 

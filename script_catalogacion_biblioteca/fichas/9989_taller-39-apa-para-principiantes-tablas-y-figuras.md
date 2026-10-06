@@ -17,7 +17,7 @@ verificacion:
 **ID Calibre**: 9989
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Christopher, Hernandez Amesquita/Taller 39. APA para principiantes_ tablas y figuras (9989)`
+Carpeta actual en Calibre: `biblioteca/Christopher, Hernandez Amesquita/Taller 39. APA para principiantes_ tablas y figuras (9989)`
 
 ## Zotero
 

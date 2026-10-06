@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1493
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/La relacion sobre la tasa de cambio y caos (1493)
+**Carpeta**: biblioteca/Unknown/La relacion sobre la tasa de cambio y caos (1493)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/La relacion sobre la tasa de cambio y caos (1493)`
+Carpeta actual en Calibre: `biblioteca/Unknown/La relacion sobre la tasa de cambio y caos (1493)`
 
 ## Zotero
 

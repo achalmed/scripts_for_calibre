@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigrama-2024.pdf` · SHA-256 `1c360268534d4325…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`scripts_for_fuentes/entrada/organigrama-2024.pdf` · SHA-256 `1c360268534d4325…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

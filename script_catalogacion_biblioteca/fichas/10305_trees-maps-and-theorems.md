@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/doumont-2009-trees-maps-and-theorems-materiales-abiertos-principiae.pdf` · SHA-256 `a6f60936ea3660b8…` · 23 págs · con texto
+`scripts_for_fuentes/entrada/doumont-2009-trees-maps-and-theorems-materiales-abiertos-principiae.pdf` · SHA-256 `a6f60936ea3660b8…` · 23 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 563
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Consumer and firm behavior_ the work-leisure decision and profit maximization (563)
+**Carpeta**: biblioteca/Unknown/Consumer and firm behavior_ the work-leisure decision and profit maximization (563)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Stephen D., Williamson/Consumer and firm behavior_ the work-leisure decision and profit maximization (563)`
+Carpeta actual en Calibre: `biblioteca/Stephen D., Williamson/Consumer and firm behavior_ the work-leisure decision and profit maximization (563)`
 
 ## Zotero
 

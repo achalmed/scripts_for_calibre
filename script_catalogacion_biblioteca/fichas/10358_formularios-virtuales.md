@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/Manual-de-usuario-Formularios-Virtuales.pdf` · SHA-256 `88e31095114873a2…` · 21 págs · con texto
+`scripts_for_fuentes/entrada/Manual-de-usuario-Formularios-Virtuales.pdf` · SHA-256 `88e31095114873a2…` · 21 págs · con texto
 
 ## Zotero
 | Campo | Valor |

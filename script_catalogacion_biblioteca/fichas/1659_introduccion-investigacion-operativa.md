@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1659
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Introduccion a la investigacion operativa (1659)
+**Carpeta**: biblioteca/Unknown/Introduccion a la investigacion operativa (1659)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Universidad de la Republica (Uruguay), Facultad de Ingenieria/Introduccion a la investigacion operativa (1659)`
+Carpeta actual en Calibre: `biblioteca/Universidad de la Republica (Uruguay), Facultad de Ingenieria/Introduccion a la investigacion operativa (1659)`
 
 ## Zotero
 

@@ -17,7 +17,7 @@ verificacion:
 **ID Calibre**: 9991
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Christopher, Hernandez Amesquita/Taller 40. Estilo APA explicado facil_ estilo de redaccion academica (9991)`
+Carpeta actual en Calibre: `biblioteca/Christopher, Hernandez Amesquita/Taller 40. Estilo APA explicado facil_ estilo de redaccion academica (9991)`
 
 ## Zotero
 

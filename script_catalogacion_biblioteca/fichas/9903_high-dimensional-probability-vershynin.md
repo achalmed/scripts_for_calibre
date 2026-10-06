@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9903
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/HDP-2 no borrar (9903)
+**Carpeta**: biblioteca/Desconocido/HDP-2 no borrar (9903)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Roman, Vershynin/High-dimensional probability_ an introduction with applications in data science (9903)`
+Carpeta actual en Calibre: `biblioteca/Roman, Vershynin/High-dimensional probability_ an introduction with applications in data science (9903)`
 
 ## Zotero
 

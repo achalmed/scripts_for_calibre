@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/BCRP_Organigrama_ROF.pdf` · SHA-256 `ce329672c2587ac9…` · 172 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/BCRP_Organigrama_ROF.pdf` · SHA-256 `ce329672c2587ac9…` · 172 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_barraza2019.pdf` · SHA-256 `acd27cc8890b7811…` · entrada BibTeX `@online{lect_barraza2019}`
+`scripts_for_fuentes/entrada/lect_barraza2019.pdf` · SHA-256 `acd27cc8890b7811…` · entrada BibTeX `@online{lect_barraza2019}`
 
 ## Zotero
 | Campo | Valor |

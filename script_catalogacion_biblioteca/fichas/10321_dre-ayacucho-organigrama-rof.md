@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/DRE-AYACUCHO_Organigrama_ROF.pdf` · SHA-256 `d91d3be726a144c0…` · 2 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/DRE-AYACUCHO_Organigrama_ROF.pdf` · SHA-256 `d91d3be726a144c0…` · 2 págs · con texto
 
 ## Zotero
 | Campo | Valor |

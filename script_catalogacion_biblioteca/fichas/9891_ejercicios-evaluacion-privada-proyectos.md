@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9891
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/EJERCICIOS DE EVALUACION PRIVADA DE PROYECTOS (1) (9891)
+**Carpeta**: biblioteca/Desconocido/EJERCICIOS DE EVALUACION PRIVADA DE PROYECTOS (1) (9891)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Arlette, Beltran/Ejercicios de evaluacion privada de proyectos (9891)`
+Carpeta actual en Calibre: `biblioteca/Arlette, Beltran/Ejercicios de evaluacion privada de proyectos (9891)`
 
 ## Zotero
 

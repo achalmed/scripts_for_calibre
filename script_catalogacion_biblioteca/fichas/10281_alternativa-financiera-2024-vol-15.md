@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/3 la influencia de la inversion 1.pdf` · SHA-256 `44a54655ceff4268…` · 11 págs · con texto
+`03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/3 la influencia de la inversion 1.pdf` · SHA-256 `44a54655ceff4268…` · 11 págs · con texto
 
 ## Zotero
 | Campo | Valor |

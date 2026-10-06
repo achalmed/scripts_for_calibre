@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/presupuesto/proyecto/2026/PL_Presupuesto_SP_2026.pdf` · SHA-256 `ecabc27e49841e8e…` · 125 págs · con texto
+`02 analysis/data/raw/peru/mef/presupuesto/proyecto/2026/PL_Presupuesto_SP_2026.pdf` · SHA-256 `ecabc27e49841e8e…` · 125 págs · con texto
 
 ## Zotero
 | Campo | Valor |

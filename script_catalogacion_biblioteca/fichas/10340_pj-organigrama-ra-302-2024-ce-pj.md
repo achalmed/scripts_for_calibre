@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/PJ_Organigrama_RA-302-2024-CE-PJ.pdf` · SHA-256 `99165fee1a3678e9…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/PJ_Organigrama_RA-302-2024-CE-PJ.pdf` · SHA-256 `99165fee1a3678e9…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

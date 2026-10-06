@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/UNSCH_Organigrama_ROF-RR-041-2021.pdf` · SHA-256 `45cd2808eaae22c5…` · 88 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/UNSCH_Organigrama_ROF-RR-041-2021.pdf` · SHA-256 `45cd2808eaae22c5…` · 88 págs · con texto
 
 ## Zotero
 | Campo | Valor |

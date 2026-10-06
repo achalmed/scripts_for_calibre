@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/Guia_Casilla_Electronica.pdf` · SHA-256 `1614878c2f3ca68d…` · 14 págs · con texto
+`scripts_for_fuentes/entrada/Guia_Casilla_Electronica.pdf` · SHA-256 `1614878c2f3ca68d…` · 14 págs · con texto
 
 ## Zotero
 | Campo | Valor |

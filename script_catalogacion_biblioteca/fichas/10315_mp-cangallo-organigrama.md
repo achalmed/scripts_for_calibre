@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/MP-CANGALLO_Organigrama.pdf` · SHA-256 `6e4b320855c544d1…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/MP-CANGALLO_Organigrama.pdf` · SHA-256 `6e4b320855c544d1…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

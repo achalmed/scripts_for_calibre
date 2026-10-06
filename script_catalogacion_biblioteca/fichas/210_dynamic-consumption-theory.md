@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 210
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Dynamic consumption theory (210)
+**Carpeta**: biblioteca/Unknown/Dynamic consumption theory (210)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Fabio-Cesare, Bagliano/Dynamic consumption theory (210)`
+Carpeta actual en Calibre: `biblioteca/Fabio-Cesare, Bagliano/Dynamic consumption theory (210)`
 
 ## Zotero
 

@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 478
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Resumen tema 3_ muestreo estratificado (478)
+**Carpeta**: biblioteca/Unknown/Resumen tema 3_ muestreo estratificado (478)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Desiree, Romero Molina/Resumen tema 3_ muestreo estratificado (478)`
+Carpeta actual en Calibre: `biblioteca/Desiree, Romero Molina/Resumen tema 3_ muestreo estratificado (478)`
 
 ## Zotero
 

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_dumrauf2010cap1.pdf` · SHA-256 `dae1eab5c0cb6835…` · entrada BibTeX `@incollection{lect_dumrauf2010cap1}`
+`scripts_for_fuentes/entrada/lect_dumrauf2010cap1.pdf` · SHA-256 `dae1eab5c0cb6835…` · entrada BibTeX `@incollection{lect_dumrauf2010cap1}`
 
 ## Zotero
 | Campo | Valor |

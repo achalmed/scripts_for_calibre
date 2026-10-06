@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9892
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para educar (9892)
+**Carpeta**: biblioteca/Desconocido/Cuentos para educar (9892)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Clara, Redondo/Cuentos para educar_ dirigido a ninos y ninas de entre 6 y 12 anos para promover los valores en (9892)`
+Carpeta actual en Calibre: `biblioteca/Clara, Redondo/Cuentos para educar_ dirigido a ninos y ninas de entre 6 y 12 anos para promover los valores en (9892)`
 
 ## Zotero
 

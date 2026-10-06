@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/Instructivo para el Uso del Portal de Datos Abiertos.pdf` · SHA-256 `25b22e191793e118…` · 11 págs · con texto
+`scripts_for_fuentes/entrada/Instructivo para el Uso del Portal de Datos Abiertos.pdf` · SHA-256 `25b22e191793e118…` · 11 págs · con texto
 
 ## Zotero
 | Campo | Valor |

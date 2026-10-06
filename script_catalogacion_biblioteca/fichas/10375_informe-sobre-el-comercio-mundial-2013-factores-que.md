@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_omc2013c.pdf` · SHA-256 `1a65f9b1560fe71c…` · entrada BibTeX `@report{lect_omc2013c}`
+`scripts_for_fuentes/entrada/lect_omc2013c.pdf` · SHA-256 `1a65f9b1560fe71c…` · entrada BibTeX `@report{lect_omc2013c}`
 
 ## Zotero
 | Campo | Valor |

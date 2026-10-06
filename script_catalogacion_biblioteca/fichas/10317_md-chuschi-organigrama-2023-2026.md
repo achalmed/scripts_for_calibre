@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/MD-CHUSCHI_Organigrama_2023-2026.pdf` · SHA-256 `a0a38dbf1b13a336…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`scripts_for_fuentes/entrada/organigramas/MD-CHUSCHI_Organigrama_2023-2026.pdf` · SHA-256 `a0a38dbf1b13a336…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

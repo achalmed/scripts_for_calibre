@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9906
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/guia para la formulacion de proyectos de inversion exitosos (9906)
+**Carpeta**: biblioteca/Desconocido/guia para la formulacion de proyectos de inversion exitosos (9906)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Ministerio de Economia y Finanzas/Turismo_ guia para la formulacion de proyectos de inversion exitosos (9906)`
+Carpeta actual en Calibre: `biblioteca/Ministerio de Economia y Finanzas/Turismo_ guia para la formulacion de proyectos de inversion exitosos (9906)`
 
 ## Zotero
 

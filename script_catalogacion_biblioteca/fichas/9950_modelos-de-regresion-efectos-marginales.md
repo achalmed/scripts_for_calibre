@@ -17,7 +17,7 @@ verificacion:
 **ID Calibre**: 9950
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Juan A., Huaripuma Vargas/Modelos de regresion_ efectos marginales (9950)`
+Carpeta actual en Calibre: `biblioteca/Juan A., Huaripuma Vargas/Modelos de regresion_ efectos marginales (9950)`
 
 ## Zotero
 

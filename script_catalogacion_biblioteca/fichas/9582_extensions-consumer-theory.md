@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9582
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Extensions uncertainty and intertemporal choice (9582)
+**Carpeta**: biblioteca/Unknown/Extensions uncertainty and intertemporal choice (9582)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Extensions to consumer theory_ intertemporal choice, uncertainty and revealed preferences (9582)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Extensions to consumer theory_ intertemporal choice, uncertainty and revealed preferences (9582)`
 
 ## Zotero
 

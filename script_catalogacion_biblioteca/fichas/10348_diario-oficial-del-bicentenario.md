@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/Reglamento Diputados 2026.pdf` · SHA-256 `a9559305c13a2430…` · 28 págs · con texto
+`scripts_for_fuentes/entrada/Reglamento Diputados 2026.pdf` · SHA-256 `a9559305c13a2430…` · 28 págs · con texto
 
 ## Zotero
 | Campo | Valor |

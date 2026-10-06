@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/ley30714_2017.pdf` · SHA-256 `eace313c2ce72a4c…` · entrada BibTeX `@misc{ley30714_2017}`
+`scripts_for_fuentes/entrada/ley30714_2017.pdf` · SHA-256 `eace313c2ce72a4c…` · entrada BibTeX `@misc{ley30714_2017}`
 
 ## Zotero
 | Campo | Valor |

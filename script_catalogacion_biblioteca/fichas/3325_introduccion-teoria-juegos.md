@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3325
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Introduccion (3325)
+**Carpeta**: biblioteca/Unknown/Introduccion (3325)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Introduccion (3325)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Introduccion (3325)`
 
 ## Zotero
 

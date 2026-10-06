@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 447
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Capitalizacion y actualizacion (447)
+**Carpeta**: biblioteca/Unknown/Capitalizacion y actualizacion (447)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Capitalizacion y actualizacion (447)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Capitalizacion y actualizacion (447)`
 
 ## Zotero
 

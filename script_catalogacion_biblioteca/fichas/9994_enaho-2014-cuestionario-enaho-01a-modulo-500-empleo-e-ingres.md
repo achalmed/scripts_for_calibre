@@ -17,7 +17,7 @@ verificacion:
 **ID Calibre**: 9994
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Instituto Nacional de Estadistica e Informatica/ENAHO 2014. Cuestionario ENAHO.01A, modulo 500_ empleo e ingresos (9994)`
+Carpeta actual en Calibre: `biblioteca/Instituto Nacional de Estadistica e Informatica/ENAHO 2014. Cuestionario ENAHO.01A, modulo 500_ empleo e ingresos (9994)`
 
 ## Zotero
 

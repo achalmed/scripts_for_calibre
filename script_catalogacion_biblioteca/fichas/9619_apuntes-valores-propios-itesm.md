@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9619
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Valores propios 01 (9619)
+**Carpeta**: biblioteca/Unknown/Valores propios 01 (9619)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Departamento de Matematicas CSI_ITESM/Valores y vectores propios (9619)`
+Carpeta actual en Calibre: `biblioteca/Departamento de Matematicas CSI_ITESM/Valores y vectores propios (9619)`
 
 ## Zotero
 

@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1544
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Bayesian econometrcis (1544)
+**Carpeta**: biblioteca/Unknown/Bayesian econometrcis (1544)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Bayesian econometrics (1544)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Bayesian econometrics (1544)`
 
 ## Zotero
 

@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1717
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Fundamentos microeconomicos para la regulacion (1717)
+**Carpeta**: biblioteca/Unknown/Fundamentos microeconomicos para la regulacion (1717)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Juan Carlos, Mendieta Lopez/Apuntes de microeconomia II_ teoria del consumidor, teoria del productor y competencia imperfec (1717)`
+Carpeta actual en Calibre: `biblioteca/Juan Carlos, Mendieta Lopez/Apuntes de microeconomia II_ teoria del consumidor, teoria del productor y competencia imperfec (1717)`
 
 ## Zotero
 

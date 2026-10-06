@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/inei/criminalidad_i_sem_2025/criminalidad_i_sem_2025_v001_2026-09-02.pdf` · SHA-256 `a1db20ee53093256…` · 103 págs · con texto
+`02 analysis/data/raw/peru/inei/criminalidad_i_sem_2025/criminalidad_i_sem_2025_v001_2026-09-02.pdf` · SHA-256 `a1db20ee53093256…` · 103 págs · con texto
 
 ## Zotero
 | Campo | Valor |

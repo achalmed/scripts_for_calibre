@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3332
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Analisis en forma estrategica_ juegos estaticos i (3332)
+**Carpeta**: biblioteca/Unknown/Analisis en forma estrategica_ juegos estaticos i (3332)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Analisis en forma estrategica_ juegos estaticos I (3332)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Analisis en forma estrategica_ juegos estaticos I (3332)`
 
 ## Zotero
 

@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 391
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Resumen circunstanciado de lo actuado por la junta monetaria con motivo de la emision de la res (391)
+**Carpeta**: biblioteca/Unknown/Resumen circunstanciado de lo actuado por la junta monetaria con motivo de la emision de la res (391)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Banco de Guatemala/Resumen circunstanciado de lo actuado por la Junta Monetaria con motivo de la emision de la res (391)`
+Carpeta actual en Calibre: `biblioteca/Banco de Guatemala/Resumen circunstanciado de lo actuado por la Junta Monetaria con motivo de la emision de la res (391)`
 
 ## Zotero
 

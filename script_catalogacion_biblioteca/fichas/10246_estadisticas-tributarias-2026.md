@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/cepal/estadisticas_tributarias_2026/estadisticas_tributarias_2026_v001_2026-09-04.pdf` · SHA-256 `f0b44b34e0c1da34…` · 215 págs · con texto
+`02 analysis/data/raw/peru/cepal/estadisticas_tributarias_2026/estadisticas_tributarias_2026_v001_2026-09-04.pdf` · SHA-256 `f0b44b34e0c1da34…` · 215 págs · con texto
 
 ## Zotero
 | Campo | Valor |

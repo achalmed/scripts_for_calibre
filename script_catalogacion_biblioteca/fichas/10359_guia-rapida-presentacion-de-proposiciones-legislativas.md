@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/Guia para presentación de proposiciones legislativas.pdf` · SHA-256 `7d71e2d1fb53fb21…` · 2 págs · con texto
+`scripts_for_fuentes/entrada/Guia para presentación de proposiciones legislativas.pdf` · SHA-256 `7d71e2d1fb53fb21…` · 2 págs · con texto
 
 ## Zotero
 | Campo | Valor |

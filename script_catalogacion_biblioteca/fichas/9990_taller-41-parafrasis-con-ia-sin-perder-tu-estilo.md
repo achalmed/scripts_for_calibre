@@ -17,7 +17,7 @@ verificacion:
 **ID Calibre**: 9990
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Christopher, Hernandez Amesquita/Taller 41. Parafrasis con IA sin perder tu estilo (9990)`
+Carpeta actual en Calibre: `biblioteca/Christopher, Hernandez Amesquita/Taller 41. Parafrasis con IA sin perder tu estilo (9990)`
 
 ## Zotero
 

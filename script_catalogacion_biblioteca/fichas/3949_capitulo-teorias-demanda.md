@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3949
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Teorias de la demanda (3949)
+**Carpeta**: biblioteca/Unknown/Teorias de la demanda (3949)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Teorias de la demanda (3949)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Teorias de la demanda (3949)`
 
 ## Zotero
 

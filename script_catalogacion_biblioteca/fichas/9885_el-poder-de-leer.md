@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9885
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/El poder de leer (9885)
+**Carpeta**: biblioteca/Desconocido/El poder de leer (9885)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Josette, Jolibert/El poder de leer_ tecnicas, procedimientos y orientaciones para la ensenanza y aprendizaje de l (9885)`
+Carpeta actual en Calibre: `biblioteca/Josette, Jolibert/El poder de leer_ tecnicas, procedimientos y orientaciones para la ensenanza y aprendizaje de l (9885)`
 
 ## Zotero
 

@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1430
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/_Que es la regulacion economica_ (1430)
+**Carpeta**: biblioteca/Unknown/_Que es la regulacion economica_ (1430)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/W. Kip, Viscusi/Introduccion a la regulacion economica (1430)`
+Carpeta actual en Calibre: `biblioteca/W. Kip, Viscusi/Introduccion a la regulacion economica (1430)`
 
 ## Zotero
 

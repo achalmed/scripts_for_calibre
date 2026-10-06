@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_poncela2019.pdf` · SHA-256 `61de66847dfd30a6…` · entrada BibTeX `@article{lect_poncela2019}`
+`scripts_for_fuentes/entrada/lect_poncela2019.pdf` · SHA-256 `61de66847dfd30a6…` · entrada BibTeX `@article{lect_poncela2019}`
 
 ## Zotero
 | Campo | Valor |

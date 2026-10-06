@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/garcia2024.pdf` · SHA-256 `37cc561ddda50a58…` · entrada BibTeX `@article{garcia2024}`
+`scripts_for_fuentes/entrada/garcia2024.pdf` · SHA-256 `37cc561ddda50a58…` · entrada BibTeX `@article{garcia2024}`
 
 ## Zotero
 | Campo | Valor |

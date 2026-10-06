@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1660
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Que es la ingenieria financiera (1660)
+**Carpeta**: biblioteca/Unknown/Que es la ingenieria financiera (1660)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/_Que es la ingenieria financiera_ (1660)`
+Carpeta actual en Calibre: `biblioteca/Unknown/_Que es la ingenieria financiera_ (1660)`
 
 ## Zotero
 

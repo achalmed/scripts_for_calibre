@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9594
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Introduccion al analisis de regresion (9594)
+**Carpeta**: biblioteca/Unknown/Introduccion al analisis de regresion (9594)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Analisis de regresion (9594)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Analisis de regresion (9594)`
 
 ## Zotero
 

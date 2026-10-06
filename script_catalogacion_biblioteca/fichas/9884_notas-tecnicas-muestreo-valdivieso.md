@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9884
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/NOTAS DE TECNICAS DE MUESTREO 2021 (9884)
+**Carpeta**: biblioteca/Desconocido/NOTAS DE TECNICAS DE MUESTREO 2021 (9884)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Luis, Valdivieso Serrano/Notas de tecnicas de muestreo (9884)`
+Carpeta actual en Calibre: `biblioteca/Luis, Valdivieso Serrano/Notas de tecnicas de muestreo (9884)`
 
 ## Zotero
 

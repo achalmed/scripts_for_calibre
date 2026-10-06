@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9889
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/FINAL II PARTE (1) (9889)
+**Carpeta**: biblioteca/Desconocido/FINAL II PARTE (1) (9889)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Carlos, Aliaga/Final II parte (9889)`
+Carpeta actual en Calibre: `biblioteca/Carlos, Aliaga/Final II parte (9889)`
 
 ## Zotero
 

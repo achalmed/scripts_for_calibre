@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 334
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Sociologia economica (334)
+**Carpeta**: biblioteca/Unknown/Sociologia economica (334)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Sociologia economica (334)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Sociologia economica (334)`
 
 ## Zotero
 

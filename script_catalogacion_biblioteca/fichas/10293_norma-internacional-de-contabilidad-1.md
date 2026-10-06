@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/NIC-1-presentacion-estados-financieros-MEF-2021.pdf` · SHA-256 `79b0d5269f8e7d9f…` · 26 págs · con texto
+`scripts_for_fuentes/entrada/NIC-1-presentacion-estados-financieros-MEF-2021.pdf` · SHA-256 `79b0d5269f8e7d9f…` · 26 págs · con texto
 
 ## Zotero
 | Campo | Valor |

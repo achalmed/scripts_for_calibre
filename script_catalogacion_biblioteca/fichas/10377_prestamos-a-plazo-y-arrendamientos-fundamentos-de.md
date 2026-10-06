@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_vanhorne2010cap21.pdf` · SHA-256 `b931a2fe402671bd…` · entrada BibTeX `@incollection{lect_vanhorne2010cap21}`
+`scripts_for_fuentes/entrada/lect_vanhorne2010cap21.pdf` · SHA-256 `b931a2fe402671bd…` · entrada BibTeX `@incollection{lect_vanhorne2010cap21}`
 
 ## Zotero
 | Campo | Valor |

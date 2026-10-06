@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3078
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Programacionn lineaal (3078)
+**Carpeta**: biblioteca/Unknown/Programacionn lineaal (3078)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Programacion lineal (3078)`
+Carpeta actual en Calibre: `biblioteca/Apuntes de matematica y estadistica/Programacion lineal (3078)`
 
 ## Zotero
 

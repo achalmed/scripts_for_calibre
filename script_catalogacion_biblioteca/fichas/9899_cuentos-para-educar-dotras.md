@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9899
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para educar -pdf (9899)
+**Carpeta**: biblioteca/Desconocido/Cuentos para educar -pdf (9899)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Leticia, Dotras/Cuentos para educar (9899)`
+Carpeta actual en Calibre: `biblioteca/Leticia, Dotras/Cuentos para educar (9899)`
 
 ## Zotero
 

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_fernandez_globalizacion.pdf` · SHA-256 `2df44dbd68391cc2…` · entrada BibTeX `@online{lect_fernandez_globalizacion}`
+`scripts_for_fuentes/entrada/lect_fernandez_globalizacion.pdf` · SHA-256 `2df44dbd68391cc2…` · entrada BibTeX `@online{lect_fernandez_globalizacion}`
 
 ## Zotero
 | Campo | Valor |

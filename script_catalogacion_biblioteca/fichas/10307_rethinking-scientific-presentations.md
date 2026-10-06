@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/alley-assertion-evidence-classroom-teaching-slides-notes.pdf` · SHA-256 `803782350cb442fb…` · 11 págs · con texto
+`scripts_for_fuentes/entrada/alley-assertion-evidence-classroom-teaching-slides-notes.pdf` · SHA-256 `803782350cb442fb…` · 11 págs · con texto
 
 ## Zotero
 | Campo | Valor |

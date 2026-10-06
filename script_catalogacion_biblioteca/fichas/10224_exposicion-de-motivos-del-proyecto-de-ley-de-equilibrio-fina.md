@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/presupuesto/proyecto/2026/EM_PL_Equilibrio_Financiero_2026.pdf` · SHA-256 `44384223e94f6415…` · 33 págs · con texto
+`02 analysis/data/raw/peru/mef/presupuesto/proyecto/2026/EM_PL_Equilibrio_Financiero_2026.pdf` · SHA-256 `44384223e94f6415…` · 33 págs · con texto
 
 ## Zotero
 | Campo | Valor |

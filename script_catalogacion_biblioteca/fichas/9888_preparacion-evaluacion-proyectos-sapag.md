@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9888
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Sapag N. et al (2014) Preparacion y Evaluacion de Proyectos. Sexta Edicion., pp. 52-61 (9888)
+**Carpeta**: biblioteca/Desconocido/Sapag N. et al (2014) Preparacion y Evaluacion de Proyectos. Sexta Edicion., pp. 52-61 (9888)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Nassir, Sapag Chain/Preparacion y evaluacion de proyectos (9888)`
+Carpeta actual en Calibre: `biblioteca/Nassir, Sapag Chain/Preparacion y evaluacion de proyectos (9888)`
 
 ## Zotero
 

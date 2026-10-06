@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/PCM_Organigrama_RM-234-2026-PCM.pdf` · SHA-256 `f5d09e12d29f7489…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/PCM_Organigrama_RM-234-2026-PCM.pdf` · SHA-256 `f5d09e12d29f7489…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

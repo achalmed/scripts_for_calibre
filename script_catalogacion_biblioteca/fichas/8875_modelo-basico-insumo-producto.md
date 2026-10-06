@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 8875
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Modelo basico insumo - producto (8875)
+**Carpeta**: biblioteca/Unknown/Modelo basico insumo - producto (8875)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Modelo basico insumo-producto (8875)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Modelo basico insumo-producto (8875)`
 
 ## Zotero
 

@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9271
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/The Political and Economic Challenges of Natural Resource Wealth (9271)
+**Carpeta**: biblioteca/Unknown/The Political and Economic Challenges of Natural Resource Wealth (9271)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Natural Resource Governance Institute/The resource curse_ The political and economic challenges of natural resource wealth (9271)`
+Carpeta actual en Calibre: `biblioteca/Natural Resource Governance Institute/The resource curse_ The political and economic challenges of natural resource wealth (9271)`
 
 ## Zotero
 

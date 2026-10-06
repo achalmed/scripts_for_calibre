@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 112
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Modelo de eleccion intertemporal (112)
+**Carpeta**: biblioteca/Unknown/Modelo de eleccion intertemporal (112)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Modelos de eleccion intertemporal (112)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Modelos de eleccion intertemporal (112)`
 
 ## Zotero
 

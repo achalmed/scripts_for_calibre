@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 568
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Manual investigacion operativa (568)
+**Carpeta**: biblioteca/Unknown/Manual investigacion operativa (568)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Manual de investigacion operativa (568)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Manual de investigacion operativa (568)`
 
 ## Zotero
 

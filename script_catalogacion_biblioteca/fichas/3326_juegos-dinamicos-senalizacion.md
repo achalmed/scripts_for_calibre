@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3326
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Informacion incompleta_ juegos dinamicos o de senalizacion (3326)
+**Carpeta**: biblioteca/Unknown/Informacion incompleta_ juegos dinamicos o de senalizacion (3326)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Informacion incompleta_ juegos dinamicos o de senalizacion (3326)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Informacion incompleta_ juegos dinamicos o de senalizacion (3326)`
 
 ## Zotero
 

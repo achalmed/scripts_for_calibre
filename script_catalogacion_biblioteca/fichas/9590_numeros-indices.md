@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9590
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Numeros indices (9590)
+**Carpeta**: biblioteca/Unknown/Numeros indices (9590)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Numeros indices (9590)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Numeros indices (9590)`
 
 ## Zotero
 

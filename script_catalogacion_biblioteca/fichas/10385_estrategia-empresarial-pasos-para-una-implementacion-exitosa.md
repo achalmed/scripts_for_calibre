@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_pad2021.pdf` · SHA-256 `5540aced279e45f1…` · entrada BibTeX `@online{lect_pad2021}`
+`scripts_for_fuentes/entrada/lect_pad2021.pdf` · SHA-256 `5540aced279e45f1…` · entrada BibTeX `@online{lect_pad2021}`
 
 ## Zotero
 | Campo | Valor |

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_fernandez_liderazgo.pdf` · SHA-256 `2b3d2b4a0221464a…` · entrada BibTeX `@online{lect_fernandez_liderazgo}`
+`scripts_for_fuentes/entrada/lect_fernandez_liderazgo.pdf` · SHA-256 `2b3d2b4a0221464a…` · entrada BibTeX `@online{lect_fernandez_liderazgo}`
 
 ## Zotero
 | Campo | Valor |

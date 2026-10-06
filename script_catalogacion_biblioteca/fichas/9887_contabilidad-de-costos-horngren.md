@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9887
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Contabilidad de costos (9887)
+**Carpeta**: biblioteca/Desconocido/Contabilidad de costos (9887)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Charles T., Horngren/Contabilidad de costos_ un enfoque gerencial (9887)`
+Carpeta actual en Calibre: `biblioteca/Charles T., Horngren/Contabilidad de costos_ un enfoque gerencial (9887)`
 
 ## Zotero
 

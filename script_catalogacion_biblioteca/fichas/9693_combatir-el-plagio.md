@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9693
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Por que y como debemos combatir el plagio (9693)
+**Carpeta**: biblioteca/Unknown/Por que y como debemos combatir el plagio (9693)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Vicerrectorado Academico/Por que y como debemos combatir el plagio (9693)`
+Carpeta actual en Calibre: `biblioteca/Vicerrectorado Academico/Por que y como debemos combatir el plagio (9693)`
 
 ## Zotero
 

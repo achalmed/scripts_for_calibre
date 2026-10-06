@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/chimbo2025.pdf` · SHA-256 `e12004ae7524a0a4…` · entrada BibTeX `@article{chimbo2025}`
+`scripts_for_fuentes/entrada/chimbo2025.pdf` · SHA-256 `e12004ae7524a0a4…` · entrada BibTeX `@article{chimbo2025}`
 
 ## Zotero
 | Campo | Valor |

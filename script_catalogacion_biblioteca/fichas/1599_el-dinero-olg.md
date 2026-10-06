@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1599
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/El dinero (1599)
+**Carpeta**: biblioteca/Unknown/El dinero (1599)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/El dinero (1599)`
+Carpeta actual en Calibre: `biblioteca/Unknown/El dinero (1599)`
 
 ## Zotero
 

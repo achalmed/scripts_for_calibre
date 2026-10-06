@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/congreso/rt150_recursos_determinados_2026/RT_150_2025-2026_recursos_determinados_por_departamento.pdf` · SHA-256 `ca21dddd045fcca7…` · 64 págs · con texto
+`02 analysis/data/raw/peru/congreso/rt150_recursos_determinados_2026/RT_150_2025-2026_recursos_determinados_por_departamento.pdf` · SHA-256 `ca21dddd045fcca7…` · 64 págs · con texto
 
 ## Zotero
 | Campo | Valor |

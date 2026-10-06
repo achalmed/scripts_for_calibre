@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/ONPE_Organigrama_RJ-125-2024-JN.pdf` · SHA-256 `0f21574405d16a5e…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`scripts_for_fuentes/entrada/organigramas/ONPE_Organigrama_RJ-125-2024-JN.pdf` · SHA-256 `0f21574405d16a5e…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

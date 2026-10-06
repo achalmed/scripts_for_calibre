@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/minem/cartera_proyectos_mineros_2024/cartera_proyectos_mineros_2024_v001_2026-09-05.pdf` · SHA-256 `f702170c5ac7e8d8…` · 90 págs · con texto
+`02 analysis/data/raw/peru/minem/cartera_proyectos_mineros_2024/cartera_proyectos_mineros_2024_v001_2026-09-05.pdf` · SHA-256 `f702170c5ac7e8d8…` · 90 págs · con texto
 
 ## Zotero
 | Campo | Valor |

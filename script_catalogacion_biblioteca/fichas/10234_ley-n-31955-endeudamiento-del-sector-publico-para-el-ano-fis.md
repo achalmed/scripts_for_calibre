@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/presupuesto/aprobado/2024/Ley_31955_Endeudamiento_del_Sector_Publico_para_el_Anio_Fiscal_2024.pdf` · SHA-256 `f9bc67f04cf1b3cc…` · 7 págs · con texto
+`02 analysis/data/raw/peru/mef/presupuesto/aprobado/2024/Ley_31955_Endeudamiento_del_Sector_Publico_para_el_Anio_Fiscal_2024.pdf` · SHA-256 `f9bc67f04cf1b3cc…` · 7 págs · con texto
 
 ## Zotero
 | Campo | Valor |

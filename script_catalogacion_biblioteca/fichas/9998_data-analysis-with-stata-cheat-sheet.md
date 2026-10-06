@@ -17,7 +17,7 @@ verificacion:
 **ID Calibre**: 9998
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Tim, Essam/Data analysis with Stata_ cheat sheet (9998)`
+Carpeta actual en Calibre: `biblioteca/Tim, Essam/Data analysis with Stata_ cheat sheet (9998)`
 
 ## Zotero
 

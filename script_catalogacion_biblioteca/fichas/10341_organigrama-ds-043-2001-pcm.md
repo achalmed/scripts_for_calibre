@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/INEI_Organigrama_DS-043-2001-PCM.pdf` · SHA-256 `c04f8932640734b7…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/INEI_Organigrama_DS-043-2001-PCM.pdf` · SHA-256 `c04f8932640734b7…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

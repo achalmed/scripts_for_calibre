@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3077
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Limites y continuidad de funciones (3077)
+**Carpeta**: biblioteca/Unknown/Limites y continuidad de funciones (3077)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Limites y continuidad de funciones (3077)`
+Carpeta actual en Calibre: `biblioteca/Apuntes de matematica y estadistica/Limites y continuidad de funciones (3077)`
 
 ## Zotero
 

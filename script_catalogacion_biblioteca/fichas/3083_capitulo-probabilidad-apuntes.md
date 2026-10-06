@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3083
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Probabilidad (3083)
+**Carpeta**: biblioteca/Unknown/Probabilidad (3083)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Probabilidad (3083)`
+Carpeta actual en Calibre: `biblioteca/Apuntes de matematica y estadistica/Probabilidad (3083)`
 
 ## Zotero
 

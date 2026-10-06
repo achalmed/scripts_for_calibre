@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 8877
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Numeros indice (8877)
+**Carpeta**: biblioteca/Unknown/Numeros indice (8877)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Numeros indice (8877)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Numeros indice (8877)`
 
 ## Zotero
 

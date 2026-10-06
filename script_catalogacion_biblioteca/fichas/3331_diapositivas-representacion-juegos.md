@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3331
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Representacion de juegos (3331)
+**Carpeta**: biblioteca/Unknown/Representacion de juegos (3331)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Representacion de juegos (3331)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Representacion de juegos (3331)`
 
 ## Zotero
 

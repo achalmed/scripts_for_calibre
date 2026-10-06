@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/wilson-madsen-memoir-class-manual.pdf` · SHA-256 `34c57d4558367517…` · 625 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`scripts_for_fuentes/entrada/wilson-madsen-memoir-class-manual.pdf` · SHA-256 `34c57d4558367517…` · 625 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

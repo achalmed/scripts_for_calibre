@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 8856
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Metodologia de estimacion del balance de pagos (8856)
+**Carpeta**: biblioteca/Unknown/Metodologia de estimacion del balance de pagos (8856)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Direccion Nacional de Cuentas Internacionales/Metodologia de estimacion del balance de pagos (8856)`
+Carpeta actual en Calibre: `biblioteca/Direccion Nacional de Cuentas Internacionales/Metodologia de estimacion del balance de pagos (8856)`
 
 ## Zotero
 

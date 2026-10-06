@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/GORE-AYACUCHO_Organigrama_2025.pdf` · SHA-256 `5564d466648690b7…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/GORE-AYACUCHO_Organigrama_2025.pdf` · SHA-256 `5564d466648690b7…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

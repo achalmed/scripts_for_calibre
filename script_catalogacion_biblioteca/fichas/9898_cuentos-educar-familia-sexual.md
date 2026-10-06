@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9898
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para educar en familia-Educacion-sexual (9898)
+**Carpeta**: biblioteca/Desconocido/Cuentos para educar en familia-Educacion-sexual (9898)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Maria Victoria, Ramirez/Cuentos para educar en familia_ dirigido a ninos y ninas de entre 6 y 12 anos para fomentar la (9898)`
+Carpeta actual en Calibre: `biblioteca/Maria Victoria, Ramirez/Cuentos para educar en familia_ dirigido a ninos y ninas de entre 6 y 12 anos para fomentar la (9898)`
 
 ## Zotero
 

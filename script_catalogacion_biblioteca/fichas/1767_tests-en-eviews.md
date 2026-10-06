@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1767
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Conjunto de tests en eviews (1767)
+**Carpeta**: biblioteca/Unknown/Conjunto de tests en eviews (1767)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Conjunto de tests en EViews (1767)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Conjunto de tests en EViews (1767)`
 
 ## Zotero
 

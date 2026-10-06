@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1655
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Naturaleza de la econometria y de los datos economicos (1655)
+**Carpeta**: biblioteca/Unknown/Naturaleza de la econometria y de los datos economicos (1655)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Naturaleza de la econometria y de los datos economicos (1655)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Naturaleza de la econometria y de los datos economicos (1655)`
 
 ## Zotero
 

@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 4389
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Acumulacion de capital y crecimiento (ii) el modelo de solow (4389)
+**Carpeta**: biblioteca/Unknown/Acumulacion de capital y crecimiento (ii) el modelo de solow (4389)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Acumulacion de capital y crecimiento (II). El modelo de Solow (4389)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Acumulacion de capital y crecimiento (II). El modelo de Solow (4389)`
 
 ## Zotero
 

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/iv fce 313 te avila espinoza 2025.pdf` · SHA-256 `b28a024104acb939…` · 116 págs · con texto
+`03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/iv fce 313 te avila espinoza 2025.pdf` · SHA-256 `b28a024104acb939…` · 116 págs · con texto
 
 ## Zotero
 | Campo | Valor |

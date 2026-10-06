@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 8873
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/El mercado de bienes (8873)
+**Carpeta**: biblioteca/Unknown/El mercado de bienes (8873)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/El mercado de bienes (8873)`
+Carpeta actual en Calibre: `biblioteca/Unknown/El mercado de bienes (8873)`
 
 ## Zotero
 

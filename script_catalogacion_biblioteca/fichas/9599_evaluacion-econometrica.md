@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9599
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Evaluacion econometrica (9599)
+**Carpeta**: biblioteca/Unknown/Evaluacion econometrica (9599)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Evaluacion econometrica (9599)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Evaluacion econometrica (9599)`
 
 ## Zotero
 

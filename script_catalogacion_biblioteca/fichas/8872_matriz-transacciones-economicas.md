@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 8872
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Matriz de transacciones economicas (8872)
+**Carpeta**: biblioteca/Unknown/Matriz de transacciones economicas (8872)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Matriz de transacciones economicas (8872)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Matriz de transacciones economicas (8872)`
 
 ## Zotero
 

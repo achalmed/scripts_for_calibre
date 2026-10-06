@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 8874
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/El mercado de bienes en una economia abierta (8874)
+**Carpeta**: biblioteca/Unknown/El mercado de bienes en una economia abierta (8874)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/El mercado de bienes en una economia abierta (8874)`
+Carpeta actual en Calibre: `biblioteca/Unknown/El mercado de bienes en una economia abierta (8874)`
 
 ## Zotero
 

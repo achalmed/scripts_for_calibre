@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3075
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Indice (3075)
+**Carpeta**: biblioteca/Unknown/Indice (3075)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Indice general (3075)`
+Carpeta actual en Calibre: `biblioteca/Apuntes de matematica y estadistica/Indice general (3075)`
 
 ## Zotero
 

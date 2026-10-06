@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_huaranga2021.pdf` · SHA-256 `2f187b693e4ad8e6…` · entrada BibTeX `@report{lect_huaranga2021}`
+`scripts_for_fuentes/entrada/lect_huaranga2021.pdf` · SHA-256 `2f187b693e4ad8e6…` · entrada BibTeX `@report{lect_huaranga2021}`
 
 ## Zotero
 | Campo | Valor |

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/villarreal2025.pdf` · SHA-256 `1eec29d4c48956bd…` · entrada BibTeX `@article{villarreal2025}`
+`scripts_for_fuentes/entrada/villarreal2025.pdf` · SHA-256 `1eec29d4c48956bd…` · entrada BibTeX `@article{villarreal2025}`
 
 ## Zotero
 | Campo | Valor |

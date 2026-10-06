@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 445
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Heraclito vs pitagoras y parmenides (445)
+**Carpeta**: biblioteca/Unknown/Heraclito vs pitagoras y parmenides (445)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Heraclito vs Pitagoras y Parmenides (445)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Heraclito vs Pitagoras y Parmenides (445)`
 
 ## Zotero
 

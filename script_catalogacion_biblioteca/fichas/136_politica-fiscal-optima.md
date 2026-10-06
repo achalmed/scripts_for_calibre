@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 136
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Politica fiscal optima (136)
+**Carpeta**: biblioteca/Unknown/Politica fiscal optima (136)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Politica fiscal optima (136)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Politica fiscal optima (136)`
 
 ## Zotero
 

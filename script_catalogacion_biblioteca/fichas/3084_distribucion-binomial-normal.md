@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3084
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Distribucion binomial y normal (3084)
+**Carpeta**: biblioteca/Unknown/Distribucion binomial y normal (3084)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Distribucion binomial y distribucion normal (3084)`
+Carpeta actual en Calibre: `biblioteca/Apuntes de matematica y estadistica/Distribucion binomial y distribucion normal (3084)`
 
 ## Zotero
 

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/cepal/panorama_social_2025/panorama_social_2025_v001_2026-09-04.pdf` · SHA-256 `e36770337af1d359…` · 207 págs · con texto
+`02 analysis/data/raw/peru/cepal/panorama_social_2025/panorama_social_2025_v001_2026-09-04.pdf` · SHA-256 `e36770337af1d359…` · 207 págs · con texto
 
 ## Zotero
 | Campo | Valor |

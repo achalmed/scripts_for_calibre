@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9911
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Emiliano, Brancaccio/Anti-Blanchard. Un enfoque comparativo para el estudio de la macroeconomia (9911)
+**Carpeta**: biblioteca/Emiliano, Brancaccio/Anti-Blanchard. Un enfoque comparativo para el estudio de la macroeconomia (9911)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Emiliano, Brancaccio/Anti-Blanchard. Un enfoque comparativo para el estudio de la macroeconomia (9911)`
+Carpeta actual en Calibre: `biblioteca/Emiliano, Brancaccio/Anti-Blanchard. Un enfoque comparativo para el estudio de la macroeconomia (9911)`
 
 ## Zotero
 

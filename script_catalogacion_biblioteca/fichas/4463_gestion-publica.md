@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 4463
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Gestion publica (4463)
+**Carpeta**: biblioteca/Unknown/Gestion publica (4463)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Gestion publica (4463)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Gestion publica (4463)`
 
 ## Zotero
 

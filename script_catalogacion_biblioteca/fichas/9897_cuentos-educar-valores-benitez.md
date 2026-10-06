@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9897
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para educar en valores (9897)
+**Carpeta**: biblioteca/Desconocido/Cuentos para educar en valores (9897)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Laureano, Benitez Grande-Caballero/Cuentos para educar en valores_ actividades para animacion a la lectura, educacion para la ciud (9897)`
+Carpeta actual en Calibre: `biblioteca/Laureano, Benitez Grande-Caballero/Cuentos para educar en valores_ actividades para animacion a la lectura, educacion para la ciud (9897)`
 
 ## Zotero
 

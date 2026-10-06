@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9882
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Evaluacion de proyectos Rene Cornejo (9882)
+**Carpeta**: biblioteca/Desconocido/Evaluacion de proyectos Rene Cornejo (9882)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Rene, Cornejo Diaz/Evaluacion de proyectos_ con ejemplos (9882)`
+Carpeta actual en Calibre: `biblioteca/Rene, Cornejo Diaz/Evaluacion de proyectos_ con ejemplos (9882)`
 
 ## Zotero
 

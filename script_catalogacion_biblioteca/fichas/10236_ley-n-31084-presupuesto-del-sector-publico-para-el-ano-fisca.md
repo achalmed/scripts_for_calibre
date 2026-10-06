@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/presupuesto/aprobado/2021/Ley_31084_Presupuesto_del_Sector_Publico_para_el_Anio_Fiscal_2021.pdf` · SHA-256 `95af0a52d8cceb67…` · 76 págs · con texto
+`02 analysis/data/raw/peru/mef/presupuesto/aprobado/2021/Ley_31084_Presupuesto_del_Sector_Publico_para_el_Anio_Fiscal_2021.pdf` · SHA-256 `95af0a52d8cceb67…` · 76 págs · con texto
 
 ## Zotero
 | Campo | Valor |

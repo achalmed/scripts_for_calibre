@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/MD-SAN-JUAN-BAUTISTA_Organigrama_ROF.pdf` · SHA-256 `a5192599fbc77d5d…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`scripts_for_fuentes/entrada/organigramas/MD-SAN-JUAN-BAUTISTA_Organigrama_ROF.pdf` · SHA-256 `a5192599fbc77d5d…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

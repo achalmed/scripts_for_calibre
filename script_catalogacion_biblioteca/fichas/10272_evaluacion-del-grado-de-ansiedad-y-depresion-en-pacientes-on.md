@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/trello2025.pdf` · SHA-256 `2c30e2e0b25be948…` · entrada BibTeX `@article{trello2025}`
+`scripts_for_fuentes/entrada/trello2025.pdf` · SHA-256 `2c30e2e0b25be948…` · entrada BibTeX `@article{trello2025}`
 
 ## Zotero
 | Campo | Valor |

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/PLAN DE SALUD REGULAR CONGRESO.pdf` · SHA-256 `d17c6d9be8629670…` · 98 págs · con texto
+`scripts_for_fuentes/entrada/PLAN DE SALUD REGULAR CONGRESO.pdf` · SHA-256 `d17c6d9be8629670…` · 98 págs · con texto
 
 ## Zotero
 | Campo | Valor |

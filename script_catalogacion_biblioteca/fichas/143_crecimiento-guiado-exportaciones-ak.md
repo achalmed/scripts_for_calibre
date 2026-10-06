@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 143
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Crecimiento sostenido _guiado_por las exportaciones. un modelo tipo ak para una economia abiert (143)
+**Carpeta**: biblioteca/Unknown/Crecimiento sostenido _guiado_por las exportaciones. un modelo tipo ak para una economia abiert (143)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Crecimiento sostenido _guiado_ por las exportaciones. Un modelo tipo AK para una economia abier (143)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Crecimiento sostenido _guiado_ por las exportaciones. Un modelo tipo AK para una economia abier (143)`
 
 ## Zotero
 

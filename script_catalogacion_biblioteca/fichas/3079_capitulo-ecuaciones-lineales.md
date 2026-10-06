@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3079
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Sistema de ecuaciones lineales (3079)
+**Carpeta**: biblioteca/Unknown/Sistema de ecuaciones lineales (3079)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Sistemas de ecuaciones lineales (3079)`
+Carpeta actual en Calibre: `biblioteca/Apuntes de matematica y estadistica/Sistemas de ecuaciones lineales (3079)`
 
 ## Zotero
 

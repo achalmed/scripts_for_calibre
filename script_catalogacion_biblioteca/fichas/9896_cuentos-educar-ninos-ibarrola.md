@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9896
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Cuentos para educar ninos (9896)
+**Carpeta**: biblioteca/Desconocido/Cuentos para educar ninos (9896)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Begona, Ibarrola/Cuentos para educar ninos felices (9896)`
+Carpeta actual en Calibre: `biblioteca/Begona, Ibarrola/Cuentos para educar ninos felices (9896)`
 
 ## Zotero
 

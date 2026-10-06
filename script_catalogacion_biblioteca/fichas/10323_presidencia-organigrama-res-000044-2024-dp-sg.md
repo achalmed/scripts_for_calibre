@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/PRESIDENCIA_Organigrama_Res-000044-2024-DP-SG.pdf` · SHA-256 `bd46a54b2fc665a5…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`scripts_for_fuentes/entrada/organigramas/PRESIDENCIA_Organigrama_Res-000044-2024-DP-SG.pdf` · SHA-256 `bd46a54b2fc665a5…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

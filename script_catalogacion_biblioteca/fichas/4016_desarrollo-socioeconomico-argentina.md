@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 4016
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Desarrollo socioeconomicos de argentina (4016)
+**Carpeta**: biblioteca/Unknown/Desarrollo socioeconomicos de argentina (4016)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Argentina. Desarrollo socioeconomico en el siglo XX e inicios del siglo XXI (4016)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Argentina. Desarrollo socioeconomico en el siglo XX e inicios del siglo XXI (4016)`
 
 ## Zotero
 

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/identidad_visual/linea_grafica_gestion_2025_2026_fr.pdf` · SHA-256 `d3cb01048d70ab75…` · 14 págs · con texto
+`scripts_for_fuentes/entrada/identidad_visual/linea_grafica_gestion_2025_2026_fr.pdf` · SHA-256 `d3cb01048d70ab75…` · 14 págs · con texto
 
 ## Zotero
 | Campo | Valor |

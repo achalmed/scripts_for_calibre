@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/tufte-2005-powerpoint-does-rocket-science.pdf` · SHA-256 `8f913c5ff19a62e7…` · 23 págs · con texto
+`scripts_for_fuentes/entrada/tufte-2005-powerpoint-does-rocket-science.pdf` · SHA-256 `8f913c5ff19a62e7…` · 23 págs · con texto
 
 ## Zotero
 | Campo | Valor |

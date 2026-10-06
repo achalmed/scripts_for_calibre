@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/ortiz2024.pdf` · SHA-256 `f4c0aae06be0c149…` · entrada BibTeX `@article{ortiz2024}`
+`scripts_for_fuentes/entrada/ortiz2024.pdf` · SHA-256 `f4c0aae06be0c149…` · entrada BibTeX `@article{ortiz2024}`
 
 ## Zotero
 | Campo | Valor |

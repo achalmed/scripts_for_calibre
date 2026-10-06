@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 449
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Comparacion entre el modelo clasico y el de keynes (449)
+**Carpeta**: biblioteca/Unknown/Comparacion entre el modelo clasico y el de keynes (449)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/John, Petroff/Comparacion entre el modelo clasico y el de Keynes (449)`
+Carpeta actual en Calibre: `biblioteca/John, Petroff/Comparacion entre el modelo clasico y el de Keynes (449)`
 
 ## Zotero
 

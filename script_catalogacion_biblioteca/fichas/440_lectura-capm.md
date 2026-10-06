@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 440
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/The capital asset pricing model capm (440)
+**Carpeta**: biblioteca/Unknown/The capital asset pricing model capm (440)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Jean-Pierre, Danthine/Intermediate financial theory, cap. 7_ The capital asset pricing model (CAPM) (440)`
+Carpeta actual en Calibre: `biblioteca/Jean-Pierre, Danthine/Intermediate financial theory, cap. 7_ The capital asset pricing model (CAPM) (440)`
 
 ## Zotero
 

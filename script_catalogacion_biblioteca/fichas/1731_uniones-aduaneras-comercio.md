@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1731
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/El comercio y los efectos de la formacion de uniones aduaneras (1731)
+**Carpeta**: biblioteca/Unknown/El comercio y los efectos de la formacion de uniones aduaneras (1731)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/El comercio y los efectos de la formacion de uniones aduaneras (1731)`
+Carpeta actual en Calibre: `biblioteca/Unknown/El comercio y los efectos de la formacion de uniones aduaneras (1731)`
 
 ## Zotero
 

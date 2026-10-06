@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/MININTER_Organigrama_2026-05-08.pdf` · SHA-256 `2d810db12a166636…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/MININTER_Organigrama_2026-05-08.pdf` · SHA-256 `2d810db12a166636…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

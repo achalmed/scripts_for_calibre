@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3074
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Combinatoria (3074)
+**Carpeta**: biblioteca/Unknown/Combinatoria (3074)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Combinatoria (3074)`
+Carpeta actual en Calibre: `biblioteca/Apuntes de matematica y estadistica/Combinatoria (3074)`
 
 ## Zotero
 

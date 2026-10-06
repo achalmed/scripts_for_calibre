@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/alley-neeley-2005-rethinking-the-design-of-presentation-slides.pdf` · SHA-256 `a21092a692f22e08…` · 10 págs · con texto
+`scripts_for_fuentes/entrada/alley-neeley-2005-rethinking-the-design-of-presentation-slides.pdf` · SHA-256 `a21092a692f22e08…` · 10 págs · con texto
 
 ## Zotero
 | Campo | Valor |

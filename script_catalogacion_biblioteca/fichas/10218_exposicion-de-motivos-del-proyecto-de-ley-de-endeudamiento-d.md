@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/mef/presupuesto/proyecto/2025/EM_PL_Endeudamiento_2025.pdf` · SHA-256 `83be5523850706f5…` · 78 págs · con texto
+`02 analysis/data/raw/peru/mef/presupuesto/proyecto/2025/EM_PL_Endeudamiento_2025.pdf` · SHA-256 `83be5523850706f5…` · 78 págs · con texto
 
 ## Zotero
 | Campo | Valor |

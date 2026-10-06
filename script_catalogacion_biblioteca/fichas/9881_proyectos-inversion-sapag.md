@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9881
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Proyectos de inversion.Formulacion y Evaluacion (9881)
+**Carpeta**: biblioteca/Desconocido/Proyectos de inversion.Formulacion y Evaluacion (9881)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Nassir, Sapag Chain/Proyectos de inversion_ formulacion y evaluacion (9881)`
+Carpeta actual en Calibre: `biblioteca/Nassir, Sapag Chain/Proyectos de inversion_ formulacion y evaluacion (9881)`
 
 ## Zotero
 

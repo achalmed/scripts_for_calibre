@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1615
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Metodologia anarquista de paul feyerabend (1615)
+**Carpeta**: biblioteca/Unknown/Metodologia anarquista de paul feyerabend (1615)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Virginia Maria, Fontes Goncalves/Do racionalismo critico ao anarquismo pluralista (cap. 3_ A epistemologia anarquista de Paul Fe (1615)`
+Carpeta actual en Calibre: `biblioteca/Virginia Maria, Fontes Goncalves/Do racionalismo critico ao anarquismo pluralista (cap. 3_ A epistemologia anarquista de Paul Fe (1615)`
 
 ## Zotero
 

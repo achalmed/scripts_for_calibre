@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 48
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/60 anos de bretton woods (48)
+**Carpeta**: biblioteca/Unknown/60 anos de bretton woods (48)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Pedro, Solbes Mira/60 anos despues de Bretton Woods (48)`
+Carpeta actual en Calibre: `biblioteca/Pedro, Solbes Mira/60 anos despues de Bretton Woods (48)`
 
 ## Zotero
 

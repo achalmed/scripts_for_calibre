@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/MD-JESUS-NAZARENO_Organigrama_ROF.pdf` · SHA-256 `4c87db062fc721c6…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`scripts_for_fuentes/entrada/organigramas/MD-JESUS-NAZARENO_Organigrama_ROF.pdf` · SHA-256 `4c87db062fc721c6…` · 1 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

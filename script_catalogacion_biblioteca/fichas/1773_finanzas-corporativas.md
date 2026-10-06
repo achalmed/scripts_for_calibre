@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1773
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Finanzas coorporativas (1773)
+**Carpeta**: biblioteca/Unknown/Finanzas coorporativas (1773)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Claudia Raquel, Baqueiro Lezama/Finanzas corporativas (1773)`
+Carpeta actual en Calibre: `biblioteca/Claudia Raquel, Baqueiro Lezama/Finanzas corporativas (1773)`
 
 ## Zotero
 

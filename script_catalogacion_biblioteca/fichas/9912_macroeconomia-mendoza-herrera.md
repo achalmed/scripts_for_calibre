@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9912
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Waldo, Mendoza Bellido/Macroeconomia. Un marco de analisis para una economia pequena y abierta (9912)
+**Carpeta**: biblioteca/Waldo, Mendoza Bellido/Macroeconomia. Un marco de analisis para una economia pequena y abierta (9912)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Waldo, Mendoza Bellido/Macroeconomia. Un marco de analisis para una economia pequena y abierta (9912)`
+Carpeta actual en Calibre: `biblioteca/Waldo, Mendoza Bellido/Macroeconomia. Un marco de analisis para una economia pequena y abierta (9912)`
 
 ## Zotero
 

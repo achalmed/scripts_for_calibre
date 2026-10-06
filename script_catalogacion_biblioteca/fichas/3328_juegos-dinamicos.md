@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3328
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Juegos dinamicos (3328)
+**Carpeta**: biblioteca/Unknown/Juegos dinamicos (3328)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Juegos dinamicos (3328)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Juegos dinamicos (3328)`
 
 ## Zotero
 

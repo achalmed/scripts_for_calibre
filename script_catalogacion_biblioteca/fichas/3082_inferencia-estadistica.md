@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3082
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Inferencia estadisticaistica (3082)
+**Carpeta**: biblioteca/Unknown/Inferencia estadisticaistica (3082)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Inferencia estadistica (3082)`
+Carpeta actual en Calibre: `biblioteca/Apuntes de matematica y estadistica/Inferencia estadistica (3082)`
 
 ## Zotero
 

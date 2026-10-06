@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 167
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Critica de las teorias monetarista y keynesiana (167)
+**Carpeta**: biblioteca/Unknown/Critica de las teorias monetarista y keynesiana (167)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Jesus, Huerta de Soto/Critica de las teorias monetarista y keynesiana (167)`
+Carpeta actual en Calibre: `biblioteca/Jesus, Huerta de Soto/Critica de las teorias monetarista y keynesiana (167)`
 
 ## Zotero
 

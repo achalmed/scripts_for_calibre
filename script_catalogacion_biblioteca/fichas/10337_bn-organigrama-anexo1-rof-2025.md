@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/BN_Organigrama_Anexo1-ROF-2025.pdf` · SHA-256 `456b3f3a7e1645a1…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/BN_Organigrama_Anexo1-ROF-2025.pdf` · SHA-256 `456b3f3a7e1645a1…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

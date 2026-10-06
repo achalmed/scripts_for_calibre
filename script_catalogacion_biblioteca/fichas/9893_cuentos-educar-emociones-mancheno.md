@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9893
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/Tecnicas, actividades y cuentos para educar las emociones de los (9893)
+**Carpeta**: biblioteca/Desconocido/Tecnicas, actividades y cuentos para educar las emociones de los (9893)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Isa, Mancheno/Tecnicas, actividades y cuentos para educar las emociones de los ninos (9893)`
+Carpeta actual en Calibre: `biblioteca/Isa, Mancheno/Tecnicas, actividades y cuentos para educar las emociones de los ninos (9893)`
 
 ## Zotero
 

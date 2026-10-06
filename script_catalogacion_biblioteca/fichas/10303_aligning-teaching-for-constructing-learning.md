@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/biggs-2003-aligning-teaching-for-constructing-learning.pdf` · SHA-256 `31a69336e0d60a6e…` · 4 págs · con texto
+`scripts_for_fuentes/entrada/biggs-2003-aligning-teaching-for-constructing-learning.pdf` · SHA-256 `31a69336e0d60a6e…` · 4 págs · con texto
 
 ## Zotero
 | Campo | Valor |

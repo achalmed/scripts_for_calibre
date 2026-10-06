@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/mejia2022.pdf` · SHA-256 `384bf0c047a4f7a1…` · entrada BibTeX `@article{mejia2022}`
+`scripts_for_fuentes/entrada/mejia2022.pdf` · SHA-256 `384bf0c047a4f7a1…` · entrada BibTeX `@article{mejia2022}`
 
 ## Zotero
 | Campo | Valor |

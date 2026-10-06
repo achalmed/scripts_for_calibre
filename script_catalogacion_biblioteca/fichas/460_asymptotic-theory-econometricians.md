@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 460
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Asymptotic theory for econometricians (460)
+**Carpeta**: biblioteca/Unknown/Asymptotic theory for econometricians (460)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Halbert, White/Asymptotic theory for econometricians (460)`
+Carpeta actual en Calibre: `biblioteca/Halbert, White/Asymptotic theory for econometricians (460)`
 
 ## Zotero
 

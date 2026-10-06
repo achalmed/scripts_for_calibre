@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3080
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Matrices y determinantes (3080)
+**Carpeta**: biblioteca/Unknown/Matrices y determinantes (3080)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Matrices y determinantes (3080)`
+Carpeta actual en Calibre: `biblioteca/Apuntes de matematica y estadistica/Matrices y determinantes (3080)`
 
 ## Zotero
 

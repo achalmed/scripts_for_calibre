@@ -17,7 +17,7 @@ verificacion:
 **ID Calibre**: 9971
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Tony, Hinojosa Vivanco/Costo de capital en el mercado emergente peruano (9971)`
+Carpeta actual en Calibre: `biblioteca/Tony, Hinojosa Vivanco/Costo de capital en el mercado emergente peruano (9971)`
 
 ## Zotero
 

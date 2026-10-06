@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 4367
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Informacion incompleta (asimetria) (4367)
+**Carpeta**: biblioteca/Unknown/Informacion incompleta (asimetria) (4367)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Informacion incompleta (asimetria) (4367)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Informacion incompleta (asimetria) (4367)`
 
 ## Zotero
 

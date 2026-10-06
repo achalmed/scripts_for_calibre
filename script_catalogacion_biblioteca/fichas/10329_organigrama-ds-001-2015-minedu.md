@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/MINEDU_Organigrama_DS-001-2015-MINEDU.pdf` · SHA-256 `6f36b9f31588cb83…` · 2 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`scripts_for_fuentes/entrada/organigramas/MINEDU_Organigrama_DS-001-2015-MINEDU.pdf` · SHA-256 `6f36b9f31588cb83…` · 2 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

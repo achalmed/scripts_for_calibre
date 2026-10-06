@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9103
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Problem set 2 (9103)
+**Carpeta**: biblioteca/Unknown/Problem set 2 (9103)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Problem set 2 (9103)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Problem set 2 (9103)`
 
 ## Zotero
 

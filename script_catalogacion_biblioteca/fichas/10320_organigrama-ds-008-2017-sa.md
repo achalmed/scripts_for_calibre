@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/organigramas/MINSA_Organigrama_DS-008-2017-SA.pdf` · SHA-256 `2ba81c6d3defd6df…` · 1 págs · con texto
+`scripts_for_fuentes/entrada/organigramas/MINSA_Organigrama_DS-008-2017-SA.pdf` · SHA-256 `2ba81c6d3defd6df…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

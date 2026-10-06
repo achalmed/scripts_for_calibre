@@ -15,7 +15,7 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9886
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Desconocido/LIBRO DE MATEMATICA FINANCIERA (2) (1) (9886)
+**Carpeta**: biblioteca/Desconocido/LIBRO DE MATEMATICA FINANCIERA (2) (1) (9886)
 
 ## Zotero
 

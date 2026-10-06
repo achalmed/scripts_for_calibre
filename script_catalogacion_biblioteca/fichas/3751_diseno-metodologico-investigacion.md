@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3751
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Diseno metodologico de la investigacion (3751)
+**Carpeta**: biblioteca/Unknown/Diseno metodologico de la investigacion (3751)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Diseno metodologico de la investigacion (3751)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Diseno metodologico de la investigacion (3751)`
 
 ## Zotero
 

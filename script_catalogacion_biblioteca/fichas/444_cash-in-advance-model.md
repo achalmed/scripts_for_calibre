@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 444
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Cash in advance model (444)
+**Carpeta**: biblioteca/Unknown/Cash in advance model (444)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Martin, Ellison/Cash in advance model (Monetary Economics, cap. 4) (444)`
+Carpeta actual en Calibre: `biblioteca/Martin, Ellison/Cash in advance model (Monetary Economics, cap. 4) (444)`
 
 ## Zotero
 

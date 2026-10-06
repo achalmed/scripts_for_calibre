@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 8865
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Slide agregados economicos (8865)
+**Carpeta**: biblioteca/Unknown/Slide agregados economicos (8865)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Agregados economicos (8865)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Agregados economicos (8865)`
 
 ## Zotero
 

@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 4357
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Walsh small open economics (4357)
+**Carpeta**: biblioteca/Unknown/Walsh small open economics (4357)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Walsh small open economics (4357)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Walsh small open economics (4357)`
 
 ## Zotero
 

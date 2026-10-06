@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3912
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Contrataciones publicas (3912)
+**Carpeta**: biblioteca/Unknown/Contrataciones publicas (3912)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Contrataciones publicas (3912)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Contrataciones publicas (3912)`
 
 ## Zotero
 

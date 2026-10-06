@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 123
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/El modelo de informacion imperfecta de lucas (123)
+**Carpeta**: biblioteca/Unknown/El modelo de informacion imperfecta de lucas (123)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/El modelo de informacion imperfecta de Lucas (123)`
+Carpeta actual en Calibre: `biblioteca/Unknown/El modelo de informacion imperfecta de Lucas (123)`
 
 ## Zotero
 

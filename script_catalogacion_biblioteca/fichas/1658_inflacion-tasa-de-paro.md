@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 1658
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Introduccion curva phillips basico (1658)
+**Carpeta**: biblioteca/Unknown/Introduccion curva phillips basico (1658)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/Inflacion y tasa de paro (1658)`
+Carpeta actual en Calibre: `biblioteca/Unknown/Inflacion y tasa de paro (1658)`
 
 ## Zotero
 

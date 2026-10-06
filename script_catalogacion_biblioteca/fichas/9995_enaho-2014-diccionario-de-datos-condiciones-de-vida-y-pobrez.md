@@ -17,7 +17,7 @@ verificacion:
 **ID Calibre**: 9995
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Instituto Nacional de Estadistica e Informatica/ENAHO 2014. Diccionario de datos_ condiciones de vida y pobreza (9995)`
+Carpeta actual en Calibre: `biblioteca/Instituto Nacional de Estadistica e Informatica/ENAHO 2014. Diccionario de datos_ condiciones de vida y pobreza (9995)`
 
 ## Zotero
 

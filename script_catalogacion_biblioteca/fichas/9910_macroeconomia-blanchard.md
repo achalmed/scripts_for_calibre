@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9910
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Olivier, Blanchard/Macroeconomia (9910)
+**Carpeta**: biblioteca/Olivier, Blanchard/Macroeconomia (9910)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Olivier, Blanchard/Macroeconomia (9910)`
+Carpeta actual en Calibre: `biblioteca/Olivier, Blanchard/Macroeconomia (9910)`
 
 ## Zotero
 

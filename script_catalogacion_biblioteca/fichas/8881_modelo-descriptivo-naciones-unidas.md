@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 8881
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/El modelo descriptivo de las naciones unidas (8881)
+**Carpeta**: biblioteca/Unknown/El modelo descriptivo de las naciones unidas (8881)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Unknown/El modelo descriptivo de las Naciones Unidas (8881)`
+Carpeta actual en Calibre: `biblioteca/Unknown/El modelo descriptivo de las Naciones Unidas (8881)`
 
 ## Zotero
 

@@ -17,7 +17,7 @@ verificacion:
 **ID Calibre**: 9997
 **Carpeta**: (asignada por Calibre tras set_metadata)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Ricardo A., Pasquini/Clase 1_ introduccion a Stata (9997)`
+Carpeta actual en Calibre: `biblioteca/Ricardo A., Pasquini/Clase 1_ introduccion a Stata (9997)`
 
 ## Zotero
 

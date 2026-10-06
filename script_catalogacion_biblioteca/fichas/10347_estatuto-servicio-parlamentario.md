@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/Estatuto Servicio Parlamentario.pdf` · SHA-256 `36c3322bf3cc4a24…` · 14 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`scripts_for_fuentes/entrada/Estatuto Servicio Parlamentario.pdf` · SHA-256 `36c3322bf3cc4a24…` · 14 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

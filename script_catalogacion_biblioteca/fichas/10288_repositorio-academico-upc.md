@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/rumaldo ac.pdf` · SHA-256 `21fe2e8057b86b52…` · 40 págs · con texto
+`03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/rumaldo ac.pdf` · SHA-256 `21fe2e8057b86b52…` · 40 págs · con texto
 
 ## Zotero
 | Campo | Valor |

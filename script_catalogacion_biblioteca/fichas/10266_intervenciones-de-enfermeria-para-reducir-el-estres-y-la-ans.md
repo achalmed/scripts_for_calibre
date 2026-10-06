@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/cardenas2025.pdf` · SHA-256 `0ca230ce5f8cff91…` · entrada BibTeX `@article{cardenas2025}`
+`scripts_for_fuentes/entrada/cardenas2025.pdf` · SHA-256 `0ca230ce5f8cff91…` · entrada BibTeX `@article{cardenas2025}`
 
 ## Zotero
 | Campo | Valor |

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts_for_fuentes/entrada/lect_reyes2005.pdf` · SHA-256 `bbdafec95b14c23b…` · entrada BibTeX `@article{lect_reyes2005}`
+`scripts_for_fuentes/entrada/lect_reyes2005.pdf` · SHA-256 `bbdafec95b14c23b…` · entrada BibTeX `@article{lect_reyes2005}`
 
 ## Zotero
 | Campo | Valor |

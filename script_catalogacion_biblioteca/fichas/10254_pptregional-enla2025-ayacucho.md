@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/02 analysis/data/raw/peru/minedu/enla_2025_ayacucho/PPTRegional_ENLA2025_Ayacucho.pdf` · SHA-256 `c6b6d69136b88166…` · 108 págs · con texto
+`02 analysis/data/raw/peru/minedu/enla_2025_ayacucho/PPTRegional_ENLA2025_Ayacucho.pdf` · SHA-256 `c6b6d69136b88166…` · 108 págs · con texto
 
 ## Zotero
 | Campo | Valor |

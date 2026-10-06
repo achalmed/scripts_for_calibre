@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3076
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Integracion calculo de areas (3076)
+**Carpeta**: biblioteca/Unknown/Integracion calculo de areas (3076)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Integracion. Calculo de areas (3076)`
+Carpeta actual en Calibre: `biblioteca/Apuntes de matematica y estadistica/Integracion. Calculo de areas (3076)`
 
 ## Zotero
 

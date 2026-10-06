@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3904
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Plan contable general empresarial (3904)
+**Carpeta**: biblioteca/Unknown/Plan contable general empresarial (3904)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Consejo Normativo de Contabilidad/Plan contable general empresarial (3904)`
+Carpeta actual en Calibre: `biblioteca/Consejo Normativo de Contabilidad/Plan contable general empresarial (3904)`
 
 ## Zotero
 

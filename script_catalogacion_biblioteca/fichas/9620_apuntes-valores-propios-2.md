@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 9620
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Valores propios 02 (9620)
+**Carpeta**: biblioteca/Unknown/Valores propios 02 (9620)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Julio, Benitez Lopez/Valores y vectores propios (9620)`
+Carpeta actual en Calibre: `biblioteca/Julio, Benitez Lopez/Valores y vectores propios (9620)`
 
 ## Zotero
 

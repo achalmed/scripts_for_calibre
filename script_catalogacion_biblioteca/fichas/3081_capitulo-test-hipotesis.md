@@ -15,9 +15,9 @@ verificacion:
 ## Origen
 
 **ID Calibre**: 3081
-**Carpeta**: /home/achalmaedison/Documents/biblioteca/Unknown/Test de hipotesis (3081)
+**Carpeta**: biblioteca/Unknown/Test de hipotesis (3081)
 
-Carpeta actual en Calibre: `/home/achalmaedison/Documents/biblioteca/Apuntes de matematica y estadistica/Test de hipotesis (3081)`
+Carpeta actual en Calibre: `biblioteca/Apuntes de matematica y estadistica/Test de hipotesis (3081)`
 
 ## Zotero
 
