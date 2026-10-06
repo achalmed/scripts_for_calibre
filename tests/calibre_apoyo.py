@@ -90,8 +90,19 @@ def arbol_referencia(destino: Path, ref: str = REFERENCIA) -> Path:
     arbol.mkdir()
     archivo = subprocess.run(["git", "-C", str(REPO), "archive", ref], check=True, capture_output=True).stdout
     subprocess.run(["tar", "-x", "-C", str(arbol)], input=archivo, check=True)
+    # Las suites tomaron nombres por función en la fase E de la ola 2: en la referencia, cada nombre nuevo es un
+    # enlace a su carpeta vieja, y las pruebas usan las mismas rutas para las dos versiones.
+    for viejo, nuevo in NOMBRES_ANTERIORES.items():
+        if (arbol / viejo).is_dir() and not (arbol / nuevo).exists():
+            os.symlink(viejo, arbol / nuevo)
     os.symlink(CORE, destino / "core")
     return arbol
+
+
+# carpeta en la referencia (467c8a7) → carpeta hoy (fase E de la ola 2)
+NOMBRES_ANTERIORES = {"script_catalogacion_biblioteca": "catalogacion", "script_ecosistema_lectura": "lectura",
+                      "script_koreader_estudio": "koreader", "script_sincronizar_zotero": "sincronizar-zotero",
+                      "script_metadatos_calibre": "metadatos-pdf", "script_verificar_metadatos": "verificacion"}
 
 
 def arbol_actual(destino: Path) -> Path:
@@ -101,7 +112,7 @@ def arbol_actual(destino: Path) -> Path:
     salida = subprocess.run(["git", "-C", str(REPO), "ls-files", "-co", "--exclude-standard", "-z"],
                             check=True, capture_output=True).stdout.decode()
     for rel in filter(None, salida.split("\0")):
-        if rel.startswith("script_catalogacion_biblioteca/fichas/"):
+        if rel.startswith("catalogacion/fichas/"):
             continue
         origen = REPO / rel
         if not origen.exists() and not origen.is_symlink():

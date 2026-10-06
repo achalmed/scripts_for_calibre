@@ -1,0 +1,16 @@
+# verificacion/suite.yml — suite verificar_metadatos: Coteja los metadatos de Calibre contra bases bibliográficas públicas y escribe un informe de discrepancias; nunca modifica la biblioteca.
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: verificacion
+objetivo: biblioteca
+resumen: Coteja los metadatos de Calibre contra bases bibliográficas públicas y escribe un informe de discrepancias; nunca modifica la biblioteca.
+escribe_en:
+- ninguno
+simula_por_defecto: true
+comandos:
+- 'main.sh                      # informe en reportes/'
+- main.sh --modo isbn
+estado: activo
+depende_de:
+- CORE_PYTHON (urllib; sin curl)
+- core/shell-lib
+- lib/leer.sh

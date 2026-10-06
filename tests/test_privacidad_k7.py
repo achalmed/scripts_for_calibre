@@ -25,7 +25,7 @@ def test_sin_correos_en_lo_rastreado():
 
 
 def test_fichas_con_proyecto_por_id():
-    fichas = (ap.REPO / "script_catalogacion_biblioteca" / "fichas").glob("*.md")
+    fichas = (ap.REPO / "catalogacion" / "fichas").glob("*.md")
     malas = [f.name for f in fichas
              if re.search(r"^proyecto:\s*\S*/", f.read_text(encoding="utf-8", errors="replace"), re.M)]
     assert malas == []

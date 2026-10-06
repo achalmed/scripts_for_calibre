@@ -1,7 +1,7 @@
 """tests/test_calibre_caracterizacion.py — caracterización de los tres sincronizadores vivos (ola 2, K1; R-2).
 
-Objetivo: fijar lo que hacen hoy `script_ecosistema_lectura`, `script_koreader_estudio` y
-  `script_sincronizar_zotero` antes de tocar su código (Feathers 2002, calibre_id 10437): el árbol de
+Objetivo: fijar lo que hacen hoy `lectura`, `koreader` y
+  `sincronizar-zotero` antes de tocar su código (Feathers 2002, calibre_id 10437): el árbol de
   trabajo debe producir, sobre las mismas copias, el mismo reporte y el mismo cambio en las bases que la
   referencia de git (`calibre_apoyo.REFERENCIA`).
 Método: para cada suite y modo (simulación y `--aplicar`), dos corridas aisladas desde la misma foto de
@@ -23,12 +23,12 @@ import calibre_apoyo as ap
 pytestmark = pytest.mark.caracterizacion
 
 SUITES = {
-    "ecosistema_lectura": ("script_ecosistema_lectura", "reportes", "sync_*.tsv"),
-    "koreader_estudio": ("script_koreader_estudio", "reportes", "sync_*.tsv"),
-    "sincronizar_zotero": ("script_sincronizar_zotero", "reportes", "sync_*.tsv"),
+    "ecosistema_lectura": ("lectura", "reportes", "sync_*.tsv"),
+    "koreader_estudio": ("koreader", "reportes", "sync_*.tsv"),
+    "sincronizar_zotero": ("sincronizar-zotero", "reportes", "sync_*.tsv"),
 }
 # el timer ecosistema-metadatos: ecosistema_lectura --metadatos orquesta sincronizar_zotero (candado heredado)
-ORQUESTADOR = ("script_ecosistema_lectura", "../script_sincronizar_zotero/reportes", "sync_*.tsv")
+ORQUESTADOR = ("lectura", "../sincronizar-zotero/reportes", "sync_*.tsv")
 OTRAS = {}   # otras suites que comparan otros módulos de prueba (test_escritores_k5.py)
 
 

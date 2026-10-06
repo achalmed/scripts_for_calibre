@@ -25,7 +25,7 @@ para este repo y solo dice lo que aquella no dice.
   `python3 -m pytest scripts_for_calibre/tests` (< 2 min) contra la referencia; un defecto se fija
   primero como `xfail` estricto.
 - **Calibre manda en los metadatos bibliográficos**; Zotero solo rellena vacíos y puebla el espejo
-  `#zotero_*`; vacío en el origen nunca borra en el destino (`script_sincronizar_zotero/README.md`).
+  `#zotero_*`; vacío en el origen nunca borra en el destino (`sincronizar-zotero/README.md`).
 - **Título y autor jamás se escriben en Calibre** por sincronización ni verificación: Zotero enlaza
   los adjuntos por `Autor/Título (id)`. Excepciones: la catalogación (antes de que haya ítem en
   Zotero) y una campaña que reescriba Zotero en la misma operación (`lib/adjuntos_zotero.py`).
@@ -47,7 +47,7 @@ para este repo y solo dice lo que aquella no dice.
   ignorado; lo generado (bloques `suite:`/`suites:`/`docs:`) no se edita a mano.
 - **`lib_comun/` no se amplía, ni se borra ni se renombra**: lo consume `scripts_for_fuentes`
   hasta que `core` lo retire (C4).
-- **`script_catalogacion_biblioteca/fichas/` y su TSV son el registro de esa suite**: las fichas las
+- **`catalogacion/fichas/` y su TSV son el registro de esa suite**: las fichas las
   escribe `scripts_for_fuentes/ingesta`; aquí se aplican al catálogo. `proyecto:` es un id.
 - **Dónde va cada cosa nueva**: en la raíz solo `README.md`, `CLAUDE.md`, `AGENTS.md`, `estado.md` y
   `LICENSE`; el porqué a `docs/decisiones.md` (`### §N.M`, sin renumerar), lo pendiente a
@@ -63,7 +63,7 @@ python3 -m pytest scripts_for_calibre/tests                  # caracterización,
 python3 core/archivos.py validar scripts_for_calibre --linea-base "$PWD/meta/programa/05-piloto/linea-base/validador.json"
 python3 core/suites.py validar                               # los suite.yml contra core/suite.schema.yml
 python3 core/docs.py verificar scripts_for_calibre           # ¿docs/README.md al día?
-bash -n scripts_for_calibre/script_koreader_estudio/main.sh  # sintaxis; un archivo por invocación
+bash -n scripts_for_calibre/koreader/main.sh  # sintaxis; un archivo por invocación
 scripts_for_calibre/systemd/instalar.sh --verificar          # ¿lo instalado = las plantillas?
 systemctl --user list-timers | grep -E "koreader|ecosistema" # los tres timers, próxima pasada
 ```
@@ -77,7 +77,7 @@ la base, con la app cerrada.
   («Another calibre program…»); por eso las pruebas corren bajo `unshare -rn`. Mientras corren, un
   timer real puede ver procesos de Calibre y saltarse la pasada: es normal.
 - **Trampas de Calibre 9 y de las columnas `#ko_*`** (`set_custom`, `field()` frente a
-  `raw_field()`, `#ko_progfloat` en fracción 0–1): `script_koreader_estudio/README.md`.
+  `raw_field()`, `#ko_progfloat` en fracción 0–1): `koreader/README.md`.
 - **KOReader ↔ Calibre se emparejan por el MD5 parcial de KOReader** (`#ko_md5`); los sidecars
   viven en `~/.config/koreader/hashdocsettings/`, así que renombrar en Calibre no rompe nada.
 - **El Read Time de Zotero** es una nota del ítem «Addon Item» de Ethereal Style en `itemNotes`; se

@@ -5,7 +5,7 @@ Description=Sincronizar las estadísticas de KOReader hacia Calibre (estudio)
 Type=oneshot
 # PATH mínimo: las suites corren con CORE_PYTHON (core/env) y las herramientas del sistema, sin anaconda (P221).
 Environment="PATH=/usr/local/bin:/usr/bin:/bin"
-ExecStart=@RAIZ@/script_koreader_estudio/main.sh --desde-timer
+ExecStart=@RAIZ@/koreader/main.sh --desde-timer
 # 75 = candado ocupado u otra herramienta escribiendo: «reintentar luego», no es un fallo (core/shell-lib/lock.sh).
 SuccessExitStatus=75
 Nice=10

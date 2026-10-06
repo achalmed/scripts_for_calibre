@@ -23,7 +23,7 @@ cosa?**
 |---|---|---|---|
 | `koreader-calibre-sync` | cada 30 min | KOReader → Calibre: progreso, estado, minutos, fechas, barra; y **respalda** stats+sidecars al repo `~/.local/share/koreader-respaldo/` (commit git local; FG3) | Calibre abierto |
 | `ecosistema-lectura` | cada 30 min | Zotero → Calibre: `#zot_tiempo`, `#zot_progreso`, `#zot_ultima` | Calibre abierto |
-| `ecosistema-metadatos` | diario 04:30 | etiquetas + metadatos bidireccionales (`../script_sincronizar_zotero/`) | Calibre O Zotero abiertos, o sin cambios en las bases |
+| `ecosistema-metadatos` | diario 04:30 | etiquetas + metadatos bidireccionales (`../sincronizar-zotero/`) | Calibre O Zotero abiertos, o sin cambios en las bases |
 
 - «Se salta» no es un error: **reintenta en la siguiente pasada**. Si dejas la laptop apagada a las
   04:30, `Persistent=true` la corre al encender.
@@ -61,21 +61,21 @@ Fuera del repo quedan solo las copias renderizadas; la fuente es siempre `../sys
 |---|---|
 | Terminaste de LEER un libro | En KOReader: menú del libro → estado → **Terminado** (o marca `Leído` en Calibre). Eso dispara ✅ Finalizado + fecha |
 | Estado de ESTUDIO (≠ lectura) | Edita a mano la columna **`#estudio`** (⬜/📖/🔁/✅). Ningún script la toca |
-| Creamos una nota de clase nueva | `../script_koreader_estudio/main.sh --apuntes <id_libro> "<ruta.md>" "<texto>"` (escribe al invocarse, con Calibre cerrado; el asistente lo hace en la sesión de estudio) |
+| Creamos una nota de clase nueva | `../koreader/main.sh --apuntes <id_libro> "<ruta.md>" "<texto>"` (escribe al invocarse, con Calibre cerrado; el asistente lo hace en la sesión de estudio) |
 | Quieres publicar los respaldos al remoto | `git -C ~/.local/share/koreader-respaldo push` (los commits locales ya están hechos) |
-| Llevar a Zotero los libros que no están | `../script_ecosistema_lectura/main.sh --enlazar --ris` → importar el `.ris` en Zotero (enlazar archivos) → `--enlazar --aplicar` (escribe las claves «adjunto») → los de ISBN o título, pegar la clave en ZKey |
+| Llevar a Zotero los libros que no están | `../lectura/main.sh --enlazar --ris` → importar el `.ris` en Zotero (enlazar archivos) → `--enlazar --aplicar` (escribe las claves «adjunto») → los de ISBN o título, pegar la clave en ZKey |
 | Ver los apuntes desde Calibre | Selecciona el libro → panel **Detalles del libro** (derecha) → clic en «📝 …» (abre en **Obsidian**) o «abrir como archivo» (MarkText). El **doble clic** sobre el libro siempre abre el PDF: es el comportamiento normal de Calibre, no un error |
 
 ## 3. Chuleta de comandos
 
 ```bash
-cd "$SCRIPTS_CALIBRE/script_koreader_estudio"        # SCRIPTS_CALIBRE: core/env.sh --print
+cd "$SCRIPTS_CALIBRE/koreader"        # SCRIPTS_CALIBRE: core/env.sh --print
 ./main.sh                              # KOReader → Calibre: simulación (ver qué haría)
 ./main.sh --aplicar                    # forzar una pasada YA (Calibre cerrado)
 ./main.sh --apuntes ID RUTA "TEXTO"    # enlazar apuntes .md a un libro
 ./main.sh --migrar-sdr                 # ya ejecutada; solo si aparecieran .sdr nuevos
 
-cd "$SCRIPTS_CALIBRE/script_ecosistema_lectura"
+cd "$SCRIPTS_CALIBRE/lectura"
 ./main.sh                              # Zotero → Calibre: simulación
 ./main.sh --aplicar                    # forzar pasada YA (Calibre cerrado; Zotero da igual)
 ./main.sh --metadatos                  # ensayo de etiquetas/metadatos (simulación)
@@ -116,5 +116,5 @@ git -C ~/.local/share/koreader-respaldo log --oneline -5       # respaldos recie
   `$XDG_STATE_HOME/biblioteca/`.
 - No muevas el repo de carpeta sin reinstalar los timers (`../systemd/instalar.sh --aplicar`).
 - No ejecutes los `.js` de `scripts_for_zotero` (salvo `series_organizer`): sus transformaciones
-  están absorbidas por la política de `../script_sincronizar_zotero/` y el sync nocturno las
+  están absorbidas por la política de `../sincronizar-zotero/` y el sync nocturno las
   revertiría.

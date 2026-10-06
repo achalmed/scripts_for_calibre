@@ -5,7 +5,7 @@ Description=Orquestar la sincronización de metadatos Calibre-Zotero (si ambos c
 Type=oneshot
 # PATH mínimo: las suites corren con CORE_PYTHON (core/env) y las herramientas del sistema, sin anaconda (P221).
 Environment="PATH=/usr/local/bin:/usr/bin:/bin"
-ExecStart=@RAIZ@/script_ecosistema_lectura/main.sh --metadatos --desde-timer
+ExecStart=@RAIZ@/lectura/main.sh --metadatos --desde-timer
 # 75 = candado ocupado u otra herramienta escribiendo: «reintentar luego», no es un fallo (core/shell-lib/lock.sh).
 SuccessExitStatus=75
 Nice=10

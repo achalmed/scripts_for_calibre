@@ -12,8 +12,8 @@ se lee para saber por qué, no para saber cómo.
 
 | si eres… | empieza por |
 |---|---|
-| **quien lee y estudia** (KOReader, Zotero, Calibre) | [operacion.md](operacion.md) §1 y §2 → [`../script_koreader_estudio/README.md`](../script_koreader_estudio/README.md) |
-| **quien cataloga o corrige metadatos** | [`../script_catalogacion_biblioteca/README.md`](../script_catalogacion_biblioteca/README.md) → [`../script_verificar_metadatos/README.md`](../script_verificar_metadatos/README.md) → [`../script_sincronizar_zotero/README.md`](../script_sincronizar_zotero/README.md) |
+| **quien lee y estudia** (KOReader, Zotero, Calibre) | [operacion.md](operacion.md) §1 y §2 → [`../koreader/README.md`](../koreader/README.md) |
+| **quien cataloga o corrige metadatos** | [`../catalogacion/README.md`](../catalogacion/README.md) → [`../verificacion/README.md`](../verificacion/README.md) → [`../sincronizar-zotero/README.md`](../sincronizar-zotero/README.md) |
 | **quien mantiene o amplía las suites** | [`../estado.md`](../estado.md) → [`../CLAUDE.md`](../CLAUDE.md) → [decisiones.md](decisiones.md) (§2: la puerta de escritura) → [operacion.md](operacion.md) §1.1 y §4 → el `README.md` y el `suite.yml` de la suite → `../tests/` |
 | **quien prepara una campaña sobre la biblioteca** | [decisiones.md](decisiones.md) §4.8 y §2.9 (`../lib/adjuntos_zotero.py`) → [historial/campanas-sobre-la-biblioteca.md](historial/campanas-sobre-la-biblioteca.md) → `meta/docs/historial/diagnosticos/` |
 | **otro repositorio** (`scripts_for_fuentes`, `prompts`, `meta`) | [consumidores.md](consumidores.md) (lo que se usa de aquí) → `meta/docs/historial/MODELO_METADATOS.md` y `meta/docs/historial/SINCRONIZACION.md` (la frontera) |

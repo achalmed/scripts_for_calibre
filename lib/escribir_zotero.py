@@ -6,7 +6,7 @@ Objetivo: que el SQL que modifica Zotero viva solo aquí (tests/test_puerta.py);
   (synced=0 y la fecha) para que la cuenta de zotero.org suba el cambio.
 Método: `conexion_zotero` exige la puerta de Zotero abierta (PUERTA_ZOTERO=abierta para esa base: Zotero
   cerrado, LOCK_ZOTERO y respaldo verificado; lib/escribir.sh o `escribir.puerta()`); las `z_*` reciben
-  el cursor de esa conexión. Las usan script_sincronizar_zotero y lib/adjuntos_zotero.py.
+  el cursor de esa conexión. Las usan sincronizar-zotero y lib/adjuntos_zotero.py.
 """
 from __future__ import annotations
 

@@ -52,9 +52,9 @@ def test_instalar_simula_y_verificar_distingue(tmp_path):
 
 
 @pytest.mark.parametrize("suite,args", [
-    ("script_ecosistema_lectura", ["--aplicar"]),
-    ("script_koreader_estudio", ["--aplicar"]),
-    ("script_sincronizar_zotero", ["--aplicar"]),
+    ("lectura", ["--aplicar"]),
+    ("koreader", ["--aplicar"]),
+    ("sincronizar-zotero", ["--aplicar"]),
 ])
 def test_corre_con_el_path_de_los_timers(corrida, suite, args):
     c = corrida("path")
@@ -62,5 +62,5 @@ def test_corre_con_el_path_de_los_timers(corrida, suite, args):
     c.env["KOREADER_RESPALDO_DIR"] = str(c.raiz / "koreader-respaldo")
     r = ap.correr(ap.REPO, suite, args, c.env)
     assert r.returncode == 0, r.stdout[-2000:] + r.stderr[-2000:]
-    if suite == "script_koreader_estudio":
+    if suite == "koreader":
         assert "CREATE TABLE" in (c.raiz / "koreader-respaldo" / "statistics.sql").read_text()

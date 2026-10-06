@@ -18,7 +18,7 @@ posteriores, en su commit.
 
 En conflicto gana Calibre y se propaga a Zotero; Zotero solo rellena vacíos en Calibre y puebla las
 columnas espejo `#zotero_*`. Vacío en el origen nunca borra en el destino. Política campo a campo:
-`../script_sincronizar_zotero/README.md`; autoridad por dato en el workspace:
+`../sincronizar-zotero/README.md`; autoridad por dato en el workspace:
 `meta/docs/historial/MODELO_METADATOS.md`.
 
 ### §1.2 Título y autor no se escriben en Calibre por sincronización ni verificación (2026-07-28)
@@ -131,14 +131,14 @@ ninguna suite de este repo los usa; quedan para `scripts_for_fuentes` hasta C4.
 
 *Superada por §4.8.*
 
-### §4.3 `script_catalogacion_biblioteca/fichas/` y `resumen_catalogacion.tsv` son el registro de esa suite (D12, 2026-09-20)
+### §4.3 `catalogacion/fichas/` y `resumen_catalogacion.tsv` son el registro de esa suite (D12, 2026-09-20)
 
 Las fichas y las filas nuevas las escribe `scripts_for_fuentes/ingesta`; aquí solo se aplican al
 catálogo. Una ficha cita su proyecto por id (`proyecto: meta`), no por ruta (normativa 1.10, K7).
 
 ### §4.4 Un solo incrustador de PDF (auditoría A7, 2026-08-10)
 
-`script_metadatos_calibre embed`, con InfoDict y XMP Dublin Core; el de `scripts_for_zotero` quedó
+`metadatos-pdf embed`, con InfoDict y XMP Dublin Core; el de `scripts_for_zotero` quedó
 absorbido.
 
 ### §4.5 Los timers se instalan con la herramienta (2026-09-20)

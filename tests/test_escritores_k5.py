@@ -1,6 +1,6 @@
 """tests/test_escritores_k5.py — catalogación y `metadatos_calibre register` por la puerta (ola 2a, K5; P1, P2, P214).
 
-Objetivo: fijar que `script_catalogacion_biblioteca --aplicar` y `script_metadatos_calibre register` escriben
+Objetivo: fijar que `catalogacion --aplicar` y `metadatos-pdf register` escriben
   solo por la puerta (Calibre cerrado, candado, respaldo verificado), que `metadatos_calibre` simula por
   defecto y que la catalogación hace lo mismo que la referencia sobre una copia.
 Método: `register` contra una biblioteca de juguete con un `calibredb` falso que anota (nunca contra el
@@ -45,7 +45,7 @@ def _juguete(tmp_path):
 
 
 def _register(tmp_path, env, lib, *extra):
-    return subprocess.run([str(ap.REPO / "script_metadatos_calibre" / "main.sh"), "register", "--library", str(lib),
+    return subprocess.run([str(ap.REPO / "metadatos-pdf" / "main.sh"), "register", "--library", str(lib),
                            "--root", str(lib / "Autor, Prueba"), *extra], env=env, capture_output=True, text=True,
                           stdin=subprocess.DEVNULL, cwd=tmp_path)
 
@@ -88,13 +88,13 @@ def test_catalogacion_simulacion_igual_a_la_referencia(arboles, corrida):
     salidas = {}
     for impl in ("ref", "act"):
         c = corrida(impl)
-        r = ap.correr(arboles[impl], "script_catalogacion_biblioteca", ["--ids", IDS], c.env)
+        r = ap.correr(arboles[impl], "catalogacion", ["--ids", IDS], c.env)
         assert r.returncode == 0, r.stderr
         salidas[impl] = _normalizar(r.stdout, c)
     assert salidas["act"] == salidas["ref"] and len(salidas["act"]) == 3
 
 
 def test_catalogacion_aplicar_igual_a_la_referencia(arboles, corrida):
-    tc.OTRAS["catalogacion"] = ("script_catalogacion_biblioteca", "reportes", "*.tsv")
+    tc.OTRAS["catalogacion"] = ("catalogacion", "reportes", "*.tsv")
     m = tc._comparar(arboles, corrida, "catalogacion", ["--aplicar", "--ids", IDS])
     assert "Backup" in m["act"]["texto"], "la catalogación aplicó sin respaldo de la puerta"

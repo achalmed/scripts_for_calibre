@@ -1,0 +1,21 @@
+# koreader/suite.yml — suite koreader_estudio: Convierte Calibre en tablero de estudio: progreso, tiempo y anotaciones de KOReader hacia las columnas del libro.
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: koreader
+objetivo: biblioteca
+resumen: 'Convierte Calibre en tablero de estudio: progreso, tiempo y anotaciones de KOReader hacia las columnas del libro.'
+escribe_en:
+- calibre
+simula_por_defecto: true
+comandos:
+- 'main.sh                      # simula'
+- main.sh --aplicar
+- main.sh --desde-timer
+estado: activo
+entrada: statistics.sqlite3 de KOReader
+depende_de:
+- calibredb
+- koreader
+- core/shell-lib
+- lib/escribir.sh (la puerta)
+timer: koreader-calibre-sync.timer
+pruebas: python3 -m pytest scripts_for_calibre/tests   # desde ~/Documents; copias de las bases, nunca las reales
