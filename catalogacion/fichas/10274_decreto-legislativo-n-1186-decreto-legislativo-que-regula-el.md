@@ -44,4 +44,4 @@ verificacion:
 | #item_type | Statute |
 
 ## Notas
-- Metadatos tomados del `.bib` del proyecto `03 writing/essays/2026-08-25-tecnicas-identificacion-zonas-alto-riesgo`; la clave BibTeX es la del trabajo (Better BibTeX la conserva).
+- Metadatos tomados del `.bib` del proyecto `escritura/essays/2026-08-25-tecnicas-identificacion-zonas-alto-riesgo`; la clave BibTeX es la del trabajo (Better BibTeX la conserva).

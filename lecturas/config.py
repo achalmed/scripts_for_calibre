@@ -24,7 +24,7 @@ CONTEXTO_ANTES = 350          # caracteres antes de la coincidencia
 CONTEXTO_DESPUES = 450        # caracteres después
 MAX_POR_PATRON = 6            # pasajes por patrón si el spec no dice otra cosa
 SUFIJO_ARCHIVO = "-lectura-extraida.md"   # fichas_formato_y_voz.md §2: <clave_bibtex>-lectura-extraida.md
-DESTINO_DEFECTO = "fuentes/fichas"        # relativo al proyecto (03 writing/docs/estructura-de-proyecto.md §3.5), si el spec no declara `destino`
+DESTINO_DEFECTO = "fuentes/fichas"        # relativo al proyecto (escritura/docs/estructura-de-proyecto.md §3.5), si el spec no declara `destino`
 
 # El bloque generado se delimita con marcas: al reejecutar se sustituye solo eso y se conserva lo redactado.
 MARCA_INICIO = "<!-- lecturas: pasajes generados por scripts_for_fuentes/lecturas; no editar entre las marcas -->"

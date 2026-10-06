@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/informe de impacto 2025 transformando para una mayor escala e impacto.pdf` · SHA-256 `ffdcbb8e8c2bffc7…` · 125 págs · con texto
+`escritura/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/informe de impacto 2025 transformando para una mayor escala e impacto.pdf` · SHA-256 `ffdcbb8e8c2bffc7…` · 125 págs · con texto
 
 ## Zotero
 | Campo | Valor |

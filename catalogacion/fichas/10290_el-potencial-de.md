@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/el potencial de la inversion en infraestructura para impulsar el empleo en america latina y el caribe.pdf` · SHA-256 `773d5a2be5a4921c…` · 25 págs · con texto
+`escritura/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/el potencial de la inversion en infraestructura para impulsar el empleo en america latina y el caribe.pdf` · SHA-256 `773d5a2be5a4921c…` · 25 págs · con texto
 
 ## Zotero
 | Campo | Valor |

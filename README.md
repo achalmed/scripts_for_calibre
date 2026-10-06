@@ -83,7 +83,7 @@ ingesta/main.sh identificar                           # paso 02: pendientes.tsv 
 ingesta/main.sh catalogar --aplicar                   # a Calibre por la puerta
 ingesta/main.sh zotero                                # paso 03: .ris para importar en Zotero
 ingesta/main.sh cursos --escanear                     # material externo de los cursos, a TSV
-P="../03 writing/reports/<slug>/fuentes"
+P="../escritura/reports/<slug>/fuentes"
 python3 fichas/main.py verificar "$P/fichas"          # paso 05: cotejo contra el libro
 python3 lecturas/main.py "$P/lecturas.yml"            # paso 07: pasajes con página
 python3 manifiesto/main.py generar "$P" --aplicar     # paso 09: el fuentes.yml del proyecto
@@ -112,7 +112,7 @@ para `metadatos-pdf`. Qué es automático y qué es manual: [`docs/operacion.md`
 | `entrada/` | zona de aterrizaje de lo descargado, fuera de git | runtime |
 | `ingesta/` | de la entrada a Calibre y Zotero: identificar, catalogar, RIS, archivar, OCR, paquetes, cursos; ledger `ingesta.tsv` | a mano |
 | `catalogacion/` | aplica `resumen_catalogacion.tsv` a Calibre; `fichas/` y el TSV son el registro canónico (los escribe `ingesta catalogar`) | a mano |
-| `fichas/`, `lecturas/`, `manifiesto/` | pasos 05, 07 y 09 sobre las fichas de un proyecto; `manifiesto/` es contrato con `datafw` y `03 writing` y no cambia de nombre | a mano |
+| `fichas/`, `lecturas/`, `manifiesto/` | pasos 05, 07 y 09 sobre las fichas de un proyecto; `manifiesto/` es contrato con `datafw` y `escritura` y no cambia de nombre | a mano |
 | `koreader/`, `lectura/`, `sincronizar-zotero/` | la coherencia Calibre ⇄ KOReader ⇄ Zotero; los tres timers | a mano; timers `koreader-calibre-sync`, `ecosistema-lectura`, `ecosistema-metadatos` |
 | `zotero-series/` | organiza una colección de Zotero en subcolecciones por su campo Series (se pega en la consola de Zotero); lo único vivo de `scripts_for_zotero`, archivado en la ola 2 | a mano |
 | `verificacion/`, `metadatos-pdf/` | cotejo con OpenLibrary y Crossref (solo lectura); incrustador OPF → PDF | a mano |

@@ -40,12 +40,12 @@ paráfrasis) contra el texto del libro en Calibre y deja escrito el veredicto (`
 
 ```bash
 cd ~/Documents/scripts_for_fuentes/fichas
-python3 main.py validar "../../03 writing/reports/<slug>/fuentes/fichas"                 # frontmatter, nombre, secciones; código 1 si hay faltas (--json: detalle)
-python3 main.py verificar "../../03 writing/reports/<slug>/fuentes/fichas" --desfase 0   # simula el cotejo; --aplicar escribe verificacion.*; --tolerancia N cambia el ±2
-python3 main.py claves "../../03 writing/reports/<slug>/fuentes/fichas" --aplicar        # calibre_id y zotero_key desde el fuentes.yml
-python3 main.py indice "../../03 writing/reports/<slug>/fuentes/fichas" --aplicar        # 00-indice_fichas.md
-python3 main.py estado "../../03 writing/reports/<slug>/fuentes/fichas"                  # código 1 si hay «observada» o «pendiente» en uso
-python3 main.py migrar "../../03 writing/<tipo>/<slug>/notes/fichas" --formato hibrida   # simula; --aplicar con respaldo y UNDO antes
+python3 main.py validar "../../escritura/reports/<slug>/fuentes/fichas"                 # frontmatter, nombre, secciones; código 1 si hay faltas (--json: detalle)
+python3 main.py verificar "../../escritura/reports/<slug>/fuentes/fichas" --desfase 0   # simula el cotejo; --aplicar escribe verificacion.*; --tolerancia N cambia el ±2
+python3 main.py claves "../../escritura/reports/<slug>/fuentes/fichas" --aplicar        # calibre_id y zotero_key desde el fuentes.yml
+python3 main.py indice "../../escritura/reports/<slug>/fuentes/fichas" --aplicar        # 00-indice_fichas.md
+python3 main.py estado "../../escritura/reports/<slug>/fuentes/fichas"                  # código 1 si hay «observada» o «pendiente» en uso
+python3 main.py migrar "../../escritura/<tipo>/<slug>/notes/fichas" --formato hibrida   # simula; --aplicar con respaldo y UNDO antes
 ```
 
 ## Qué escribe y qué no

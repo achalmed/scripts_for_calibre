@@ -5,7 +5,7 @@
 (`datafw/data/raw/…`, `biblioteca/<Autor>/<Título (id)>/…`), y al leer:
 
 - absoluta                                  → tal cual (filas viejas o fuera de la raíz);
-- relativa que empieza por una carpeta de la raíz (`datafw`, `03 writing`, `scripts_for_fuentes`,
+- relativa que empieza por una carpeta de la raíz (`datafw`, `escritura`, `scripts_for_fuentes`,
   `biblioteca`…)                            → DOCS_ROOT / ruta;
 - cualquier otra relativa                   → relativa a la zona de entrada, como siempre (incluidas las del
   CIL histórico, `02_investigacion/…`, que ya no existen y se conservan como texto).

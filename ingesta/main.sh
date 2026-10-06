@@ -7,7 +7,7 @@ set -euo pipefail
 #   ./main.sh catalogar [--aplicar] [--solo REGEX]   alta en Calibre (calibredb add + columnas) + registro en la suite de catalogación
 #   ./main.sh zotero                  .ris para importar en Zotero (+ alta directa si el conector responde)
 #   ./main.sh archivar [--aplicar]    retira el original y lo registra en el fuentes.yml de su proyecto (modo manifiesto; enlace/mover por compatibilidad)
-#   ./main.sh bib <ref.bib> --serie … paso 02 de un trabajo de 03 writing: pendientes.tsv + fichas desde el .bib (archivos entrada/<clave>.pdf)
+#   ./main.sh bib <ref.bib> --serie … paso 02 de un trabajo de escritura: pendientes.tsv + fichas desde el .bib (archivos entrada/<clave>.pdf)
 #   ./main.sh ocr [--aplicar]         cada X.ocr.pdf pasa a ser el FORMATO del libro de X.pdf (texto buscable); ambos al manifiesto
 #   ./main.sh paquetes [--aplicar]    adjuntos de un paquete → carpeta data/ de su entrada (registrados en el manifiesto)
 #   ./main.sh todo [--aplicar]        recibir → identificar → catalogar → zotero → archivar → paquetes
@@ -93,7 +93,7 @@ cmd_archivar() {
   python3 "$SCRIPT_DIR/lib/archivar.py" "$(cfg_json)" "${extra[@]}"
 }
 
-cmd_bib() {  # paso 02 para trabajos de 03 writing: metadatos desde el .bib del proyecto (archivos entrada/<clave>.pdf)
+cmd_bib() {  # paso 02 para trabajos de escritura: metadatos desde el .bib del proyecto (archivos entrada/<clave>.pdf)
   local bib="${1:-}"; [[ -f "$bib" ]] || { log_error "uso: ./main.sh bib <references.bib> --serie \"…\" [--tags \"…\"] [--proyecto RUTA] [--archivo clave=ruta]"; exit 2; }
   python3 "$SCRIPT_DIR/lib/desde_bib.py" "$(cfg_json)" "$@"
 }

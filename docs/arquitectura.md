@@ -46,7 +46,7 @@ guarda copias: la biblioteca es Calibre.
 ```
 
 `ingesta` no solo lee `entrada/`: también barre como raíces de entrada `datafw/data/raw` y
-`03 writing` (`INBOX_RAICES` de `ingesta/config.sh`), restringidas a PDF bajo carpetas de fuentes
+`escritura` (`INBOX_RAICES` de `ingesta/config.sh`), restringidas a PDF bajo carpetas de fuentes
 (`INBOX_RAICES_SOLO`). Así un documento que nació en otro sistema se cataloga donde está, sin
 copiarlo a una zona de paso.
 
@@ -106,7 +106,7 @@ Un tercer registro es **dato, no suite**: `manifiestos/marco_legal/` guarda el m
 `ingesta` lee para titular y seriar las normas. No tiene `suite.yml` ni se ejecuta en el recorrido; sus dos
 generadores solo lo rearman sobre una carpeta local (`MARCO_LEGAL`) y `tests/fuentes/test_marco_legal.py` comprueba
 que regenerarlo da los mismos archivos. Es del marco legal, no del despacho (§1.4 de las decisiones), y
-`manifiesto/` (la suite del `fuentes.yml`, contrato con `datafw` y `03 writing`) es otra cosa.
+`manifiesto/` (la suite del `fuentes.yml`, contrato con `datafw` y `escritura`) es otra cosa.
 
 ## 5. Maquinaria compartida y dependencias
 
@@ -133,8 +133,8 @@ aquí, no una copia.
 | consumidor | qué usa | qué no cambia sin aviso |
 |---|---|---|
 | `datafw` (`datafw/pipeline/lib_proc/fuentes.py`, y a través de él `datafw/pipeline/documentos/main.py`) | el módulo `manifiesto/lib/manifiesto.py`, cargado **por ruta** desde `SCRIPTS_FUENTES` de `core/env.py`: `cargar(raiz)` (un diccionario con la lista `fuentes`) y `ruta(raiz, clave)` (la ruta física por el resolutor, o nada); el `fuentes.yml` de `datafw/data/raw/` | la ruta y el nombre del módulo; las dos funciones y su firma; las claves de cada entrada (`CLAVES_ENTRADA` de `manifiesto/config.py`, en especial `origen` y `anexo`); que `manifiesto/lib/` siga sin `__init__.py`, por eso se carga por ruta y no como paquete |
-| `03 writing` (`03 writing/reporting/entorno.py`, función `manifiesto()`) | el mismo módulo, por la misma vía | lo mismo |
-| `03 writing` (proyectos) | `manifiesto/main.py bib <carpeta>`: admite la carpeta del proyecto o su `fuentes/`; escribe el bloque generado de `<proyecto>/references.bib` y la `clave_bibtex` del manifiesto. El `fuentes.yml` va donde dicta `REGLAS_RAIZ` (`fuentes/` en un proyecto de la estructura única). `fichas` escribe en la carpeta de fichas del proyecto (fuentes/fichas/) el frontmatter y `00-indice_fichas.md`; `lecturas` lee el `lecturas.yml` del proyecto y escribe `<clave>-lectura-extraida.md` en su `destino` | el comando y sus opciones; el nombre del manifiesto; los nombres de archivo que escriben `fichas` y `lecturas`; las marcas de los bloques generados |
+| `escritura` (`escritura/reporting/entorno.py`, función `manifiesto()`) | el mismo módulo, por la misma vía | lo mismo |
+| `escritura` (proyectos) | `manifiesto/main.py bib <carpeta>`: admite la carpeta del proyecto o su `fuentes/`; escribe el bloque generado de `<proyecto>/references.bib` y la `clave_bibtex` del manifiesto. El `fuentes.yml` va donde dicta `REGLAS_RAIZ` (`fuentes/` en un proyecto de la estructura única). `fichas` escribe en la carpeta de fichas del proyecto (fuentes/fichas/) el frontmatter y `00-indice_fichas.md`; `lecturas` lee el `lecturas.yml` del proyecto y escribe `<clave>-lectura-extraida.md` en su `destino` | el comando y sus opciones; el nombre del manifiesto; los nombres de archivo que escriben `fichas` y `lecturas`; las marcas de los bloques generados |
 | `docencia` (cursos de `docencia/contenido`) | `ingesta/main.sh cursos` (antes `ingesta_cursos`) lee `contenido/cursos/*/05-recursos/` y escribe en `curso.yml` la lista `bibliografia:` con `calibre_id`, `titulo`, `autor`, `origen` y, si hay, `nota` | la carpeta que se escanea y las claves de `bibliografia:` (`docencia/docs/estandar-docencia.md` las cita) |
 | `meta/doctor` (`meta/doctor/lib/chequeos/`) | comprueba que `fichas/main.py` y `lecturas/main.py` existan, que `ingesta/fichas/` no retenga borradores, que ningún script de aquí resuelva rutas de libros por su cuenta, que los `fuentes.yml` cuadren con Calibre (`manifiesto/main.py todo`, que simula) y que no queden enlaces simbólicos hacia la biblioteca en los proyectos | `manifiesto/main.py todo` sin `--aplicar` no escribe y sale con 0 si todo cuadra; las rutas `fichas/main.py`, `lecturas/main.py` y `manifiesto/main.py` |
 | `prompts/01 fuentes/` | cada prompt de los pasos 00–09 nombra el comando que lo ejecuta | los nombres de los comandos |

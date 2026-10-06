@@ -111,7 +111,7 @@ def main():
     ap = argparse.ArgumentParser(description="fuentes.yml por proyecto en vez de enlaces simbólicos")
     sub = ap.add_subparsers(dest="cmd", required=True)
     p = sub.add_parser("generar"); p.add_argument("carpeta"); p.add_argument("--aplicar", action="store_true")
-    p.add_argument("--bib", help="trabajo de 03 writing: una entrada por clave del .bib, localizada en Calibre por DOI, URL o título")
+    p.add_argument("--bib", help="trabajo de escritura: una entrada por clave del .bib, localizada en Calibre por DOI, URL o título")
     p.add_argument("--asignar", nargs="*", help="clave=calibre_id para fijar a mano (ediciones, obras sin DOI)")
     p = sub.add_parser("verificar"); p.add_argument("carpetas", nargs="+")
     p = sub.add_parser("ruta"); p.add_argument("carpeta"); p.add_argument("clave")

@@ -44,4 +44,4 @@ verificacion:
 | #item_type | Statute |
 
 ## Notas
-- Metadatos tomados del `.bib` del proyecto `03 writing/monographs/2026-07-18-ansiedad-e-intervencion-del-enfermero`; la clave BibTeX es la del trabajo (Better BibTeX la conserva).
+- Metadatos tomados del `.bib` del proyecto `escritura/monographs/2026-07-18-ansiedad-e-intervencion-del-enfermero`; la clave BibTeX es la del trabajo (Better BibTeX la conserva).

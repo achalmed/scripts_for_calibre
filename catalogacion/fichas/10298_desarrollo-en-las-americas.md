@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/peligro y promesa enfrentar el cambio climatico en america latina y el caribe resumen ejecutivo.pdf` · SHA-256 `3bf46954ad7ede01…` · 28 págs · con texto
+`escritura/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/peligro y promesa enfrentar el cambio climatico en america latina y el caribe resumen ejecutivo.pdf` · SHA-256 `3bf46954ad7ede01…` · 28 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/asce inversion publica en infraestructura agricola y su impacto en el crecimiento economico en el sector agrario del peru 2009 2018 .pdf` · SHA-256 `d3d72ea8082b7862…` · 20 págs · con texto
+`escritura/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/asce inversion publica en infraestructura agricola y su impacto en el crecimiento economico en el sector agrario del peru 2009 2018 .pdf` · SHA-256 `d3d72ea8082b7862…` · 20 págs · con texto
 
 ## Zotero
 | Campo | Valor |

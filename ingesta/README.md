@@ -30,7 +30,7 @@ main.sh cursos --escanear · main.sh cursos [--dry-run] [--tsv ARCHIVO] · main.
 <!-- suite:fin -->
 
 `entrada/` es la zona de aterrizaje: **recibe** documentos y esta suite los
-procesa. También barre como raíces de entrada `datafw/data/raw` y `03 writing`
+procesa. También barre como raíces de entrada `datafw/data/raw` y `escritura`
 (`INBOX_RAICES`, solo PDF bajo carpetas de fuentes). El almacén permanente es
 `~/Documents/biblioteca` (Calibre, autoridad bibliográfica) y Zotero guarda las citas. Cada PDF o
 DOCX que entra se vuelve un libro de Calibre con metadatos y ficha, y un ítem de Zotero por RIS;
@@ -51,7 +51,7 @@ Simulación por defecto; `--aplicar` escribe. Desde esta carpeta:
 ./main.sh paquetes [--aplicar]        anexos de un paquete → data/ del documento principal
 ./main.sh ocr [--aplicar]             X.ocr.pdf, X_ocr_buscable.pdf, X_texto.pdf → formato de X
 ./main.sh bib <references.bib> --serie "…" [--tags "…"] [--proyecto RUTA] [--archivo clave=ruta …]
-                                      paso 02 de un trabajo de 03 writing, desde su .bib (entrada/<clave>.pdf o --archivo)
+                                      paso 02 de un trabajo de escritura, desde su .bib (entrada/<clave>.pdf o --archivo)
 ./main.sh todo [--aplicar]            recibir → … → archivar → paquetes → estado
 ./main.sh estado                      ledger y chequeos (el comando por defecto)
 ```
@@ -84,7 +84,7 @@ metadatos de normas: `../manifiestos/marco_legal/manifiesto.tsv`.
 
 | Campo | Regla |
 |---|---|
-| **Serie** | **la carpeta de origen**: `marco_legal/03_congreso` → `Marco legal 03 - Congreso` (índice = orden del `manifiesto.tsv`; sin fila → 90+); `03 writing/reports/<slug>/01_fuentes` → `Informe <slug> - Fuentes`; `data/raw/<inst>/<paquete>` → `datafw <inst> - <paquete>` |
+| **Serie** | **la carpeta de origen**: `marco_legal/03_congreso` → `Marco legal 03 - Congreso` (índice = orden del `manifiesto.tsv`; sin fila → 90+); `escritura/reports/<slug>/01_fuentes` → `Informe <slug> - Fuentes`; `data/raw/<inst>/<paquete>` → `datafw <inst> - <paquete>` |
 | **Autor** | la **institución**, nunca el `Author` del PDF: sigla inicial del archivo (`inei_…`, `endes2024_…`), sufijo sectorial de la norma (`ds_004_2019_jus` → MINJUS), sigla interna (`…_minjus_…`), carpeta (`INSTITUCION_POR_CARPETA_JSON`), raíz datafw; anónimo = `Unknown` |
 | **Título** | normas: `Ley N.° 28587. Proteccion al consumidor…`, `Decreto Supremo N.° 040-2014-PCM. Reglamento…`, `Texto Único Ordenado de la Ley N.° 27444. …`; documentos: `Directiva N.° 02-2023-DGP/CR. Gestión documental`, `Código civil D.Leg. 295 16a edición oficial`; informes: descripción del archivo en frase (sin la sigla: ya es el autor) o el `Title` del PDF si es real (los EN MAYÚSCULAS pasan a frase). Nunca `SIGLA — …` |
 | **Fecha** | año del nombre de archivo (`_2019_`, `_2026_t1`), luego `CreationDate`, luego el texto; se ignoran años futuros (`PEN 2036`) |

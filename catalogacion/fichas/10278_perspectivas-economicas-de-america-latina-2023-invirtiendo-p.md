@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/s2301196 es.pdf` · SHA-256 `395382f956f12329…` · 304 págs · con texto
+`escritura/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/s2301196 es.pdf` · SHA-256 `395382f956f12329…` · 304 págs · con texto
 
 ## Zotero
 | Campo | Valor |

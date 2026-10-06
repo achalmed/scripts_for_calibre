@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/infraestructura y empleo el rol de los sectores de transporte energia agua y saneamiento en la recuperacion economica post covid 19.pdf` · SHA-256 `e2de55ac999ab1f5…` · 63 págs · con texto
+`escritura/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/infraestructura y empleo el rol de los sectores de transporte energia agua y saneamiento en la recuperacion economica post covid 19.pdf` · SHA-256 `e2de55ac999ab1f5…` · 63 págs · con texto
 
 ## Zotero
 | Campo | Valor |

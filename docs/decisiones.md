@@ -343,7 +343,7 @@ queda solo por compatibilidad.
 `fichas/config.py` transcribe `prompts/00 metodo/fichas_formato_y_voz.md`; `migrar` llevó las
 fichas anteriores a ese formato y es de un solo uso.
 
-### §8.4 El manifiesto de un proyecto de `03 writing` vive en `fuentes/` (P5, 2026-09-08)
+### §8.4 El manifiesto de un proyecto de `escritura` vive en `fuentes/` (P5, 2026-09-08)
 
 Cuando la raíz que dicta `REGLAS_RAIZ` tiene una carpeta `fuentes/`, el `fuentes.yml` va ahí, para
 que un documento archivado desde `referencias/` no deje el manifiesto suelto en la raíz. Las reglas

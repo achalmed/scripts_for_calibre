@@ -1,6 +1,6 @@
 """Caracterización de `main.py verificar`, `manifiesto/` y `fichas/` (ola 2, F1), en seco y contra la copia.
 
-`manifiesto/` es contrato con `datafw` y `03 writing`, que cargan `manifiesto/lib/manifiesto.py` por ruta y
+`manifiesto/` es contrato con `datafw` y `escritura`, que cargan `manifiesto/lib/manifiesto.py` por ruta y
 usan `cargar` y `ruta`; `manifiesto/main.py bib` es el otro contrato. Estas pruebas fijan esa interfaz.
 """
 import json
@@ -52,7 +52,7 @@ def test_fuentes_y_estado(caja):
 
 # ---------------------------------------------------------------- manifiesto (contrato)
 def _proyecto(caja, libro):
-    raiz = caja.docs / "03 writing" / "reports" / "2026-10-05-prueba" / "fuentes"
+    raiz = caja.docs / "escritura" / "reports" / "2026-10-05-prueba" / "fuentes"
     raiz.mkdir(parents=True)
     (raiz / "fuentes.yml").write_text(textwrap.dedent(f"""\
         proyecto: 2026-10-05-prueba
@@ -74,7 +74,7 @@ def _proyecto(caja, libro):
 
 
 def test_manifiesto_cargado_por_ruta(caja):
-    """Como lo cargan datafw (pipeline/lib_proc/fuentes.py) y 03 writing (reporting/entorno.py)."""
+    """Como lo cargan datafw (pipeline/lib_proc/fuentes.py) y escritura (reporting/entorno.py)."""
     libro = caja.libro_con_archivo()
     raiz = _proyecto(caja, libro)
     codigo = textwrap.dedent(f"""\
@@ -151,7 +151,7 @@ Proviene de [prueba2026-fuente.md](prueba2026-fuente.md).
 
 def test_fichas_validar_y_estado(caja):
     libro = caja.un_libro()
-    carpeta = caja.docs / "03 writing" / "reports" / "2026-10-05-prueba" / "fuentes" / "fichas"
+    carpeta = caja.docs / "escritura" / "reports" / "2026-10-05-prueba" / "fuentes" / "fichas"
     carpeta.mkdir(parents=True)
     (carpeta / "prueba2026-p001-parafrasis-prueba.md").write_text(FICHA_BUENA.format(bid=libro["id"]), encoding="utf-8")
     r = caja.py("fichas/main.py", "validar", carpeta)

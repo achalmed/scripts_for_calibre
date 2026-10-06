@@ -4,7 +4,7 @@
 #   main.py <lecturas.yml> [--aplicar] [--destino DIR] [--unico ARCHIVO.md] [--solo ID…] [--proyecto RUTA]
 #
 # lecturas.yml:
-#   proyecto: 03 writing/reports/delegacion-facultades-2026     # relativo a ~/Documents (opcional)
+#   proyecto: escritura/reports/delegacion-facultades-2026     # relativo a ~/Documents (opcional)
 #   destino: 12_documentacion/lecturas                                       # relativo al proyecto (opcional)
 #   lecturas:
 #     - calibre_id: 1068

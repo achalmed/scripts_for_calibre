@@ -39,7 +39,7 @@ INBOX_RAICES=("$DATAFW_DIR/data/raw"
 #    dos porque un proyecto migrado y otro sin migrar conviven.
 #  · `referencias/` son los PDF de consulta que las TESIS guardaban junto al
 #    documento. La regla 0b —los documentos viven en Calibre— dejó de aplicarse
-#    solo a `datafw` en P7: también alcanza a `03 writing`.
+#    solo a `datafw` en P7: también alcanza a `escritura`.
 INBOX_RAICES_SOLO=".*/(data/raw|entrada|01_fuentes|fuentes|referencias)/.*"
 INBOX_GLOBS=("02_investigacion/20[0-9][0-9]-*/fuentes")      # carpetas de fuentes de cada investigación fechada (glob relativo al CIL)
 # Rutas excluidas dentro de esas raíces (regex de `find -regex`).

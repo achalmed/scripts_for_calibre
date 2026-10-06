@@ -87,7 +87,7 @@ def test_ledgers_sin_rutas_absolutas_de_la_raiz():
 def test_archivar_resuelve_rutas_relativas(caja):
     """Una fila del ledger con origen y ruta_calibre relativas a DOCS_ROOT se archiva (en simulación) como antes."""
     libro = caja.libro_con_archivo()
-    origen = caja.docs / "03 writing" / "reports" / "2026-10-05-prueba" / "fuentes" / "doc.pdf"
+    origen = caja.docs / "escritura" / "reports" / "2026-10-05-prueba" / "fuentes" / "doc.pdf"
     origen.parent.mkdir(parents=True)
     origen.write_bytes(libro["archivo"].read_bytes())
     led = caja.repo / "ingesta" / "ingesta.tsv"
@@ -96,7 +96,7 @@ def test_archivar_resuelve_rutas_relativas(caja):
                            "2026", "", "", str(libro["id"]), str(libro["archivo"].relative_to(caja.docs)), "", "catalogado"]) + "\n")
     r = caja.ingesta("archivar")
     assert r.returncode == 0, r.stdout + r.stderr
-    assert "SIM  03 writing/reports/2026-10-05-prueba/fuentes/doc.pdf → manifiesto →" in r.stdout
+    assert "SIM  escritura/reports/2026-10-05-prueba/fuentes/doc.pdf → manifiesto →" in r.stdout
     assert "[archivar] 1 documento(s) · simulación" in r.stdout
 
 
@@ -109,7 +109,7 @@ def test_correo_de_unpaywall_desde_el_entorno(caja):
 
 
 def test_fichas_grafia_respalda_fuera_del_repo(caja):
-    carpeta = caja.docs / "03 writing" / "reports" / "2026-10-05-prueba" / "fuentes" / "fichas"
+    carpeta = caja.docs / "escritura" / "reports" / "2026-10-05-prueba" / "fuentes" / "fichas"
     carpeta.mkdir(parents=True)
     ficha = carpeta / "prueba2026-fuente.md"
     ficha.write_text("---\ntipo: ficha-fuente\ncalibre-id: 1\n---\n\ncuerpo\n", encoding="utf-8")

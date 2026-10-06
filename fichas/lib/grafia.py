@@ -24,7 +24,7 @@ VALORES = {"verificada-script": "verificada_script", "verificada-autor": "verifi
            "ficha-parafrasis": "ficha_parafrasis", "ficha-sintesis": "ficha_sintesis",
            "ficha-parafraseo-complejo": "ficha_sintesis", "ficha-replicacion": "ficha_replicacion",
            "indice-fichas": "indice_fichas"}
-RUTA_PROYECTO = re.compile(r"^(\s*proyecto:\s*)03 writing/[a-z]+/([^/\n]+)(?:/[^\n]*)?\s*$")
+RUTA_PROYECTO = re.compile(r"^(\s*proyecto:\s*)escritura/[a-z]+/([^/\n]+)(?:/[^\n]*)?\s*$")
 
 
 def migrar_texto(txt):

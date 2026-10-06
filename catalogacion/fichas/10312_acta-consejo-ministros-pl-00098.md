@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`03 writing/reports/delegacion-facultades-2026/fuentes/expediente/acta_consejo_ministros_pl_00098_2026-08-31.pdf` · SHA-256 `c659f8f6cb33ece6…` · 8 págs · con texto
+`escritura/reports/delegacion-facultades-2026/fuentes/expediente/acta_consejo_ministros_pl_00098_2026-08-31.pdf` · SHA-256 `c659f8f6cb33ece6…` · 8 págs · con texto
 
 ## Zotero
 | Campo | Valor |

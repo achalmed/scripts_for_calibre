@@ -3,7 +3,7 @@
 Dos formatos de origen:
   catalogacion  fichas de `script_catalogacion_biblioteca/fichas/` (ingesta 2026-09 y las antiguas «SALIDA PARA ZOTERO/CALIBRE»)
                 → mismo archivo, con frontmatter `ficha_catalogacion`, sin H1, secciones Origen · Zotero · Calibre · Notas.
-  hibrida       fichas de `03 writing/<trabajo>/notes/fichas/` (una ficha por obra con resumen y citas mezcladas)
+  hibrida       fichas de `escritura/<trabajo>/notes/fichas/` (una ficha por obra con resumen y citas mezcladas)
                 → una ficha de FUENTE + una TEXTUAL por cita literal + una PARÁFRASIS por idea; la híbrida desaparece.
 Nada se pierde: lo que no encaja en una sección va a «Observaciones». Se conserva el estado de verificación; un estado fuera de
 contrato (`verificada-abstract`) pasa a `pendiente` con nota. Simula por defecto: devuelve el plan; `aplicar=True` escribe.
@@ -102,7 +102,7 @@ def migrar_catalogacion(carpeta, aplicar=False):
     return plan
 
 
-# --- híbridas (03 writing) -------------------------------------------------
+# --- híbridas (escritura) -------------------------------------------------
 RE_H1 = re.compile(r"^# (.+?)\s+—\s+(.+)$", re.M)
 RE_PAG = re.compile(r"\((?:pp?\.|p\.)\s*(\d+)(?:\s*[–-]\s*\d+)?\)")
 RE_ART = re.compile(r"\((art\.\s*[^)]+)\)", re.I)

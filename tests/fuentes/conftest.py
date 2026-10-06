@@ -119,7 +119,7 @@ def plantilla(tmp_path_factory) -> Path:
     # Ni el envoltorio lib_comun (retirado en la fusión) ni la red de datafw (F4) entran en la caja:
     # las pruebas demuestran que este repo ya no los necesita.
     # raíces de entrada que ingesta recorre
-    for d in ("datafw/data/raw", "03 writing/reports", "docencia/contenido/cursos", "prompts"):
+    for d in ("datafw/data/raw", "escritura/reports", "docencia/contenido/cursos", "prompts"):
         (docs / d).mkdir(parents=True, exist_ok=True)
     # la base: copia consistente leída en solo lectura
     real = _db_real()

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`03 writing/reports/delegacion-facultades-2026/fuentes/expediente/oficio_038_2026_2027_adp_p_cd_observaciones_pl_00098.pdf` · SHA-256 `555cdf82548b81fb…` · 1 págs · con texto
+`escritura/reports/delegacion-facultades-2026/fuentes/expediente/oficio_038_2026_2027_adp_p_cd_observaciones_pl_00098.pdf` · SHA-256 `555cdf82548b81fb…` · 1 págs · con texto
 
 ## Zotero
 | Campo | Valor |

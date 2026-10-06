@@ -33,20 +33,20 @@ Regla 1 del Método Documental: un proyecto dice **qué** usa (`calibre_id`, `zo
 está. Esta suite construye y mantiene ese manifiesto: lo genera desde los enlaces hacia la biblioteca que aún haya, el
 ledger de `ingesta` y el manifiesto previo; lo verifica contra Calibre; resuelve la ruta física para los scripts que la
 necesiten; retira los enlaces simbólicos que el manifiesto ya cubre; y escribe el `references.bib` del proyecto (APA 7
-vía biblatex) desde Calibre. Lo usan `ingesta` (archivar, paquetes, ocr), `datafw`, `03 writing` y el doctor; lo que esos
+vía biblatex) desde Calibre. Lo usan `ingesta` (archivar, paquetes, ocr), `datafw`, `escritura` y el doctor; lo que esos
 repositorios usan y no cambia sin aviso está en [`../docs/arquitectura.md`](../docs/arquitectura.md) §6.
 
 ## Uso
 
 ```bash
 cd ~/Documents/scripts_for_fuentes/manifiesto
-python3 main.py generar "../../03 writing/reports/<slug>/fuentes"                     # simula; --aplicar escribe fuentes.yml
-python3 main.py generar "../../03 writing/reports/<slug>/fuentes" --bib ref.bib --asignar clave=id   # una entrada por clave del .bib
-python3 main.py verificar "../../03 writing/reports/<slug>/fuentes"                   # cada entrada existe en Calibre y tiene archivo
-python3 main.py ruta "../../03 writing/reports/<slug>/fuentes" 10024                  # ruta física por el resolutor; código 1 si no resuelve
-python3 main.py quitar-enlaces "../../03 writing/reports/<slug>/fuentes" --aplicar    # borra los enlaces que el manifiesto ya cubre
-python3 main.py bib "../../03 writing/reports/<slug>/fuentes" --aplicar               # references.bib + clave_bibtex en el manifiesto
-python3 main.py raiz "../../03 writing/reports/<slug>/fuentes/normas/ley.pdf"         # qué carpeta lleva el manifiesto de ese archivo
+python3 main.py generar "../../escritura/reports/<slug>/fuentes"                     # simula; --aplicar escribe fuentes.yml
+python3 main.py generar "../../escritura/reports/<slug>/fuentes" --bib ref.bib --asignar clave=id   # una entrada por clave del .bib
+python3 main.py verificar "../../escritura/reports/<slug>/fuentes"                   # cada entrada existe en Calibre y tiene archivo
+python3 main.py ruta "../../escritura/reports/<slug>/fuentes" 10024                  # ruta física por el resolutor; código 1 si no resuelve
+python3 main.py quitar-enlaces "../../escritura/reports/<slug>/fuentes" --aplicar    # borra los enlaces que el manifiesto ya cubre
+python3 main.py bib "../../escritura/reports/<slug>/fuentes" --aplicar               # references.bib + clave_bibtex en el manifiesto
+python3 main.py raiz "../../escritura/reports/<slug>/fuentes/normas/ley.pdf"         # qué carpeta lleva el manifiesto de ese archivo
 python3 main.py todo                                                                   # generar en todas las raíces vigiladas; con --aplicar, además verificar
 ```
 
@@ -77,5 +77,5 @@ de la norma).
 - **Siglas cerradas**: solo las de `config.SIGLAS`; una institución sin sigla se cita entera (`prompts/00 metodo/normas_apa7.md` §7; su equivalente en el `.bib`, §14).
 - **El modo `enlace` es del pasado**: el resolutor da la ruta; si un script sigue leyendo un enlace simbólico, es deuda de
   ese script, no de esta suite.
-- **`todo` recorre solo `RAICES_VIGILADAS`** (`entrada/`, `datafw/data/raw`, `03 writing`): un proyecto fuera de ahí
+- **`todo` recorre solo `RAICES_VIGILADAS`** (`entrada/`, `datafw/data/raw`, `escritura`): un proyecto fuera de ahí
   se genera a mano.

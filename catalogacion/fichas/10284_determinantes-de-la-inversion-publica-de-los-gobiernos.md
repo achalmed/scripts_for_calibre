@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`03 writing/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/determinantes de la inversion publica local vf.pdf` · SHA-256 `aec2137b6cf2b16f…` · 29 págs · con texto
+`escritura/theses/2026-07-06-tesis-inversion-y-empleo-ayacucho/referencias/determinantes de la inversion publica local vf.pdf` · SHA-256 `aec2137b6cf2b16f…` · 29 págs · con texto
 
 ## Zotero
 | Campo | Valor |

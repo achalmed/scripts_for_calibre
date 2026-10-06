@@ -56,7 +56,7 @@ def raiz_de(path):
 
     Con una excepción (P5, 2026-09-08): si la raíz que sale de la regla tiene
     dentro una carpeta `fuentes/`, el manifiesto va ahí. Es el rol canónico de
-    las fuentes de un proyecto de `03 writing`, y así un documento archivado
+    las fuentes de un proyecto de `escritura`, y así un documento archivado
     desde `referencias/` no deja el `fuentes.yml` suelto en la raíz mientras el
     resto de las fuentes viven en `fuentes/`.
     """
@@ -272,7 +272,7 @@ def generar(raiz, aplicar=False):
 
 
 def generar_desde_bib(raiz, bib_path, asignar=None, aplicar=False):
-    """Manifiesto de un trabajo de 03 writing: una entrada por clave del .bib, localizada en Calibre por DOI, URL o título
+    """Manifiesto de un trabajo de escritura: una entrada por clave del .bib, localizada en Calibre por DOI, URL o título
     (o fijada a mano con asignar={clave: id}). Conserva las entradas previas. Devuelve (data, resumen)."""
     import re
     raiz = Path(raiz).absolute(); data = cargar(raiz)

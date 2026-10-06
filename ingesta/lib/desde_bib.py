@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# desde_bib.py — paso 02 para los trabajos de 03 writing: la metadata ya está en el `.bib` del proyecto, así que
+# desde_bib.py — paso 02 para los trabajos de escritura: la metadata ya está en el `.bib` del proyecto, así que
 # no se adivina desde el PDF (como hace identificar.py con normas e informes): se toma del .bib y se escribe
 # pendientes.tsv + la ficha de catalogación con `clave_bibtex`. Después, `catalogar --aplicar` hace lo de siempre.
 #
