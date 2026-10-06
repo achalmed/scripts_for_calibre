@@ -10,7 +10,7 @@ estado: activo
 Coteja los metadatos de Calibre contra bases bibliográficas públicas y escribe un informe de discrepancias; nunca modifica la biblioteca.
 
 - Escribe en: ninguno · simula por defecto: sí
-- Depende de: python3, core/shell-lib
+- Depende de: CORE_PYTHON (urllib; sin curl), core/shell-lib, lib/leer.sh
 
 Comandos:
 
@@ -19,12 +19,13 @@ main.sh                      # informe en reportes/
 main.sh --modo isbn
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-04); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-05); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 Coteja los metadatos de Calibre con bases bibliográficas públicas (OpenLibrary y, de respaldo,
 Crossref) y deja un **informe de discrepancias** para corregir a mano. Es de **solo lectura**: lee
-`metadata.db` con `sqlite3` y nunca escribe en Calibre, así que no hace falta cerrarlo. Sirve para
+`metadata.db` en modo `ro` (`../lib/leer.sh`) y nunca escribe en Calibre, así que no hace falta
+cerrarlo. Sirve para
 casos como una editorial vacía o falsa (`ePubLibre` es la web del reempaquetado, no la editorial),
 el año de otra edición o un número de páginas erróneo.
 
@@ -43,9 +44,10 @@ valor_fuente, fuente, confianza`) y un `discrepancias_<fecha>.md` para leer. `co
 en las búsquedas por identificador y `aprox:<ratio>` en las de título y autor. Tras corregir en
 Calibre, `calibredb backup_metadata --all` (Calibre cerrado) para que ZMI y Zotero vean el cambio.
 
-Requisitos: `python3` (solo biblioteca estándar, HTTP por `urllib`), `sqlite3` e internet; no hace
-falta clave de API ni `curl`, aunque el manifiesto aún lo declare (`../docs/decisiones.md`,
-Pendientes P13).
+Requisitos: el Python de `core` (`CORE_PYTHON`; solo biblioteca estándar, HTTP por `urllib`) e
+internet; ni clave de API, ni `curl`, ni `sqlite3`. El contacto del «polite pool» de Crossref llega
+por la variable de entorno `CROSSREF_MAILTO` (sin ella, la consulta va sin `mailto`); ningún correo
+vive en el código.
 
 ## Alcance y criterios
 

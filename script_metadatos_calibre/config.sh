@@ -3,7 +3,7 @@
 #  script_metadatos_calibre/config.sh — Global configuration, constants, and default values
 # Global configuration, constants, and default values.
 # All tuneable parameters live here so operators never need to touch
-# business-logic files.
+# business-logic files. Módulo: lo carga main.sh con `source` (hereda sus opciones).
 # ==============================================================================
 
 source "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../../core/env.sh"   # rutas: core/env (K6, P217)

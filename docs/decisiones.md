@@ -1,132 +1,175 @@
 ---
 tipo: decision
-titulo: "Decisiones de scripts_for_calibre: autoridad de los datos, escritura segura, campañas y pendientes"
+titulo: "Decisiones de scripts_for_calibre: autoridad de los datos, escritura segura y organización"
+genero: explicacion
 estado: activo
 ---
 # Decisiones de `scripts_for_calibre`
 
-Registro acumulativo, por tema y con la fecha de cada decisión. Los números de sección no se
-renumeran: se añaden al final. Lo pendiente va a §Pendientes. La crónica de las campañas hasta
-2026-10-01, en `historial/campanas-sobre-la-biblioteca.md`; la de las posteriores, en su carpeta y
-en su commit (§4.6).
+Registro acumulativo, por tema y con la fecha de cada decisión. **Los números son identificadores
+permanentes**: una entrada no se renumera ni se borra; si deja de regir, lleva *Superada por §X*.
+Lo pendiente vive en [`../estado.md`](../estado.md) §Por hacer (desde la ola 2a, K9). La crónica de
+las campañas hasta 2026-10-01, en `historial/campanas-sobre-la-biblioteca.md`; la de las
+posteriores, en su commit.
 
 ## 1. Autoridad de los datos
 
-1.1. **Calibre manda en los metadatos bibliográficos** (2026-07-28). En conflicto gana Calibre y se
-propaga a Zotero; Zotero solo rellena vacíos en Calibre y puebla las columnas espejo `#zotero_*`.
-Vacío en el origen nunca borra en el destino. Política campo a campo:
+### §1.1 Calibre manda en los metadatos bibliográficos (2026-07-28)
+
+En conflicto gana Calibre y se propaga a Zotero; Zotero solo rellena vacíos en Calibre y puebla las
+columnas espejo `#zotero_*`. Vacío en el origen nunca borra en el destino. Política campo a campo:
 `../script_sincronizar_zotero/README.md`; autoridad por dato en el workspace:
 `meta/docs/historial/MODELO_METADATOS.md`.
 
-1.2. **Título y autor no se escriben en Calibre por sincronización ni verificación** (2026-07-28):
+### §1.2 Título y autor no se escriben en Calibre por sincronización ni verificación (2026-07-28)
+
 Zotero enlaza los adjuntos por la ruta `Autor/Título (id)`. Desde 2026-09-30 se admite una
 excepción: una campaña aprobada que reescriba en la misma operación las rutas y los datos de Zotero
-(`historial/campanas-sobre-la-biblioteca.md` §4 y §5).
+(hoy con `lib/adjuntos_zotero.py`, §2.9).
 
-1.3. **Los relojes de lectura no se copian entre sí** (2026-08-09). `#ko_tiempo` es de KOReader,
-`#zot_tiempo` de Zotero (Ethereal Style) y `#tiempo_estudio` los suma: ningún segundo entra dos
-veces al mismo contador, así que no hay deduplicación que implementar. Diseño:
-`historial/diseno-ecosistema-lectura-2026-08.md` §3.
+### §1.3 Los relojes de lectura no se copian entre sí (2026-08-09)
 
-1.4. **Estado de lectura y estado de estudio son columnas distintas** (2026-08-09):
+`#ko_tiempo` es de KOReader, `#zot_tiempo` de Zotero (Ethereal Style) y `#tiempo_estudio` los suma:
+ningún segundo entra dos veces al mismo contador, así que no hay deduplicación que implementar.
+Diseño: `historial/diseno-ecosistema-lectura-2026-08.md` §3.
+
+### §1.4 Estado de lectura y estado de estudio son columnas distintas (2026-08-09)
+
 `#estado_estudio` lo calculan las suites; `#estudio` es manual y ningún script lo toca.
 
-1.5. **El título se compara exacto** entre Calibre y Zotero (2026-10-01); los demás campos siguen
-comparándose normalizados. Con `norm()` una corrección de tildes o mayúsculas en Calibre nunca
-llegaba a Zotero.
+### §1.5 El título se compara exacto entre Calibre y Zotero (2026-10-01)
+
+Los demás campos siguen comparándose normalizados. Con `norm()` una corrección de tildes o
+mayúsculas en Calibre nunca llegaba a Zotero.
 
 ## 2. Escritura segura
 
-2.1. **Un solo escritor de `metadata.db` a la vez**, con el candado `flock` compartido
-`.lock_calibre_write` de la raíz (auditoría C5, 2026-08-09). Los timers lo pasan al hijo por
-descriptor (`ECOSISTEMA_LOCK_HELD=1`). Qué suites lo toman de verdad: §Pendientes P1.
+### §2.1 Un solo escritor de `metadata.db` a la vez (auditoría C5, 2026-08-09)
 
-2.2. **Simulación por defecto y `--aplicar` explícito**, con respaldo rotado antes de escribir y
-`PRAGMA integrity_check` después (2026-07-28). Excepciones vigentes: §Pendientes P2 y el patrón de
-campaña (§4.2).
+Un candado `flock` compartido; los timers lo pasan al hijo por descriptor
+(`ECOSISTEMA_LOCK_HELD=1`). *Precisión (2026-10-05, ola 2, C1):* el candado ya no es
+`.lock_calibre_write` de la raíz del repo sino `LOCK_CALIBRE` de `core/env.sh` (estado de usuario), y
+ocupado sale 75; lo toman todos los escritores por la puerta (§2.5).
 
-2.3. **Tras escribir por SQLite, `calibredb backup_metadata --all`** con Calibre cerrado, para que
-los OPF no queden rancios; nunca `embed_metadata`, que modifica el archivo del libro (2026-07-28).
+### §2.2 Simulación por defecto y `--aplicar` explícito (2026-07-28)
 
-2.4. **Zotero se escribe por SQL directo** solo desde `sincronizar_zotero` y desde las campañas, con
-ambas apps cerradas y `synced=0` en cada ítem tocado para que la cuenta lo suba (2026-07-28).
+Con respaldo verificado antes de escribir y `PRAGMA integrity_check` después. Desde la ola 2a no
+quedan excepciones: `metadatos_calibre` también simula por defecto (K5) y `--apuntes` de
+`koreader_estudio` es una orden explícita que escribe por la puerta.
+
+### §2.3 Tras escribir por SQLite, `calibredb backup_metadata --all` (2026-07-28)
+
+*Superada por §2.7:* Calibre ya no se escribe por SQLite.
+
+### §2.4 Zotero se escribe por SQL directo, con ambas apps cerradas y `synced=0` (2026-07-28)
+
+Para que la cuenta suba cada ítem tocado. *Precisión (ola 2a):* el SQL vive solo en
+`lib/escribir_zotero.py`; lo usan `sincronizar_zotero` y `lib/adjuntos_zotero.py`.
+
+### §2.5 Una sola puerta de escritura (ola 2a, K2, 2026-10-05)
+
+`lib/escribir.sh` (Bash) y `lib/escribir.py` / `lib/escribir_zotero.py` (Python) son los únicos que
+escriben en `metadata.db` y en `zotero.sqlite`. Abrir la puerta de Calibre es, en este orden y todo o
+nada: Calibre cerrado (detección canónica de `core/shell-lib/detectar_apps.sh`), candado
+`LOCK_CALIBRE` y respaldo verificado (`backup_metadata_db` de `core`); la de Zotero, igual con
+`LOCK_ZOTERO` y un respaldo verificado de `zotero.sqlite`. Después se escribe con
+`calibredb_escribe`, con la API de Calibre (`set_campos`, que exige `PUERTA_CALIBRE=abierta` para esa
+biblioteca) o con las primitivas `z_*`. `tests/test_puerta.py` hace fallar a cualquier escritor
+fuera de la puerta. Fuente: normativa 9.1 y RQ-PRE-06.
+
+### §2.6 Los respaldos viven fuera del repo (ola 2a, K2 y K8, 2026-10-05)
+
+Los de cada escritura, en `$XDG_STATE_HOME/biblioteca/respaldos/<suite>/{calibre,zotero}/` (5 de
+`metadata.db`, 3 de `zotero.sqlite`): sobreviven a la fusión y al renombre del repo y no se mezclan
+con el código. Los que vivían dentro del repo se copiaron verificados a
+`$RESPALDOS_DIR/biblioteca/<suite>/` y los originales están en
+`~/.local/share/residuos-programa/2026-10-05/scripts_for_calibre/`.
+
+### §2.7 Calibre se escribe por su API o por `calibredb`, nunca por SQL (ola 2a, K3, 2026-10-05)
+
+El SQL directo choca con los disparadores de Calibre (`title_sort`: el relleno de `pubdate` de
+`sincronizar_zotero` fallaba después de haber escrito Zotero) y no marca los libros para su OPF.
+`sincronizar_zotero` deja su plan en `plan_calibre.json` y lo aplica `escribir.py aplicar-plan`
+dentro de `calibre-debug`; las columnas se resuelven por etiqueta. Como la API marca los libros
+cambiados, basta `calibredb backup_metadata` sin `--all` (0,6 s en vez de 20 s).
+
+### §2.8 La caracterización precede al cambio (ola 2a, K1, 2026-10-05)
+
+`tests/` corre cada sincronizador vivo sobre copias de las bases (biblioteca espejo de enlaces,
+HOME, XDG y candado propios, `unshare -rn` contra el socket de instancia única de Calibre) y compara
+reporte y delta de las bases con un commit de referencia (`467c8a7`). Nunca toca las bases reales.
+Un defecto hallado se fija primero como `xfail` estricto y su arreglo lo vuelve verde.
+
+### §2.9 Un solo escritor de rutas de adjuntos en Zotero (ola 2a, K4, 2026-10-05)
+
+`lib/adjuntos_zotero.py` (`rutas`, `titulos`, `autores`, `verificar`) sustituye a las diez copias
+de `aplicar_zotero.py` de las campañas: simula por defecto y, tras reescribir, exige 0 rutas nuevas
+rotas.
 
 ## 3. KOReader
 
-3.1. **Sidecars por hash** (2026-08-09): `document_metadata_folder = "hash"` y los `.sdr` en
-`~/.config/koreader/hashdocsettings/`; renombrar en Calibre ya no rompe el emparejamiento, que se
-hace por el MD5 parcial de KOReader cacheado en `#ko_md5`.
+### §3.1 Sidecars por hash (2026-08-09)
 
-3.2. **El respaldo de KOReader va a un repo de datos propio** (`KOREADER_RESPALDO_DIR`, FG3,
-2026-09-15), no a `~/.dotfiles`, y excluye `settings.reader.lua` porque lleva credenciales `kosync`.
+`document_metadata_folder = "hash"` y los `.sdr` en `~/.config/koreader/hashdocsettings/`; renombrar
+en Calibre ya no rompe el emparejamiento, que se hace por el MD5 parcial de KOReader cacheado en
+`#ko_md5`.
+
+### §3.2 El respaldo de KOReader va a un repo de datos propio (FG3, 2026-09-15)
+
+`KOREADER_RESPALDO_DIR`, no `~/.dotfiles`, y excluye `settings.reader.lua` porque lleva credenciales
+`kosync`. *Precisión (ola 2a, K6):* el volcado de `statistics.sqlite3` se hace con `CORE_PYTHON`
+(`iterdump`), porque los timers ya no llevan el `sqlite3` de anaconda.
 
 ## 4. Organización del repositorio
 
-4.1. **`lib_comun/` son envoltorios de `core/`** (FS2, 2026-09-07) y no se amplían; el código nuevo
-carga `core/env.sh` o `core/env.py` directamente.
+### §4.1 `lib_comun/` son envoltorios de `core/` (FS2, 2026-09-07)
 
-4.2. **Una campaña sobre la biblioteca es una carpeta en
-`script_normalizacion_metadatos/migraciones/<tema>_<fecha>/`** (2026-09-30) con `main.sh`, foto
-previa, `propuesta.tsv`, `hechos.tsv` (registro y guarda contra la repetición) y `deshacer.sh`. Su
-`main.sh` aplica sobre las bases reales; el ensayo es `--simular <biblioteca> <zotero.sqlite>` sobre
-una copia.
+No se amplían; el código nuevo carga `core/env.sh` o `core/env.py` directamente. Desde la ola 2a
+ninguna suite de este repo los usa; quedan para `scripts_for_fuentes` hasta C4.
 
-4.3. **`script_catalogacion_biblioteca/fichas/` y `resumen_catalogacion.tsv` son el registro de esa
-suite** (D12, 2026-09-20): las fichas y las filas nuevas las escriben `scripts_for_fuentes/ingesta`
-e `ingesta_cursos`; aquí solo se aplican al catálogo.
+### §4.2 Una campaña es una carpeta con su registro y su deshacer (2026-09-30)
 
-4.4. **Un solo incrustador de PDF** (auditoría A7, 2026-08-10): `script_metadatos_calibre embed`,
-con InfoDict y XMP Dublin Core; el de `scripts_for_zotero` quedó absorbido.
+*Superada por §4.8.*
 
-4.5. **Los timers se instalan con la herramienta** (`--instalar-timer`) desde las plantillas
-versionadas en `../script_koreader_estudio/lib/systemd/` y
-`../script_ecosistema_lectura/lib/systemd/`; `~/.dotfiles` no los gestiona (2026-09-20).
+### §4.3 `script_catalogacion_biblioteca/fichas/` y `resumen_catalogacion.tsv` son el registro de esa suite (D12, 2026-09-20)
 
-4.6. **La crónica de una campaña nueva va a su carpeta y al commit** (2026-10-04): la cabecera de
-su `main.sh`, sus tablas (`propuesta.tsv`, `hechos.tsv`) y el mensaje de commit. La bitácora
-`historial/campanas-sobre-la-biblioteca.md` cubre hasta 2026-10-01, está cerrada y no se reabre.
+Las fichas y las filas nuevas las escribe `scripts_for_fuentes/ingesta`; aquí solo se aplican al
+catálogo. Una ficha cita su proyecto por id (`proyecto: meta`), no por ruta (normativa 1.10, K7).
 
-4.7. **La interfaz que usan otros repos vive en `consumidores.md`** (2026-10-04): `lib_comun/`, el
-registro de catalogación y el candado. `lib_comun/` se conserva mientras tenga consumidores.
+### §4.4 Un solo incrustador de PDF (auditoría A7, 2026-08-10)
 
-## Pendientes
+`script_metadatos_calibre embed`, con InfoDict y XMP Dublin Core; el de `scripts_for_zotero` quedó
+absorbido.
 
-- **P1. El candado no lo toman todos los escritores.** `script_catalogacion_biblioteca` (con
-  `--aplicar`) y `script_metadatos_calibre register` escriben `metadata.db` por `calibredb` sin
-  `tomar_lock_calibre`; solo comprueban (la primera) que Calibre esté cerrado. Su `suite.yml` o su
-  README decían lo contrario.
-- **P2. `script_metadatos_calibre` escribe por defecto.** `embed` y `register` modifican los PDF y
-  `metadata.db` salvo que se pase `--dry-run`; `--aplicar` solo lo lee `limpiar-json`. Además, sin
-  `--root`, la raíz es el directorio actual, y `register` no comprueba que Calibre esté cerrado
-  (lo exige `calibredb`). Desde 2026-10-04 su `suite.yml` lo declara así; lo pendiente es el código.
-- ~~**P3. Manifiestos que se quedaron cortos.**~~ *Cerrado el 2026-10-04:* los `suite.yml` de
-  `normalizacion_metadatos`, `catalogacion_biblioteca` y `metadatos_calibre` dicen lo que hace el
-  código y los bloques se regeneraron con `core/suites.py generar --aplicar`.
-- **P4. Respaldos de ruta literal.** Los `config.sh` de las seis suites con `main.sh` y las
-  migraciones `01`–`09` caen a `~/Documents/biblioteca` (y las dos que leen Zotero, a `~/Zotero`)
-  si no reciben la ruta por variable (`BIBLIOTECA_DIR`, `CALIBRE_DB`, `ZOTERO_DIR` o la propia de
-  la suite), en vez de cargar `core/env.sh`.
-- **P5. Fase 5 del diseño** (exportar sesiones de KOReader al registro de Ethereal Style): opcional,
-  no planificada.
-- **P6. `reportes/` no rota sola**: la poda de más de 30 días la hace una fase de higiene.
-- ~~**P7. Licencia**~~ *Cerrado el 2026-10-04 por decisión del autor:* MIT (`LICENSE`), la del resto
-  del código del ecosistema y la que anunciaba el primer README.
-- **P8. Plantillas systemd con ruta de máquina** (2026-10-04, autor): los tres `.service` de
-  `script_koreader_estudio/lib/systemd/` y `script_ecosistema_lectura/lib/systemd/` fijan un `PATH` con el directorio personal; solo `@MAIN@` se renderiza al instalar.
-- **P9. Rutas de máquina en las fichas** (2026-10-04, autor): la sección «Origen» de muchas fichas de
-  catalogación lleva la ruta absoluta del archivo de entrada, y el repo es público. Son registro:
-  se limpian con la herramienta que las escribe (`scripts_for_fuentes/ingesta`), no a mano.
-- **P10. Filas sin ficha** (2026-10-04, autor): 10423–10425 están en `resumen_catalogacion.tsv` y no
-  en `fichas/`.
-- **P11. Ayuda de CLI fuera de la norma de idioma** (2026-10-04, autor): `script_metadatos_calibre`
-  (en inglés, también `script_verificar_metadatos/lib/db.sh`), `script_sincronizar_zotero` y
-  `script_verificar_metadatos` (sin tildes).
-- **P12. `script_normalizacion_metadatos/migraciones/zotero_alta_2026-09-30/` sin aplicar** (2026-10-04, autor): un solo script que
-  manda a la papelera de Zotero la segunda importación del RIS de `--enlazar`; no sigue el patrón de
-  §4.2 (sin `hechos.tsv` ni `deshacer.sh`) y no hay respaldo que pruebe que se aplicó.
-- **P13. El `suite.yml` de `verificar_metadatos` declara `curl`** (2026-10-04, autor): el código hace
-  las peticiones con `urllib` y `script_verificar_metadatos/lib/cli.sh` no comprueba `curl`; el
-  bloque generado del README lo repite. Al corregirlo, `core/suites.py generar --aplicar`.
-- **P14. Un correo personal en `script_verificar_metadatos/config.sh`** (2026-10-04, autor): el
-  contacto del «polite pool» de Crossref está escrito como valor por defecto en un repo público;
-  cabe moverlo a `core/env.sh` o exigir la variable de entorno.
+### §4.5 Los timers se instalan con la herramienta (2026-09-20)
+
+*Superada por §4.9.*
+
+### §4.6 La crónica de una campaña nueva va a su carpeta y al commit (2026-10-04)
+
+La bitácora `historial/campanas-sobre-la-biblioteca.md` cubre hasta 2026-10-01, está cerrada y no
+se reabre.
+
+### §4.7 La interfaz que usan otros repos vive en `consumidores.md` (2026-10-04)
+
+`lib_comun/`, el registro de catalogación, la puerta y el candado. `lib_comun/` se conserva
+mientras tenga consumidores.
+
+### §4.8 Las campañas cerradas salen al historial de git (ola 2a, K8, 2026-10-05)
+
+`script_normalizacion_metadatos` (11 campañas aplicadas) salió del árbol con `git rm`; se lee en
+`467c8a7`. Las campañas de la ola 2b usarán la plantilla común de `migraciones/` (simular,
+respaldar, aplicar, reescribir `attachments:`, verificar, deshacer) por la puerta.
+
+### §4.9 Los timers son plantillas en `systemd/` (ola 2a, K6, 2026-10-05)
+
+Con `@RAIZ@` → `%h/<ruta bajo el HOME>`, `SuccessExitStatus=75` y un PATH sin anaconda (P221).
+`systemd/instalar.sh` simula por defecto, instala con `--aplicar` y compara lo instalado con la
+plantilla con `--verificar`; `--instalar-timer` de las suites lo delega. `~/.dotfiles` no las
+gestiona; si el repo cambia de carpeta, se reinstalan con la herramienta.
+
+### §4.10 Las rutas salen de `core/env.sh` (ola 2a, K6, 2026-10-05)
+
+Los `config.sh` cargan `core/env.sh`: ni `$HOME/Documents` ni `~/Zotero` de respaldo. El estado de
+las suites (marca de la orquestación, último sync, plan de Calibre) vive en
+`$XDG_STATE_HOME/biblioteca/<suite>/`.

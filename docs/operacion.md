@@ -1,6 +1,7 @@
 ---
 tipo: doc
 titulo: "Operación del ecosistema de lectura y estudio (Calibre ⇄ KOReader ⇄ Zotero): qué es automático, qué es manual, cómo se verifica"
+genero: guia
 estado: activo
 ---
 # Operación del ecosistema de lectura y estudio (Calibre ⇄ KOReader ⇄ Zotero)
@@ -26,10 +27,11 @@ cosa?**
 
 - «Se salta» no es un error: **reintenta en la siguiente pasada**. Si dejas la laptop apagada a las
   04:30, `Persistent=true` la corre al encender.
-- Los tres comparten un candado (`.lock_calibre_write` en la raíz del repo; `LOCK_CALIBRE` en
-  `core/env.sh`): nunca escriben a la vez.
-- Todo escribe con respaldo previo rotado: `backups/` de cada suite; `sincronizar_zotero` respalda
-  ambas bases en `../script_sincronizar_zotero/estado/backups/`.
+- Los tres comparten un candado (`LOCK_CALIBRE` de `core/env.sh`, en `$XDG_STATE_HOME/biblioteca/`):
+  nunca escriben a la vez; ocupado, salen 75 y reintentan.
+- Todo escribe por la puerta (`../lib/escribir.sh`): con la app cerrada y un respaldo verificado y
+  rotado en `$XDG_STATE_HOME/biblioteca/respaldos/<suite>/` (`calibre/` y, para
+  `sincronizar_zotero`, también `zotero/`).
 
 **Tu única rutina real: lee en KOReader o Zotero, organiza en Calibre. Fin.**
 
@@ -37,23 +39,21 @@ cosa?**
 
 Las seis unidades (`koreader-calibre-sync`, `ecosistema-lectura`, `ecosistema-metadatos`, cada una
 `.service` + `.timer`) están en `~/.config/systemd/user/` como archivos normales, no como enlaces.
-Las escribe `--instalar-timer` de cada suite a partir de las plantillas versionadas en
-`../script_koreader_estudio/lib/systemd/` y `../script_ecosistema_lectura/lib/systemd/`: el
-`.service` se renderiza sustituyendo `@MAIN@` por la ruta absoluta del `main.sh` de la suite y el
-`.timer` se copia tal cual; después `daemon-reload` y `enable --now`. `--desinstalar-timer` hace lo
-inverso. `~/.dotfiles` no gestiona estas unidades (no tiene paquete systemd): si una suite cambia de
-carpeta o de máquina, se reinstala con la herramienta.
+Las escribe `../systemd/instalar.sh --aplicar` a partir de las plantillas versionadas de
+`../systemd/`: `@RAIZ@` se renderiza como `%h/<ruta del repo bajo el HOME>`, el PATH es el mínimo del
+sistema (sin anaconda) y `SuccessExitStatus=75`; después `daemon-reload` y `enable --now`. Sin
+`--aplicar` simula; `--verificar` dice si lo instalado es la plantilla; `--desinstalar --aplicar`
+hace lo inverso. `--instalar-timer` y `--desinstalar-timer` de las suites lo delegan. `~/.dotfiles`
+no gestiona estas unidades: si el repo cambia de carpeta o de máquina, se reinstala con la
+herramienta.
 
 ```bash
-../script_koreader_estudio/main.sh --instalar-timer        # koreader-calibre-sync (30 min)
-../script_ecosistema_lectura/main.sh --instalar-timer      # ecosistema-lectura y -metadatos
-../script_koreader_estudio/main.sh --desinstalar-timer     # detiene y borra sus unidades
-diff ../script_koreader_estudio/lib/systemd/koreader-calibre-sync.timer \
-     ~/.config/systemd/user/koreader-calibre-sync.timer
+../systemd/instalar.sh                     # simula: qué cambiaría frente a lo instalado
+../systemd/instalar.sh --aplicar           # instala y activa los tres timers
+../systemd/instalar.sh --verificar         # 0 si lo instalado = las plantillas renderizadas
 ```
 
-Fuera del repo quedan solo las copias renderizadas; la fuente es siempre la carpeta `systemd/`
-dentro del `lib/` de cada suite.
+Fuera del repo quedan solo las copias renderizadas; la fuente es siempre `../systemd/`.
 
 ## 2. Lo MANUAL (los únicos gestos que te tocan)
 
@@ -82,7 +82,7 @@ cd "$SCRIPTS_CALIBRE/script_ecosistema_lectura"
 ./main.sh --metadatos --aplicar        # correr YA la sync de etiquetas/metadatos (AMBOS cerrados)
 ./main.sh --enlazar [--ris] [--aplicar] # informe de libros sin #zotero_key; .ris; claves «adjunto»
 
-./main.sh --instalar-timer             # en los dos main.sh; --desinstalar-timer lo revierte
+../systemd/instalar.sh --aplicar       # los tres timers (simula sin --aplicar)
 ```
 
 ## 4. ¿Está funcionando? (verificación y problemas)
@@ -99,9 +99,11 @@ git -C ~/.local/share/koreader-respaldo log --oneline -5       # respaldos recie
 - Las columnas se actualizan **al cerrar el libro en KOReader** (ahí vuelca sus datos) y en la
   siguiente pasada del timer. No es instantáneo: es fiable.
 - Restaurar en laptop nueva: receta en `~/.local/share/koreader-respaldo/README.md`.
-- Deshacer una escritura: `koreader_estudio` y `ecosistema_lectura` guardan `backups/metadata_*.db`
-  (los 5 últimos); copiar encima de `biblioteca/metadata.db` con Calibre cerrado. Los de
-  `sincronizar_zotero` están en `../script_sincronizar_zotero/estado/backups/`.
+- Deshacer una escritura: la puerta guarda `metadata_*.db` (los 5 últimos) y, en
+  `sincronizar_zotero` y `adjuntos_zotero`, `zotero_*.sqlite` (los 3 últimos) en
+  `$XDG_STATE_HOME/biblioteca/respaldos/<suite>/{calibre,zotero}/`; copiar el que toque encima de la
+  base, con la app cerrada. Los respaldos anteriores a la ola 2a están en
+  `$RESPALDOS_DIR/biblioteca/<suite>/` (con `SHA256SUMS`).
 - Los `reportes/` de cada suite (un TSV o MD por pasada) no rotan solos: se podan los de más de 30
   días en las fases de higiene; el último de cada tipo se conserva.
 
@@ -110,9 +112,9 @@ git -C ~/.local/share/koreader-respaldo log --oneline -5       # respaldos recie
 - No edites a mano las columnas `ko_*`, `zot_*`, `#leído` tras Terminado, ni
   `#tiempo_estudio`/`#barra`/`#estado_estudio` (composites: se recalculan). Las tuyas son:
   **`#estudio`**, **`#apuntes`** (vía comando), etiquetas, series.
-- No borres `~/.config/koreader/hashdocsettings/` (son tus progresos) ni el `.lock_calibre_write` de
-  la raíz de `scripts_for_calibre/`.
-- No muevas los scripts de carpeta sin reinstalar los timers (`--instalar-timer`).
+- No borres `~/.config/koreader/hashdocsettings/` (son tus progresos) ni el candado de
+  `$XDG_STATE_HOME/biblioteca/`.
+- No muevas el repo de carpeta sin reinstalar los timers (`../systemd/instalar.sh --aplicar`).
 - No ejecutes los `.js` de `scripts_for_zotero` (salvo `series_organizer`): sus transformaciones
   están absorbidas por la política de `../script_sincronizar_zotero/` y el sync nocturno las
   revertiría.

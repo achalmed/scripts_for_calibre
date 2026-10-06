@@ -17,4 +17,6 @@ depende_de:
 - calibredb
 - zotero.sqlite
 - core/shell-lib
+- lib/escribir.sh (la puerta)
 timer: ecosistema-lectura.timer · ecosistema-metadatos.timer
+pruebas: python3 -m pytest scripts_for_calibre/tests   # desde ~/Documents; copias de las bases, nunca las reales

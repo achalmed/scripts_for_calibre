@@ -4,145 +4,84 @@ estado: activo
 ---
 # CLAUDE.md — scripts_for_calibre
 
-Guía para el asistente. En español, como todo el ecosistema. `AGENTS.md` es un enlace a este
-archivo. Léase antes: `README.md` (qué es, uso, estructura), `docs/README.md` (el mapa por lector),
-`docs/decisiones.md` (por qué y qué está pendiente), el `suite.yml` y el README de la suite que se
-toque, y `meta/docs/historial/MODELO_METADATOS.md` §2 y §4 (autoridad por dato) cuando el cambio afecte a qué
-sistema manda sobre un campo.
+Guía para el asistente. En español con tildes, como todo el ecosistema. `AGENTS.md` es un enlace a
+este archivo. Léase antes: `estado.md` (dónde está el repo), `README.md` (qué es, uso, estructura) y
+`docs/README.md` (el mapa de la documentación, por lector). Concreta la guía de `~/Documents/CLAUDE.md`
+para este repo y solo dice lo que aquella no dice.
 
 ## Reglas que no se negocian
 
-- **Dónde va cada cosa nueva** (NORMATIVA §15.11). En la raíz solo `README.md`, `CLAUDE.md`,
-  `AGENTS.md` y `LICENSE`; ningún otro `.md`.
-
-  | lo que apareció | va a | nunca a |
-  |---|---|---|
-  | cómo se usa una suite | el README de la suite (§Uso) | un `.md` suelto |
-  | operación transversal (timers, rutina, verificación) | `docs/operacion.md` | la raíz |
-  | por qué se decidió algo; un pendiente | `docs/decisiones.md` (§Pendientes con fecha y dueño) | `TODO.md`, `DECISION_<fecha>.md` |
-  | lo que otro repo usa de aquí | `docs/consumidores.md` | una copia en el consumidor |
-  | una campaña nueva | su carpeta en `script_normalizacion_metadatos/migraciones/` y el commit | la bitácora cerrada de `docs/historial/` |
-  | una ficha de catalogación | la escribe `scripts_for_fuentes/ingesta` | a mano aquí |
-
-  Lo que hiciste en esta sesión va al mensaje de commit, no a un archivo. Si nada encaja, pregunta
-  antes de crear un documento.
-- **Calibre manda en los metadatos bibliográficos.** En conflicto gana Calibre y se propaga a Zotero
-  (título, fecha, editorial, ISBN, serie, páginas, edición, idioma, tags, abstract). **Zotero solo
-  rellena vacíos** en Calibre (año placeholder, ISBN ausente) y puebla las columnas espejo
-  `#zotero_*`. Vacío en el origen nunca borra en el destino. Política completa:
-  `script_sincronizar_zotero/README.md`.
-- **Título y autor jamás se escriben en Calibre** (ni por sync ni por verificación): Zotero enlaza
-  los adjuntos por la ruta `Autor/Título (id)` y cambiarlos rompe el vínculo. Solo van Calibre →
-  Zotero. Las excepciones: `catalogacion_biblioteca` (los escribe, y vale antes de que el libro
-  tenga ítem en Zotero) y una campaña que reescriba Zotero en la misma operación
-  (`script_normalizacion_metadatos/migraciones/<tema>_<fecha>/`).
-- **Los relojes de lectura nunca se copian entre sí.** `#ko_tiempo` es de KOReader, `#zot_tiempo` de
-  Zotero (Ethereal Style); `#tiempo_estudio` es una composite que los suma. No existe deduplicación
-  porque ningún segundo entra dos veces al mismo contador; no se implementa ninguna.
-- **Un solo escritor de `metadata.db` a la vez.** Todo escritor toma el candado
-  `.lock_calibre_write` de la raíz (`tomar_lock_calibre` de `core/shell-lib/lock.sh`; la ruta la
-  fija `LOCK_CALIBRE` en `core/env.sh` y `core/env.py`; `config.sh` de `koreader_estudio` y de
-  `ecosistema_lectura` la redeclaran como `LOCK_ESCRITURA_CALIBRE`, que tiene prioridad). Lo toman
-  también `sincronizar_zotero` y las suites `ingesta` e `ingesta_cursos` de `scripts_for_fuentes`;
-  los timers lo heredan por descriptor (`ECOSISTEMA_LOCK_HELD=1`). Hoy **no** lo toman
-  `catalogacion_biblioteca` ni `metadatos_calibre register` (`docs/decisiones.md`, Pendientes P1):
-  no se toman como modelo. Una suite nueva que escriba en Calibre lo toma o no existe.
-- **Calibre cerrado para escribir; Zotero cerrado además para `sincronizar_zotero`.** Las suites lo
-  comprueban (`detectar_apps.sh`) y abortan; un timer que se salta no es un fallo: reintenta.
-- **Simulación por defecto y `--aplicar` explícito** (`--apply` en las migraciones `NN_*.py`). Fuera
-  de la regla, y hay que avisar antes de correrlos: `metadatos_calibre embed|register` (escriben
-  salvo `--dry-run`), `koreader_estudio --apuntes` y el `main.sh` de cada campaña (leer su
-  cabecera). Backup rotado de `metadata.db` (5) o de ambas bases (en
-  `script_sincronizar_zotero/estado/`) antes de escribir; `PRAGMA integrity_check` después. Un
-  cambio masivo se ensaya con `--limite N` o `--ids` antes del total.
-- **Columnas manuales que ningún script toca:** `#estudio` (estado de estudio, distinto del de
-  lectura), `#apuntes` (solo vía `--apuntes`), etiquetas y series. Las `ko_*`, `zot_*`, `#leído`
-  tras Terminado, `#tiempo_estudio`, `#barra` y `#estado_estudio` las escriben las suites: no se
-  editan a mano.
-- **Escribir en SQLite directo deja los OPF rancios**: tras cualquier escritura que no pase por
-  `calibredb`, `calibredb backup_metadata --all` con Calibre cerrado (solo reescribe OPF); nunca
-  `embed_metadata`, que modifica el archivo del libro.
+- **Una sola puerta de escritura** (normativa 9.1, RQ-PRE-06; `docs/decisiones.md` §2.5). Solo
+  `lib/escribir.sh`, `lib/escribir.py` y `lib/escribir_zotero.py` escriben en `metadata.db` o en
+  `zotero.sqlite`: Calibre cerrado, candado (`LOCK_CALIBRE`/`LOCK_ZOTERO` de `core/env.sh`; ocupado
+  sale 75) y respaldo verificado, en ese orden. Después, `calibredb_escribe`, la API de Calibre
+  (`set_campos`) o las primitivas `z_*`. Calibre **nunca** por SQL (§2.7). Un escritor nuevo entra
+  por la puerta o no existe: `tests/test_puerta.py` lo hace fallar.
+- **Las bases reales son intocables en las pruebas.** Todo ensayo va sobre copias
+  (`tests/calibre_apoyo.py`: biblioteca espejo, HOME y candado propios); las bases reales se leen
+  solo con `mode=ro`. Nunca se ejecuta `add_format` contra el espejo (copiaría sobre un enlace a un
+  PDF real).
+- **La prueba antes del código** (R-2 de la ola 1): un cambio en un sincronizador vivo deja verde
+  `python3 -m pytest scripts_for_calibre/tests` (< 2 min) contra la referencia; un defecto se fija
+  primero como `xfail` estricto.
+- **Calibre manda en los metadatos bibliográficos**; Zotero solo rellena vacíos y puebla el espejo
+  `#zotero_*`; vacío en el origen nunca borra en el destino (`script_sincronizar_zotero/README.md`).
+- **Título y autor jamás se escriben en Calibre** por sincronización ni verificación: Zotero enlaza
+  los adjuntos por `Autor/Título (id)`. Excepciones: la catalogación (antes de que haya ítem en
+  Zotero) y una campaña que reescriba Zotero en la misma operación (`lib/adjuntos_zotero.py`).
+- **Los relojes de lectura no se copian entre sí**: `#ko_tiempo` (KOReader), `#zot_tiempo` (Zotero),
+  `#tiempo_estudio` los suma. No hay deduplicación que implementar.
+- **Simulación por defecto y `--aplicar` explícito**, en todas las suites (también
+  `metadatos_calibre`). Un cambio masivo se ensaya con `--limite N` o `--ids` antes del total.
+- **Columnas manuales que ningún script toca:** `#estudio`, `#apuntes` (solo vía `--apuntes`),
+  etiquetas y series. Las `ko_*`, `zot_*`, `#leído` tras Terminado y las compuestas las escriben las
+  suites: no se editan a mano.
+- **Las columnas se resuelven por etiqueta**, nunca por número de `custom_column_N`.
+- **Rutas por `core/env.sh`** (`BIBLIOTECA_DIR`, `ZOTERO_DB`, `KOREADER_STATS`, `CORE_PYTHON`…): ni
+  `$HOME/Documents` ni la carpeta de inicio literal; lecturas de SQLite desde Bash con `lib/leer.sh`
+  (los timers no llevan `sqlite3` en el PATH).
+- **Los timers son plantillas en `systemd/`** y se instalan con `systemd/instalar.sh` (simula por
+  defecto; `--verificar` compara lo instalado). No se tocan las unidades de `~/.config/systemd/user`
+  a mano. Los timers corren cada 30 min sobre este repo: cada commit deja sus `main.sh` funcionando.
+- **Respaldos y estado fuera del repo**: `$XDG_STATE_HOME/biblioteca/`. `reportes/` es runtime
+  ignorado; lo generado (bloques `suite:`/`suites:`/`docs:`) no se edita a mano.
 - **`lib_comun/` no se amplía, ni se borra ni se renombra**: lo consume `scripts_for_fuentes`
-  (`docs/consumidores.md`, con el resto de la interfaz que otros usan). Son envoltorios de
-  `core/shell-lib` y `core/py-common` (FS2); el código nuevo carga `core/env.sh` o `core/env.py` y
-  sus módulos directamente, sin `$HOME/Documents` ni rutas de máquina. El único logger propio (`script_metadatos_calibre/lib/logger.sh`) es a su vez
-  envoltorio del de `core/`.
-- **Los timers se instalan con la herramienta**, no a mano: `--instalar-timer` escribe las unidades
-  en `~/.config/systemd/user/` desde las plantillas `script_koreader_estudio/lib/systemd/` y
-  `script_ecosistema_lectura/lib/systemd/`; si una suite cambia de carpeta se reinstala.
-  `~/.dotfiles` no las gestiona.
-- **Lo generado no se edita**: bloques `<!-- suite:inicio -->` y `<!-- suites:inicio -->` de los README
-  (`core/suites.py generar --aplicar`), `docs/README.md` (`core/docs.py indice`); `reportes/`, `backups/`,
-  `estado/` y el lock son runtime ignorado.
-- **`script_catalogacion_biblioteca/fichas/` y `resumen_catalogacion.tsv` son el registro de esa suite**
-  (D12): las fichas nuevas las escribe `scripts_for_fuentes/ingesta/lib/catalogar.py` con su
-  `calibre_id`; aquí solo se aplican al catálogo y se corrige el TSV cuando una ficha cambia.
-- Español con tildes en código, mensajes y docs; nada del despacho ni identificadores de cliente.
+  hasta que `core` lo retire (C4).
+- **`script_catalogacion_biblioteca/fichas/` y su TSV son el registro de esa suite**: las fichas las
+  escribe `scripts_for_fuentes/ingesta`; aquí se aplican al catálogo. `proyecto:` es un id.
+- **Dónde va cada cosa nueva**: en la raíz solo `README.md`, `CLAUDE.md`, `AGENTS.md`, `estado.md` y
+  `LICENSE`; el porqué a `docs/decisiones.md` (`### §N.M`, sin renumerar), lo pendiente a
+  `estado.md` §Por hacer con fecha y dueño, el uso de una suite a su README, lo que otro repo usa de
+  aquí a su documento de `docs/` (consumidores). Lo hecho en una sesión va al commit, no a un archivo.
+- Nada del despacho ni correos en el repo (es público): el contacto de Crossref llega por
+  `CROSSREF_MAILTO`.
 
 ## Cómo se verifica un cambio
 
 ```bash
-python3 core/archivos.py validar scripts_for_calibre        # A01–A14 y D01–D12, desde ~/Documents
+python3 -m pytest scripts_for_calibre/tests                  # caracterización, puerta, entorno (< 2 min)
+python3 core/archivos.py validar scripts_for_calibre --linea-base "$PWD/meta/programa/05-piloto/linea-base/validador.json"
 python3 core/suites.py validar                               # los suite.yml contra core/suite.schema.yml
-python3 core/suites.py generar                               # ¿bloques e índice desfasados? (simula)
 python3 core/docs.py verificar scripts_for_calibre           # ¿docs/README.md al día?
 bash -n scripts_for_calibre/script_koreader_estudio/main.sh  # sintaxis; un archivo por invocación
-python3 -m py_compile scripts_for_calibre/script_koreader_estudio/lib/sync_koreader.py
-scripts_for_calibre/script_koreader_estudio/main.sh          # simulación: qué escribiría
-scripts_for_calibre/script_sincronizar_zotero/main.sh --limite 20   # simula; informe en reportes/
+scripts_for_calibre/systemd/instalar.sh --verificar          # ¿lo instalado = las plantillas?
 systemctl --user list-timers | grep -E "koreader|ecosistema" # los tres timers, próxima pasada
-journalctl --user -u ecosistema-metadatos -n 30              # la última orquestación
-meta/doctor/main.sh --breve                                  # salud del ecosistema (0 · 1 · 2)
 ```
 
-No hay pruebas automáticas: un cambio se prueba en simulación sobre pocos ids, se aplica con la app
-cerrada, se lee el informe en `reportes/` y se abre Calibre a mirar. Deshacer una escritura: copiar el
-`backups/metadata_*.db` correspondiente sobre `biblioteca/metadata.db` con Calibre cerrado.
+Deshacer una escritura: copiar el respaldo de `$XDG_STATE_HOME/biblioteca/respaldos/<suite>/` sobre
+la base, con la app cerrada.
 
 ## Detalles que cuesta redescubrir
 
-- **Trampas de Calibre 9 y de las columnas `#ko_*`** (`set_custom`, `field()` frente a `raw_field()`,
-  `substr`, `#ko_progfloat` en fracción 0–1): `script_koreader_estudio/README.md` §Trampas conocidas.
-- **KOReader ↔ Calibre se emparejan por el MD5 parcial de KOReader** (bloques de 1 KB en offsets
-  0 y 1024·4^i), cacheado en `#ko_md5`; los sidecars viven en `~/.config/koreader/hashdocsettings/`
-  (modo `hash`), así que renombrar en Calibre no rompe nada.
-- **KOReader vuelca sidecar y estadísticas al cerrar el libro**: el progreso de la sesión aparece en la
-  pasada siguiente. Marcar *Terminado* en KOReader pone ✅, `#leído`, `#read_date` y `#ko_finish`;
-  `#leído` a mano solo promueve, nunca degrada.
-- **El Read Time de Zotero no es un campo nativo**: es una nota hija del ítem «Addon Item» del plugin
-  Ethereal Style en `itemNotes` de `~/Zotero/zotero.sqlite` (`ITEMKEY` + JSON `readingTime`); se lee en
-  modo solo lectura, seguro con Zotero abierto. Si hay varias notas por ítem gana la de `dateModified`
-  más reciente. `#zot_progreso` solo se calcula cuando existen página y total: no se inventa.
-- **`--metadatos` solo corre si alguna base cambió** desde la última pasada aplicada (mtime contra la
-  marca en `script_ecosistema_lectura/estado/`); `--enlazar` solo escribe con `--aplicar` y solo los enlaces «adjunto» (el ítem enlaza el PDF del libro);
-  los de ISBN o título se pegan a mano. El RIS de lo que falta en Zotero lo da `--enlazar --ris`.
-- **El respaldo de KOReader excluye `settings.reader.lua` a propósito** (contiene credenciales `kosync`);
-  el repo de datos es `KOREADER_RESPALDO_DIR` (`~/.local/share/koreader-respaldo/`), no `~/.dotfiles`.
-- **`IFS=$'\t'` colapsa campos vacíos de un TSV en Bash**: `script_catalogacion_biblioteca` usa
-  `tr '\t' '\037'` + `IFS=$'\037'`; GNU `tr` solo acepta el octal. El enum `Clasificador` real lleva
-  tildes y le faltan valores del prompt: `script_catalogacion_biblioteca/lib/clasificador.sh` normaliza y
-  omite reportando.
-- **Los `.js` de `scripts_for_zotero` están absorbidos por la política de `sincronizar_zotero`**:
-  ejecutarlos reintroduce divergencia (en especial `invertir_nombres.js`); solo `series_organizer`
-  sigue vivo, como organizador de subcolecciones después del sync.
-- **«Calibre está abierto; reintentará»** en el journal es normal; `Persistent=true` corre a las 04:30
-  perdidas al encender.
-
-## Dónde está cada cosa
-
-| pregunta | documento |
-|---|---|
-| qué es automático, qué hago yo, comandos, verificación, qué no tocar | `docs/operacion.md` |
-| qué usan otros repos de aquí (`lib_comun/`, fichas y TSV, candado) | `docs/consumidores.md` |
-| por qué es así y qué está pendiente | `docs/decisiones.md` |
-| por qué el ecosistema de lectura es así (fases 1–4) | `docs/historial/diseno-ecosistema-lectura-2026-08.md` |
-| qué hizo cada campaña y cómo se monta una | `docs/historial/campanas-sobre-la-biblioteca.md` (hasta 2026-10-01), la carpeta de la campaña y su commit, `script_normalizacion_metadatos/README.md` |
-| autoridad por dato y dirección de cada sync | `meta/docs/historial/MODELO_METADATOS.md`, `meta/docs/historial/SINCRONIZACION.md` |
-| política campo a campo Calibre ⇄ Zotero | `script_sincronizar_zotero/README.md` |
-| columnas `#ko_*`, sidecars por hash, respaldo continuo | `script_koreader_estudio/README.md` |
-| columnas `#zot_*`, fuente de datos en Zotero, orquestación | `script_ecosistema_lectura/README.md` |
-| flujo ficha → TSV → Calibre y el registro de fichas | `script_catalogacion_biblioteca/README.md` |
-| formato de una ficha de catalogación (prompt 02) | `prompts/01 fuentes/prompt_02_catalogar.md` |
-| lock, logger, backup rotado, detección de apps | `core/shell-lib/`, `core/README.md` |
-| contrato de suite y bloques generados | `core/suite.schema.yml`, `core/suites.py` |
-| normativa de archivos y documentación | `meta/docs/historial/NORMATIVA_ARCHIVOS.md` §15 |
+- **Calibre se excluye por un socket abstracto por usuario**: dos `calibredb` a la vez fallan
+  («Another calibre program…»); por eso las pruebas corren bajo `unshare -rn`. Mientras corren, un
+  timer real puede ver procesos de Calibre y saltarse la pasada: es normal.
+- **Trampas de Calibre 9 y de las columnas `#ko_*`** (`set_custom`, `field()` frente a
+  `raw_field()`, `#ko_progfloat` en fracción 0–1): `script_koreader_estudio/README.md`.
+- **KOReader ↔ Calibre se emparejan por el MD5 parcial de KOReader** (`#ko_md5`); los sidecars
+  viven en `~/.config/koreader/hashdocsettings/`, así que renombrar en Calibre no rompe nada.
+- **El Read Time de Zotero** es una nota del ítem «Addon Item» de Ethereal Style en `itemNotes`; se
+  lee en solo lectura, seguro con Zotero abierto.
+- **`--metadatos` solo corre si alguna base cambió** desde la última orquestación aplicada.
+- **`IFS=$'\t'` colapsa campos vacíos de un TSV en Bash**: la catalogación usa `\037`.
+- **Los `.js` de `scripts_for_zotero`** (salvo `series_organizer`) revierten la política del sync.

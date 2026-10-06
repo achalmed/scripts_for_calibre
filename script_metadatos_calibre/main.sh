@@ -13,10 +13,10 @@
 # Run without arguments to launch the interactive menu.
 # ==============================================================================
 
-set -uo pipefail
-# Note: -e is intentionally omitted at the top level so that a failure in
-# one book folder does not abort processing of the remaining folders.
-# Each module uses explicit return-code checks and counters to track failures.
+set -euo pipefail
+# -e no corta el lote: las operaciones (run_*) se llaman en un contexto `||` (abajo), donde bash
+# no aplica -e, y cada módulo lleva sus códigos de retorno y contadores; así un fallo en una
+# carpeta de libro no aborta las demás. -e protege el resto: carga, argumentos y despacho (K9).
 
 # ------------------------------------------------------------------------------
 # Resolve paths relative to this script's location, not the caller's CWD.
@@ -28,13 +28,15 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # ------------------------------------------------------------------------------
 # Source all modules in dependency order.
 # config.sh must come first (defines constants used by all others).
-# logger.sh second (logging used by validators and domain modules).
+# the logger of core/shell-lib second, plus this suite's session helpers (lib/sesion.sh).
 # ------------------------------------------------------------------------------
 # shellcheck source=config.sh
 source "${SCRIPT_DIR}/config.sh"
 
-# shellcheck source=lib/logger.sh
-source "${SCRIPT_DIR}/lib/logger.sh"
+# shellcheck source=../../core/shell-lib/logger.sh
+source "${SHELL_LIB}/logger.sh"
+# shellcheck source=lib/sesion.sh
+source "${SCRIPT_DIR}/lib/sesion.sh"
 
 # shellcheck source=../lib/escribir.sh
 source "${SCRIPT_DIR}/../lib/escribir.sh"   # la puerta de escritura en metadata.db (K5)

@@ -11,5 +11,6 @@ comandos:
 - main.sh --modo isbn
 estado: activo
 depende_de:
-- python3
+- CORE_PYTHON (urllib; sin curl)
 - core/shell-lib
+- lib/leer.sh

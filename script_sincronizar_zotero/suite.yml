@@ -1,8 +1,8 @@
-# script_sincronizar_zotero/suite.yml — suite sincronizar_zotero: Sincroniza en las dos direcciones los metadatos de los libros enlazados por #zotero_key entre Calibre y Zotero, con backups e integridad.
+# script_sincronizar_zotero/suite.yml — suite sincronizar_zotero: Sincroniza en las dos direcciones los metadatos de los libros enlazados por #zotero_key entre Calibre y Zotero, con respaldos verificados e integridad.
 # Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
 id: sincronizar_zotero
 objetivo: biblioteca
-resumen: 'Sincroniza en las dos direcciones los metadatos de los libros enlazados por #zotero_key entre Calibre y Zotero, con backups e integridad.'
+resumen: 'Sincroniza en las dos direcciones los metadatos de los libros enlazados por #zotero_key entre Calibre y Zotero, con respaldos verificados e integridad.'
 escribe_en:
 - calibre
 - zotero
@@ -15,3 +15,5 @@ depende_de:
 - calibredb
 - zotero.sqlite
 - core/shell-lib
+- lib/escribir.sh (la puerta)
+pruebas: python3 -m pytest scripts_for_calibre/tests   # desde ~/Documents; copias de las bases, nunca las reales

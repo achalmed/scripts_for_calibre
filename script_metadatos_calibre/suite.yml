@@ -6,16 +6,19 @@ resumen: Incrusta los metadatos OPF de Calibre en los PDF (XMP con exiftool) y r
 escribe_en:
 - calibre
 - archivos
-simula_por_defecto: false
+simula_por_defecto: true
 comandos:
-- 'main.sh                      # menú interactivo'
-- main.sh embed --dry-run
+- 'main.sh                      # menú interactivo (simula)'
 - main.sh embed
-- main.sh register --dry-run
+- main.sh embed --aplicar
+- main.sh register
+- 'main.sh register --aplicar   # por la puerta: Calibre cerrado, candado y respaldo'
 - main.sh limpiar-json --aplicar
 estado: activo
 depende_de:
 - calibredb
 - exiftool
 - core/shell-lib
-nota: embed y register escriben salvo --dry-run; --aplicar solo lo lee limpiar-json, que sin él lista los huérfanos y no borra.
+- lib/escribir.sh (la puerta)
+nota: todo simula por defecto (ola 2a, K5); con --aplicar, embed modifica los PDF, register escribe metadata.db por la puerta y limpiar-json borra los huérfanos.
+pruebas: python3 -m pytest scripts_for_calibre/tests   # desde ~/Documents; copias de las bases, nunca las reales

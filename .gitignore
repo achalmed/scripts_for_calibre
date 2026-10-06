@@ -1,10 +1,10 @@
 # .gitignore de scripts_for_calibre, por clase (NORMATIVA §5 y §15.8). Uno solo, en la raíz.
 
 # --- temporal: runtime de las suites (no se versiona; la poda la hace la higiene) ---
+# (los respaldos, el estado y el candado viven fuera del repo desde la ola 2a: $XDG_STATE_HOME/biblioteca/)
 */backups/
 */reportes/
 */estado/
-.lock_calibre_write
 
 # --- artefacto: bytecode de Python ---
 __pycache__/

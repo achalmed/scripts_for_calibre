@@ -7,10 +7,10 @@ estado: activo
 <!-- suite:inicio -->
 **Suite `sincronizar_zotero`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
 
-Sincroniza en las dos direcciones los metadatos de los libros enlazados por #zotero_key entre Calibre y Zotero, con backups e integridad.
+Sincroniza en las dos direcciones los metadatos de los libros enlazados por #zotero_key entre Calibre y Zotero, con respaldos verificados e integridad.
 
 - Escribe en: calibre, zotero · simula por defecto: sí
-- Depende de: calibredb, zotero.sqlite, core/shell-lib
+- Depende de: calibredb, zotero.sqlite, core/shell-lib, lib/escribir.sh (la puerta)
 
 Comandos:
 
@@ -19,7 +19,7 @@ main.sh                      # simula y reporta
 main.sh --aplicar            # ambas apps cerradas
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-05); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 Sincronizador **bidireccional** de metadatos entre Calibre (`biblioteca/metadata.db`) y Zotero
@@ -78,19 +78,25 @@ Reglas duras, no configurables:
 
 ## Escritura segura
 
-`--aplicar` comprueba por el nombre del proceso (`detectar_apps.sh` de `core/shell-lib/`) que
-Calibre y Zotero estén cerrados, toma el candado
-`.lock_calibre_write` (o lo hereda del timer), respalda ambas bases en `estado/backups/`, escribe en
-Zotero por SQL directo dejando cada ítem tocado con `synced=0` y `dateModified` al día para que la
-cuenta lo suba, corre `PRAGMA integrity_check` en las dos bases y regenera los OPF de Calibre
-(`calibredb backup_metadata --all`). Si la comprobación falla, pide restaurar los respaldos.
+`--aplicar` entra por la puerta (`../lib/escribir.sh`, `../docs/decisiones.md` §2.5): comprueba por
+el nombre del proceso que Calibre y Zotero estén cerrados, toma `LOCK_CALIBRE` (o lo hereda del
+timer) y `LOCK_ZOTERO`, y deja un respaldo **verificado** de cada base en
+`$XDG_STATE_HOME/biblioteca/respaldos/sincronizar_zotero/{calibre,zotero}/`. Después escribe Zotero
+por SQL (`../lib/escribir_zotero.py`) dejando cada ítem tocado con `synced=0` y `dateModified` al día
+para que la cuenta lo suba; Calibre **no** se escribe por SQL: el plan (rellenos de fecha, ISBN y
+valoración, y el espejo `#zotero_*`, con las columnas resueltas por etiqueta) va a
+`plan_calibre.json` y lo aplica la API de Calibre (`escribir.py aplicar-plan`, §2.7). Al final,
+`PRAGMA integrity_check` en las dos bases (solo lectura) y `calibredb backup_metadata` de los libros
+cambiados. Si la comprobación falla, nombra los respaldos que hay que restaurar.
 
 ## Estructura
 
-`main.sh` (orquestación) · `config.sh` (rutas, columna clave, política) · `lib/`: `cli.sh`
-(opciones, ayuda, dependencias), `validator.sh` (apps cerradas, respaldos, `integrity_check`),
-`sincronizador.py` (núcleo: lee ambas bases, planifica, reporta y aplica) · `reportes/` y `estado/`
-(respaldos y `ultimo_sync.json`, la foto para los diffs) son runtime ignorado. El motor de
+`main.sh` (orquestación) · `config.sh` (rutas de `core/env.sh`, política) · `lib/`: `cli.sh`
+(opciones, ayuda, dependencias), `validator.sh` (bases sanas, apps cerradas y la puerta),
+`sincronizador.py` (núcleo: lee ambas bases, planifica, reporta, escribe Zotero y deja el plan de
+Calibre) · `reportes/` es runtime ignorado; el estado (`ultimo_sync.json`, la foto para los diffs, y
+`plan_calibre.json`) vive en `$XDG_STATE_HOME/biblioteca/sincronizar_zotero/`. Pruebas: la
+caracterización de `../tests/` (copia perturbada y orquestación de las 04:30). El motor de
 comparación partió del de `../script_verificar_metadatos`. La primera corrida completa (2026-07-28)
 está en `../docs/historial/campanas-sobre-la-biblioteca.md` §3.
 
@@ -98,7 +104,8 @@ está en `../docs/historial/campanas-sobre-la-biblioteca.md` §3.
 
 - **Zotero se escribe por SQL directo**, método no soportado por Zotero (el mismo terreno que ZMI);
   por eso exige ambas apps cerradas y deja `synced=0`.
-- **Deshacer es restaurar los respaldos** de `estado/backups/` con las apps cerradas.
+- **Deshacer es restaurar los respaldos** de la puerta con las apps cerradas (los anteriores a la ola
+  2a están en `$RESPALDOS_DIR/biblioteca/sincronizar_zotero/`).
 - **Las acciones `reporte (...)` quedan para revisión manual**: conflictos de idioma, autores donde
   Zotero es más completo y adjuntos que no se pudieron recalcular.
 - **Los `.js` de `scripts_for_zotero` quedan absorbidos** por esta política (`capitalizar_tags`,

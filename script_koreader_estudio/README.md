@@ -11,7 +11,7 @@ Convierte Calibre en tablero de estudio: progreso, tiempo y anotaciones de KORea
 
 - Escribe en: calibre · simula por defecto: sí
 - Entrada: statistics.sqlite3 de KOReader
-- Depende de: calibredb, koreader, core/shell-lib
+- Depende de: calibredb, koreader, core/shell-lib, lib/escribir.sh (la puerta)
 - Timer: `koreader-calibre-sync.timer`
 
 Comandos:
@@ -22,33 +22,21 @@ main.sh --aplicar
 main.sh --desde-timer
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-09-20); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-05); no se edita a mano.</sub>
 <!-- suite:fin -->
 
-Convierte Calibre en un **tablero de seguimiento de estudio**: KOReader (en este mismo Linux) es el
-lector; este script vuelca automáticamente su progreso, estado y estadísticas en columnas de
-Calibre, y añade un enlace clicable a los apuntes `.md` de cada libro.
-
-> **Sin duplicar nada:** KOReader abre los mismos archivos de la biblioteca
-> Calibre (`BIBLIOTECA_DIR`); el script reutiliza las columnas que ya
-> creó el plugin *KOReader Sync* (que en escritorio no puede sincronizar, al no
-> haber "dispositivo") y respeta su convención de escalas.
+Convierte Calibre en un **tablero de seguimiento de estudio**: KOReader (en este mismo Linux) lee
+los mismos archivos de la biblioteca (`BIBLIOTECA_DIR`); este script vuelca su progreso, estado y
+estadísticas en columnas de Calibre (reutiliza las del plugin *KOReader Sync* y su convención de
+escalas) y añade un enlace clicable a los apuntes `.md` de cada libro.
 
 ## Cómo funciona
 
-KOReader ya escribe dos fuentes de datos; el script solo las une con Calibre:
-
-```
-Sidecars <libro>.sdr/metadata.<ext>.lua     statistics.sqlite3 (plugin Estadísticas)
-  · percent_finished (fracción 0–1)           · tiempo total de lectura
-  · summary.status (reading/complete/…)       · primera/última sesión (page_stat_data)
-            │                                           │  emparejado por MD5 parcial
-            └────────────────┬──────────────────────────┘  (algoritmo de KOReader,
-                             ▼                              verificado contra esta BD)
-                   lib/sync_koreader.py  (calibre-debug, escritura en lote)
-                             ▼
-                     Columnas de Calibre
-```
+KOReader ya escribe dos fuentes: los sidecars `metadata.<ext>.lua` (`percent_finished` en fracción
+0–1, `summary.status`) y `statistics.sqlite3` (tiempo total, primera y última sesión). El núcleo
+`lib/sync_koreader.py` (vía `calibre-debug`) las empareja con cada libro por el MD5 parcial de
+KOReader (su algoritmo, verificado contra esta base) y escribe en lote, por la puerta, solo los
+valores que cambiaron.
 
 ## Columnas
 
@@ -67,70 +55,39 @@ Sidecars <libro>.sdr/metadata.<ext>.lua     statistics.sqlite3 (plugin Estadíst
 | `#apuntes` | comments | enlace clicable `file://` al `.md` de apuntes | `--apuntes` |
 | `#leído` / `#read_date` | bool/fecha | ya existían; se marcan al llegar a `complete` | integración |
 
-Las composite se calculan solas: no hay información duplicada almacenada.
-
 ## Uso
 
 ```bash
 ./main.sh                  # SIMULACIÓN: muestra qué haría (no escribe)
-./main.sh --aplicar        # columnas faltantes + backup metadata.db + sync real
-./main.sh --migrar-sdr     # simula la migración de .sdr → hash central
-./main.sh --migrar-sdr --aplicar   # migra de verdad (KOReader cerrado)
-
-./main.sh --apuntes ID "/ruta/apuntes.md" "Clase 01"   # escribe YA, sin --aplicar
-
-./main.sh --instalar-timer         # systemd de usuario, cada 30 min (../docs/operacion.md §1.1)
-./main.sh --desinstalar-timer
+./main.sh --aplicar        # por la puerta: respaldo verificado, columnas faltantes y sync real
+./main.sh --migrar-sdr [--aplicar]   # .sdr → hash central (de una vez; KOReader cerrado)
+./main.sh --apuntes ID "/ruta/apuntes.md" "Clase 01"   # orden explícita: escribe YA, por la puerta
+./main.sh --instalar-timer | --desinstalar-timer       # desde ../systemd/ (../docs/operacion.md §1.1)
 ```
 
-Además existe la columna manual **`#estudio`** («Estudio (manual)»: ⬜/📖/🔁/✅) para el *estado de
-estudio*, separado del estado de *lectura* automático (`#estado_estudio`): un libro puede estar
-100 % leído y aún «📖 En proceso» de estudio. El sync jamás toca `#estudio`.
-
-Requisitos: Calibre (`calibredb`, `calibre-debug`), `sqlite3`, `python3`, KOReader con el plugin de
-**Estadísticas de lectura** activo.
-
-**Marca el final en KOReader**: menú ⌄ → estado del libro → *Terminado* (`complete`). Eso pone ✅
-Finalizado, marca `#leído` y fija `#read_date` y `#ko_finish`. Antes de aplicar, `--aplicar` respalda
-`metadata.db` en `backups/` (rotado) y toma el candado `.lock_calibre_write`: nunca corren dos
-escritores a la vez. Lo que hay que saber de Calibre abierto, del volcado al cerrar el libro y de
-`#leído` manual está en «Límite honesto».
+La columna manual **`#estudio`** (⬜/📖/🔁/✅, estado de *estudio*) es distinta del estado de
+*lectura* automático (`#estado_estudio`); el sync jamás la toca. **Marca el final en KOReader**
+(estado del libro → *Terminado*): pone ✅ Finalizado, `#leído`, `#read_date` y `#ko_finish`.
+`--aplicar` escribe por la puerta (`../lib/escribir.sh`): Calibre cerrado, candado `LOCK_CALIBRE` y
+respaldo verificado en `$XDG_STATE_HOME/biblioteca/respaldos/koreader_estudio/`. Requisitos:
+Calibre (`calibredb`, `calibre-debug`), `CORE_PYTHON` y el plugin de **Estadísticas de lectura**.
 
 ## Sidecars centralizados por hash
 
-Los `.sdr` ya **no** viven junto a los libros: se migraron con `--migrar-sdr` a
-`~/.config/koreader/hashdocsettings/<md5[0:2]>/<md5>.sdr/` (layout de `docsettings.lua` de KOReader)
-y KOReader quedó configurado con `document_metadata_folder = "hash"`. Ventajas:
-
-- **Renombrar/editar metadatos en Calibre ya no rompe nada**: el sidecar se encuentra por hash del
-  contenido, no por ruta (KOReader incluso omite la relocalización de sidecars en modo hash —
-  `docsettings.lua:443`).
-- **Todo lo valioso queda en un solo árbol** (`~/.config/koreader/`), fácil de respaldar y de llevar
-  a otra laptop.
-- Los `.sdr` huérfanos de renombrados antiguos se dejaron en su sitio y se listan al migrar;
-  KOReader sigue leyendo sidecars legacy como fallback.
+Los `.sdr` viven en `~/.config/koreader/hashdocsettings/<md5[0:2]>/<md5>.sdr/` (se migraron con
+`--migrar-sdr`; `document_metadata_folder = "hash"`): el sidecar se encuentra por el hash del
+contenido, así que renombrar en Calibre no rompe nada y todo lo valioso queda en un solo árbol. Los
+`.sdr` huérfanos de renombrados antiguos se dejaron en su sitio; KOReader los lee como respaldo.
 
 ## Respaldo continuo (no volver a perder lecturas)
 
-Cada sincronización (y el timer cada 30 min) espeja **en texto** las estadísticas (dump SQL), los
-sidecars hash y el historial a un repo git propio de datos de lectura (`KOREADER_RESPALDO_DIR` en
-`core/env.sh`), con commit local automático (publicar = `git push` desde ese repo, remoto privado):
-
-```
-~/.local/share/koreader-respaldo/  ← repo git propio (datos, no configuración)
-├── statistics.sql     (dump SQL de statistics.sqlite3, restaurable)
-├── hashdocsettings/   (todos los sidecars .lua de texto)
-└── history.lua
-```
-
-Los datos **vivos** siguen en `~/.config/koreader/`; esto es un respaldo versionado, no la copia de
-trabajo. **`settings.reader.lua` se EXCLUYE a propósito**: contiene el bloque `kosync` con
-credenciales.
-
-**Restaurar en una laptop nueva:** instalar KOReader y reconstruir desde el repo — `sqlite3
-~/.config/koreader/settings/statistics.sqlite3 < statistics.sql` y copiar `hashdocsettings/` +
-`history.lua` a `~/.config/koreader/`. Las estadísticas y sidecars emparejan por hash del contenido,
-así que funcionan aunque la biblioteca cambie de ruta.
+Cada pasada espeja **en texto** las estadísticas (volcado SQL hecho con `CORE_PYTHON`), los sidecars
+`hashdocsettings/` y `history.lua` al repo git de datos `KOREADER_RESPALDO_DIR` (`core/env.sh`), con
+commit local (publicar = `git push` desde ese repo, remoto privado). Los datos vivos siguen en
+`~/.config/koreader/`. **`settings.reader.lua` se excluye a propósito** (bloque `kosync` con
+credenciales). Restaurar en otra máquina: `sqlite3 ~/.config/koreader/settings/statistics.sqlite3 <
+statistics.sql` y copiar `hashdocsettings/` e `history.lua`; el emparejamiento por hash funciona
+aunque la biblioteca cambie de ruta.
 
 ## Trampas conocidas
 
@@ -143,28 +100,20 @@ así que funcionan aunque la biblioteca cambie de ruta.
 
 ## Estructura
 
-| ruta | qué es | dueño |
-|---|---|---|
-| `main.sh` | orquestación y CLI, sin lógica | a mano |
-| `config.sh` | rutas y nombres de columnas: todo lo editable | a mano |
-| `lib/checks.sh` · `lib/setup_columnas.sh` | entorno y apps cerradas; columnas y plantillas, idempotente | a mano |
-| `lib/sync_koreader.py` | núcleo (vía `calibre-debug`): sidecars y estadísticas → columnas | a mano |
-| `lib/migrar_sdr.py` | migración de `.sdr` a `hashdocsettings`, de una vez | a mano |
-| `lib/respaldo_koreader.sh` | espejo continuo en texto al repo `KOREADER_RESPALDO_DIR` | a mano |
-| `lib/systemd/` | plantillas del `.service` y el `.timer` de usuario | a mano; las instala `--instalar-timer` |
-| `reportes/` · `backups/` | TSV de cada pasada; `metadata.db` rotados y tars previos a la migración | runtime, ignorado |
+`main.sh` (orquestación y CLI) · `config.sh` (rutas de `core/env.sh` y columnas) · `lib/`: `checks.sh`
+(entorno, KOReader cerrado), `setup_columnas.sh` (columnas y plantillas, idempotente),
+`sync_koreader.py` (núcleo), `migrar_sdr.py` (de una vez), `respaldo_koreader.sh` (espejo en texto) ·
+`reportes/` es runtime ignorado. El timer está en `../systemd/`; las pruebas, en `../tests/`.
 
 ## Límite honesto
 
-- **Calibre cerrado para escribir**: el timer que lo encuentra abierto se salta la pasada y
-  reintenta a los 30 minutos; solo una ejecución manual avisa.
+- **Calibre cerrado para escribir**: el timer que lo encuentra abierto se salta la pasada y reintenta.
 - **No es instantáneo**: KOReader vuelca sidecar y estadísticas al cerrar el libro (y en pausas); el
   progreso de la sesión en curso aparece en la pasada siguiente.
 - **Solo escribe valores que cambiaron** y jamás toca `#estudio`, etiquetas ni series; `#leído`
   marcado a mano promueve a Finalizado, nunca degrada.
-- **El respaldo excluye `settings.reader.lua` a propósito** (credenciales `kosync`): restaurar en
-  otra máquina exige reconfigurar la cuenta.
+- **Restaurar en otra máquina exige reconfigurar la cuenta `kosync`** (su archivo no se respalda).
 - **`--migrar-sdr` fue una migración de una vez**; vuelve a tener sentido solo si
   aparecen `.sdr` nuevos junto a los libros.
-- **Mover la suite de carpeta rompe el timer**: la unidad instalada lleva la ruta absoluta de
-  `main.sh`; se reinstala con `--instalar-timer`.
+- **Mover el repo de carpeta rompe el timer**: la unidad instalada lleva la ruta de `main.sh` bajo
+  `%h`; se reinstala con `../systemd/instalar.sh --aplicar`.

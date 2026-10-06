@@ -10,7 +10,7 @@ estado: activo
 Lleva el tiempo de lectura de Zotero (readingTime) y los metadatos de estudio a las columnas de Calibre.
 
 - Escribe en: calibre · simula por defecto: sí
-- Depende de: calibredb, zotero.sqlite, core/shell-lib
+- Depende de: calibredb, zotero.sqlite, core/shell-lib, lib/escribir.sh (la puerta)
 - Timer: `ecosistema-lectura.timer · ecosistema-metadatos.timer`
 
 Comandos:
@@ -23,7 +23,7 @@ main.sh --enlazar --ris          # informe y .ris de lo que falta en Zotero
 main.sh --enlazar --aplicar      # escribe las claves «adjunto»
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-01); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-05); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 **Zotero → Calibre** (diseño de 2026-08: `../docs/historial/diseno-ecosistema-lectura-2026-08.md`;
@@ -58,26 +58,27 @@ diseño (`../docs/historial/diseno-ecosistema-lectura-2026-08.md` §5).
 
 ```bash
 ./main.sh                # SIMULACIÓN (no escribe)
-./main.sh --aplicar      # columnas + backup metadata.db + escritura real
+./main.sh --aplicar      # por la puerta: respaldo verificado, columnas y escritura real
 ./main.sh --metadatos            # metadatos: orquesta sincronizar_zotero (simulación)
 ./main.sh --metadatos --aplicar  #   …con escritura (Calibre Y Zotero cerrados)
 ./main.sh --enlazar              # enlazador: reporte de libros sin #zotero_key y de claves anómalas
 ./main.sh --enlazar --ris        #   …y el .ris de los que no tienen ítem en Zotero
 ./main.sh --enlazar --aplicar    #   …y escribe #zotero_key de los «adjunto» (Calibre cerrado)
-./main.sh --instalar-timer       # timers: lectura 30 min + metadatos 04:30
+./main.sh --instalar-timer       # timers: lectura 30 min + metadatos 04:30 (../systemd/instalar.sh)
 ./main.sh --desinstalar-timer
 ```
 
 **Metadatos y etiquetas (`--metadatos`):** corre `script_sincronizar_zotero` solo si Calibre y Zotero están
-cerrados **y** alguna base cambió desde la última pasada aplicada (marca en `estado/`). El timer
-diario de las 04:30 la ejecuta con `--aplicar`; la herramienta orquestada trae sus propios backups y
+cerrados **y** alguna base cambió desde la última pasada aplicada (marca en
+`$XDG_STATE_HOME/biblioteca/ecosistema_lectura/`). El timer diario de las 04:30 la ejecuta con
+`--aplicar`; la herramienta orquestada abre su propia puerta (respaldos de ambas bases) y deja sus
 reportes.
 
 **Enlazador (`--enlazar`):** genera `reportes/enlazar_*.tsv` con el candidato Zotero de cada libro sin
 `#zotero_key`, del más firme al más débil:
 
 - **`adjunto`**: el ítem que enlaza un archivo de la carpeta «… (id)/» del libro. Es determinista y
-  es el único que `--aplicar` escribe (con lock, respaldo y `calibredb set_custom`). Si una
+  es el único que `--aplicar` escribe (por la puerta: candado, respaldo y `calibredb set_custom`). Si una
   importación se repitió, cuenta el ítem de la colección viva y no el que solo está en una colección
   mandada a la papelera.
 - **ISBN exacto** o **título único**: se confirman a mano, pegando la clave en la columna ZKey.
@@ -98,9 +99,10 @@ El ciclo para llevar a Zotero lo que falta:
 
 - **Calibre cerrado** para escribir; **Zotero puede estar abierto** (su base solo se lee en modo
   ro).
-- Lock **compartido** con `script_koreader_estudio` (`../.lock_calibre_write`): las dos herramientas
-  nunca escriben a la vez.
-- Simulación por defecto, backups rotados (5), reporte TSV por pasada.
+- Candado **compartido** con `script_koreader_estudio` (`LOCK_CALIBRE` de `core/env.sh`): las dos
+  herramientas nunca escriben a la vez.
+- Simulación por defecto, respaldos verificados y rotados (5) en
+  `$XDG_STATE_HOME/biblioteca/respaldos/ecosistema_lectura/`, reporte TSV por pasada.
 
 ## Fuente de datos (verificada por inspección; releer el diseño en ../docs/historial/)
 
@@ -116,22 +118,22 @@ más de una nota por ítem, gana la de `dateModified` más reciente.
 
 ## Estructura
 
-`main.sh` (orquestación y CLI) · `config.sh` (rutas, columnas, lock compartido) · `lib/`:
-`checks.sh` (entorno y apps cerradas), `setup_columnas.sh` (columnas y plantillas, idempotente),
-`sync_zotero_lectura.py` (núcleo: zotero.sqlite en solo lectura → columnas, vía calibre-debug),
-`orquestar_metadatos.sh` (`--metadatos`), `enlazar_reporte.py` (`--enlazar`), `systemd/` (plantillas de las dos
-unidades) · `reportes/`, `backups/` y `estado/` son runtime ignorado.
+`main.sh` (orquestación y CLI; escribe por `../lib/escribir.sh`) · `config.sh` (rutas de
+`core/env.sh`, columnas) · `lib/`: `checks.sh` (entorno), `setup_columnas.sh` (columnas y plantillas,
+idempotente), `sync_zotero_lectura.py` (núcleo: zotero.sqlite en solo lectura → columnas por la API,
+vía calibre-debug), `orquestar_metadatos.sh` (`--metadatos`), `enlazar_reporte.py` (`--enlazar`) ·
+las plantillas de las dos unidades están en `../systemd/` · `reportes/` es runtime ignorado.
 
 ## Límite honesto
 
 - **No exporta sesiones de KOReader al registro de Ethereal Style**: es opcional y de riesgo, y no
-  está planificado (`../docs/decisiones.md`, Pendientes P5).
+  está planificado (`../estado.md` §Futuro).
 - **`#zot_progreso` solo se calcula cuando existen la página del lector y el total de páginas**; los
   localizadores no numéricos (EPUB) se omiten: no se inventa el dato.
 - **Zotero solo se lee**, nunca se escribe desde aquí; escribir en `zotero.sqlite` es de
   `../script_sincronizar_zotero/`, y solo con ambas apps cerradas.
-- **`--metadatos` corre solo si alguna base cambió** desde la última pasada aplicada (marca en
-  `estado/`); `--enlazar` sin `--aplicar` no escribe; con `--aplicar` escribe solo los enlaces
+- **`--metadatos` corre solo si alguna base cambió** desde la última pasada aplicada (marca en el
+  estado de usuario); `--enlazar` sin `--aplicar` no escribe; con `--aplicar` escribe solo los enlaces
   «adjunto», y los de ISBN o título se pegan a mano en la columna ZKey.
 - **Calibre cerrado para escribir**; el timer que se salta reintenta a los 30 minutos y no avisa a
   nadie: la verificación es `journalctl --user -u ecosistema-lectura`.
