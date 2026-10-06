@@ -24,10 +24,10 @@ readonly OL_SEARCH_ENDPOINT="https://openlibrary.org/search.json"
 # and, valuably, a DOI we may not have. Set USE_CROSSREF=false to disable.
 readonly CROSSREF_ENDPOINT="https://api.crossref.org/works"
 readonly USE_CROSSREF="true"
-# Crossref pide un contacto en el User-Agent (el "polite pool"). Se toma de
-# CROSSREF_MAILTO_OVERRIDE si está definida en el entorno; si no, el valor por
-# defecto de abajo (edítalo o exporta la variable para no dejar tu correo aquí).
-readonly CROSSREF_MAILTO="${CROSSREF_MAILTO_OVERRIDE:-achalmed.18@gmail.com}"
+# Crossref pide un contacto (el "polite pool"): se toma de la variable de entorno CROSSREF_MAILTO
+# (o de CROSSREF_MAILTO_OVERRIDE, el nombre anterior). Ningún correo vive en el código (K7, P227,
+# RQ-SEC-01); sin la variable, la consulta va sin `mailto` (pool común, más lento pero válido).
+readonly CROSSREF_MAILTO="${CROSSREF_MAILTO:-${CROSSREF_MAILTO_OVERRIDE:-}}"
 
 # Seconds to wait between network calls (be polite; avoid throttling).
 readonly RATE_LIMIT_SECONDS="1"

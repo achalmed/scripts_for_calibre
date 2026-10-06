@@ -3,7 +3,8 @@ tipo: ficha_catalogacion
 calibre_id: 10445
 zotero_key:
 clave_bibtex:
-proyecto: meta/programa (Fase 1, unidad 0)
+proyecto: meta
+uso: "programa de reingeniería, Fase 1, unidad 0"
 verificacion:
   estado: pendiente
   metodo:

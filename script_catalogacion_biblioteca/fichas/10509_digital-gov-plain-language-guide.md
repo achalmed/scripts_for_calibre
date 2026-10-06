@@ -3,7 +3,8 @@ tipo: ficha_catalogacion
 calibre_id: 10509
 zotero_key:
 clave_bibtex:
-proyecto: meta/programa (Fase 4, base normativa)
+proyecto: meta
+uso: "programa de reingeniería, Fase 4, base normativa"
 verificacion:
   estado: pendiente
   metodo:

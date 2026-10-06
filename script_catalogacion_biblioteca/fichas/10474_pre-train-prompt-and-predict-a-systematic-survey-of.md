@@ -3,7 +3,8 @@ tipo: ficha_catalogacion
 calibre_id: 10474
 zotero_key:
 clave_bibtex:
-proyecto: meta/programa (Fase 2, cierre)
+proyecto: meta
+uso: "programa de reingeniería, Fase 2, cierre"
 verificacion:
   estado: pendiente
   metodo:
