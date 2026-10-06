@@ -22,7 +22,23 @@ from pathlib import Path
 
 import pytest
 
+BASETEMP = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "pytest" / "scripts-biblioteca-fuentes" / "basetemp"
+
+
+@pytest.hookimpl(tryfirst=True)
+def pytest_configure(config):
+    """El temporal de la caja de arena va al disco (XDG_CACHE_HOME), no a /tmp: /tmp es tmpfs (RAM). Solo si nadie
+    pidió otro --basetemp y la corrida es de estas pruebas."""
+    if config.option.basetemp:
+        return
+    aqui = Path(__file__).resolve().parent
+    args = [Path(a.split("::")[0]).resolve() for a in (config.args or [])]
+    if args and all(aqui in a.parents or a == aqui for a in args):
+        BASETEMP.parent.mkdir(parents=True, exist_ok=True)
+        config.option.basetemp = str(BASETEMP)
+
 REPO = Path(__file__).resolve().parents[2]
+NOMBRE_REPO = "scripts-biblioteca"   # la caja usa ya el nombre de destino de la fusión
 DOCS_REAL = REPO.parent
 CORE_REAL = DOCS_REAL / "core"
 
@@ -78,23 +94,29 @@ def plantilla(tmp_path_factory) -> Path:
     for parte in ("shell-lib", "py-common"):
         shutil.copytree(CORE_REAL / parte, docs / "core" / parte, ignore=_EXCLUIR)
     # este repo, sin estado local
-    shutil.copytree(REPO, docs / "scripts_for_fuentes", ignore=_EXCLUIR, symlinks=True)
-    fichas = docs / "scripts_for_fuentes" / "ingesta" / "fichas"
+    # el repo fusionado (ola 2, fase E), sin el registro real de la catalogación (650 fichas): la caja lleva uno vacío
+    def _ignorar(carpeta, nombres):
+        fuera = set(_EXCLUIR(carpeta, nombres))
+        if Path(carpeta).resolve() == (REPO / "catalogacion").resolve():
+            fuera |= {"fichas", "resumen_catalogacion.tsv"}
+        return fuera
+    shutil.copytree(REPO, docs / NOMBRE_REPO, ignore=_ignorar, symlinks=True)
+    fichas = docs / NOMBRE_REPO / "ingesta" / "fichas"
     if fichas.exists():
         shutil.rmtree(fichas)
     fichas.mkdir()
-    entrada = docs / "scripts_for_fuentes" / "entrada"
+    entrada = docs / NOMBRE_REPO / "entrada"
     if entrada.exists():
         shutil.rmtree(entrada)
     entrada.mkdir()
-    (docs / "scripts_for_fuentes" / "logs").mkdir()
-    # catalogación (el registro canónico vive en scripts_for_calibre): solo cabecera y carpeta
-    cat = docs / "scripts_for_calibre" / "catalogacion"
+    (docs / NOMBRE_REPO / "logs").mkdir(exist_ok=True)
+    # catalogación (el registro canónico, en el mismo repo desde la fusión): solo cabecera y carpeta
+    cat = docs / NOMBRE_REPO / "catalogacion"
     (cat / "fichas").mkdir(parents=True)
     (cat / "resumen_catalogacion.tsv").write_text(
         "id\tautores\ttitulo\ttipo_zotero\tclasificador\teditorial\tfecha\tidentificador\tidioma\ttags\tconfianza\tnota\n",
         encoding="utf-8")
-    # Ni el envoltorio scripts_for_calibre/lib_comun (F2, F5) ni la red de 02 analysis (F4) entran en la caja:
+    # Ni el envoltorio lib_comun (retirado en la fusión) ni la red de 02 analysis (F4) entran en la caja:
     # las pruebas demuestran que este repo ya no los necesita.
     # raíces de entrada que ingesta recorre
     for d in ("02 analysis/data/raw", "03 writing/reports", "10 Class/docencia/cursos", "prompts"):
@@ -125,10 +147,12 @@ class Caja:
     def __init__(self, base: Path):
         self.base = base
         self.docs = base / "Documents"
-        self.repo = self.docs / "scripts_for_fuentes"
+        self.repo = self.docs / NOMBRE_REPO
         self.biblioteca = self.docs / "biblioteca"
         self.db = self.biblioteca / "metadata.db"
         self.respaldos = base / "respaldos"
+        # los respaldos de la puerta única (ola 2, fase E) van al estado de usuario: <estado>/biblioteca/respaldos/<suite>/
+        self.respaldos_puerta = base / "estado" / "biblioteca" / "respaldos"
         self.lock_calibre = base / "estado" / "biblioteca" / "calibre.lock"
         home = base / "home"
         home.mkdir(exist_ok=True)
@@ -138,6 +162,7 @@ class Caja:
             "USER": os.environ.get("USER", "prueba"),
             "HOME": str(home),
             "DOCS_ROOT": str(self.docs),
+            "SCRIPTS_BIBLIOTECA": str(self.repo), "SCRIPTS_CALIBRE": str(self.repo), "SCRIPTS_FUENTES": str(self.repo),
             "BIBLIOTECA_DIR": str(self.biblioteca),
             "CALIBRE_DB": str(self.db),
             "ZOTERO_DIR": str(base / "Zotero"),

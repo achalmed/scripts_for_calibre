@@ -16,6 +16,8 @@ from conftest import REPO
 
 CORREO = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z0-9.-]*[A-Za-z]")
 HOME = "/" + "home" + "/"          # partido: el patrón no se cuenta a sí mismo
+# identificadores públicos que tienen forma de correo y no lo son (el id del complemento Ethereal Style de Zotero)
+NO_CORREOS = {"zoterostyle@polygon.org"}
 
 
 def _rastreados():
@@ -35,6 +37,8 @@ def test_ningun_archivo_rastreado_lleva_home_ni_correo():
         if HOME in texto:
             hallazgos.append(f"{rel}: ruta de la carpeta de inicio")
         for m in CORREO.finditer(texto):
+            if m.group(0) in NO_CORREOS:
+                continue
             hallazgos.append(f"{rel}: correo {m.group(0)[:3]}…")
     assert not hallazgos, "\n".join(hallazgos[:20])
 
@@ -43,7 +47,8 @@ def test_codigo_sin_lib_comun_ni_reparaciones():
     malos = []
     for rel in _rastreados():
         if rel.endswith((".py", ".sh")) and not rel.startswith("tests/"):
-            texto = (REPO / rel).read_text(encoding="utf-8")
+            # Path.home() solo como respaldo de una variable XDG (el estado de usuario), nunca para una ruta de datos
+            texto = "\n".join(l for l in (REPO / rel).read_text(encoding="utf-8").splitlines() if "XDG_" not in l)
             for patron in ("lib_comun", "LIB_COMUN", "reparaciones", "$HOME/Documents", "Path.home()"):
                 if patron in texto:
                     malos.append(f"{rel}: {patron}")
@@ -60,7 +65,7 @@ def test_rutas_relativas_a_docs_root(tmp_path):
     R = _rutas()
     docs = tmp_path / "Documents"
     (docs / "02 analysis" / "data").mkdir(parents=True)
-    entrada = docs / "scripts_for_fuentes" / "entrada"
+    entrada = docs / "scripts-biblioteca" / "entrada"
     entrada.mkdir(parents=True)
     assert R.a_texto(docs / "02 analysis" / "data" / "x.pdf", docs) == "02 analysis/data/x.pdf"
     assert R.a_texto("/otra/parte/x.pdf", docs) == "/otra/parte/x.pdf"     # fuera de la raíz: se queda absoluta

@@ -11,7 +11,8 @@ import subprocess
 
 import calibre_apoyo as ap
 
-PERMITIDOS = {"zoterostyle@polygon.org"}   # id del complemento Ethereal Style de Zotero, no un correo
+PERMITIDOS = {"zoterostyle@polygon.org",   # id del complemento Ethereal Style de Zotero, no un correo
+              "contacto@ejemplo.org"}     # dominio de ejemplo: el valor de prueba de tests/fuentes/test_privacidad_rutas.py
 CORREO = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}")   # ERE: git grep -E
 
 

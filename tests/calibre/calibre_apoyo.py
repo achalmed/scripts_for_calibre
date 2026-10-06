@@ -100,9 +100,9 @@ def arbol_referencia(destino: Path, ref: str = REFERENCIA) -> Path:
 
 
 # carpeta en la referencia (467c8a7) → carpeta hoy (fase E de la ola 2)
-NOMBRES_ANTERIORES = {"catalogacion": "catalogacion", "lectura": "lectura",
-                      "koreader": "koreader", "sincronizar-zotero": "sincronizar-zotero",
-                      "metadatos-pdf": "metadatos-pdf", "verificacion": "verificacion"}
+NOMBRES_ANTERIORES = {"script_catalogacion_biblioteca": "catalogacion", "script_ecosistema_lectura": "lectura",
+                      "script_koreader_estudio": "koreader", "script_sincronizar_zotero": "sincronizar-zotero",
+                      "script_metadatos_calibre": "metadatos-pdf", "script_verificar_metadatos": "verificacion"}
 
 
 def arbol_actual(destino: Path) -> Path:

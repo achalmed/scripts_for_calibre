@@ -78,7 +78,7 @@ def test_catalogar_aplicado_en_la_copia(caja, sin_calibre_abierto):
     filas = _filas(caja.repo / "ingesta" / "ingesta.tsv")
     assert len(filas) == n_led + 1
     assert filas[-1]["sha256"] == pend["sha256"] and filas[-1]["calibre_id"] == str(ultimo + 1)
-    cat = caja.docs / "scripts_for_calibre" / "catalogacion"
+    cat = caja.repo / "catalogacion"
     assert _filas(cat / "resumen_catalogacion.tsv")[-1]["id"] == str(ultimo + 1)
     # la ficha provisional pasa a la canónica con su id
     assert not (caja.repo / "ingesta" / "fichas" / pend["ficha"]).exists()

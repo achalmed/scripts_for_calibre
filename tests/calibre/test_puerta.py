@@ -48,6 +48,16 @@ def _archivos(raiz: Path):
             yield rel
 
 
+# En Bash, lo que no es código: un comentario al final de la línea y el texto de un mensaje
+# (`log_*`/`echo`/`printf` con su argumento entre comillas) aunque la línea siga con código (fusión, ola 2).
+_COMENTARIO_SH = re.compile(r"\s#(?![!{]).*$")
+_MENSAJE_SH = re.compile(r"\b(?:log_\w+|echo|printf)\s+\"[^\"]*\"")
+
+
+def _sin_mensajes(linea: str) -> str:
+    return _MENSAJE_SH.sub("", _COMENTARIO_SH.sub("", linea))
+
+
 def escritores(raiz: Path) -> list[tuple[str, int, str, str]]:
     """[(archivo, línea, regla, texto)] de toda escritura fuera de la puerta."""
     hallazgos = []
@@ -55,8 +65,9 @@ def escritores(raiz: Path) -> list[tuple[str, int, str, str]]:
         for n, linea in enumerate((raiz / rel).read_text(encoding="utf-8", errors="replace").splitlines(), 1):
             if MENSAJE.match(linea):
                 continue
+            codigo = _sin_mensajes(linea) if rel.endswith(".sh") else linea
             for regla, patron in REGLAS.items():
-                if patron.search(linea):
+                if patron.search(codigo):
                     hallazgos.append((rel, n, regla, linea.strip()))
             if rel.endswith(".py") and CONEXION_PY.search(linea) and ("mode=ro" not in linea or " if " in linea):
                 hallazgos.append((rel, n, "conexión SQLite de escritura", linea.strip()))

@@ -33,7 +33,7 @@ def _preparar(caja):
 
 def _foto(caja):
     """Lo que una escritura cambiaría: la base, el ledger y los respaldos."""
-    resp = sorted(p.name for p in caja.respaldos.rglob("*.db")) if caja.respaldos.exists() else []
+    resp = sorted(p.name for d in (caja.respaldos, caja.respaldos_puerta) if d.exists() for p in d.rglob("*.db"))
     return caja.huella_db(), (caja.repo / "ingesta" / "ingesta.tsv").read_bytes(), resp
 
 
@@ -90,13 +90,13 @@ def test_sin_core_falla_ruidoso_y_no_escribe(caja):
 
 def test_sin_respaldo_verificado_sale_74_y_no_escribe(caja, sin_calibre_abierto):
     _preparar(caja)
-    caja.respaldos.mkdir(parents=True)
-    caja.respaldos.chmod(0o500)          # no se puede crear la carpeta del respaldo
+    caja.respaldos_puerta.mkdir(parents=True)
+    caja.respaldos_puerta.chmod(0o500)   # no se puede crear la carpeta del respaldo
     try:
         antes = _foto(caja)
         r = caja.ingesta("catalogar", "--aplicar", "--solo", NOMBRE)
     finally:
-        caja.respaldos.chmod(0o700)
+        caja.respaldos_puerta.chmod(0o700)
     saltar_si_calibre(r)
     assert r.returncode == 74, r.stdout + r.stderr
     assert _foto(caja) == antes
@@ -110,9 +110,9 @@ def test_puerta_abierta_respalda_antes_de_escribir(caja, sin_calibre_abierto):
     saltar_si_calibre(r)
     assert r.returncode == 0, r.stdout + r.stderr
     assert caja.max_id() == ultimo + 1
-    respaldos = list(caja.respaldos.rglob("metadata_*.db"))
+    respaldos = list(caja.respaldos_puerta.rglob("metadata_*.db"))
     assert len(respaldos) == 1
-    assert respaldos[0].is_relative_to(caja.respaldos / "biblioteca" / "fuentes")
+    assert respaldos[0].is_relative_to(caja.respaldos_puerta / "ingesta")
     from conftest import sha256
     assert sha256(respaldos[0]) == antes          # el respaldo es la base de ANTES de escribir
     assert not (caja.repo / "ingesta" / "backups").exists()   # ningún respaldo dentro del repo
@@ -169,25 +169,8 @@ def _llamadas_shell(texto):
     return malas
 
 
-def test_nadie_escribe_en_calibre_fuera_de_la_puerta():
-    hallazgos = []
-    for rel in _codigo():
-        texto = (REPO / rel).read_text(encoding="utf-8")
-        malas = _llamadas_python(texto) if rel.endswith(".py") else _llamadas_shell(texto)
-        hallazgos += [f"{rel}: {m}" for m in malas]
-    assert not hallazgos, "escrituras (o llamadas) a Calibre fuera de lib/escribir.*:\n" + "\n".join(hallazgos)
-
-
-def test_el_detector_de_la_puerta_detecta():
-    """El detector no es ciego: casos que pasan y que fallan."""
-    assert _llamadas_python('subprocess.run(["calibredb", "add", "x"])')
-    assert _llamadas_python('sqlite3.connect("metadata.db")')
-    assert not _llamadas_python('sqlite3.connect(f"file:{db}?mode=ro", uri=True)')
-    assert _llamadas_shell('out="$("$CALIBREDB" add x)"')
-    assert _llamadas_shell('  calibredb add --with-library "$B" x')
-    assert not _llamadas_shell("# calibredb add en un comentario")
-    assert not _llamadas_shell('log_info "[simular] calibredb add -t x"')
-    assert _llamadas_shell('x=1; sqlite3 "$DB" "update books set title=1"')
+# La regla estática (nadie escribe fuera de la puerta) vive en tests/calibre/test_puerta.py y cubre todo el
+# repo fusionado (ola 2, fase E): una sola regla, la más fina (distingue lecturas y admite la puerta de Zotero).
 
 
 def test_cursos_con_candado_ocupado_sale_75_y_no_escribe(caja):

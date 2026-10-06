@@ -79,4 +79,4 @@ def test_aplicar_en_la_copia_por_la_puerta(caja, sin_calibre_abierto):
     assert bib == [{"calibre_id": ultimo + 1, "titulo": "Lectura de prueba", "autor": "Unknown", "origen": ruta}]
     assert not pdf.exists()
     assert (caja.respaldos / "biblioteca" / "fuentes" / "originales-cursos" / ruta).is_file()
-    assert list((caja.respaldos / "biblioteca" / "fuentes" / "metadata").glob("metadata_*.db"))
+    assert list((caja.respaldos_puerta / "ingesta" / "calibre").glob("metadata_*.db"))

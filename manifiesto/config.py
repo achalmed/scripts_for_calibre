@@ -20,8 +20,9 @@ RAIZ = Path(__file__).resolve().parent
 DOCS = env.DOCS_ROOT
 PY_COMMON = env.PY_COMMON                      # resolutor core/py-common/biblioteca.py
 BIBLIOTECA = env.BIBLIOTECA_DIR
-CIL_DIR = env.SCRIPTS_FUENTES / "entrada"   # raíz histórica de entrada (el CIL del despacho, disuelto en M10 D6); hoy la zona de aterrizaje
-LEDGER_INGESTA = env.SCRIPTS_FUENTES / "ingesta" / "ingesta.tsv"   # origen (relativo al CIL o absoluto) → calibre_id, sha256
+REPO = RAIZ.parent                             # scripts-biblioteca (este repo, por su ubicación)
+CIL_DIR = REPO / "entrada"   # raíz histórica de entrada (el CIL del despacho, disuelto en M10 D6); hoy la zona de aterrizaje
+LEDGER_INGESTA = REPO / "ingesta" / "ingesta.tsv"   # origen (relativo al CIL o absoluto) → calibre_id, sha256
 
 NOMBRE = "fuentes.yml"
 

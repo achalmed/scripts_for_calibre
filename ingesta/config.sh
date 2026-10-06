@@ -16,8 +16,8 @@ REPO_FUENTES="$(cd "$SCRIPT_DIR/.." && pwd)"                                   #
 CIL_DIR="${INGESTA_ENTRADA:-$REPO_FUENTES/entrada}"
 MANIFIESTO_MARCO_LEGAL="$SCRIPT_DIR/../manifiestos/marco_legal/manifiesto.tsv"   # dato del marco legal (carpeta, archivo, URL, fuente, nota)
 BIBLIOTECA="${BIBLIOTECA_DIR:-$DOCS/biblioteca}"                               # biblioteca Calibre (metadata.db)
-SCRIPTS_CALIBRE="${SCRIPTS_CALIBRE:-$DOCS/scripts_for_calibre}"                 # suite de catalogación reutilizada
-CATALOGACION_DIR="$SCRIPTS_CALIBRE/catalogacion"   # hogar canónico de fichas + TSV
+SCRIPTS_CALIBRE="$REPO_FUENTES"                                                 # mismo repo desde la fusión (ola 2, fase E)
+CATALOGACION_DIR="$REPO_FUENTES/catalogacion"                                   # hogar canónico de fichas + TSV
 DATAFW_DIR="$ANALYSIS_DIR"                                   # OCR (pipeline/documentos) si el PDF no tiene texto
 PROMPTS_DIR="${PROMPTS_DIR:-$DOCS/prompts}"                  # prompt de catalogación (ficha dual)
 
