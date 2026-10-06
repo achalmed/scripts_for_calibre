@@ -67,7 +67,7 @@ def cmd_fuentes(_a):
         if tipos:
             print(f"  {'':<14} acepta: {', '.join(tipos)}")
     print("\n  Los DATOS (series, microdatos, APIs) no se piden aquí: "
-          "son de los conectores de 02 analysis.")
+          "son de los conectores de datafw.")
     return 0
 
 

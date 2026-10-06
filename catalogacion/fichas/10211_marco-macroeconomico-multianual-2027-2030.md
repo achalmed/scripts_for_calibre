@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/mef/mmm_2027_2030/mmm_2027_2030_v001_2026-09-04.pdf` · SHA-256 `2bec400f19265754…` · 295 págs · con texto
+`datafw/data/raw/peru/mef/mmm_2027_2030/mmm_2027_2030_v001_2026-09-04.pdf` · SHA-256 `2bec400f19265754…` · 295 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -2,7 +2,7 @@
 #
 # La distinción que da sentido a este sistema (directiva de Edison, 2026-09-06):
 #
-#   DATOS       series, microdatos, APIs, geometrías   → los conectores de datafw (02 analysis)
+#   DATOS       series, microdatos, APIs, geometrías   → los conectores de datafw (datafw)
 #               destino: data/raw/ + catalogo.sqlite     (los procesa pipeline/)
 #   DOCUMENTOS  normas, informes, libros, artículos,   → ESTE SISTEMA
 #               tesis, publicaciones                     destino: Calibre + Zotero

@@ -27,7 +27,7 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 | 2026-10-05 | Ola 2 (fuentes), F1: caracterización en una caja de arena (copia de `metadata.db` en solo lectura, entorno aislado): `ingesta` (recibir, identificar, catalogar simulado y aplicado en la copia, ocr, paquetes), `ingesta_cursos` (escaneo y simulación), `verificar`, `manifiesto` (carga por ruta, `cargar`, `ruta`, `bib` en seco) y `fichas validar` | `python3 -m pytest -q` (tests/) |
 | 2026-10-05 | Ola 2 (fuentes), F2: puerta de escritura `lib/escribir.sh` + `lib/escribir.py` (core/shell-lib o 69; Calibre cerrado y candado o 75; respaldo verificado fuera del repo, `$RESPALDOS_DIR/biblioteca/fuentes/metadata`, o 74); `catalogar`, `ocr`, `paquetes` y `ingesta_cursos --aplicar` pasan por ella; `ingesta` e `ingesta_cursos` sin `lib_comun`; `ingesta/main.sh` con `set -euo pipefail` | `tests/test_puerta.py` |
 | 2026-10-05 | Ola 2, C3 (en `core`, commit 12dc8a5): `core/py-common/red.py` (descarga con hash, reintentos, agente de usuario, validación por bytes con `%PDF-`; intermedios TLS por `RED_INTERMEDIOS`); falta documentarlo en `core` (README, consumidores, CHANGELOG): lo hace el director | `core/tests/test_red.py` |
-| 2026-10-05 | Ola 2 (fuentes), F4: la red sale de `core/py-common/red.py`; ningún código importa `02 analysis/connectors` (la arista hacia `datafw` desaparece: pedido al director para el manifiesto y la excepción E5); `descargar` comprueba `%PDF-` | `tests/test_red_fuentes.py`; [decisiones §3.4](docs/decisiones.md) |
+| 2026-10-05 | Ola 2 (fuentes), F4: la red sale de `core/py-common/red.py`; ningún código importa `datafw/connectors` (la arista hacia `datafw` desaparece: pedido al director para el manifiesto y la excepción E5); `descargar` comprueba `%PDF-` | `tests/test_red_fuentes.py`; [decisiones §3.4](docs/decisiones.md) |
 | 2026-10-05 | Ola 2 (fuentes), F3: `ingesta_cursos` fundida en `ingesta/main.sh cursos` (`--escanear`, `--dry-run`, `--aplicar` por la puerta); fuera `ingesta_cursos/lib/biblioteca.py`; simular ya no deja informes; `ORIGINALES_DIR` en `$RESPALDOS_DIR/biblioteca/fuentes/originales-cursos`; respaldos del repo copiados y verificados a `$RESPALDOS_DIR/biblioteca/fuentes/` y movidos a residuos | `tests/test_ingesta_cursos.py`; [decisiones §2.8](docs/decisiones.md) |
 | 2026-10-05 | Ola 2 (fuentes), F5: ledgers con rutas relativas a `DOCS_ROOT` (2 220 celdas: 710 de `ingesta.tsv`, 1 510 de `pendientes.tsv`; solo la forma) y `lib/rutas.py` para leerlas y escribirlas; correo de Unpaywall a `FUENTES_CORREO_CONTACTO` (P248); nada carga `lib_comun` ni la carpeta personal; `fichas grafia`/`migrar` respaldan fuera del repo (P240); `manifiesto todo` en seco idéntico antes y después | `tests/test_privacidad_rutas.py`; [decisiones §3.5](docs/decisiones.md) |
 | 2026-10-05 | Ola 2 (fuentes), F6: las 812 fichas provisionales sin rastrear, clasificadas por cabecera y ledger: 0 confirmadas (ninguna corresponde a una obra de `ingesta.tsv` con `calibre_id`), 35 sustituidas y 777 sin obra; copiadas con `SHA256SUMS` verificado a `$RESPALDOS_DIR/biblioteca/fuentes/ingesta-fichas-provisionales/` y movidas a `~/.local/share/residuos-programa/2026-10-05/scripts_for_fuentes/ingesta-fichas-provisionales/`; la carpeta queda temporal en `.gitignore` | `tests/test_arbol.py`; [decisiones §2.9](docs/decisiones.md) |
@@ -49,7 +49,7 @@ nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (mi
 - 2026-10-05 · **Ayuda de CLI fuera de la norma de idioma** (dueño: agente «calibre», ola 2b o la fusión; antes P11): `metadatos-pdf` (en inglés, también `verificacion/lib/db.sh`), `sincronizar-zotero` y `verificacion` (sin tildes).
 - 2026-10-05 · **La campaña `zotero_alta_2026-09-30` no se aplicó** (dueño: el autor; antes P12): manda a la papelera de Zotero la segunda importación del RIS de `--enlazar`; vive en la historia (`467c8a7`); si se quiere, se rehace como migración de la ola 2b por `lib/adjuntos_zotero.py` y la puerta.
 - 2026-10-05 · dueño: autor · Decidir las 1 448 filas de `ingesta/pendientes.tsv` (INEI y ESCALE de
-  `02 analysis/data/raw`, identificadas en septiembre y nunca catalogadas): catalogarlas (sus borradores
+  `datafw/data/raw`, identificadas en septiembre y nunca catalogadas): catalogarlas (sus borradores
   están en la copia de F6) o quitarlas (§2.9).
 - 2026-10-05 · dueño: director · Regenerar `meta/INDICE_SCRIPTS.md` (`core/suites.py generar --aplicar`): la
   suite `ingesta_cursos` ya no existe (§2.8); y en `meta/workspace.yml`, las evidencias de las aristas de
@@ -58,7 +58,7 @@ nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (mi
   y pasar `datafw` a él en la ola 3 (§3.4).
   fusión: el mismo candado y la misma sede de respaldos (`$RESPALDOS_DIR/biblioteca/`).
 - 2026-10-04 · dueño: autor · `identificar` exige el nivel `peru/` al deducir la institución de una ruta de
-  `02 analysis/data/raw`, que lo perdió el 2026-09-25.
+  `datafw/data/raw`, que lo perdió el 2026-09-25.
 - 2026-10-04 · dueño: autor · La serie «Informe <slug> - Fuentes» solo se asigna bajo `01_fuentes/`
   (`ingesta/lib/identificar.py`): un PDF bajo la carpeta canónica `fuentes/` de un informe queda sin serie.
 - 2026-10-04 · dueño: autor · `lecturas` toma `proyecto:` como ruta relativa a la raíz: un `lecturas.yml` con el

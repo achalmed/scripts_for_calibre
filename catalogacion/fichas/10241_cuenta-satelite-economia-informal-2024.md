@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/inei/cuenta_satelite_economia_informal_2024/cuenta_satelite_economia_informal_2024_v001_2026-09-04.pdf` · SHA-256 `7409356cf979896e…` · 128 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`datafw/data/raw/peru/inei/cuenta_satelite_economia_informal_2024/cuenta_satelite_economia_informal_2024_v001_2026-09-04.pdf` · SHA-256 `7409356cf979896e…` · 128 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

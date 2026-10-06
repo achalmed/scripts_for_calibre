@@ -2,10 +2,10 @@
 
 `ingesta/ingesta.tsv` y `ingesta/pendientes.tsv` guardaban rutas absolutas de la máquina (`origen`,
 `ruta_calibre`). Desde F5 una ruta bajo la raíz del workspace se escribe relativa a ella
-(`02 analysis/data/raw/…`, `biblioteca/<Autor>/<Título (id)>/…`), y al leer:
+(`datafw/data/raw/…`, `biblioteca/<Autor>/<Título (id)>/…`), y al leer:
 
 - absoluta                                  → tal cual (filas viejas o fuera de la raíz);
-- relativa que empieza por una carpeta de la raíz (`02 analysis`, `03 writing`, `scripts_for_fuentes`,
+- relativa que empieza por una carpeta de la raíz (`datafw`, `03 writing`, `scripts_for_fuentes`,
   `biblioteca`…)                            → DOCS_ROOT / ruta;
 - cualquier otra relativa                   → relativa a la zona de entrada, como siempre (incluidas las del
   CIL histórico, `02_investigacion/…`, que ya no existen y se conservan como texto).

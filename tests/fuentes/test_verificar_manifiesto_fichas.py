@@ -1,6 +1,6 @@
 """Caracterización de `main.py verificar`, `manifiesto/` y `fichas/` (ola 2, F1), en seco y contra la copia.
 
-`manifiesto/` es contrato con `02 analysis` y `03 writing`, que cargan `manifiesto/lib/manifiesto.py` por ruta y
+`manifiesto/` es contrato con `datafw` y `03 writing`, que cargan `manifiesto/lib/manifiesto.py` por ruta y
 usan `cargar` y `ruta`; `manifiesto/main.py bib` es el otro contrato. Estas pruebas fijan esa interfaz.
 """
 import json
@@ -74,7 +74,7 @@ def _proyecto(caja, libro):
 
 
 def test_manifiesto_cargado_por_ruta(caja):
-    """Como lo cargan 02 analysis (pipeline/lib_proc/fuentes.py) y 03 writing (reporting/entorno.py)."""
+    """Como lo cargan datafw (pipeline/lib_proc/fuentes.py) y 03 writing (reporting/entorno.py)."""
     libro = caja.libro_con_archivo()
     raiz = _proyecto(caja, libro)
     codigo = textwrap.dedent(f"""\

@@ -33,7 +33,7 @@ Regla 1 del Método Documental: un proyecto dice **qué** usa (`calibre_id`, `zo
 está. Esta suite construye y mantiene ese manifiesto: lo genera desde los enlaces hacia la biblioteca que aún haya, el
 ledger de `ingesta` y el manifiesto previo; lo verifica contra Calibre; resuelve la ruta física para los scripts que la
 necesiten; retira los enlaces simbólicos que el manifiesto ya cubre; y escribe el `references.bib` del proyecto (APA 7
-vía biblatex) desde Calibre. Lo usan `ingesta` (archivar, paquetes, ocr), `02 analysis`, `03 writing` y el doctor; lo que esos
+vía biblatex) desde Calibre. Lo usan `ingesta` (archivar, paquetes, ocr), `datafw`, `03 writing` y el doctor; lo que esos
 repositorios usan y no cambia sin aviso está en [`../docs/arquitectura.md`](../docs/arquitectura.md) §6.
 
 ## Uso
@@ -54,7 +54,7 @@ python3 main.py todo                                                            
 
 | comando | escribe | dónde |
 |---|---|---|
-| `generar --aplicar` | `fuentes.yml`: `proyecto`, `generado` y una entrada por fuente (origen, calibre_id, zotero_key, clave_bibtex, título, autores, serie, anexo, sha256, uso, nota); conserva `clave_bibtex`, `uso` y `nota` escritos a mano | la raíz que dicta `REGLAS_RAIZ`: `fuentes/` de un informe (o `01_fuentes/` sin migrar), `02 analysis/data/raw/`, la carpeta de una monografía, ensayo, tesis o artículo; si ninguna aplica, la carpeta del archivo |
+| `generar --aplicar` | `fuentes.yml`: `proyecto`, `generado` y una entrada por fuente (origen, calibre_id, zotero_key, clave_bibtex, título, autores, serie, anexo, sha256, uso, nota); conserva `clave_bibtex`, `uso` y `nota` escritos a mano | la raíz que dicta `REGLAS_RAIZ`: `fuentes/` de un informe (o `01_fuentes/` sin migrar), `datafw/data/raw/`, la carpeta de una monografía, ensayo, tesis o artículo; si ninguna aplica, la carpeta del archivo |
 | `generar --bib` | lo mismo, una entrada por clave del `.bib`, localizada en Calibre por DOI, URL o título (o fijada con `--asignar clave=id`) | ídem |
 | `bib --aplicar` | el bloque generado de `references.bib` (entre marcadores; lo escrito fuera se conserva) y la `clave_bibtex` de cada entrada del manifiesto | `references.bib` en la carpeta del proyecto (la que contiene `fuentes/`, o la del manifiesto si no está en `fuentes/`), o `--salida` |
 | `quitar-enlaces --aplicar` | borra los enlaces simbólicos hacia la biblioteca que el manifiesto ya cubre | la carpeta dada |
@@ -77,5 +77,5 @@ de la norma).
 - **Siglas cerradas**: solo las de `config.SIGLAS`; una institución sin sigla se cita entera (`prompts/00 metodo/normas_apa7.md` §7; su equivalente en el `.bib`, §14).
 - **El modo `enlace` es del pasado**: el resolutor da la ruta; si un script sigue leyendo un enlace simbólico, es deuda de
   ese script, no de esta suite.
-- **`todo` recorre solo `RAICES_VIGILADAS`** (`entrada/`, `02 analysis/data/raw`, `03 writing`): un proyecto fuera de ahí
+- **`todo` recorre solo `RAICES_VIGILADAS`** (`entrada/`, `datafw/data/raw`, `03 writing`): un proyecto fuera de ahí
   se genera a mano.

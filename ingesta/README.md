@@ -30,13 +30,13 @@ main.sh cursos --escanear · main.sh cursos [--dry-run] [--tsv ARCHIVO] · main.
 <!-- suite:fin -->
 
 `entrada/` es la zona de aterrizaje: **recibe** documentos y esta suite los
-procesa. También barre como raíces de entrada `02 analysis/data/raw` y `03 writing`
+procesa. También barre como raíces de entrada `datafw/data/raw` y `03 writing`
 (`INBOX_RAICES`, solo PDF bajo carpetas de fuentes). El almacén permanente es
 `~/Documents/biblioteca` (Calibre, autoridad bibliográfica) y Zotero guarda las citas. Cada PDF o
 DOCX que entra se vuelve un libro de Calibre con metadatos y ficha, y un ítem de Zotero por RIS;
 en el proyecto de origen queda solo su entrada en el `fuentes.yml` (modos de archivar:
-`../docs/arquitectura.md` §2). Fronteras con `02 analysis`:
-`02 analysis/docs/integracion-ecosistema.md` §2.
+`../docs/arquitectura.md` §2). Fronteras con `datafw`:
+`datafw/docs/integracion-ecosistema.md` §2.
 
 ## Uso
 
@@ -58,7 +58,7 @@ Simulación por defecto; `--aplicar` escribe. Desde esta carpeta:
 La ayuda es `./main.sh <comando> -h`. Antes de `catalogar --aplicar` se revisa `pendientes.tsv`:
 lo que queda por debajo de `CONFIANZA_MINIMA_AUTO` (`config.sh`) se omite hasta revisar su ficha
 con `prompts/01 fuentes/prompt_02_catalogar.md`. Un escaneado sin texto necesita OCR previo
-(`02 analysis/pipeline/documentos/main.py ocr`; lo del Congreso, `ocrmypdf -l spa`).
+(`datafw/pipeline/documentos/main.py ocr`; lo del Congreso, `ocrmypdf -l spa`).
 
 ## Estructura
 
@@ -99,10 +99,10 @@ OPF tocados (`../docs/decisiones.md` §2.2).
 
 `PAQUETES_JSON` declara por raíz familias `{principal, adjuntos}` (regex sobre el nombre): en
 `data/raw/mef/presupuesto/<aprobado|proyecto>/<año>` la Ley (o el PL) es el libro y sus `Anexo_*` van a la
-carpeta `data/` del libro (que Calibre no registra), cada uno anotado en `02 analysis/data/raw/fuentes.yml`
+carpeta `data/` del libro (que Calibre no registra), cada uno anotado en `datafw/data/raw/fuentes.yml`
 con su `anexo`. Sin texto de la ley (`sin_principal`), el primer anexo hace de formato hasta `add_format`.
 `identificar` salta los anexos (`[adj]`) y registra como copia lo que ya está en el ledger (`[copia]`).
-Series de `02 analysis/data/raw`: `datafw <institución>` y, con etapa y año, `datafw <inst> - <carpeta> <etapa>`.
+Series de `datafw/data/raw`: `datafw <institución>` y, con etapa y año, `datafw <inst> - <carpeta> <etapa>`.
 
 ## Cursos: material externo de `10 Class` (`main.sh cursos`)
 
@@ -136,5 +136,5 @@ completa `scripts-biblioteca/catalogacion/`.
 - **`paquetes` solo ve las raíces que declara `PAQUETES_JSON`** (`$ANALYSIS_DIR/data/raw/mef/presupuesto/…`);
   una raíz inexistente da un aviso y se salta.
 - **En las raíces externas solo entran PDF** bajo carpetas data/raw, `entrada`, `01_fuentes`,
-  `fuentes` o `referencias` (`INBOX_RAICES_SOLO`); un `.xlsx` de `02 analysis` es dato de
+  `fuentes` o `referencias` (`INBOX_RAICES_SOLO`); un `.xlsx` de `datafw` es dato de
   procesamiento, no un documento que se lea.

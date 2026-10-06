@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/mef/presupuesto/proyecto/2027/EM_PL_Endeudamiento_2027.pdf` · SHA-256 `4154d5a7d2bb5af2…` · 36 págs · con texto
+`datafw/data/raw/peru/mef/presupuesto/proyecto/2027/EM_PL_Endeudamiento_2027.pdf` · SHA-256 `4154d5a7d2bb5af2…` · 36 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/mef/presupuesto/aprobado/2024/Ley_31953_Presupuesto_del_Sector_Publico_para_el_Anio_Fiscal_2024.pdf` · SHA-256 `309d41d44c4622f8…` · 101 págs · con texto
+`datafw/data/raw/peru/mef/presupuesto/aprobado/2024/Ley_31953_Presupuesto_del_Sector_Publico_para_el_Anio_Fiscal_2024.pdf` · SHA-256 `309d41d44c4622f8…` · 101 págs · con texto
 
 ## Zotero
 | Campo | Valor |

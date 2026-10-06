@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/inei/pobreza_monetaria_poblacion_venezolana_2024/pobreza_monetaria_poblacion_venezolana_2024_v001_2026-09-05.pdf` · SHA-256 `08125a7addcc8cbe…` · 210 págs · con texto
+`datafw/data/raw/peru/inei/pobreza_monetaria_poblacion_venezolana_2024/pobreza_monetaria_poblacion_venezolana_2024_v001_2026-09-05.pdf` · SHA-256 `08125a7addcc8cbe…` · 210 págs · con texto
 
 ## Zotero
 | Campo | Valor |

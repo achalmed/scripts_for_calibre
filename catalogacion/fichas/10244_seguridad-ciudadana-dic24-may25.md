@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/inei/seguridad_ciudadana_dic24_may25/seguridad_ciudadana_dic24_may25_v001_2026-09-02.pdf` · SHA-256 `1ef0ea8c4b434766…` · 37 págs · con texto
+`datafw/data/raw/peru/inei/seguridad_ciudadana_dic24_may25/seguridad_ciudadana_dic24_may25_v001_2026-09-02.pdf` · SHA-256 `1ef0ea8c4b434766…` · 37 págs · con texto
 
 ## Zotero
 | Campo | Valor |

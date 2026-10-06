@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/oms_unicef/jmp_agua_saneamiento_2024/jmp_agua_saneamiento_2024_v001_2026-09-04.pdf` · SHA-256 `0ba68e5ea1f52162…` · 192 págs · con texto
+`datafw/data/raw/peru/oms_unicef/jmp_agua_saneamiento_2024/jmp_agua_saneamiento_2024_v001_2026-09-04.pdf` · SHA-256 `0ba68e5ea1f52162…` · 192 págs · con texto
 
 ## Zotero
 | Campo | Valor |

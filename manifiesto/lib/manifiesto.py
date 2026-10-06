@@ -62,9 +62,9 @@ def raiz_de(path):
     """
     s = str(Path(path).resolve() if not Path(path).is_symlink() else Path(path).absolute())
     # Las reglas se prueban PRIMERO contra la ruta tal como se dio y después
-    # contra la resuelta. `02 analysis/data` es un enlace simbólico al disco
+    # contra la resuelta. `datafw/data` es un enlace simbólico al disco
     # externo desde el 2026-09-20: resuelta, la ruta ya no contiene
-    # `/02 analysis/data/raw/`, ninguna regla casaba y el manifiesto caía en la
+    # `/datafw/data/raw/`, ninguna regla casaba y el manifiesto caía en la
     # carpeta del archivo —un `fuentes.yml` suelto por documento en vez de su
     # entrada en `data/raw/fuentes.yml`— (2026-09-29, primer documento de datafw
     # archivado desde el enlace). Las reglas describen el proyecto como lo

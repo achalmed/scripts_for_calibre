@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/ilo/panorama_laboral_2025/panorama_laboral_2025_v001_2026-09-04.pdf` · SHA-256 `8366bb806c5bec13…` · 78 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`datafw/data/raw/peru/ilo/panorama_laboral_2025/panorama_laboral_2025_v001_2026-09-04.pdf` · SHA-256 `8366bb806c5bec13…` · 78 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

@@ -64,12 +64,12 @@ def _rutas():
 def test_rutas_relativas_a_docs_root(tmp_path):
     R = _rutas()
     docs = tmp_path / "Documents"
-    (docs / "02 analysis" / "data").mkdir(parents=True)
+    (docs / "datafw" / "data").mkdir(parents=True)
     entrada = docs / "scripts-biblioteca" / "entrada"
     entrada.mkdir(parents=True)
-    assert R.a_texto(docs / "02 analysis" / "data" / "x.pdf", docs) == "02 analysis/data/x.pdf"
+    assert R.a_texto(docs / "datafw" / "data" / "x.pdf", docs) == "datafw/data/x.pdf"
     assert R.a_texto("/otra/parte/x.pdf", docs) == "/otra/parte/x.pdf"     # fuera de la raíz: se queda absoluta
-    assert R.resolver("02 analysis/data/x.pdf", entrada, docs) == docs / "02 analysis" / "data" / "x.pdf"
+    assert R.resolver("datafw/data/x.pdf", entrada, docs) == docs / "datafw" / "data" / "x.pdf"
     assert R.resolver("programa-2026/x.pdf", entrada, docs) == entrada / "programa-2026" / "x.pdf"
     assert R.resolver("02_investigacion/marco_legal/x.pdf", entrada, docs) == entrada / "02_investigacion/marco_legal/x.pdf"
     assert R.resolver("/abs/x.pdf", entrada, docs).as_posix() == "/abs/x.pdf"

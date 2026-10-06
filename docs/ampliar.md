@@ -49,7 +49,7 @@ Cuando un documento nace en otra carpeta del espacio de trabajo y debe catalogar
 3. Ensayo: `ingesta/main.sh recibir`, `identificar` y `catalogar` sin `--aplicar`;
    `python3 manifiesto/main.py raiz <archivo>` dice dónde iría su manifiesto.
 
-En una raíz externa solo se ingieren documentos de consulta (PDF): un `.xlsx` de `02 analysis` es
+En una raíz externa solo se ingieren documentos de consulta (PDF): un `.xlsx` de `datafw` es
 dato de procesamiento y no se cataloga.
 
 ## Un paquete de anexos

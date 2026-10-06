@@ -65,7 +65,7 @@ la escritura en `metadata.db` sin compartir código. Hace dos cosas:
 
 Y una sola **puerta de escritura** (`lib/escribir.*`): nada escribe en `metadata.db` ni en `zotero.sqlite` sin la
 app cerrada, el candado (`LOCK_CALIBRE`, `LOCK_ZOTERO` de `core/env.sh`) y un respaldo verificado. **No es** la
-biblioteca (`biblioteca/`), ni el gestor de citas (Zotero), ni adquiere datos (eso es `02 analysis/connectors`).
+biblioteca (`biblioteca/`), ni el gestor de citas (Zotero), ni adquiere datos (eso es `datafw/connectors`).
 Dónde está el repo hoy: [`estado.md`](estado.md).
 
 ## Uso
@@ -112,7 +112,7 @@ para `metadatos-pdf`. Qué es automático y qué es manual: [`docs/operacion.md`
 | `entrada/` | zona de aterrizaje de lo descargado, fuera de git | runtime |
 | `ingesta/` | de la entrada a Calibre y Zotero: identificar, catalogar, RIS, archivar, OCR, paquetes, cursos; ledger `ingesta.tsv` | a mano |
 | `catalogacion/` | aplica `resumen_catalogacion.tsv` a Calibre; `fichas/` y el TSV son el registro canónico (los escribe `ingesta catalogar`) | a mano |
-| `fichas/`, `lecturas/`, `manifiesto/` | pasos 05, 07 y 09 sobre las fichas de un proyecto; `manifiesto/` es contrato con `02 analysis` y `03 writing` y no cambia de nombre | a mano |
+| `fichas/`, `lecturas/`, `manifiesto/` | pasos 05, 07 y 09 sobre las fichas de un proyecto; `manifiesto/` es contrato con `datafw` y `03 writing` y no cambia de nombre | a mano |
 | `koreader/`, `lectura/`, `sincronizar-zotero/` | la coherencia Calibre ⇄ KOReader ⇄ Zotero; los tres timers | a mano; timers `koreader-calibre-sync`, `ecosistema-lectura`, `ecosistema-metadatos` |
 | `zotero-series/` | organiza una colección de Zotero en subcolecciones por su campo Series (se pega en la consola de Zotero); lo único vivo de `scripts_for_zotero`, archivado en la ola 2 | a mano |
 | `verificacion/`, `metadatos-pdf/` | cotejo con OpenLibrary y Crossref (solo lectura); incrustador OPF → PDF | a mano |

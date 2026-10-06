@@ -21,7 +21,7 @@ se lee para saber por qué, no para saber cómo.
 | **quien adquiere o ficha** una fuente para un proyecto | [`../README.md`](../README.md) §Uso → `prompts/00 metodo/METODO_DOCUMENTAL.md` → el README de la suite del paso |
 | **quien ingiere** lo que entró | [`../ingesta/README.md`](../ingesta/README.md) (§Cursos para el material de `10 Class`) → [`../catalogacion/README.md`](../catalogacion/README.md) |
 | **quien amplía** (una fuente, una raíz, una sigla, una suite) | [arquitectura.md](arquitectura.md) → [ampliar.md](ampliar.md) |
-| **otro repositorio** (`prompts`, `meta`, `02 analysis`, `03 writing`) | [consumidores.md](consumidores.md) (lo que se usa de aquí) → [arquitectura.md](arquitectura.md) §6 y [`../manifiesto/README.md`](../manifiesto/README.md) → `meta/docs/historial/MODELO_METADATOS.md` y `meta/docs/historial/SINCRONIZACION.md` (la frontera) |
+| **otro repositorio** (`prompts`, `meta`, `datafw`, `03 writing`) | [consumidores.md](consumidores.md) (lo que se usa de aquí) → [arquitectura.md](arquitectura.md) §6 y [`../manifiesto/README.md`](../manifiesto/README.md) → `meta/docs/historial/MODELO_METADATOS.md` y `meta/docs/historial/SINCRONIZACION.md` (la frontera) |
 
 ## Cómo se mantiene
 

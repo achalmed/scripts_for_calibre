@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/mef/presupuesto/proyecto/2027/EM_PL_Equilibrio_Financiero_2027.pdf` · SHA-256 `e7710053ba7eee03…` · 28 págs · con texto
+`datafw/data/raw/peru/mef/presupuesto/proyecto/2027/EM_PL_Equilibrio_Financiero_2027.pdf` · SHA-256 `e7710053ba7eee03…` · 28 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -116,10 +116,10 @@ def plantilla(tmp_path_factory) -> Path:
     (cat / "resumen_catalogacion.tsv").write_text(
         "id\tautores\ttitulo\ttipo_zotero\tclasificador\teditorial\tfecha\tidentificador\tidioma\ttags\tconfianza\tnota\n",
         encoding="utf-8")
-    # Ni el envoltorio lib_comun (retirado en la fusión) ni la red de 02 analysis (F4) entran en la caja:
+    # Ni el envoltorio lib_comun (retirado en la fusión) ni la red de datafw (F4) entran en la caja:
     # las pruebas demuestran que este repo ya no los necesita.
     # raíces de entrada que ingesta recorre
-    for d in ("02 analysis/data/raw", "03 writing/reports", "10 Class/docencia/cursos", "prompts"):
+    for d in ("datafw/data/raw", "03 writing/reports", "10 Class/docencia/cursos", "prompts"):
         (docs / d).mkdir(parents=True, exist_ok=True)
     # la base: copia consistente leída en solo lectura
     real = _db_real()

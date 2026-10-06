@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/inei/endes_2025_ppr/Informe_Indicadores_PPR_ENDES_2025.pdf` · SHA-256 `d3c9220633b8e0b7…` · 296 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`datafw/data/raw/peru/inei/endes_2025_ppr/Informe_Indicadores_PPR_ENDES_2025.pdf` · SHA-256 `d3c9220633b8e0b7…` · 296 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

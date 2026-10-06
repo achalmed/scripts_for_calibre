@@ -183,8 +183,8 @@ las suites (marca de la orquestación, último sync, plan de Calibre) vive en
 
 ### §5.1 Dos adquisiciones, dos sistemas (2026-09-06)
 
-Datos y documentos se adquieren por separado: los datos, `02 analysis/connectors` hacia
-`02 analysis/data/raw/`; los documentos, este repo hacia Calibre y Zotero. Confundirlos fue el error que
+Datos y documentos se adquieren por separado: los datos, `datafw/connectors` hacia
+`datafw/data/raw/`; los documentos, este repo hacia Calibre y Zotero. Confundirlos fue el error que
 originó el sistema: un artículo y una serie no se guardan ni se citan igual. Comparten la
 maquinaria de red y hash (§7.1) y el modelo de procedencia, no el destino.
 
@@ -281,14 +281,14 @@ retirada de `meta/reparaciones/` y va a `$RESPALDOS_DIR/biblioteca/fuentes/origi
 frontmatter, sin leer el cuerpo) y por su fila en `ingesta.tsv`: ninguno correspondía a una obra con
 `calibre_id` (la ficha de lo catalogado ya está, con su id, en `scripts-biblioteca`); 35 llevaban la marca
 «sustituida» y 777 eran borradores sin obra (773 de filas de `pendientes.tsv` aún sin catalogar, de
-`02 analysis/data/raw`, y 4 sin fila). Los 812 se copiaron con `SHA256SUMS` verificado a
+`datafw/data/raw`, y 4 sin fila). Los 812 se copiaron con `SHA256SUMS` verificado a
 `$RESPALDOS_DIR/biblioteca/fuentes/ingesta-fichas-provisionales/` (con `clasificacion.tsv`) y se movieron a los
 residuos del programa; `.gitignore` declara la carpeta temporal. Si una de esas filas se cataloga, su borrador
 se recupera de la copia o se regenera con `identificar` tras quitar la fila de `pendientes.tsv`.
 
 ## 7. Maquinaria y dependencias
 
-### §7.1 Se importa la maquinaria de `02 analysis`, no se reimplementa (2026-09-06)
+### §7.1 Se importa la maquinaria de `datafw`, no se reimplementa (2026-09-06)
 
 Superada por §7.4 (2026-10-05).
 
@@ -311,7 +311,7 @@ La dependencia de §7.1 hacía un ciclo `datafw ↔ scripts_for_fuentes` (RQ-MAN
 la ola 3. Dos cambios de comportamiento, a propósito: `descargar` ahora comprueba `%PDF-` en los PDF (el
 original no comprobaba nada para esa extensión: una página de WAF servida como PDF entraba en `entrada/`),
 y los intermedios TLS que `_lib` traía en `intermedios/` se indican con `RED_INTERMEDIOS` si un portal los
-vuelve a pedir. `tests/fuentes/test_red_fuentes.py` corre sin `02 analysis` en la caja de arena.
+vuelve a pedir. `tests/fuentes/test_red_fuentes.py` corre sin `datafw` en la caja de arena.
 
 ### §7.5 Rutas relativas a la raíz y nada personal en el repo (ola 2, F5, 2026-10-05)
 
@@ -348,7 +348,7 @@ fichas anteriores a ese formato y es de un solo uso.
 Cuando la raíz que dicta `REGLAS_RAIZ` tiene una carpeta `fuentes/`, el `fuentes.yml` va ahí, para
 que un documento archivado desde `referencias/` no deje el manifiesto suelto en la raíz. Las reglas
 se prueban primero contra la ruta tal como se dio y después contra la resuelta, porque
-`02 analysis/data` es un enlace simbólico a un disco externo (2026-09-29).
+`datafw/data` es un enlace simbólico a un disco externo (2026-09-29).
 
 ### §8.5 `references.bib` se genera desde Calibre (2026-09-16)
 

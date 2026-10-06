@@ -1,7 +1,7 @@
 """La red de `scripts_for_fuentes` sale de `core/py-common/red.py` (ola 2, F4; RQ-MAN-04, excepción E5).
 
-Antes, `lib/comun.py` importaba `02 analysis/connectors/_lib` y había un ciclo `datafw ↔ scripts_for_fuentes`.
-La caja de arena ya no lleva `02 analysis/connectors`: si el código lo necesitara, estas pruebas fallarían.
+Antes, `lib/comun.py` importaba `datafw/connectors/_lib` y había un ciclo `datafw ↔ scripts_for_fuentes`.
+La caja de arena ya no lleva `datafw/connectors`: si el código lo necesitara, estas pruebas fallarían.
 """
 import http.server
 import re
@@ -34,7 +34,7 @@ def servidor():
 
 
 def test_descargar_por_core_red(caja, servidor):
-    assert not (caja.docs / "02 analysis" / "connectors").exists()
+    assert not (caja.docs / "datafw" / "connectors").exists()
     codigo = (
         "import sys; from pathlib import Path\n"
         f"sys.path.insert(0, {str(caja.repo)!r})\n"

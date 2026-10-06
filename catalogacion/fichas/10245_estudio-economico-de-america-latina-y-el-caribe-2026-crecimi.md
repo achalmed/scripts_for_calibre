@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/cepal/estudio_economico_2026/estudio_economico_2026_v001_2026-09-04.pdf` · SHA-256 `cc7145d3b251f9dd…` · 203 págs · con texto
+`datafw/data/raw/peru/cepal/estudio_economico_2026/estudio_economico_2026_v001_2026-09-04.pdf` · SHA-256 `cc7145d3b251f9dd…` · 203 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/mef/presupuesto/proyecto/2027/EM_PL_Presupuesto_SP_2027.pdf` · SHA-256 `22423e4a76b3c81e…` · 137 págs · con texto
+`datafw/data/raw/peru/mef/presupuesto/proyecto/2027/EM_PL_Presupuesto_SP_2027.pdf` · SHA-256 `22423e4a76b3c81e…` · 137 págs · con texto
 
 ## Zotero
 | Campo | Valor |

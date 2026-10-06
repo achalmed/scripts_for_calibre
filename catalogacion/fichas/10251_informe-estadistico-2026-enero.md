@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/inpe/informe_estadistico_2026_enero/informe_estadistico_2026_enero_v001_2026-09-02.pdf` · SHA-256 `850a9df6d9233fcc…` · 127 págs · con texto
+`datafw/data/raw/peru/inpe/informe_estadistico_2026_enero/informe_estadistico_2026_enero_v001_2026-09-02.pdf` · SHA-256 `850a9df6d9233fcc…` · 127 págs · con texto
 
 ## Zotero
 | Campo | Valor |

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/mef/presupuesto/proyecto/2025/PL_Presupuesto_SP_2025.pdf` · SHA-256 `466239da17824c6d…` · 144 págs · con texto
+`datafw/data/raw/peru/mef/presupuesto/proyecto/2025/PL_Presupuesto_SP_2025.pdf` · SHA-256 `466239da17824c6d…` · 144 págs · con texto
 
 ## Zotero
 | Campo | Valor |

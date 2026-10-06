@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/inei/condiciones_vida_poblacion_venezolana_2024/condiciones_vida_poblacion_venezolana_2024_v001_2026-09-05.pdf` · SHA-256 `ef82f3820552d577…` · 362 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
+`datafw/data/raw/peru/inei/condiciones_vida_poblacion_venezolana_2024/condiciones_vida_poblacion_venezolana_2024_v001_2026-09-05.pdf` · SHA-256 `ef82f3820552d577…` · 362 págs · SIN TEXTO → OCR (datafw/pipeline/documentos)
 
 ## Zotero
 | Campo | Valor |

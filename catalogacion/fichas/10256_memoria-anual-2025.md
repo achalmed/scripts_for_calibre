@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`02 analysis/data/raw/peru/indecopi/memoria_anual_2025/memoria_anual_2025_v001_2026-09-05.pdf` · SHA-256 `5a6aff885808ef37…` · 73 págs · con texto
+`datafw/data/raw/peru/indecopi/memoria_anual_2025/memoria_anual_2025_v001_2026-09-05.pdf` · SHA-256 `5a6aff885808ef37…` · 73 págs · con texto
 
 ## Zotero
 | Campo | Valor |
