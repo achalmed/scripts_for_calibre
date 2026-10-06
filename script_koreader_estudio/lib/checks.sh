@@ -19,15 +19,7 @@ comprobar_entorno() {
     return "$errores"
 }
 
-# calibre_abierto() lo aporta lib_comun/detectar_apps.sh (detección canónica
-# `ps -eo comm`); main.sh lo tiene sourced antes que este módulo.
-exigir_calibre_cerrado() {
-    if calibre_abierto; then
-        echo "✗ Calibre está abierto. Ciérralo antes de sincronizar (la base se bloquea)." >&2
-        return 1
-    fi
-    return 0
-}
+# Calibre cerrado antes de escribir lo exige la puerta (lib/escribir.sh, puerta_calibre_abrir).
 
 koreader_abierto() {
     pgrep -f "koreader/luajit|/usr/bin/koreader" >/dev/null 2>&1

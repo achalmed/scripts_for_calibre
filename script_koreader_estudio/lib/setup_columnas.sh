@@ -25,14 +25,14 @@ crear_columna() {
     # add, el UNIQUE de calibre falla y aquí se trata como "ya existe".
     local salida
     if [ -n "$display" ]; then
-        salida=$(calibredb add_custom_column --with-library "$BIBLIOTECA" \
+        salida=$(calibredb_escribe add_custom_column \
             --display "$display" "$label" "$nombre" "$tipo" 2>&1) || {
                 echo "$salida" | grep -qi "UNIQUE" \
                     && { echo "  = #$label ya existía (creada en paralelo)."; return 0; } \
                     || { echo "$salida" >&2; return 1; }
             }
     else
-        salida=$(calibredb add_custom_column --with-library "$BIBLIOTECA" \
+        salida=$(calibredb_escribe add_custom_column \
             "$label" "$nombre" "$tipo" 2>&1) || {
                 echo "$salida" | grep -qi "UNIQUE" \
                     && { echo "  = #$label ya existía (creada en paralelo)."; return 0; } \

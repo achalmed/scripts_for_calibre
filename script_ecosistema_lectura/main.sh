@@ -5,9 +5,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/config.sh"
-source "$SCRIPT_DIR/../lib_comun/detectar_apps.sh"
-source "$SCRIPT_DIR/../lib_comun/lock.sh"
-source "$SCRIPT_DIR/../lib_comun/backup_rotado.sh"
+source "$SCRIPT_DIR/../lib/escribir.sh"     # la puerta de escritura (K2): core/env, detección, candado, respaldo
 source "$SCRIPT_DIR/lib/checks.sh"
 source "$SCRIPT_DIR/lib/setup_columnas.sh"
 source "$SCRIPT_DIR/lib/orquestar_metadatos.sh"
@@ -79,7 +77,7 @@ accion_timer_off() {
 }
 
 accion_metadatos() {
-    tomar_lock_calibre
+    puerta_candado_calibre
     # El hijo (sincronizar_zotero) hereda el lock por fd: que no intente retomarlo (C5).
     export ECOSISTEMA_LOCK_HELD=1
     comprobar_entorno
@@ -102,21 +100,19 @@ accion_enlazar() {
         return 0
     fi
     [ "$n" -gt 0 ] || { echo "· Nada que enlazar por adjunto."; return 0; }
-    tomar_lock_calibre
-    exigir_calibre_cerrado
-    backup_metadata_db "$BIBLIOTECA/metadata.db" "$BACKUPS_DIR" "$BACKUPS_CONSERVAR"
+    puerta_calibre_abrir ecosistema_lectura "$BIBLIOTECA"
     local bid key hechas=0
     while IFS=$'\t' read -r bid key; do
-        calibredb --with-library "$BIBLIOTECA" set_custom "$COL_ZKEY" "$bid" "$key" >/dev/null
+        calibredb_escribe set_custom "$COL_ZKEY" "$bid" "$key" >/dev/null
         hechas=$((hechas + 1))
     done < "$pares"
-    echo "· $hechas claves escritas en #$COL_ZKEY (respaldo previo en $BACKUPS_DIR)."
+    echo "· $hechas claves escritas en #$COL_ZKEY (respaldo previo: $(puerta_respaldos))."
     return 0
 }
 
 accion_sync() {
-    # Lock COMPARTIDO con script_koreader_estudio: ambos escriben metadata.db.
-    tomar_lock_calibre
+    # Candado COMPARTIDO con script_koreader_estudio: ambos escriben metadata.db.
+    puerta_candado_calibre
 
     comprobar_entorno
 
@@ -125,14 +121,11 @@ accion_sync() {
         exit 0
     fi
     if [ "$MODO" = "aplicar" ]; then
-        exigir_calibre_cerrado
+        # La puerta: Calibre cerrado, candado y respaldo verificado antes de crear columnas o escribir.
+        puerta_calibre_abrir ecosistema_lectura "$BIBLIOTECA"
     fi
 
     setup_columnas
-
-    if [ "$MODO" = "aplicar" ]; then
-        backup_metadata_db "$BIBLIOTECA/metadata.db" "$BACKUPS_DIR" "$BACKUPS_CONSERVAR"
-    fi
 
     mkdir -p "$REPORTES_DIR"
     QEL_BIBLIOTECA="$BIBLIOTECA" \

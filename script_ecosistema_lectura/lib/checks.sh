@@ -11,13 +11,5 @@ comprobar_entorno() {
     return "$errores"
 }
 
-# calibre_abierto() lo aporta lib_comun/detectar_apps.sh (detección canónica
-# `ps -eo comm`); main.sh lo tiene sourced antes que este módulo. Zotero SÍ
+# Calibre cerrado antes de escribir lo exige la puerta (lib/escribir.sh, puerta_calibre_abrir). Zotero SÍ
 # puede estar abierto en accion_sync: su base solo se lee (modo ro).
-exigir_calibre_cerrado() {
-    if calibre_abierto; then
-        echo "✗ Calibre está abierto. Ciérralo antes de sincronizar." >&2
-        return 1
-    fi
-    return 0
-}

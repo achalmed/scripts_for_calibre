@@ -25,7 +25,11 @@ import csv
 import json
 import math
 import sqlite3
+import sys
 from datetime import datetime, timezone
+
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "lib"))
+import escribir  # noqa: E402  (la puerta de escritura, K2)
 
 BIBLIOTECA = os.environ.get("QEL_BIBLIOTECA", "")
 ZOTERO_DB = os.environ.get("QEL_ZOTERO_DB", "")
@@ -178,12 +182,7 @@ def main():
         w.writerows(filas_reporte)
 
     if APLICAR:
-        if upd_tiempo:
-            api.set_field(COL_ZTIEMPO, upd_tiempo)
-        if upd_ultima:
-            api.set_field(COL_ZULTIMA, upd_ultima)
-        if upd_prog:
-            api.set_field(COL_ZPROG, upd_prog)
+        escribir.set_campos(api, {COL_ZTIEMPO: upd_tiempo, COL_ZULTIMA: upd_ultima, COL_ZPROG: upd_prog})
 
     modo = "APLICADO" if APLICAR else "SIMULACIÓN (nada escrito)"
     print("── Zotero (Ethereal Style) → Calibre ─────────────────────")

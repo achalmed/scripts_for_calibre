@@ -132,6 +132,23 @@ def perturbar(c: "Corrida", fecha: bool = False) -> None:  # noqa: F821
     zot.close()
 
 
+def perturbar_lectura(c: "Corrida") -> None:  # noqa: F821
+    """Borra en la copia los valores que escriben ecosistema_lectura (#zot_*) y koreader_estudio (#ko_*)
+    en los primeros libros que los tienen: la sincronización debe reponerlos por la puerta."""
+    cal = _cal_rw(c.calibre)
+    for label, n in (("zot_tiempo", 4), ("zot_ultima", 4), ("zot_progreso", 4), ("ko_tiempo", 4),
+                     ("ko_progfloat", 4), ("ko_progint", 4), ("ko_status", 3), ("ko_lastmod", 4), ("ko_md5", 3)):
+        num, norm = cal.execute("select id, normalized from custom_columns where label = ?", (label,)).fetchone()
+        if norm:
+            libros = [b for (b,) in cal.execute(f"select book from books_custom_column_{num}_link order by book limit {n}")]
+            cal.executemany(f"delete from books_custom_column_{num}_link where book = ?", [(b,) for b in libros])
+        else:
+            libros = [b for (b,) in cal.execute(f"select book from custom_column_{num} order by book limit {n}")]
+            cal.executemany(f"delete from custom_column_{num} where book = ?", [(b,) for b in libros])
+    cal.commit()
+    cal.close()
+
+
 def _comparar(arboles, corrida, nombre, args, perturbacion=None, exigir_exito=True):
     """Corre referencia y árbol actual a la vez sobre copias idénticas y compara reporte y deltas."""
     suite, sub, patron = SUITES[nombre]
@@ -176,12 +193,8 @@ def test_simulacion_igual_a_la_referencia(arboles, corrida, nombre):
     assert m["act"]["zotero"] == {}
 
 
-@pytest.mark.parametrize("nombre", list(SUITES))
-def test_aplicar_igual_a_la_referencia(arboles, corrida, nombre):
-    _comparar(arboles, corrida, nombre, ["--aplicar"])
-
-
 def test_sincronizar_zotero_perturbado_igual_a_la_referencia(arboles, corrida):
+    """`--aplicar` sobre la foto real más la perturbación (la foto sola es un subconjunto)."""
     m = _comparar(arboles, corrida, "sincronizar_zotero", ["--aplicar"], perturbar)
     campos = {k[1] for k in m["act"]["calibre"]} | {k[1] for k in m["act"]["zotero"]}
     # cada camino de escritura quedó ejercitado
@@ -205,3 +218,11 @@ def test_sincronizar_zotero_relleno_de_fecha(arboles, corrida):
     assert act["zotero"] == ref["zotero"]
     fechas = {k: v for k, v in act["calibre"].items() if k[1] == "pubdate"}
     assert len(fechas) == 3 and all(v[1].endswith("-01-01T00:00:00+00:00") for v in fechas.values())
+
+
+@pytest.mark.parametrize("nombre", ["ecosistema_lectura", "koreader_estudio"])
+def test_lectura_perturbada_igual_a_la_referencia(arboles, corrida, nombre):
+    """`--aplicar` sobre la foto real con valores de lectura borrados (la foto sola es un subconjunto)."""
+    m = _comparar(arboles, corrida, nombre, ["--aplicar"], perturbar_lectura)
+    prefijo = "#zot_" if nombre == "ecosistema_lectura" else "#ko_"
+    assert any(k[1].startswith(prefijo) for k in m["act"]["calibre"]), "la perturbación no se repuso"

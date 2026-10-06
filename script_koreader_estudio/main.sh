@@ -6,9 +6,7 @@ set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/config.sh"
-source "$SCRIPT_DIR/../lib_comun/detectar_apps.sh"
-source "$SCRIPT_DIR/../lib_comun/lock.sh"
-source "$SCRIPT_DIR/../lib_comun/backup_rotado.sh"
+source "$SCRIPT_DIR/../lib/escribir.sh"     # la puerta de escritura (K2): core/env, detección, candado, respaldo
 source "$SCRIPT_DIR/lib/checks.sh"
 source "$SCRIPT_DIR/lib/setup_columnas.sh"
 source "$SCRIPT_DIR/lib/respaldo_koreader.sh"
@@ -60,11 +58,9 @@ done
 
 # --- Acción: enlace de apuntes ---------------------------------------------
 accion_apuntes() {
-    # Lock compartido (auditoría C5): calibredb set_custom escribe metadata.db
-    # y debe serializar con los timers, igual que accion_sync.
-    tomar_lock_calibre
-    exigir_calibre_cerrado
     [ -f "$APUNTES_RUTA" ] || { echo "✗ No existe el archivo: $APUNTES_RUTA" >&2; exit 1; }
+    # La puerta (K2): Calibre cerrado, candado compartido con los timers y respaldo verificado.
+    puerta_calibre_abrir koreader_estudio "$BIBLIOTECA"
     local abs texto html
     abs="$(readlink -f "$APUNTES_RUTA")"
     texto="${APUNTES_TEXTO:-$(basename "$APUNTES_RUTA" .md)}"
@@ -78,8 +74,7 @@ print('<div><p><a href="%s">📝 %s</a></p>'
       % (obs, texto, fil))
 EOF
 )"
-    calibredb set_custom --with-library "$BIBLIOTECA" \
-        "$COL_APUNTES" "$APUNTES_ID" "$html"
+    calibredb_escribe set_custom "$COL_APUNTES" "$APUNTES_ID" "$html"
     echo "✓ #$COL_APUNTES del libro $APUNTES_ID → enlace a: $abs"
 }
 
@@ -141,9 +136,9 @@ accion_migrar() {
 
 # --- Acción principal: setup + sync ----------------------------------------
 accion_sync() {
-    # Lock COMPARTIDO entre las herramientas que escriben metadata.db
+    # Candado COMPARTIDO entre las herramientas que escriben metadata.db
     # (script_koreader_estudio y script_ecosistema_lectura): nunca a la vez.
-    tomar_lock_calibre
+    puerta_candado_calibre
 
     comprobar_entorno
 
@@ -152,14 +147,11 @@ accion_sync() {
         exit 0
     fi
     if [ "$MODO" = "aplicar" ]; then
-        exigir_calibre_cerrado
+        # La puerta: Calibre cerrado, candado y respaldo verificado antes de crear columnas o escribir.
+        puerta_calibre_abrir koreader_estudio "$BIBLIOTECA"
     fi
 
     setup_columnas
-
-    if [ "$MODO" = "aplicar" ]; then
-        backup_metadata_db "$BIBLIOTECA/metadata.db" "$BACKUPS_DIR" "$BACKUPS_CONSERVAR"
-    fi
 
     mkdir -p "$REPORTES_DIR"
     QKO_BIBLIOTECA="$BIBLIOTECA" \

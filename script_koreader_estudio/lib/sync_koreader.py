@@ -27,6 +27,9 @@ import hashlib
 import sqlite3
 from datetime import datetime, timezone
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "lib"))
+import escribir  # noqa: E402  (la puerta de escritura, K2)
+
 # --- Configuración por entorno (la exporta main.sh desde config.sh) --------
 BIBLIOTECA = os.environ.get("QKO_BIBLIOTECA", "")
 KOREADER_CONFIG = os.environ.get("QKO_KOREADER_CONFIG", "")
@@ -284,9 +287,7 @@ def main():
     # --- Aplicar -----------------------------------------------------------
     n_cambios = sum(len(v) for v in updates.values())
     if APLICAR and n_cambios:
-        for campo, valores in updates.items():
-            if valores:
-                api.set_field(C[campo], valores)
+        escribir.set_campos(api, {C[campo]: valores for campo, valores in updates.items()})
 
     # --- Resumen -----------------------------------------------------------
     modo = "APLICADO" if APLICAR else "SIMULACIÓN (nada escrito)"
