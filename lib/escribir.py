@@ -16,6 +16,7 @@ Uso como CLI (lo llama lib/escribir.sh):
     escribir.py respaldar BASE CARPETA PREFIJO N   → respaldo verificado y rotado; imprime su ruta
     escribir.py integridad BASE…                   → PRAGMA integrity_check (solo lectura) = ok en todas
     calibre-debug -e escribir.py aplicar-plan BIBLIOTECA PLAN.json   → {campo: {libro: valor}} por la API
+    calibre-debug -e escribir.py aplicar-campana BIBLIOTECA PLAN.json → una campaña de migraciones/ (ola 2b)
 Límite: la API de Calibre solo existe dentro de `calibre-debug`; fuera, `set_campos` no se puede llamar.
 """
 from __future__ import annotations
@@ -187,6 +188,45 @@ def aplicar_plan(biblioteca, plan_json) -> int:
     return set_campos(api, cambios)
 
 
+def aplicar_campana(biblioteca, plan_json) -> int:
+    """Una campaña de `migraciones/` (ola 2b) por la API: `enum_antes` ({columna: valores}, la unión de los viejos y
+    los nuevos, para que ningún valor nuevo se rechace), `campos` ({campo: {libro: valor}}), `enum_despues` (la
+    enumeración final) y `columnas_borrar` ([etiquetas]; Calibre las borra al reabrir la base). Devuelve cuántos
+    valores escribió. Exige la puerta abierta."""
+    from calibre.library import db as calibre_db
+    exigir("calibre", biblioteca)
+    plan = json.loads(Path(plan_json).read_text(encoding="utf-8"))
+
+    def enumeracion(legacy, cambios):
+        mapa = legacy.custom_column_label_map
+        for etiqueta, valores in (cambios or {}).items():
+            col = mapa[etiqueta.lstrip("#")]
+            display = dict(col["display"])
+            display["enum_values"] = list(valores)
+            legacy.set_custom_column_metadata(col["num"], display=display)
+
+    legacy = calibre_db(str(biblioteca))
+    enumeracion(legacy, plan.get("enum_antes"))
+    legacy.close()
+    legacy = calibre_db(str(biblioteca))
+    api = legacy.new_api
+    n = 0
+    for campo, valores in (plan.get("campos") or {}).items():
+        v = {int(b): x for b, x in valores.items()}
+        if campo == "pubdate":
+            v = {b: _fecha(x) for b, x in v.items()}
+        if v:
+            api.set_field(campo, v)
+            n += len(v)
+    enumeracion(legacy, plan.get("enum_despues"))
+    for etiqueta in plan.get("columnas_borrar") or []:
+        legacy.delete_custom_column(label=etiqueta.lstrip("#"))
+    legacy.close()
+    if plan.get("columnas_borrar"):
+        calibre_db(str(biblioteca)).close()   # al reabrir, Calibre borra las columnas marcadas
+    return n
+
+
 # ------------------------------------------------------------------ calibredb (ingesta)
 # Lo que usaba la puerta de scripts_for_fuentes (F2): `ingesta` y sus módulos cargan este archivo por ruta y
 # escriben con `calibredb`; las órdenes de lectura pasan siempre, las demás exigen la puerta abierta.
@@ -228,6 +268,10 @@ def main(argv) -> int:
         return 0
     if orden == "integridad":
         return 0 if integridad(*args) else 1
+    if orden == "aplicar-campana":
+        biblioteca, plan = args
+        print(f"── Calibre: {aplicar_campana(biblioteca, plan)} valores escritos por la API (campaña)")
+        return 0
     if orden == "aplicar-plan":
         biblioteca, plan = args
         n = aplicar_plan(biblioteca, plan)

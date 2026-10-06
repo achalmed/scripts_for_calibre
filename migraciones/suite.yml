@@ -1,0 +1,17 @@
+# migraciones/suite.yml — suite migraciones: la migración de metadatos de la biblioteca por campañas (ola 2b, P0–P9).
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: migraciones
+objetivo: biblioteca
+resumen: Campañas de la migración de metadatos de Calibre (P1–P9): plan desde una copia, ensayo y deshacer probados sobre otra copia, y aplicación por la puerta.
+escribe_en:
+- calibre
+simula_por_defecto: true
+comandos:
+- 'python3 migraciones/campana.py P1             # plan + ensayo sobre copia + deshacer probado; no toca la base real'
+- 'python3 migraciones/campana.py P1 --aplicar   # además la aplica por la puerta y deja deshacer.sh en $RESPALDOS_DIR'
+estado: activo
+entrada: metadata.db (copias en $XDG_CACHE_HOME/migraciones/)
+depende_de:
+- calibre
+pruebas: ensayo de cada campaña sobre una copia (campana.py sin --aplicar)
+nota: 'el registro de cada campaña (plan.json, propuesta.tsv, resumen.md) queda en migraciones/<paso>_<fecha>/; el respaldo y deshacer.sh, en $RESPALDOS_DIR/biblioteca/migraciones/'
