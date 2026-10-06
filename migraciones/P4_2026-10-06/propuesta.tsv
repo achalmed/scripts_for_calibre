@@ -1,0 +1,695 @@
+libro	antes	después
+1068	political_science	ciencia_politica
+1078	ethics; psychology	etica; psicologia
+1310	ethics	etica
+1371	political_science; social_science	ciencia_politica; ciencias_sociales
+1457	political_science	ciencia_politica
+1462	political_science	ciencia_politica
+1476	political_science	ciencia_politica
+1492	political_science	ciencia_politica
+1502	political_science	ciencia_politica
+1510	political_science	ciencia_politica
+1576	political_science	ciencia_politica
+1577	political_science	ciencia_politica
+1578	political_science	ciencia_politica
+16	economic_history	historia_economica
+1603	ethics	etica
+2	social_science; sociology	sociologia
+2083	econometrics	econometria
+2084	econometrics	econometria
+2086	econometrics	econometria
+24	ethics	etica
+282	econometrics; finance	econometria; finanzas
+414	political_science	ciencia_politica
+496	econometrics	econometria
+814	ethics	etica
+890	political_science	ciencia_politica
+932	ethics	etica
+9793	econometrics; machine_learning	aprendizaje_automatico; econometria
+9795	machine_learning; programming_r	aprendizaje_automatico; lenguaje_r
+9796	data_mining; machine_learning	aprendizaje_automatico; mineria_de_datos
+9797	machine_learning	aprendizaje_automatico
+9798	machine_learning	aprendizaje_automatico
+9799	machine_learning	aprendizaje_automatico
+9801	machine_learning	aprendizaje_automatico
+9802	machine_learning	aprendizaje_automatico
+9808	ethics	etica
+9809	political_science	ciencia_politica
+9810	political_science	ciencia_politica
+9903	data_science	ciencia_de_datos
+9884	programming_r	lenguaje_r
+43	sociology	sociologia
+197	economic_history	historia_economica
+248	political_science	ciencia_politica
+271	economic_history	historia_economica
+272	economic_history	historia_economica
+278	political_science	ciencia_politica
+284	political_science	ciencia_politica
+286	political_science	ciencia_politica
+376	political_science	ciencia_politica
+404	ethics; political_science	ciencia_politica; etica
+533	econometrics	econometria
+590	political_science	ciencia_politica
+675	political_science	ciencia_politica
+708	finance	finanzas
+719	political_science	ciencia_politica
+758	social_science; sociology	sociologia
+770	social_science; sociology	sociologia
+775	psychology	psicologia
+793	ethics	etica
+798	programming_r	lenguaje_r
+802	sociology	sociologia
+845	sociology	sociologia
+846	political_science	ciencia_politica
+899	psychology	psicologia
+901	sociology	sociologia
+943	economic_history	historia_economica
+1015	ethics; political_science	ciencia_politica; etica
+1091	econometrics	econometria
+1099	political_science	ciencia_politica
+1102	political_science	ciencia_politica
+1111	political_science	ciencia_politica
+1152	economic_history	historia_economica
+1166	economic_history	historia_economica
+1333	political_science	ciencia_politica
+1537	political_science	ciencia_politica
+1570	psychology	psicologia
+1596	political_science	ciencia_politica
+1609	political_science	ciencia_politica
+1633	political_science	ciencia_politica
+1638	political_science	ciencia_politica
+1641	political_science	ciencia_politica
+1663	political_science	ciencia_politica
+1677	political_science	ciencia_politica
+1790	political_science; sociology	ciencia_politica; sociologia
+1909	sociology	sociologia
+1980	political_science	ciencia_politica
+2023	ethics	etica
+2025	ethics	etica
+2026	ethics	etica
+2028	ethics	etica
+2029	ethics	etica
+2030	ethics	etica
+2035	ethics	etica
+2070	ethics	etica
+2074	ethics	etica
+8531	econometrics	econometria
+9592	econometrics	econometria
+9727	political_science	ciencia_politica
+9730	political_science	ciencia_politica
+9731	political_science	ciencia_politica
+9736	sociology	sociologia
+9950	econometrics	econometria
+10265	psychology	psicologia
+10266	psychology	psicologia
+10267	psychology	psicologia
+10268	psychology	psicologia
+10269	psychology	psicologia
+10270	psychology	psicologia
+10271	psychology	psicologia
+10272	psychology	psicologia
+10273	psychology	psicologia
+10344	comunicacion	comunicaciones
+10345	comunicacion	comunicaciones
+10407	delegacion-facultades-2026	delegacion_facultades_2026
+10408	delegacion-facultades-2026	delegacion_facultades_2026
+10412	estilo editorial	estilo_editorial
+10413	estilo editorial	estilo_editorial
+10414	estilo editorial	estilo_editorial
+10415	estilo editorial	estilo_editorial
+10416	filtro Hodrick-Prescott; series de tiempo	filtro_hodrick_prescott; series_tiempo
+10417	IPC; indice de precios	indice_precios
+10418	IPC; indice de precios	indice_precios
+10419	ciclo economico; filtro Hodrick-Prescott; series de tiempo	ciclo_economico; filtro_hodrick_prescott; series_tiempo
+10420	ENAHO; linea de pobreza; pobreza monetaria	enaho; linea_pobreza; pobreza_monetaria
+10421	FGT; encuestas de hogares	encuestas_hogares
+10422	encuestas complejas	muestreo_complejo
+10423	PBI trimestral; benchmarking; cuentas nacionales	cuentas_nacionales; evaluacion_comparativa; pbi_trimestral
+10424	inti; unidad monetaria	unidad_monetaria
+10425	nuevo sol; unidad monetaria	unidad_monetaria
+10464	programming_r	lenguaje_r
+9865	political_science	ciencia_politica
+9863	political_science	ciencia_politica
+9864	political_science	ciencia_politica
+9861	political_science	ciencia_politica
+9862	political_science	ciencia_politica
+9860	ethics	etica
+9816	econometrics	econometria
+9811	econometrics; finance	econometria; finanzas
+3	economic_history; social_science; sociology	historia_economica; sociologia
+5	social_science; sociology	sociologia
+9	finance	finanzas
+17	economic_history	historia_economica
+18	economic_history	historia_economica
+20	psychology	psicologia
+28	economic_history	historia_economica
+29	political_science	ciencia_politica
+35	economic_history	historia_economica
+37	political_science; social_science	ciencia_politica; ciencias_sociales
+41	econometrics	econometria
+42	finance	
+48	economic_history	historia_economica
+56	econometrics	econometria
+132	finance	
+246	ethics	etica
+251	econometrics	econometria
+264	econometrics	econometria
+297	economic_history	historia_economica
+298	economic_history	historia_economica
+299	economic_history	historia_economica
+300	economic_history	historia_economica
+301	economic_history	historia_economica
+302	economic_history	historia_economica
+303	economic_history	historia_economica
+305	sociology	sociologia
+318	econometrics	econometria
+319	econometrics	econometria
+320	econometrics	econometria
+328	ethics	etica
+334	social_science; sociology	sociologia
+340	econometrics	econometria
+345	sociology	sociologia
+346	sociology	sociologia
+347	sociology	sociologia
+348	sociology	sociologia
+357	econometrics	econometria
+392	econometrics	econometria
+419	econometrics	econometria
+423	econometrics	econometria
+425	econometrics	econometria
+426	econometrics	econometria
+434	econometrics	econometria
+436	economic_history	historia_economica
+439	econometrics	econometria
+441	econometrics	econometria
+455	econometrics	econometria
+457	econometrics	econometria
+476	econometrics	econometria
+513	econometrics	econometria
+526	econometrics	econometria
+535	econometrics	econometria
+570	econometrics	econometria
+577	econometrics	econometria
+578	econometrics	econometria
+582	econometrics	econometria
+598	econometrics	econometria
+602	econometrics	econometria
+669	econometrics; programming_r	econometria; lenguaje_r
+672	programming_r	lenguaje_r
+674	econometrics	econometria
+677	econometrics	econometria
+678	econometrics	econometria
+689	econometrics	econometria
+699	econometrics	econometria
+700	econometrics	econometria
+707	finance	
+721	political_science	ciencia_politica
+726	econometrics	econometria
+728	econometrics	econometria
+745	econometrics	econometria
+748	econometrics	econometria
+776	econometrics	econometria
+780	finance	
+781	econometrics	econometria
+782	econometrics	econometria
+784	finance	finanzas
+785	econometrics	econometria
+786	econometrics	econometria
+795	social_science	
+811	econometrics	econometria
+865	econometrics	econometria
+866	econometrics	econometria
+885	econometrics	econometria
+892	social_science	
+955	econometrics	econometria
+956	econometrics	econometria
+957	econometrics	econometria
+1066	political_science	ciencia_politica
+1092	econometrics	econometria
+1098	econometrics	econometria
+1143	econometrics	econometria
+1156	econometrics	econometria
+1200	social_science	
+1201	social_science; sociology	sociologia
+1202	social_science	
+1203	econometrics	econometria
+1204	econometrics	econometria
+1208	econometrics	econometria
+1209	econometrics	econometria
+1210	econometrics	econometria
+1285	econometrics	econometria
+1369	social_science	
+1370	social_science; sociology	sociologia
+1419	political_science	ciencia_politica
+1501	political_science	ciencia_politica
+1531	econometrics	econometria
+1635	econometrics	econometria
+1640	sociology	sociologia
+1674	econometrics	econometria
+1675	econometrics	econometria
+1676	econometrics	econometria
+1730	econometrics	econometria
+1750	econometrics	econometria
+1774	political_science	ciencia_politica
+1777	econometrics	econometria
+1785	econometrics	econometria
+1941	econometrics	econometria
+1942	econometrics	econometria
+1943	econometrics	econometria
+1944	econometrics	econometria
+2031	ethics	etica
+2032	ethics	etica
+2085	econometrics	econometria
+2087	econometrics; programming_r	econometria; lenguaje_r
+2089	econometrics	econometria
+2090	econometrics	econometria
+2091	econometrics	econometria
+2094	econometrics	econometria
+2189	econometrics	econometria
+2190	econometrics	econometria
+2191	econometrics	econometria
+2192	econometrics	econometria
+2193	econometrics	econometria
+2194	econometrics	econometria
+2195	econometrics	econometria
+2196	econometrics	econometria
+2197	econometrics	econometria
+2198	econometrics	econometria
+2199	econometrics	econometria
+2200	econometrics	econometria
+2201	econometrics	econometria
+2203	econometrics	econometria
+2204	econometrics	econometria
+2232	econometrics	econometria
+2233	econometrics	econometria
+2234	econometrics	econometria
+2235	econometrics	econometria
+2236	econometrics	econometria
+2237	econometrics	econometria
+2238	econometrics	econometria
+2239	econometrics	econometria
+2240	econometrics	econometria
+2241	econometrics	econometria
+2242	econometrics	econometria
+2243	econometrics	econometria
+2244	econometrics	econometria
+2246	econometrics	econometria
+2247	econometrics	econometria
+2862	econometrics	econometria
+2863	econometrics	econometria
+2864	econometrics	econometria
+2865	econometrics	econometria
+2866	econometrics	econometria
+2867	econometrics	econometria
+2868	econometrics	econometria
+2869	econometrics	econometria
+2870	econometrics	econometria
+2871	econometrics	econometria
+2872	econometrics	econometria
+2873	econometrics	econometria
+2874	econometrics	econometria
+2875	econometrics	econometria
+2876	econometrics	econometria
+2877	econometrics	econometria
+2878	econometrics	econometria
+3058	economic_history	historia_economica
+3059	economic_history; ethics	etica; historia_economica
+3060	economic_history	historia_economica
+3061	economic_history	historia_economica
+3062	economic_history	historia_economica
+3063	economic_history	historia_economica
+3064	economic_history	historia_economica
+3065	economic_history	historia_economica
+3066	economic_history	historia_economica
+3067	economic_history	historia_economica
+3068	economic_history	historia_economica
+3069	economic_history	historia_economica
+3070	economic_history	historia_economica
+3071	economic_history	historia_economica
+3072	economic_history	historia_economica
+3073	economic_history	historia_economica
+3101	social_science	
+3107	econometrics	econometria
+3135	econometrics	econometria
+3136	econometrics	econometria
+3137	econometrics	econometria
+3138	econometrics	econometria
+3139	econometrics	econometria
+3140	econometrics	econometria
+3141	econometrics	econometria
+3142	econometrics	econometria
+3143	econometrics	econometria
+3144	econometrics	econometria
+3145	econometrics	econometria
+3153	econometrics	econometria
+3182	econometrics	econometria
+3183	econometrics	econometria
+3184	econometrics	econometria
+3185	econometrics	econometria
+3186	econometrics	econometria
+3199	econometrics	econometria
+3200	econometrics	econometria
+3201	econometrics	econometria
+3333	finance	
+3334	finance	
+3335	finance	
+3336	finance	
+3512	econometrics	econometria
+3515	econometrics	econometria
+3517	econometrics	econometria
+3521	econometrics	econometria
+3522	econometrics	econometria
+3524	econometrics	econometria
+3589	finance	
+3590	finance	
+3592	finance	
+3593	finance	
+3594	finance	
+3595	finance	
+3596	finance	
+3597	finance	
+3598	finance	
+3599	finance	
+3600	finance	
+3601	finance	
+3602	finance	
+3603	finance	
+3605	finance	
+3606	finance	
+3607	finance	
+3608	finance	
+3609	finance	
+3612	finance	
+3613	finance	
+3614	finance	
+3615	finance	
+3616	finance	
+3617	finance	
+3618	finance	
+3619	finance	
+3620	finance	
+3621	finance	
+3622	finance	
+3623	finance	
+3624	finance	
+3625	finance	
+3626	finance	
+3627	finance	
+3628	finance	
+3629	finance	
+3630	finance	
+3631	finance	
+3632	finance	
+3633	finance	
+3732	power_BI	power_bi
+3733	power_BI	power_bi
+3734	power_BI	power_bi
+3735	power_BI	power_bi
+3736	power_BI	power_bi
+3737	power_BI	power_bi
+3738	power_BI	power_bi
+3739	power_BI	power_bi
+3824	econometrics	econometria
+3825	econometrics	econometria
+3826	econometrics	econometria
+3827	econometrics	econometria
+3828	econometrics	econometria
+3829	econometrics	econometria
+3830	econometrics	econometria
+3831	econometrics	econometria
+3832	econometrics	econometria
+3833	econometrics	econometria
+3834	econometrics	econometria
+3835	econometrics	econometria
+3836	econometrics	econometria
+3837	econometrics	econometria
+3838	econometrics	econometria
+3839	econometrics	econometria
+3840	econometrics	econometria
+3841	econometrics	econometria
+3842	econometrics	econometria
+3843	econometrics	econometria
+3844	econometrics	econometria
+3845	econometrics	econometria
+3846	econometrics	econometria
+3847	econometrics	econometria
+3848	econometrics	econometria
+3849	econometrics	econometria
+3850	econometrics	econometria
+3851	econometrics	econometria
+3853	econometrics	econometria
+3854	econometrics	econometria
+3855	econometrics	econometria
+3856	econometrics	econometria
+3857	econometrics	econometria
+3858	econometrics	econometria
+3859	econometrics	econometria
+3913	finance	
+3914	finance	
+3915	finance	
+3917	finance	
+3918	finance	
+3919	finance	
+3920	finance	
+3921	finance	
+3922	finance	
+3923	finance	
+3924	finance	
+3925	finance	
+3935	econometrics	econometria
+3936	econometrics	econometria
+3937	econometrics	econometria
+3938	econometrics	econometria
+3939	econometrics	econometria
+3940	econometrics	econometria
+3941	econometrics	econometria
+3942	econometrics	econometria
+3943	econometrics	econometria
+3944	econometrics	econometria
+3945	econometrics	econometria
+3946	econometrics	econometria
+3947	econometrics	econometria
+4016	economic_history	historia_economica
+4056	ethics	etica
+4318	political_science; sociology	ciencia_politica; sociologia
+4319	political_science; sociology	ciencia_politica; sociologia
+4320	political_science; sociology	ciencia_politica; sociologia
+4321	political_science; sociology	ciencia_politica; sociologia
+4542	finance	
+4547	finance	
+4548	finance	
+4549	finance	
+4554	finance	
+4555	finance	
+4556	finance	
+4557	finance	
+4558	finance	
+4559	finance	
+4561	finance	
+4562	finance	
+8518	econometrics	econometria
+8519	econometrics	econometria
+8520	econometrics	econometria
+8521	econometrics	econometria
+8522	econometrics	econometria
+8523	econometrics	econometria
+8524	econometrics	econometria
+8580	programming_r	lenguaje_r
+8581	programming_r	lenguaje_r
+8582	programming_r	lenguaje_r
+8583	programming_r	lenguaje_r
+8584	programming_r	lenguaje_r
+8585	programming_r	lenguaje_r
+8586	programming_r	lenguaje_r
+8587	programming_r	lenguaje_r
+8810	econometrics	econometria
+8811	econometrics	econometria
+8812	econometrics	econometria
+9037	finance	
+9038	finance	
+9039	finance	
+9040	finance	
+9041	finance	
+9042	finance	
+9043	finance	
+9044	finance	
+9046	finance	
+9047	finance	
+9048	finance	
+9130	finance	
+9132	finance	
+9133	finance	
+9134	finance	
+9135	finance	
+9136	finance	
+9137	finance	
+9138	finance	
+9139	finance	
+9140	finance	
+9141	finance	
+9142	finance	
+9143	finance	
+9144	finance	
+9145	finance	
+9146	finance	
+9147	finance	
+9148	finance	
+9149	finance	
+9150	finance	
+9151	finance	
+9152	finance	
+9153	finance	
+9155	finance	
+9156	finance	
+9157	finance	
+9158	finance	
+9159	finance	
+9160	finance	
+9161	finance	
+9162	finance	
+9163	finance	
+9164	finance	
+9165	finance	
+9166	finance	
+9167	finance	
+9181	programming_r	lenguaje_r
+9182	programming_r	lenguaje_r
+9183	programming_r	lenguaje_r
+9184	programming_r	lenguaje_r
+9185	programming_r	lenguaje_r
+9186	programming_r	lenguaje_r
+9187	programming_r	lenguaje_r
+9188	programming_r	lenguaje_r
+9189	programming_r	lenguaje_r
+9190	programming_r	lenguaje_r
+9191	programming_r	lenguaje_r
+9192	programming_r	lenguaje_r
+9193	programming_r	lenguaje_r
+9194	programming_r	lenguaje_r
+9195	programming_r	lenguaje_r
+9196	programming_r	lenguaje_r
+9197	programming_r	lenguaje_r
+9198	programming_r	lenguaje_r
+9199	programming_r	lenguaje_r
+9271	political_science	ciencia_politica
+9309	finance	
+9333	economic_history	historia_economica
+9334	economic_history	historia_economica
+9607	econometrics	econometria
+9608	econometrics	econometria
+9609	econometrics	econometria
+9610	econometrics	econometria
+9611	econometrics	econometria
+9612	econometrics	econometria
+9613	econometrics	econometria
+9614	econometrics	econometria
+9615	econometrics	econometria
+9616	econometrics	econometria
+9693	ethics	etica
+9824	econometrics	econometria
+9866	political_science	ciencia_politica
+9893	psychology	psicologia
+9894	psychology	psicologia
+9895	ethics	etica
+9896	psychology	psicologia
+9897	ethics	etica
+9908	finance	
+68	econometrics	econometria
+144	econometrics	econometria
+174	finance	finanzas
+175	econometrics	econometria
+194	econometrics	econometria
+207	econometrics	econometria
+214	econometrics	econometria
+235	econometrics	econometria
+240	political_science	ciencia_politica
+267	finance	
+279	political_science	ciencia_politica
+288	finance	
+289	economic_history	historia_economica
+339	econometrics	econometria
+342	finance	
+344	economic_history	historia_economica
+365	finance	finanzas
+394	political_science	ciencia_politica
+401	political_science	ciencia_politica
+420	finance	
+471	economic_history	historia_economica
+479	finance	
+498	psychology	psicologia
+521	political_science	ciencia_politica
+554	econometrics	econometria
+567	political_science	ciencia_politica
+597	econometrics	econometria
+606	political_science	ciencia_politica
+607	economic_history	historia_economica
+613	psychology	psicologia
+624	political_science	ciencia_politica
+627	econometrics	econometria
+637	psychology	psicologia
+666	finance	
+667	psychology	psicologia
+670	econometrics	econometria
+671	programming_r	lenguaje_r
+683	econometrics	econometria
+685	econometrics	econometria
+705	finance	
+734	finance	
+747	political_science	ciencia_politica
+789	econometrics	econometria
+790	econometrics	econometria
+791	econometrics	econometria
+861	political_science	ciencia_politica
+867	econometrics	econometria
+1022	psychology	psicologia
+1023	psychology	psicologia
+1024	psychology	psicologia
+1055	econometrics	econometria
+1115	econometrics	econometria
+1117	finance	
+1133	economic_history	historia_economica
+1147	economic_history	historia_economica
+1323	economic_history	historia_economica
+1404	political_science	ciencia_politica
+1416	finance	
+1490	sociology	sociologia
+1526	finance	
+1533	political_science	ciencia_politica
+1571	psychology	psicologia
+1610	political_science	ciencia_politica
+1622	ethics	etica
+1665	finance	
+1671	econometrics	econometria
+1672	econometrics	econometria
+1680	political_science	ciencia_politica
+1718	finance	
+1736	ethics	etica
+1741	economic_history	historia_economica
+1792	political_science	ciencia_politica
+1809	political_science	ciencia_politica
+1831	political_science	ciencia_politica
+1855	political_science	ciencia_politica
+1968	finance	
+1976	political_science	ciencia_politica
+1993	finance	
+2054	finance	
+2076	economic_history	historia_economica
+3172	finance	
+4546	finance	
+8760	finance	
+8906	finance	
+9583	data_science; machine_learning	aprendizaje_automatico; ciencia_de_datos
+9593	econometrics	econometria
+9617	econometrics	econometria
+9618	econometrics	econometria
+9715	political_science	ciencia_politica
+9716	political_science	ciencia_politica
+9717	political_science	ciencia_politica
+9718	political_science	ciencia_politica
+9719	political_science	ciencia_politica
+9720	political_science	ciencia_politica
+9721	political_science	ciencia_politica
+9725	political_science	ciencia_politica
+9733	political_science	ciencia_politica
+9907	finance	
+9997	econometrics	econometria

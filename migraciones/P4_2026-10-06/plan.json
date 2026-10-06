@@ -1,0 +1,3228 @@
+{
+ "campos": {
+  "tags": {
+   "1068": [
+    "ciencia_politica",
+    "economia_politica",
+    "filosofia"
+   ],
+   "1078": [
+    "economia_general",
+    "etica",
+    "filosofia",
+    "psicologia"
+   ],
+   "1310": [
+    "economia_general",
+    "ensayos",
+    "etica",
+    "filosofia"
+   ],
+   "1371": [
+    "ciencia_politica",
+    "ciencias_sociales",
+    "economia_general",
+    "filosofia"
+   ],
+   "1457": [
+    "ciencia_politica",
+    "filosofia"
+   ],
+   "1462": [
+    "ciencia_politica",
+    "filosofia"
+   ],
+   "1476": [
+    "ciencia_politica",
+    "filosofia"
+   ],
+   "1492": [
+    "ciencia_politica",
+    "filosofia"
+   ],
+   "1502": [
+    "ciencia_politica",
+    "filosofia"
+   ],
+   "1510": [
+    "ciencia_politica",
+    "filosofia"
+   ],
+   "1576": [
+    "ciencia_politica",
+    "filosofia"
+   ],
+   "1577": [
+    "ciencia_politica",
+    "filosofia"
+   ],
+   "1578": [
+    "ciencia_politica",
+    "filosofia"
+   ],
+   "16": [
+    "filosofia",
+    "historia_economica"
+   ],
+   "1603": [
+    "economia_politica",
+    "etica",
+    "filosofia"
+   ],
+   "2": [
+    "ciencias_sociales",
+    "ensayos",
+    "sociologia"
+   ],
+   "2083": [
+    "econometria",
+    "economia_general",
+    "estadistica",
+    "matematicas",
+    "probability"
+   ],
+   "2084": [
+    "econometria",
+    "economia_general",
+    "estadistica",
+    "eviews",
+    "matematicas",
+    "probability"
+   ],
+   "2086": [
+    "econometria",
+    "economia_general",
+    "estadistica",
+    "eviews",
+    "matematicas",
+    "probability",
+    "series_tiempo"
+   ],
+   "24": [
+    "ciencias_sociales",
+    "derecho",
+    "ensayos",
+    "etica",
+    "filosofia"
+   ],
+   "282": [
+    "econometria",
+    "economia_general",
+    "estadistica",
+    "finanzas",
+    "matematicas",
+    "probability",
+    "series_tiempo"
+   ],
+   "414": [
+    "ciencia_politica",
+    "filosofia"
+   ],
+   "496": [
+    "econometria",
+    "econometria_bayesiana",
+    "economia_general",
+    "estadistica",
+    "matematicas",
+    "probability"
+   ],
+   "814": [
+    "etica",
+    "filosofia"
+   ],
+   "890": [
+    "ciencia_politica",
+    "economia_politica",
+    "ensayos",
+    "filosofia"
+   ],
+   "932": [
+    "etica",
+    "filosofia"
+   ],
+   "9793": [
+    "aprendizaje_automatico",
+    "econometria",
+    "estadistica"
+   ],
+   "9795": [
+    "aprendizaje_automatico",
+    "estadistica",
+    "inteligencia_artificial",
+    "lenguaje_r"
+   ],
+   "9796": [
+    "aprendizaje_automatico",
+    "estadistica",
+    "inteligencia_artificial",
+    "mineria_de_datos"
+   ],
+   "9797": [
+    "aprendizaje_automatico",
+    "estadistica",
+    "inteligencia_artificial",
+    "matematicas"
+   ],
+   "9798": [
+    "aprendizaje_automatico",
+    "estadistica",
+    "inteligencia_artificial",
+    "python"
+   ],
+   "9799": [
+    "aprendizaje_automatico",
+    "estadistica",
+    "probability",
+    "python"
+   ],
+   "9801": [
+    "aprendizaje_automatico",
+    "estadistica",
+    "inferencia_estadistica",
+    "probability"
+   ],
+   "9802": [
+    "aprendizaje_automatico",
+    "estadistica",
+    "probability"
+   ],
+   "9808": [
+    "etica",
+    "filosofia",
+    "literatura"
+   ],
+   "9809": [
+    "ciencia_politica",
+    "filosofia",
+    "literatura"
+   ],
+   "9810": [
+    "ciencia_politica",
+    "filosofia",
+    "literatura"
+   ],
+   "9903": [
+    "ciencia_de_datos",
+    "estadistica",
+    "probability"
+   ],
+   "9884": [
+    "estadistica",
+    "inferencia_estadistica",
+    "lenguaje_r",
+    "muestreo"
+   ],
+   "43": [
+    "ciencias_sociales",
+    "historia",
+    "sociologia"
+   ],
+   "197": [
+    "historia",
+    "historia_economica",
+    "politica_monetaria"
+   ],
+   "248": [
+    "ciencia_politica",
+    "epistemologia",
+    "filosofia"
+   ],
+   "271": [
+    "administracion",
+    "historia",
+    "historia_economica"
+   ],
+   "272": [
+    "administracion",
+    "historia",
+    "historia_economica"
+   ],
+   "278": [
+    "ciencia_politica",
+    "historia"
+   ],
+   "284": [
+    "ciencia_politica",
+    "ensayos",
+    "filosofia"
+   ],
+   "286": [
+    "ciencia_politica",
+    "ensayos",
+    "filosofia"
+   ],
+   "376": [
+    "ciencia_politica",
+    "ciencias_sociales",
+    "filosofia"
+   ],
+   "404": [
+    "ciencia_politica",
+    "etica",
+    "filosofia"
+   ],
+   "533": [
+    "econometria",
+    "estadistica",
+    "regresion"
+   ],
+   "590": [
+    "ciencia_politica",
+    "ensayos",
+    "filosofia"
+   ],
+   "675": [
+    "ciencia_politica",
+    "ensayos",
+    "filosofia"
+   ],
+   "708": [
+    "estadistica",
+    "finanzas",
+    "probabilidad_estadistica"
+   ],
+   "719": [
+    "ciencia_politica",
+    "ensayos",
+    "historia"
+   ],
+   "758": [
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "770": [
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "775": [
+    "ciencias_sociales",
+    "investigacion_mercados",
+    "psicologia"
+   ],
+   "793": [
+    "etica",
+    "filosofia"
+   ],
+   "798": [
+    "ciencias_sociales",
+    "estadistica",
+    "lenguaje_r"
+   ],
+   "802": [
+    "ciencias_sociales",
+    "filosofia",
+    "sociologia"
+   ],
+   "845": [
+    "cultura_popular",
+    "filosofia",
+    "sociologia"
+   ],
+   "846": [
+    "ciencia_politica",
+    "cultura_popular",
+    "filosofia"
+   ],
+   "899": [
+    "filosofia",
+    "historia",
+    "psicologia"
+   ],
+   "901": [
+    "derecho",
+    "filosofia",
+    "sociologia"
+   ],
+   "943": [
+    "economia_politica",
+    "historia",
+    "historia_economica"
+   ],
+   "1015": [
+    "ciencia_politica",
+    "etica",
+    "filosofia"
+   ],
+   "1091": [
+    "econometria",
+    "estadistica",
+    "regresion"
+   ],
+   "1099": [
+    "ciencia_politica",
+    "ensayos",
+    "filosofia"
+   ],
+   "1102": [
+    "ciencia_politica",
+    "ensayos",
+    "filosofia"
+   ],
+   "1111": [
+    "ciencia_politica",
+    "ciencias_sociales",
+    "filosofia"
+   ],
+   "1152": [
+    "economia_general",
+    "historia",
+    "historia_economica"
+   ],
+   "1166": [
+    "historia",
+    "historia_economica",
+    "pobreza"
+   ],
+   "1333": [
+    "ciencia_politica",
+    "economia_politica",
+    "filosofia"
+   ],
+   "1537": [
+    "ciencia_politica",
+    "historia"
+   ],
+   "1570": [
+    "epistemologia",
+    "filosofia",
+    "psicologia"
+   ],
+   "1596": [
+    "ciencia_politica",
+    "filosofia",
+    "literatura"
+   ],
+   "1609": [
+    "ciencia_politica",
+    "historia"
+   ],
+   "1633": [
+    "ciencia_politica",
+    "filosofia"
+   ],
+   "1638": [
+    "ciencia_politica",
+    "economia_marxista",
+    "historia"
+   ],
+   "1641": [
+    "ciencia_politica",
+    "historia"
+   ],
+   "1663": [
+    "ciencia_politica",
+    "filosofia"
+   ],
+   "1677": [
+    "ciencia_politica",
+    "economia_marxista",
+    "historia"
+   ],
+   "1790": [
+    "ciencia_politica",
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "1909": [
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "1980": [
+    "ciencia_politica",
+    "economia_marxista",
+    "filosofia"
+   ],
+   "2023": [
+    "economia_politica",
+    "etica",
+    "filosofia"
+   ],
+   "2025": [
+    "administracion",
+    "etica",
+    "filosofia"
+   ],
+   "2026": [
+    "administracion",
+    "etica",
+    "filosofia"
+   ],
+   "2028": [
+    "economia_politica",
+    "etica",
+    "filosofia"
+   ],
+   "2029": [
+    "etica",
+    "filosofia"
+   ],
+   "2030": [
+    "ensayos",
+    "etica",
+    "filosofia"
+   ],
+   "2035": [
+    "etica",
+    "filosofia"
+   ],
+   "2070": [
+    "ensayos",
+    "etica",
+    "filosofia"
+   ],
+   "2074": [
+    "etica",
+    "filosofia",
+    "legislacion"
+   ],
+   "8531": [
+    "econometria",
+    "estadistica",
+    "series_tiempo"
+   ],
+   "9592": [
+    "econometria",
+    "estadistica",
+    "series_tiempo"
+   ],
+   "9727": [
+    "ciencia_politica",
+    "ensayos",
+    "literatura"
+   ],
+   "9730": [
+    "ciencia_politica",
+    "ensayos",
+    "literatura"
+   ],
+   "9731": [
+    "ciencia_politica",
+    "ensayos",
+    "literatura"
+   ],
+   "9736": [
+    "anthropology",
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "9950": [
+    "econometria",
+    "estadistica",
+    "regresion"
+   ],
+   "10265": [
+    "medicina",
+    "psicologia"
+   ],
+   "10266": [
+    "medicina",
+    "psicologia"
+   ],
+   "10267": [
+    "medicina",
+    "psicologia"
+   ],
+   "10268": [
+    "medicina",
+    "psicologia"
+   ],
+   "10269": [
+    "medicina",
+    "psicologia"
+   ],
+   "10270": [
+    "medicina",
+    "psicologia"
+   ],
+   "10271": [
+    "medicina",
+    "psicologia"
+   ],
+   "10272": [
+    "medicina",
+    "psicologia"
+   ],
+   "10273": [
+    "medicina",
+    "psicologia"
+   ],
+   "10344": [
+    "comunicaciones",
+    "documento_oficial",
+    "identidad_visual"
+   ],
+   "10345": [
+    "comunicaciones",
+    "documento_oficial",
+    "identidad_visual"
+   ],
+   "10407": [
+    "comunicaciones",
+    "congreso",
+    "delegacion_facultades_2026"
+   ],
+   "10408": [
+    "comunicaciones",
+    "congreso",
+    "delegacion_facultades_2026"
+   ],
+   "10412": [
+    "estilo_editorial",
+    "informes"
+   ],
+   "10413": [
+    "estilo_editorial",
+    "informes"
+   ],
+   "10414": [
+    "estilo_editorial",
+    "informes"
+   ],
+   "10415": [
+    "estilo_editorial",
+    "informes"
+   ],
+   "10416": [
+    "filtro_hodrick_prescott",
+    "metodologia",
+    "series_tiempo"
+   ],
+   "10417": [
+    "documento_oficial",
+    "indice_precios",
+    "metodologia"
+   ],
+   "10418": [
+    "documento_oficial",
+    "indice_precios",
+    "metodologia"
+   ],
+   "10419": [
+    "ciclo_economico",
+    "filtro_hodrick_prescott",
+    "metodologia",
+    "series_tiempo"
+   ],
+   "10420": [
+    "documento_oficial",
+    "enaho",
+    "linea_pobreza",
+    "metodologia",
+    "pobreza_monetaria"
+   ],
+   "10421": [
+    "desigualdad",
+    "encuestas_hogares",
+    "metodologia",
+    "pobreza"
+   ],
+   "10422": [
+    "bootstrap",
+    "linealizacion",
+    "metodologia",
+    "muestreo_complejo",
+    "varianza"
+   ],
+   "10423": [
+    "cuentas_nacionales",
+    "desestacionalizacion",
+    "empalme",
+    "evaluacion_comparativa",
+    "metodologia",
+    "pbi_trimestral"
+   ],
+   "10424": [
+    "legislacion",
+    "moneda",
+    "unidad_monetaria"
+   ],
+   "10425": [
+    "legislacion",
+    "moneda",
+    "unidad_monetaria"
+   ],
+   "10464": [
+    "lenguaje_r",
+    "manual",
+    "programa-2026"
+   ],
+   "9865": [
+    "ciencia_politica",
+    "derecho_economico",
+    "gestion_publica",
+    "politica_y_gobierno"
+   ],
+   "9863": [
+    "capacitacion",
+    "ciencia_politica",
+    "gestion_publica",
+    "politica_y_gobierno"
+   ],
+   "9864": [
+    "capacitacion",
+    "ciencia_politica",
+    "derecho_laboral",
+    "gestion_publica",
+    "politica_y_gobierno"
+   ],
+   "9861": [
+    "ciencia_politica",
+    "derecho_laboral",
+    "gestion_publica",
+    "politica_y_gobierno"
+   ],
+   "9862": [
+    "capacitacion",
+    "ciencia_politica",
+    "gestion_publica",
+    "pedagogia",
+    "politica_y_gobierno"
+   ],
+   "9860": [
+    "derecho_internacional",
+    "etica",
+    "filosofia",
+    "inteligencia_artificial",
+    "religion"
+   ],
+   "9816": [
+    "analisis_matematico",
+    "econometria",
+    "economia",
+    "economia_general",
+    "matematicas"
+   ],
+   "9811": [
+    "econometria",
+    "economia",
+    "economia_general",
+    "finanzas"
+   ],
+   "3": [
+    "ciencias_sociales",
+    "economia_general",
+    "historia_economica",
+    "sociologia"
+   ],
+   "5": [
+    "ciencias_sociales",
+    "economia_general",
+    "sociologia",
+    "teoria_economica"
+   ],
+   "9": [
+    "economia",
+    "economia_general",
+    "finanzas",
+    "teoria_economica"
+   ],
+   "17": [
+    "ciencias_sociales",
+    "ensayos",
+    "historia_economica",
+    "literatura"
+   ],
+   "18": [
+    "historia",
+    "historia_economica"
+   ],
+   "20": [
+    "ensayos",
+    "literatura",
+    "psicologia"
+   ],
+   "28": [
+    "ciencias_sociales",
+    "ensayos",
+    "historia_economica",
+    "literatura"
+   ],
+   "29": [
+    "ciencia_politica",
+    "economia",
+    "economia_general",
+    "politica_economica",
+    "teoria_economica"
+   ],
+   "35": [
+    "historia",
+    "historia_economica"
+   ],
+   "37": [
+    "ciencia_politica",
+    "ciencias_sociales",
+    "derecho",
+    "filosofia",
+    "gestion_publica",
+    "politica_y_gobierno"
+   ],
+   "41": [
+    "econometria",
+    "estadistica",
+    "stata"
+   ],
+   "42": [
+    "finanzas",
+    "politica_fiscal"
+   ],
+   "48": [
+    "economia_internacional",
+    "finanzas_internacionales",
+    "historia",
+    "historia_economica"
+   ],
+   "56": [
+    "econometria",
+    "estadistica",
+    "macroeconomia"
+   ],
+   "132": [
+    "economia_general",
+    "finanzas"
+   ],
+   "246": [
+    "etica",
+    "filosofia"
+   ],
+   "251": [
+    "econometria",
+    "estadistica"
+   ],
+   "264": [
+    "econometria",
+    "estadistica"
+   ],
+   "297": [
+    "historia",
+    "historia_economica"
+   ],
+   "298": [
+    "historia",
+    "historia_economica"
+   ],
+   "299": [
+    "historia",
+    "historia_economica"
+   ],
+   "300": [
+    "historia",
+    "historia_economica"
+   ],
+   "301": [
+    "historia",
+    "historia_economica"
+   ],
+   "302": [
+    "historia",
+    "historia_economica"
+   ],
+   "303": [
+    "historia",
+    "historia_economica"
+   ],
+   "305": [
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "318": [
+    "econometria",
+    "estadistica",
+    "eviews"
+   ],
+   "319": [
+    "econometria",
+    "estadistica"
+   ],
+   "320": [
+    "econometria",
+    "estadistica"
+   ],
+   "328": [
+    "etica",
+    "filosofia"
+   ],
+   "334": [
+    "ciencias_sociales",
+    "socioeconomia",
+    "sociologia"
+   ],
+   "340": [
+    "econometria",
+    "estadistica"
+   ],
+   "345": [
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "346": [
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "347": [
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "348": [
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "357": [
+    "econometria",
+    "estadistica"
+   ],
+   "392": [
+    "econometria",
+    "estadistica"
+   ],
+   "419": [
+    "econometria",
+    "estadistica"
+   ],
+   "423": [
+    "econometria",
+    "estadistica",
+    "eviews"
+   ],
+   "425": [
+    "econometria",
+    "estadistica"
+   ],
+   "426": [
+    "econometria",
+    "estadistica"
+   ],
+   "434": [
+    "econometria",
+    "estadistica"
+   ],
+   "436": [
+    "economia_internacional",
+    "finanzas_internacionales",
+    "historia",
+    "historia_economica"
+   ],
+   "439": [
+    "econometria",
+    "estadistica"
+   ],
+   "441": [
+    "econometria",
+    "estadistica"
+   ],
+   "455": [
+    "econometria",
+    "estadistica"
+   ],
+   "457": [
+    "econometria",
+    "estadistica",
+    "microeconomia"
+   ],
+   "476": [
+    "econometria",
+    "estadistica"
+   ],
+   "513": [
+    "econometria",
+    "estadistica"
+   ],
+   "526": [
+    "econometria",
+    "econometria_bayesiana",
+    "estadistica"
+   ],
+   "535": [
+    "econometria",
+    "econometria_bayesiana",
+    "estadistica"
+   ],
+   "570": [
+    "econometria",
+    "estadistica",
+    "eviews"
+   ],
+   "577": [
+    "econometria",
+    "estadistica",
+    "microeconomia"
+   ],
+   "578": [
+    "econometria",
+    "estadistica",
+    "metodologia_investigacion"
+   ],
+   "582": [
+    "econometria",
+    "estadistica"
+   ],
+   "598": [
+    "econometria",
+    "estadistica"
+   ],
+   "602": [
+    "econometria",
+    "estadistica",
+    "eviews"
+   ],
+   "669": [
+    "econometria",
+    "informatica",
+    "lenguaje_r",
+    "microeconomia"
+   ],
+   "672": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "674": [
+    "econometria",
+    "estadistica"
+   ],
+   "677": [
+    "econometria",
+    "econometria_bayesiana",
+    "estadistica"
+   ],
+   "678": [
+    "econometria",
+    "estadistica"
+   ],
+   "689": [
+    "econometria",
+    "econometria_bayesiana",
+    "estadistica"
+   ],
+   "699": [
+    "econometria",
+    "estadistica"
+   ],
+   "700": [
+    "econometria",
+    "estadistica"
+   ],
+   "707": [
+    "economia_general",
+    "finanzas"
+   ],
+   "721": [
+    "ciencia_politica",
+    "economia_general",
+    "politica_y_gobierno"
+   ],
+   "726": [
+    "econometria",
+    "estadistica",
+    "microeconomia"
+   ],
+   "728": [
+    "econometria",
+    "estadistica",
+    "microeconomia"
+   ],
+   "745": [
+    "econometria",
+    "estadistica",
+    "macroeconomia"
+   ],
+   "748": [
+    "econometria",
+    "estadistica"
+   ],
+   "776": [
+    "econometria",
+    "econometria_bayesiana",
+    "estadistica"
+   ],
+   "780": [
+    "economia_general",
+    "finanzas"
+   ],
+   "781": [
+    "econometria",
+    "estadistica"
+   ],
+   "782": [
+    "econometria",
+    "estadistica"
+   ],
+   "784": [
+    "economia",
+    "economia_general",
+    "filosofia",
+    "finanzas",
+    "teoria_regulacion"
+   ],
+   "785": [
+    "econometria",
+    "estadistica"
+   ],
+   "786": [
+    "econometria",
+    "estadistica",
+    "series_tiempo"
+   ],
+   "795": [
+    "ciencias_sociales"
+   ],
+   "811": [
+    "econometria",
+    "econometria_bayesiana",
+    "estadistica"
+   ],
+   "865": [
+    "econometria",
+    "estadistica"
+   ],
+   "866": [
+    "econometria",
+    "estadistica"
+   ],
+   "885": [
+    "econometria",
+    "estadistica"
+   ],
+   "892": [
+    "anthropology",
+    "ciencias_sociales",
+    "economia_general",
+    "economia_politica"
+   ],
+   "955": [
+    "econometria",
+    "estadistica"
+   ],
+   "956": [
+    "econometria",
+    "estadistica"
+   ],
+   "957": [
+    "econometria",
+    "estadistica"
+   ],
+   "1066": [
+    "ciencia_politica",
+    "economia",
+    "economia_general",
+    "economia_politica",
+    "ensayos",
+    "filosofia"
+   ],
+   "1092": [
+    "econometria",
+    "estadistica"
+   ],
+   "1098": [
+    "econometria",
+    "estadistica"
+   ],
+   "1143": [
+    "econometria",
+    "estadistica"
+   ],
+   "1156": [
+    "econometria",
+    "estadistica",
+    "macroeconomia"
+   ],
+   "1200": [
+    "ciencias_sociales"
+   ],
+   "1201": [
+    "ciencias_sociales",
+    "economia_general",
+    "filosofia",
+    "sociologia"
+   ],
+   "1202": [
+    "ciencias_sociales"
+   ],
+   "1203": [
+    "econometria",
+    "estadistica"
+   ],
+   "1204": [
+    "econometria",
+    "estadistica"
+   ],
+   "1208": [
+    "econometria",
+    "estadistica"
+   ],
+   "1209": [
+    "econometria",
+    "estadistica"
+   ],
+   "1210": [
+    "econometria",
+    "estadistica"
+   ],
+   "1285": [
+    "econometria",
+    "estadistica"
+   ],
+   "1369": [
+    "ciencias_sociales"
+   ],
+   "1370": [
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "1419": [
+    "ciencia_politica",
+    "politica_y_gobierno"
+   ],
+   "1501": [
+    "ciencia_politica",
+    "politica_y_gobierno"
+   ],
+   "1531": [
+    "econometria",
+    "estadistica",
+    "microeconomia"
+   ],
+   "1635": [
+    "econometria",
+    "estadistica"
+   ],
+   "1640": [
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "1674": [
+    "econometria",
+    "economia_general",
+    "estadistica"
+   ],
+   "1675": [
+    "econometria",
+    "estadistica"
+   ],
+   "1676": [
+    "econometria",
+    "estadistica"
+   ],
+   "1730": [
+    "econometria",
+    "estadistica",
+    "macroeconomia"
+   ],
+   "1750": [
+    "econometria",
+    "estadistica"
+   ],
+   "1774": [
+    "ciencia_politica",
+    "politica_y_gobierno"
+   ],
+   "1777": [
+    "econometria",
+    "estadistica"
+   ],
+   "1785": [
+    "econometria",
+    "estadistica"
+   ],
+   "1941": [
+    "econometria",
+    "estadistica"
+   ],
+   "1942": [
+    "econometria",
+    "estadistica"
+   ],
+   "1943": [
+    "econometria",
+    "estadistica"
+   ],
+   "1944": [
+    "econometria",
+    "estadistica"
+   ],
+   "2031": [
+    "etica",
+    "filosofia"
+   ],
+   "2032": [
+    "etica",
+    "filosofia"
+   ],
+   "2085": [
+    "econometria",
+    "estadistica",
+    "series_tiempo"
+   ],
+   "2087": [
+    "econometria",
+    "estadistica",
+    "lenguaje_r",
+    "series_tiempo"
+   ],
+   "2089": [
+    "econometria",
+    "estadistica",
+    "stata"
+   ],
+   "2090": [
+    "econometria",
+    "estadistica",
+    "stata"
+   ],
+   "2091": [
+    "econometria",
+    "estadistica",
+    "microeconomia",
+    "stata"
+   ],
+   "2094": [
+    "econometria",
+    "estadistica",
+    "stata"
+   ],
+   "2189": [
+    "econometria",
+    "estadistica"
+   ],
+   "2190": [
+    "econometria",
+    "estadistica"
+   ],
+   "2191": [
+    "econometria",
+    "estadistica"
+   ],
+   "2192": [
+    "econometria",
+    "estadistica"
+   ],
+   "2193": [
+    "econometria",
+    "estadistica"
+   ],
+   "2194": [
+    "econometria",
+    "estadistica"
+   ],
+   "2195": [
+    "econometria",
+    "estadistica"
+   ],
+   "2196": [
+    "econometria",
+    "estadistica"
+   ],
+   "2197": [
+    "econometria",
+    "estadistica"
+   ],
+   "2198": [
+    "econometria",
+    "estadistica"
+   ],
+   "2199": [
+    "econometria",
+    "estadistica"
+   ],
+   "2200": [
+    "econometria",
+    "estadistica"
+   ],
+   "2201": [
+    "econometria",
+    "estadistica"
+   ],
+   "2203": [
+    "econometria",
+    "estadistica"
+   ],
+   "2204": [
+    "econometria",
+    "estadistica"
+   ],
+   "2232": [
+    "econometria",
+    "estadistica"
+   ],
+   "2233": [
+    "econometria",
+    "estadistica"
+   ],
+   "2234": [
+    "econometria",
+    "estadistica"
+   ],
+   "2235": [
+    "econometria",
+    "estadistica"
+   ],
+   "2236": [
+    "econometria",
+    "estadistica"
+   ],
+   "2237": [
+    "econometria",
+    "estadistica"
+   ],
+   "2238": [
+    "econometria",
+    "estadistica"
+   ],
+   "2239": [
+    "econometria",
+    "estadistica"
+   ],
+   "2240": [
+    "econometria",
+    "estadistica"
+   ],
+   "2241": [
+    "econometria",
+    "estadistica"
+   ],
+   "2242": [
+    "econometria",
+    "estadistica"
+   ],
+   "2243": [
+    "econometria",
+    "estadistica"
+   ],
+   "2244": [
+    "econometria",
+    "estadistica"
+   ],
+   "2246": [
+    "econometria",
+    "estadistica"
+   ],
+   "2247": [
+    "econometria",
+    "estadistica"
+   ],
+   "2862": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2863": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2864": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2865": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2866": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2867": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2868": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2869": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2870": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2871": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2872": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2873": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2874": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2875": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2876": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2877": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia"
+   ],
+   "2878": [
+    "econometria",
+    "estadistica",
+    "microeconometria",
+    "microeconomia",
+    "stata"
+   ],
+   "3058": [
+    "historia",
+    "historia_economica"
+   ],
+   "3059": [
+    "etica",
+    "filosofia",
+    "historia_economica"
+   ],
+   "3060": [
+    "historia",
+    "historia_economica"
+   ],
+   "3061": [
+    "historia",
+    "historia_economica"
+   ],
+   "3062": [
+    "historia",
+    "historia_economica"
+   ],
+   "3063": [
+    "historia",
+    "historia_economica"
+   ],
+   "3064": [
+    "crisis_economica",
+    "economia",
+    "historia_economica",
+    "politica_monetaria"
+   ],
+   "3065": [
+    "historia",
+    "historia_economica"
+   ],
+   "3066": [
+    "historia",
+    "historia_economica"
+   ],
+   "3067": [
+    "historia",
+    "historia_economica"
+   ],
+   "3068": [
+    "historia",
+    "historia_economica"
+   ],
+   "3069": [
+    "historia",
+    "historia_economica"
+   ],
+   "3070": [
+    "historia",
+    "historia_economica"
+   ],
+   "3071": [
+    "historia",
+    "historia_economica"
+   ],
+   "3072": [
+    "historia",
+    "historia_economica"
+   ],
+   "3073": [
+    "historia",
+    "historia_economica"
+   ],
+   "3101": [
+    "ciencias_sociales",
+    "metodologia_investigacion"
+   ],
+   "3107": [
+    "econometria",
+    "estadistica"
+   ],
+   "3135": [
+    "econometria",
+    "estadistica"
+   ],
+   "3136": [
+    "econometria",
+    "estadistica"
+   ],
+   "3137": [
+    "econometria",
+    "estadistica"
+   ],
+   "3138": [
+    "econometria",
+    "estadistica",
+    "series_tiempo"
+   ],
+   "3139": [
+    "econometria",
+    "estadistica"
+   ],
+   "3140": [
+    "econometria",
+    "estadistica"
+   ],
+   "3141": [
+    "econometria",
+    "estadistica"
+   ],
+   "3142": [
+    "econometria",
+    "estadistica"
+   ],
+   "3143": [
+    "econometria",
+    "estadistica"
+   ],
+   "3144": [
+    "econometria",
+    "estadistica"
+   ],
+   "3145": [
+    "econometria",
+    "estadistica"
+   ],
+   "3153": [
+    "econometria",
+    "estadistica"
+   ],
+   "3182": [
+    "econometria",
+    "estadistica"
+   ],
+   "3183": [
+    "econometria",
+    "estadistica"
+   ],
+   "3184": [
+    "econometria",
+    "estadistica"
+   ],
+   "3185": [
+    "econometria",
+    "estadistica"
+   ],
+   "3186": [
+    "econometria",
+    "estadistica"
+   ],
+   "3199": [
+    "econometria",
+    "estadistica"
+   ],
+   "3200": [
+    "econometria",
+    "estadistica"
+   ],
+   "3201": [
+    "econometria",
+    "estadistica"
+   ],
+   "3333": [
+    "finanzas"
+   ],
+   "3334": [
+    "finanzas"
+   ],
+   "3335": [
+    "finanzas"
+   ],
+   "3336": [
+    "finanzas"
+   ],
+   "3512": [
+    "econometria",
+    "estadistica",
+    "fundamentos_econometria"
+   ],
+   "3515": [
+    "econometria",
+    "estadistica",
+    "fundamentos_econometria"
+   ],
+   "3517": [
+    "econometria",
+    "estadistica",
+    "fundamentos_econometria"
+   ],
+   "3521": [
+    "econometria",
+    "estadistica",
+    "fundamentos_econometria"
+   ],
+   "3522": [
+    "econometria",
+    "estadistica",
+    "fundamentos_econometria"
+   ],
+   "3524": [
+    "econometria",
+    "estadistica",
+    "fundamentos_econometria"
+   ],
+   "3589": [
+    "finanzas"
+   ],
+   "3590": [
+    "finanzas"
+   ],
+   "3592": [
+    "finanzas"
+   ],
+   "3593": [
+    "finanzas",
+    "finanzas_corporativas"
+   ],
+   "3594": [
+    "finanzas",
+    "finanzas_corporativas"
+   ],
+   "3595": [
+    "finanzas",
+    "finanzas_corporativas"
+   ],
+   "3596": [
+    "finanzas",
+    "finanzas_corporativas"
+   ],
+   "3597": [
+    "finanzas",
+    "finanzas_corporativas"
+   ],
+   "3598": [
+    "finanzas",
+    "finanzas_corporativas"
+   ],
+   "3599": [
+    "finanzas",
+    "finanzas_corporativas"
+   ],
+   "3600": [
+    "evaluacion_privada",
+    "finanzas",
+    "finanzas_corporativas"
+   ],
+   "3601": [
+    "finanzas",
+    "finanzas_corporativas"
+   ],
+   "3602": [
+    "finanzas",
+    "renta_variable"
+   ],
+   "3603": [
+    "finanzas",
+    "renta_variable"
+   ],
+   "3605": [
+    "finanzas",
+    "renta_variable"
+   ],
+   "3606": [
+    "finanzas",
+    "renta_variable"
+   ],
+   "3607": [
+    "finanzas",
+    "renta_variable"
+   ],
+   "3608": [
+    "finanzas",
+    "renta_variable"
+   ],
+   "3609": [
+    "finanzas",
+    "renta_variable"
+   ],
+   "3612": [
+    "finanzas",
+    "renta_variable"
+   ],
+   "3613": [
+    "finanzas",
+    "renta_variable"
+   ],
+   "3614": [
+    "finanzas",
+    "renta_fija"
+   ],
+   "3615": [
+    "finanzas",
+    "renta_fija"
+   ],
+   "3616": [
+    "finanzas",
+    "renta_fija"
+   ],
+   "3617": [
+    "finanzas",
+    "renta_fija"
+   ],
+   "3618": [
+    "finanzas",
+    "renta_fija"
+   ],
+   "3619": [
+    "finanzas",
+    "renta_fija"
+   ],
+   "3620": [
+    "finanzas",
+    "renta_fija"
+   ],
+   "3621": [
+    "finanzas",
+    "renta_fija"
+   ],
+   "3622": [
+    "derivados_financieros",
+    "finanzas"
+   ],
+   "3623": [
+    "derivados_financieros",
+    "finanzas"
+   ],
+   "3624": [
+    "derivados_financieros",
+    "finanzas"
+   ],
+   "3625": [
+    "derivados_financieros",
+    "finanzas"
+   ],
+   "3626": [
+    "derivados_financieros",
+    "finanzas"
+   ],
+   "3627": [
+    "derivados_financieros",
+    "finanzas"
+   ],
+   "3628": [
+    "finanzas",
+    "teoria_portafolio"
+   ],
+   "3629": [
+    "finanzas",
+    "teoria_portafolio"
+   ],
+   "3630": [
+    "finanzas",
+    "teoria_portafolio"
+   ],
+   "3631": [
+    "finanzas",
+    "teoria_portafolio"
+   ],
+   "3632": [
+    "finanzas",
+    "teoria_portafolio"
+   ],
+   "3633": [
+    "finanzas",
+    "teoria_portafolio"
+   ],
+   "3732": [
+    "informatica",
+    "power_bi"
+   ],
+   "3733": [
+    "informatica",
+    "power_bi"
+   ],
+   "3734": [
+    "informatica",
+    "power_bi"
+   ],
+   "3735": [
+    "informatica",
+    "power_bi"
+   ],
+   "3736": [
+    "informatica",
+    "power_bi"
+   ],
+   "3737": [
+    "informatica",
+    "power_bi"
+   ],
+   "3738": [
+    "informatica",
+    "power_bi"
+   ],
+   "3739": [
+    "informatica",
+    "power_bi"
+   ],
+   "3824": [
+    "econometria",
+    "estadistica",
+    "eviews"
+   ],
+   "3825": [
+    "econometria",
+    "estadistica"
+   ],
+   "3826": [
+    "econometria",
+    "estadistica",
+    "stata"
+   ],
+   "3827": [
+    "econometria",
+    "estadistica",
+    "stata"
+   ],
+   "3828": [
+    "econometria",
+    "estadistica",
+    "stata"
+   ],
+   "3829": [
+    "econometria",
+    "estadistica",
+    "eviews",
+    "series_tiempo"
+   ],
+   "3830": [
+    "econometria",
+    "estadistica",
+    "eviews"
+   ],
+   "3831": [
+    "econometria",
+    "estadistica",
+    "eviews"
+   ],
+   "3832": [
+    "econometria",
+    "estadistica"
+   ],
+   "3833": [
+    "econometria",
+    "estadistica"
+   ],
+   "3834": [
+    "econometria",
+    "estadistica"
+   ],
+   "3835": [
+    "econometria",
+    "estadistica"
+   ],
+   "3836": [
+    "econometria",
+    "estadistica",
+    "eviews"
+   ],
+   "3837": [
+    "econometria",
+    "estadistica",
+    "eviews"
+   ],
+   "3838": [
+    "econometria",
+    "estadistica",
+    "eviews"
+   ],
+   "3839": [
+    "econometria",
+    "estadistica"
+   ],
+   "3840": [
+    "econometria",
+    "estadistica"
+   ],
+   "3841": [
+    "econometria",
+    "estadistica"
+   ],
+   "3842": [
+    "econometria",
+    "estadistica"
+   ],
+   "3843": [
+    "econometria",
+    "estadistica"
+   ],
+   "3844": [
+    "econometria",
+    "estadistica"
+   ],
+   "3845": [
+    "econometria",
+    "estadistica"
+   ],
+   "3846": [
+    "econometria",
+    "estadistica"
+   ],
+   "3847": [
+    "econometria",
+    "estadistica",
+    "eviews"
+   ],
+   "3848": [
+    "econometria",
+    "estadistica",
+    "eviews"
+   ],
+   "3849": [
+    "econometria",
+    "estadistica"
+   ],
+   "3850": [
+    "econometria",
+    "estadistica"
+   ],
+   "3851": [
+    "econometria",
+    "estadistica",
+    "eviews"
+   ],
+   "3853": [
+    "econometria",
+    "estadistica"
+   ],
+   "3854": [
+    "econometria",
+    "estadistica"
+   ],
+   "3855": [
+    "econometria",
+    "estadistica"
+   ],
+   "3856": [
+    "econometria",
+    "estadistica"
+   ],
+   "3857": [
+    "econometria",
+    "estadistica"
+   ],
+   "3858": [
+    "econometria",
+    "estadistica"
+   ],
+   "3859": [
+    "econometria",
+    "estadistica"
+   ],
+   "3913": [
+    "finanzas"
+   ],
+   "3914": [
+    "finanzas"
+   ],
+   "3915": [
+    "finanzas"
+   ],
+   "3917": [
+    "finanzas"
+   ],
+   "3918": [
+    "finanzas"
+   ],
+   "3919": [
+    "finanzas"
+   ],
+   "3920": [
+    "finanzas"
+   ],
+   "3921": [
+    "finanzas"
+   ],
+   "3922": [
+    "finanzas"
+   ],
+   "3923": [
+    "finanzas"
+   ],
+   "3924": [
+    "finanzas"
+   ],
+   "3925": [
+    "finanzas"
+   ],
+   "3935": [
+    "econometria",
+    "estadistica"
+   ],
+   "3936": [
+    "econometria",
+    "estadistica"
+   ],
+   "3937": [
+    "econometria",
+    "estadistica"
+   ],
+   "3938": [
+    "econometria",
+    "estadistica"
+   ],
+   "3939": [
+    "econometria",
+    "estadistica"
+   ],
+   "3940": [
+    "econometria",
+    "estadistica"
+   ],
+   "3941": [
+    "econometria",
+    "estadistica"
+   ],
+   "3942": [
+    "econometria",
+    "estadistica"
+   ],
+   "3943": [
+    "econometria",
+    "estadistica"
+   ],
+   "3944": [
+    "econometria",
+    "estadistica"
+   ],
+   "3945": [
+    "econometria",
+    "estadistica",
+    "series_tiempo"
+   ],
+   "3946": [
+    "econometria",
+    "estadistica"
+   ],
+   "3947": [
+    "econometria",
+    "estadistica",
+    "series_tiempo"
+   ],
+   "4016": [
+    "economia_desarrollo",
+    "historia",
+    "historia_economica"
+   ],
+   "4056": [
+    "etica",
+    "filosofia"
+   ],
+   "4318": [
+    "ciencia_politica",
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "4319": [
+    "ciencia_politica",
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "4320": [
+    "ciencia_politica",
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "4321": [
+    "ciencia_politica",
+    "ciencias_sociales",
+    "sociologia"
+   ],
+   "4542": [
+    "finanzas"
+   ],
+   "4547": [
+    "finanzas",
+    "teoria_portafolio"
+   ],
+   "4548": [
+    "finanzas"
+   ],
+   "4549": [
+    "finanzas"
+   ],
+   "4554": [
+    "finanzas",
+    "finanzas_internacionales"
+   ],
+   "4555": [
+    "finanzas",
+    "finanzas_internacionales"
+   ],
+   "4556": [
+    "finanzas",
+    "finanzas_internacionales"
+   ],
+   "4557": [
+    "finanzas",
+    "finanzas_internacionales"
+   ],
+   "4558": [
+    "finanzas",
+    "finanzas_internacionales"
+   ],
+   "4559": [
+    "finanzas",
+    "finanzas_internacionales"
+   ],
+   "4561": [
+    "finanzas",
+    "finanzas_internacionales"
+   ],
+   "4562": [
+    "finanzas",
+    "finanzas_internacionales"
+   ],
+   "8518": [
+    "econometria",
+    "estadistica"
+   ],
+   "8519": [
+    "econometria",
+    "estadistica"
+   ],
+   "8520": [
+    "econometria",
+    "estadistica"
+   ],
+   "8521": [
+    "econometria",
+    "estadistica"
+   ],
+   "8522": [
+    "econometria",
+    "estadistica"
+   ],
+   "8523": [
+    "econometria",
+    "estadistica"
+   ],
+   "8524": [
+    "econometria",
+    "estadistica"
+   ],
+   "8580": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "8581": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "8582": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "8583": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "8584": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "8585": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "8586": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "8587": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "8810": [
+    "econometria",
+    "estadistica"
+   ],
+   "8811": [
+    "econometria",
+    "estadistica"
+   ],
+   "8812": [
+    "econometria",
+    "estadistica"
+   ],
+   "9037": [
+    "finanzas"
+   ],
+   "9038": [
+    "finanzas"
+   ],
+   "9039": [
+    "finanzas"
+   ],
+   "9040": [
+    "finanzas"
+   ],
+   "9041": [
+    "finanzas"
+   ],
+   "9042": [
+    "finanzas"
+   ],
+   "9043": [
+    "finanzas"
+   ],
+   "9044": [
+    "finanzas"
+   ],
+   "9046": [
+    "finanzas"
+   ],
+   "9047": [
+    "finanzas"
+   ],
+   "9048": [
+    "finanzas"
+   ],
+   "9130": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9132": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9133": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9134": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9135": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9136": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9137": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9138": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9139": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9140": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9141": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9142": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9143": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9144": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9145": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9146": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9147": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9148": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9149": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9150": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9151": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9152": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9153": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9155": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9156": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9157": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9158": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9159": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9160": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9161": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9162": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9163": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9164": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9165": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9166": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9167": [
+    "finanzas",
+    "opciones_reales"
+   ],
+   "9181": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9182": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9183": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9184": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9185": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9186": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9187": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9188": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9189": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9190": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9191": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9192": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9193": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9194": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9195": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9196": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9197": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9198": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9199": [
+    "informatica",
+    "lenguaje_r"
+   ],
+   "9271": [
+    "ciencia_politica",
+    "economia",
+    "economia_desarrollo",
+    "recursos_naturales"
+   ],
+   "9309": [
+    "finanzas"
+   ],
+   "9333": [
+    "historia",
+    "historia_economica"
+   ],
+   "9334": [
+    "historia",
+    "historia_economica"
+   ],
+   "9607": [
+    "econometria",
+    "estadistica",
+    "series_tiempo"
+   ],
+   "9608": [
+    "econometria",
+    "estadistica",
+    "series_tiempo"
+   ],
+   "9609": [
+    "econometria",
+    "estadistica",
+    "series_tiempo"
+   ],
+   "9610": [
+    "econometria",
+    "estadistica",
+    "eviews",
+    "series_tiempo"
+   ],
+   "9611": [
+    "econometria",
+    "estadistica",
+    "eviews",
+    "series_tiempo"
+   ],
+   "9612": [
+    "econometria",
+    "estadistica",
+    "eviews",
+    "series_tiempo"
+   ],
+   "9613": [
+    "econometria",
+    "estadistica",
+    "eviews",
+    "series_tiempo"
+   ],
+   "9614": [
+    "econometria",
+    "estadistica",
+    "eviews",
+    "series_tiempo"
+   ],
+   "9615": [
+    "econometria",
+    "estadistica",
+    "eviews",
+    "series_tiempo"
+   ],
+   "9616": [
+    "econometria",
+    "estadistica",
+    "eviews",
+    "series_tiempo"
+   ],
+   "9693": [
+    "etica",
+    "filosofia",
+    "metodologia_investigacion",
+    "redaccion_academica"
+   ],
+   "9824": [
+    "datos_panel",
+    "econometria",
+    "estadistica",
+    "metodologia_investigacion",
+    "series_tiempo"
+   ],
+   "9866": [
+    "ciencia_politica",
+    "derecho_economico",
+    "gestion_publica",
+    "politica_y_gobierno",
+    "recursos_humanos"
+   ],
+   "9893": [
+    "aprendizaje",
+    "educacion",
+    "pedagogia",
+    "psicologia"
+   ],
+   "9894": [
+    "aprendizaje",
+    "educacion",
+    "pedagogia",
+    "psicologia"
+   ],
+   "9895": [
+    "didactica",
+    "educacion",
+    "etica",
+    "pedagogia"
+   ],
+   "9896": [
+    "aprendizaje",
+    "educacion",
+    "pedagogia",
+    "psicologia"
+   ],
+   "9897": [
+    "didactica",
+    "educacion",
+    "etica",
+    "pedagogia"
+   ],
+   "9908": [
+    "finanzas",
+    "mercados_financieros",
+    "teoria_portafolio"
+   ],
+   "68": [
+    "econometria",
+    "economia",
+    "economia_internacional",
+    "finanzas_internacionales",
+    "politica_monetaria"
+   ],
+   "144": [
+    "econometria",
+    "economia",
+    "macroeconomia",
+    "politica_monetaria"
+   ],
+   "174": [
+    "economia",
+    "finanzas",
+    "politica_monetaria",
+    "teoria_juegos"
+   ],
+   "175": [
+    "econometria",
+    "economia",
+    "macroeconomia",
+    "politica_monetaria"
+   ],
+   "194": [
+    "econometria",
+    "economia",
+    "economia_laboral",
+    "microeconomia"
+   ],
+   "207": [
+    "econometria",
+    "economia",
+    "macroeconomia",
+    "politica_monetaria"
+   ],
+   "214": [
+    "econometria",
+    "economia",
+    "economia_internacional",
+    "macroeconomia"
+   ],
+   "235": [
+    "econometria",
+    "economia",
+    "economia_internacional",
+    "finanzas_internacionales"
+   ],
+   "240": [
+    "ciencia_politica",
+    "economia",
+    "economia_internacional",
+    "teoria_juegos"
+   ],
+   "267": [
+    "evaluacion_privada",
+    "finanzas",
+    "matematicas_financieras"
+   ],
+   "279": [
+    "ciencia_politica",
+    "ciencias_sociales",
+    "historia",
+    "politica_y_gobierno"
+   ],
+   "288": [
+    "finanzas",
+    "matematicas_financieras"
+   ],
+   "289": [
+    "economia_internacional",
+    "historia",
+    "historia_economica",
+    "politica_economica"
+   ],
+   "339": [
+    "econometria",
+    "economia",
+    "economia_internacional",
+    "macroeconomia"
+   ],
+   "342": [
+    "finanzas",
+    "matematicas_financieras"
+   ],
+   "344": [
+    "economia_desarrollo",
+    "economia_descriptiva",
+    "historia",
+    "historia_economica"
+   ],
+   "365": [
+    "diccionario",
+    "economia",
+    "economia_general",
+    "finanzas",
+    "referencia"
+   ],
+   "394": [
+    "administracion",
+    "ciencia_politica",
+    "gestion_publica",
+    "politica_y_gobierno"
+   ],
+   "401": [
+    "ciencia_politica",
+    "ciencias_sociales",
+    "economia_marxista",
+    "politica_y_gobierno"
+   ],
+   "420": [
+    "finanzas",
+    "optimizacion",
+    "teoria_portafolio"
+   ],
+   "471": [
+    "economia_internacional",
+    "finanzas_internacionales",
+    "historia",
+    "historia_economica"
+   ],
+   "479": [
+    "finanzas",
+    "mercados_financieros",
+    "renta_fija"
+   ],
+   "498": [
+    "economia",
+    "microeconomia",
+    "psicologia",
+    "teoria_economica"
+   ],
+   "521": [
+    "ciencia_politica",
+    "ensayos",
+    "politica_y_gobierno"
+   ],
+   "554": [
+    "econometria",
+    "economia",
+    "macroeconomia",
+    "teoria_economica"
+   ],
+   "567": [
+    "ciencia_politica",
+    "filosofia",
+    "literatura",
+    "politica_y_gobierno"
+   ],
+   "597": [
+    "econometria",
+    "estadistica",
+    "organizacion_industrial",
+    "regresion"
+   ],
+   "606": [
+    "ciencia_politica",
+    "economia",
+    "economia_politica",
+    "teoria_economica"
+   ],
+   "607": [
+    "economia",
+    "economia_descriptiva",
+    "estadistica",
+    "historia_economica"
+   ],
+   "613": [
+    "economia",
+    "microeconomia",
+    "psicologia",
+    "teoria_economica"
+   ],
+   "624": [
+    "ciencia_politica",
+    "economia_politica",
+    "ensayos",
+    "politica_y_gobierno"
+   ],
+   "627": [
+    "econometria",
+    "estadistica",
+    "inferencia_estadistica",
+    "regresion"
+   ],
+   "637": [
+    "economia",
+    "microeconomia",
+    "psicologia",
+    "teoria_economica"
+   ],
+   "666": [
+    "evaluacion_privada",
+    "finanzas",
+    "finanzas_corporativas"
+   ],
+   "667": [
+    "cultura_popular",
+    "divulgacion_cientifica",
+    "psicologia"
+   ],
+   "670": [
+    "econometria",
+    "estadistica",
+    "modelamiento_economico",
+    "optimizacion"
+   ],
+   "671": [
+    "estadistica",
+    "lenguaje_r",
+    "series_fourier",
+    "series_tiempo"
+   ],
+   "683": [
+    "econometria",
+    "economia",
+    "macroeconomia",
+    "politica_monetaria"
+   ],
+   "685": [
+    "econometria",
+    "estadistica",
+    "politica_monetaria",
+    "series_tiempo"
+   ],
+   "705": [
+    "finanzas",
+    "matematicas_financieras"
+   ],
+   "734": [
+    "ecuaciones_diferenciales",
+    "finanzas",
+    "matematicas_financieras"
+   ],
+   "747": [
+    "ciencia_politica",
+    "economia_marxista",
+    "economia_politica",
+    "politica_y_gobierno"
+   ],
+   "789": [
+    "econometria",
+    "estadistica",
+    "regresion",
+    "series_tiempo"
+   ],
+   "790": [
+    "econometria",
+    "estadistica",
+    "inferencia_estadistica",
+    "regresion"
+   ],
+   "791": [
+    "econometria",
+    "estadistica",
+    "regresion",
+    "series_tiempo"
+   ],
+   "861": [
+    "ciencia_politica",
+    "economia_politica",
+    "ensayos",
+    "politica_y_gobierno"
+   ],
+   "867": [
+    "econometria",
+    "estadistica",
+    "problemas_resueltos",
+    "solucionario"
+   ],
+   "1022": [
+    "ciencias_sociales",
+    "psicoanalisis",
+    "psicologia"
+   ],
+   "1023": [
+    "ciencias_sociales",
+    "cultura_popular",
+    "psicoanalisis",
+    "psicologia"
+   ],
+   "1024": [
+    "ciencias_sociales",
+    "psicoanalisis",
+    "psicologia"
+   ],
+   "1055": [
+    "crecimiento_economico",
+    "econometria",
+    "economia",
+    "macroeconomia"
+   ],
+   "1115": [
+    "crecimiento_economico",
+    "econometria",
+    "economia",
+    "economia_desarrollo"
+   ],
+   "1117": [
+    "crecimiento_economico",
+    "economia_financiera",
+    "finanzas"
+   ],
+   "1133": [
+    "economia_desarrollo",
+    "historia",
+    "historia_economica",
+    "historia_pensamiento_economico"
+   ],
+   "1147": [
+    "crecimiento_economico",
+    "economia",
+    "historia_economica",
+    "politica_economica"
+   ],
+   "1323": [
+    "crecimiento_economico",
+    "economia",
+    "economia_desarrollo",
+    "historia_economica"
+   ],
+   "1404": [
+    "ciencia_politica",
+    "derecho_internacional",
+    "economia_asiatica",
+    "politica_y_gobierno"
+   ],
+   "1416": [
+    "banca",
+    "economia_financiera",
+    "finanzas"
+   ],
+   "1490": [
+    "ciencias_sociales",
+    "economia_politica",
+    "ensayos",
+    "sociologia"
+   ],
+   "1526": [
+    "administracion",
+    "finanzas",
+    "finanzas_corporativas"
+   ],
+   "1533": [
+    "ciencia_politica",
+    "ensayos",
+    "filosofia",
+    "politica_y_gobierno"
+   ],
+   "1571": [
+    "epistemologia",
+    "filosofia",
+    "psicologia"
+   ],
+   "1610": [
+    "ciencia_politica",
+    "ensayos",
+    "politica_y_gobierno"
+   ],
+   "1622": [
+    "administracion",
+    "economia",
+    "etica",
+    "gerencia_social"
+   ],
+   "1665": [
+    "banca",
+    "economia_financiera",
+    "finanzas"
+   ],
+   "1671": [
+    "econometria",
+    "estadistica",
+    "macroeconometria",
+    "series_tiempo"
+   ],
+   "1672": [
+    "econometria",
+    "estadistica",
+    "macroeconometria",
+    "series_tiempo"
+   ],
+   "1680": [
+    "ciencia_politica",
+    "filosofia",
+    "historia",
+    "politica_y_gobierno"
+   ],
+   "1718": [
+    "analisis_financiero",
+    "finanzas",
+    "finanzas_corporativas"
+   ],
+   "1736": [
+    "economia",
+    "etica",
+    "microeconomia",
+    "teoria_economica"
+   ],
+   "1741": [
+    "economia",
+    "economia_internacional",
+    "finanzas_internacionales",
+    "historia_economica"
+   ],
+   "1792": [
+    "ciencia_politica",
+    "ensayos",
+    "filosofia",
+    "politica_y_gobierno"
+   ],
+   "1809": [
+    "ciencia_politica",
+    "ciencias_sociales",
+    "ensayos",
+    "politica_y_gobierno"
+   ],
+   "1831": [
+    "ciencia_politica",
+    "ensayos",
+    "politica_y_gobierno"
+   ],
+   "1855": [
+    "ciencia_politica",
+    "economia",
+    "economia_internacional",
+    "ensayos"
+   ],
+   "1968": [
+    "analisis_financiero",
+    "finanzas",
+    "matematicas_financieras"
+   ],
+   "1976": [
+    "ciencia_politica",
+    "economia_marxista",
+    "ensayos",
+    "politica_y_gobierno"
+   ],
+   "1993": [
+    "derivados_financieros",
+    "finanzas",
+    "mercados_financieros"
+   ],
+   "2054": [
+    "finanzas",
+    "teoria_portafolio"
+   ],
+   "2076": [
+    "economia",
+    "historia_economica",
+    "historia_pensamiento_economico",
+    "teoria_economica"
+   ],
+   "3172": [
+    "banca",
+    "finanzas",
+    "mercados_financieros"
+   ],
+   "4546": [
+    "analisis_financiero",
+    "finanzas"
+   ],
+   "8760": [
+    "finanzas",
+    "matematicas_financieras",
+    "probabilidad_estadistica"
+   ],
+   "8906": [
+    "finanzas",
+    "matematicas_financieras"
+   ],
+   "9583": [
+    "aprendizaje_automatico",
+    "ciencia_de_datos",
+    "informatica",
+    "inteligencia_artificial"
+   ],
+   "9593": [
+    "econometria",
+    "estadistica",
+    "fundamentos_econometria"
+   ],
+   "9617": [
+    "econometria",
+    "estadistica",
+    "fundamentos_econometria",
+    "regresion"
+   ],
+   "9618": [
+    "econometria",
+    "estadistica",
+    "fundamentos_econometria",
+    "regresion"
+   ],
+   "9715": [
+    "ciencia_politica",
+    "ensayos",
+    "politica_y_gobierno"
+   ],
+   "9716": [
+    "ciencia_politica",
+    "economia_marxista",
+    "ensayos",
+    "politica_y_gobierno"
+   ],
+   "9717": [
+    "ciencia_politica",
+    "economia_marxista",
+    "ensayos",
+    "politica_y_gobierno"
+   ],
+   "9718": [
+    "ciencia_politica",
+    "ensayos",
+    "historia",
+    "politica_y_gobierno"
+   ],
+   "9719": [
+    "ciencia_politica",
+    "ensayos",
+    "politica_y_gobierno"
+   ],
+   "9720": [
+    "ciencia_politica",
+    "economia_desarrollo",
+    "politica_economica",
+    "politica_y_gobierno"
+   ],
+   "9721": [
+    "ciencia_politica",
+    "ensayos",
+    "historia",
+    "politica_y_gobierno"
+   ],
+   "9725": [
+    "ciencia_politica",
+    "ensayos",
+    "historia",
+    "politica_y_gobierno"
+   ],
+   "9733": [
+    "ciencia_politica",
+    "economia_asiatica",
+    "ensayos",
+    "politica_y_gobierno"
+   ],
+   "9907": [
+    "finanzas",
+    "mercados_financieros",
+    "renta_variable"
+   ],
+   "9997": [
+    "econometria",
+    "estadistica",
+    "stata"
+   ]
+  }
+ }
+}
