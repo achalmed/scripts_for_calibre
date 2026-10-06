@@ -27,7 +27,7 @@ main.py estado
 <!-- suite:fin -->
 
 <!-- suites:inicio -->
-Suites de esta carpeta (12); índice global en `meta/INDICE_SCRIPTS.md`. Patrón: M main · C config · L lib.
+Suites de esta carpeta (13); índice global en `meta/INDICE_SCRIPTS.md`. Patrón: M main · C config · L lib.
 
 | Suite | Carpeta | Objetivo | Escribe en | Simula | Timer | Estado | Patrón |
 |---|---|---|---|---|---|---|---|
@@ -39,6 +39,7 @@ Suites de esta carpeta (12); índice global en `meta/INDICE_SCRIPTS.md`. Patrón
 | `lecturas` | [scripts-biblioteca/lecturas](lecturas/) | fuentes | vault | sí |  | activo | `MCL` |
 | `manifiesto` | [scripts-biblioteca/manifiesto](manifiesto/) | fuentes | vault | sí |  | activo | `MCL` |
 | `metadatos-pdf` | [scripts-biblioteca/metadatos-pdf](metadatos-pdf/) | biblioteca | calibre, archivos | sí |  | activo | `MCL` |
+| `migraciones` | [scripts-biblioteca/migraciones](migraciones/) | biblioteca | calibre | sí |  | activo | `M··` |
 | `sincronizar-zotero` | [scripts-biblioteca/sincronizar-zotero](sincronizar-zotero/) | biblioteca | calibre, zotero | sí |  | activo | `MCL` |
 | `fuentes` | [scripts-biblioteca](./) | fuentes | archivos | sí |  | activo | `MCL` |
 | `verificacion` | [scripts-biblioteca/verificacion](verificacion/) | biblioteca | ninguno | sí |  | activo | `MCL` |

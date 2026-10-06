@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""migraciones/campana.py — una campaña de la migración de metadatos de la biblioteca (ola 2b, P0–P9).
+"""migraciones/main.py — una campaña de la migración de metadatos de la biblioteca (ola 2b, P0–P9).
 
 Objetivo: cambiar los metadatos de Calibre por pasos (`pasos/pN.py`), sin riesgo: nada se aplica sin que el ensayo
   sobre una copia cierre en lo previsto y sin que su deshacer devuelva la base exacta.
@@ -13,8 +13,8 @@ Método (normativa 9.1; `meta/programa/03-arquitectura/modelo-de-metadatos.md` �
   3. con --aplicar: la puerta (Calibre cerrado, candado, respaldo verificado), la misma orden sobre la base real, la
      misma verificación y, para deshacer, el respaldo en $RESPALDOS_DIR/biblioteca/migraciones/<paso>/ con su suma y un
      `deshacer.sh`. El registro de la campaña (plan, propuesta legible, resumen) queda en migraciones/<paso>_<fecha>/.
-Uso: campana.py P1            → plan + ensayo + deshacer probado (no toca la base real)
-     campana.py P1 --aplicar  → además la aplica en la base real
+Uso: main.py P1            → plan + ensayo + deshacer probado (no toca la base real)
+     main.py P1 --aplicar  → además la aplica en la base real
 """
 from __future__ import annotations
 
@@ -36,21 +36,14 @@ sys.path.insert(0, str(REPO.parent / "core"))
 import env  # noqa: E402  (core/env.py)
 
 ESCRIBIR = REPO / "lib" / "escribir.py"
+sys.path.insert(0, str(REPO / "lib"))
+import escribir  # noqa: E402  (la puerta)
 LEER = AQUI / "leer_campos.py"
 CACHE = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "migraciones"
 
 
 def _copia(origen: Path, destino: Path) -> Path:
-    destino.parent.mkdir(parents=True, exist_ok=True)
-    if destino.exists():
-        destino.unlink()
-    a = sqlite3.connect(f"file:{origen}?mode=ro", uri=True)
-    b = sqlite3.connect(destino)
-    with b:
-        a.backup(b)
-    a.close()
-    b.close()
-    return destino
+    return escribir.copia_de_trabajo(origen, destino)   # la copia la hace la puerta (lib/escribir.py)
 
 
 def _sha(p: Path) -> str:
@@ -166,8 +159,6 @@ def main(argv=None) -> int:
         return 0
 
     # 3. aplicar en la base real, por la puerta
-    sys.path.insert(0, str(REPO / "lib"))
-    import escribir  # noqa: E402
     destino = Path(env.RESPALDOS_DIR) / "biblioteca" / "migraciones" / f"{a.paso}_{hoy}"
     destino.mkdir(parents=True, exist_ok=True)
     with escribir.puerta("migraciones", calibre=real_bib):

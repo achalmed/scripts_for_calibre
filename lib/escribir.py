@@ -152,6 +152,22 @@ def puerta(suite: str, calibre: str | os.PathLike | None = None, zotero: str | o
             cm.__exit__(None, None, None)
 
 
+def copia_de_trabajo(origen, destino) -> Path:
+    """Copia consistente de una base (API de respaldo de SQLite, origen en solo lectura) para leerla o ensayar sobre
+    ella fuera de la base real (migraciones/main.py). Nunca escribe en el origen."""
+    destino = Path(destino)
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    if destino.exists():
+        destino.unlink()
+    a = sqlite3.connect(f"file:{origen}?mode=ro", uri=True)
+    b = sqlite3.connect(destino)
+    with b:
+        a.backup(b)
+    a.close()
+    b.close()
+    return destino
+
+
 # ------------------------------------------------------------------ Calibre (API, dentro de calibre-debug)
 def set_campos(api, cambios: dict) -> int:
     """{campo: {libro: valor}} → `api.set_field` por campo; devuelve cuántos valores pidió escribir."""
