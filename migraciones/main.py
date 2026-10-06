@@ -81,6 +81,12 @@ def _verificar(biblioteca: Path, plan: dict, antes: dict, mueve: bool, trabajo: 
     movidas = [b for b, r in antes["rutas"].items() if despues["rutas"].get(b) != r]
     if movidas and not mueve:
         errores.append(f"{len(movidas)} carpetas de libro cambiaron en un paso que no las mueve (p. ej. {movidas[:5]})")
+    if plan.get("columnas_borrar"):
+        c = sqlite3.connect(f"file:{biblioteca / 'metadata.db'}?mode=ro", uri=True)
+        quedan = {r[0] for r in c.execute("select label from custom_columns")} & {x.lstrip("#") for x in plan["columnas_borrar"]}
+        c.close()
+        if quedan:
+            errores.append(f"columnas que debían retirarse y siguen: {sorted(quedan)}")
     campos = plan.get("campos") or {}
     if campos:
         pedido = trabajo / "pedido.json"
