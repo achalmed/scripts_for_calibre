@@ -28,7 +28,7 @@ NOMBRE = "fuentes.yml"
 
 # Qué carpeta lleva el manifiesto de un archivo dado: la primera regla cuyo grupo 1 coincide con el inicio de la ruta
 # absoluta. Si ninguna coincide, el manifiesto va en la carpeta del archivo.
-_W, _A = re.escape(env.WRITING_DIR.name), re.escape(env.ANALYSIS_DIR.name)   # carpetas de WRITING_DIR y ANALYSIS_DIR
+_W, _A = re.escape(env.WRITING_DIR.name), re.escape(env.DATAFW_DIR.name)   # carpetas de WRITING_DIR y DATAFW_DIR
 REGLAS_RAIZ = [re.compile(p) for p in (
     rf"^(.*/{_W}/reports/[^/]+/fuentes)/",          # canónico desde P5
     rf"^(.*/{_W}/reports/[^/]+/01_fuentes)/",       # informes sin migrar
@@ -37,7 +37,7 @@ REGLAS_RAIZ = [re.compile(p) for p in (
 )]
 
 # Raíces que el doctor y `todo` recorren buscando manifiestos y enlaces simbólicos hacia la biblioteca.
-RAICES_VIGILADAS = [CIL_DIR, env.ANALYSIS_DIR / "data" / "raw",
+RAICES_VIGILADAS = [CIL_DIR, env.DATAFW_DIR / "data" / "raw",
                     env.WRITING_DIR]   # WRITING_DIR incluye reports/ (FR1)
 
 # Orden de las claves de cada entrada del manifiesto.

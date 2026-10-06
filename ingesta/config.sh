@@ -16,9 +16,8 @@ REPO_FUENTES="$(cd "$SCRIPT_DIR/.." && pwd)"                                   #
 CIL_DIR="${INGESTA_ENTRADA:-$REPO_FUENTES/entrada}"
 MANIFIESTO_MARCO_LEGAL="$SCRIPT_DIR/../manifiestos/marco_legal/manifiesto.tsv"   # dato del marco legal (carpeta, archivo, URL, fuente, nota)
 BIBLIOTECA="${BIBLIOTECA_DIR:-$DOCS/biblioteca}"                               # biblioteca Calibre (metadata.db)
-SCRIPTS_CALIBRE="$REPO_FUENTES"                                                 # mismo repo desde la fusión (ola 2, fase E)
 CATALOGACION_DIR="$REPO_FUENTES/catalogacion"                                   # hogar canónico de fichas + TSV
-DATAFW_DIR="$ANALYSIS_DIR"                                   # OCR (pipeline/documentos) si el PDF no tiene texto
+: "${DATAFW_DIR:?core/env.sh define DATAFW_DIR}"            # OCR (pipeline/documentos) si el PDF no tiene texto
 PROMPTS_DIR="${PROMPTS_DIR:-$DOCS/prompts}"                  # prompt de catalogación (ficha dual)
 
 # Carpetas de entrada que se rastrean (relativas a CIL_DIR). Se excluyen 00_ingesta y enlaces simbólicos.
@@ -32,7 +31,7 @@ PROMPTS_DIR="${PROMPTS_DIR:-$DOCS/prompts}"                  # prompt de catalog
 #   datafw/data/raw              → ENLACE: un script necesita esa ruta para leer.
 #   scripts_for_fuentes/entrada  → MOVER:  es zona de aterrizaje, nadie la necesita
 #                                  después; Calibre queda como único almacén.
-INBOX_RAICES=("$ANALYSIS_DIR/data/raw"
+INBOX_RAICES=("$DATAFW_DIR/data/raw"
               "$CIL_DIR"
               "$WRITING_DIR")                        # ver INBOX_RAICES_SOLO
 # En las raíces externas solo entran rutas que cumplen este regex.
@@ -63,12 +62,12 @@ INBOX_RAICES_EXTENSIONES="pdf"
 #                 no subcadena: «Anexo_1_LeyPpto2024.PDF» contiene «leyppto» y
 #                 «EM_PL_Presupuesto_SP_2027.pdf» contiene «pl_presupuesto».
 PAQUETES_JSON='[
-  {"raiz": "'"$ANALYSIS_DIR"'/data/raw/mef/presupuesto/aprobado",
+  {"raiz": "'"$DATAFW_DIR"'/data/raw/mef/presupuesto/aprobado",
    "familias": [{"principal": "^ley.*(ppto|presupuesto)", "adjuntos": "^anexo",
                  "sin_principal": {"titulo": "Ley N.° {ley}. Presupuesto del sector público para el año fiscal {anio} (anexos; texto de la ley pendiente)",
                                    "leyes": {"2022": "31365", "2023": "31638"}, "autor": "Ministerio de Economía y Finanzas", "serie": "datafw mef - Presupuesto aprobado",
                                    "tags": "presupuesto_publico, politica_fiscal, legislacion", "clasificador": "Normativa", "item_type": "Statute"}}]},
-  {"raiz": "'"$ANALYSIS_DIR"'/data/raw/mef/presupuesto/proyecto",
+  {"raiz": "'"$DATAFW_DIR"'/data/raw/mef/presupuesto/proyecto",
    "familias": [{"principal": "^pl_presupuesto", "adjuntos": "^anexo"}]}
 ]'
 

@@ -162,7 +162,7 @@ class Caja:
             "USER": os.environ.get("USER", "prueba"),
             "HOME": str(home),
             "DOCS_ROOT": str(self.docs),
-            "SCRIPTS_BIBLIOTECA": str(self.repo), "SCRIPTS_CALIBRE": str(self.repo), "SCRIPTS_FUENTES": str(self.repo),
+            "SCRIPTS_BIBLIOTECA": str(self.repo),
             "BIBLIOTECA_DIR": str(self.biblioteca),
             "CALIBRE_DB": str(self.db),
             "ZOTERO_DIR": str(base / "Zotero"),

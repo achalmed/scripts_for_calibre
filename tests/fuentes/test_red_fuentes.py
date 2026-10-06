@@ -67,6 +67,6 @@ def test_ningun_codigo_importa_connectors():
         if rel.startswith("tests/"):
             continue
         for n, linea in enumerate((REPO / rel).read_text(encoding="utf-8").splitlines(), 1):
-            if re.search(r"connectors|LIB_ADQUISICION|ANALYSIS_DIR\s*/\s*[\"']connectors", linea):
+            if re.search(r"connectors|LIB_ADQUISICION|(?:ANALYSIS|DATAFW)_DIR\s*/\s*[\"']connectors", linea):
                 malos.append(f"{rel}:{n}: {linea.strip()[:80]}")
     assert not malos, "\n".join(malos)
