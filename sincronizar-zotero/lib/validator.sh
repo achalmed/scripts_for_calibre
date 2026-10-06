@@ -13,6 +13,10 @@
 validate_database() {
     local db=$1 table=$2
     [[ -s "$db" ]] || { log_error "Base inexistente o vacia: $db"; exit 1; }
+    # Un journal con datos es una transacción cortada (suspensión, cierre forzado): en solo
+    # lectura SQLite no puede deshacerla y la base parece «sin tablas». No es corrupción: se
+    # respaldan juntos la base y el journal y se abre una vez en escritura (rollback).
+    [[ -s "$db-journal" ]] && { log_error "Transaccion interrumpida (journal pendiente, no corrupcion): respalde $db y su -journal y abralo una vez en escritura para deshacerla"; exit 1; }
     "$CORE_PYTHON" - "$db" "$table" <<'PY' >/dev/null 2>&1 \
         || { log_error "Base sin tabla '$table' (¿fichero corrupto?): $db"; exit 1; }
 import sqlite3, sys
