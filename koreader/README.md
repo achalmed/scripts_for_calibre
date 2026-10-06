@@ -5,7 +5,7 @@ estado: activo
 # koreader/ — KOReader → Calibre: progreso, tiempo, estado y apuntes de cada libro
 
 <!-- suite:inicio -->
-**Suite `koreader_estudio`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
+**Suite `koreader`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
 
 Convierte Calibre en tablero de estudio: progreso, tiempo y anotaciones de KOReader hacia las columnas del libro.
 
@@ -22,7 +22,7 @@ main.sh --aplicar
 main.sh --desde-timer
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-05); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-06); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 Convierte Calibre en un **tablero de seguimiento de estudio**: KOReader (en este mismo Linux) lee

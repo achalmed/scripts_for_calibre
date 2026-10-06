@@ -1,4 +1,4 @@
-# .gitignore de scripts-biblioteca (fusión de scripts_for_calibre y scripts_for_fuentes, ola 2), por clase
+# .gitignore de scripts-biblioteca (fusión de scripts-biblioteca y scripts_for_fuentes, ola 2), por clase
 # (normativa 7.x, clases de archivo). Uno solo, en la raíz.
 
 # --- temporal: runtime de las suites (no se versiona; la poda la hace la higiene) ---

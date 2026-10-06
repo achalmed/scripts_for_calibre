@@ -5,7 +5,7 @@ estado: activo
 # verificacion/ — coteja Calibre con OpenLibrary y Crossref (solo lectura)
 
 <!-- suite:inicio -->
-**Suite `verificar_metadatos`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
+**Suite `verificacion`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
 
 Coteja los metadatos de Calibre contra bases bibliográficas públicas y escribe un informe de discrepancias; nunca modifica la biblioteca.
 
@@ -19,7 +19,7 @@ main.sh                      # informe en reportes/
 main.sh --modo isbn
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-05); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-06); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 Coteja los metadatos de Calibre con bases bibliográficas públicas (OpenLibrary y, de respaldo,

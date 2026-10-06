@@ -19,4 +19,4 @@ depende_de:
 - lib/escribir.sh (la puerta)
 metodo_documental: paso 02
 nota: 'fichas/ y resumen_catalogacion.tsv son el registro de esta suite (D12): las fichas nuevas y sus filas las escribe scripts_for_fuentes/ingesta con su calibre_id; aquí se aplican a Calibre'
-pruebas: python3 -m pytest scripts_for_calibre/tests   # desde ~/Documents; copias de las bases, nunca las reales
+pruebas: python3 -m pytest scripts-biblioteca/tests   # desde ~/Documents; copias de las bases, nunca las reales

@@ -13,7 +13,7 @@ las campañas hasta 2026-10-01, en `historial/campanas-sobre-la-biblioteca.md`; 
 posteriores, en su commit.
 
 
-**Fusión (ola 2, fase E, 2026-10-05).** `scripts_for_calibre` y `scripts_for_fuentes` son un solo repo. Las
+**Fusión (ola 2, fase E, 2026-10-05).** `scripts-biblioteca` y `scripts_for_fuentes` son un solo repo. Las
 secciones §1–§4 son las de Calibre; las del Método Documental (antes `scripts_for_fuentes/docs/decisiones.md`)
 son ahora §5–§8 con el mismo segundo número: su §1.x es §5.x, §2.x es §6.x, §3.x es §7.x y §4.x es §8.x.
 
@@ -88,7 +88,7 @@ Los de cada escritura, en `$XDG_STATE_HOME/biblioteca/respaldos/<suite>/{calibre
 `metadata.db`, 3 de `zotero.sqlite`): sobreviven a la fusión y al renombre del repo y no se mezclan
 con el código. Los que vivían dentro del repo se copiaron verificados a
 `$RESPALDOS_DIR/biblioteca/<suite>/` y los originales están en
-`~/.local/share/residuos-programa/2026-10-05/scripts_for_calibre/`.
+`~/.local/share/residuos-programa/2026-10-05/scripts-biblioteca/`.
 
 ### §2.7 Calibre se escribe por su API o por `calibredb`, nunca por SQL (ola 2a, K3, 2026-10-05)
 
@@ -192,7 +192,7 @@ maquinaria de red y hash (§7.1) y el modelo de procedencia, no el destino.
 
 Aquí se descarga, se identifica y se cataloga; un proyecto (informe, curso, post) solo conserva su
 `fuentes.yml`. La ingesta del CIL del despacho (`CIL/00_ingesta`), el manifiesto del marco legal y
-`script_ingesta_recursos` de `scripts_for_calibre` se mudaron aquí; cuando el CIL se disolvió
+`script_ingesta_recursos` de `scripts-biblioteca` se mudaron aquí; cuando el CIL se disolvió
 (M10 D6), `entrada/` pasó a ser la zona de aterrizaje. Nada del despacho queda en el repo: el
 marco legal es dato público, no del cliente. La procedencia de cada carpeta:
 [historial/procedencia-de-las-carpetas.md](historial/procedencia-de-las-carpetas.md).
@@ -251,10 +251,10 @@ no por subcadena, porque un anexo puede llevar el nombre de la ley.
 Dos PDF de una tesis se borraron sin quedar registrados porque `archivar` borraba antes de
 escribir el manifiesto. El orden se invirtió: si registrar falla, el original sigue en su sitio.
 
-### §6.6 La ficha de catalogación canónica vive en `scripts_for_calibre` (D12, 2026-09-20)
+### §6.6 La ficha de catalogación canónica vive en `scripts-biblioteca` (D12, 2026-09-20)
 
 `ingesta/fichas/<sha8>_<slug>.md` es un borrador; `catalogar --aplicar` escribe la ficha con id en
-`scripts_for_calibre/catalogacion/fichas/` y su fila en
+`scripts-biblioteca/catalogacion/fichas/` y su fila en
 `resumen_catalogacion.tsv`. Las fichas existentes no se mudan. El doctor avisa si
 `ingesta/fichas/` conserva borradores.
 
@@ -279,7 +279,7 @@ retirada de `meta/reparaciones/` y va a `$RESPALDOS_DIR/biblioteca/fuentes/origi
 
 `ingesta/fichas/` acumulaba 812 borradores sin rastrear. Se clasificaron por su cabecera (la primera línea y el
 frontmatter, sin leer el cuerpo) y por su fila en `ingesta.tsv`: ninguno correspondía a una obra con
-`calibre_id` (la ficha de lo catalogado ya está, con su id, en `scripts_for_calibre`); 35 llevaban la marca
+`calibre_id` (la ficha de lo catalogado ya está, con su id, en `scripts-biblioteca`); 35 llevaban la marca
 «sustituida» y 777 eran borradores sin obra (773 de filas de `pendientes.tsv` aún sin catalogar, de
 `02 analysis/data/raw`, y 4 sin fila). Los 812 se copiaron con `SHA256SUMS` verificado a
 `$RESPALDOS_DIR/biblioteca/fuentes/ingesta-fichas-provisionales/` (con `clasificacion.tsv`) y se movieron a los
@@ -320,7 +320,7 @@ Los ledgers `ingesta/ingesta.tsv` y `ingesta/pendientes.tsv` guardaban 2 220 rut
 apuntan a archivos que ya no existen quedan como texto) y el código escribe y lee por `lib/rutas.py`: lo
 relativo que empieza por una carpeta de la raíz es relativo a `DOCS_ROOT`; lo demás, a la zona de entrada,
 como siempre. El correo de Unpaywall sale del entorno (`FUENTES_CORREO_CONTACTO`, P248); ninguna
-configuración carga ya `scripts_for_calibre/lib_comun` ni la carpeta personal; `fichas grafia` y `migrar`
+configuración carga ya `scripts-biblioteca/lib_comun` ni la carpeta personal; `fichas grafia` y `migrar`
 respaldan en `$RESPALDOS_DIR/biblioteca/fuentes/fichas/` (P240). `manifiesto todo` en seco da la misma
 salida antes y después. `tests/test_privacidad_rutas.py` lo vigila.
 

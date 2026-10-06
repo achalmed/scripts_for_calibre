@@ -5,7 +5,7 @@ estado: activo
 # lectura/ — Zotero (Read Time) → Calibre y orquestación del sync de metadatos
 
 <!-- suite:inicio -->
-**Suite `ecosistema_lectura`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
+**Suite `lectura`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
 
 Lleva el tiempo de lectura de Zotero (readingTime) y los metadatos de estudio a las columnas de Calibre.
 
@@ -23,7 +23,7 @@ main.sh --enlazar --ris          # informe y .ris de lo que falta en Zotero
 main.sh --enlazar --aplicar      # escribe las claves «adjunto»
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-05); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-06); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 **Zotero → Calibre** (diseño de 2026-08: `../docs/historial/diseno-ecosistema-lectura-2026-08.md`;

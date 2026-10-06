@@ -14,7 +14,7 @@
 #
 # Relación con los otros dos sistemas centrales:
 #   este sistema  →  descarga y localiza
-#   Calibre       →  almacena y cataloga   (scripts_for_calibre + ingesta/ de este sistema)
+#   Calibre       →  almacena y cataloga   (scripts-biblioteca + ingesta/ de este sistema)
 #   Zotero        →  referencia y cita      (sincronizar-zotero, .ris)
 
 from pathlib import Path

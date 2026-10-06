@@ -66,7 +66,7 @@ texto principal, `sin_principal` dice con qué título, autor y serie crear el l
 - Para que `identificar` reconozca al autor por el nombre de archivo: la sigla en `SIGLAS_JSON`
   y, si se decide por carpeta, la institución en `INSTITUCION_POR_CARPETA_JSON`
   (`ingesta/config.sh`). Las etiquetas por carpeta, en `TAGS_POR_CARPETA_JSON`, solo con valores
-  del vocabulario cerrado de etiquetas de la biblioteca (lo custodia `scripts_for_calibre`).
+  del vocabulario cerrado de etiquetas de la biblioteca (lo custodia `scripts-biblioteca`).
 - Para que `references.bib` lleve `shortauthor`: la sigla en `SIGLAS` de `manifiesto/config.py`.
   Solo siglas conocidas; una institución sin sigla se cita entera
   (`prompts/00 metodo/normas_apa7.md`).

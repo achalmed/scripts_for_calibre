@@ -4,7 +4,7 @@ Objetivo: correr las suites tal como se usan (procesos, `main.sh`/`main.py`) sin
 Método: cada prueba recibe una copia del workspace en miniatura bajo `tmp_path`:
   Documents/core/                 env, shell-lib y py-common copiados del core real
   Documents/scripts_for_fuentes/  el árbol de trabajo de este repo (sin fichas provisionales, respaldos ni entrada/)
-  Documents/scripts_for_calibre/  solo lo que ingesta lee o escribe: fichas y resumen de la catalogación
+  Documents/scripts-biblioteca/  solo lo que ingesta lee o escribe: fichas y resumen de la catalogación
   Documents/biblioteca/metadata.db  copia de la base real hecha con la API de respaldo de sqlite, en solo lectura
 y un entorno limpio (HOME, XDG_*, CALIBRE_CONFIG_DIRECTORY, LOCK_*, RESPALDOS_DIR) que apunta dentro de la caja.
 Límite: la base real se lee una vez por sesión (`mode=ro`); nunca se escribe. Los libros de la copia no tienen

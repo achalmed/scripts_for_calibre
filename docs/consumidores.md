@@ -1,10 +1,10 @@
 ---
 tipo: doc
-titulo: "Consumidores de scripts_for_calibre: lo que otros repos usan de aquí y lo que no se cambia sin avisarles"
+titulo: "Consumidores de scripts-biblioteca: lo que otros repos usan de aquí y lo que no se cambia sin avisarles"
 genero: referencia
 estado: activo
 ---
-# Consumidores de `scripts_for_calibre`
+# Consumidores de `scripts-biblioteca`
 
 Referencia de la frontera (NORMATIVA §15.6): qué ofrece este repo a otros, quién lo usa y qué no se
 puede renombrar, mover ni cambiar de forma sin actualizar al consumidor en el mismo ciclo. El

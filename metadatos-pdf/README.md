@@ -5,7 +5,7 @@ estado: activo
 # metadatos-pdf/ — incrusta en los PDF los metadatos de Calibre y registra PDF sueltos
 
 <!-- suite:inicio -->
-**Suite `metadatos_calibre`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
+**Suite `metadatos-pdf`** · objetivo *biblioteca* · estado *activo* · bash · interfaz cli
 
 Incrusta los metadatos OPF de Calibre en los PDF (XMP con exiftool) y registra PDF sueltos como libros.
 
@@ -24,7 +24,7 @@ main.sh register --aplicar   # por la puerta: Calibre cerrado, candado y respald
 main.sh limpiar-json --aplicar
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-05); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-06); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 Lleva a los PDF de la biblioteca los metadatos que Calibre guarda en cada `metadata.opf` y registra

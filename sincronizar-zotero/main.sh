@@ -20,7 +20,7 @@ source "$PROJECT_DIR/lib/validator.sh"
 source "$PROJECT_DIR/lib/cli.sh"
 
 # Lock compartido del ecosistema (auditoría C5): toda escritura a metadata.db
-# serializa con los timers de scripts_for_calibre. Si nos invoca el orquestador
+# serializa con los timers de scripts-biblioteca. Si nos invoca el orquestador
 # (ECOSISTEMA_LOCK_HELD=1) el lock ya viene heredado por fd y no se retoma.
 puerta_candado_calibre
 

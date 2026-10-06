@@ -5,7 +5,7 @@ estado: activo
 # catalogacion/ — el registro de fichas de catalogación y su aplicación a Calibre
 
 <!-- suite:inicio -->
-**Suite `catalogacion_biblioteca`** · objetivo *fuentes* · estado *activo* · bash · interfaz cli
+**Suite `catalogacion`** · objetivo *fuentes* · estado *activo* · bash · interfaz cli
 
 Aplica a Calibre los metadatos catalogados en resumen_catalogacion.tsv (autor «Nombre, Apellidos», vocabulario cerrado, identificadores); registro canónico de lo catalogado.
 
@@ -23,7 +23,7 @@ main.sh --aplicar            # escribe (con Calibre cerrado)
 main.sh --aplicar --ids 10265,10266
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-05); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-06); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 Dos cosas en una carpeta: el **registro de catalogación** de la biblioteca —una ficha por libro en

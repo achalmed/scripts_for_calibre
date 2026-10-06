@@ -73,7 +73,7 @@ con `prompts/01 fuentes/prompt_02_catalogar.md`. Un escaneado sin texto necesita
 | `lib/paquetes.py` · `lib/ocr_formatos.py` · `lib/desde_bib.py` | paquetes de anexos, variantes OCR y alta desde un `.bib` |
 | `ingesta.tsv` | el ledger, fuente de verdad: sha256 → calibre_id → zotero_key → estado |
 | `pendientes.tsv` | candidatos identificados (columnas de `resumen_catalogacion.tsv` sin id) |
-| `fichas/` | fichas provisionales, fuera de git (borradores); `catalogar --aplicar` las lleva a `scripts_for_calibre/catalogacion/fichas/` |
+| `fichas/` | fichas provisionales, fuera de git (borradores); `catalogar --aplicar` las lleva a `scripts-biblioteca/catalogacion/fichas/` |
 | `salida_ris/` · `reportes/` | RIS e informes de ejecución, fuera de git (los respaldos de `metadata.db` los deja la puerta en `$RESPALDOS_DIR/biblioteca/fuentes/metadata`, fuera del repo) |
 
 Toda escritura en Calibre pasa por la puerta `../lib/escribir.sh`/`.py` (F2): `core/shell-lib` o 69; Calibre
@@ -114,7 +114,7 @@ PDF **externos** de `05-recursos/` de `10 Class/docencia/cursos/*` → Calibre, 
 canónico o `Unknown`, sin etiquetas; original a `ORIGINALES_DIR` = `$RESPALDOS_DIR/biblioteca/fuentes/originales-cursos`;
 fila en `reportes/cursos/catalogar_*`), `duplicado` (enlaza el curso al libro existente), `omitir`, `revisar`.
 Duplicado, autor y título los decide `core/py-common/biblioteca.py`; el libro entra a medias a propósito y lo
-completa `scripts_for_calibre/catalogacion/`.
+completa `scripts-biblioteca/catalogacion/`.
 
 ## Límite honesto
 
@@ -129,7 +129,7 @@ completa `scripts_for_calibre/catalogacion/`.
   conector local es un intento sin garantía. Los `.ris` anteriores al 2026-09-30 no se importan
   (`salida_ris/obsoletos_2026-09-30/`, `../docs/decisiones.md` §2.7).
 - **`fichas/` de esta carpeta es provisional**: la ficha que cuenta es la que `catalogar` escribe
-  con `calibre_id` en `scripts_for_calibre/catalogacion/fichas/`.
+  con `calibre_id` en `scripts-biblioteca/catalogacion/fichas/`.
 - **La serie `Informe <slug> - Fuentes` solo se asigna bajo `01_fuentes/`**: un PDF identificado bajo la
   carpeta canónica `fuentes/` de un informe queda sin serie (`../estado.md` §Por hacer); con
   `bib --serie` la serie se da a mano.

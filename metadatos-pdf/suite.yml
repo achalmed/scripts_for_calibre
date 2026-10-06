@@ -21,4 +21,4 @@ depende_de:
 - core/shell-lib
 - lib/escribir.sh (la puerta)
 nota: todo simula por defecto (ola 2a, K5); con --aplicar, embed modifica los PDF, register escribe metadata.db por la puerta y limpiar-json borra los huérfanos.
-pruebas: python3 -m pytest scripts_for_calibre/tests   # desde ~/Documents; copias de las bases, nunca las reales
+pruebas: python3 -m pytest scripts-biblioteca/tests   # desde ~/Documents; copias de las bases, nunca las reales

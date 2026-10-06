@@ -1,4 +1,4 @@
-"""tests/calibre_apoyo.py — utilidades de las pruebas de scripts_for_calibre (ola 2, K1).
+"""tests/calibre_apoyo.py — utilidades de las pruebas de scripts-biblioteca (ola 2, K1).
 
 Objetivo: correr las suites sobre COPIAS de metadata.db y zotero.sqlite en un directorio temporal y
   comparar lo que hacen con lo que hacía la referencia (un commit de git), sin tocar jamás las bases
@@ -84,9 +84,9 @@ def copiar_koreader(destino: Path) -> Path:
 
 
 def arbol_referencia(destino: Path, ref: str = REFERENCIA) -> Path:
-    """El árbol del repo en `ref`, en destino/scripts_for_calibre, con `core` enlazado al lado."""
+    """El árbol del repo en `ref`, en destino/scripts-biblioteca, con `core` enlazado al lado."""
     destino.mkdir(parents=True, exist_ok=True)
-    arbol = destino / "scripts_for_calibre"
+    arbol = destino / "scripts-biblioteca"
     arbol.mkdir()
     archivo = subprocess.run(["git", "-C", str(REPO), "archive", ref], check=True, capture_output=True).stdout
     subprocess.run(["tar", "-x", "-C", str(arbol)], input=archivo, check=True)
@@ -106,9 +106,9 @@ NOMBRES_ANTERIORES = {"script_catalogacion_biblioteca": "catalogacion", "script_
 
 
 def arbol_actual(destino: Path) -> Path:
-    """El árbol de trabajo (rastreado y nuevo no ignorado), sin las fichas, en destino/scripts_for_calibre."""
+    """El árbol de trabajo (rastreado y nuevo no ignorado), sin las fichas, en destino/scripts-biblioteca."""
     destino.mkdir(parents=True, exist_ok=True)
-    arbol = destino / "scripts_for_calibre"
+    arbol = destino / "scripts-biblioteca"
     salida = subprocess.run(["git", "-C", str(REPO), "ls-files", "-co", "--exclude-standard", "-z"],
                             check=True, capture_output=True).stdout.decode()
     for rel in filter(None, salida.split("\0")):

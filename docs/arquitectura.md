@@ -26,7 +26,7 @@ la capa de datos: `02 analysis/docs/integracion-ecosistema.md` §2 y
 `02 analysis/docs/documentos-de-consulta.md`.
 
 Este repo **no** cataloga (la ficha canónica de cada libro la mantiene
-`scripts_for_calibre/catalogacion/`), **no** gestiona citas (Zotero) y **no**
+`scripts-biblioteca/catalogacion/`), **no** gestiona citas (Zotero) y **no**
 guarda copias: la biblioteca es Calibre.
 
 ## 2. El recorrido de un documento
@@ -71,7 +71,7 @@ Un archivo de `entrada/` se borra sin manifiesto aunque el modo sea `manifiesto`
 | suite | paso del método | escribe | contrato |
 |---|---|---|---|
 | `fuentes` (raíz) | 00, 01 | `entrada/<archivo>` y `fuentes_descargadas.tsv`; nada más | `suite.yml` |
-| `ingesta` | 02, 03 | Calibre por `calibredb`; `ingesta/ingesta.tsv`, `pendientes.tsv`, fichas provisionales en `ingesta/fichas/`, RIS en `ingesta/salida_ris/`; la ficha con id y la fila de `resumen_catalogacion.tsv` en `scripts_for_calibre/catalogacion/`; el `fuentes.yml` del proyecto al archivar | `ingesta/README.md` |
+| `ingesta` | 02, 03 | Calibre por `calibredb`; `ingesta/ingesta.tsv`, `pendientes.tsv`, fichas provisionales en `ingesta/fichas/`, RIS en `ingesta/salida_ris/`; la ficha con id y la fila de `resumen_catalogacion.tsv` en `scripts-biblioteca/catalogacion/`; el `fuentes.yml` del proyecto al archivar | `ingesta/README.md` |
 | `ingesta cursos` (fundida en `ingesta`, ola 2 F3) | 02 (cursos) | Calibre por la puerta; `bibliografia:` del `curso.yml` del curso; `ingesta/reportes/cursos/`; retira el original del curso a `ORIGINALES_DIR` (`$RESPALDOS_DIR/biblioteca/fuentes/originales-cursos`) | `ingesta/README.md` §Cursos |
 | `fichas` | 05, 09 | el frontmatter de las fichas del proyecto (`verificacion.*`, `calibre_id`, `zotero_key`) y `00-indice_fichas.md` | `fichas/README.md` |
 | `lecturas` | 07 | `<clave>-lectura-extraida.md` en la carpeta de destino; al reejecutar regenera solo lo que está entre sus marcas | `lecturas/README.md` |
@@ -116,12 +116,12 @@ que regenerarlo da los mismos archivos. Es del marco legal, no del despacho (§1
 | el resolutor de la biblioteca | `core/py-common/biblioteca.py` | ¿existe?, ruta física, metadatos, texto por páginas (caché en `~/.cache/biblioteca_texto`) |
 | logger, lock, detección de apps, backup rotado | `core/shell-lib` | la puerta `lib/escribir.sh`, para escribir en Calibre sin pisarse |
 | raíz del espacio de trabajo | `core/env.sh` | `ingesta/config.sh` lo carga |
-| la ficha de catalogación canónica | `scripts_for_calibre/catalogacion/` | `catalogar` escribe allí la ficha con id y su fila |
+| la ficha de catalogación canónica | `scripts-biblioteca/catalogacion/` | `catalogar` escribe allí la ficha con id y su fila |
 
 El contrato de lo que este repo consume lo escribe cada proveedor: `core/docs/consumidores.md`,
-`scripts_for_calibre/docs/consumidores.md` y `02 analysis/docs/integracion-ecosistema.md` §2.
+`scripts-biblioteca/docs/consumidores.md` y `02 analysis/docs/integracion-ecosistema.md` §2.
 
-Las suites cargan `core/` directamente (ya no el envoltorio `scripts_for_calibre/lib_comun/`; ola 2,
+Las suites cargan `core/` directamente (ya no el envoltorio `scripts-biblioteca/lib_comun/`; ola 2,
 F2 y F5) y toman la raíz de `core/env.py`. Los ledgers guardan rutas relativas a esa raíz (`lib/rutas.py`). `prompts/01 fuentes/` no es una dependencia de código, pero sí de
 criterio: el mapeo RIS sigue `prompt_03_zotero.md` y la ficha provisional, `prompt_02_catalogar.md`.
 

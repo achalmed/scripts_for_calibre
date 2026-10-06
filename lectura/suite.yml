@@ -19,4 +19,4 @@ depende_de:
 - core/shell-lib
 - lib/escribir.sh (la puerta)
 timer: ecosistema-lectura.timer · ecosistema-metadatos.timer
-pruebas: python3 -m pytest scripts_for_calibre/tests   # desde ~/Documents; copias de las bases, nunca las reales
+pruebas: python3 -m pytest scripts-biblioteca/tests   # desde ~/Documents; copias de las bases, nunca las reales

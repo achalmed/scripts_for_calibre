@@ -5,14 +5,50 @@ estado: activo
 # scripts-biblioteca/ — la biblioteca del ecosistema: adquirir, ingerir, catalogar y fichar fuentes, y mantener coherentes Calibre, KOReader y Zotero
 
 <!-- suite:inicio -->
+**Suite `fuentes`** · objetivo *fuentes* · estado *activo* · python · interfaz cli
+
+Adquisición de documentos: verifica si una referencia ya está en la biblioteca y descarga a entrada/ desde una fuente conocida (congreso, articulo) con hash y procedencia.
+
+- Escribe en: archivos · simula por defecto: sí
+- Depende de: python3, core/py-common/biblioteca.py, core/py-common/red.py
+- Método Documental: pasos 00 y 01
+
+Comandos:
+
+```bash
+main.py verificar <referencia>… [--archivo RUTA] [--titulo|--autor|--isbn|--doi|--norma …]
+main.py fuentes
+main.py localizar <fuente> <ref>…
+main.py descargar <fuente> <ref>… [--lista archivo]
+main.py estado
+```
+
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-06); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 <!-- suites:inicio -->
+Suites de esta carpeta (11); índice global en `meta/INDICE_SCRIPTS.md`. Patrón: M main · C config · L lib.
+
+| Suite | Carpeta | Objetivo | Escribe en | Simula | Timer | Estado | Patrón |
+|---|---|---|---|---|---|---|---|
+| `catalogacion` | [scripts-biblioteca/catalogacion](catalogacion/) | fuentes | calibre, archivos | sí |  | activo | `MCL` |
+| `fichas` | [scripts-biblioteca/fichas](fichas/) | fuentes | vault | sí |  | activo | `MCL` |
+| `ingesta` | [scripts-biblioteca/ingesta](ingesta/) | fuentes | calibre, vault, archivos | sí |  | activo | `MCL` |
+| `koreader` | [scripts-biblioteca/koreader](koreader/) | biblioteca | calibre | sí | koreader-calibre-sync.timer | activo | `MCL` |
+| `lectura` | [scripts-biblioteca/lectura](lectura/) | biblioteca | calibre | sí | ecosistema-lectura.timer · ecosistema-metadatos.timer | activo | `MCL` |
+| `lecturas` | [scripts-biblioteca/lecturas](lecturas/) | fuentes | vault | sí |  | activo | `MCL` |
+| `manifiesto` | [scripts-biblioteca/manifiesto](manifiesto/) | fuentes | vault | sí |  | activo | `MCL` |
+| `metadatos-pdf` | [scripts-biblioteca/metadatos-pdf](metadatos-pdf/) | biblioteca | calibre, archivos | sí |  | activo | `MCL` |
+| `sincronizar-zotero` | [scripts-biblioteca/sincronizar-zotero](sincronizar-zotero/) | biblioteca | calibre, zotero | sí |  | activo | `MCL` |
+| `fuentes` | [scripts-biblioteca](./) | fuentes | archivos | sí |  | activo | `MCL` |
+| `verificacion` | [scripts-biblioteca/verificacion](verificacion/) | biblioteca | ninguno | sí |  | activo | `MCL` |
+
+<sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-10-06); no se edita a mano.</sub>
 <!-- suites:fin -->
 
 Las herramientas de línea de comandos (Bash y Python) alrededor de la biblioteca Calibre (`biblioteca/`, la
 autoridad bibliográfica del workspace). Nació en la ola 2 del programa de reingeniería (2026-10-05) de la fusión de
-`scripts_for_calibre` y `scripts_for_fuentes`, que compartían la biblioteca, el ledger de catalogación, el candado y
+`scripts-biblioteca` y `scripts_for_fuentes`, que compartían la biblioteca, el ledger de catalogación, el candado y
 la escritura en `metadata.db` sin compartir código. Hace dos cosas:
 
 - **El Método Documental ejecutable** (`prompts/00 metodo/METODO_DOCUMENTAL.md`): cada paso que toca archivos tiene

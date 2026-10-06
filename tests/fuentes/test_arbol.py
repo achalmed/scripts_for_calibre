@@ -1,7 +1,7 @@
 """El árbol del repo, sin restos (ola 2, F6 y F7).
 
 F6: las fichas provisionales de `ingesta/fichas/` son borradores temporales (D12): la canónica la escribe
-`catalogar` en `scripts_for_calibre`. Ninguna queda sin rastrear (las 812 de partida se clasificaron por su
+`catalogar` en `scripts-biblioteca`. Ninguna queda sin rastrear (las 812 de partida se clasificaron por su
 cabecera y su fila en `ingesta.tsv`) y el `.gitignore` las declara temporales, así que `git status` no las
 vuelve a acumular.
 """

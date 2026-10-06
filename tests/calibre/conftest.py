@@ -1,4 +1,4 @@
-"""tests/conftest.py — fixtures de las pruebas de scripts_for_calibre (ola 2, K1).
+"""tests/conftest.py — fixtures de las pruebas de scripts-biblioteca (ola 2, K1).
 
 Objetivo: dar a cada prueba una corrida aislada (copias de las bases, biblioteca espejo, HOME y candado
   propios) y los dos árboles que se comparan: la referencia de git y el árbol de trabajo.
@@ -16,7 +16,7 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parents[2]
-BASETEMP = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "pytest" / "scripts_for_calibre" / "basetemp"
+BASETEMP = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "pytest" / "scripts-biblioteca" / "basetemp"
 
 
 @pytest.hookimpl(tryfirst=True)
