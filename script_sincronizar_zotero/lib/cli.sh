@@ -67,7 +67,7 @@ parse_arguments() {
 # Verifies the external commands and databases the tool relies on.
 check_dependencies() {
     local missing=()
-    for cmd in python3 sqlite3 calibredb; do
+    for cmd in "$CORE_PYTHON" calibredb calibre-debug; do
         command -v "$cmd" >/dev/null 2>&1 || missing+=("$cmd")
     done
     if [[ ${#missing[@]} -gt 0 ]]; then

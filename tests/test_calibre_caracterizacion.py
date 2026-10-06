@@ -27,6 +27,8 @@ SUITES = {
     "koreader_estudio": ("script_koreader_estudio", "reportes", "sync_*.tsv"),
     "sincronizar_zotero": ("script_sincronizar_zotero", "reportes", "sync_*.tsv"),
 }
+# el timer ecosistema-metadatos: ecosistema_lectura --metadatos orquesta sincronizar_zotero (candado heredado)
+ORQUESTADOR = ("script_ecosistema_lectura", "../script_sincronizar_zotero/reportes", "sync_*.tsv")
 
 
 def _cal_rw(db):
@@ -151,7 +153,7 @@ def perturbar_lectura(c: "Corrida") -> None:  # noqa: F821
 
 def _comparar(arboles, corrida, nombre, args, perturbacion=None, exigir_exito=True):
     """Corre referencia y árbol actual a la vez sobre copias idénticas y compara reporte y deltas."""
-    suite, sub, patron = SUITES[nombre]
+    suite, sub, patron = SUITES.get(nombre) or ORQUESTADOR
     estado = {}
     for impl in ("ref", "act"):
         c = corrida(impl)
@@ -204,12 +206,11 @@ def test_sincronizar_zotero_perturbado_igual_a_la_referencia(arboles, corrida):
 
 
 
-@pytest.mark.xfail(strict=True, reason="defecto de la referencia que K3 corrige: el relleno de pubdate por SQL "
-                   "directo choca con el disparador books_update_trg (title_sort) después de escribir Zotero")
 def test_sincronizar_zotero_relleno_de_fecha(arboles, corrida):
     """Calibre sin año y Zotero con año: la referencia escribe Zotero, falla con «no such function:
-    title_sort» y deja Calibre sin tocar (ni la fecha, ni el espejo, ni los demás rellenos). Lo esperado
-    tras K3: el mismo cambio en Zotero y, además, la fecha rellenada en Calibre, con salida 0."""
+    title_sort» y deja Calibre sin tocar (ni la fecha, ni el espejo, ni los demás rellenos). Desde K3 (la
+    escritura en Calibre va por la API): el mismo cambio en Zotero y, además, la fecha rellenada en
+    Calibre, con salida 0. Fue xfail estricto en K1 (R-2: la prueba antes del código)."""
     m = _comparar(arboles, corrida, "sincronizar_zotero", ["--aplicar"],
                   lambda c: perturbar(c, fecha=True), exigir_exito=False)
     ref, act = m["ref"], m["act"]
@@ -226,3 +227,9 @@ def test_lectura_perturbada_igual_a_la_referencia(arboles, corrida, nombre):
     m = _comparar(arboles, corrida, nombre, ["--aplicar"], perturbar_lectura)
     prefijo = "#zot_" if nombre == "ecosistema_lectura" else "#ko_"
     assert any(k[1].startswith(prefijo) for k in m["act"]["calibre"]), "la perturbación no se repuso"
+
+
+def test_orquestacion_de_metadatos_igual_a_la_referencia(arboles, corrida):
+    """`ecosistema_lectura --metadatos --aplicar` (el timer de las 04:30) sobre la copia perturbada."""
+    m = _comparar(arboles, corrida, "orquestador", ["--metadatos", "--aplicar"], perturbar)
+    assert m["act"]["zotero"] and m["act"]["calibre"], "la orquestación no corrió la sincronización"

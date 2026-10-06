@@ -22,9 +22,6 @@ FUERA = ("tests/", "script_normalizacion_metadatos/")   # normalización: campa�
 
 # archivo → ítem de la ola 2a que lo pasa por la puerta
 PENDIENTES = {
-    "script_sincronizar_zotero/lib/sincronizador.py": "K3",
-    "script_sincronizar_zotero/lib/validator.sh": "K3",
-    "script_sincronizar_zotero/main.sh": "K3",
     "script_catalogacion_biblioteca/lib/metadata.sh": "K5",
     "script_metadatos_calibre/lib/register_formats.sh": "K5",
 }

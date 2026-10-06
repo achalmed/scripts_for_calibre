@@ -10,12 +10,10 @@ readonly PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # shellcheck source=config.sh
 source "$PROJECT_DIR/config.sh"
-# shellcheck source=../lib_comun/logger.sh
-source "$PROJECT_DIR/../lib_comun/logger.sh"
-# shellcheck source=../lib_comun/detectar_apps.sh
-source "$PROJECT_DIR/../lib_comun/detectar_apps.sh"
-# shellcheck source=../lib_comun/lock.sh
-source "$PROJECT_DIR/../lib_comun/lock.sh"
+# shellcheck source=../lib/escribir.sh
+source "$PROJECT_DIR/../lib/escribir.sh"     # la puerta (K2): core/env, detección, candado, respaldo
+# shellcheck source=../../core/shell-lib/logger.sh
+source "$SHELL_LIB/logger.sh"
 # shellcheck source=lib/validator.sh
 source "$PROJECT_DIR/lib/validator.sh"
 # shellcheck source=lib/cli.sh
@@ -24,7 +22,7 @@ source "$PROJECT_DIR/lib/cli.sh"
 # Lock compartido del ecosistema (auditoría C5): toda escritura a metadata.db
 # serializa con los timers de scripts_for_calibre. Si nos invoca el orquestador
 # (ECOSISTEMA_LOCK_HELD=1) el lock ya viene heredado por fd y no se retoma.
-tomar_lock_calibre
+puerta_candado_calibre
 
 # prepare_output_paths()
 # Timestamped reports plus the persistent state snapshot path.
@@ -36,14 +34,16 @@ prepare_output_paths() {
     REPORT_TSV="$rdir/sync_${stamp}.tsv"
     REPORT_MD="$rdir/sync_${stamp}.md"
     STATE_JSON="$PROJECT_DIR/$STATE_DIR_BASENAME/ultimo_sync.json"
-    export REPORT_TSV REPORT_MD STATE_JSON
+    PLAN_CALIBRE="$PROJECT_DIR/$STATE_DIR_BASENAME/plan_calibre.json"
+    rm -f -- "$PLAN_CALIBRE"
+    export REPORT_TSV REPORT_MD STATE_JSON PLAN_CALIBRE
 }
 
 # export_core_env()
 # Surfaces config.sh values to the Python core. The config values are
 # readonly, so we only mark them for export (never reassign).
 export_core_env() {
-    export CALIBRE_DB ZOTERO_DB CAL_COL_ZOTERO_KEY
+    export CALIBRE_DB ZOTERO_DB
     export REPAIR_ATTACHMENTS BACKFILL_CALIBRE POPULATE_MIRROR
     export LIMIT ONLY_IDS
     export APPLY="$APPLY_CHANGES"
@@ -84,12 +84,19 @@ main() {
     fi
 
     local summary
-    summary="$(python3 "$PROJECT_DIR/lib/sincronizador.py")"
+    summary="$("$CORE_PYTHON" "$PROJECT_DIR/lib/sincronizador.py")"
 
     if [[ "$APPLY_CHANGES" == true ]]; then
-        verify_integrity
-        log_info "Regenerando OPFs de Calibre (backup_metadata --all)..."
-        calibredb --with-library "$CALIBRE_LIBRARY" backup_metadata --all
+        if [[ -s "$PLAN_CALIBRE" && "$(cat "$PLAN_CALIBRE")" != "{}" ]]; then
+            log_info "Aplicando el plan de Calibre por la API (lib/escribir.py aplicar-plan)..."
+            calibre-debug -e "$PUERTA_PY" aplicar-plan "$CALIBRE_LIBRARY" "$PLAN_CALIBRE"
+        fi
+        puerta_integridad
+        log_info "Integridad verificada: ok en ambas bases"
+        # La API marca los libros que cambia (metadata_dirtied): basta con regenerar esos OPF. El
+        # `--all` (20 s) solo hacía falta cuando se escribía por SQL, que no los marcaba (K3).
+        log_info "Regenerando los OPF de los libros cambiados (backup_metadata)..."
+        calibredb_escribe backup_metadata
     fi
 
     print_summary "$summary"

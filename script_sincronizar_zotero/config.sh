@@ -19,8 +19,8 @@ readonly ZOTERO_DB="$ZOTERO_DIR/zotero.sqlite"
 readonly ZOTERO_BASE_ATTACHMENT_PATH="$CALIBRE_LIBRARY"
 
 # --- Link key -----------------------------------------------------------
-# Calibre custom column that stores the Zotero PARENT item key (ZMI).
-readonly CAL_COL_ZOTERO_KEY="13"
+# La clave del ítem padre de Zotero vive en la columna #zotero_key de Calibre (ZMI);
+# lib/sincronizador.py resuelve todas las columnas por etiqueta, nunca por número (K3).
 
 # --- Direction policy (decided by the user, 2026-07-28) -----------------
 # "calibre" -> on conflict Calibre wins for core fields (title, date,
