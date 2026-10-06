@@ -57,7 +57,7 @@ Simulación por defecto; `--aplicar` escribe. Desde esta carpeta:
 ```
 La ayuda es `./main.sh <comando> -h`. Antes de `catalogar --aplicar` se revisa `pendientes.tsv`:
 lo que queda por debajo de `CONFIANZA_MINIMA_AUTO` (`config.sh`) se omite hasta revisar su ficha
-con `prompts/01 fuentes/prompt_02_catalogar.md`. Un escaneado sin texto necesita OCR previo
+con `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`. Un escaneado sin texto necesita OCR previo
 (`datafw/pipeline/documentos/main.py ocr`; lo del Congreso, `ocrmypdf -l spa`).
 
 ## Estructura
@@ -77,7 +77,7 @@ con `prompts/01 fuentes/prompt_02_catalogar.md`. Un escaneado sin texto necesita
 | `salida_ris/` · `reportes/` | RIS e informes de ejecución, fuera de git (los respaldos de `metadata.db` los deja la puerta en `$RESPALDOS_DIR/biblioteca/fuentes/metadata`, fuera del repo) |
 
 Toda escritura en Calibre pasa por la puerta `../lib/escribir.sh`/`.py` (F2): `core/shell-lib` o 69; Calibre
-cerrado y candado `LOCK_CALIBRE` o 75; respaldo verificado o 74. RIS: mapeo de `prompts/01 fuentes/prompt_03_zotero.md`;
+cerrado y candado `LOCK_CALIBRE` o 75; respaldo verificado o 74. RIS: mapeo de `prompts/skills/fuentes-documentales/references/paso-03-zotero.md`;
 metadatos de normas: `../manifiestos/marco_legal/manifiesto.tsv`.
 
 ## Cómo queda cada documento en Calibre

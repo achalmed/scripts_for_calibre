@@ -42,7 +42,7 @@ def ascii_clave(c):
 def _reescribir_ingesta(cuerpo):
     cuerpo = re.sub(r"^# Ficha de catalogación — (.+)$", lambda m: f"> Ficha de catalogación de «{m.group(1).strip()}».", cuerpo, count=1, flags=re.M)
     cuerpo = cuerpo.replace("`00_ingesta/lib/identificar.py`", "`scripts_for_fuentes/ingesta/lib/identificar.py`")
-    cuerpo = cuerpo.replace("(formato del `prompt_para_zotero_1_catalogacion.md`)", "(formato de `prompts/01 fuentes/prompt_02_catalogar.md`)")
+    cuerpo = cuerpo.replace("(formato del `prompt_para_zotero_1_catalogacion.md`)", "(formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`)")
     # «> Ficha…» + «> Generada…» en un solo bloque de cita
     cuerpo = re.sub(r"^(> Ficha de catalogación de «[^\n]+»\.)\n\n> Generada", r"\1 Generada", cuerpo, count=1, flags=re.M)
     cuerpo = re.sub(r"^\*\*Origen:\*\*\s*(.+)$", r"## Origen\n\n\1", cuerpo, count=1, flags=re.M)

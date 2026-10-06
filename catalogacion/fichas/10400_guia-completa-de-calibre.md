@@ -10,7 +10,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Guía completa de Calibre». Escrita el 2026-09-20 al aplicar la decisión D15 del `DIAGNOSTICO_DOCUMENTACION_2026-09` (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta** (obra del propio autor; metadatos del frontmatter de la nota).
+> Ficha de catalogación de «Guía completa de Calibre». Escrita el 2026-09-20 al aplicar la decisión D15 del `DIAGNOSTICO_DOCUMENTACION_2026-09` (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta** (obra del propio autor; metadatos del frontmatter de la nota).
 
 ## Origen
 

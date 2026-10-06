@@ -10,7 +10,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Riesgo de afectación en salud mental asociado al malestar psicológico en un grupo de adultos jóvenes durante el aislamiento por COVID-19». Generada por `scripts_for_fuentes/ingesta/lib/desde_bib.py` el 2026-09-07 desde `references.bib` del proyecto (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta** (metadatos del .bib del autor).
+> Ficha de catalogación de «Riesgo de afectación en salud mental asociado al malestar psicológico en un grupo de adultos jóvenes durante el aislamiento por COVID-19». Generada por `scripts_for_fuentes/ingesta/lib/desde_bib.py` el 2026-09-07 desde `references.bib` del proyecto (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta** (metadatos del .bib del autor).
 
 ## Origen
 

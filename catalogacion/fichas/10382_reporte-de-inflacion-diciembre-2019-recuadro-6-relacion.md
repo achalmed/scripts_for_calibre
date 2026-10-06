@@ -10,7 +10,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Reporte de Inflación, diciembre 2019. Recuadro 6: Relación entre inflación y actividad económica en el corto plazo». Generada por `scripts_for_fuentes/ingesta/lib/desde_bib.py` el 2026-09-17 desde `macro2.bib` del proyecto (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta** (metadatos del .bib del autor).
+> Ficha de catalogación de «Reporte de Inflación, diciembre 2019. Recuadro 6: Relación entre inflación y actividad económica en el corto plazo». Generada por `scripts_for_fuentes/ingesta/lib/desde_bib.py` el 2026-09-17 desde `macro2.bib` del proyecto (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta** (metadatos del .bib del autor).
 
 ## Origen
 

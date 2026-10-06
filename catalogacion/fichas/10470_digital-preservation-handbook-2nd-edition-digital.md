@@ -11,7 +11,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Digital Preservation Handbook, 2nd edition. Digital Preservation Briefing». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` y completada a mano (Bibliotecólogo del programa) el 2026-10-04 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**.
+> Ficha de catalogación de «Digital Preservation Handbook, 2nd edition. Digital Preservation Briefing». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` y completada a mano (Bibliotecólogo del programa) el 2026-10-04 (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta**.
 
 ## Origen
 

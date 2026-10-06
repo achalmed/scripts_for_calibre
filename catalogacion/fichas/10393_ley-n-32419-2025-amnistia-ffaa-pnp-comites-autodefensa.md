@@ -10,7 +10,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Ley N.° 32419-2025. Amnistia ffaa PNP comites autodefensa». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-18 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Ley N.° 32419-2025. Amnistia ffaa PNP comites autodefensa». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-18 (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
 ## Origen
 

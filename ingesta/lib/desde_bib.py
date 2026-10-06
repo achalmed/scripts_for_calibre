@@ -82,7 +82,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «{titulo}». Generada por `scripts_for_fuentes/ingesta/lib/desde_bib.py` el {HOY} desde `{bib_path.name}` del proyecto (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta** (metadatos del .bib del autor).
+> Ficha de catalogación de «{titulo}». Generada por `scripts_for_fuentes/ingesta/lib/desde_bib.py` el {HOY} desde `{bib_path.name}` del proyecto (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta** (metadatos del .bib del autor).
 
 ## Origen
 

@@ -10,7 +10,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Decreto Supremo N.° 012-2021-VIVIENDA. Decreto Supremo que aprueba la Política Nacional de Vivienda y Urbanismo, con horizonte temporal al 2030». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Decreto Supremo N.° 012-2021-VIVIENDA. Decreto Supremo que aprueba la Política Nacional de Vivienda y Urbanismo, con horizonte temporal al 2030». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
 ## Origen
 

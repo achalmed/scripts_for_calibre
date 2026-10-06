@@ -29,7 +29,7 @@ main.py <lecturas.yml> --aplicar --unico todo.md
 La lista curada de (`calibre_id`, conceptos, patrones) que un informe necesita vive en el
 `lecturas.yml` del proyecto, no dentro de un script (sucede al `06_lecturas_biblioteca.py` de un
 informe de datafw: `../docs/historial/procedencia-de-las-carpetas.md`). Por cada ítem lee el texto del libro por el resolutor, busca los patrones (regex sin tildes, insensible a mayúsculas) y escribe
-una ficha `lectura` con los pasajes hallados, lista para que el prompt 07 (`prompts/01 fuentes/prompt_07_extraer_ideas.md`)
+una ficha `lectura` con los pasajes hallados, lista para que el prompt 07 (`prompts/skills/fuentes-documentales/references/paso-07-extraer-ideas.md`)
 complete las secciones.
 
 ## Uso

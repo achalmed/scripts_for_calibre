@@ -26,7 +26,7 @@ Sincronizador **bidireccional** de metadatos entre Calibre (`biblioteca/metadata
 (`~/Zotero/zotero.sqlite`) para los libros enlazados por la columna `#zotero_key` (la clave del ítem
 padre en Zotero, que puebla ZMI o `../lectura/main.sh --enlazar`). Deja los
 metadatos completos y coherentes en ambos lados. El contrato de campos RIS que implementa lo define
-`prompts/01 fuentes/prompt_03_zotero.md`. Lo corre a diario el timer `ecosistema-metadatos`, a
+`prompts/skills/fuentes-documentales/references/paso-03-zotero.md`. Lo corre a diario el timer `ecosistema-metadatos`, a
 través de `../lectura/main.sh --metadatos`.
 
 ## Uso

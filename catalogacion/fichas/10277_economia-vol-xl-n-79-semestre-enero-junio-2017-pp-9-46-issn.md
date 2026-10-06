@@ -10,7 +10,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Economía Vol. XL, N° 79, semestre enero-junio 2017, pp. 9-46 / ISSN 0254-4415». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-08 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **media**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Economía Vol. XL, N° 79, semestre enero-junio 2017, pp. 9-46 / ISSN 0254-4415». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-08 (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **media**. Revisar antes de aplicar si es media/baja.
 
 ## Origen
 

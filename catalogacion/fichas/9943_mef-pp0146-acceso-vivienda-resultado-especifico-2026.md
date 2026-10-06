@@ -10,7 +10,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Programa Presupuestal 0146 Acceso de las familias a vivienda y entorno urbano adecuado: resultado específico (vigente al 2026)». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Programa Presupuestal 0146 Acceso de las familias a vivienda y entorno urbano adecuado: resultado específico (vigente al 2026)». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-02 (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
 ## Origen
 

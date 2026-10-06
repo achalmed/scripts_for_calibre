@@ -10,7 +10,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Análisis del régimen económico (documentos de debate sobre régimen económico)». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-16 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta** (revisada el 2026-09-16 sobre la carátula: el PDF no lleva metadatos propios).
+> Ficha de catalogación de «Análisis del régimen económico (documentos de debate sobre régimen económico)». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-16 (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta** (revisada el 2026-09-16 sobre la carátula: el PDF no lleva metadatos propios).
 
 ## Origen
 

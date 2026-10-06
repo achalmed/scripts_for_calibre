@@ -10,7 +10,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Línea gráfica - gestión 2025-2026 FR». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-15 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Línea gráfica - gestión 2025-2026 FR». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-15 (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
 ## Origen
 

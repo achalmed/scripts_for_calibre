@@ -10,7 +10,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Environmental regulation and the competitiveness of U.S. manufacturing: what does the evidence tell us?». Generada por `scripts_for_fuentes/ingesta/lib/desde_bib.py` el 2026-09-17 desde `rrnn.bib` del proyecto (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta** (metadatos del .bib del autor).
+> Ficha de catalogación de «Environmental regulation and the competitiveness of U.S. manufacturing: what does the evidence tell us?». Generada por `scripts_for_fuentes/ingesta/lib/desde_bib.py` el 2026-09-17 desde `rrnn.bib` del proyecto (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta** (metadatos del .bib del autor).
 
 ## Origen
 

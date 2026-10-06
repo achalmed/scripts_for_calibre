@@ -10,7 +10,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Universidad nacional de san cristóbal de huamanga». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-08 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **media**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Universidad nacional de san cristóbal de huamanga». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-08 (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **media**. Revisar antes de aplicar si es media/baja.
 
 ## Origen
 

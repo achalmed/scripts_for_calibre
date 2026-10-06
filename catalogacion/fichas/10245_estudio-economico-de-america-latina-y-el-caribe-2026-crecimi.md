@@ -10,7 +10,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Estudio Económico de América Latina y el Caribe, 2026. Crecimiento y productividad en un contexto de alta informalidad: factores limitantes y desafíos para impulsar la formalización productiva en la región». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
+> Ficha de catalogación de «Estudio Económico de América Latina y el Caribe, 2026. Crecimiento y productividad en un contexto de alta informalidad: factores limitantes y desafíos para impulsar la formalización productiva en la región». Generada por `scripts_for_fuentes/ingesta/lib/identificar.py` el 2026-09-06 (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta**. Revisar antes de aplicar si es media/baja.
 
 ## Origen
 

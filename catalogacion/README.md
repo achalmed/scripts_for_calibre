@@ -29,7 +29,7 @@ main.sh --aplicar --ids 10265,10266
 Dos cosas en una carpeta: el **registro de catalogación** de la biblioteca —una ficha por libro en
 `fichas/<calibre_id>_<slug>.md` y una fila por libro en `resumen_catalogacion.tsv`— y la herramienta
 `main.sh`, que aplica las filas del TSV a Calibre con `calibredb set_metadata`, por la puerta. El formato de la
-ficha lo define `prompts/01 fuentes/prompt_02_catalogar.md`, con el frontmatter de `prompts/00
+ficha lo define `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`, con el frontmatter de `prompts/00
 metodo/fichas_formato_y_voz.md`; las fichas y filas nuevas las escriben
 `scripts_for_fuentes/ingesta` (`ingesta/lib/catalogar.py`, también para los
 cursos) (D12); `proyecto:` cita el id del proyecto, no una ruta (normativa 1.10). Mapa del ecosistema de aprendizaje: `prompts/docs/dominios/aprendizaje.md`.

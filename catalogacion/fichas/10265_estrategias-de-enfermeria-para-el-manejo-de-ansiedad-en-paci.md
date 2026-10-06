@@ -10,7 +10,7 @@ verificacion:
   fecha:
 ---
 
-> Ficha de catalogación de «Estrategias de enfermería para el manejo de ansiedad en pacientes prequirúrgicos: revisión bibliográfica». Generada por `scripts_for_fuentes/ingesta/lib/desde_bib.py` el 2026-09-07 desde `references.bib` del proyecto (formato de `prompts/01 fuentes/prompt_02_catalogar.md`). Confianza: **alta** (metadatos del .bib del autor).
+> Ficha de catalogación de «Estrategias de enfermería para el manejo de ansiedad en pacientes prequirúrgicos: revisión bibliográfica». Generada por `scripts_for_fuentes/ingesta/lib/desde_bib.py` el 2026-09-07 desde `references.bib` del proyecto (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta** (metadatos del .bib del autor).
 
 ## Origen
 

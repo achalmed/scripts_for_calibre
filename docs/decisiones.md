@@ -201,7 +201,7 @@ marco legal es dato público, no del cliente. La procedencia de cada carpeta:
 
 Si un documento hace falta y su fuente no existe, se añade aquí como `fuentes/<nombre>/` (dos
 archivos), no como un script en el proyecto. Lo recoge `meta/docs/historial/ARQUITECTURA.md` §2 (la fila de
-este repo) y `prompts/01 fuentes/prompt_01_localizar_descargar.md`.
+este repo) y `prompts/skills/fuentes-documentales/references/paso-01-localizar-descargar.md`.
 
 ### §5.4 El marco legal: el dato se queda, el código se fue (2026-09-06; M10 D6, 2026-09-15; DOC10, 2026-10-04)
 
