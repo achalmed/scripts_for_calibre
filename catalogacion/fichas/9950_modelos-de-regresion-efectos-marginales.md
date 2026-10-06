@@ -59,4 +59,4 @@ Carpeta actual en Calibre: `biblioteca/Juan A., Huaripuma Vargas/Modelos de regr
 ## Notas
 
 Confianza: **media**. Capítulo 8 de un curso de la UNSCH (17-07-2023); serie asignada por el área donde estaba archivado (Estadística), curso exacto no identificado en el PDF.
-- Origen: `10 Class/contenido/_inbox/estadistica/course_00_curso_base/06_RECURSOS/presentaciones/slide chapter 08 modelos de regresion efectos marginales.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).
+- Origen: `docencia/contenido/_inbox/estadistica/course_00_curso_base/06_RECURSOS/presentaciones/slide chapter 08 modelos de regresion efectos marginales.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).

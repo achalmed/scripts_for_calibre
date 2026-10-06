@@ -59,4 +59,4 @@ Carpeta actual en Calibre: `biblioteca/Tim, Essam/Data analysis with Stata_ chea
 ## Notas
 
 Confianza: **alta**. geocenter.github.io/StataTraining; CC BY 4.0; versión analysis_2021_rd2.
-- Origen: `10 Class/contenido/cursos/stata/05-recursos/presentaciones/slide stata cheatsheets.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).
+- Origen: `docencia/contenido/cursos/stata/05-recursos/presentaciones/slide stata cheatsheets.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).

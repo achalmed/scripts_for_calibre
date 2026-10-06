@@ -10,7 +10,7 @@ from conftest import pdf_minimo
 
 
 def _curso(caja):
-    curso = caja.docs / "10 Class" / "contenido" / "cursos" / "curso-prueba"
+    curso = caja.docs / "docencia" / "contenido" / "cursos" / "curso-prueba"
     (curso / "05-recursos" / "lecturas").mkdir(parents=True)
     (curso / "curso.yml").write_text("curso: curso-prueba\nbibliografia: []\n", encoding="utf-8")
     pdf = curso / "05-recursos" / "lecturas" / "lectura_de_prueba.pdf"
@@ -30,7 +30,7 @@ def test_escanear_propone_ingestar(caja):
     assert len(tsvs) == 1
     filas = list(csv.DictReader(open(tsvs[0], encoding="utf-8"), delimiter="\t"))
     assert [(f["decision"], f["clase"], f["autor"]) for f in filas] == [("ingestar", "lectura", "Unknown")]
-    assert filas[0]["ruta"] == "10 Class/contenido/cursos/curso-prueba/05-recursos/lecturas/lectura_de_prueba.pdf"
+    assert filas[0]["ruta"] == "docencia/contenido/cursos/curso-prueba/05-recursos/lecturas/lectura_de_prueba.pdf"
 
 
 def test_simular_anuncia_sin_escribir_en_calibre(caja):

@@ -104,10 +104,10 @@ con su `anexo`. Sin texto de la ley (`sin_principal`), el primer anexo hace de f
 `identificar` salta los anexos (`[adj]`) y registra como copia lo que ya está en el ledger (`[copia]`).
 Series de `datafw/data/raw`: `datafw <institución>` y, con etapa y año, `datafw <inst> - <carpeta> <etapa>`.
 
-## Cursos: material externo de `10 Class` (`main.sh cursos`)
+## Cursos: material externo de `docencia` (`main.sh cursos`)
 
-PDF **externos** de `05-recursos/` de `10 Class/contenido/cursos/*` → Calibre, con `bibliografia:
-[{calibre_id, titulo, autor, origen}]` en el `curso.yml` (contrato con `10 Class`, `../docs/arquitectura.md`
+PDF **externos** de `05-recursos/` de `docencia/contenido/cursos/*` → Calibre, con `bibliografia:
+[{calibre_id, titulo, autor, origen}]` en el `curso.yml` (contrato con `docencia`, `../docs/arquitectura.md`
 §6). Era `ingesta_cursos` (fundida en F3). `cursos --escanear` escribe `reportes/cursos/candidatos_<fecha>.tsv`;
 `cursos [--dry-run] [--tsv X]` simula sin escribir nada; `cursos --aplicar` va por la puerta. Sale 5 sin
 `pdfinfo`/`python3`/`calibredb` y 3 sin TSV. Decisiones del TSV: `ingestar` (alta con título en frase y autor

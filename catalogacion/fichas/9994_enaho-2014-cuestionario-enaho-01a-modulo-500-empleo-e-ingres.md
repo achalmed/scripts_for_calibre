@@ -59,4 +59,4 @@ Carpeta actual en Calibre: `biblioteca/Instituto Nacional de Estadistica e Infor
 ## Notas
 
 Confianza: **alta**. Cédula del cuestionario 01A (personas de 14 años y más).
-- Origen: `10 Class/contenido/cursos/python/08_INVESTIGACION/referencias/ced_01a_500 2014.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).
+- Origen: `docencia/contenido/cursos/python/08_INVESTIGACION/referencias/ced_01a_500 2014.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).

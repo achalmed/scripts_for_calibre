@@ -19,7 +19,7 @@ se lee para saber por qué, no para saber cómo.
 | **quien mantiene o amplía las suites** | [`../estado.md`](../estado.md) → [`../CLAUDE.md`](../CLAUDE.md) → [decisiones.md](decisiones.md) (§2: la puerta de escritura) → [operacion.md](operacion.md) §1.1 y §4 → el `README.md` y el `suite.yml` de la suite → `../tests/` |
 | **quien prepara una campaña sobre la biblioteca** | [decisiones.md](decisiones.md) §4.8 y §2.9 (`../lib/adjuntos_zotero.py`) → [historial/campanas-sobre-la-biblioteca.md](historial/campanas-sobre-la-biblioteca.md) → `meta/docs/historial/diagnosticos/` |
 | **quien adquiere o ficha** una fuente para un proyecto | [`../README.md`](../README.md) §Uso → `prompts/00 metodo/METODO_DOCUMENTAL.md` → el README de la suite del paso |
-| **quien ingiere** lo que entró | [`../ingesta/README.md`](../ingesta/README.md) (§Cursos para el material de `10 Class`) → [`../catalogacion/README.md`](../catalogacion/README.md) |
+| **quien ingiere** lo que entró | [`../ingesta/README.md`](../ingesta/README.md) (§Cursos para el material de `docencia`) → [`../catalogacion/README.md`](../catalogacion/README.md) |
 | **quien amplía** (una fuente, una raíz, una sigla, una suite) | [arquitectura.md](arquitectura.md) → [ampliar.md](ampliar.md) |
 | **otro repositorio** (`prompts`, `meta`, `datafw`, `03 writing`) | [consumidores.md](consumidores.md) (lo que se usa de aquí) → [arquitectura.md](arquitectura.md) §6 y [`../manifiesto/README.md`](../manifiesto/README.md) → `meta/docs/historial/MODELO_METADATOS.md` y `meta/docs/historial/SINCRONIZACION.md` (la frontera) |
 

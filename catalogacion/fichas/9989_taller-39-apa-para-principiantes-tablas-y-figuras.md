@@ -59,4 +59,4 @@ Carpeta actual en Calibre: `biblioteca/Christopher, Hernandez Amesquita/Taller 3
 ## Notas
 
 Confianza: **media**. Programa de Formación de Usuarios de la BNP, ciclo de fin de año 2025; fecha estimada (los talleres son semanales, el 40 fue el 03-12-2025).
-- Origen: `10 Class/contenido/cursos/sistema-apa/05-recursos/talleres/taller 39 apa para principiantes tablas y figuras.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).
+- Origen: `docencia/contenido/cursos/sistema-apa/05-recursos/talleres/taller 39 apa para principiantes tablas y figuras.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).

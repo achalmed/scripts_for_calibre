@@ -59,4 +59,4 @@ Carpeta actual en Calibre: `biblioteca/Christopher, Hernandez Amesquita/Taller 4
 ## Notas
 
 Confianza: **alta**. Fecha impresa en las diapositivas (11 de diciembre de 2025).
-- Origen: `10 Class/contenido/cursos/sistema-apa/05-recursos/talleres/taller 41 parafrasis con ia sin perder tu estilo.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).
+- Origen: `docencia/contenido/cursos/sistema-apa/05-recursos/talleres/taller 41 parafrasis con ia sin perder tu estilo.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).
