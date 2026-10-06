@@ -20,6 +20,7 @@ import pytest
 REPO = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(REPO / "lib"))
 import escribir  # noqa: E402
+import escribir_zotero  # noqa: E402
 
 
 def _base(p: Path):
@@ -112,11 +113,11 @@ def test_python_exige_la_puerta(mundo, monkeypatch):
     for k in ("PUERTA_ZOTERO", "PUERTA_ZOTERO_DB", "PUERTA_CALIBRE", "PUERTA_BIBLIOTECA"):
         monkeypatch.delenv(k, raising=False)
     with pytest.raises(escribir.PuertaCerrada):
-        escribir.conexion_zotero(zot)
+        escribir_zotero.conexion_zotero(zot)
     monkeypatch.setenv("PUERTA_ZOTERO", "abierta")
     monkeypatch.setenv("PUERTA_ZOTERO_DB", str(tmp / "otra.sqlite"))
     with pytest.raises(escribir.PuertaCerrada):        # abierta para otra base
-        escribir.conexion_zotero(zot)
+        escribir_zotero.conexion_zotero(zot)
 
 
 def test_python_puerta_respalda_y_restaura_el_entorno(mundo, monkeypatch):
@@ -125,7 +126,7 @@ def test_python_puerta_respalda_y_restaura_el_entorno(mundo, monkeypatch):
         monkeypatch.setenv(k, v)
     monkeypatch.delenv("PUERTA_ZOTERO", raising=False)
     with escribir.puerta("prueba", zotero=zot):
-        c = escribir.conexion_zotero(zot)
+        c = escribir_zotero.conexion_zotero(zot)
         c.execute("select 1")
         c.close()
     assert "PUERTA_ZOTERO" not in os.environ

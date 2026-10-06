@@ -13,6 +13,7 @@ El encargo de la ola 2a es `meta/programa/06-olas/ola-02-reingenieria.md` §2 (K
 
 | fecha | qué | dónde se ve |
 |---|---|---|
+| 2026-10-05 | Ola 2a, K8: `script_normalizacion_metadatos` (11 campañas cerradas, 3 953 líneas) sale del árbol al historial de git (se lee en `467c8a7`); los respaldos de dentro del repo (1,0 GB: `normalizacion_metadatos/backups` 820 MB, `ecosistema_lectura/backups`, `koreader_estudio/backups`, `sincronizar_zotero/estado/backups`) se copiaron a `$RESPALDOS_DIR/biblioteca/<suite>/` con `SHA256SUMS` verificado y los originales se movieron a `~/.local/share/residuos-programa/2026-10-05/scripts_for_calibre/` (verificados también); nada se borró. Las primitivas SQL de Zotero pasan a `lib/escribir_zotero.py`: ningún archivo que nombre `metadata.db` lleva SQL que modifique (RQ-PRE-06 parte D = 0 en el repo) | `tests/test_puerta.py` sin exclusiones |
 | 2026-10-05 | Ola 2a, K7: el correo del «polite pool» de Crossref sale de `script_verificar_metadatos/config.sh` a la variable `CROSSREF_MAILTO` (P227, P14); las 86 fichas del programa citan `proyecto: meta` (id, normativa 1.10) y la fase en `uso:` (RQ-BIB-04: 86 → 0) | `tests/test_privacidad_k7.py` |
 | 2026-10-05 | Ola 2a, K6: los seis `config.sh` cargan `core/env.sh` (sin `$HOME/Documents/biblioteca` de respaldo, P217/P4); los tres timers como plantillas en `systemd/` con `%h`, `SuccessExitStatus=75` y PATH sin anaconda (P221/P8), instaladas por `systemd/instalar.sh` (simula por defecto; `--verificar` compara lo instalado con la plantilla); lecturas de SQLite y Python con `CORE_PYTHON` (`lib/leer.sh`), sin el `sqlite3` de anaconda; el estado de `ecosistema_lectura` y `sincronizar_zotero` fuera del repo; ninguna suite usa ya `lib_comun/` | `tests/test_entorno_k6.py` (`systemd-analyze --user verify`, corridas con el PATH de los timers) |
 | 2026-10-05 | Ola 2a, K5: `catalogacion_biblioteca --aplicar` y `metadatos_calibre register` escriben por la puerta (cierra P1: ahora toman el candado y respaldan); `metadatos_calibre` simula por defecto y `--aplicar` escribe (cierra P2); la catalogación usa la detección canónica de Calibre abierto; `test_puerta.py` sin pendientes | `tests/test_escritores_k5.py`, `tests/test_puerta.py` |
@@ -23,13 +24,16 @@ El encargo de la ola 2a es `meta/programa/06-olas/ola-02-reingenieria.md` §2 (K
 
 ## En curso
 
-- 2026-10-05 · ola 2a, K8: `script_normalizacion_metadatos` al historial y los respaldos fuera del repo (dueño: agente «calibre»)
+- 2026-10-05 · ola 2a, K9: documentación de la fila 13 (dueño: agente «calibre»)
 
 ## Por hacer
 
-- 2026-10-05 · K8–K9 de la ola 2a (dueño: agente «calibre»): ver el encargo.
+- 2026-10-05 · K9 de la ola 2a (dueño: agente «calibre»): ver el encargo.
 
 - 2026-10-05 · **Reinstalar los tres timers desde `systemd/`** (dueño: el director, fase E de la ola 2): `systemd/instalar.sh --aplicar` y después `systemd/instalar.sh --verificar` = 0; hasta entonces corren las unidades viejas (PATH con anaconda), que siguen funcionando con el código nuevo.
+
+- 2026-10-05 · **Residuos de la ola 2a** (dueño: el director, con la copia 3): `~/.local/share/residuos-programa/2026-10-05/scripts_for_calibre/` guarda los respaldos movidos (con su `*.SHA256SUMS`); la copia externa está en `$RESPALDOS_DIR/biblioteca/{normalizacion_metadatos,ecosistema_lectura,koreader_estudio,sincronizar_zotero}/`. Nada se borra antes de la copia 3.
+- 2026-10-05 · **Estado viejo dentro del repo** (dueño: agente «calibre» o el director tras la orquestación de las 04:30): `script_ecosistema_lectura/estado/` (la marca, que la orquestación copia sola a `$XDG_STATE_HOME/biblioteca/ecosistema_lectura/`) y `script_sincronizar_zotero/estado/ultimo_sync.json` quedan sin uso; van a residuos cuando la marca nueva exista.
 
 ## Futuro
 

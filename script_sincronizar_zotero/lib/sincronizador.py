@@ -4,7 +4,7 @@
 Lee ambas bases, calcula el plan de sincronizacion segun el contrato ZMI
 (prompt_para_zotero_1_catalogacion.md) y la politica "Calibre manda", genera
 reportes TSV+MD y, con APPLY=true, escribe Zotero por SQL (primitivas z_* de
-lib/escribir.py, la puerta) y deja el plan de Calibre en PLAN_CALIBRE para que
+lib/escribir_zotero.py, la puerta) y deja el plan de Calibre en PLAN_CALIBRE para que
 main.sh lo aplique con la API de Calibre (calibre-debug, lib/escribir.py
 aplicar-plan): metadata.db no se toca por SQL (ola 2a, K3). Las columnas de
 Calibre se resuelven por etiqueta, nunca por número.
@@ -52,10 +52,10 @@ import unicodedata
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "lib"))
-import escribir  # noqa: E402  (la puerta de escritura, K2)
+import escribir_zotero as ez  # noqa: E402  (la puerta de escritura en Zotero, K2)
 # Las primitivas de escritura en Zotero viven en la puerta; se reexportan para quien las tomaba de aquí.
-from escribir import (z_touch, z_field_id, z_value_id, z_set_field, z_get_field,  # noqa: E402,F401
-                      z_set_creators, z_tag_id, z_set_manual_tags, z_set_attachment_path)
+from escribir_zotero import (z_touch, z_field_id, z_value_id, z_set_field, z_get_field,  # noqa: E402,F401
+                             z_set_creators, z_tag_id, z_set_manual_tags, z_set_attachment_path)
 
 CAL_DB = os.environ["CALIBRE_DB"]
 ZOT_DB = os.environ["ZOTERO_DB"]
@@ -70,7 +70,7 @@ DO_ATTACH = os.environ.get("REPAIR_ATTACHMENTS", "true") == "true"
 DO_BACKFILL = os.environ.get("BACKFILL_CALIBRE", "true") == "true"
 DO_MIRROR = os.environ.get("POPULATE_MIRROR", "true") == "true"
 
-NOW_SQL = escribir.AHORA_SQL
+NOW_SQL = ez.AHORA_SQL
 
 # Idioma: Calibre usa ISO 639-2 (spa); el contrato pide ISO 639-1 en Zotero.
 LANG_2TO1 = {"spa": "es", "eng": "en", "por": "pt", "fra": "fr", "ita": "it",
@@ -375,7 +375,7 @@ def z_change_type(cur, item_id, new_type, csl_type=None):
     - Creadores con rol invalido: pasan al rol primario del tipo nuevo.
     - csl_type: para tipos sustitutos del contrato, anexa "Type: <csl>".
     """
-    escribir.z_change_type(cur, item_id, new_type, csl_type, {
+    ez.z_change_type(cur, item_id, new_type, csl_type, {
         "TYPE_ID": TYPE_ID, "VALID_FIELDS": VALID_FIELDS, "BASE_OF": BASE_OF, "TARGET_FIELD": TARGET_FIELD,
         "VALID_CREATORS": VALID_CREATORS, "PRIMARY_CREATOR": PRIMARY_CREATOR, "FIELD_NAME": FIELD_NAME,
         "field_label": field_label})
@@ -671,7 +671,7 @@ def main():
     # Calibre se lee siempre en solo lectura: se escribe por la API (main.sh, aplicar-plan).
     cal = sqlite3.connect(f"file:{CAL_DB}?mode=ro", uri=True)
     if APPLY:
-        zot = escribir.conexion_zotero(ZOT_DB)   # exige la puerta de Zotero abierta (main.sh)
+        zot = ez.conexion_zotero(ZOT_DB)   # exige la puerta de Zotero abierta (main.sh)
     else:
         zot = sqlite3.connect(f"file:{ZOT_DB}?mode=ro", uri=True)
     columnas(cal)

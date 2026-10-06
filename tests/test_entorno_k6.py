@@ -22,8 +22,7 @@ UNIDADES = ["ecosistema-lectura", "ecosistema-metadatos", "koreader-calibre-sync
 
 def test_sin_rutas_de_maquina_en_el_codigo():
     r = subprocess.run(["git", "-C", str(ap.REPO), "grep", "-nI", "-e", "/home/[a-z]", "-e", "$HOME/Documents",
-                        "--", "*.sh", "*.py", "*.service", "*.timer", "*.yml", ":!script_normalizacion_metadatos",
-                        ":!tests"], capture_output=True, text=True)
+                        "--", "*.sh", "*.py", "*.service", "*.timer", "*.yml", ":!tests"], capture_output=True, text=True)
     assert r.stdout == "", r.stdout
 
 

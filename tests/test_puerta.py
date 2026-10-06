@@ -1,6 +1,6 @@
-"""tests/test_puerta.py — una sola puerta de escritura en metadata.db y zotero.sqlite (ola 2a, K2; RQ-PRE-06).
+"""tests/test_puerta.py — una sola puerta de escritura en las bases de Calibre y Zotero (ola 2a, K2; RQ-PRE-06).
 
-Objetivo: que ningún archivo de código del repo fuera de `lib/escribir.py` y `lib/escribir.sh` escriba en
+Objetivo: que ningún archivo de código del repo fuera de `lib/escribir.{py,sh}` y `lib/escribir_zotero.py` escriba en
   las bases: ni `calibredb` con un subcomando que escribe, ni la API de Calibre (`set_field`…), ni una
   conexión SQLite que no sea de solo lectura, ni SQL que modifique (`UPDATE … SET`, `INSERT INTO`…).
 Método: búsqueda por texto en los `.py` y `.sh` rastreados y nuevos (sin `tests/`), línea a línea, sin
@@ -17,8 +17,8 @@ import subprocess
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[1]
-PUERTA = {"lib/escribir.py", "lib/escribir.sh"}
-FUERA = ("tests/", "script_normalizacion_metadatos/")   # normalización: campañas cerradas, sale del árbol en K8
+PUERTA = {"lib/escribir.py", "lib/escribir.sh", "lib/escribir_zotero.py"}
+FUERA = ("tests/",)   # las campañas de script_normalizacion_metadatos salieron al historial de git en K8
 
 # archivo → ítem de la ola 2a que lo pasa por la puerta
 PENDIENTES = {

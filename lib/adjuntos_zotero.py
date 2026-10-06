@@ -33,6 +33,7 @@ LIB = Path(__file__).resolve().parent
 sys.path.insert(0, str(LIB))
 sys.path.insert(0, str(LIB.parent.parent / "core"))
 import escribir  # noqa: E402  (la puerta)
+import escribir_zotero as ez  # noqa: E402
 
 
 def _env():
@@ -96,7 +97,7 @@ def _rutas(cur, tsv, out, aplicar):
     n = 0
     for libro, viejo, nuevo, *_ in _filas(tsv, 3):
         if aplicar:
-            k = escribir.z_rewrite_attachment_paths(cur, f"attachments:{viejo}", f"attachments:{nuevo}")
+            k = ez.z_rewrite_attachment_paths(cur, f"attachments:{viejo}", f"attachments:{nuevo}")
         else:
             k = cur.execute("select count(*) from itemAttachments where path = ?", (f"attachments:{viejo}",)).fetchone()[0]
         if k:
@@ -117,13 +118,13 @@ def _titulos(cur, tsv, out, aplicar, claves):
         key, item = _item(cur, claves, libro)
         if item is None:
             continue
-        actual = escribir.z_get_field(cur, item, "title")
+        actual = ez.z_get_field(cur, item, "title")
         if actual != viejo:
             omitidos += 1
             out.write(f"omitido\t{libro}\t{key}\tZotero tenía «{actual}»\n")
             continue
         if aplicar:
-            escribir.z_set_field(cur, item, "title", nuevo)
+            ez.z_set_field(cur, item, "title", nuevo)
         hechos += 1
         out.write(f"titulo\t{libro}\t{key}\t{viejo}\t{nuevo}\n")
     return {"títulos": hechos, "omitidos": omitidos}
@@ -149,7 +150,7 @@ def _autores(cur, tsv, out, aplicar, claves):
             continue
         antes = " ; ".join(f"{ln}, {fn}" for fn, ln, _ in primarios)
         if aplicar:
-            escribir.z_set_creators(cur, item, [_persona(a) for a in nuevos.split(" & ")], tipo)
+            ez.z_set_creators(cur, item, [_persona(a) for a in nuevos.split(" & ")], tipo)
         hechos += 1
         out.write(f"creadores\t{libro}\t{key}\t{antes}\t{nuevos}\n")
     return {"ítems con creadores rehechos": hechos, "omitidos": omitidos}
@@ -205,7 +206,7 @@ def main(argv=None) -> int:
     from candado import Ocupado  # noqa: E402
     try:
         with escribir.puerta("adjuntos_zotero", zotero=zotero):
-            con = escribir.conexion_zotero(zotero)
+            con = ez.conexion_zotero(zotero)
             cuentas = hacer(con)
             con.commit()
             con.close()
