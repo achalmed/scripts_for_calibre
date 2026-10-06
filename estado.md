@@ -1,7 +1,7 @@
 ---
 tipo: estado
 estado: activo
-actualizado: 2026-10-05
+actualizado: 2026-10-06
 ---
 # estado.md — scripts-biblioteca
 
@@ -40,6 +40,12 @@ nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (mi
 `meta/programa/06-olas/ola-02-reingenieria.md` §6), que la conduce el director.
 
 ## Por hacer
+
+- 2026-10-06 · dueño: Edison · **Política del sincronizador tras §1.6** (Zotero manda en metadatos, [docs/citar.md](docs/citar.md)): `sincronizar-zotero` sigue con «Calibre gana» y el timer `ecosistema-metadatos` (04:30) sobrescribe en Zotero cada noche lo corregido solo allí. Decidir: invertir la política campo a campo (Zotero → Calibre, salvo título y autor, que forman la ruta del adjunto, §1.2), dejar solo el relleno de vacíos o pausar el timer (`systemctl --user disable --now ecosistema-metadatos.timer`) mientras tanto. Cambio de lógica: caracterización primero (§2.8).
+- 2026-10-06 · dueño: Edison · **Exportación automática de Better BibTeX** a `ZOTERO_BIB` y claves fijadas: pasos en [docs/citar.md](docs/citar.md) §2 (requiere la interfaz de Zotero).
+- 2026-10-06 · dueño: Edison · **`manifiesto bib` tras §1.6**: hoy escribe claves propias (`apellidoAAAApalabra`) que no coinciden con ninguna de Better BibTeX. Opciones: que escriba en `clave_bibtex` la clave de Zotero del mismo `calibre_id` (por la ruta del adjunto) o retirarlo cuando los documentos vivos citen desde `zotero.bib`; `escritura/scripts/claves_zotero.py` ya da la equivalencia.
+- 2026-10-06 · dueño: Edison · **Obsidian y LibreOffice**: aplicar la configuración propuesta de Zotero Integration (APA, formatos de cita, `calibre_id` en la plantilla) y dejar funcionando el complemento de LibreOffice (`libreoffice-java-common`, Java en Opciones): [docs/citar.md](docs/citar.md) §3 y §4.
+- 2026-10-06 · dueño: Edison · **Prompts y Método Documental**: `prompts/00 metodo/METODO_DOCUMENTAL.md`, `normas_apa7.md` y el skill de fuentes describen a Calibre como autoridad de la cita; alinearlos con §1.6 junto con la normativa (N 9.6).
 
 - 2026-10-05 · **Residuos de la ola 2a** (dueño: el director, con la copia 3): `~/.local/share/residuos-programa/2026-10-05/scripts-biblioteca/` guarda los respaldos movidos (con su `*.SHA256SUMS`) y el `.lock_calibre_write` vacío; la copia externa está en `$RESPALDOS_DIR/biblioteca/{normalizacion_metadatos,ecosistema_lectura,koreader_estudio,sincronizar_zotero}/`. Nada se borra antes de la copia 3.
 - 2026-10-05 · **Estado viejo dentro del repo** (dueño: el director, después de la orquestación de las 04:30 del 2026-10-06): `lectura/estado/` (la marca, que la orquestación copia sola a `$XDG_STATE_HOME/biblioteca/ecosistema_lectura/`) y `sincronizar-zotero/estado/ultimo_sync.json` quedan sin uso; van a residuos cuando la marca nueva exista.

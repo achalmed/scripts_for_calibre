@@ -20,7 +20,8 @@ las suites de fuentes) y el README de la suite que se toque. Concreta `~/Documen
   pruebas van al disco (`$XDG_CACHE_HOME/pytest/`), nunca a `/tmp` (es RAM).
 - **La prueba antes del código**: un cambio en un sincronizador vivo deja verde `tests/calibre` contra la
   referencia de git; un defecto se fija primero como `xfail` estricto.
-- **Calibre manda en los metadatos bibliográficos**; Zotero solo rellena vacíos; vacío en el origen nunca borra en
+- **Zotero manda en citas y metadatos y Calibre en los archivos** desde 2026-10-06 (`docs/citar.md`, §1.6); hasta
+  cambiar la política, el sincronizador sigue: Calibre gana y Zotero solo rellena vacíos; vacío en el origen nunca borra en
   el destino. **Título y autor jamás se escriben en Calibre** por sincronización ni verificación (Zotero enlaza los
   adjuntos por `Autor/Título (id)`), salvo la catalogación y una campaña que reescriba Zotero en la misma operación.
 - **Los relojes de lectura no se copian entre sí**: `#ko_tiempo`, `#zot_tiempo`; `#tiempo_estudio` los suma.

@@ -21,6 +21,9 @@ son ahora §5–§8 con el mismo segundo número: su §1.x es §5.x, §2.x es §
 
 ### §1.1 Calibre manda en los metadatos bibliográficos (2026-07-28)
 
+*Superada por §1.6 (2026-10-06) en cuanto a la autoridad; el sincronizador la aplica hasta que se
+fije la política nueva (`../estado.md` §Por hacer).*
+
 En conflicto gana Calibre y se propaga a Zotero; Zotero solo rellena vacíos en Calibre y puebla las
 columnas espejo `#zotero_*`. Vacío en el origen nunca borra en el destino. Política campo a campo:
 `../sincronizar-zotero/README.md`; autoridad por dato en el workspace:
@@ -46,6 +49,16 @@ Diseño: `historial/diseno-ecosistema-lectura-2026-08.md` §3.
 
 Los demás campos siguen comparándose normalizados. Con `norm()` una corrección de tildes o
 mayúsculas en Calibre nunca llegaba a Zotero.
+
+### §1.6 Zotero manda en citas y metadatos; Calibre, en los archivos (Edison, 2026-10-06)
+
+Zotero es la autoridad de los metadatos, las referencias y las citas en todo el ecosistema
+(`escritura`, SGDP, Obsidian, LibreOffice), por sus complementos: la clave de cita es la de Better
+BibTeX y la fuente de los `.bib` es su exportación automática (`ZOTERO_BIB` de `core/env.sh`).
+Calibre organiza los archivos y da su ubicación por `calibre_id`; el puente es la ruta del adjunto
+en Zotero, `<Autor>/<Título> (<calibre_id>)/`. Cómo se cita: [citar.md](citar.md). No se reescribe
+de golpe: la política de `sincronizar-zotero` (§1.1), `manifiesto bib` (§8.5) y la regla N 9.6 de
+la normativa cambian en su propio ciclo (`../estado.md` §Por hacer; `meta/estado.md`).
 
 ## 2. Escritura segura
 
@@ -351,6 +364,9 @@ se prueban primero contra la ruta tal como se dio y después contra la resuelta,
 `datafw/data` es un enlace simbólico a un disco externo (2026-09-29).
 
 ### §8.5 `references.bib` se genera desde Calibre (2026-09-16)
+
+*Superada por §1.6 (2026-10-06) para los documentos nuevos: citan desde la exportación de Better
+BibTeX; los existentes conservan su `references.bib` generado hasta migrarlos.*
 
 `manifiesto/main.py bib` escribe el bloque generado de `references.bib` (APA 7 vía biblatex) y la
 `clave_bibtex` de cada entrada; un error se corrige en Calibre y se regenera. Informes y libros se

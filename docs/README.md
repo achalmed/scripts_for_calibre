@@ -19,6 +19,7 @@ se lee para saber por qué, no para saber cómo.
 | **quien mantiene o amplía las suites** | [`../estado.md`](../estado.md) → [`../CLAUDE.md`](../CLAUDE.md) → [decisiones.md](decisiones.md) (§2: la puerta de escritura) → [operacion.md](operacion.md) §1.1 y §4 → el `README.md` y el `suite.yml` de la suite → `../tests/` |
 | **quien prepara una campaña sobre la biblioteca** | [decisiones.md](decisiones.md) §4.8 y §2.9 (`../lib/adjuntos_zotero.py`) → [historial/campanas-sobre-la-biblioteca.md](historial/campanas-sobre-la-biblioteca.md) → `meta/docs/historial/diagnosticos/` |
 | **quien adquiere o ficha** una fuente para un proyecto | [`../README.md`](../README.md) §Uso → `prompts/00 metodo/METODO_DOCUMENTAL.md` → el README de la suite del paso |
+| **quien cita** (LaTeX, Obsidian, LibreOffice, SGDP) | [citar.md](citar.md): Zotero manda en citas y metadatos; Calibre, en los archivos |
 | **quien ingiere** lo que entró | [`../ingesta/README.md`](../ingesta/README.md) (§Cursos para el material de `docencia`) → [`../catalogacion/README.md`](../catalogacion/README.md) |
 | **quien amplía** (una fuente, una raíz, una sigla, una suite) | [arquitectura.md](arquitectura.md) → [ampliar.md](ampliar.md) |
 | **otro repositorio** (`prompts`, `meta`, `datafw`, `escritura`) | [consumidores.md](consumidores.md) (lo que se usa de aquí) → [arquitectura.md](arquitectura.md) §6 y [`../manifiesto/README.md`](../manifiesto/README.md) → `meta/docs/historial/MODELO_METADATOS.md` y `meta/docs/historial/SINCRONIZACION.md` (la frontera) |
@@ -42,6 +43,7 @@ se lee para saber por qué, no para saber cómo.
 |---|---|---|---|
 | [ampliar.md](ampliar.md) | `procedimiento` | `activo` | Ampliar: una fuente, una raíz de entrada, un paquete de anexos, una sigla o una suite |
 | [arquitectura.md](arquitectura.md) | `doc` | `activo` | Arquitectura: dos adquisiciones, el recorrido de un documento y las piezas que lo mueven |
+| [citar.md](citar.md) | `doc` | `activo` | Citar en el ecosistema: Zotero manda en citas y metadatos, Calibre en los archivos |
 | [consumidores.md](consumidores.md) | `doc` | `activo` | Consumidores de scripts-biblioteca: lo que otros repos usan de aquí y lo que no se cambia sin avisarles |
 | [decisiones.md](decisiones.md) | `decision` | `activo` | Decisiones de scripts-biblioteca: autoridad de los datos, escritura segura, organización y Método Documental |
 | [operacion.md](operacion.md) | `doc` | `activo` | Operación del ecosistema de lectura y estudio (Calibre ⇄ KOReader ⇄ Zotero): qué es automático, qué es manual, cómo se verifica |
