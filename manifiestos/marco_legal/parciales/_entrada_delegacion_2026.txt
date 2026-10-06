@@ -1,0 +1,44 @@
+# Normas citadas por el PL de delegación de facultades (Oficio 245-2026-PR) — generado desde datafw materias.json
+# formato: norma | carpeta CIL | título corto
+Ley N.° 32490 | 11_seguridad | medidas extraordinarias extorsion sicariato transporte
+Decreto Legislativo N.° 1735 | 11_seguridad | subsistema especializado contra la extorsion
+Decreto Legislativo N.° 1182 | 11_seguridad | geolocalizacion datos telecomunicaciones
+Decreto Legislativo N.° 1338 | 11_seguridad | registro nacional equipos terminales moviles RENTESEG
+Decreto Legislativo N.° 1688 | 11_seguridad | comunicaciones ilegales penales operadoras
+Ley N.° 30096 | 11_seguridad | delitos informaticos
+Ley N.° 30424 | 11_seguridad | responsabilidad administrativa personas juridicas
+Ley N.° 32332 | 11_seguridad | plataforma denuncia digital
+Decreto Legislativo N.° 1095 | 11_seguridad | uso de la fuerza fuerzas armadas
+Decreto Legislativo N.° 1094 | 01_normativa_fundamental/02_codigos | codigo penal militar policial
+Decreto Legislativo N.° 1141 | 11_seguridad | sistema de inteligencia nacional DINI
+Decreto Legislativo N.° 1228 | 07_economia | centros de innovacion productiva CITE
+Decreto Legislativo N.° 1409 | 07_economia | sociedad por acciones cerrada simplificada SACS
+Ley N.° 28806 | 14_trabajo | ley general de inspeccion del trabajo
+Decreto Legislativo N.° 728 | 14_trabajo | ley de fomento del empleo
+Ley N.° 32645 | 04_administracion_publica | colegio profesional de artistas del peru
+Ley N.° 31335 | 20_desarrollo_productivo | cooperativas agrarias
+Ley N.° 27287 | 07_economia | ley de titulos valores
+Decreto Legislativo N.° 1400 | 07_economia | regimen de garantia mobiliaria
+Ley N.° 29148 | 20_desarrollo_productivo | fondo de garantia para el campo FOGASA
+Decreto de Urgencia N.° 027-2009 | 20_desarrollo_productivo | fondo AGROPERU
+Ley N.° 31071 | 20_desarrollo_productivo | compras estatales alimentos agricultura familiar
+Ley N.° 31872 | 20_desarrollo_productivo | sierra y selva exportadora modificatoria
+Ley N.° 28890 | 20_desarrollo_productivo | crea sierra exportadora
+Ley N.° 31145 | 20_desarrollo_productivo | saneamiento fisico legal predios rurales
+Decreto Legislativo N.° 1060 | 20_desarrollo_productivo | sistema nacional de innovacion agraria
+Ley N.° 31410 | 20_desarrollo_productivo | SECIGRA agrario
+Ley N.° 30230 | 09_inversion_publica | medidas tributarias simplificacion inversion
+Decreto Legislativo N.° 1192 | 09_inversion_publica | ley marco adquisicion y expropiacion
+Decreto Ley N.° 25844 | 20_desarrollo_productivo | ley de concesiones electricas
+Ley N.° 28832 | 20_desarrollo_productivo | desarrollo eficiente generacion electrica
+Ley N.° 28587 | 07_economia | proteccion al consumidor servicios financieros
+Ley N.° 26702 | 07_economia | ley general del sistema financiero SBS
+Ley N.° 31143 | 07_economia | ley que protege de la usura topes tasas interes
+Decreto Legislativo N.° 1280 | 20_desarrollo_productivo | ley marco gestion servicios saneamiento
+Ley N.° 27829 | 20_desarrollo_productivo | bono familiar habitacional
+Ley N.° 30852 | 20_desarrollo_productivo | exoneracion requisitos damnificados BFH
+Ley N.° 31526 | 20_desarrollo_productivo | bono de arrendamiento vivienda emergencias
+Ley N.° 32065 | 20_desarrollo_productivo | acceso universal al agua potable
+Ley N.° 29230 | 09_inversion_publica | obras por impuestos
+Decreto Legislativo N.° 635 | 01_normativa_fundamental/02_codigos | codigo penal
+Decreto Legislativo N.° 957 | 01_normativa_fundamental/02_codigos | nuevo codigo procesal penal

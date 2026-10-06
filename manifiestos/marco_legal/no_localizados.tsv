@@ -1,0 +1,20 @@
+estado	documento	motivo
+FALLIDO	RM 151-2021-PCM (norma aprobatoria del Manual AIR) en cdn.www.gob.pe/uploads/document/file/2018744	el PDF descarga OK pero es una pagina suelta de El Peruano con contenido ajeno (estado de emergencia), no la resolucion; buscar la norma en busquedas.elperuano.pe
+FALLIDO	Guia para la elaboracion de proyectos de ley del Congreso (documento 4)	NO EXISTE como publicacion autonoma. La materia esta cubierta por el Manual de Tecnica Legislativa 3a ed. 2021 y el Manual del Proceso Legislativo (2012), ambos ya registrados
+FALLIDO	Manual o Guia del Congresista (documento 6)	NO EXISTE con ese titulo. Equivalentes institucionales registrados: Manual del Parlamento (Delgado-Guembes, Oficialia Mayor 2012) y Guia de Gestion de la Representacion Politica (2011)
+FALLIDO	Manual de Redaccion Parlamentaria como publicacion suelta (documento 3)	NO EXISTE por separado; solo se publica dentro del tomo MTL+MRP 2013, ya registrado en dos URLs
+FALLIDO	Directiva especifica sobre tramite legislativo de proposiciones de ley	NO EXISTE una directiva unica publicada; el tramite lo fija el propio Reglamento del Congreso. Lo publicado son directivas y PTA de gestion documental, mesa de partes digital y expediente virtual, ya registrados
+FALLIDO	Nueva edicion del Manual de Tecnica Legislativa adaptada a la bicameralidad (2026)	NO PUBLICADA a la fecha (31/07/2026); la 3a ed. 2021 sigue siendo la vigente pese a que los Reglamentos son de 2026
+FALLIDO	sgp.pcm.gob.pe (biblioteca y seccion Analisis de Calidad Regulatoria)	el servidor no responde (timeout tras 45 s en dos intentos); los mismos documentos se obtuvieron via cdn.www.gob.pe
+FALLIDO	Compendio oficial de precedentes vinculantes/casaciones de la Corte Suprema en materia LABORAL y CIVIL	No existe PDF recopilatorio oficial unico; el PJ solo ofrece buscadores dinamicos por resolucion. Consultar: https://www.pj.gob.pe/wps/wcm/connect/cij-juris/s_jurisprudencia_sistematizada/as_suprema/as_servicios/as_jurisprudencia_vinculante/inicio_jurisprudencia_vinculante y la Sala Constitucional y Social (NLPT). Los compendios MINJUS-SPIJ solo cubren materia penal
+FALLIDO	Ley N.° 32490	no localizado en Congreso-ADLP/DLeg/gob.pe
+FALLIDO	Decreto Legislativo N.° 1735	no localizado en Congreso-ADLP/DLeg/gob.pe
+FALLIDO	Decreto Legislativo N.° 1688	no localizado en Congreso-ADLP/DLeg/gob.pe
+FALLIDO	Ley N.° 32332	no localizado en Congreso-ADLP/DLeg/gob.pe
+FALLIDO	Ley N.° 32645	no localizado en Congreso-ADLP/DLeg/gob.pe
+FALLIDO	Decreto de Urgencia N.° 027-2009	no localizado en Congreso-ADLP/DLeg/gob.pe
+FALLIDO	Ley N.° 31872	no localizado en Congreso-ADLP/DLeg/gob.pe
+FALLIDO	Decreto Legislativo N.° 1060	no localizado en Congreso-ADLP/DLeg/gob.pe
+FALLIDO	Ley N.° 31410	no localizado en Congreso-ADLP/DLeg/gob.pe
+FALLIDO	Ley N.° 31526	no localizado en Congreso-ADLP/DLeg/gob.pe
+FALLIDO	Ley N.° 32065	no localizado en Congreso-ADLP/DLeg/gob.pe

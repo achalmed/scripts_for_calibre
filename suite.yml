@@ -1,0 +1,21 @@
+# suite.yml — suite fuentes: Adquisición de documentos: verifica si una referencia ya está en la biblioteca y descarga a entrada/ desde una fuente conocida (congreso, articulo) con hash y procedencia.
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: fuentes
+objetivo: fuentes
+resumen: 'Adquisición de documentos: verifica si una referencia ya está en la biblioteca y descarga a entrada/ desde una fuente conocida (congreso, articulo) con
+  hash y procedencia.'
+escribe_en:
+- archivos
+simula_por_defecto: true
+comandos:
+- main.py verificar <referencia>… [--archivo RUTA] [--titulo|--autor|--isbn|--doi|--norma …]
+- main.py fuentes
+- main.py localizar <fuente> <ref>…
+- main.py descargar <fuente> <ref>… [--lista archivo]
+- main.py estado
+estado: activo
+depende_de:
+- python3
+- core/py-common/biblioteca.py
+- core/py-common/red.py
+metodo_documental: pasos 00 y 01

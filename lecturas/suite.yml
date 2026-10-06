@@ -1,0 +1,19 @@
+# lecturas/suite.yml — suite lecturas: Pasajes con número de página por concepto, extraídos del texto de cada libro de lecturas.yml; una ficha de lectura por ítem con el frontmatter único.
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: lecturas
+objetivo: fuentes
+resumen: Pasajes con número de página por concepto, extraídos del texto de cada libro de lecturas.yml; una ficha de lectura por ítem con el frontmatter único.
+escribe_en:
+- vault
+simula_por_defecto: true
+comandos:
+- 'main.py <lecturas.yml>              # simula'
+- main.py <lecturas.yml> --aplicar
+- main.py <lecturas.yml> --aplicar --unico todo.md
+estado: activo
+depende_de:
+- python3
+- pdftotext
+- core/py-common/biblioteca.py
+- fichas
+metodo_documental: paso 07

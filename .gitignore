@@ -1,11 +1,30 @@
-# .gitignore de scripts_for_calibre, por clase (NORMATIVA §5 y §15.8). Uno solo, en la raíz.
+# .gitignore de scripts-biblioteca (fusión de scripts_for_calibre y scripts_for_fuentes, ola 2), por clase
+# (normativa 7.x, clases de archivo). Uno solo, en la raíz.
 
 # --- temporal: runtime de las suites (no se versiona; la poda la hace la higiene) ---
-# (los respaldos, el estado y el candado viven fuera del repo desde la ola 2a: $XDG_STATE_HOME/biblioteca/)
+# Los respaldos, el estado y el candado viven fuera del repo desde la ola 2a: $XDG_STATE_HOME/biblioteca/.
 */backups/
 */reportes/
 */estado/
 
+# --- temporal: zona de aterrizaje y registros de ejecución ---
+# entrada/ es tránsito hacia Calibre, no almacén (docs/arquitectura.md §2).
+entrada/*
+!entrada/.gitkeep
+logs/*
+!logs/.gitkeep
+*.log
+.cache_*
+
+# --- temporal: RIS e informes de ingesta; las fichas provisionales son borradores (D12): la canónica la escribe
+# `catalogar` en catalogacion/fichas con su calibre_id (ola 2, F6) ---
+ingesta/salida_ris/
+ingesta/fichas/*
+!ingesta/fichas/.gitkeep
+
 # --- artefacto: bytecode de Python ---
 __pycache__/
 *.pyc
+
+# --- ajeno: metadatos del gestor de archivos (KDE Dolphin) ---
+.directory

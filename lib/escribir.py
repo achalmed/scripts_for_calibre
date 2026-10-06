@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""lib/escribir.py — la única puerta de escritura de scripts_for_calibre, lado Python (ola 2a, K2).
+"""lib/escribir.py — la única puerta de escritura de scripts-biblioteca, lado Python (ola 2a, K2 y F2; fundidas en la fase E).
 
 Objetivo: que ningún otro archivo del repo escriba en metadata.db ni en zotero.sqlite (normativa 9.1,
   RQ-PRE-06; lo comprueba tests/test_puerta.py).
@@ -185,6 +185,35 @@ def aplicar_plan(biblioteca, plan_json) -> int:
             v = {b: _fecha(x) for b, x in v.items()}
         cambios[campo] = v
     return set_campos(api, cambios)
+
+
+# ------------------------------------------------------------------ calibredb (ingesta)
+# Lo que usaba la puerta de scripts_for_fuentes (F2): `ingesta` y sus módulos cargan este archivo por ruta y
+# escriben con `calibredb`; las órdenes de lectura pasan siempre, las demás exigen la puerta abierta.
+SALIDA_CERRADA = 75
+LECTURAS = {"list", "search", "show_metadata", "list_categories", "export", "catalog"}
+ENTORNO = {"LC_ALL": "C", "LANG": "C"}   # la salida de calibredb en inglés («Added book ids»)
+
+
+def abierta() -> bool:
+    return os.environ.get("PUERTA_CALIBRE") == ABIERTA
+
+
+def exigir_puerta() -> None:
+    """Corta el proceso con 75 si la puerta no está abierta: nada se escribe (ni Calibre ni ledgers)."""
+    if not abierta():
+        print("[ERROR] puerta de Calibre cerrada: escriba a través de ingesta/main.sh … --aplicar "
+              "(Calibre cerrado, candado y respaldo verificado); reintente luego (salida 75)", file=sys.stderr)
+        sys.exit(SALIDA_CERRADA)
+
+
+def calibredb(biblioteca, orden: str, *args, **kw) -> subprocess.CompletedProcess:
+    """`calibredb --with-library BIBLIOTECA ORDEN ARGS…`; las órdenes que no son de lectura exigen la puerta."""
+    if orden not in LECTURAS and not abierta():
+        raise PuertaCerrada(f"calibredb {orden} sin la puerta abierta (lib/escribir.sh)")
+    entorno = dict(os.environ, **ENTORNO)
+    return subprocess.run([os.environ.get("CALIBREDB", "calibredb"), "--with-library", str(biblioteca), orden,
+                           *map(str, args)], capture_output=True, text=True, errors="replace", env=entorno, **kw)
 
 
 # ------------------------------------------------------------------ CLI

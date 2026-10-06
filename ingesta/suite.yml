@@ -1,0 +1,30 @@
+# ingesta/suite.yml — suite ingesta: De la zona de entrada a la biblioteca: identifica, cataloga en Calibre, exporta RIS para Zotero, archiva en el fuentes.yml del proyecto, OCR, paquetes de anexos y el material externo de los cursos.
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: ingesta
+objetivo: fuentes
+resumen: 'De la zona de entrada a la biblioteca: identifica, cataloga en Calibre, exporta RIS para Zotero, archiva en el fuentes.yml del proyecto, OCR, paquetes
+  de anexos y el material externo de los cursos.'
+escribe_en:
+- calibre
+- vault
+- archivos
+simula_por_defecto: true
+comandos:
+- main.sh recibir · main.sh identificar · main.sh zotero
+- main.sh catalogar [--aplicar] [--solo REGEX]
+- main.sh bib <ref.bib> --serie «…» [--tags …] [--proyecto RUTA] [--archivo clave=ruta]
+- main.sh archivar [--aplicar] [--mover] · main.sh todo [--aplicar]
+- main.sh paquetes|ocr [--aplicar]
+- main.sh estado
+- main.sh cursos --escanear · main.sh cursos [--dry-run] [--tsv ARCHIVO] · main.sh cursos --aplicar [--tsv ARCHIVO]
+estado: activo
+entrada: scripts_for_fuentes/entrada/
+depende_de:
+- calibredb
+- exiftool
+- pdftotext
+- pdfinfo
+- core/shell-lib
+- catalogacion_biblioteca
+- manifiesto
+metodo_documental: pasos 02 y 03

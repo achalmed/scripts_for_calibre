@@ -1,0 +1,22 @@
+# fichas/suite.yml — suite fichas: Fichas del Método Documental: valida el formato único, coteja textuales y paráfrasis contra el texto del libro, rellena claves desde fuentes.yml y genera el índice.
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: fichas
+objetivo: fuentes
+resumen: 'Fichas del Método Documental: valida el formato único, coteja textuales y paráfrasis contra el texto del libro, rellena claves desde fuentes.yml y genera
+  el índice.'
+escribe_en:
+- vault
+simula_por_defecto: true
+comandos:
+- main.py validar <carpeta>
+- main.py verificar <carpeta> [--aplicar] [--desfase N]
+- main.py claves|grafia <carpeta> [--aplicar]
+- main.py indice <carpeta> --aplicar
+- main.py estado <carpeta>
+- main.py migrar <carpeta> --formato hibrida
+estado: activo
+depende_de:
+- python3
+- core/py-common/biblioteca.py
+- manifiesto
+metodo_documental: pasos 05 y 09

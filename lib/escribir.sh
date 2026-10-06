@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# lib/escribir.sh — la única puerta de escritura de scripts_for_calibre en metadata.db y zotero.sqlite (ola 2a, K2).
+# lib/escribir.sh — la única puerta de escritura de scripts-biblioteca en metadata.db y zotero.sqlite (ola 2a, K2 y F2;
+# fundidas en la fase E: una sola para las suites de Calibre y para ingesta).
 # Módulo: se carga con `source` y hereda las opciones de la shell que lo carga; no fija `set -euo pipefail` (normativa 5.18).
 #
 # Abrir la puerta de Calibre es, en este orden y todo o nada (normativa 9.1, RQ-PRE-06):
@@ -15,11 +16,33 @@
 # Los respaldos viven fuera del repo, en el estado de usuario: $PUERTA_RESPALDOS/<suite>/{calibre,zotero}/.
 
 _PUERTA_LIB="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-# core/ es hermano del repo; env.sh respeta lo que ya traiga el entorno (CALIBRE_DB, LOCK_CALIBRE, …).
-source "$_PUERTA_LIB/../../core/env.sh"
-source "$SHELL_LIB/detectar_apps.sh"
-source "$SHELL_LIB/lock.sh"
-source "$SHELL_LIB/backup_rotado.sh"
+
+_puerta_falla() {   # _puerta_falla CÓDIGO MENSAJE — avisa por stderr y sale del script con CÓDIGO (siempre ruidoso)
+    printf '[ERROR] puerta de Calibre: %s (salida %s)\n' "$2" "$1" >&2
+    exit "$1"
+}
+
+# _puerta_core — env, logger, detección de apps, candado y respaldo de core/ (hermano del repo; env.sh respeta lo que
+# ya traiga el entorno: CALIBRE_DB, LOCK_CALIBRE, …). Sin core/shell-lib sale 69: antes, sin el envoltorio de core,
+# ingesta escribía sin candado y en silencio (F2). Idempotente.
+_puerta_core() {
+    [ "${_PUERTA_CORE:-0}" = 1 ] && return 0
+    if [ -z "${DOCS_ROOT:-}" ] || [ ! -f "${DOCS_ROOT:-}/core/env.sh" ]; then
+        local d="$_PUERTA_LIB"
+        while [ "$d" != / ] && [ ! -f "$d/core/env.sh" ]; do d="$(dirname "$d")"; done
+        [ -f "$d/core/env.sh" ] || _puerta_falla 69 "no encuentro core/env.sh"
+        # shellcheck source=/dev/null
+        source "$d/core/env.sh"
+    fi
+    local m
+    for m in logger detectar_apps lock backup_rotado; do
+        [ -f "$SHELL_LIB/$m.sh" ] || _puerta_falla 69 "falta core/shell-lib/$m.sh ($SHELL_LIB): no se escribe sin candado ni respaldo"
+        # shellcheck source=/dev/null
+        source "$SHELL_LIB/$m.sh"
+    done
+    _PUERTA_CORE=1
+}
+_puerta_core
 
 : "${PUERTA_RESPALDOS:=${XDG_STATE_HOME:-$HOME/.local/state}/biblioteca/respaldos}"
 : "${PUERTA_CONSERVAR_CALIBRE:=5}"
@@ -60,7 +83,18 @@ puerta_calibre_abrir() {
     }
     echo "$salida"
     _PUERTA_RESPALDO_CALIBRE="${salida#── Backup: }"
-    export PUERTA_CALIBRE=abierta PUERTA_BIBLIOTECA="$bib"
+    # Los procesos hijos heredan el candado por el descriptor 9: no deben volver a tomarlo (lock.sh).
+    export PUERTA_CALIBRE=abierta PUERTA_BIBLIOTECA="$bib" ECOSISTEMA_LOCK_HELD=1
+}
+
+# puerta_calibre_abrir_o_salir SUITE BIBLIOTECA — la misma puerta, pero un fallo corta el proceso con su código:
+# 75 Calibre abierto o candado ocupado («reintentar luego»), 74 sin biblioteca o sin respaldo verificado. La usa ingesta.
+puerta_calibre_abrir_o_salir() {
+    local suite="${1:?falta la suite}" bib="${2:?falta la biblioteca}"
+    [ "${PUERTA_CALIBRE:-}" = abierta ] && [ "${PUERTA_BIBLIOTECA:-}" = "$bib" ] && return 0
+    [ -f "$bib/metadata.db" ] || _puerta_falla 74 "no existe $bib/metadata.db"
+    calibre_abierto && _puerta_falla 75 "Calibre está abierto (o corre otro calibredb): ciérrelo y reintente luego"
+    puerta_calibre_abrir "$suite" "$bib" || _puerta_falla 74 "sin respaldo verificado de $bib/metadata.db"
 }
 
 # puerta_zotero_abrir SUITE ZOTERO_DB — Zotero cerrado, LOCK_ZOTERO y respaldo verificado; exporta
@@ -98,7 +132,13 @@ calibredb_escribe() {
         return 1
     fi
     local sub="${1:?calibredb_escribe: falta el subcomando}"; shift
-    calibredb "$sub" --with-library "$PUERTA_BIBLIOTECA" "$@"
+    "${CALIBREDB:-calibredb}" "$sub" --with-library "$PUERTA_BIBLIOTECA" "$@"
+}
+
+# calibredb_escribir ARGS… — lo mismo, estricto: con la puerta cerrada corta el proceso con 70 (lo usa ingesta).
+calibredb_escribir() {
+    [ "${PUERTA_CALIBRE:-}" = abierta ] || _puerta_falla 70 "calibredb $1 con la puerta cerrada (abra antes la puerta)"
+    "${CALIBREDB:-calibredb}" --with-library "$PUERTA_BIBLIOTECA" "$@"
 }
 
 # puerta_integridad — PRAGMA integrity_check (solo lectura) de las bases abiertas por la puerta; ≠ ok → 1.

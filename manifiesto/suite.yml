@@ -1,0 +1,20 @@
+# manifiesto/suite.yml — suite manifiesto: El fuentes.yml de cada proyecto en vez de enlaces simbólicos a la biblioteca: genera, verifica contra Calibre, resuelve rutas, retira enlaces y escribe el references.bib (APA 7) desde Calibre.
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: manifiesto
+objetivo: fuentes
+resumen: 'El fuentes.yml de cada proyecto en vez de enlaces simbólicos a la biblioteca: genera, verifica contra Calibre, resuelve rutas, retira enlaces y escribe el references.bib (APA 7) desde Calibre.'
+escribe_en:
+- vault
+simula_por_defecto: true
+comandos:
+- main.py generar <carpeta> [--aplicar] [--bib ref.bib --asignar clave=id]
+- main.py verificar <carpeta>…
+- main.py ruta <carpeta> <origen|calibre_id> · main.py raiz <archivo>
+- main.py quitar-enlaces <carpeta> [--aplicar]
+- main.py bib <carpeta> [--aplicar] [--salida references.bib]
+- main.py todo [--aplicar]
+estado: activo
+depende_de:
+- python3
+- core/py-common/biblioteca.py
+metodo_documental: paso 09
