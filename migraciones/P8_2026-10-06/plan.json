@@ -1,0 +1,63 @@
+{
+ "items_renombrar": {
+  "publisher": {
+   "Alianza": "Alianza Editorial",
+   "Alianza Editorial Sa": "Alianza Editorial",
+   "Brontes S.L.": "Ediciones Brontes",
+   "Deusto": "Ediciones Deusto",
+   "EDICIONES BRONTES S.L.": "Ediciones Brontes",
+   "Ediciones Paidos Iberica": "Paidós Ibérica",
+   "Paidos Iberica Ediciones S a": "Paidós Ibérica",
+   "Pearson Educacion": "Pearson Educación",
+   "Siglo XXI": "Siglo XXI Editores",
+   "Siglo XXI Ediciones": "Siglo XXI Editores",
+   "The MIT Press": "MIT Press",
+   "Universidad de Sevilla": "Editorial Universidad de Sevilla",
+   "Universidad del Pacifico": "Universidad del Pacífico"
+  }
+ },
+ "esperado": {
+  "publisher": {
+   "1647": "Ediciones Deusto",
+   "1567": "Ediciones Deusto",
+   "344": "Universidad del Pacífico",
+   "441": "Universidad del Pacífico",
+   "366": "Universidad del Pacífico",
+   "4140": "Universidad del Pacífico",
+   "4139": "Universidad del Pacífico",
+   "146": "Universidad del Pacífico",
+   "428": "Universidad del Pacífico",
+   "430": "Universidad del Pacífico",
+   "367": "Universidad del Pacífico",
+   "1739": "Universidad del Pacífico",
+   "1777": "Universidad del Pacífico",
+   "4138": "Universidad del Pacífico",
+   "1776": "Universidad del Pacífico",
+   "3926": "Universidad del Pacífico",
+   "3933": "Universidad del Pacífico",
+   "3931": "Universidad del Pacífico",
+   "3929": "Universidad del Pacífico",
+   "3928": "Universidad del Pacífico",
+   "3927": "Universidad del Pacífico",
+   "2098": "Editorial Universidad de Sevilla",
+   "9817": "MIT Press",
+   "9887": "Pearson Educación",
+   "9881": "Pearson Educación",
+   "590": "Ediciones Brontes",
+   "833": "Siglo XXI Editores",
+   "837": "Siglo XXI Editores",
+   "838": "Siglo XXI Editores",
+   "845": "Siglo XXI Editores",
+   "869": "Paidós Ibérica",
+   "1102": "Alianza Editorial",
+   "9735": "Alianza Editorial",
+   "9737": "Ediciones Brontes",
+   "437": "Siglo XXI Editores",
+   "834": "Siglo XXI Editores",
+   "923": "Alianza Editorial",
+   "1046": "Paidós Ibérica",
+   "1069": "Alianza Editorial",
+   "1710": "Alianza Editorial"
+  }
+ }
+}
