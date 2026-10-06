@@ -59,4 +59,4 @@ Carpeta actual en Calibre: `biblioteca/Instituto Nacional de Estadistica e Infor
 ## Notas
 
 Confianza: **alta**. Encuesta continua 2014; ficha técnica y nomenclatura de archivos SPSS; Lima, abril de 2015.
-- Origen: `10 Class/docencia/cursos/python/08_INVESTIGACION/referencias/diccionario2014.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).
+- Origen: `10 Class/contenido/cursos/python/08_INVESTIGACION/referencias/diccionario2014.pdf` (ingesta F5.4 con `script_ingesta_recursos`, 2026-09-06; original retirado a `meta/reparaciones/F5.4_biblioteca_2026-09-06/originales/`).

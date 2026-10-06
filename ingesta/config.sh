@@ -107,9 +107,9 @@ TAGS_POR_CARPETA_JSON='{"11_seguridad":"seguridad_ciudadana, legislacion","14_tr
 ZOTERO_CONNECTOR="http://localhost:23119"    # si Zotero está abierto, alta directa best-effort (además del RIS)
 
 # --- Cursos (`main.sh cursos`; antes la sub-suite ingesta_cursos, fundida en la ola 2, F3) -----------
-# Material EXTERNO de los cursos (05-recursos de 10 Class/docencia/cursos/<slug>/) → Calibre, deduplicado contra la
+# Material EXTERNO de los cursos (05-recursos de 10 Class/contenido/cursos/<slug>/) → Calibre, deduplicado contra la
 # biblioteca, con el calibre_id anotado en `bibliografia:` del curso.yml (contrato con 10 Class).
-CURSOS="$CLASS_DIR/docencia/cursos"   # M6 (2026-09-15): los cursos viven en docencia/cursos/<slug>/
+CURSOS="$CLASS_DIR/contenido/cursos"   # M6 (2026-09-15): los cursos viven en docencia/cursos/<slug>/
 CURSOS_REPORTES_DIR="$SCRIPT_DIR/reportes/cursos"      # candidatos_*, ingesta_* y catalogar_*, fuera de git
 # A dónde se retira el original del curso tras catalogarlo: fuera del repo y del vault, con los respaldos
 # (antes una carpeta retirada de meta). Reversible: el original está ahí, intacto.

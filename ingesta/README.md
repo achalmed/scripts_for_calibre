@@ -106,7 +106,7 @@ Series de `datafw/data/raw`: `datafw <institución>` y, con etapa y año, `dataf
 
 ## Cursos: material externo de `10 Class` (`main.sh cursos`)
 
-PDF **externos** de `05-recursos/` de `10 Class/docencia/cursos/*` → Calibre, con `bibliografia:
+PDF **externos** de `05-recursos/` de `10 Class/contenido/cursos/*` → Calibre, con `bibliografia:
 [{calibre_id, titulo, autor, origen}]` en el `curso.yml` (contrato con `10 Class`, `../docs/arquitectura.md`
 §6). Era `ingesta_cursos` (fundida en F3). `cursos --escanear` escribe `reportes/cursos/candidatos_<fecha>.tsv`;
 `cursos [--dry-run] [--tsv X]` simula sin escribir nada; `cursos --aplicar` va por la puerta. Sale 5 sin
