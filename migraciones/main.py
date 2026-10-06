@@ -91,7 +91,7 @@ def _verificar(biblioteca: Path, plan: dict, antes: dict, mueve: bool, trabajo: 
         c.close()
         if quedan:
             errores.append(f"columnas que debían retirarse y siguen: {sorted(quedan)}")
-    campos = plan.get("campos") or {}
+    campos = {**(plan.get("esperado") or {}), **(plan.get("campos") or {})}   # «esperado»: solo se verifica
     if campos:
         pedido = trabajo / "pedido.json"
         leido = trabajo / "leido.json"

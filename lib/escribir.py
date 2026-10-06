@@ -234,6 +234,15 @@ def aplicar_campana(biblioteca, plan_json) -> int:
         if v:
             api.set_field(campo, v)
             n += len(v)
+    for campo, pares in (plan.get("items_renombrar") or {}).items():   # {campo: {valor viejo: valor nuevo}}
+        ids = {}
+        for viejo, nuevo in pares.items():
+            i = api.get_item_id(campo, viejo)
+            if i is not None:
+                ids[i] = nuevo
+        if ids:
+            api.rename_items(campo, ids)
+            n += len(ids)
     renombres = {int(i): nombre for i, nombre in (plan.get("autores_renombrar") or {}).items()}
     if renombres:   # la fila del autor misma (P2a): Calibre reutiliza la fila existente al escribir los autores de un libro
         api.rename_items("authors", renombres)

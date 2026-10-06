@@ -67,7 +67,31 @@ normalize_clasificador() {
         "Articulo de revista")  echo "Artículo de revista" ;;
         "Guia de estudio")      echo "Guía de estudio" ;;
         "Informe tecnico")      echo "Informe técnico" ;;
-        *)                      echo "$1" ;;
+        *)                      unidad_docente "$1"; return ;;
+    esac | { read -r v; unidad_docente "$v"; }
+}
+
+# unidad_docente()
+# Arguments:
+#   $1 - Normalized classifier value
+# Outputs:
+#   El valor del vocabulario de unidad docente (ola 2b, P3a; modelo-de-metadatos.md §3.3) si el valor es docente;
+#   si no, el mismo valor (los no docentes se conservan).
+unidad_docente() {
+    case "$1" in
+        "Sesión"|"Clase"|"Notas de sesion"|"Notas de sesión") echo "sesion" ;;
+        "Tema") echo "tema" ;;
+        "Capítulo"|"Parte") echo "capitulo" ;;
+        "Lectura"|"Lectura obligatoria"|"Artículo complementario"|"Material complementario") echo "lectura" ;;
+        "Apuntes de clase"|"Apuntes de historia"|"Apuntes de estudio"|"Handout") echo "apuntes" ;;
+        "Módulo") echo "modulo" ;;
+        "Unidad") echo "unidad" ;;
+        "Semana") echo "semana" ;;
+        "Sílabus"|"Programa") echo "silabo" ;;
+        "Taller") echo "taller" ;;
+        "Ejercicio"|"Ejercicios resueltos"|"Solucionario"|"Guía de estudio"|"Recurso educativo") echo "ejercicios" ;;
+        "Evaluación") echo "evaluacion" ;;
+        *) echo "$1" ;;
     esac
 }
 
