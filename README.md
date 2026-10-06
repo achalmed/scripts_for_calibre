@@ -27,7 +27,7 @@ main.py estado
 <!-- suite:fin -->
 
 <!-- suites:inicio -->
-Suites de esta carpeta (11); índice global en `meta/INDICE_SCRIPTS.md`. Patrón: M main · C config · L lib.
+Suites de esta carpeta (12); índice global en `meta/INDICE_SCRIPTS.md`. Patrón: M main · C config · L lib.
 
 | Suite | Carpeta | Objetivo | Escribe en | Simula | Timer | Estado | Patrón |
 |---|---|---|---|---|---|---|---|
@@ -42,6 +42,7 @@ Suites de esta carpeta (11); índice global en `meta/INDICE_SCRIPTS.md`. Patrón
 | `sincronizar-zotero` | [scripts-biblioteca/sincronizar-zotero](sincronizar-zotero/) | biblioteca | calibre, zotero | sí |  | activo | `MCL` |
 | `fuentes` | [scripts-biblioteca](./) | fuentes | archivos | sí |  | activo | `MCL` |
 | `verificacion` | [scripts-biblioteca/verificacion](verificacion/) | biblioteca | ninguno | sí |  | activo | `MCL` |
+| `zotero-series` | [scripts-biblioteca/zotero-series](zotero-series/) | biblioteca | zotero | no |  | activo | `···` |
 
 <sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-10-06); no se edita a mano.</sub>
 <!-- suites:fin -->
@@ -62,7 +63,7 @@ la escritura en `metadata.db` sin compartir código. Hace dos cosas:
   se copian entre sí: Calibre los suma en `#tiempo_estudio`.
 
 Y una sola **puerta de escritura** (`lib/escribir.*`): nada escribe en `metadata.db` ni en `zotero.sqlite` sin la
-app cerrada, el candado (`LOCK_CALIBRE`, `LOCK_ZOTERO` de `core/env`) y un respaldo verificado. **No es** la
+app cerrada, el candado (`LOCK_CALIBRE`, `LOCK_ZOTERO` de `core/env.sh`) y un respaldo verificado. **No es** la
 biblioteca (`biblioteca/`), ni el gestor de citas (Zotero), ni adquiere datos (eso es `02 analysis/connectors`).
 Dónde está el repo hoy: [`estado.md`](estado.md).
 
@@ -112,6 +113,7 @@ para `metadatos-pdf`. Qué es automático y qué es manual: [`docs/operacion.md`
 | `catalogacion/` | aplica `resumen_catalogacion.tsv` a Calibre; `fichas/` y el TSV son el registro canónico (los escribe `ingesta catalogar`) | a mano |
 | `fichas/`, `lecturas/`, `manifiesto/` | pasos 05, 07 y 09 sobre las fichas de un proyecto; `manifiesto/` es contrato con `02 analysis` y `03 writing` y no cambia de nombre | a mano |
 | `koreader/`, `lectura/`, `sincronizar-zotero/` | la coherencia Calibre ⇄ KOReader ⇄ Zotero; los tres timers | a mano; timers `koreader-calibre-sync`, `ecosistema-lectura`, `ecosistema-metadatos` |
+| `zotero-series/` | organiza una colección de Zotero en subcolecciones por su campo Series (se pega en la consola de Zotero); lo único vivo de `scripts_for_zotero`, archivado en la ola 2 | a mano |
 | `verificacion/`, `metadatos-pdf/` | cotejo con OpenLibrary y Crossref (solo lectura); incrustador OPF → PDF | a mano |
 | `manifiestos/marco_legal/`, `registro/` | el dato del marco legal y la memoria documental que no es de ninguna herramienta | a mano |
 | `lib/` | la puerta de escritura (`escribir.sh`, `escribir.py`, `escribir_zotero.py`), lecturas sin `sqlite3` (`leer.sh`), el escritor de rutas de adjuntos de Zotero (`adjuntos_zotero.py`) y lo común de las suites de fuentes (`comun.py`, `rutas.py`) | a mano |

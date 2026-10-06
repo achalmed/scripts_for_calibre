@@ -14,7 +14,7 @@ posteriores, en su commit.
 
 
 **Fusión (ola 2, fase E, 2026-10-05).** `scripts-biblioteca` y `scripts_for_fuentes` son un solo repo. Las
-secciones §1–§4 son las de Calibre; las del Método Documental (antes `scripts_for_fuentes/docs/decisiones.md`)
+secciones §1–§4 son las de Calibre; las del Método Documental (antes §5–§8 de este registro)
 son ahora §5–§8 con el mismo segundo número: su §1.x es §5.x, §2.x es §6.x, §3.x es §7.x y §4.x es §8.x.
 
 ## 1. Autoridad de los datos
@@ -79,7 +79,7 @@ nada: Calibre cerrado (detección canónica de `core/shell-lib/detectar_apps.sh`
 `LOCK_CALIBRE` y respaldo verificado (`backup_metadata_db` de `core`); la de Zotero, igual con
 `LOCK_ZOTERO` y un respaldo verificado de `zotero.sqlite`. Después se escribe con
 `calibredb_escribe`, con la API de Calibre (`set_campos`, que exige `PUERTA_CALIBRE=abierta` para esa
-biblioteca) o con las primitivas `z_*`. `tests/test_puerta.py` hace fallar a cualquier escritor
+biblioteca) o con las primitivas `z_*`. `tests/calibre/test_puerta.py` hace fallar a cualquier escritor
 fuera de la puerta. Fuente: normativa 9.1 y RQ-PRE-06.
 
 ### §2.6 Los respaldos viven fuera del repo (ola 2a, K2 y K8, 2026-10-05)
@@ -88,7 +88,7 @@ Los de cada escritura, en `$XDG_STATE_HOME/biblioteca/respaldos/<suite>/{calibre
 `metadata.db`, 3 de `zotero.sqlite`): sobreviven a la fusión y al renombre del repo y no se mezclan
 con el código. Los que vivían dentro del repo se copiaron verificados a
 `$RESPALDOS_DIR/biblioteca/<suite>/` y los originales están en
-`~/.local/share/residuos-programa/2026-10-05/scripts-biblioteca/`.
+`~/.local/share/residuos-programa/2026-10-05/scripts_for_calibre/`.
 
 ### §2.7 Calibre se escribe por su API o por `calibredb`, nunca por SQL (ola 2a, K3, 2026-10-05)
 
@@ -272,7 +272,7 @@ Las dos suites compartían ledger, catalogación y, desde F2, la puerta de escri
 propia configuración, su respaldo dentro del repo y un envoltorio propio del resolutor. Pasa a
 ser el comando `ingesta/main.sh cursos` con sus módulos `ingesta/lib/cursos_*`, sus valores en
 `ingesta/config.sh` §Cursos y el resolutor de `core/py-common` llamado directamente. La simulación anuncia
-lo mismo que antes (`tests/test_ingesta_cursos.py`) pero ya no deja informes; `ORIGINALES_DIR` deja la carpeta
+lo mismo que antes (`tests/fuentes/test_ingesta_cursos.py`) pero ya no deja informes; `ORIGINALES_DIR` deja la carpeta
 retirada de `meta/reparaciones/` y va a `$RESPALDOS_DIR/biblioteca/fuentes/originales-cursos`.
 
 ### §6.9 Las fichas provisionales no se versionan (ola 2, F6, 2026-10-05)
@@ -311,7 +311,7 @@ La dependencia de §7.1 hacía un ciclo `datafw ↔ scripts_for_fuentes` (RQ-MAN
 la ola 3. Dos cambios de comportamiento, a propósito: `descargar` ahora comprueba `%PDF-` en los PDF (el
 original no comprobaba nada para esa extensión: una página de WAF servida como PDF entraba en `entrada/`),
 y los intermedios TLS que `_lib` traía en `intermedios/` se indican con `RED_INTERMEDIOS` si un portal los
-vuelve a pedir. `tests/test_red_fuentes.py` corre sin `02 analysis` en la caja de arena.
+vuelve a pedir. `tests/fuentes/test_red_fuentes.py` corre sin `02 analysis` en la caja de arena.
 
 ### §7.5 Rutas relativas a la raíz y nada personal en el repo (ola 2, F5, 2026-10-05)
 
@@ -322,7 +322,7 @@ relativo que empieza por una carpeta de la raíz es relativo a `DOCS_ROOT`; lo d
 como siempre. El correo de Unpaywall sale del entorno (`FUENTES_CORREO_CONTACTO`, P248); ninguna
 configuración carga ya `scripts-biblioteca/lib_comun` ni la carpeta personal; `fichas grafia` y `migrar`
 respaldan en `$RESPALDOS_DIR/biblioteca/fuentes/fichas/` (P240). `manifiesto todo` en seco da la misma
-salida antes y después. `tests/test_privacidad_rutas.py` lo vigila.
+salida antes y después. `tests/fuentes/test_privacidad_rutas.py` lo vigila.
 
 ## 8. El proyecto declara qué usa, no dónde está
 

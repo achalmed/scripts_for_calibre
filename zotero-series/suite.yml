@@ -1,0 +1,16 @@
+# zotero-series/suite.yml — suite zotero-series (antes series_organizer de scripts_for_zotero, archivado en la ola 2): Organiza los ítems de una colección de Zotero en subcolecciones según su campo Series (script «Run JavaScript», v2.0); el único que sigue vivo de scripts_for_zotero.
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: zotero-series
+objetivo: biblioteca
+resumen: Organiza los ítems de una colección de Zotero en subcolecciones según su campo Series (script «Run JavaScript», v2.0); el único que sigue vivo de scripts_for_zotero.
+escribe_en:
+- zotero
+simula_por_defecto: false
+comandos:
+- 'cat series_organizer.js | xclip -selection clipboard   # al portapapeles; pegar en Zotero → Herramientas → Desarrollador → Ejecutar JavaScript'
+- 'node -e ''const A=Object.getPrototypeOf(async function(){}).constructor; new A(require("fs").readFileSync(process.argv[1],"utf8")); console.log("sintaxis ok")'' series_organizer.js   # solo sintaxis, como la consola de Zotero; node --check no sirve'
+estado: activo
+entrada: colección de Zotero (CONFIG.nombreColeccionPrincipal, por defecto Calibre)
+depende_de:
+- zotero
+nota: 'sin main.sh: se ejecuta pegándolo en la consola de Zotero; modoSimulacion: false por defecto (ponerlo en true la primera vez); corre después de sincronizar-zotero, nunca antes'

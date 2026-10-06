@@ -60,7 +60,7 @@ compatibilidad y choca con `--aplicar`. `register --aplicar` entra por la puerta
 los mensajes de depuración. El log de cada sesión va a `/tmp/calibre-metadata-manager_<fecha>.log`.
 
 Requisitos: Bash ≥ 4, `exiftool`, `calibredb`, GNU `find`, `grep` y `sed`. Pruebas de `register`
-(simula, aplica por la puerta, no escribe con Calibre abierto): `../tests/test_escritores_k5.py`.
+(simula, aplica por la puerta, no escribe con Calibre abierto): `../tests/calibre/test_escritores_k5.py`.
 
 ## Estructura
 

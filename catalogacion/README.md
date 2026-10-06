@@ -31,7 +31,7 @@ Dos cosas en una carpeta: el **registro de catalogación** de la biblioteca —u
 `main.sh`, que aplica las filas del TSV a Calibre con `calibredb set_metadata`, por la puerta. El formato de la
 ficha lo define `prompts/01 fuentes/prompt_02_catalogar.md`, con el frontmatter de `prompts/00
 metodo/fichas_formato_y_voz.md`; las fichas y filas nuevas las escriben
-`scripts_for_fuentes/ingesta` (`scripts_for_fuentes/ingesta/lib/catalogar.py`, también para los
+`scripts_for_fuentes/ingesta` (`ingesta/lib/catalogar.py`, también para los
 cursos) (D12); `proyecto:` cita el id del proyecto, no una ruta (normativa 1.10). Mapa del ecosistema de aprendizaje: `prompts/docs/dominios/aprendizaje.md`.
 
 ## Uso
@@ -84,5 +84,5 @@ en `../docs/historial/`.
 - **El enum `Clasificador` de Calibre y la lista del prompt no coinciden** (tildes, valores que
   faltan): lo que el enum rechaza se omite y se reporta, no se inventa.
 - **No genera fichas ni filas**: aquí solo se aplican y se conserva el registro.
-- **Las pruebas** (`../tests/test_escritores_k5.py`) comparan la simulación y `--aplicar --ids` con
+- **Las pruebas** (`../tests/calibre/test_escritores_k5.py`) comparan la simulación y `--aplicar --ids` con
   la referencia sobre una copia; no validan el contenido de las fichas.

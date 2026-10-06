@@ -104,7 +104,7 @@ Las rutas de `ingesta.tsv` son relativas a la raíz del workspace (o a la zona d
 Un tercer registro es **dato, no suite**: `manifiestos/marco_legal/` guarda el manifiesto del marco legal
 (`manifiesto.tsv`, `no_localizados.tsv`, `fallidos.tsv` y los `parciales/` de los que se rearma) que
 `ingesta` lee para titular y seriar las normas. No tiene `suite.yml` ni se ejecuta en el recorrido; sus dos
-generadores solo lo rearman sobre una carpeta local (`MARCO_LEGAL`) y `tests/test_marco_legal.py` comprueba
+generadores solo lo rearman sobre una carpeta local (`MARCO_LEGAL`) y `tests/fuentes/test_marco_legal.py` comprueba
 que regenerarlo da los mismos archivos. Es del marco legal, no del despacho (§1.4 de las decisiones), y
 `manifiesto/` (la suite del `fuentes.yml`, contrato con `02 analysis` y `03 writing`) es otra cosa.
 

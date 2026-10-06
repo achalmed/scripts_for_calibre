@@ -29,7 +29,7 @@ main.sh cursos --escanear · main.sh cursos [--dry-run] [--tsv ARCHIVO] · main.
 <sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-05); no se edita a mano.</sub>
 <!-- suite:fin -->
 
-`scripts_for_fuentes/entrada/` es la zona de aterrizaje: **recibe** documentos y esta suite los
+`entrada/` es la zona de aterrizaje: **recibe** documentos y esta suite los
 procesa. También barre como raíces de entrada `02 analysis/data/raw` y `03 writing`
 (`INBOX_RAICES`, solo PDF bajo carpetas de fuentes). El almacén permanente es
 `~/Documents/biblioteca` (Calibre, autoridad bibliográfica) y Zotero guarda las citas. Cada PDF o
@@ -124,7 +124,7 @@ completa `scripts-biblioteca/catalogacion/`.
   `CONFIANZA_MINIMA_AUTO` no se cataloga sin revisión humana.
 - **Nunca edita `metadata.db` ni `zotero.sqlite`**: todo pasa por `calibredb` a través de la puerta
   (Calibre cerrado, candado, respaldo verificado); con Calibre abierto o el candado ocupado sale 75 sin
-  aplicar nada. `tests/test_puerta.py` falla si un archivo del repo llama a `calibredb` fuera de la puerta.
+  aplicar nada. `tests/fuentes/test_puerta.py` falla si un archivo del repo llama a `calibredb` fuera de la puerta.
 - **Zotero se alimenta por RIS**: el `.ris` de `salida_ris/` se importa a mano; el alta por el
   conector local es un intento sin garantía. Los `.ris` anteriores al 2026-09-30 no se importan
   (`salida_ris/obsoletos_2026-09-30/`, `../docs/decisiones.md` §2.7).

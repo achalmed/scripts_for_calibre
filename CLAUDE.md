@@ -12,7 +12,7 @@ las suites de fuentes) y el README de la suite que se toque. Concreta `~/Documen
 
 - **Una sola puerta de escritura** (normativa 9.1, RQ-PRE-06; `docs/decisiones.md` §2.5): solo `lib/escribir.sh`,
   `lib/escribir.py` y `lib/escribir_zotero.py` escriben en `metadata.db` o en `zotero.sqlite`, con la app cerrada,
-  candado (`LOCK_CALIBRE`/`LOCK_ZOTERO` de `core/env`; ocupado sale 75) y respaldo verificado, en ese orden. Después,
+  candado (`LOCK_CALIBRE`/`LOCK_ZOTERO` de `core/env.sh`; ocupado sale 75) y respaldo verificado, en ese orden. Después,
   `calibredb_escribe`/`calibredb_escribir`, la API de Calibre (`set_campos`) o las primitivas `z_*`. Calibre **nunca**
   por SQL (§2.7). Un escritor nuevo entra por la puerta o no existe: `tests/*/test_puerta.py` lo hacen fallar.
 - **Las bases reales son intocables en las pruebas**: todo ensayo va sobre copias (`tests/calibre/calibre_apoyo.py`,
@@ -32,7 +32,7 @@ las suites de fuentes) y el README de la suite que se toque. Concreta `~/Documen
   escriben `fichas` y `lecturas`, `bibliografia:` del `curso.yml` (`docs/consumidores.md`, `docs/arquitectura.md` §6).
 - **Simulación por defecto y `--aplicar` explícito** en todas las suites; un cambio masivo se ensaya con `--limite`
   o `--ids`. Las columnas se resuelven por etiqueta, nunca por número de `custom_column_N`.
-- **Rutas por `core/env`** (`BIBLIOTECA_DIR`, `ZOTERO_DB`, `SCRIPTS_BIBLIOTECA`…); ledgers con rutas relativas a
+- **Rutas por `core/env.sh`** (`BIBLIOTECA_DIR`, `ZOTERO_DB`, `SCRIPTS_BIBLIOTECA`…); ledgers con rutas relativas a
   `DOCS_ROOT` (`lib/rutas.py`); lecturas de SQLite desde Bash con `lib/leer.sh`. Nada personal ni del despacho en el
   repo (es público): el contacto de Crossref y Unpaywall llega por `CROSSREF_MAILTO` y `FUENTES_CORREO_CONTACTO`.
 - **Los timers son plantillas en `systemd/`** y se instalan con `systemd/instalar.sh` (simula; `--verificar` compara);
@@ -68,5 +68,5 @@ la app cerrada.
   SHA-256; las variantes OCR son formatos, no libros; los anexos de un paquete van a `data/` del principal.
 - **`lecturas` da la página del PDF desde 1**; «hallada en otra página» es `observada`, nunca `verificada`.
 - **`IFS=$'\t'` colapsa campos vacíos de un TSV en Bash**: la catalogación usa `\037`.
-- **`manifiestos/marco_legal/` es dato, no suite**; **los `.js` de `zotero/`** (solo `series_organizer`) se pegan
+- **`manifiestos/marco_legal/` es dato, no suite**; **`zotero-series/series_organizer.js`** se pega
   a mano en la consola de Zotero.
