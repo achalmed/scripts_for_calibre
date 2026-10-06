@@ -13,6 +13,7 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 
 | fecha | qué | dónde se ve |
 |---|---|---|
+| 2026-10-06 | Ola 2, fase E (cierre): carpeta y id `scripts-biblioteca` (`core/renombrar.py`, `UNDO.sh` en `$RESPALDOS_DIR/renombres/`); timers reinstalados desde `systemd/` (`instalar.sh --verificar` = 0; `ecosistema-lectura` corrió con 0); `zotero-series/` desde `scripts_for_zotero` (archivado en GitHub); las rutas de máquina de las fichas, relativas; publicado en el remoto (`0c5eec4`) tras 0 correos, 0 rutas de usuario y 0 patrones del despacho | `README.md`; `git log` |
 | 2026-10-05 | Ola 2, fase E: **fusión** de `scripts-biblioteca` y `scripts_for_fuentes` en este repo; suites de Calibre con nombre por función (`catalogacion`, `lectura`, `koreader`, `sincronizar-zotero`, `metadatos-pdf`, `verificacion`); una sola puerta de escritura (`lib/escribir.*`, la de K2 con la interfaz de F2); decisiones de fuentes como §5–§8 | `docs/decisiones.md` (nota de fusión); `README.md` |
 | 2026-10-05 | Ola 2a, K9: documentación de la fila 13: `estado.md` normativo; `docs/decisiones.md` en `### §N.M` sin «Pendientes» (los abiertos, aquí abajo); `CLAUDE.md` bajo las 100 líneas (`wc -l CLAUDE.md`) y sin resumir `docs/`; README raíz, de suites y de `docs/` al día con la puerta, `systemd/`, `tests/` y los respaldos fuera del repo; `metadatos_calibre` sin `logger.sh` propio (`lib/sesion.sh` + el de `core`) y con `set -euo pipefail`; `pruebas:` en los `suite.yml` que escriben; bloques regenerados con las funciones de `core/suites.py` solo en este repo | validador: 0 fallos (antes 90) |
 | 2026-10-05 | Ola 2a, K8: `script_normalizacion_metadatos` (11 campañas cerradas) sale del árbol al historial de git (se lee en `467c8a7`); los respaldos de dentro del repo (1,0 GB: `normalizacion_metadatos/backups` 820 MB, `ecosistema_lectura/backups`, `koreader_estudio/backups`, `sincronizar_zotero/estado/backups`) se copiaron a `$RESPALDOS_DIR/biblioteca/<suite>/` con `SHA256SUMS` verificado y los originales se movieron a `~/.local/share/residuos-programa/2026-10-05/scripts-biblioteca/` (verificados también); nada se borró. Las primitivas SQL de Zotero pasan a `lib/escribir_zotero.py`: ningún archivo que nombre `metadata.db` lleva SQL que modifique (RQ-PRE-06 parte D = 0 en el repo) | `tests/test_puerta.py` sin exclusiones |
@@ -35,22 +36,18 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 
 ## En curso
 
-scripts-biblioteca · main · ola 2, fase E (la hace el director, en ventana exclusiva con los timers parados) ·
-siguiente paso: renombre de la carpeta, reinstalación de los timers y cierre de la 2a.
+nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (migración de metadatos P0–P9,
+`meta/programa/06-olas/ola-02-reingenieria.md` §6), que la conduce el director.
 
 ## Por hacer
 
-- 2026-10-05 · **Reinstalar los tres timers desde `systemd/`** (dueño: el director, fase E de la ola 2): `systemd/instalar.sh --aplicar` y después `systemd/instalar.sh --verificar` = 0; hasta entonces corren las unidades viejas (PATH con anaconda), que siguen funcionando con el código nuevo.
 - 2026-10-05 · **Residuos de la ola 2a** (dueño: el director, con la copia 3): `~/.local/share/residuos-programa/2026-10-05/scripts-biblioteca/` guarda los respaldos movidos (con su `*.SHA256SUMS`) y el `.lock_calibre_write` vacío; la copia externa está en `$RESPALDOS_DIR/biblioteca/{normalizacion_metadatos,ecosistema_lectura,koreader_estudio,sincronizar_zotero}/`. Nada se borra antes de la copia 3.
 - 2026-10-05 · **Estado viejo dentro del repo** (dueño: el director, después de la orquestación de las 04:30 del 2026-10-06): `lectura/estado/` (la marca, que la orquestación copia sola a `$XDG_STATE_HOME/biblioteca/ecosistema_lectura/`) y `sincronizar-zotero/estado/ultimo_sync.json` quedan sin uso; van a residuos cuando la marca nueva exista.
-- 2026-10-05 · **`meta/INDICE_SCRIPTS.md` desfasado** (dueño: el director): `python3 core/suites.py generar --aplicar` (sale `normalizacion_metadatos`, cambian `metadatos_calibre` y los `depende_de`); aquí se regeneraron solo los bloques de este repo.
 - 2026-10-05 · **21 adjuntos de Zotero que no resuelven** (dueño: el director y el autor, ola 2b, P9): `lib/adjuntos_zotero.py verificar` los lista sobre una copia; RQ-BIB-03.
 - 2026-10-05 · **`reportes/` no rota solo** (dueño: la higiene del programa; antes P6): la poda de más de 30 días la hace una fase de higiene.
-- 2026-10-05 · **Rutas de máquina en la sección «Origen» de muchas fichas** (dueño: `scripts_for_fuentes/ingesta`, la herramienta que las escribe; antes P9): son registro y se limpian con esa herramienta, no a mano.
 - 2026-10-05 · **Filas sin ficha** (dueño: el autor; antes P10): 10423–10425 están en `resumen_catalogacion.tsv` y no en `fichas/`.
 - 2026-10-05 · **Ayuda de CLI fuera de la norma de idioma** (dueño: agente «calibre», ola 2b o la fusión; antes P11): `metadatos-pdf` (en inglés, también `verificacion/lib/db.sh`), `sincronizar-zotero` y `verificacion` (sin tildes).
 - 2026-10-05 · **La campaña `zotero_alta_2026-09-30` no se aplicó** (dueño: el autor; antes P12): manda a la papelera de Zotero la segunda importación del RIS de `--enlazar`; vive en la historia (`467c8a7`); si se quiere, se rehace como migración de la ola 2b por `lib/adjuntos_zotero.py` y la puerta.
-- 2026-10-05 · **Nombres de carpeta fuera de kebab-case** (dueño: el director, fase E): `script_*` y la raíz (RQ-IDN-03, 7 avisos) cambian con la fusión y la reorganización de `scripts-biblioteca`.
 - 2026-10-05 · dueño: autor · Decidir las 1 448 filas de `ingesta/pendientes.tsv` (INEI y ESCALE de
   `02 analysis/data/raw`, identificadas en septiembre y nunca catalogadas): catalogarlas (sus borradores
   están en la copia de F6) o quitarlas (§2.9).
@@ -59,7 +56,6 @@ siguiente paso: renombre de la carpeta, reinstalación de los timers y cierre de
   este repo y la excepción E5 (ver el informe de la ola 2a).
 - 2026-10-05 · dueño: director · Documentar `core/py-common/red.py` en `core` (README, consumidores, CHANGELOG)
   y pasar `datafw` a él en la ola 3 (§3.4).
-- 2026-10-05 · dueño: director · Alinear la puerta `lib/escribir.*` con la de `scripts-biblioteca` (K2) en la
   fusión: el mismo candado y la misma sede de respaldos (`$RESPALDOS_DIR/biblioteca/`).
 - 2026-10-04 · dueño: autor · `identificar` exige el nivel `peru/` al deducir la institución de una ruta de
   `02 analysis/data/raw`, que lo perdió el 2026-09-25.
