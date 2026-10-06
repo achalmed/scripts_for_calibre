@@ -1,4 +1,4 @@
-"""P3a — `#clasificador` como vocabulario de **unidad docente** (modelo-de-metadatos.md §3.3), parte mecánica.
+"""migraciones/pasos/p3.py — P3a: `#clasificador` como vocabulario de **unidad docente** (modelo-de-metadatos.md §3.3), parte mecánica.
 
 Los valores docentes pasan a los 12 del vocabulario nuevo (sesion, tema, capitulo, lectura, apuntes, modulo, unidad,
 semana, silabo, taller, ejercicios, evaluacion) según la tabla del modelo; los valores que no son docentes se

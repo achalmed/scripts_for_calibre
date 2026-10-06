@@ -1,4 +1,4 @@
-"""P2a — autores con coma literal (modelo-de-metadatos.md §7, P2, parte mecánica).
+"""migraciones/pasos/p2.py — P2a: autores con coma literal (modelo-de-metadatos.md §7, P2, parte mecánica).
 
 Calibre guarda la coma dentro del nombre de un autor como `|` (la coma separa autores en sus listas); 828 autores
 entraron con la coma literal por SQL. Se reescriben por la API con el mismo nombre visible, y el ensayo exige que no

@@ -131,9 +131,9 @@ def main(argv=None) -> int:
     c = sqlite3.connect(f"file:{lectura}?mode=ro", uri=True)
     plan, resumen, propuesta = paso.plan(c)
     c.close()
-    registro = AQUI / f"{a.paso}_{hoy}"
+    registro = AQUI / f"{a.paso.lower()}-{hoy}"   # kebab-case (normativa 2.3)
     registro.mkdir(exist_ok=True)
-    (registro / "plan.json").write_text(json.dumps(plan, ensure_ascii=False, indent=1), encoding="utf-8")
+    (registro / "plan.json").write_text(json.dumps({"_": f"migraciones/{registro.name}/plan.json — plan de la campaña {a.paso} (generado por migraciones/main.py)", **plan}, ensure_ascii=False, indent=1), encoding="utf-8")
     (registro / "propuesta.tsv").write_text("\n".join("\t".join(map(str, f)) for f in propuesta) + "\n", encoding="utf-8")
     n_valores = sum(len(v) for v in (plan.get("campos") or {}).values())
     print(f"── {a.paso}: {resumen}")
@@ -161,7 +161,8 @@ def main(argv=None) -> int:
         print("✗ ensayo: el deshacer no devolvió la base exacta")
         return 1
     print(f"✓ ensayo: verificación sin errores y deshacer probado ({r.stdout.strip().splitlines()[-1] if r.stdout.strip() else ''})")
-    resumen_md = [f"# {a.paso} — {hoy}", "", f"- {resumen}", f"- valores: {n_valores}",
+    resumen_md = ["---", "tipo: registro", f"titulo: \"Campaña {a.paso} de la migración de metadatos ({hoy})\"", f"creado: {hoy}", "---",
+                  f"# {a.paso} — {hoy}", "", f"- {resumen}", f"- valores: {n_valores}",
                   f"- enumeraciones: {', '.join(plan.get('enum_despues') or {}) or '—'}",
                   f"- columnas que se retiran: {', '.join(plan.get('columnas_borrar') or []) or '—'}",
                   "- ensayo sobre copia: verificación sin errores; deshacer probado (la copia volvió byte a byte)"]

@@ -1,4 +1,4 @@
-"""P1 — `#item_type` con los 37 tipos de Zotero (modelo-de-metadatos.md §7).
+"""migraciones/pasos/p1.py — P1: `#item_type` con los 37 tipos de Zotero (modelo-de-metadatos.md §7).
 
 Se añaden Preprint, Standard y Computer Program; Pamphlet pasa a Document (Zotero no lo tiene); los libros sin tipo
 toman el de `#zotero_item_type` si lo hay o Document; las normas ISO, RFC y CCSDS pasan a Standard; se retiran de la

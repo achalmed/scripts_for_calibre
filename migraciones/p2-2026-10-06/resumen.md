@@ -1,3 +1,8 @@
+---
+tipo: registro
+titulo: "Campaña P2 de la migración de metadatos (2026-10-06)"
+creado: 2026-10-06
+---
 # P2 — 2026-10-06
 
 - 828 autores con coma literal en 1398 libros: se guardan como Calibre los espera

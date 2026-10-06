@@ -42,7 +42,7 @@ automáticamente en subcolecciones por serie, sin perder notas, anotaciones ni a
 (porque mueve el ítem padre completo, no toca sus hijos individualmente). En esta biblioteca la
 serie de Calibre llega a Zotero por el sync (`series` en el ítem; `publicationTitle` en artículos),
 así que el script solo tiene sentido sobre una colección ya sincronizada (el contrato del sync,
-en `scripts-biblioteca/script_sincronizar_zotero/README.md`).
+en `scripts-biblioteca/sincronizar-zotero/README.md`).
 
 Requisitos: Zotero 6 o superior con la consola de Ejecutar JavaScript habilitada; ningún plugin
 adicional; una colección existente cuyo nombre coincida con `CONFIG.nombreColeccionPrincipal` (por

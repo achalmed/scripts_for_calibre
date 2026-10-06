@@ -1,3 +1,8 @@
+---
+tipo: registro
+titulo: "Campaña P8 de la migración de metadatos (2026-10-06)"
+creado: 2026-10-06
+---
 # P8 — 2026-10-06
 
 - 13 grafías de editorial en 40 libros pasan a su forma única

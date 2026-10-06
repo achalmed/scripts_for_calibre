@@ -14,4 +14,4 @@ entrada: metadata.db (copias en $XDG_CACHE_HOME/migraciones/)
 depende_de:
 - calibre
 pruebas: ensayo de cada campaña sobre una copia (main.py sin --aplicar)
-nota: 'el registro de cada campaña (plan.json, propuesta.tsv, resumen.md) queda en migraciones/<paso>_<fecha>/; el respaldo y deshacer.sh, en $RESPALDOS_DIR/biblioteca/migraciones/'
+nota: 'el registro de cada campaña (plan.json, propuesta.tsv, resumen.md) queda en migraciones/<paso>-<fecha>/ (en minúsculas); el respaldo y deshacer.sh, en $RESPALDOS_DIR/biblioteca/migraciones/'

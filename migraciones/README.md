@@ -12,7 +12,7 @@ Campañas de la migración de metadatos de Calibre (P1–P9): plan desde una cop
 - Escribe en: calibre · simula por defecto: sí
 - Entrada: metadata.db (copias en $XDG_CACHE_HOME/migraciones/)
 - Depende de: calibre
-- Nota: el registro de cada campaña (plan.json, propuesta.tsv, resumen.md) queda en migraciones/<paso>_<fecha>/; el respaldo y deshacer.sh, en $RESPALDOS_DIR/biblioteca/migraciones/
+- Nota: el registro de cada campaña (plan.json, propuesta.tsv, resumen.md) queda en migraciones/<paso>-<fecha>/ (en minúsculas); el respaldo y deshacer.sh, en $RESPALDOS_DIR/biblioteca/migraciones/
 
 Comandos:
 
@@ -43,7 +43,7 @@ python3 migraciones/main.py P1 --aplicar   # aplica por la puerta (Calibre cerra
 | `main.py` | el ciclo de una campaña: plan, ensayo, verificación, deshacer, aplicación |
 | `leer_campos.py` | lee por la API de Calibre (solo lectura) los valores escritos, para verificarlos |
 | `pasos/pN.py` | el plan de cada paso |
-| `<paso>_<fecha>/` | el registro de cada campaña: `plan.json`, `propuesta.tsv`, `resumen.md` |
+| `<paso>-<fecha>/` (p. ej. `p8-2026-10-06/`) | el registro de cada campaña: `plan.json`, `propuesta.tsv`, `resumen.md` |
 
 ## Límite honesto
 

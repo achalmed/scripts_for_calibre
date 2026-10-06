@@ -1,3 +1,8 @@
+---
+tipo: registro
+titulo: "Campaña P1 de la migración de metadatos (2026-10-06)"
+creado: 2026-10-06
+---
 # P1 — 2026-10-06
 
 - 17 libros cambian de tipo; la enumeración queda en 37 valores (retirados: Software, Attachment, Note, Figure, Musical Score, Pamphlet, Book Review, Treaty)

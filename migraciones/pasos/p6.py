@@ -1,4 +1,4 @@
-"""P6 — identificadores y columnas sin uso (modelo-de-metadatos.md §7, P6).
+"""migraciones/pasos/p6.py — P6: identificadores y columnas sin uso (modelo-de-metadatos.md §7, P6).
 
 Salen de `identifiers` los residuos del plugin ZMI (`zkey`, `zkey_file`, `zcollection`: ningún script los lee; el
 enlace con Zotero es `#zotero_key`) y los de tiendas (`amazon`, `google`, `goodreads`, `mobi-asin`, `asin`,

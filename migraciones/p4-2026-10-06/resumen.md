@@ -1,3 +1,8 @@
+---
+tipo: registro
+titulo: "Campaña P4 de la migración de metadatos (2026-10-06)"
+creado: 2026-10-06
+---
 # P4 — 2026-10-06
 
 - 694 libros; 33 etiquetas pasan a su equivalente en español y snake_case

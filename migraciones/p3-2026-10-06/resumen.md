@@ -1,3 +1,8 @@
+---
+tipo: registro
+titulo: "Campaña P3 de la migración de metadatos (2026-10-06)"
+creado: 2026-10-06
+---
 # P3 — 2026-10-06
 
 - 1777 libros pasan al vocabulario docente; 22 valores no docentes se conservan; salen de la enumeración 54 valores

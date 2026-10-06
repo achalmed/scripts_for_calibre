@@ -1,4 +1,4 @@
-"""P4 — etiquetas en español y en `snake_case` según las equivalencias de modelo-de-metadatos.md §4.2 y §4.3.
+"""migraciones/pasos/p4.py — P4: etiquetas en español y en `snake_case` según las equivalencias de modelo-de-metadatos.md §4.2 y §4.3.
 
 Solo se aplican las equivalencias que el modelo fija una a una (las 14 en inglés, las que llevan espacio y las
 variantes de grafía); las etiquetas de un solo libro y las mayúsculas sin equivalencia fijada quedan como están

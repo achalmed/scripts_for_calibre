@@ -1,3 +1,8 @@
+---
+tipo: registro
+titulo: "Campaña P5 de la migración de metadatos (2026-10-06)"
+creado: 2026-10-06
+---
 # P5 — 2026-10-06
 
 - 3536 libros con género; 2952 ganan la etiqueta de su disciplina; se retira #genres

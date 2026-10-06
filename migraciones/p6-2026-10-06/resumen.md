@@ -1,3 +1,8 @@
+---
+tipo: registro
+titulo: "Campaña P6 de la migración de metadatos (2026-10-06)"
+creado: 2026-10-06
+---
 # P6 — 2026-10-06
 
 - 3481 libros con identificadores depurados; se retiran 7 columnas vacías sin uso

@@ -1,4 +1,4 @@
-"""P5 — `#genres` (16 disciplinas que duplican `tags`) pasa a etiquetas del vocabulario y la columna se retira
+"""migraciones/pasos/p5.py — P5: `#genres` (16 disciplinas que duplican `tags`) pasa a etiquetas del vocabulario y la columna se retira
 (modelo-de-metadatos.md §3.4). Cada libro conserva sus etiquetas y gana la de su disciplina si no la tiene."""
 
 MAPA = {"Economia": "economia", "Estadistica": "estadistica", "Finanzas": "finanzas", "Filosofia": "filosofia",
