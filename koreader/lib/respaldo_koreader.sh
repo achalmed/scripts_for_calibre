@@ -31,7 +31,7 @@ respaldar_koreader() {
         if [ -n "$(git -C "$RESPALDO_KOREADER_DIR" status --porcelain 2>/dev/null)" ]; then
             git -C "$RESPALDO_KOREADER_DIR" add -A 2>/dev/null || true
             git -C "$RESPALDO_KOREADER_DIR" commit -q \
-                -m "respaldo automático $(date '+%F %H:%M')" 2>/dev/null || true
+                -m "chore(respaldo): respaldo automático $(date '+%F %H:%M')" 2>/dev/null || true
         fi
     fi
     echo "── Respaldo KOReader → $RESPALDO_KOREADER_DIR ✓ (commit local; publica con git push desde ese repo)"
