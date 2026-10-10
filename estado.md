@@ -1,7 +1,7 @@
 ---
 tipo: estado
 estado: activo
-actualizado: 2026-10-06
+actualizado: 2026-10-10
 ---
 # estado.md — scripts-biblioteca
 
@@ -13,6 +13,7 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 
 | fecha | qué | dónde se ve |
 |---|---|---|
+| 2026-10-10 | **Política del sincronizador resuelta (§1.7)**: `CONFLICT_POLICY="zotero"`, Calibre solo rellena lo vacío en Zotero; lo que Zotero tiene se reporta y no se sobrescribe, el tipo no cambia; idioma ISO y rutas de adjunto siguen como reglas duras; `POLITICA=calibre` recupera la conducta anterior. Caracterización contra la referencia con `POLITICA=calibre` y prueba propia de la nueva: `tests/calibre` 36 en verde. Documentación alineada (README, CLAUDE, lectura, citar.md, cli.sh). Timer `ecosistema-metadatos` reactivado | `docs/decisiones.md` §1.7; `fde1be3`; `tests/calibre/test_calibre_caracterizacion.py::test_sincronizar_zotero_politica_zotero_solo_rellena` |
 | 2026-10-06 | Ola 2, fase E (cierre): carpeta y id `scripts-biblioteca` (`core/renombrar.py`, `UNDO.sh` en `$RESPALDOS_DIR/renombres/`); timers reinstalados desde `systemd/` (`instalar.sh --verificar` = 0; `ecosistema-lectura` corrió con 0); `zotero-series/` desde `scripts_for_zotero` (archivado en GitHub); las rutas de máquina de las fichas, relativas; publicado en el remoto (`0c5eec4`) tras 0 correos, 0 rutas de usuario y 0 patrones del despacho | `README.md`; `git log` |
 | 2026-10-05 | Ola 2, fase E: **fusión** de `scripts-biblioteca` y `scripts_for_fuentes` en este repo; suites de Calibre con nombre por función (`catalogacion`, `lectura`, `koreader`, `sincronizar-zotero`, `metadatos-pdf`, `verificacion`); una sola puerta de escritura (`lib/escribir.*`, la de K2 con la interfaz de F2); decisiones de fuentes como §5–§8 | `docs/decisiones.md` (nota de fusión); `README.md` |
 | 2026-10-05 | Ola 2a, K9: documentación de la fila 13: `estado.md` normativo; `docs/decisiones.md` en `### §N.M` sin «Pendientes» (los abiertos, aquí abajo); `CLAUDE.md` bajo las 100 líneas (`wc -l CLAUDE.md`) y sin resumir `docs/`; README raíz, de suites y de `docs/` al día con la puerta, `systemd/`, `tests/` y los respaldos fuera del repo; `metadatos_calibre` sin `logger.sh` propio (`lib/sesion.sh` + el de `core`) y con `set -euo pipefail`; `pruebas:` en los `suite.yml` que escriben; bloques regenerados con las funciones de `core/suites.py` solo en este repo | validador: 0 fallos (antes 90) |
@@ -41,7 +42,6 @@ nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (mi
 
 ## Por hacer
 
-- 2026-10-06 · dueño: Edison · **Política del sincronizador tras §1.6** (Zotero manda en metadatos, [docs/citar.md](docs/citar.md)): `sincronizar-zotero` sigue con «Calibre gana» y el timer `ecosistema-metadatos` (04:30) sobrescribe en Zotero cada noche lo corregido solo allí. Decidir: invertir la política campo a campo (Zotero → Calibre, salvo título y autor, que forman la ruta del adjunto, §1.2) o dejar solo el relleno de vacíos. **El timer está pausado desde el 2026-10-06** (`systemctl --user disable --now ecosistema-metadatos.timer`, por Edison): se reactiva con `enable --now` cuando la política esté decidida. Cambio de lógica: caracterización primero (§2.8).
 - 2026-10-06 · dueño: Edison · **Exportación automática de Better BibTeX** a `ZOTERO_BIB` y claves fijadas: pasos en [docs/citar.md](docs/citar.md) §2 (requiere la interfaz de Zotero).
 - 2026-10-06 · dueño: Edison · **`manifiesto bib` tras §1.6**: hoy escribe claves propias (`apellidoAAAApalabra`) que no coinciden con ninguna de Better BibTeX. Opciones: que escriba en `clave_bibtex` la clave de Zotero del mismo `calibre_id` (por la ruta del adjunto) o retirarlo cuando los documentos vivos citen desde `zotero.bib`; `escritura/scripts/claves_zotero.py` ya da la equivalencia.
 - 2026-10-06 · dueño: Edison · **Obsidian y LibreOffice**: aplicar la configuración propuesta de Zotero Integration (APA, formatos de cita, `calibre_id` en la plantilla) y dejar funcionando el complemento de LibreOffice (`libreoffice-java-common`, Java en Opciones): [docs/citar.md](docs/citar.md) §3 y §4.
