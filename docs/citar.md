@@ -25,11 +25,13 @@ El puente entre los dos es la ruta del adjunto: Zotero enlaza cada archivo de la
 aparte. La normativa general (N 9.6, «ninguna obra se cita sin `calibre_id`») se actualizará: el
 recordatorio está en `meta/estado.md` §Por hacer.
 
-**Mientras dure la transición**, el sincronizador nocturno (`../sincronizar-zotero/`, timer
-`ecosistema-metadatos`, 04:30) sigue la política anterior: en conflicto **Calibre gana y sobrescribe
-a Zotero** (título, fecha, editorial, idioma, tipo…). Una corrección hecha solo en Zotero se pierde
-esa noche. Hasta que se decida la política nueva ([`../estado.md`](../estado.md) §Por hacer),
-corregir en los dos o pausar ese timer.
+El sincronizador nocturno (`../sincronizar-zotero/`, timer `ecosistema-metadatos`, 04:30) aplica esta
+política desde el 2026-10-08 (`CONFLICT_POLICY="zotero"`): **Calibre solo rellena en Zotero lo vacío**
+(título, fecha, editorial, creadores, etiquetas…); lo que Zotero ya tiene se reporta como `reporte
+(Zotero manda: no se sobrescribe)` y no cambia, ni cambia el tipo de ítem. Una corrección hecha solo en
+Zotero se conserva. Quedan como reglas duras, por ser del archivo o del formato: el idioma se normaliza
+a ISO 639-1 y las rutas de los adjuntos (y la línea de ruta de `Extra`) se reparan. Hacia Calibre sigue
+igual: relleno de vacíos (año, ISBN, valoración) y columnas espejo `#zotero_*`; título y autor jamás.
 
 ## 2. LaTeX (`escritura`): la exportación automática de Better BibTeX
 

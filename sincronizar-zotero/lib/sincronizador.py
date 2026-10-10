@@ -2,7 +2,8 @@
 """lib/sincronizador.py - Nucleo del sincronizador Calibre <-> Zotero.
 
 Lee ambas bases, calcula el plan de sincronizacion segun el contrato ZMI
-(prompt_para_zotero_1_catalogacion.md) y la politica "Calibre manda", genera
+(prompt_para_zotero_1_catalogacion.md) y la politica de config.sh (POLITICA: "zotero" desde
+el 2026-10-08, Calibre solo rellena lo vacio en Zotero; "calibre", la anterior, gana en conflicto), genera
 reportes TSV+MD y, con APPLY=true, escribe Zotero por SQL (primitivas z_* de
 lib/escribir_zotero.py, la puerta) y deja el plan de Calibre en PLAN_CALIBRE para que
 main.sh lo aplique con la API de Calibre (calibre-debug, lib/escribir.py
@@ -66,6 +67,33 @@ REPORT_TSV = os.environ["REPORT_TSV"]
 REPORT_MD = os.environ["REPORT_MD"]
 STATE_JSON = os.environ["STATE_JSON"]
 PLAN_CALIBRE = os.environ.get("PLAN_CALIBRE", "")
+POLITICA = os.environ.get("POLITICA", "zotero")     # zotero: Calibre solo rellena vacíos (config.sh, 2026-10-08)
+OMITIDAS = {"campo": 0, "autores": 0, "etiquetas": 0, "tipo": 0}   # escrituras que la política «zotero» no hace
+
+if POLITICA == "zotero":
+    # Zotero manda en metadatos (docs/citar.md §1): estas envolturas, que usan las acciones del plan al aplicarse,
+    # solo escriben donde Zotero está vacío. Las rutas de los adjuntos (z_set_attachment_path) no pasan por aquí.
+    _z_set_field, _z_set_creators, _z_set_manual_tags = z_set_field, z_set_creators, z_set_manual_tags
+
+    SIEMPRE = {"language", "extra"}   # reglas duras: el idioma se normaliza a ISO y la línea de ruta de Extra es del archivo
+
+    def z_set_field(cur, item_id, field, value):  # noqa: F811
+        if field not in SIEMPRE and str(z_get_field(cur, item_id, field) or "").strip():
+            OMITIDAS["campo"] += 1
+            return None
+        return _z_set_field(cur, item_id, field, value)
+
+    def z_set_creators(cur, item_id, persons, ctype_id):  # noqa: F811
+        if cur.execute("SELECT 1 FROM itemCreators WHERE itemID=? LIMIT 1", (item_id,)).fetchone():
+            OMITIDAS["autores"] += 1
+            return None
+        return _z_set_creators(cur, item_id, persons, ctype_id)
+
+    def z_set_manual_tags(cur, item_id, tags):  # noqa: F811
+        if cur.execute("SELECT 1 FROM itemTags WHERE itemID=? AND type=0 LIMIT 1", (item_id,)).fetchone():
+            OMITIDAS["etiquetas"] += 1
+            return None
+        return _z_set_manual_tags(cur, item_id, tags)
 DO_ATTACH = os.environ.get("REPAIR_ATTACHMENTS", "true") == "true"
 DO_BACKFILL = os.environ.get("BACKFILL_CALIBRE", "true") == "true"
 DO_MIRROR = os.environ.get("POPULATE_MIRROR", "true") == "true"
@@ -241,6 +269,10 @@ class Plan:
         self.cal_writes = []    # (campo de Calibre, book_id, valor): se aplican por la API
 
     def add(self, bid, zkey, campo, accion, antes, despues):
+        # Zotero manda (POLITICA=zotero): un valor que Zotero ya tiene no se sobrescribe desde Calibre; se reporta.
+        if (POLITICA == "zotero" and campo != "idioma" and accion.startswith("calibre->zotero")
+                and "(vacio)" not in accion and str(antes or "").strip()):
+            accion = "reporte (Zotero manda: no se sobrescribe)"
         self.rows.append((bid, zkey, campo, accion,
                           str(antes or "")[:200], str(despues or "")[:200]))
 
@@ -375,6 +407,9 @@ def z_change_type(cur, item_id, new_type, csl_type=None):
     - Creadores con rol invalido: pasan al rol primario del tipo nuevo.
     - csl_type: para tipos sustitutos del contrato, anexa "Type: <csl>".
     """
+    if POLITICA == "zotero":            # el tipo es metadato: Zotero manda (2026-10-08)
+        OMITIDAS["tipo"] += 1
+        return None
     ez.z_change_type(cur, item_id, new_type, csl_type, {
         "TYPE_ID": TYPE_ID, "VALID_FIELDS": VALID_FIELDS, "BASE_OF": BASE_OF, "TARGET_FIELD": TARGET_FIELD,
         "VALID_CREATORS": VALID_CREATORS, "PRIMARY_CREATOR": PRIMARY_CREATOR, "FIELD_NAME": FIELD_NAME,
@@ -723,6 +758,9 @@ def main():
 
     cal.close()
     zot.close()
+    if POLITICA == "zotero" and APPLY:
+        print("politica zotero: escrituras omitidas porque Zotero ya tenia valor: "
+              + ", ".join(f"{k} {v}" for k, v in OMITIDAS.items()), file=sys.stderr)
     print(f"{len(pairs)}\t{len(plan.rows)}\t{len(plan.zot_writes)}\t"
           f"{len(plan.cal_writes) + mcount}\t{len(orphans)}\t{mcount}")
 

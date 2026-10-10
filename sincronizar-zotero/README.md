@@ -47,9 +47,13 @@ claves huérfanas). Las acciones `reporte (...)` no se aplican: son para revisi�
 
 ## Política de sincronización
 
-- **Calibre manda**: en conflicto gana Calibre y se propaga a Zotero: título, fecha, editorial,
-  ISBN, serie y número, páginas, edición, idioma, etiquetas y resumen. El título se compara exacto;
-  los demás campos, normalizados.
+- **Zotero manda** (`CONFLICT_POLICY="zotero"` en `config.sh`, desde el 2026-10-08; `../docs/citar.md` §1):
+  Calibre solo rellena en Zotero lo **vacío** (título, fecha, editorial, ISBN, serie y número, páginas,
+  edición, etiquetas, resumen, creadores); un valor que Zotero ya tiene se reporta como `reporte (Zotero
+  manda: no se sobrescribe)` y no cambia, ni cambia el tipo de ítem. Las reglas duras de abajo (idioma,
+  rutas de adjunto y `Extra`) se aplican igual. `CONFLICT_POLICY="calibre"` (o `POLITICA=calibre` en el
+  entorno) recupera la política anterior, en la que Calibre ganaba en conflicto; la caracterización
+  (`tests/calibre`) fija esa conducta vieja contra la referencia y prueba la nueva aparte.
 - **Título y autores, solo Calibre → Zotero**: jamás se escriben en Calibre, porque Zotero enlaza
   los adjuntos por la ruta `Autor/Título (id)`.
 - **Zotero → Calibre, solo relleno de vacíos** (año de relleno `0101`, ISBN ausente) y las columnas

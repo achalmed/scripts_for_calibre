@@ -23,11 +23,12 @@ readonly ZOTERO_BASE_ATTACHMENT_PATH="$CALIBRE_LIBRARY"
 # La clave del ítem padre de Zotero vive en la columna #zotero_key de Calibre (ZMI);
 # lib/sincronizador.py resuelve todas las columnas por etiqueta, nunca por número (K3).
 
-# --- Direction policy (decided by the user, 2026-07-28) -----------------
-# "calibre" -> on conflict Calibre wins for core fields (title, date,
-# publisher, isbn, series, pages, language, tags, edition) EXCEPT authors
-# where Zotero keeps richer supersets (never delete co-authors).
-readonly CONFLICT_POLICY="calibre"
+# --- Política de conflictos ---------------------------------------------------
+# "zotero" (decisión del 2026-10-08, tras docs/citar.md §1: Zotero manda en metadatos y citas, Calibre en los
+# archivos): Calibre solo rellena en Zotero los campos VACÍOS; un campo que Zotero ya tiene no se sobrescribe y
+# queda como «reporte (Zotero manda)». Las reparaciones de la ruta de los adjuntos siguen (son del archivo).
+# "calibre": la política anterior (2026-07-28): en conflicto gana Calibre, salvo autores.
+readonly CONFLICT_POLICY="zotero"
 
 # Repair broken Zotero attachment paths and stale {path} lines in Extra.
 readonly REPAIR_ATTACHMENTS="true"

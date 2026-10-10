@@ -47,6 +47,7 @@ export_core_env() {
     export REPAIR_ATTACHMENTS BACKFILL_CALIBRE POPULATE_MIRROR
     export LIMIT ONLY_IDS
     export APPLY="$APPLY_CHANGES"
+    export POLITICA="${POLITICA:-$CONFLICT_POLICY}"   # el entorno puede forzarla (pruebas, corridas sueltas)
 }
 
 # print_summary()

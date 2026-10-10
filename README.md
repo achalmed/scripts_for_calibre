@@ -59,8 +59,8 @@ la escritura en `metadata.db` sin compartir código. Hace dos cosas:
   mantiene el `fuentes.yml` con el que cada proyecto declara qué obras usa. Es el único lugar del ecosistema donde
   se descarga un documento.
 - **La coherencia de la biblioteca**: tres timers systemd de usuario la mueven solos (KOReader → Calibre y Zotero →
-  Calibre cada 30 minutos; la sincronización bidireccional de metadatos a diario a las 04:30). **Calibre manda** en
-  los metadatos bibliográficos, Zotero solo rellena vacíos, y los relojes de lectura de KOReader y de Zotero nunca
+  Calibre cada 30 minutos; la sincronización bidireccional de metadatos a diario a las 04:30). **Zotero manda** en
+  los metadatos bibliográficos (`docs/citar.md` §1): cada sistema solo rellena lo vacío del otro, y los relojes de lectura de KOReader y de Zotero nunca
   se copian entre sí: Calibre los suma en `#tiempo_estudio`.
 
 Y una sola **puerta de escritura** (`lib/escribir.*`): nada escribe en `metadata.db` ni en `zotero.sqlite` sin la

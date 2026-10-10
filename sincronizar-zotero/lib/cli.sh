@@ -9,11 +9,13 @@ $TOOL_NAME v$VERSION - Sincronizador bidireccional de metadatos entre la
 biblioteca Calibre y Zotero para los libros enlazados via ZMI (#zotero_key).
 
 Que hace (segun el contrato del prompt de catalogacion y la politica
-"Calibre manda" decidida por el usuario):
+"Zotero manda" del 2026-10-08, CONFLICT_POLICY en config.sh):
 
-  Calibre -> Zotero   titulo, autores*, fecha, editorial, ISBN, serie,
-                      paginas, idioma, tags, edicion, abstract (comments).
-                      * autores: solo si Zotero esta vacio/Unknown o difiere;
+  Calibre -> Zotero   solo rellena lo VACIO en Zotero: titulo, autores*, fecha,
+                      editorial, ISBN, serie, paginas, tags, edicion, abstract.
+                      Lo que Zotero ya tiene se reporta y no se sobrescribe;
+                      el idioma (ISO 639-1) es la excepcion: se normaliza siempre.
+                      * autores: solo si Zotero esta vacio/Unknown;
                         si Zotero tiene MAS autores (coautores), se conserva
                         y solo se reporta. Formatos por sistema respetados:
                         Zotero "Apellido, Nombre" / Calibre "Nombre, Apellido".

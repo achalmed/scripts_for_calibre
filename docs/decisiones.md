@@ -21,8 +21,7 @@ son ahora §5–§8 con el mismo segundo número: su §1.x es §5.x, §2.x es §
 
 ### §1.1 Calibre manda en los metadatos bibliográficos (2026-07-28)
 
-*Superada por §1.6 (2026-10-06) en cuanto a la autoridad; el sincronizador la aplica hasta que se
-fije la política nueva (`../estado.md` §Por hacer).*
+*Superada por §1.6 (2026-10-06) en cuanto a la autoridad y por §1.7 (2026-10-08) en el sincronizador.*
 
 En conflicto gana Calibre y se propaga a Zotero; Zotero solo rellena vacíos en Calibre y puebla las
 columnas espejo `#zotero_*`. Vacío en el origen nunca borra en el destino. Política campo a campo:
@@ -59,6 +58,21 @@ Calibre organiza los archivos y da su ubicación por `calibre_id`; el puente es 
 en Zotero, `<Autor>/<Título> (<calibre_id>)/`. Cómo se cita: [citar.md](citar.md). No se reescribe
 de golpe: la política de `sincronizar-zotero` (§1.1), `manifiesto bib` (§8.5) y la regla N 9.6 de
 la normativa cambian en su propio ciclo (`../estado.md` §Por hacer; `meta/estado.md`).
+
+### §1.7 El sincronizador solo rellena lo vacío en Zotero (director, 2026-10-08)
+
+Aplica §1.6 en `sincronizar-zotero` sin invertir la política campo a campo: `CONFLICT_POLICY="zotero"`
+(`config.sh`). Calibre → Zotero solo escribe donde Zotero está vacío (título, fecha, editorial, ISBN,
+serie, páginas, edición, etiquetas, resumen, creadores); un valor que Zotero ya tiene se deja y se
+reporta (`reporte (Zotero manda: no se sobrescribe)`), y el tipo de ítem no cambia. Siguen como reglas
+duras, por ser del archivo o del formato y no del contenido: el idioma se normaliza a ISO 639-1 y las
+rutas de adjunto y la línea de ruta de `Extra` se reparan. Zotero → Calibre no cambia (relleno de
+vacíos y columnas espejo; §1.2). Por qué no invertir campo a campo: Zotero → Calibre ya rellena lo
+vacío, y sobrescribir Calibre desde Zotero tocaría título y autor (§1.2) o exigiría excepciones que
+el relleno de vacíos no necesita; en ambos sistemas vale «vacío en el origen nunca borra». La política
+anterior queda disponible (`POLITICA=calibre`) y fijada por la caracterización (`tests/calibre`,
+referencia de git); la nueva tiene su prueba propia. El timer `ecosistema-metadatos` se reactiva con
+esta política.
 
 ## 2. Escritura segura
 

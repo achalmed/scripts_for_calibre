@@ -152,12 +152,19 @@ def perturbar_lectura(c: "Corrida") -> None:  # noqa: F821
     cal.close()
 
 
-def _comparar(arboles, corrida, nombre, args, perturbacion=None, exigir_exito=True):
-    """Corre referencia y árbol actual a la vez sobre copias idénticas y compara reporte y deltas."""
+def _comparar(arboles, corrida, nombre, args, perturbacion=None, exigir_exito=True, politica="calibre",
+              impls=("ref", "act")):
+    """Corre referencia y árbol actual a la vez sobre copias idénticas y compara reporte y deltas.
+
+    `politica` va al entorno (`POLITICA`): la referencia no la lee y el árbol actual la honra desde el
+    2026-10-08; la caracterización fija la conducta vieja («Calibre gana») y la política nueva («Zotero manda», la
+    de `config.sh`) se prueba aparte con `politica=None` y solo el árbol actual."""
     suite, sub, patron = SUITES.get(nombre) or OTRAS.get(nombre) or ORQUESTADOR
     estado = {}
-    for impl in ("ref", "act"):
+    for impl in impls:
         c = corrida(impl)
+        if politica:
+            c.env["POLITICA"] = politica
         if perturbacion:
             perturbacion(c)
         carpeta = arboles[impl] / suite / sub
@@ -180,7 +187,7 @@ def _comparar(arboles, corrida, nombre, args, perturbacion=None, exigir_exito=Tr
         }
         if exigir_exito:
             assert codigo == 0, f"{impl}: salida {codigo}\n{texto[-4000:]}"
-    if exigir_exito:
+    if exigir_exito and "ref" in medidas:
         for clave in ("reporte", "calibre", "zotero"):
             assert medidas["act"][clave] == medidas["ref"][clave], \
                 f"{nombre} {args}: «{clave}» difiere de la referencia"
@@ -205,6 +212,26 @@ def test_sincronizar_zotero_perturbado_igual_a_la_referencia(arboles, corrida):
                      "adjunto", "f:language", "tipo"):
         assert esperado in campos, f"la perturbación no ejercitó «{esperado}»"
 
+
+
+def test_sincronizar_zotero_politica_zotero_solo_rellena(arboles, corrida):
+    """Política por omisión desde el 2026-10-08 (`CONFLICT_POLICY="zotero"`, docs/citar.md §1): Zotero manda en
+    metadatos y Calibre solo rellena lo vacío. Sobre la misma perturbación: el título que Zotero ya tiene no se
+    sobrescribe (queda «reporte (Zotero manda…)») ni cambia el tipo; los creadores y etiquetas borrados en Zotero
+    sí se reponen (estaban vacíos), el idioma se normaliza (regla dura) y el adjunto se repara (es del archivo);
+    hacia Calibre todo sigue igual (ISBN, valoración, espejo). Solo el árbol actual: la referencia no conoce la
+    política."""
+    m = _comparar(arboles, corrida, "sincronizar_zotero", ["--aplicar"], perturbar, politica=None, impls=("act",))
+    act = m["act"]
+    zot = {k[1] for k in act["zotero"]}
+    cal = {k[1] for k in act["calibre"]}
+    assert "f:title" not in zot and "tipo" not in zot, zot
+    for esperado in ("creadores", "etiquetas", "adjunto", "f:language"):
+        assert esperado in zot, f"la política zotero dejó de rellenar «{esperado}»: {zot}"
+    for esperado in ("identifiers", "rating", "#zotero_title"):
+        assert esperado in cal, f"la política zotero dejó de rellenar «{esperado}» en Calibre: {cal}"
+    assert sum("Zotero manda" in fila for fila in act["reporte"]) >= 3, act["reporte"][:20]
+    assert "politica zotero: escrituras omitidas" in act["texto"]
 
 
 def test_sincronizar_zotero_relleno_de_fecha(arboles, corrida):

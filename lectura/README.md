@@ -95,7 +95,7 @@ El ciclo para llevar a Zotero lo que falta:
 1. `--enlazar --ris`.
 2. En Zotero: Archivo → Importar → el `.ris` → «Enlazar a los archivos en su ubicación original».
 3. `--enlazar --aplicar`: el puente se cierra por el adjunto, sin adivinar.
-4. `--metadatos --aplicar`: completa los campos («Calibre manda»).
+4. `--metadatos --aplicar`: completa los campos vacíos («Zotero manda»: lo que Zotero ya tiene no se toca).
 
 - **Calibre cerrado** para escribir; **Zotero puede estar abierto** (su base solo se lee en modo
   ro).
