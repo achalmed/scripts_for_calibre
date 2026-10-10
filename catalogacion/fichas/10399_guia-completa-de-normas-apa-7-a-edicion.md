@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`01 notes/60-guias-y-referencias/2026-06-19-guia-completa-de-apa.md` (vault de Obsidian, `tipo: referencia`, `creado: 2026-06-19`) · formato subido: `md`, copia íntegra del original · en el vault queda una nota puntero con `calibre_id: 10399`; el original respaldado en `meta/reparaciones/DOC9_cierre_2026-09-20/bitacora/guias-originales/`.
+`notas/60-guias-y-referencias/2026-06-19-guia-completa-de-apa.md` (vault de Obsidian, `tipo: referencia`, `creado: 2026-06-19`) · formato subido: `md`, copia íntegra del original · en el vault queda una nota puntero con `calibre_id: 10399`; el original respaldado en `meta/reparaciones/DOC9_cierre_2026-09-20/bitacora/guias-originales/`.
 
 ## Zotero
 | Campo | Valor |
