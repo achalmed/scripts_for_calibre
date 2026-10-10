@@ -21,7 +21,7 @@ las suites de fuentes) y el README de la suite que se toque. Concreta `~/Documen
 - **La prueba antes del código**: un cambio en un sincronizador vivo deja verde `tests/calibre` contra la
   referencia de git; un defecto se fija primero como `xfail` estricto.
 - **Zotero manda en citas y metadatos y Calibre en los archivos** desde 2026-10-06 (`docs/citar.md`, §1.6); el
-  sincronizador lo aplica desde 2026-10-08 (`CONFLICT_POLICY="zotero"`): Calibre solo rellena en Zotero lo vacío y lo
+  sincronizador lo aplica (`CONFLICT_POLICY="zotero"`, `docs/decisiones.md` §1.7): Calibre solo rellena en Zotero lo vacío y lo
   que Zotero ya tiene se reporta sin sobrescribir (reglas duras aparte: idioma ISO y ruta del adjunto); vacío en el
   origen nunca borra en el destino. **Título y autor jamás se escriben en Calibre** por sincronización ni verificación (Zotero enlaza los
   adjuntos por `Autor/Título (id)`), salvo la catalogación y una campaña que reescriba Zotero en la misma operación.
