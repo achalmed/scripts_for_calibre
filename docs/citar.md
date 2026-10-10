@@ -82,7 +82,7 @@ Instalado y activo: **Zotero Integration** de mgmeyers (`obsidian-zotero-desktop
 habla con Better BibTeX con Zotero abierto. Su configuración es
 `.obsidian/plugins/obsidian-zotero-desktop-connector/data.json` (enlace a `~/.dotfiles`, se edita
 con Obsidian cerrado y en un commit propio de `dotfiles`); su plantilla de nota de lectura,
-`meta/integrations/zotero/research note.md` (frontmatter único del vault, `clave_bibtex: {{citekey}}`,
+`meta/vault-os/integrations/zotero/research note.md` (frontmatter único del vault, `clave_bibtex: {{citekey}}`,
 anotaciones por color).
 
 Configuración propuesta (no aplicada; pendiente en [`../estado.md`](../estado.md)):
