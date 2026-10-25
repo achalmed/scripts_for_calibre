@@ -26,7 +26,7 @@ readonly ZOTERO_BASE_ATTACHMENT_PATH="$CALIBRE_LIBRARY"
 # --- Política de conflictos ---------------------------------------------------
 # "zotero" (decisión del 2026-10-08, tras docs/citar.md §1: Zotero manda en metadatos y citas, Calibre en los
 # archivos): Calibre solo rellena en Zotero los campos VACÍOS; un campo que Zotero ya tiene no se sobrescribe y
-# queda como «reporte (Zotero manda)». Las reparaciones de la ruta de los adjuntos siguen (son del archivo).
+# queda como «reporte (Zotero manda)». Los arreglos de la ruta de los adjuntos siguen (son del archivo).
 # "calibre": la política anterior (2026-07-28): en conflicto gana Calibre, salvo autores.
 readonly CONFLICT_POLICY="zotero"
 
