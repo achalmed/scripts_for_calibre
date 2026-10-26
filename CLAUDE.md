@@ -55,8 +55,8 @@ scripts-biblioteca/systemd/instalar.sh --verificar        # ¿lo instalado = las
 ( cd scripts-biblioteca && python3 manifiesto/main.py todo )   # todos los fuentes.yml vigilados, simula
 ```
 
-Deshacer una escritura: copiar el respaldo de `$XDG_STATE_HOME/biblioteca/respaldos/<suite>/` sobre la base, con
-la app cerrada.
+Deshacer una escritura: copiar el respaldo de `$RESPALDOS_DIR/biblioteca/puerta/<suite>/` (el SSD; sin él,
+`$XDG_STATE_HOME/biblioteca/respaldos/<suite>/`) sobre la base, con la app cerrada.
 
 ## Detalles que cuesta redescubrir
 

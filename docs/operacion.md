@@ -30,7 +30,7 @@ cosa?**
 - Los tres comparten un candado (`LOCK_CALIBRE` de `core/env.sh`, en `$XDG_STATE_HOME/biblioteca/`):
   nunca escriben a la vez; ocupado, salen 75 y reintentan.
 - Todo escribe por la puerta (`../lib/escribir.sh`): con la app cerrada y un respaldo verificado y
-  rotado en `$XDG_STATE_HOME/biblioteca/respaldos/<suite>/` (`calibre/` y, para
+  rotado en `$RESPALDOS_DIR/biblioteca/puerta/<suite>/` (`calibre/` y, para
   `sincronizar_zotero`, también `zotero/`).
 
 **Tu única rutina real: lee en KOReader o Zotero, organiza en Calibre. Fin.**
@@ -101,7 +101,7 @@ git -C ~/.local/share/koreader-respaldo log --oneline -5       # respaldos recie
 - Restaurar en laptop nueva: receta en `~/.local/share/koreader-respaldo/README.md`.
 - Deshacer una escritura: la puerta guarda `metadata_*.db` (los 5 últimos) y, en
   `sincronizar_zotero` y `adjuntos_zotero`, `zotero_*.sqlite` (los 3 últimos) en
-  `$XDG_STATE_HOME/biblioteca/respaldos/<suite>/{calibre,zotero}/`; copiar el que toque encima de la
+  `$RESPALDOS_DIR/biblioteca/puerta/<suite>/{calibre,zotero}/`; copiar el que toque encima de la
   base, con la app cerrada. Los respaldos anteriores a la ola 2a están en
   `$RESPALDOS_DIR/biblioteca/<suite>/` (con `SHA256SUMS`).
 - Los `reportes/` de cada suite (un TSV o MD por pasada) no rotan solos: se podan los de más de 30

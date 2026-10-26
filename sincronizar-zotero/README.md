@@ -85,7 +85,7 @@ Reglas duras, no configurables:
 `--aplicar` entra por la puerta (`../lib/escribir.sh`, `../docs/decisiones.md` §2.5): comprueba por
 el nombre del proceso que Calibre y Zotero estén cerrados, toma `LOCK_CALIBRE` (o lo hereda del
 timer) y `LOCK_ZOTERO`, y deja un respaldo **verificado** de cada base en
-`$XDG_STATE_HOME/biblioteca/respaldos/sincronizar_zotero/{calibre,zotero}/`. Después escribe Zotero
+`$RESPALDOS_DIR/biblioteca/puerta/sincronizar_zotero/{calibre,zotero}/`. Después escribe Zotero
 por SQL (`../lib/escribir_zotero.py`) dejando cada ítem tocado con `synced=0` y `dateModified` al día
 para que la cuenta lo suba; Calibre **no** se escribe por SQL: el plan (rellenos de fecha, ISBN y
 valoración, y el espejo `#zotero_*`, con las columnas resueltas por etiqueta) va a

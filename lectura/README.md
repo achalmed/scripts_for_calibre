@@ -102,7 +102,7 @@ El ciclo para llevar a Zotero lo que falta:
 - Candado **compartido** con `koreader` (`LOCK_CALIBRE` de `core/env.sh`): las dos
   herramientas nunca escriben a la vez.
 - Simulación por defecto, respaldos verificados y rotados (5) en
-  `$XDG_STATE_HOME/biblioteca/respaldos/ecosistema_lectura/`, reporte TSV por pasada.
+  `$RESPALDOS_DIR/biblioteca/puerta/ecosistema_lectura/`, reporte TSV por pasada.
 
 ## Fuente de datos (verificada por inspección; releer el diseño en ../docs/historial/)
 

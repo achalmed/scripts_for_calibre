@@ -13,7 +13,8 @@
 # `LOCK_ZOTERO` y un respaldo verificado de zotero.sqlite. Ningún otro archivo del repo escribe en las bases:
 # lo comprueba tests/test_puerta.py.
 #
-# Los respaldos viven fuera del repo, en el estado de usuario: $PUERTA_RESPALDOS/<suite>/{calibre,zotero}/.
+# Los respaldos viven fuera del repo, en $PUERTA_RESPALDOS/<suite>/{calibre,zotero}/: en el SSD externo
+# ($RESPALDOS_DIR/biblioteca/puerta) cuando está montado; si no, en el estado de usuario, con aviso (decisiones §2.6).
 
 _PUERTA_LIB="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
@@ -44,7 +45,18 @@ _puerta_core() {
 }
 _puerta_core
 
-: "${PUERTA_RESPALDOS:=${XDG_STATE_HOME:-$HOME/.local/state}/biblioteca/respaldos}"
+# _puerta_raiz — fija PUERTA_RESPALDOS la primera vez que se respalda: el SSD externo si está montado y se puede
+# escribir; si no, el estado de usuario, con un aviso (el disco interno es escaso). Lo que traiga el entorno manda.
+_puerta_raiz() {
+    [ -n "${PUERTA_RESPALDOS:-}" ] && return 0
+    if mountpoint -q "$ARCHDISK_DIR" 2>/dev/null && mkdir -p "$RESPALDOS_DIR/biblioteca/puerta" 2>/dev/null; then
+        PUERTA_RESPALDOS="$RESPALDOS_DIR/biblioteca/puerta"
+    else
+        PUERTA_RESPALDOS="${XDG_STATE_HOME:-$HOME/.local/state}/biblioteca/respaldos"
+        echo "[AVISO] puerta: el SSD externo no está montado; el respaldo queda en el disco interno ($PUERTA_RESPALDOS)" >&2
+    fi
+    export PUERTA_RESPALDOS
+}
 : "${PUERTA_CONSERVAR_CALIBRE:=5}"
 : "${PUERTA_CONSERVAR_ZOTERO:=3}"
 PUERTA_PY="$_PUERTA_LIB/escribir.py"
@@ -76,6 +88,7 @@ puerta_calibre_abrir() {
     fi
     [ -f "$bib/metadata.db" ] || { echo "✗ No hay biblioteca Calibre en: $bib" >&2; return 1; }
     puerta_candado_calibre
+    _puerta_raiz
     local salida
     salida="$(backup_metadata_db "$bib/metadata.db" "$PUERTA_RESPALDOS/$suite/calibre" "$PUERTA_CONSERVAR_CALIBRE")" || {
         echo "✗ Sin respaldo verificado de metadata.db no se escribe." >&2
@@ -110,6 +123,7 @@ puerta_zotero_abrir() {
     fi
     [ -s "$db" ] || { echo "✗ No existe la base de Zotero: $db" >&2; return 1; }
     puerta_candado_zotero
+    _puerta_raiz
     local salida
     salida="$("$CORE_PYTHON" "$PUERTA_PY" respaldar "$db" "$PUERTA_RESPALDOS/$suite/zotero" zotero "$PUERTA_CONSERVAR_ZOTERO")" || {
         echo "✗ Sin respaldo verificado de zotero.sqlite no se escribe." >&2

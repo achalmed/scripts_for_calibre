@@ -151,6 +151,7 @@ def entorno(corrida: Path, biblioteca: Path, zotero_db: Path, koreader: Path) ->
         "LANG": os.environ.get("LANG", "C.UTF-8"),
         "TZ": os.environ.get("TZ", "America/Lima"),
         "XDG_STATE_HOME": str(corrida / "estado"),
+        "ARCHDISK_DIR": str(corrida / "sin-ssd"),   # sin SSD montado: los respaldos quedan en el estado aislado
         "XDG_CACHE_HOME": str(home / ".cache"),
         "XDG_CONFIG_HOME": str(home / ".config"),
         "BIBLIOTECA_DIR": str(biblioteca),

@@ -111,11 +111,17 @@ fuera de la puerta. Fuente: normativa 9.1 y RQ-PRE-06.
 
 ### §2.6 Los respaldos viven fuera del repo (ola 2a, K2 y K8, 2026-10-05)
 
-Los de cada escritura, en `$XDG_STATE_HOME/biblioteca/respaldos/<suite>/{calibre,zotero}/` (5 de
+Los de cada escritura, en `$PUERTA_RESPALDOS/<suite>/{calibre,zotero}/` (5 de
 `metadata.db`, 3 de `zotero.sqlite`): sobreviven a la fusión y al renombre del repo y no se mezclan
 con el código. Los que vivían dentro del repo se copiaron verificados a
-`$RESPALDOS_DIR/biblioteca/<suite>/` y los originales están en
-`~/.local/share/residuos-programa/2026-10-05/scripts_for_calibre/`.
+`$RESPALDOS_DIR/biblioteca/<suite>/` y los originales quedaron en los residuos del programa del disco interno hasta el 2026-10-25, cuando fueron a
+la papelera tras verificarlos contra el SSD.
+
+**Al SSD externo (2026-10-25, pedido de Edison).** El disco interno tiene unos 15 GB libres y los timers respaldan
+`metadata.db` cada media hora (12 MB cada uno): `PUERTA_RESPALDOS` es ahora `$RESPALDOS_DIR/biblioteca/puerta`
+cuando el SSD está montado (`mountpoint`). Sin el SSD, la escritura no se detiene: el respaldo cae en
+`$XDG_STATE_HOME/biblioteca/respaldos` con un aviso por stderr. Los 392 MB que había en el disco interno se
+movieron al SSD, verificados con `sha256sum -c`. Las pruebas fijan `ARCHDISK_DIR` a una carpeta sin montar.
 
 ### §2.7 Calibre se escribe por su API o por `calibredb`, nunca por SQL (ola 2a, K3, 2026-10-05)
 

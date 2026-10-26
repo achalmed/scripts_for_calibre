@@ -46,7 +46,7 @@ def mundo(tmp_path):
         f.chmod(0o755)
     env = {
         "PATH": f"{binf}:{os.environ['PATH']}", "HOME": str(tmp_path / "home"),
-        "XDG_STATE_HOME": str(tmp_path / "estado"), "LOCK_CALIBRE": str(tmp_path / "estado" / "calibre.lock"),
+        "XDG_STATE_HOME": str(tmp_path / "estado"), "ARCHDISK_DIR": str(tmp_path / "sin-ssd"), "LOCK_CALIBRE": str(tmp_path / "estado" / "calibre.lock"),
         "LOCK_ZOTERO": str(tmp_path / "estado" / "zotero.lock"), "BIBLIOTECA_DIR": str(bib),
         "CALIBRE_DB": str(bib / "metadata.db"), "ZOTERO_DB": str(zot), "PS_CALIBRE": str(tmp_path / "calibre-abierto"),
     }

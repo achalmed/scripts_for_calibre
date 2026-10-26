@@ -21,6 +21,7 @@ Límite: la API de Calibre solo existe dentro de `calibre-debug`; fuera, `set_ca
 """
 from __future__ import annotations
 
+import getpass
 import json
 import os
 import sqlite3
@@ -114,6 +115,24 @@ def _respaldo_calibre(db, carpeta, conservar: int) -> str:
     return r.stdout.strip().removeprefix("── Backup: ")
 
 
+def raiz_respaldos() -> Path:
+    """La misma regla que `_puerta_raiz` de lib/escribir.sh: PUERTA_RESPALDOS si viene en el entorno; si no, el SSD
+    externo ($RESPALDOS_DIR/biblioteca/puerta) cuando está montado; si no, el estado de usuario, con aviso."""
+    if os.environ.get("PUERTA_RESPALDOS"):
+        return Path(os.environ["PUERTA_RESPALDOS"])
+    ssd = Path(os.environ.get("ARCHDISK_DIR") or Path("/run/media") / (os.environ.get("USER") or getpass.getuser()) / "ARCHDISK")
+    destino = Path(os.environ.get("RESPALDOS_DIR") or ssd / "respaldos") / "biblioteca" / "puerta"
+    if os.path.ismount(ssd):
+        try:
+            destino.mkdir(parents=True, exist_ok=True)
+            return destino
+        except OSError:
+            pass
+    local = Path(os.environ.get("XDG_STATE_HOME") or Path.home() / ".local/state") / "biblioteca" / "respaldos"
+    print(f"[AVISO] puerta: el SSD externo no está montado; el respaldo queda en el disco interno ({local})", file=sys.stderr)
+    return local
+
+
 @contextmanager
 def puerta(suite: str, calibre: str | os.PathLike | None = None, zotero: str | os.PathLike | None = None,
            respaldos: str | os.PathLike | None = None):
@@ -121,8 +140,7 @@ def puerta(suite: str, calibre: str | os.PathLike | None = None, zotero: str | o
     base pedida (`calibre` = carpeta de la biblioteca; `zotero` = zotero.sqlite). Ocupado: `Ocupado` (75)."""
     sys.path.insert(0, str(CORE / "py-common"))
     from candado import candado  # noqa: E402  (core/py-common/candado.py)
-    estado = Path(os.environ.get("XDG_STATE_HOME") or Path.home() / ".local/state")
-    raiz = Path(respaldos or os.environ.get("PUERTA_RESPALDOS") or estado / "biblioteca" / "respaldos") / suite
+    raiz = Path(respaldos or raiz_respaldos()) / suite
     antes = {k: os.environ.get(k) for k in ("PUERTA_CALIBRE", "PUERTA_BIBLIOTECA", "PUERTA_ZOTERO", "PUERTA_ZOTERO_DB")}
     pilas = []
     try:

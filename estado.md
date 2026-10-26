@@ -1,7 +1,7 @@
 ---
 tipo: estado
 estado: activo
-actualizado: 2026-10-10
+actualizado: 2026-10-25
 ---
 # estado.md — scripts-biblioteca
 
@@ -13,6 +13,7 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 
 | fecha | qué | dónde se ve |
 |---|---|---|
+| 2026-10-25 | **Respaldos al SSD externo** (pedido de Edison, el disco interno tiene unos 15 GB libres): la puerta respalda en `$RESPALDOS_DIR/biblioteca/puerta/<suite>/` cuando el SSD está montado y, sin él, en el estado de usuario con aviso. Los 392 MB que había en `~/.local/state/biblioteca/respaldos` pasaron al SSD, verificados con `sha256sum -c`. Residuos de la ola 2a cerrados: los duplicados de `~/.local/share/residuos-programa/2026-10-05` (1,2 GB) se verificaron contra `$RESPALDOS_DIR/biblioteca/` y fueron a la papelera; lo que no tenía copia (17 MB) quedó en `$RESPALDOS_DIR/residuos-programa/2026-10-05` | `docs/decisiones.md` §2.6; `lib/escribir.sh` `_puerta_raiz`, `lib/escribir.py` `raiz_respaldos` |
 | 2026-10-10 | **Política del sincronizador resuelta (§1.7)**: `CONFLICT_POLICY="zotero"`, Calibre solo rellena lo vacío en Zotero; lo que Zotero tiene se reporta y no se sobrescribe, el tipo no cambia; idioma ISO y rutas de adjunto siguen como reglas duras; `POLITICA=calibre` recupera la conducta anterior. Caracterización contra la referencia con `POLITICA=calibre` y prueba propia de la nueva: `tests/calibre` 36 en verde. Documentación alineada (README, CLAUDE, lectura, citar.md, cli.sh). Timer `ecosistema-metadatos` reactivado | `docs/decisiones.md` §1.7; `fde1be3`; `tests/calibre/test_calibre_caracterizacion.py::test_sincronizar_zotero_politica_zotero_solo_rellena` |
 | 2026-10-06 | Ola 2, fase E (cierre): carpeta y id `scripts-biblioteca` (`core/renombrar.py`, `UNDO.sh` en `$RESPALDOS_DIR/renombres/`); timers reinstalados desde `systemd/` (`instalar.sh --verificar` = 0; `ecosistema-lectura` corrió con 0); `zotero-series/` desde `scripts_for_zotero` (archivado en GitHub); las rutas de máquina de las fichas, relativas; publicado en el remoto (`0c5eec4`) tras 0 correos, 0 rutas de usuario y 0 patrones del despacho | `README.md`; `git log` |
 | 2026-10-05 | Ola 2, fase E: **fusión** de `scripts-biblioteca` y `scripts_for_fuentes` en este repo; suites de Calibre con nombre por función (`catalogacion`, `lectura`, `koreader`, `sincronizar-zotero`, `metadatos-pdf`, `verificacion`); una sola puerta de escritura (`lib/escribir.*`, la de K2 con la interfaz de F2); decisiones de fuentes como §5–§8 | `docs/decisiones.md` (nota de fusión); `README.md` |
@@ -42,13 +43,13 @@ nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (mi
 
 ## Por hacer
 
+- 2026-10-25 · dueño: agente «calibre» · **`test_sincronizar_zotero_politica_zotero_solo_rellena` falla**: `sincronizar_zotero --aplicar` escribe `f:title` en Zotero pese a la política «zotero» (§1.7). Ya fallaba antes del cambio de respaldos del 2026-10-25 (comprobado con ese cambio apartado); las otras 35 de `tests/calibre` y las 44 de `tests/fuentes` pasan.
 - 2026-10-24 · dueño: Edison (con las apps cerradas) · **Fuentes del post «Institutos públicos de Ayacucho: sin lucha no hay victoria»** (`web/_pubs/dialectica-y-mercado/posts/2026-10-24-unidad-estudiantes-institutos-ayacucho/`): ingresar por `ingesta` las cinco fuentes web que cita (Decreto Legislativo 882 de 1996; Minedu en El Peruano, 2023-12-05, PISA 2022; Gestión, 2023-10-16, 105 IEST licenciados; Gestión, 2024-06-13; Andina, 2025-04-07) y corregir en Zotero dos fechas: Bourdieu, «La esencia del neoliberalismo», 1998 (hoy sin año: clave `bourdieuEsenciaNeoliberalismo101`), y la Política Nacional de Educación Superior y Técnico-Productiva, 2020 (hoy 2018). El `referencias.bib` del post ya usa las fechas correctas; al cambiar las claves de Better BibTeX, actualizarlas allí.
 - 2026-10-06 · dueño: Edison · **Exportación automática de Better BibTeX** a `ZOTERO_BIB` y claves fijadas: pasos en [docs/citar.md](docs/citar.md) §2 (requiere la interfaz de Zotero).
 - 2026-10-06 · dueño: Edison · **`manifiesto bib` tras §1.6**: hoy escribe claves propias (`apellidoAAAApalabra`) que no coinciden con ninguna de Better BibTeX. Opciones: que escriba en `clave_bibtex` la clave de Zotero del mismo `calibre_id` (por la ruta del adjunto) o retirarlo cuando los documentos vivos citen desde `zotero.bib`; `escritura/scripts/claves_zotero.py` ya da la equivalencia.
 - 2026-10-06 · dueño: Edison · **Obsidian y LibreOffice**: aplicar la configuración propuesta de Zotero Integration (APA, formatos de cita, `calibre_id` en la plantilla) y dejar funcionando el complemento de LibreOffice (`libreoffice-java-common`, Java en Opciones): [docs/citar.md](docs/citar.md) §3 y §4.
 - 2026-10-06 · dueño: Edison · **Prompts y Método Documental**: `prompts/00 metodo/METODO_DOCUMENTAL.md`, `normas_apa7.md` y el skill de fuentes describen a Calibre como autoridad de la cita; alinearlos con §1.6 junto con la normativa (N 9.6).
 
-- 2026-10-05 · **Residuos de la ola 2a** (dueño: el director, con la copia 3): `~/.local/share/residuos-programa/2026-10-05/scripts-biblioteca/` guarda los respaldos movidos (con su `*.SHA256SUMS`) y el `.lock_calibre_write` vacío; la copia externa está en `$RESPALDOS_DIR/biblioteca/{normalizacion_metadatos,ecosistema_lectura,koreader_estudio,sincronizar_zotero}/`. Nada se borra antes de la copia 3.
 - 2026-10-05 · **Estado viejo dentro del repo** (dueño: el director, después de la orquestación de las 04:30 del 2026-10-06): `lectura/estado/` (la marca, que la orquestación copia sola a `$XDG_STATE_HOME/biblioteca/ecosistema_lectura/`) y `sincronizar-zotero/estado/ultimo_sync.json` quedan sin uso; van a residuos cuando la marca nueva exista.
 - 2026-10-05 · **21 adjuntos de Zotero que no resuelven** (dueño: el director y el autor, ola 2b, P9): `lib/adjuntos_zotero.py verificar` los lista sobre una copia; RQ-BIB-03.
 - 2026-10-05 · **`reportes/` no rota solo** (dueño: la higiene del programa; antes P6): la poda de más de 30 días la hace una fase de higiene.

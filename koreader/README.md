@@ -69,7 +69,7 @@ La columna manual **`#estudio`** (⬜/📖/🔁/✅, estado de *estudio*) es dis
 *lectura* automático (`#estado_estudio`); el sync jamás la toca. **Marca el final en KOReader**
 (estado del libro → *Terminado*): pone ✅ Finalizado, `#leído`, `#read_date` y `#ko_finish`.
 `--aplicar` escribe por la puerta (`../lib/escribir.sh`): Calibre cerrado, candado `LOCK_CALIBRE` y
-respaldo verificado en `$XDG_STATE_HOME/biblioteca/respaldos/koreader_estudio/`. Requisitos:
+respaldo verificado en `$RESPALDOS_DIR/biblioteca/puerta/koreader_estudio/`. Requisitos:
 Calibre (`calibredb`, `calibre-debug`), `CORE_PYTHON` y el plugin de **Estadísticas de lectura**.
 
 ## Sidecars centralizados por hash

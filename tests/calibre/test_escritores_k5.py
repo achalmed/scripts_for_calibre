@@ -38,7 +38,7 @@ def _juguete(tmp_path):
     for f in binf.iterdir():
         f.chmod(0o755)
     env = {"PATH": f"{binf}:{os.environ['PATH']}", "HOME": str(tmp_path / "home"),
-           "XDG_STATE_HOME": str(tmp_path / "estado"), "LOCK_CALIBRE": str(tmp_path / "estado" / "calibre.lock"),
+           "XDG_STATE_HOME": str(tmp_path / "estado"), "ARCHDISK_DIR": str(tmp_path / "sin-ssd"), "LOCK_CALIBRE": str(tmp_path / "estado" / "calibre.lock"),
            "BIBLIOTECA_DIR": str(lib), "CALIBRE_DB": str(lib / "metadata.db"),
            "PS_CALIBRE": str(tmp_path / "calibre-abierto")}
     return lib, env
