@@ -214,18 +214,40 @@ def test_sincronizar_zotero_perturbado_igual_a_la_referencia(arboles, corrida):
 
 
 
+def _perturbar_y_quitar_un_titulo(c: "Corrida") -> None:  # noqa: F821
+    """La perturbación de siempre y, además, un ítem enlazado sin título en Zotero (el último par, que `perturbar` no
+    toca): el caso de los ítems recién ingresados que la política debe rellenar (R9)."""
+    perturbar(c)
+    cal, zot = _cal_rw(c.calibre), sqlite3.connect(c.zotero)
+    _, clave, item = _enlazados(cal, zot)[-1]
+    zot.execute("delete from itemData where itemID = ? and fieldID = (select fieldID from fields where fieldName = 'title')",
+                (item,))
+    zot.commit()
+    cal.close()
+    zot.close()
+    c.sin_titulo = clave
+
+
 def test_sincronizar_zotero_politica_zotero_solo_rellena(arboles, corrida):
     """Política por omisión desde el 2026-10-08 (`CONFLICT_POLICY="zotero"`, docs/citar.md §1): Zotero manda en
     metadatos y Calibre solo rellena lo vacío. Sobre la misma perturbación: el título que Zotero ya tiene no se
     sobrescribe (queda «reporte (Zotero manda…)») ni cambia el tipo; los creadores y etiquetas borrados en Zotero
     sí se reponen (estaban vacíos), el idioma se normaliza (regla dura) y el adjunto se repara (es del archivo);
     hacia Calibre todo sigue igual (ISBN, valoración, espejo). Solo el árbol actual: la referencia no conoce la
-    política."""
-    m = _comparar(arboles, corrida, "sincronizar_zotero", ["--aplicar"], perturbar, politica=None, impls=("act",))
+    política. Un título vacío en Zotero sí se rellena (la política lo manda): con datos vivos hay ítems recién
+    ingresados sin título (R9 de la auditoría posterior), así que se exige que ningún título CON valor cambie, no
+    que ningún título se escriba."""
+    vistas = []
+    m = _comparar(arboles, corrida, "sincronizar_zotero", ["--aplicar"],
+                  lambda c: (_perturbar_y_quitar_un_titulo(c), vistas.append(c)), politica=None, impls=("act",))
     act = m["act"]
     zot = {k[1] for k in act["zotero"]}
     cal = {k[1] for k in act["calibre"]}
-    assert "f:title" not in zot and "tipo" not in zot, zot
+    relleno = act["zotero"].get((vistas[0].sin_titulo, "f:title"))
+    assert relleno and relleno[0] is None and relleno[1], f"el título vacío no se rellenó: {relleno}"
+    titulos_pisados = {k: v for k, v in act["zotero"].items() if k[1] == "f:title" and (v[0] or "").strip()}
+    assert titulos_pisados == {}, f"la política zotero sobrescribió títulos con valor: {titulos_pisados}"
+    assert "tipo" not in zot, zot
     for esperado in ("creadores", "etiquetas", "adjunto", "f:language"):
         assert esperado in zot, f"la política zotero dejó de rellenar «{esperado}»: {zot}"
     for esperado in ("identifiers", "rating", "#zotero_title"):
