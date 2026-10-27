@@ -125,13 +125,13 @@ LibreOffice. Necesita Java dentro de LibreOffice; si la barra de Zotero de Write
 
 En cada documento, la primera vez: Zotero → **Preferencias del documento** → estilo **American
 Psychological Association 7th edition** e idioma **Español (España)**, lo mismo que usa el SGDP
-(`ZOTERO_ESTILO=apa`, `ZOTERO_IDIOMA=es-ES` de `sgdp/.env.example`). La copia rápida de Zotero
+(`ZOTERO_ESTILO=apa`, `ZOTERO_IDIOMA=es-ES` de `qillqa/.env.example`). La copia rápida de Zotero
 (Ajustes → Exportar) está en APA con `es-MX`: conviene `es-ES` para que todo salga igual.
 
 ## 5. SGDP
 
 Lo resuelve el propio SGDP en solo lectura, por la API local de Zotero o una copia de
-`zotero.sqlite`: `sgdp/backend/app/servicios/zotero.py` y `sgdp/docs/decisiones.md` §Biblioteca y
+`zotero.sqlite`: `qillqa/backend/app/servicios/zotero.py` y `qillqa/docs/decisiones.md` §Biblioteca y
 citas.
 
 ## 6. Verificar
