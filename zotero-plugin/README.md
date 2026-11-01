@@ -69,7 +69,7 @@ python3 -m json.tool manifest.json >/dev/null && echo "manifest válido"
 | archivo | qué hace |
 |---|---|
 | `manifest.json` | WebExtension con `applications.zotero` (id `ecosistema@biblioteca-studio`, de Zotero 7.0 a 10.*) |
-| `bootstrap.js` | `install`, `startup`, `onMainWindowLoad`, `onMainWindowUnload`, `shutdown`, `uninstall`; registra `chrome://ecosistema/` y carga `content/` |
+| `bootstrap.js` | `install`, `startup`, `onMainWindowLoad`, `onMainWindowUnload`, `shutdown`, `uninstall`; registra el espacio chrome «ecosistema» y carga `content/` |
 | `content/puras.js` | lo que decide, sin Zotero ni disco: calibre_id de una ruta, hex UTF-8, URLs, ruta del índice, resumen del libro, plan y vista previa de series |
 | `content/ecosistema.js` | lo que toca Zotero: leer el índice (`IOUtils`), la sección (`Zotero.ItemPaneManager.registerSection`), los menús (`Zotero.MenuManager`; en Zotero 7, por DOM y quitados al descargar la ventana) y la escritura de series |
 | `locale/es-ES/ecosistema.ftl` | los textos de la cabecera, la barra lateral y el menú (Fluent); `en-US` es copia: la extensión habla en español |
