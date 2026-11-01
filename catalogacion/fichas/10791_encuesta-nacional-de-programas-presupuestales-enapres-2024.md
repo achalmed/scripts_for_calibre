@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/inei_enapres_2024_cap300c_cuestionario_rural.pdf` · SHA-256 `666cb34cb54454ad…` · entrada BibTeX `@report{inei_enapres_2024_cap300c_cuestionario_rural}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_enapres_2024_cap300c_cuestionario_rural.pdf` · SHA-256 `666cb34cb54454ad…` · entrada BibTeX `@report{inei_enapres_2024_cap300c_cuestionario_rural}`
 
 ## Zotero
 | Campo | Valor |

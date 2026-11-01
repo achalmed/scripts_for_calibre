@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 REPO = Path(__file__).resolve().parents[2]
-BASETEMP = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "pytest" / "scripts-biblioteca-studio" / "basetemp"
+BASETEMP = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "pytest" / "biblioteca-studio-studio" / "basetemp"
 
 
 @pytest.hookimpl(tryfirst=True)

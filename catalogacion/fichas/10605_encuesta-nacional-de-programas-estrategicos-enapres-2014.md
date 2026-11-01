@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/inei_enapres_2014_cuestionario_01b.pdf` · SHA-256 `d43203a7cafda6e7…` · entrada BibTeX `@techreport{inei_enapres_2014_cuestionario_01b}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_enapres_2014_cuestionario_01b.pdf` · SHA-256 `d43203a7cafda6e7…` · entrada BibTeX `@techreport{inei_enapres_2014_cuestionario_01b}`
 
 ## Zotero
 | Campo | Valor |

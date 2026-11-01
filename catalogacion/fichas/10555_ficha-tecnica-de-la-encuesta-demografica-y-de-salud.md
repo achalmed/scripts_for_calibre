@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/inei_endes_ficha_tecnica_2012.pdf` · SHA-256 `79b88104d7ebf7c3…` · entrada BibTeX `@techreport{inei_endes_ficha_tecnica_2012}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_endes_ficha_tecnica_2012.pdf` · SHA-256 `79b88104d7ebf7c3…` · entrada BibTeX `@techreport{inei_endes_ficha_tecnica_2012}`
 
 ## Zotero
 | Campo | Valor |

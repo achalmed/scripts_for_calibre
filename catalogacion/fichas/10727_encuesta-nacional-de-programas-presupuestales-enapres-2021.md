@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/inei_enapres_2021_cap900_cuestionario_urbano.pdf` · SHA-256 `37c45ee26f7af955…` · entrada BibTeX `@report{inei_enapres_2021_cap900_cuestionario_urbano}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_enapres_2021_cap900_cuestionario_urbano.pdf` · SHA-256 `37c45ee26f7af955…` · entrada BibTeX `@report{inei_enapres_2021_cap900_cuestionario_urbano}`
 
 ## Zotero
 | Campo | Valor |

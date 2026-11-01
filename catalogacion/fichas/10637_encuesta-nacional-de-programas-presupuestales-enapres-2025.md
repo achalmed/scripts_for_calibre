@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/inei_enapres_2025_cap100e_cuestionario_urbano.pdf` · SHA-256 `9440360bc2489eac…` · entrada BibTeX `@techreport{inei_enapres_2025_cap100e_cuestionario_urbano}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_enapres_2025_cap100e_cuestionario_urbano.pdf` · SHA-256 `9440360bc2489eac…` · entrada BibTeX `@techreport{inei_enapres_2025_cap100e_cuestionario_urbano}`
 
 ## Zotero
 | Campo | Valor |

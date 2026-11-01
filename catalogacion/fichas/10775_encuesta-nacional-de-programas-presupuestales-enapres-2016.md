@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/inei_enapres_2016_cap300_cuestionario_urbano.pdf` · SHA-256 `6d2c940ceb7c763c…` · entrada BibTeX `@report{inei_enapres_2016_cap300_cuestionario_urbano}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_enapres_2016_cap300_cuestionario_urbano.pdf` · SHA-256 `6d2c940ceb7c763c…` · entrada BibTeX `@report{inei_enapres_2016_cap300_cuestionario_urbano}`
 
 ## Zotero
 | Campo | Valor |

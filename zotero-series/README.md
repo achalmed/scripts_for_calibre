@@ -31,7 +31,7 @@ node -e 'const A=Object.getPrototypeOf(async function(){}).constructor; new A(re
 > El único script vivo de `scripts_for_zotero` (repo retirado el 2026-08-09, hallazgo A3 de
 > `meta/docs/historial/diagnosticos/AUDITORIA.md`). Es compatible con la sincronización Calibre ⇄ Zotero porque
 > solo reorganiza colecciones: no toca metadatos ni etiquetas. Se corre **después** de
-> `scripts-biblioteca/script_sincronizar_zotero`, nunca antes.
+> `biblioteca-studio/script_sincronizar_zotero`, nunca antes.
 
 Script de JavaScript para Zotero (v2.0) que **organiza automáticamente los ítems de una colección en
 subcolecciones según su campo "Series"**. Por ejemplo, si tienes 10 libros de la serie "Economía
@@ -46,7 +46,7 @@ automáticamente en subcolecciones por serie, sin perder notas, anotaciones ni a
 (porque mueve el ítem padre completo, no toca sus hijos individualmente). En esta biblioteca la
 serie de Calibre llega a Zotero por el sync (`series` en el ítem; `publicationTitle` en artículos),
 así que el script solo tiene sentido sobre una colección ya sincronizada (el contrato del sync,
-en `scripts-biblioteca/sincronizar-zotero/README.md`).
+en `biblioteca-studio/sincronizar-zotero/README.md`).
 
 Requisitos: Zotero 6 o superior con la consola de Ejecutar JavaScript habilitada; ningún plugin
 adicional; una colección existente cuyo nombre coincida con `CONFIG.nombreColeccionPrincipal` (por

@@ -2,7 +2,7 @@
 tipo: readme
 estado: activo
 ---
-# docs/ — documentación de `scripts-biblioteca`: lo transversal a las suites, por lector
+# docs/ — documentación de `biblioteca-studio`: lo transversal a las suites, por lector
 
 Cada suite se documenta en su propio `README.md`; aquí va lo que cruza varias: la operación del
 ecosistema de lectura, la arquitectura del Método Documental (adquirir, ingerir, fichar, citar), cómo se
@@ -33,7 +33,7 @@ se lee para saber por qué, no para saber cómo.
   que las cuenta.
 - Una campaña nueva deja su crónica en el mensaje de commit ([decisiones.md](decisiones.md) §4.6 y
   §4.8); la bitácora de `historial/` está cerrada.
-- La tabla de abajo la genera `python3 core/docs.py indice scripts-biblioteca --aplicar` (tras la fusión, `scripts-biblioteca`` (desde
+- La tabla de abajo la genera `python3 core/docs.py indice biblioteca-studio --aplicar` (tras la fusión, `biblioteca-studio`` (desde
   `~/Documents`); no se edita a mano.
 
 ## Índice
@@ -44,8 +44,8 @@ se lee para saber por qué, no para saber cómo.
 | [ampliar.md](ampliar.md) | `procedimiento` | `activo` | Ampliar: una fuente, una raíz de entrada, un paquete de anexos, una sigla o una suite |
 | [arquitectura.md](arquitectura.md) | `doc` | `activo` | Arquitectura: dos adquisiciones, el recorrido de un documento y las piezas que lo mueven |
 | [citar.md](citar.md) | `doc` | `activo` | Citar en el ecosistema: Zotero manda en citas y metadatos, Calibre en los archivos |
-| [consumidores.md](consumidores.md) | `doc` | `activo` | Consumidores de scripts-biblioteca: lo que otros repos usan de aquí y lo que no se cambia sin avisarles |
-| [decisiones.md](decisiones.md) | `decision` | `activo` | Decisiones de scripts-biblioteca: autoridad de los datos, escritura segura, organización y Método Documental |
+| [consumidores.md](consumidores.md) | `doc` | `activo` | Consumidores de biblioteca-studio: lo que otros repos usan de aquí y lo que no se cambia sin avisarles |
+| [decisiones.md](decisiones.md) | `decision` | `activo` | Decisiones de biblioteca-studio: autoridad de los datos, escritura segura, organización y Método Documental |
 | [operacion.md](operacion.md) | `doc` | `activo` | Operación del ecosistema de lectura y estudio (Calibre ⇄ KOReader ⇄ Zotero): qué es automático, qué es manual, cómo se verifica |
 | [historial/README.md](historial/README.md) | `readme` | `activo` | docs/historial/ — lo cumplido: el ecosistema de lectura, las campañas, las refactorizaciones y la procedencia de las carpetas |
 | [historial/campanas-sobre-la-biblioteca.md](historial/campanas-sobre-la-biblioteca.md) | `bitacora` | `hecho` | Campañas sobre la biblioteca: lo que se catalogó, normalizó y sincronizó en bloque, y con qué resultado |
@@ -53,5 +53,5 @@ se lee para saber por qué, no para saber cómo.
 | [historial/procedencia-de-las-carpetas.md](historial/procedencia-de-las-carpetas.md) | `bitacora` | `hecho` | Procedencia de las carpetas: de dónde vino cada suite del único lugar de fuentes |
 | [historial/refactorizacion-modular.md](historial/refactorizacion-modular.md) | `bitacora` | `hecho` | Refactorización modular de metadatos_calibre y catalogacion_biblioteca: los defectos del código original y cómo se corrigieron |
 
-<sub>Bloque generado por `core/docs.py indice` desde el frontmatter de docs/ (2026-10-06); no se edita a mano.</sub>
+<sub>Bloque generado por `core/docs.py indice` desde el frontmatter de docs/ (2026-11-01); no se edita a mano.</sub>
 <!-- docs:fin -->

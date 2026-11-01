@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/inei_endes_ppr_2011.pdf` · SHA-256 `8444197f3d12f753…` · entrada BibTeX `@techreport{inei_endes_ppr_2011}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_endes_ppr_2011.pdf` · SHA-256 `8444197f3d12f753…` · entrada BibTeX `@techreport{inei_endes_ppr_2011}`
 
 ## Zotero
 | Campo | Valor |

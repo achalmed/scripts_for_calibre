@@ -7,7 +7,7 @@ escribe_en:
 - calibre
 - zotero
 simula_por_defecto: true
-pruebas: python3 -m pytest -q scripts-biblioteca/tests/studio   # desde ~/Documents; la ventana sin pantalla y un índice falso
+pruebas: python3 -m pytest -q biblioteca-studio/tests/studio   # desde ~/Documents; la ventana sin pantalla y un índice falso
 comandos:
 - main.py
 - main.py biblioteca-studio://libro/48

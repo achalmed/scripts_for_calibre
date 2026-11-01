@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/inei_enapres_2021_cap700_cuestionario_rural.pdf` · SHA-256 `7e408313226e7fb8…` · entrada BibTeX `@report{inei_enapres_2021_cap700_cuestionario_rural}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_enapres_2021_cap700_cuestionario_rural.pdf` · SHA-256 `7e408313226e7fb8…` · entrada BibTeX `@report{inei_enapres_2021_cap700_cuestionario_rural}`
 
 ## Zotero
 | Campo | Valor |

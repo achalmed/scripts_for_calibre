@@ -2,7 +2,7 @@
 tipo: readme
 estado: activo
 ---
-# scripts-biblioteca/ — la biblioteca del ecosistema: adquirir, ingerir, catalogar y fichar fuentes, y mantener coherentes Calibre, KOReader y Zotero
+# biblioteca-studio/ — la biblioteca del ecosistema: adquirir, ingerir, catalogar y fichar fuentes, y mantener coherentes Calibre, KOReader y Zotero
 
 <!-- suite:inicio -->
 **Suite `fuentes`** · objetivo *fuentes* · estado *activo* · python · interfaz cli
@@ -23,7 +23,7 @@ main.py descargar <fuente> <ref>… [--lista archivo]
 main.py estado
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-31); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-11-01); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 <!-- suites:inicio -->
@@ -31,27 +31,27 @@ Suites de esta carpeta (14); índice global en `meta/INDICE_SCRIPTS.md`. Patrón
 
 | Suite | Carpeta | Objetivo | Escribe en | Simula | Timer | Estado | Patrón |
 |---|---|---|---|---|---|---|---|
-| `catalogacion` | [scripts-biblioteca/catalogacion](catalogacion/) | fuentes | calibre, archivos | sí |  | activo | `MCL` |
-| `fichas` | [scripts-biblioteca/fichas](fichas/) | fuentes | vault | sí |  | activo | `MCL` |
-| `ingesta` | [scripts-biblioteca/ingesta](ingesta/) | fuentes | calibre, vault, archivos | sí |  | activo | `MCL` |
-| `koreader` | [scripts-biblioteca/koreader](koreader/) | biblioteca | calibre | sí | koreader-calibre-sync.timer | activo | `MCL` |
-| `lectura` | [scripts-biblioteca/lectura](lectura/) | biblioteca | calibre | sí | ecosistema-lectura.timer · ecosistema-metadatos.timer | activo | `MCL` |
-| `lecturas` | [scripts-biblioteca/lecturas](lecturas/) | fuentes | vault | sí |  | activo | `MCL` |
-| `manifiesto` | [scripts-biblioteca/manifiesto](manifiesto/) | fuentes | vault | sí |  | activo | `MCL` |
-| `metadatos-pdf` | [scripts-biblioteca/metadatos-pdf](metadatos-pdf/) | biblioteca | calibre, archivos | sí |  | activo | `MCL` |
-| `migraciones` | [scripts-biblioteca/migraciones](migraciones/) | biblioteca | calibre | sí |  | activo | `M··` |
-| `sincronizar-zotero` | [scripts-biblioteca/sincronizar-zotero](sincronizar-zotero/) | biblioteca | calibre, zotero | sí |  | activo | `MCL` |
-| `biblioteca_studio` | [scripts-biblioteca/studio](studio/) | biblioteca | calibre, zotero | sí |  | activo | `M··` |
-| `fuentes` | [scripts-biblioteca](./) | fuentes | archivos | sí |  | activo | `MCL` |
-| `verificacion` | [scripts-biblioteca/verificacion](verificacion/) | biblioteca | ninguno | sí |  | activo | `MCL` |
-| `zotero-series` | [scripts-biblioteca/zotero-series](zotero-series/) | biblioteca | zotero | no |  | retirado | `···` |
+| `catalogacion` | [biblioteca-studio/catalogacion](catalogacion/) | fuentes | calibre, archivos | sí |  | activo | `MCL` |
+| `fichas` | [biblioteca-studio/fichas](fichas/) | fuentes | vault | sí |  | activo | `MCL` |
+| `ingesta` | [biblioteca-studio/ingesta](ingesta/) | fuentes | calibre, vault, archivos | sí |  | activo | `MCL` |
+| `koreader` | [biblioteca-studio/koreader](koreader/) | biblioteca | calibre | sí | koreader-calibre-sync.timer | activo | `MCL` |
+| `lectura` | [biblioteca-studio/lectura](lectura/) | biblioteca | calibre | sí | ecosistema-lectura.timer · ecosistema-metadatos.timer | activo | `MCL` |
+| `lecturas` | [biblioteca-studio/lecturas](lecturas/) | fuentes | vault | sí |  | activo | `MCL` |
+| `manifiesto` | [biblioteca-studio/manifiesto](manifiesto/) | fuentes | vault | sí |  | activo | `MCL` |
+| `metadatos-pdf` | [biblioteca-studio/metadatos-pdf](metadatos-pdf/) | biblioteca | calibre, archivos | sí |  | activo | `MCL` |
+| `migraciones` | [biblioteca-studio/migraciones](migraciones/) | biblioteca | calibre | sí |  | activo | `M··` |
+| `sincronizar-zotero` | [biblioteca-studio/sincronizar-zotero](sincronizar-zotero/) | biblioteca | calibre, zotero | sí |  | activo | `MCL` |
+| `biblioteca_studio` | [biblioteca-studio/studio](studio/) | biblioteca | calibre, zotero | sí |  | activo | `M··` |
+| `fuentes` | [biblioteca-studio](./) | fuentes | archivos | sí |  | activo | `MCL` |
+| `verificacion` | [biblioteca-studio/verificacion](verificacion/) | biblioteca | ninguno | sí |  | activo | `MCL` |
+| `zotero-series` | [biblioteca-studio/zotero-series](zotero-series/) | biblioteca | zotero | no |  | retirado | `···` |
 
-<sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-10-31); no se edita a mano.</sub>
+<sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-11-01); no se edita a mano.</sub>
 <!-- suites:fin -->
 
 Las herramientas de línea de comandos (Bash y Python) alrededor de la biblioteca Calibre (`biblioteca/`, la
 autoridad bibliográfica del workspace). Nació en la ola 2 del programa de reingeniería (2026-10-05) de la fusión de
-`scripts-biblioteca` y `scripts_for_fuentes`, que compartían la biblioteca, el ledger de catalogación, el candado y
+`biblioteca-studio` y `scripts_for_fuentes`, que compartían la biblioteca, el ledger de catalogación, el candado y
 la escritura en `metadata.db` sin compartir código. Hace dos cosas:
 
 - **El Método Documental ejecutable** (`prompts/00 metodo/METODO_DOCUMENTAL.md`): cada paso que toca archivos tiene
@@ -78,7 +78,7 @@ Todo simula por defecto; `--aplicar` escribe. Lo que escribe en Calibre exige Ca
 que escribe en Zotero).
 
 ```bash
-cd ~/Documents/scripts-biblioteca
+cd ~/Documents/biblioteca-studio
 # Método Documental
 python3 main.py verificar "Ley N.° 31143"             # paso 00: ¿ya está en la biblioteca?
 python3 main.py localizar congreso "Ley N.° 31143"    # paso 01: la URL, sin descargar
@@ -104,7 +104,7 @@ systemd/instalar.sh                                   # timers: simula; --aplica
 ```
 
 Pruebas, desde `~/Documents` y sobre copias de las bases (nunca las reales): `python3 -m pytest
-scripts-biblioteca/tests/calibre` y `python3 -m pytest scripts-biblioteca/tests/fuentes`. Requisitos: Calibre con
+biblioteca-studio/tests/calibre` y `python3 -m pytest biblioteca-studio/tests/fuentes`. Requisitos: Calibre con
 `calibredb` y `calibre-debug` en el `PATH`, el Python de `core` (`CORE_PYTHON`), `ocrmypdf` para el OCR y `exiftool`
 para `metadatos-pdf`. Qué es automático y qué es manual: [`docs/operacion.md`](docs/operacion.md).
 

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/inei_endes_diseno_muestral_2008.pdf` · SHA-256 `0b3ac36572777a12…` · entrada BibTeX `@techreport{inei_endes_diseno_muestral_2008}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_endes_diseno_muestral_2008.pdf` · SHA-256 `0b3ac36572777a12…` · entrada BibTeX `@techreport{inei_endes_diseno_muestral_2008}`
 
 ## Zotero
 | Campo | Valor |

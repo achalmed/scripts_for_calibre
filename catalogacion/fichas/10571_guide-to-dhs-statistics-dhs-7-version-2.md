@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/croft_2018_guide_dhs_statistics_dhs7.pdf` · SHA-256 `c92f43f3703806fa…` · entrada BibTeX `@techreport{croft_2018_guide_dhs_statistics_dhs7}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/croft_2018_guide_dhs_statistics_dhs7.pdf` · SHA-256 `c92f43f3703806fa…` · entrada BibTeX `@techreport{croft_2018_guide_dhs_statistics_dhs7}`
 
 ## Zotero
 | Campo | Valor |

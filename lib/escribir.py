@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""lib/escribir.py — la única puerta de escritura de scripts-biblioteca, lado Python (ola 2a, K2 y F2; fundidas en la fase E).
+"""lib/escribir.py — la única puerta de escritura de biblioteca-studio, lado Python (ola 2a, K2 y F2; fundidas en la fase E).
 
 Objetivo: que ningún otro archivo del repo escriba en metadata.db ni en zotero.sqlite (normativa 9.1,
   RQ-PRE-06; lo comprueba tests/test_puerta.py).

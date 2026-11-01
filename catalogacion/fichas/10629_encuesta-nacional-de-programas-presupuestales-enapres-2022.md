@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/inei_enapres_2022_cap600_cuestionario_urbano.pdf` · SHA-256 `27d1f37bfdb3aa43…` · entrada BibTeX `@techreport{inei_enapres_2022_cap600_cuestionario_urbano}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_enapres_2022_cap600_cuestionario_urbano.pdf` · SHA-256 `27d1f37bfdb3aa43…` · entrada BibTeX `@techreport{inei_enapres_2022_cap600_cuestionario_urbano}`
 
 ## Zotero
 | Campo | Valor |

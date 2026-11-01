@@ -46,7 +46,7 @@ con la ventana abierta, un enlace nuevo va a ella (una sola instancia).
 ## Uso
 
 ```bash
-python3 studio/main.py                                # desde scripts-biblioteca/
+python3 studio/main.py                                # desde biblioteca-studio/
 python3 studio/main.py biblioteca-studio://libro/48   # abre el libro 48
 studio/install.sh                                     # acceso directo en el menú y el esquema (con -n, simula)
 studio/install.sh --quitar
@@ -57,5 +57,5 @@ Los complementos: `../calibre-plugin/`, `../koreader-plugin/`, `../zotero-plugin
 ## Cómo se prueba
 
 ```bash
-python3 -m pytest -q scripts-biblioteca/tests/studio   # desde ~/Documents: la ventana sin pantalla, un índice falso
+python3 -m pytest -q biblioteca-studio/tests/studio   # desde ~/Documents: la ventana sin pantalla, un índice falso
 ```

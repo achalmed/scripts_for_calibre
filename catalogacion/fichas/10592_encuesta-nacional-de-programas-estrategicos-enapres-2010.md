@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/inei_enapres_2010_cuestionario_01a.pdf` · SHA-256 `577dc70a025486a2…` · entrada BibTeX `@techreport{inei_enapres_2010_cuestionario_01a}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_enapres_2010_cuestionario_01a.pdf` · SHA-256 `577dc70a025486a2…` · entrada BibTeX `@techreport{inei_enapres_2010_cuestionario_01a}`
 
 ## Zotero
 | Campo | Valor |

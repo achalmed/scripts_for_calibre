@@ -5,7 +5,7 @@ Añade al menú de herramientas del lector un submenú «Ecosistema» con: qué 
 Calibre, en Zotero o en Biblioteca Studio, copiar la clave para citar, pasar los resaltados a la nota
 de lectura y sincronizar con Calibre.
 
-Lee (solo lectura) el índice que genera `lib/indice.py --aplicar` de scripts-biblioteca. No escribe en
+Lee (solo lectura) el índice que genera `lib/indice.py --aplicar` de biblioteca-studio. No escribe en
 la base de Calibre: el enlace de los apuntes lo pide a `koreader/main.sh --apuntes`, que escribe por
 la puerta. Lo único que escribe este complemento es la nota de lectura del libro, y solo añadiendo al
 final. Las órdenes externas corren en segundo plano: nada bloquea la interfaz.
@@ -318,7 +318,7 @@ function Ecosistema:anadirResaltados(id, libro, indice, ruta, resaltados)
     -- El libro no tenía apuntes enlazados en Calibre: se pide por la puerta (koreader/main.sh --apuntes).
     local orden = L.texto(indice.repo):gsub("/+$", "") .. "/koreader/main.sh"
     if L.texto(indice.repo) == "" or not existe(orden) then
-        self:avisar(hecho .. "\n\nNo encuentro koreader/main.sh de scripts-biblioteca. " .. MENSAJE_ENLACE_DIFERIDO)
+        self:avisar(hecho .. "\n\nNo encuentro koreader/main.sh de biblioteca-studio. " .. MENSAJE_ENLACE_DIFERIDO)
         return
     end
     self:avisar(hecho .. "\n\nEnlazando la nota en Calibre…", 3)

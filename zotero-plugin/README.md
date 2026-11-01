@@ -35,7 +35,7 @@ simula por defecto y pide confirmación con la vista previa delante. La sección
 ## Uso
 
 ```bash
-cd scripts-biblioteca/zotero-plugin
+cd biblioteca-studio/zotero-plugin
 node pruebas.mjs        # prueba las funciones puras y lee (solo lee) el índice real si existe
 ./build.sh --dry-run    # qué empaquetaría, sin escribir
 ./build.sh              # comprueba la sintaxis con node y escribe dist/ecosistema-<versión>.xpi (dist/ no va a git)
@@ -68,7 +68,7 @@ python3 -m json.tool manifest.json >/dev/null && echo "manifest válido"
 
 | archivo | qué hace |
 |---|---|
-| `manifest.json` | WebExtension con `applications.zotero` (id `ecosistema@scripts-biblioteca`, de Zotero 7.0 a 10.*) |
+| `manifest.json` | WebExtension con `applications.zotero` (id `ecosistema@biblioteca-studio`, de Zotero 7.0 a 10.*) |
 | `bootstrap.js` | `install`, `startup`, `onMainWindowLoad`, `onMainWindowUnload`, `shutdown`, `uninstall`; registra `chrome://ecosistema/` y carga `content/` |
 | `content/puras.js` | lo que decide, sin Zotero ni disco: calibre_id de una ruta, hex UTF-8, URLs, ruta del índice, resumen del libro, plan y vista previa de series |
 | `content/ecosistema.js` | lo que toca Zotero: leer el índice (`IOUtils`), la sección (`Zotero.ItemPaneManager.registerSection`), los menús (`Zotero.MenuManager`; en Zotero 7, por DOM y quitados al descargar la ventana) y la escritura de series |

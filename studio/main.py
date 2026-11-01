@@ -6,7 +6,7 @@ Orquestación mínima: crea la QApplication, aplica el tema guardado y abre la v
 biblioteca_app/ y en gui_comun (el repo gui-comun); cada acción es una suite de este repo, que escribe por su puerta.
 
 Uso:
-    python3 studio/main.py                               # desde scripts-biblioteca/
+    python3 studio/main.py                               # desde biblioteca-studio/
     python3 studio/main.py biblioteca-studio://libro/48  # abre el libro (lo piden los complementos)
     python3 studio/main.py --smoke                       # construye la interfaz y sale (prueba de humo)
     python3 studio/main.py --instalar-lanzador [-n]      # acceso directo del menú y el esquema biblioteca-studio://

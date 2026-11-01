@@ -4,7 +4,7 @@ Objetivo: correr las suites tal como se usan (procesos, `main.sh`/`main.py`) sin
 Método: cada prueba recibe una copia del workspace en miniatura bajo `tmp_path`:
   Documents/core/                 env, shell-lib y py-common copiados del core real
   Documents/scripts_for_fuentes/  el árbol de trabajo de este repo (sin fichas provisionales, respaldos ni entrada/)
-  Documents/scripts-biblioteca/  solo lo que ingesta lee o escribe: fichas y resumen de la catalogación
+  Documents/biblioteca-studio/  solo lo que ingesta lee o escribe: fichas y resumen de la catalogación
   Documents/biblioteca/metadata.db  copia de la base real hecha con la API de respaldo de sqlite, en solo lectura
 y un entorno limpio (HOME, XDG_*, CALIBRE_CONFIG_DIRECTORY, LOCK_*, RESPALDOS_DIR) que apunta dentro de la caja.
 Límite: la base real se lee una vez por sesión (`mode=ro`); nunca se escribe. Los libros de la copia no tienen
@@ -22,7 +22,7 @@ from pathlib import Path
 
 import pytest
 
-BASETEMP = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "pytest" / "scripts-biblioteca-fuentes" / "basetemp"
+BASETEMP = Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "pytest" / "biblioteca-studio-fuentes" / "basetemp"
 
 
 @pytest.hookimpl(tryfirst=True)
@@ -38,7 +38,7 @@ def pytest_configure(config):
         config.option.basetemp = str(BASETEMP)
 
 REPO = Path(__file__).resolve().parents[2]
-NOMBRE_REPO = "scripts-biblioteca"   # la caja usa ya el nombre de destino de la fusión
+NOMBRE_REPO = "biblioteca-studio"   # la caja usa ya el nombre de destino de la fusión
 DOCS_REAL = REPO.parent
 CORE_REAL = DOCS_REAL / "core"
 

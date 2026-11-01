@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# lib/escribir.sh — la única puerta de escritura de scripts-biblioteca en metadata.db y zotero.sqlite (ola 2a, K2 y F2;
+# lib/escribir.sh — la única puerta de escritura de biblioteca-studio en metadata.db y zotero.sqlite (ola 2a, K2 y F2;
 # fundidas en la fase E: una sola para las suites de Calibre y para ingesta).
 # Módulo: se carga con `source` y hereda las opciones de la shell que lo carga; no fija `set -euo pipefail` (normativa 5.18).
 #

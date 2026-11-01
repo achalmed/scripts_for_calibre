@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/inei_enapres_2019_cap300_cuestionario_rural.pdf` · SHA-256 `c251c851eb695b10…` · entrada BibTeX `@report{inei_enapres_2019_cap300_cuestionario_rural}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_enapres_2019_cap300_cuestionario_rural.pdf` · SHA-256 `c251c851eb695b10…` · entrada BibTeX `@report{inei_enapres_2019_cap300_cuestionario_rural}`
 
 ## Zotero
 | Campo | Valor |

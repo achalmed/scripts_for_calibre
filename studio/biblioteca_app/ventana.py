@@ -500,5 +500,5 @@ class Ventana:
         QMessageBox.about(self.ui, "Acerca de Biblioteca Studio",
                           f"<b>Biblioteca Studio</b> {APP_VERSION}<br><br>La biblioteca del ecosistema: Calibre, Zotero "
                           "y KOReader con el Método Documental (adquirir, ingerir, catalogar, fichar, citar).<br><br>"
-                          "Cada botón corre una suite de <code>scripts-biblioteca</code>; la escritura pasa por una sola "
+                          "Cada botón corre una suite de <code>biblioteca-studio</code>; la escritura pasa por una sola "
                           "puerta, con la aplicación cerrada, candado y respaldo.<br><br>Edison Achalma")

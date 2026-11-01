@@ -50,7 +50,7 @@ end
 -- Un índice de ejemplo (la forma que deja lib/indice.py).
 local INDICE_EJEMPLO = [[
 {"esquema": 1, "generado": "2026-10-31T23:03:09-0500", "biblioteca": "/datos/Mi biblioteca",
- "repo": "/datos/scripts-biblioteca", "notas": "/datos/notas",
+ "repo": "/datos/biblioteca-studio", "notas": "/datos/notas",
  "libros": {
    "48": {"titulo": "Cien años después 😀", "autores": ["Solbes, Mira", "Otro, Autor"],
           "carpeta": "Solbes, Mira/Cien años después (48)",

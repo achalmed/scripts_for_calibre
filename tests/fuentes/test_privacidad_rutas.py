@@ -65,7 +65,7 @@ def test_rutas_relativas_a_docs_root(tmp_path):
     R = _rutas()
     docs = tmp_path / "Documents"
     (docs / "datafw" / "data").mkdir(parents=True)
-    entrada = docs / "scripts-biblioteca" / "entrada"
+    entrada = docs / "biblioteca-studio" / "entrada"
     entrada.mkdir(parents=True)
     assert R.a_texto(docs / "datafw" / "data" / "x.pdf", docs) == "datafw/data/x.pdf"
     assert R.a_texto("/otra/parte/x.pdf", docs) == "/otra/parte/x.pdf"     # fuera de la raíz: se queda absoluta

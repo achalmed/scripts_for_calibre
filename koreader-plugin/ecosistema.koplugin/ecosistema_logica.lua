@@ -204,7 +204,7 @@ function M.leer_indice(ruta, decodificar)
     local f = io.open(ruta, "rb")
     if not f then
         return nil, "No encuentro el índice del ecosistema en:\n" .. ruta ..
-            "\n\nGenérelo con «lib/indice.py --aplicar» en scripts-biblioteca."
+            "\n\nGenérelo con «lib/indice.py --aplicar» en biblioteca-studio."
     end
     local contenido = f:read("*a")
     f:close()

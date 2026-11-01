@@ -2,7 +2,7 @@
 tipo: guia_ia
 estado: activo
 ---
-# CLAUDE.md — scripts-biblioteca
+# CLAUDE.md — biblioteca-studio
 
 Guía para el asistente. En español con tildes. `AGENTS.md` es un enlace a este archivo. Léase antes: `estado.md`,
 `README.md`, `docs/README.md` (mapa por lector), `prompts/00 metodo/METODO_DOCUMENTAL.md` (los diez pasos que ejecutan
@@ -50,12 +50,12 @@ las suites de fuentes) y el README de la suite que se toque. Concreta `~/Documen
 ## Cómo se verifica un cambio
 
 ```bash
-python3 -m pytest scripts-biblioteca/tests/calibre        # caracterización, puerta, entorno (sobre copias)
-python3 -m pytest scripts-biblioteca/tests/fuentes        # caja de arena de ingesta, fichas, manifiesto
-python3 core/archivos.py validar scripts-biblioteca --linea-base "$PWD/meta/programa/05-piloto/linea-base/validador.json"
-python3 core/suites.py validar && python3 core/docs.py verificar scripts-biblioteca
-scripts-biblioteca/systemd/instalar.sh --verificar        # ¿lo instalado = las plantillas?
-( cd scripts-biblioteca && python3 manifiesto/main.py todo )   # todos los fuentes.yml vigilados, simula
+python3 -m pytest biblioteca-studio/tests/calibre        # caracterización, puerta, entorno (sobre copias)
+python3 -m pytest biblioteca-studio/tests/fuentes        # caja de arena de ingesta, fichas, manifiesto
+python3 core/archivos.py validar biblioteca-studio --linea-base "$PWD/meta/programa/05-piloto/linea-base/validador.json"
+python3 core/suites.py validar && python3 core/docs.py verificar biblioteca-studio
+biblioteca-studio/systemd/instalar.sh --verificar        # ¿lo instalado = las plantillas?
+( cd biblioteca-studio && python3 manifiesto/main.py todo )   # todos los fuentes.yml vigilados, simula
 ```
 
 Deshacer una escritura: copiar el respaldo de `$RESPALDOS_DIR/biblioteca/puerta/<suite>/` (el SSD; sin él,

@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/scripts-biblioteca/entrada/inei_enapres_ficha_tecnica_2019.pdf` · SHA-256 `a89a345937d0336e…` · entrada BibTeX `@techreport{inei_enapres_ficha_tecnica_2019}`
+`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_enapres_ficha_tecnica_2019.pdf` · SHA-256 `a89a345937d0336e…` · entrada BibTeX `@techreport{inei_enapres_ficha_tecnica_2019}`
 
 ## Zotero
 | Campo | Valor |
