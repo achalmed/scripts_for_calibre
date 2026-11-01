@@ -1,18 +1,18 @@
 ---
 tipo: readme
-estado: activo
+estado: retirado
 ---
 # zotero-series/ — organiza una colección de Zotero en subcolecciones por el campo Series (script «Run JavaScript», v2.0)
 
 <!-- suite:inicio -->
-**Suite `zotero-series`** · objetivo *biblioteca* · estado *activo* · - · interfaz cli
+**Suite `zotero-series`** · objetivo *biblioteca* · estado *retirado* · - · interfaz cli
 
 Organiza los ítems de una colección de Zotero en subcolecciones según su campo Series (script «Run JavaScript», v2.0); el único que sigue vivo de scripts_for_zotero.
 
 - Escribe en: zotero · simula por defecto: no
 - Entrada: colección de Zotero (CONFIG.nombreColeccionPrincipal, por defecto Calibre)
 - Depende de: zotero
-- Nota: sin main.sh: se ejecuta pegándolo en la consola de Zotero; modoSimulacion: false por defecto (ponerlo en true la primera vez); corre después de sincronizar-zotero, nunca antes
+- Nota: retirado el 2026-10-31: lo reemplaza «Organizar por series» de la extensión de Zotero (zotero-plugin/, docs/decisiones.md §2.11), con vista previa y confirmación; queda como referencia. Sin main.sh: se ejecuta pegándolo en la consola de Zotero; modoSimulacion: false por defecto (ponerlo en true la primera vez); corre después de sincronizar-zotero, nunca antes
 
 Comandos:
 
@@ -21,8 +21,12 @@ cat series_organizer.js | xclip -selection clipboard   # al portapapeles; pegar 
 node -e 'const A=Object.getPrototypeOf(async function(){}).constructor; new A(require("fs").readFileSync(process.argv[1],"utf8")); console.log("sintaxis ok")' series_organizer.js   # solo sintaxis, como la consola de Zotero; node --check no sirve
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-06); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-31); no se edita a mano.</sub>
 <!-- suite:fin -->
+
+> **Retirado el 2026-10-31.** Lo reemplaza la orden «Organizar por series…» de la extensión «Ecosistema» de Zotero
+> ([`../zotero-plugin/`](../zotero-plugin/), `docs/decisiones.md` §2.11): la misma lógica, con vista previa y
+> confirmación, sin pegar nada en la consola. Este guion queda como referencia.
 
 > El único script vivo de `scripts_for_zotero` (repo retirado el 2026-08-09, hallazgo A3 de
 > `meta/docs/historial/diagnosticos/AUDITORIA.md`). Es compatible con la sincronización Calibre ⇄ Zotero porque

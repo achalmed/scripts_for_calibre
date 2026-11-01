@@ -42,7 +42,7 @@ las suites de fuentes) y el README de la suite que se toque. Concreta `~/Documen
 - **Los PDF del Congreso** pasan por `ocrmypdf -l spa`; nunca se copia texto del original.
 - **Biblioteca Studio y los complementos no son puertas** (`docs/decisiones.md` §2.10): `studio/` corre las CLI
   (simular, luego aplicar con la app cerrada); los complementos de Calibre, KOReader y Zotero leen el índice de
-  `lib/indice.py` (nunca las bases) y solo escriben texto: la nota de lectura y `por-verificar.tsv`.
+  `lib/indice.py` (nunca las bases) y solo escriben texto (la nota de lectura y `por-verificar.tsv`), salvo las series de Zotero (§2.11).
 - **Dónde va cada cosa nueva**: en la raíz solo `README.md`, `CLAUDE.md`, `AGENTS.md`, `estado.md`, `LICENSE` y
   lo de la suite `fuentes`; el porqué a `docs/decisiones.md` (`### §N.M`, sin renumerar), lo pendiente a `estado.md`
   §Por hacer con fecha y dueño, el uso de una suite a su README. Lo hecho en una sesión va al commit.
@@ -73,5 +73,5 @@ Deshacer una escritura: copiar el respaldo de `$RESPALDOS_DIR/biblioteca/puerta/
   SHA-256; las variantes OCR son formatos, no libros; los anexos de un paquete van a `data/` del principal.
 - **`lecturas` da la página del PDF desde 1**; «hallada en otra página» es `observada`, nunca `verificada`.
 - **`IFS=$'\t'` colapsa campos vacíos de un TSV en Bash**: la catalogación usa `\037`.
-- **`manifiestos/marco_legal/` es dato, no suite**; **`zotero-series/series_organizer.js`** se pega
-  a mano en la consola de Zotero.
+- **`manifiestos/marco_legal/` es dato, no suite**; organizar Zotero por series es la orden de `zotero-plugin/`, la
+  única escritura fuera de la puerta (§2.11); `zotero-series/` está retirado.

@@ -153,7 +153,7 @@ es una puerta nueva:
 
 - **El Studio no escribe por su cuenta**: cada tarjeta corre la CLI de su suite, primero simulando; «Aplicar» pide
   confirmación y se desactiva con la aplicación de la base abierta (`studio/biblioteca_app/acciones.py`).
-- **Los complementos solo leen las bases**. Lo que saben de un libro lo leen de `lib/indice.py`
+- **Los complementos solo leen las bases** (la excepción, las colecciones por series de Zotero, es §2.11). Lo que saben de un libro lo leen de `lib/indice.py`
   (`$XDG_STATE_HOME/biblioteca/indice.json`, generado en `mode=ro`): KOReader no abre `metadata.db` ni Zotero la de
   Calibre. Lo único que escriben son archivos de texto fuera de las bases: la nota de lectura (KOReader añade al final
   sus resaltados, nunca reescribe) y la cola `por-verificar.tsv` (Calibre). El enlace de una nota nueva en
@@ -163,6 +163,20 @@ es una puerta nueva:
   la misma ruta que usa Zotero Integration en Obsidian.
 - **`biblioteca-studio://libro/<id>`** es el enlace común: lo registra `studio/install.sh` y lo abren los tres
   complementos; con la ventana abierta va a ella.
+
+### §2.11 «Organizar por series» pasa a la extensión de Zotero: excepción declarada a la puerta (2026-10-31)
+
+`zotero-series/series_organizer.js` se pegaba a mano en la consola de Zotero y movía ítems entre colecciones con
+Zotero abierto, fuera de la puerta. Lo reemplaza la orden «Organizar por series…» de `zotero-plugin/` (Herramientas y
+el menú de la colección): arma el plan, lo muestra y solo escribe si se acepta, una transacción por serie con la API
+de Zotero (`Zotero.Collection`, `addItems`, `removeItems`). Escribe colecciones con Zotero abierto, como antes: el
+riesgo no cambia, pero ahora tiene vista previa. Es **la única escritura fuera de la puerta**, solo en colecciones
+(nunca en campos de ítems ni en adjuntos), y queda declarada aquí; `zotero-series/` pasa a `retirado`.
+
+El resto de la extensión solo lee: la sección del panel del ítem saca el `calibre_id` de la ruta del adjunto (la
+misma expresión que `lib/indice.py`) y lo demás del índice (§2.10). El `manifest.json` lleva un `update_url` de un
+dominio que no existe (`example.invalid`) porque Zotero lo exige y el repo es público; las versiones nuevas se
+instalan a mano desde `zotero-plugin/dist/`.
 
 ## 3. KOReader
 

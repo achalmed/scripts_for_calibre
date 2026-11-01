@@ -9,8 +9,8 @@ simula_por_defecto: false
 comandos:
 - 'cat series_organizer.js | xclip -selection clipboard   # al portapapeles; pegar en Zotero → Herramientas → Desarrollador → Ejecutar JavaScript'
 - 'node -e ''const A=Object.getPrototypeOf(async function(){}).constructor; new A(require("fs").readFileSync(process.argv[1],"utf8")); console.log("sintaxis ok")'' series_organizer.js   # solo sintaxis, como la consola de Zotero; node --check no sirve'
-estado: activo
+estado: retirado
 entrada: colección de Zotero (CONFIG.nombreColeccionPrincipal, por defecto Calibre)
 depende_de:
 - zotero
-nota: 'sin main.sh: se ejecuta pegándolo en la consola de Zotero; modoSimulacion: false por defecto (ponerlo en true la primera vez); corre después de sincronizar-zotero, nunca antes'
+nota: 'retirado el 2026-10-31: lo reemplaza «Organizar por series» de la extensión de Zotero (zotero-plugin/, docs/decisiones.md §2.11), con vista previa y confirmación; queda como referencia. Sin main.sh: se ejecuta pegándolo en la consola de Zotero; modoSimulacion: false por defecto (ponerlo en true la primera vez); corre después de sincronizar-zotero, nunca antes'

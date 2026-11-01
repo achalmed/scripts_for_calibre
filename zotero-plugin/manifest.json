@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "Ecosistema",
+  "version": "0.1.0",
+  "description": "El libro en Calibre y sus fichas desde el panel del ítem, y «Organizar por series» con vista previa (scripts-biblioteca).",
+  "author": "scripts-biblioteca",
+  "icons": {
+    "48": "content/icono-48.svg",
+    "96": "content/icono-48.svg"
+  },
+  "applications": {
+    "zotero": {
+      "id": "ecosistema@scripts-biblioteca",
+      "update_url": "https://example.invalid/ecosistema/updates.json",
+      "strict_min_version": "7.0",
+      "strict_max_version": "10.*"
+    }
+  }
+}

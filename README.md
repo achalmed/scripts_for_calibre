@@ -44,7 +44,7 @@ Suites de esta carpeta (14); índice global en `meta/INDICE_SCRIPTS.md`. Patrón
 | `biblioteca_studio` | [scripts-biblioteca/studio](studio/) | biblioteca | calibre, zotero | sí |  | activo | `M··` |
 | `fuentes` | [scripts-biblioteca](./) | fuentes | archivos | sí |  | activo | `MCL` |
 | `verificacion` | [scripts-biblioteca/verificacion](verificacion/) | biblioteca | ninguno | sí |  | activo | `MCL` |
-| `zotero-series` | [scripts-biblioteca/zotero-series](zotero-series/) | biblioteca | zotero | no |  | activo | `···` |
+| `zotero-series` | [scripts-biblioteca/zotero-series](zotero-series/) | biblioteca | zotero | no |  | retirado | `···` |
 
 <sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-10-31); no se edita a mano.</sub>
 <!-- suites:fin -->
@@ -118,7 +118,7 @@ para `metadatos-pdf`. Qué es automático y qué es manual: [`docs/operacion.md`
 | `catalogacion/` | aplica `resumen_catalogacion.tsv` a Calibre; `fichas/` y el TSV son el registro canónico (los escribe `ingesta catalogar`) | a mano |
 | `fichas/`, `lecturas/`, `manifiesto/` | pasos 05, 07 y 09 sobre las fichas de un proyecto; `manifiesto/` es contrato con `datafw` y `escritura` y no cambia de nombre | a mano |
 | `koreader/`, `lectura/`, `sincronizar-zotero/` | la coherencia Calibre ⇄ KOReader ⇄ Zotero; los tres timers | a mano; timers `koreader-calibre-sync`, `ecosistema-lectura`, `ecosistema-metadatos` |
-| `zotero-series/` | organiza una colección de Zotero en subcolecciones por su campo Series (se pega en la consola de Zotero); lo único vivo de `scripts_for_zotero`, archivado en la ola 2 | a mano |
+| `zotero-series/` | retirado el 2026-10-31: el organizador por series que se pegaba en la consola de Zotero; lo reemplaza `zotero-plugin/` (§2.11) | a mano |
 | `studio/` | Biblioteca Studio: la ventana de las suites (simular y aplicar cada paso), el libro de un vistazo y la puerta; acceso directo y esquema `biblioteca-studio://` con `studio/install.sh` | a mano |
 | `calibre-plugin/`, `koreader-plugin/`, `zotero-plugin/` | los complementos «Ecosistema» de Calibre, KOReader y Zotero: el libro en las otras dos aplicaciones, su clave y su nota; solo leen las bases (§2.10) | a mano; paquetes en `*/dist/`, ignorados |
 | `verificacion/`, `metadatos-pdf/` | cotejo con OpenLibrary y Crossref (solo lectura); incrustador OPF → PDF | a mano |

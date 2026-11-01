@@ -115,6 +115,7 @@ git -C ~/.local/share/koreader-respaldo log --oneline -5       # respaldos recie
 - No borres `~/.config/koreader/hashdocsettings/` (son tus progresos) ni el candado de
   `$XDG_STATE_HOME/biblioteca/`.
 - No muevas el repo de carpeta sin reinstalar los timers (`../systemd/instalar.sh --aplicar`).
-- No ejecutes los `.js` de `scripts_for_zotero` (salvo `series_organizer`): sus transformaciones
+- No ejecutes los `.js` de `scripts_for_zotero` (ni `series_organizer`, que reemplaza la extensión de
+  `../zotero-plugin/`, §2.11): sus transformaciones
   están absorbidas por la política de `../sincronizar-zotero/` y el sync nocturno las
   revertiría.
