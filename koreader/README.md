@@ -103,7 +103,8 @@ aunque la biblioteca cambie de ruta.
 `main.sh` (orquestación y CLI) · `config.sh` (rutas de `core/env.sh` y columnas) · `lib/`: `checks.sh`
 (entorno, KOReader cerrado), `setup_columnas.sh` (columnas y plantillas, idempotente),
 `sync_koreader.py` (núcleo), `migrar_sdr.py` (de una vez), `respaldo_koreader.sh` (espejo en texto) ·
-`reportes/` es runtime ignorado. El timer está en `../systemd/`; las pruebas, en `../tests/`.
+`reportes/` es runtime ignorado. El timer está en `../systemd/`; las pruebas, en `../tests/`. Tras cada pasada, el
+servicio regenera el índice de libros de Biblioteca Studio y los complementos (`../lib/indice.py --aplicar`).
 
 ## Límite honesto
 

@@ -6,6 +6,9 @@ Type=oneshot
 # PATH mínimo: las suites corren con CORE_PYTHON (core/env) y las herramientas del sistema, sin anaconda (P221).
 Environment="PATH=/usr/local/bin:/usr/bin:/bin"
 ExecStart=@RAIZ@/koreader/main.sh --desde-timer
+# Después, el índice de libros que leen Biblioteca Studio y los complementos (lib/indice.py: solo lee las bases).
+# El «-» hace que un fallo del índice no marque como fallida la sincronización (decisiones §2.10).
+ExecStartPost=-/usr/bin/python3 @RAIZ@/lib/indice.py --aplicar
 # 75 = candado ocupado u otra herramienta escribiendo: «reintentar luego», no es un fallo (core/shell-lib/lock.sh).
 SuccessExitStatus=75
 Nice=10

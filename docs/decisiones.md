@@ -154,7 +154,8 @@ es una puerta nueva:
 - **El Studio no escribe por su cuenta**: cada tarjeta corre la CLI de su suite, primero simulando; «Aplicar» pide
   confirmación y se desactiva con la aplicación de la base abierta (`studio/biblioteca_app/acciones.py`).
 - **Los complementos solo leen las bases** (la excepción, las colecciones por series de Zotero, es §2.11). Lo que saben de un libro lo leen de `lib/indice.py`
-  (`$XDG_STATE_HOME/biblioteca/indice.json`, generado en `mode=ro`): KOReader no abre `metadata.db` ni Zotero la de
+  (`$XDG_STATE_HOME/biblioteca/indice.json`, generado en `mode=ro`; lo regenera cada 30 min el `ExecStartPost` de
+  `koreader-calibre-sync.service`, con un «-» para que su fallo no haga fallar la sincronización): KOReader no abre `metadata.db` ni Zotero la de
   Calibre. Lo único que escriben son archivos de texto fuera de las bases: la nota de lectura (KOReader añade al final
   sus resaltados, nunca reescribe) y la cola `por-verificar.tsv` (Calibre). El enlace de una nota nueva en
   `#apuntes` lo pide KOReader a `koreader/main.sh --apuntes`, y `lib/enlazar_notas.py` enlaza después las que se

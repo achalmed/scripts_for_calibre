@@ -8,7 +8,7 @@ de escritura. El JSON queda fuera del repo y de las bases: `$XDG_STATE_HOME/bibl
 Entra: CALIBRE_DB, ZOTERO_DB y BIBLIOTECA_DIR de core/env. Sale: el JSON (con `--aplicar`); sin él, simula.
 Uso:
     python3 lib/indice.py              # simula: cuántos libros, cuántos con clave, sin escribir
-    python3 lib/indice.py --aplicar    # escribe el índice (Biblioteca Studio → Sincronizar → «Actualizar el índice»)
+    python3 lib/indice.py --aplicar    # escribe el índice (lo corre el timer de KOReader cada 30 min y «Actualizar el índice» del Studio)
     python3 lib/indice.py --ruta       # dónde vive el índice
 """
 from __future__ import annotations
