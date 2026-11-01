@@ -30,7 +30,7 @@ def datos_lanzador() -> dict:
     from biblioteca_app.ventana import ACENTO, LOGO
     return dict(app_id=APP_ID, nombre="Biblioteca Studio", comentario="Calibre, Zotero y KOReader con el Método "
                 "Documental: adquirir, catalogar, sincronizar y citar", orden=[sys.executable, str(_AQUI / "main.py")],
-                logo_svg=LOGO, acento=ACENTO, categorias="Office;Education;", esquema="biblioteca-studio",
+                logo_svg=LOGO, acento=ACENTO, categorias="Office;", esquema="biblioteca-studio",
                 palabras="calibre;zotero;koreader;biblioteca;libros;citas;fichas;")
 
 
