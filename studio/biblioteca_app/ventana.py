@@ -16,7 +16,7 @@ from types import SimpleNamespace
 
 from PySide6.QtCore import QSize, Qt, QTimer, QUrl
 from PySide6.QtGui import QDesktopServices, QGuiApplication, QPixmap
-from PySide6.QtWidgets import (QApplication, QFileDialog, QHBoxLayout, QLabel, QLineEdit, QListWidget,
+from PySide6.QtWidgets import (QApplication, QFileDialog, QGridLayout, QHBoxLayout, QLabel, QLineEdit, QListWidget,
                                QListWidgetItem, QMainWindow, QMessageBox, QPushButton, QStackedWidget, QVBoxLayout,
                                QWidget)
 
@@ -181,14 +181,17 @@ class PaginaLibro(QWidget):
         self.datos.setWordWrap(True)
         for w in (self.titulo, self.autores, self.datos):
             textos.addWidget(w)
-        botones = QHBoxLayout()
-        for texto, icono, accion in (("Abrir en Calibre", "libro", self._calibre), ("Abrir en Zotero", "abrir", self._zotero),
-                                     ("Abrir el archivo", "documento", self._archivo), ("Nota de lectura", "texto", self._nota),
-                                     ("Copiar la clave", "receta", self._copiar)):
+        botones = QGridLayout()                  # en rejilla de tres: en una fila no caben en una ventana estrecha
+        botones.setHorizontalSpacing(8)
+        botones.setVerticalSpacing(8)
+        for i, (texto, icono, accion) in enumerate((
+                ("Abrir en Calibre", "libro", self._calibre), ("Abrir en Zotero", "abrir", self._zotero),
+                ("Abrir el archivo", "documento", self._archivo), ("Nota de lectura", "texto", self._nota),
+                ("Copiar la clave", "receta", self._copiar))):
             b = QPushButton(icono_trazo(icono), f" {texto}")
             b.clicked.connect(accion)
-            botones.addWidget(b)
-        botones.addStretch(1)
+            botones.addWidget(b, i // 3, i % 3)
+        botones.setColumnStretch(3, 1)
         textos.addLayout(botones)
         textos.addStretch(1)
         cabeza.addLayout(textos, 1)
