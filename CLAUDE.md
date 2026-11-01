@@ -40,6 +40,9 @@ las suites de fuentes) y el README de la suite que se toque. Concreta `~/Documen
 - **Los timers son plantillas en `systemd/`** y se instalan con `systemd/instalar.sh` (simula; `--verificar` compara);
   corren cada 30 min sobre este repo: cada commit deja sus `main.sh` funcionando.
 - **Los PDF del Congreso** pasan por `ocrmypdf -l spa`; nunca se copia texto del original.
+- **Biblioteca Studio y los complementos no son puertas** (`docs/decisiones.md` §2.10): `studio/` corre las CLI
+  (simular, luego aplicar con la app cerrada); los complementos de Calibre, KOReader y Zotero leen el índice de
+  `lib/indice.py` (nunca las bases) y solo escriben texto: la nota de lectura y `por-verificar.tsv`.
 - **Dónde va cada cosa nueva**: en la raíz solo `README.md`, `CLAUDE.md`, `AGENTS.md`, `estado.md`, `LICENSE` y
   lo de la suite `fuentes`; el porqué a `docs/decisiones.md` (`### §N.M`, sin renumerar), lo pendiente a `estado.md`
   §Por hacer con fecha y dueño, el uso de una suite a su README. Lo hecho en una sesión va al commit.

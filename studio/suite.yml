@@ -1,0 +1,22 @@
+# studio/suite.yml — suite biblioteca_studio: Aplicación de escritorio (PySide6) sobre las suites de la biblioteca: simular y aplicar cada paso del Método Documental, el libro de un vistazo y la puerta.
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: biblioteca_studio
+objetivo: biblioteca
+resumen: 'Aplicación de escritorio (PySide6) sobre las suites de la biblioteca: simular y aplicar cada paso del Método Documental, el libro de un vistazo y la puerta.'
+escribe_en:
+- calibre
+- zotero
+simula_por_defecto: true
+pruebas: python3 -m pytest -q scripts-biblioteca/tests/studio   # desde ~/Documents; la ventana sin pantalla y un índice falso
+comandos:
+- main.py
+- main.py biblioteca-studio://libro/48
+- main.py --smoke
+- install.sh
+estado: activo
+interfaz: gui
+depende_de:
+- PySide6
+- gui-comun
+- las suites de este repo (escriben por lib/escribir*, la puerta)
+nota: 'No escribe por su cuenta: corre la CLI de cada suite, primero simulando; «Aplicar» se desactiva con Calibre o Zotero abiertos.'

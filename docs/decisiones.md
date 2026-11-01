@@ -144,6 +144,26 @@ Un defecto hallado se fija primero como `xfail` estricto y su arreglo lo vuelve 
 de `aplicar_zotero.py` de las campañas: simula por defecto y, tras reescribir, exige 0 rutas nuevas
 rotas.
 
+### §2.10 Biblioteca Studio y los complementos no abren una segunda puerta (2026-10-31)
+
+El autor aprobó (`meta/programa/08-mantenimiento/biblioteca-studio-2026-10-31.md`) que el repo entre a la familia de
+studios sin cambiar de nombre: la aplicación es **Biblioteca Studio** (`studio/`, `gui-comun`, acento sepia) y la
+acompañan tres complementos, uno por aplicación: `calibre-plugin/`, `koreader-plugin/` y `zotero-plugin/`. Ninguno
+es una puerta nueva:
+
+- **El Studio no escribe por su cuenta**: cada tarjeta corre la CLI de su suite, primero simulando; «Aplicar» pide
+  confirmación y se desactiva con la aplicación de la base abierta (`studio/biblioteca_app/acciones.py`).
+- **Los complementos solo leen las bases**. Lo que saben de un libro lo leen de `lib/indice.py`
+  (`$XDG_STATE_HOME/biblioteca/indice.json`, generado en `mode=ro`): KOReader no abre `metadata.db` ni Zotero la de
+  Calibre. Lo único que escriben son archivos de texto fuera de las bases: la nota de lectura (KOReader añade al final
+  sus resaltados, nunca reescribe) y la cola `por-verificar.tsv` (Calibre). El enlace de una nota nueva en
+  `#apuntes` lo pide KOReader a `koreader/main.sh --apuntes`, y `lib/enlazar_notas.py` enlaza después las que se
+  crearon con Calibre abierto; ambos por la puerta.
+- **La nota de un libro es una sola**: la de `#apuntes` si la hay; si no, `notas/<clave para citar en minúsculas>.md`,
+  la misma ruta que usa Zotero Integration en Obsidian.
+- **`biblioteca-studio://libro/<id>`** es el enlace común: lo registra `studio/install.sh` y lo abren los tres
+  complementos; con la ventana abierta va a ella.
+
 ## 3. KOReader
 
 ### §3.1 Sidecars por hash (2026-08-09)

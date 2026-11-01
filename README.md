@@ -23,11 +23,11 @@ main.py descargar <fuente> <ref>… [--lista archivo]
 main.py estado
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-06); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-31); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 <!-- suites:inicio -->
-Suites de esta carpeta (13); índice global en `meta/INDICE_SCRIPTS.md`. Patrón: M main · C config · L lib.
+Suites de esta carpeta (14); índice global en `meta/INDICE_SCRIPTS.md`. Patrón: M main · C config · L lib.
 
 | Suite | Carpeta | Objetivo | Escribe en | Simula | Timer | Estado | Patrón |
 |---|---|---|---|---|---|---|---|
@@ -41,11 +41,12 @@ Suites de esta carpeta (13); índice global en `meta/INDICE_SCRIPTS.md`. Patrón
 | `metadatos-pdf` | [scripts-biblioteca/metadatos-pdf](metadatos-pdf/) | biblioteca | calibre, archivos | sí |  | activo | `MCL` |
 | `migraciones` | [scripts-biblioteca/migraciones](migraciones/) | biblioteca | calibre | sí |  | activo | `M··` |
 | `sincronizar-zotero` | [scripts-biblioteca/sincronizar-zotero](sincronizar-zotero/) | biblioteca | calibre, zotero | sí |  | activo | `MCL` |
+| `biblioteca_studio` | [scripts-biblioteca/studio](studio/) | biblioteca | calibre, zotero | sí |  | activo | `M··` |
 | `fuentes` | [scripts-biblioteca](./) | fuentes | archivos | sí |  | activo | `MCL` |
 | `verificacion` | [scripts-biblioteca/verificacion](verificacion/) | biblioteca | ninguno | sí |  | activo | `MCL` |
 | `zotero-series` | [scripts-biblioteca/zotero-series](zotero-series/) | biblioteca | zotero | no |  | activo | `···` |
 
-<sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-10-06); no se edita a mano.</sub>
+<sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-10-31); no se edita a mano.</sub>
 <!-- suites:fin -->
 
 Las herramientas de línea de comandos (Bash y Python) alrededor de la biblioteca Calibre (`biblioteca/`, la
@@ -62,6 +63,9 @@ la escritura en `metadata.db` sin compartir código. Hace dos cosas:
   Calibre cada 30 minutos; la sincronización bidireccional de metadatos a diario a las 04:30). **Zotero manda** en
   los metadatos bibliográficos (`docs/citar.md` §1): cada sistema solo rellena lo vacío del otro, y los relojes de lectura de KOReader y de Zotero nunca
   se copian entre sí: Calibre los suma en `#tiempo_estudio`.
+- **Biblioteca Studio** (`studio/`): la misma cadena en una ventana de la familia de studios, con «Simular» y
+  «Aplicar» por paso, y los complementos «Ecosistema» de Calibre, KOReader y Zotero, que llevan de un libro a las
+  otras dos aplicaciones, a su clave para citar y a su nota de lectura (`docs/decisiones.md` §2.10).
 
 Y una sola **puerta de escritura** (`lib/escribir.*`): nada escribe en `metadata.db` ni en `zotero.sqlite` sin la
 app cerrada, el candado (`LOCK_CALIBRE`, `LOCK_ZOTERO` de `core/env.sh`) y un respaldo verificado. **No es** la
@@ -115,11 +119,13 @@ para `metadatos-pdf`. Qué es automático y qué es manual: [`docs/operacion.md`
 | `fichas/`, `lecturas/`, `manifiesto/` | pasos 05, 07 y 09 sobre las fichas de un proyecto; `manifiesto/` es contrato con `datafw` y `escritura` y no cambia de nombre | a mano |
 | `koreader/`, `lectura/`, `sincronizar-zotero/` | la coherencia Calibre ⇄ KOReader ⇄ Zotero; los tres timers | a mano; timers `koreader-calibre-sync`, `ecosistema-lectura`, `ecosistema-metadatos` |
 | `zotero-series/` | organiza una colección de Zotero en subcolecciones por su campo Series (se pega en la consola de Zotero); lo único vivo de `scripts_for_zotero`, archivado en la ola 2 | a mano |
+| `studio/` | Biblioteca Studio: la ventana de las suites (simular y aplicar cada paso), el libro de un vistazo y la puerta; acceso directo y esquema `biblioteca-studio://` con `studio/install.sh` | a mano |
+| `calibre-plugin/`, `koreader-plugin/`, `zotero-plugin/` | los complementos «Ecosistema» de Calibre, KOReader y Zotero: el libro en las otras dos aplicaciones, su clave y su nota; solo leen las bases (§2.10) | a mano; paquetes en `*/dist/`, ignorados |
 | `verificacion/`, `metadatos-pdf/` | cotejo con OpenLibrary y Crossref (solo lectura); incrustador OPF → PDF | a mano |
 | `manifiestos/marco_legal/`, `registro/` | el dato del marco legal y la memoria documental que no es de ninguna herramienta | a mano |
-| `lib/` | la puerta de escritura (`escribir.sh`, `escribir.py`, `escribir_zotero.py`), lecturas sin `sqlite3` (`leer.sh`), el escritor de rutas de adjuntos de Zotero (`adjuntos_zotero.py`) y lo común de las suites de fuentes (`comun.py`, `rutas.py`) | a mano |
+| `lib/` | la puerta de escritura (`escribir.sh`, `escribir.py`, `escribir_zotero.py`), lecturas sin `sqlite3` (`leer.sh`), el escritor de rutas de adjuntos de Zotero (`adjuntos_zotero.py`) y lo común de las suites de fuentes (`comun.py`, `rutas.py`); el índice de libros de los complementos (`indice.py`, solo lee) y `enlazar_notas.py` | a mano |
 | `systemd/` | las plantillas de los tres timers y su instalador | a mano; las unidades instaladas son su render |
-| `tests/calibre/`, `tests/fuentes/` | caracterización de los sincronizadores contra la referencia de git, la puerta, el entorno y la caja de arena de ingesta, sobre copias | a mano |
+| `tests/calibre/`, `tests/fuentes/`, `tests/studio/` | caracterización de los sincronizadores contra la referencia de git, la puerta, el entorno y la caja de arena de ingesta, sobre copias | a mano |
 | `docs/` | operación, arquitectura, ampliar, consumidores, decisiones e historial | a mano; índice por `core/docs.py indice` |
 | `suite.yml` (raíz y uno por suite) | manifiesto de cada suite (`core/suite.schema.yml`) | a mano; los bloques de README los genera `core/suites.py generar --aplicar` |
 | `logs/`, `*/reportes/` | registros e informes de cada pasada | runtime, ignorados |

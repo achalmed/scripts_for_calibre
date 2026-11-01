@@ -28,3 +28,7 @@ __pycache__/
 
 # --- ajeno: metadatos del gestor de archivos (KDE Dolphin) ---
 .directory
+
+# --- artefacto: paquetes de los complementos (los arman sus instalar.sh / build.sh) ---
+calibre-plugin/dist/
+zotero-plugin/dist/
