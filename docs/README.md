@@ -47,7 +47,7 @@ se lee para saber por qué, no para saber cómo.
 | [consumidores.md](consumidores.md) | `doc` | `activo` | Consumidores de biblioteca-studio: lo que otros repos usan de aquí y lo que no se cambia sin avisarles |
 | [decisiones.md](decisiones.md) | `decision` | `activo` | Decisiones de biblioteca-studio: autoridad de los datos, escritura segura, organización y Método Documental |
 | [operacion.md](operacion.md) | `doc` | `activo` | Operación del ecosistema de lectura y estudio (Calibre ⇄ KOReader ⇄ Zotero): qué es automático, qué es manual, cómo se verifica |
-| [rediseno.md](rediseno.md) | `doc` | `borrador` | Rediseño de Biblioteca Studio como espacio de trabajo: auditoría de la GUI de Widgets, arquitectura de información, distribución de la ventana, componentes y decisiones |
+| [rediseno.md](rediseno.md) | `doc` | `hecho` | Rediseño de Biblioteca Studio como espacio de trabajo: auditoría de la GUI de Widgets, arquitectura de información, distribución de la ventana, componentes y decisiones |
 | [historial/README.md](historial/README.md) | `readme` | `activo` | docs/historial/ — lo cumplido: el ecosistema de lectura, las campañas, las refactorizaciones y la procedencia de las carpetas |
 | [historial/campanas-sobre-la-biblioteca.md](historial/campanas-sobre-la-biblioteca.md) | `bitacora` | `hecho` | Campañas sobre la biblioteca: lo que se catalogó, normalizó y sincronizó en bloque, y con qué resultado |
 | [historial/diseno-ecosistema-lectura-2026-08.md](historial/diseno-ecosistema-lectura-2026-08.md) | `plan` | `hecho` | Diseño del ecosistema de lectura sincronizado: Calibre ⇄ KOReader ⇄ Zotero |

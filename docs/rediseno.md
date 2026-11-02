@@ -1,6 +1,6 @@
 ---
 tipo: doc
-estado: borrador
+estado: hecho
 forma: explicacion
 titulo: "Rediseño de Biblioteca Studio como espacio de trabajo: auditoría de la GUI de Widgets, arquitectura de información, distribución de la ventana, componentes y decisiones"
 creado: 2026-11-02
