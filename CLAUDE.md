@@ -40,9 +40,15 @@ las suites de fuentes) y el README de la suite que se toque. Concreta `~/Documen
 - **Los timers son plantillas en `systemd/`** y se instalan con `systemd/instalar.sh` (simula; `--verificar` compara);
   corren cada 30 min sobre este repo: cada commit deja sus `main.sh` funcionando.
 - **Los PDF del Congreso** pasan por `ocrmypdf -l spa`; nunca se copia texto del original.
-- **Biblioteca Studio y los complementos no son puertas** (`docs/decisiones.md` §2.10): `studio/` corre las CLI
-  (simular, luego aplicar con la app cerrada); los complementos de Calibre, KOReader y Zotero leen el índice de
+- **Biblioteca Studio y los complementos no son puertas** (`docs/decisiones.md` §2.10 y §2.12): `studio/` corre las CLI
+  (F5 simula, Ctrl+Intro aplica tras confirmar, con la app cerrada y el candado libre); los complementos de Calibre, KOReader y Zotero leen el índice de
   `lib/indice.py` (nunca las bases) y solo escriben texto (la nota de lectura y `por-verificar.tsv`), salvo las series de Zotero (§2.11).
+- **La ventana es QML + Kirigami sobre `gui-comun` 2.x** (`docs/rediseno.md`, `studio/README.md`): Python expone modelos,
+  propiedades y `@Slot` (`studio/biblioteca_app/controladores/`), QML pinta y pide (`studio/biblioteca_app/qml/`); cada
+  operación existe una sola vez en `studio/biblioteca_app/aplicacion.py` (`Acciones`) y su catálogo es
+  `studio/biblioteca_app/servicios/operaciones.py`. Corre con `/usr/bin/python3` (`main.py`, `install.sh`, `suite.yml`; el PySide6 de Anaconda no
+  carga Kirigami); nada de QtWidgets. Las pruebas y las capturas usan la muestra de `studio/muestra.py`, nunca la biblioteca
+  real, y **ninguna prueba aplica una suite que escriba en una base**.
 - **Dónde va cada cosa nueva**: en la raíz solo `README.md`, `CLAUDE.md`, `AGENTS.md`, `estado.md`, `LICENSE` y
   lo de la suite `fuentes`; el porqué a `docs/decisiones.md` (`### §N.M`, sin renumerar), lo pendiente a `estado.md`
   §Por hacer con fecha y dueño, el uso de una suite a su README. Lo hecho en una sesión va al commit.
@@ -52,6 +58,7 @@ las suites de fuentes) y el README de la suite que se toque. Concreta `~/Documen
 ```bash
 python3 -m pytest biblioteca-studio/tests/calibre        # caracterización, puerta, entorno (sobre copias)
 python3 -m pytest biblioteca-studio/tests/fuentes        # caja de arena de ingesta, fichas, manifiesto
+biblioteca-studio/tests/run.sh                            # Biblioteca Studio: servicios, controladores, cada QML y --smoke sobre la muestra (/usr/bin/python3)
 python3 core/archivos.py validar biblioteca-studio --linea-base "$PWD/meta/programa/05-piloto/linea-base/validador.json"
 python3 core/suites.py validar && python3 core/docs.py verificar biblioteca-studio
 biblioteca-studio/systemd/instalar.sh --verificar        # ¿lo instalado = las plantillas?

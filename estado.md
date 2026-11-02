@@ -13,6 +13,7 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 
 | fecha | qué | dónde se ve |
 |---|---|---|
+| 2026-11-02 | **Biblioteca Studio en QML + Kirigami sobre `gui-comun` 2.4** (fase 5 de la modernización de la familia; rama `wip/2026-11-02-qml`, sin fusionar): `docs/rediseno.md` (auditoría, ocho preguntas, arquitectura de información, decisiones B1–B11, lo construido con capturas), `studio/` reescrito (nueve vistas en tres secciones con la tabla de lo que cada etapa maneja: libros del índice con filtros de coherencia, descargas, zona de entrada cruzada con los ledgers, catalogación, fichas, manifiestos, comprobaciones de coherencia, respaldos de la puerta, timers; la operación elegida se simula con F5 y se aplica con Ctrl+Intro tras un diálogo con la orden exacta, las bases y el estado de la puerta; plan y registro por operación; el libro de los complementos en Libros; `/usr/bin/python3`), `studio/muestra.py` (biblioteca de muestra con `calibredb`) y `studio/capturar.py`, 32 pruebas en `tests/run.sh` sobre la muestra, tres capturas reales sin rutas de la máquina, documentos y `CLAUDE.md` al día; `docs/decisiones.md` §2.12. En `gui-comun`, 2.4.0 (`PanelDetalles` conserva sus pestañas; rama `wip/2026-11-02-qml-biblioteca`, etiqueta local). Los cinco studios migrados siguen en verde con 2.4.0 | `tests/run.sh`; `docs/figuras/biblioteca-studio-*.png`; `/usr/bin/python3 studio/main.py` |
 | 2026-10-31 | **Biblioteca Studio** (aprobada por el autor: `meta/programa/08-mantenimiento/biblioteca-studio-2026-10-31.md`): `studio/` con `gui-comun` 1.1.0 (acento sepia), 6 páginas y 32 acciones que corren las CLI simulando primero; `lib/indice.py` (índice de solo lectura para los complementos) y `lib/enlazar_notas.py`; complementos «Ecosistema» de Calibre (`calibre-plugin/`, solo lee) y de KOReader (`koreader-plugin/`, resaltados a la nota); acceso directo y esquema `biblioteca-studio://` con `studio/install.sh` | §2.10; `tests/studio` 9 en verde; `koreader-plugin/pruebas.lua` 17 y `prueba_koreader.sh` 0 fallos |
 | 2026-10-31 | **Extensión «Ecosistema» de Zotero** (`zotero-plugin/`, Zotero 7–10): sección del ítem con su libro de Calibre, fichas y nota; abrir en Calibre, en Biblioteca Studio y la nota; «Organizar por series…» con vista previa, que reemplaza `zotero-series/` (retirado) | §2.11; `node zotero-plugin/pruebas.mjs` 8 en verde; cargada en un Zotero 10.0.7 aparte, 26 comprobaciones |
 | 2026-10-27 | **Prueba de la política «zotero» robusta** (R9 de la auditoría posterior): exigía que ningún título se escribiera en Zotero y fallaba con datos vivos cuando había ítems recién ingresados sin título, que la política sí rellena. Ahora exige que ningún título CON valor cambie y que un título vacío se rellene; la perturbación quita a propósito el título de un ítem enlazado, así que el caso ya no depende de la foto del día. `tests/calibre/test_calibre_caracterizacion.py`: 9 en verde | `test_sincronizar_zotero_politica_zotero_solo_rellena` |
@@ -41,12 +42,25 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 
 ## En curso
 
-- 2026-11-02 · director (sesión «biblioteca-studio QML») · **Biblioteca Studio a QML + Kirigami sobre `gui-comun` 2.3** (fase 5 de la modernización de la familia), rama `wip/2026-11-02-qml`: diseño en `docs/rediseno.md` (borrador) y `studio/` reescrito con `tests/run.sh` (32 pruebas) hechos; en `gui-comun`, 2.4.0 (`PanelDetalles` conserva sus pestañas; rama `wip/2026-11-02-qml-biblioteca`, etiqueta local); siguen las pruebas de la familia, las capturas y los documentos. Nada se fusiona a `main`.
-
-Lo anterior: La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (migración de metadatos P0–P9,
+nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (migración de metadatos P0–P9,
 `meta/programa/06-olas/ola-02-reingenieria.md` §6), que la conduce el director.
 
 ## Por hacer
+
+- 2026-11-02 · dueño: **el autor** · usar Biblioteca Studio en la sesión real (`/usr/bin/python3 ~/Documents/biblioteca-studio/studio/main.py`:
+  Libros con sus filtros y un libro desde Calibre, KOReader o Zotero; Entrada con «Estado de la entrada» (F5) y «Catalogar en
+  Calibre» (F5, leer el plan, Ctrl+Intro con Calibre cerrado); Sincronizar con «Zotero ⇄ Calibre» simulado; Puerta y Tareas
+  automáticas; la paleta; claro y oscuro); lo que no convenza se anota aquí y se corrige en `main` o vuelve a `gui-comun`.
+  El director fusiona `wip/2026-11-02-qml` y `gui-comun` `wip/2026-11-02-qml-biblioteca` (`v2.4.0`) cuando el autor apruebe.
+- 2026-11-02 · dueño: director · lo que quedó fuera de la ventana: las órdenes de suite que 1.x tampoco ofrecía (`ingesta cursos`,
+  `ingesta bib`, `fichas claves|grafia|indice|migrar`, `manifiesto ruta|raiz|quitar-enlaces`, `metadatos-pdf register|limpiar-json`,
+  `lectura --metadatos`, `catalogacion --ids`) se corren en la terminal; la tabla Entrada no calcula huellas (lista la zona y las filas
+  de `pendientes.tsv`, también las de `datafw/data/raw` ya sin archivo); la vista Manifiestos se lee al mostrarse (recorre `escritura`);
+  la nota de lectura se abre fuera (no hay pestaña Nota, regla 8); «Configurar atajos…» y «Configurar barras…» no existen (como en
+  toda la familia); el plan y el registro se guardan por operación, no por corrida.
+- 2026-11-02 · dueño: quien lleva la ingesta · **165 fichas con `proyecto:` como ruta** (`catalogacion/fichas/10576_…` en adelante,
+  `proyecto: /home/…/datafw`, ingesta del 2026-10-26): el validador las marca (RQ-BIB-04, de 0 a 165 frente a la línea base); deben
+  citar el id del proyecto (`datafw`), normativa 1.10. No es de esta fase.
 
 - 2026-11-01 · dueño: director (core) · **Nombres que imponen KOReader y Zotero**: `koreader-plugin/ecosistema.koplugin/` (sufijo obligatorio de KOReader) y `zotero-plugin/locale/en-US/`, `es-ES/` (códigos BCP 47 de Fluent) los marca RQ-IDN-03; añadir esos patrones a `CARPETAS_TERCEROS` de `core/validador/comprobaciones.py` con su caso de prueba.
 - 2026-11-01 · dueño: quien lleva la ingesta · **`ingesta/ingesta.tsv` con rutas absolutas** (filas de 2026-10-26, `/home/…/entrada/…`): el renombre a `biblioteca-studio` lo dejó fuera porque tenía cambios sin confirmar de otra sesión; pasarlas a relativas con `lib/rutas.py`.

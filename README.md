@@ -63,9 +63,11 @@ la escritura en `metadata.db` sin compartir código. Hace dos cosas:
   Calibre cada 30 minutos; la sincronización bidireccional de metadatos a diario a las 04:30). **Zotero manda** en
   los metadatos bibliográficos (`docs/citar.md` §1): cada sistema solo rellena lo vacío del otro, y los relojes de lectura de KOReader y de Zotero nunca
   se copian entre sí: Calibre los suma en `#tiempo_estudio`.
-- **Biblioteca Studio** (`studio/`): la misma cadena en una ventana de la familia de studios, con «Simular» y
-  «Aplicar» por paso, y los complementos «Ecosistema» de Calibre, KOReader y Zotero, que llevan de un libro a las
-  otras dos aplicaciones, a su clave para citar y a su nota de lectura (`docs/decisiones.md` §2.10).
+- **Biblioteca Studio** (`studio/`): la misma cadena en una ventana de trabajo de la familia de studios (QML +
+  Kirigami sobre `gui-comun` 2.x): la tabla de lo que maneja cada etapa, la operación elegida con F5 (simular) y
+  Ctrl+Intro (aplicar, tras confirmar), las comprobaciones de coherencia, la puerta y los timers; y los complementos
+  «Ecosistema» de Calibre, KOReader y Zotero, que llevan de un libro a las otras dos aplicaciones, a su clave para
+  citar y a su nota de lectura (`docs/decisiones.md` §2.10 y §2.12).
 
 Y una sola **puerta de escritura** (`lib/escribir.*`): nada escribe en `metadata.db` ni en `zotero.sqlite` sin la
 app cerrada, el candado (`LOCK_CALIBRE`, `LOCK_ZOTERO` de `core/env.sh`) y un respaldo verificado. **No es** la
@@ -103,8 +105,8 @@ lib/adjuntos_zotero.py verificar                      # adjuntos de Zotero que n
 systemd/instalar.sh                                   # timers: simula; --aplicar instala; --verificar
 ```
 
-Pruebas, desde `~/Documents` y sobre copias de las bases (nunca las reales): `python3 -m pytest
-biblioteca-studio/tests/calibre` y `python3 -m pytest biblioteca-studio/tests/fuentes`. Requisitos: Calibre con
+Pruebas, desde `~/Documents` y sobre copias de las bases (nunca las reales): `python3 -m pytest biblioteca-studio/tests/calibre`,
+`python3 -m pytest biblioteca-studio/tests/fuentes` y `biblioteca-studio/tests/run.sh` (Biblioteca Studio). Requisitos: Calibre con
 `calibredb` y `calibre-debug` en el `PATH`, el Python de `core` (`CORE_PYTHON`), `ocrmypdf` para el OCR y `exiftool`
 para `metadatos-pdf`. Qué es automático y qué es manual: [`docs/operacion.md`](docs/operacion.md).
 
@@ -119,13 +121,13 @@ para `metadatos-pdf`. Qué es automático y qué es manual: [`docs/operacion.md`
 | `fichas/`, `lecturas/`, `manifiesto/` | pasos 05, 07 y 09 sobre las fichas de un proyecto; `manifiesto/` es contrato con `datafw` y `escritura` y no cambia de nombre | a mano |
 | `koreader/`, `lectura/`, `sincronizar-zotero/` | la coherencia Calibre ⇄ KOReader ⇄ Zotero; los tres timers | a mano; timers `koreader-calibre-sync`, `ecosistema-lectura`, `ecosistema-metadatos` |
 | `zotero-series/` | retirado el 2026-10-31: el organizador por series que se pegaba en la consola de Zotero; lo reemplaza `zotero-plugin/` (§2.11) | a mano |
-| `studio/` | Biblioteca Studio: la ventana de las suites (simular y aplicar cada paso), el libro de un vistazo y la puerta; acceso directo y esquema `biblioteca-studio://` con `studio/install.sh` | a mano |
+| `studio/` | Biblioteca Studio: la ventana de trabajo de las suites (QML + Kirigami sobre `gui-comun` 2.x; `docs/rediseno.md`): los libros del índice, la tabla de lo que maneja cada etapa, la coherencia, la puerta y los timers; cada operación es la CLI de su suite, F5 simula y Ctrl+Intro aplica; acceso directo y esquema `biblioteca-studio://` con `studio/install.sh` | a mano |
 | `calibre-plugin/`, `koreader-plugin/`, `zotero-plugin/` | los complementos «Ecosistema» de Calibre, KOReader y Zotero: el libro en las otras dos aplicaciones, su clave y su nota; solo leen las bases (§2.10) | a mano; paquetes en `*/dist/`, ignorados |
 | `verificacion/`, `metadatos-pdf/` | cotejo con OpenLibrary y Crossref (solo lectura); incrustador OPF → PDF | a mano |
 | `manifiestos/marco_legal/`, `registro/` | el dato del marco legal y la memoria documental que no es de ninguna herramienta | a mano |
 | `lib/` | la puerta de escritura (`escribir.sh`, `escribir.py`, `escribir_zotero.py`), lecturas sin `sqlite3` (`leer.sh`), el escritor de rutas de adjuntos de Zotero (`adjuntos_zotero.py`) y lo común de las suites de fuentes (`comun.py`, `rutas.py`); el índice de libros de los complementos (`indice.py`, solo lee) y `enlazar_notas.py` | a mano |
 | `systemd/` | las plantillas de los tres timers y su instalador | a mano; las unidades instaladas son su render |
-| `tests/calibre/`, `tests/fuentes/`, `tests/studio/` | caracterización de los sincronizadores contra la referencia de git, la puerta, el entorno y la caja de arena de ingesta, sobre copias | a mano |
+| `tests/calibre/`, `tests/fuentes/`, `tests/studio/` (`tests/run.sh`) | caracterización de los sincronizadores contra la referencia de git, la puerta, el entorno y la caja de arena de ingesta, sobre copias; Biblioteca Studio sobre la muestra de `studio/muestra.py` | a mano |
 | `docs/` | operación, arquitectura, ampliar, consumidores, decisiones e historial | a mano; índice por `core/docs.py indice` |
 | `suite.yml` (raíz y uno por suite) | manifiesto de cada suite (`core/suite.schema.yml`) | a mano; los bloques de README los genera `core/suites.py generar --aplicar` |
 | `logs/`, `*/reportes/` | registros e informes de cada pasada | runtime, ignorados |

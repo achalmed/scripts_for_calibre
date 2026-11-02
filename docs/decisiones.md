@@ -152,7 +152,7 @@ acompañan tres complementos, uno por aplicación: `calibre-plugin/`, `koreader-
 es una puerta nueva:
 
 - **El Studio no escribe por su cuenta**: cada tarjeta corre la CLI de su suite, primero simulando; «Aplicar» pide
-  confirmación y se desactiva con la aplicación de la base abierta (`studio/biblioteca_app/acciones.py`).
+  confirmación y se desactiva con la aplicación de la base abierta (el catálogo de operaciones, hoy `studio/biblioteca_app/servicios/operaciones.py`, §2.12).
 - **Los complementos solo leen las bases** (la excepción, las colecciones por series de Zotero, es §2.11). Lo que saben de un libro lo leen de `lib/indice.py`
   (`$XDG_STATE_HOME/biblioteca/indice.json`, generado en `mode=ro`; lo regenera cada 30 min el `ExecStartPost` de
   `koreader-calibre-sync.service`, con un «-» para que su fallo no haga fallar la sincronización): KOReader no abre `metadata.db` ni Zotero la de
@@ -178,6 +178,24 @@ El resto de la extensión solo lee: la sección del panel del ítem saca el `cal
 misma expresión que `lib/indice.py`) y lo demás del índice (§2.10). El `manifest.json` lleva un `update_url` de un
 dominio que no existe (`example.invalid`) porque Zotero lo exige y el repo es público; las versiones nuevas se
 instalan a mano desde `zotero-plugin/dist/`.
+
+### §2.12 Biblioteca Studio pasa a QML + Kirigami como espacio de trabajo, y sigue sin ser una puerta (fase 5, 2026-11-02)
+
+La ventana de 1.x (`gui-comun` 1.1, Widgets: ocho páginas de tarjetas con Simular y Aplicar) se reescribe sobre
+`gui-comun` 2.x (QML + Qt Quick + Kirigami, el diseño aprobado para toda la familia: `docs/rediseno.md`). Lo que
+cambia para la puerta: nada. La ventana sigue sin escribir en `metadata.db` ni en `zotero.sqlite`: cada operación es
+la CLI de su suite, elegida en la lista de la barra o en el menú Método; **F5 la corre sin `--aplicar`** (la suite
+simula por omisión; las que solo leen se ejecutan) y **Ctrl+Intro la corre con `--aplicar`** tras un diálogo que muestra
+la orden exacta, las bases que toca y el estado de la puerta, y que no se ofrece con la aplicación abierta o el candado
+ocupado (la puerta lo volvería a comprobar y saldría 75). Lo que gana: la tabla de lo que cada etapa maneja (la zona de
+entrada cruzada con los ledgers, las filas de catalogación, las fichas con su verificación, los manifiestos, las
+comprobaciones de coherencia calculadas del índice sin correr nada, los respaldos, los timers), el plan y el registro
+de cada operación conservados en la caché del studio, y el libro de los complementos como fila de la vista Libros.
+Las suites de Python se invocan con `CORE_PYTHON` (el mismo intérprete de los timers), nunca con el de la ventana
+(`/usr/bin/python3`, el único cuyo Qt trae Kirigami). Las pruebas y las capturas corren sobre una biblioteca de
+muestra con libros ficticios (`studio/muestra.py`; `calibredb` en un temporal), nunca sobre la real; ninguna prueba
+aplica una suite que escriba en una base. `studio/tests` pasa a `tests/run.sh` (`tests/studio/`). Los complementos
+«Ecosistema» no cambian.
 
 ## 3. KOReader
 
