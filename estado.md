@@ -1,7 +1,7 @@
 ---
 tipo: estado
 estado: activo
-actualizado: 2026-10-31
+actualizado: 2026-11-02
 ---
 # estado.md — biblioteca-studio
 
@@ -41,7 +41,9 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 
 ## En curso
 
-nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (migración de metadatos P0–P9,
+- 2026-11-02 · director (sesión «biblioteca-studio QML») · **Biblioteca Studio a QML + Kirigami sobre `gui-comun` 2.3** (fase 5 de la modernización de la familia), rama `wip/2026-11-02-qml`: diseño en `docs/rediseno.md` (hecho, borrador); sigue la reescritura de `studio/`, las pruebas, las capturas y los documentos. Nada se fusiona a `main`.
+
+Lo anterior: La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (migración de metadatos P0–P9,
 `meta/programa/06-olas/ola-02-reingenieria.md` §6), que la conduce el director.
 
 ## Por hacer
