@@ -98,6 +98,13 @@ def _zotero(db: Path, adjuntos: list[tuple[str, str, str]]) -> None:
     c.close()
 
 
+def _slug(texto: str) -> str:
+    """Nombre en kebab ASCII, como las fichas canónicas (`<id>_<slug>.md`)."""
+    import unicodedata
+    plano = unicodedata.normalize("NFKD", texto).encode("ascii", "ignore").decode()
+    return "-".join(p for p in "".join(c if c.isalnum() else " " for c in plano.lower()).split())[:48]
+
+
 def _repo_datos(repo: Path, libros: dict[int, dict]) -> None:
     """El repo de datos de muestra: los ledgers, dos fichas canónicas, la zona de entrada y un fuentes.yml."""
     (repo / "ingesta").mkdir(parents=True)
@@ -126,14 +133,15 @@ def _repo_datos(repo: Path, libros: dict[int, dict]) -> None:
         d = libros[i]
         filas.append(f"{i}\t{d['autores'][0]}\t{d['titulo']}\tbook\tlibro\t\t2021\t\tes\teconomia\talta\t")
     (repo / "catalogacion" / "resumen_catalogacion.tsv").write_text("\n".join(filas) + "\n", encoding="utf-8")
-    for i, estado in ((ids[0], "verificada"), (ids[1], "pendiente")):
+    for i, estado in ((ids[0], "verificada_script"), (ids[1], "pendiente")):
         d = libros[i]
-        slug = d["titulo"].lower().replace(" ", "-")[:40]
+        slug = _slug(d["titulo"])
         (repo / "catalogacion" / "fichas" / f"{i}_{slug}.md").write_text(
             f"---\ntipo: ficha_catalogacion\ncalibre_id: {i}\nzotero_key: {d['zotero_key']}\nclave_bibtex: {d['clave']}\nproyecto: muestra\n"
             f"verificacion:\n  estado: {estado}\n  metodo: texto\n  fecha: 2026-10-31\n---\n\n> Ficha de catalogación de «{d['titulo']}». "
             f"Generada para la muestra.\n\n## Origen\n\n`entrada/{slug}.pdf` · 12 págs\n\n## Zotero\n| Campo | Valor |\n|---|---|\n"
-            f"| Title | {d['titulo']} |\n| Author | {d['autores'][0]} |\n", encoding="utf-8")
+            f"| Title | {d['titulo']} |\n| Author | {d['autores'][0]} |\n\n## Calibre\n| Campo | Valor |\n|---|---|\n"
+            f"| Title | {d['titulo']} |\n| Authors | {d['autores'][0]} |\n| Languages | spa |\n\n## Notas\n\nFicha de muestra.\n", encoding="utf-8")
     (repo / "entrada" / "proyecto-muestra" / "fuentes.yml").write_text(
         "proyecto: proyecto-muestra\ngenerado: '2026-11-01'\nfuentes:\n"
         f"- origen: ley_31143.pdf\n  calibre_id: {ids[0]}\n  zotero_key: {libros[ids[0]]['zotero_key']}\n  clave_bibtex: ''\n  titulo: {libros[ids[0]]['titulo']}\n"

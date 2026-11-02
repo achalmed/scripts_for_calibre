@@ -32,8 +32,8 @@ QQC2.ScrollView {
             Image {
                 visible: pagina.l.portada !== ""
                 source: pagina.l.portada
-                Layout.preferredWidth: Kirigami.Units.gridUnit * 6
-                Layout.preferredHeight: Kirigami.Units.gridUnit * 8.5
+                Layout.preferredWidth: Kirigami.Units.gridUnit * 5
+                Layout.preferredHeight: Kirigami.Units.gridUnit * 7
                 Layout.alignment: Qt.AlignTop
                 fillMode: Image.PreserveAspectFit
                 asynchronous: true
@@ -42,18 +42,24 @@ QQC2.ScrollView {
             Kirigami.Icon {
                 visible: pagina.l.portada === ""
                 source: "folder-book"
-                Layout.preferredWidth: Kirigami.Units.iconSizes.huge
-                Layout.preferredHeight: Kirigami.Units.iconSizes.huge
+                Layout.preferredWidth: Kirigami.Units.iconSizes.large
+                Layout.preferredHeight: Kirigami.Units.iconSizes.large
                 Layout.alignment: Qt.AlignTop
             }
-            Kirigami.FormLayout {
+            ColumnLayout {
                 Layout.fillWidth: true
-                QQC2.Label { Kirigami.FormData.label: "Título:"; text: pagina.l.titulo; wrapMode: Text.WordWrap; Layout.fillWidth: true }
-                QQC2.Label { Kirigami.FormData.label: "Autores:"; text: pagina.l.autores; wrapMode: Text.WordWrap; Layout.fillWidth: true }
-                QQC2.Label { Kirigami.FormData.label: "Calibre:"; text: pagina.l.id; font: Kirigami.Theme.fixedWidthFont }
-                QQC2.Label { Kirigami.FormData.label: "Zotero:"; text: pagina.l.zoteroKey || "sin enlazar"; font: pagina.l.zoteroKey ? Kirigami.Theme.fixedWidthFont : Kirigami.Theme.defaultFont; color: pagina.l.zoteroKey ? Kirigami.Theme.textColor : Kirigami.Theme.neutralTextColor }
-                QQC2.Label { Kirigami.FormData.label: "Clave para citar:"; text: pagina.l.clave || "sin clave (Zotero manda)"; font: pagina.l.clave ? Kirigami.Theme.fixedWidthFont : Kirigami.Theme.defaultFont; color: pagina.l.clave ? Kirigami.Theme.positiveTextColor : Kirigami.Theme.neutralTextColor }
+                Layout.alignment: Qt.AlignTop
+                spacing: Kirigami.Units.smallSpacing
+                Kirigami.Heading { level: 3; text: pagina.l.titulo; wrapMode: Text.WordWrap; Layout.fillWidth: true }
+                QQC2.Label { text: pagina.l.autores; wrapMode: Text.WordWrap; Layout.fillWidth: true; color: Kirigami.Theme.disabledTextColor }
             }
+        }
+        Kirigami.FormLayout {
+            visible: pagina.l.hayActual
+            Layout.fillWidth: true
+            QQC2.Label { Kirigami.FormData.label: "Calibre:"; text: pagina.l.id; font: Kirigami.Theme.fixedWidthFont }
+            QQC2.Label { Kirigami.FormData.label: "Zotero:"; text: pagina.l.zoteroKey || "sin enlazar"; font: pagina.l.zoteroKey ? Kirigami.Theme.fixedWidthFont : Kirigami.Theme.defaultFont; color: pagina.l.zoteroKey ? Kirigami.Theme.textColor : Kirigami.Theme.neutralTextColor }
+            QQC2.Label { Kirigami.FormData.label: "Clave para citar:"; text: pagina.l.clave || "sin clave (Zotero manda)"; font: pagina.l.clave ? Kirigami.Theme.fixedWidthFont : Kirigami.Theme.defaultFont; color: pagina.l.clave ? Kirigami.Theme.positiveTextColor : Kirigami.Theme.neutralTextColor; wrapMode: Text.WrapAnywhere; Layout.fillWidth: true }
         }
         Kirigami.FormLayout {
             visible: pagina.l.hayActual
@@ -65,11 +71,10 @@ QQC2.ScrollView {
             QQC2.Label { Kirigami.FormData.label: "Nota:"; text: pagina.l.hayNota ? (pagina.l.notaEnlazada ? "enlazada en «apuntes»" : "existe, sin enlazar («Enlazar las notas de lectura»)") : "todavía no (la crean KOReader o Zotero Integration)"; wrapMode: Text.WordWrap; Layout.fillWidth: true; color: pagina.l.hayNota ? Kirigami.Theme.textColor : Kirigami.Theme.disabledTextColor }
             QQC2.Label { Kirigami.FormData.label: "Fichas:"; text: pagina.l.nFichas > 0 ? pagina.l.nFichas + " (pestaña Fichas)" : "ninguna ficha lo cita"; color: pagina.l.nFichas > 0 ? Kirigami.Theme.textColor : Kirigami.Theme.disabledTextColor }
         }
-        RowLayout {
+        Flow {
             visible: pagina.l.hayActual
             Layout.fillWidth: true
             spacing: Kirigami.Units.smallSpacing
-            Item { Layout.fillWidth: true }
             BotonAccion { accion: studio.acciones.accion("libro.nota"); conTexto: false }
             BotonAccion { accion: studio.acciones.accion("libro.copiar_clave"); conTexto: false }
             BotonAccion { accion: studio.acciones.accion("libro.archivo") }

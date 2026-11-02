@@ -9,8 +9,8 @@ de detalles y, si se pide, la paleta de órdenes. Nunca la biblioteca real.
     /usr/bin/python3 studio/capturar.py docs/figuras/biblioteca-studio-claro.png --esquema ~/Documents/lliphi/generado/esquema/LliphiClaro.colors --vista libros --pestana 0
     /usr/bin/python3 studio/capturar.py salida.png --paleta "catalogar"
 
-Antes de capturar corre de verdad dos operaciones que solo leen la muestra («Validar las fichas» sobre sus fichas y la
-simulación de «Actualizar el índice»): la salida del panel inferior y el plan son reales.
+Antes de capturar corre de verdad una operación que solo lee la muestra («Validar las fichas» sobre sus fichas): la
+salida del panel inferior y el plan son reales.
 """
 
 import argparse
@@ -35,7 +35,7 @@ def main() -> int:
     parser.add_argument("--operacion", default="", help="la operación elegida (id del catálogo); por omisión la de la vista")
     parser.add_argument("--fila", type=int, default=0, help="la fila seleccionada de la tabla (−1 ninguna)")
     parser.add_argument("--pestana", type=int, default=-1, help="pestaña de detalles (0 Resumen · 1 Fichas · 2 Elemento · 3 Operación · 4 Plan · 5 Registro); −1 la de la vista")
-    parser.add_argument("--sin-correr", action="store_true", help="no corre las dos operaciones de muestra antes de capturar")
+    parser.add_argument("--sin-correr", action="store_true", help="no corre la operación de muestra antes de capturar")
     parser.add_argument("--paleta", default=None, help="abre la paleta de órdenes con este texto")
     parser.add_argument("--ancho", type=int, default=1280)
     parser.add_argument("--alto", type=int, default=800)
@@ -84,7 +84,7 @@ def main() -> int:
     raiz.setProperty("height", args.alto)
     repo_muestra = Path(os.environ["BIBLIOTECA_STUDIO_DATOS"])
 
-    pendientes = [] if args.sin_correr else [("fichas_validar", str(repo_muestra / "catalogacion" / "fichas")), ("indice", "")]
+    pendientes = [] if args.sin_correr else [("fichas_validar", str(repo_muestra / "catalogacion" / "fichas"))]
 
     def correr_siguiente():
         if tareas.activa:

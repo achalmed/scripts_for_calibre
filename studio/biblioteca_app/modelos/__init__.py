@@ -1,4 +1,4 @@
-"""biblioteca_app/modelos — las filas de las tablas de Biblioteca Studio (libros, descargas, entrada, catalogación, fichas,
+"""studio/biblioteca_app/modelos/__init__.py — las filas de las tablas de Biblioteca Studio (libros, descargas, entrada, catalogación, fichas,
 manifiestos, coherencia, respaldos, tareas automáticas), sin Qt (se prueban solas); los modelos de Qt son los
 genéricos de `gui_comun.modelos` (`ModeloTabla`, `ModeloFiltrado`)."""
 from __future__ import annotations

@@ -107,7 +107,7 @@ def test_descargas_catalogacion_fichas_y_manifiestos(muestra):
     c = datos.catalogacion(muestra.repo)
     assert len(c) == 4 and [x["ficha"] for x in c] == ["sí", "sí", "no", "no"]
     f = datos.fichas(muestra.repo)
-    assert len(f) == 2 and f[0]["verificacion"] == "verificada" and f[0]["nivel"] == "positivo" and f[1]["verificacion"] == "pendiente"
+    assert len(f) == 2 and f[0]["verificacion"] == "verificada_script" and f[0]["nivel"] == "positivo" and f[1]["verificacion"] == "pendiente"
     assert f[0]["titulo"].startswith("Economía") and f[0]["proyecto"] == "muestra" and f[0]["calibre_id"] == "1"
     env = datos.cargar_env()
     m = datos.manifiestos(type("E", (), {"DOCS_ROOT": muestra.raiz, "DATAFW_DIR": muestra.raiz / "datafw", "WRITING_DIR": muestra.raiz / "escritura"})(), muestra.repo)

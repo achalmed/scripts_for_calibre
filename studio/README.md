@@ -6,9 +6,22 @@ estado: activo
 <!-- suite:inicio -->
 **Suite `biblioteca_studio`** · objetivo *biblioteca* · estado *activo* · python · interfaz gui
 
-Aplicación de escritorio (PySide6) sobre las suites de la biblioteca: simular y aplicar cada paso del Método Documental, el libro de un vistazo y la puerta.
+Ventana de la biblioteca (QML + Kirigami sobre gui-comun 2.x): los libros del índice con sus claves, la tabla de lo que maneja cada etapa del Método Documental (adquirir, entrada, catalogar, fichas, manifiestos), las comprobaciones de coherencia Calibre ⇄ KOReader ⇄ Zotero, la puerta y las tareas automáticas; cada operación es la CLI de su suite: F5 simula, Ctrl+Intro aplica tras confirmar.
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-31); no se edita a mano.</sub>
+- Escribe en: calibre, zotero · simula por defecto: sí
+- Depende de: /usr/bin/python3 con PySide6 del sistema (python3-pyside6.*) y Kirigami (qml6-module-org-kde-kirigami), gui-comun 2.3 (módulo QML GuiComun), las suites de este repo (escriben por lib/escribir*, la puerta)
+- Nota: No escribe por su cuenta: corre la CLI de cada suite, primero simulando (F5); «Aplicar» (Ctrl+Intro) confirma con la orden exacta y se desactiva con Calibre o Zotero abiertos o el candado ocupado.
+
+Comandos:
+
+```bash
+main.py
+main.py biblioteca-studio://libro/48
+main.py --smoke
+install.sh
+```
+
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-11-02); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 ## Qué es
@@ -63,7 +76,7 @@ Los complementos: `../calibre-plugin/`, `../koreader-plugin/`, `../zotero-plugin
 ## Límite honesto
 
 - **Las suites de Python corren con `CORE_PYTHON`** (`/usr/bin/python3`, el mismo de los timers); una suite que necesite
-  otro intérprete se cambia en `servicios/operaciones.py`, no en la ventana.
+  otro intérprete se cambia en `biblioteca_app/servicios/operaciones.py`, no en la ventana.
 - **La vista Manifiestos se lee al mostrarse** (recorre `escritura` y los datos crudos de `datafw`): su contador aparece
   entonces.
 - **La tabla Entrada lista la zona de entrada y las filas de `pendientes.tsv`** (también las de `datafw/data/raw`, aunque

@@ -219,7 +219,7 @@ def fichas(repo: Path = REPO) -> list[dict]:
     for p in sorted(carpeta.glob("*.md")):
         d = leer_ficha(p)
         estado = d.get("verificacion.estado", "") or "pendiente"
-        nivel = {"verificada": "positivo", "observada": "activo", "pendiente": "neutro"}.get(estado, "")
+        nivel = "positivo" if estado.startswith("verificada") else {"observada": "activo", "pendiente": "neutro"}.get(estado, "")
         filas.append({"ficha": p.name, "calibre_id": d.get("calibre_id", ""), "titulo": d.get("titulo", p.stem),
                       "proyecto": d.get("proyecto", ""), "verificacion": estado, "nivel": nivel, "zotero_key": d.get("zotero_key", ""),
                       "clave": d.get("clave_bibtex", ""), "ruta": str(p)})

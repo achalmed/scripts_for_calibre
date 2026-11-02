@@ -46,8 +46,9 @@ class Operacion:
         """La orden completa: `bash` para los `.sh`, `python` (CORE_PYTHON) para los `.py`; la entrada se parte como en
         la terminal si es texto, o va entera si es una ruta; al final, la cola de simular o de aplicar."""
         programa, *fijos = self.orden
-        ruta = REPO / programa
-        base = ["bash", str(ruta)] if programa.endswith(".sh") else [python, str(ruta)]
+        # el programa va relativo al repo: la orden corre con el repo como carpeta actual (`cwd=REPO`) y así ni la consola ni
+        # el plan llevan la carpeta de la máquina
+        base = ["bash", programa] if programa.endswith(".sh") else [python, programa]
         extra: list[str] = []
         if self.entrada == "texto":
             extra = shlex.split(valor)
@@ -58,8 +59,7 @@ class Operacion:
 
     def texto_orden(self, aplicar: bool, valor: str = "", python: str = "python3") -> str:
         """La orden tal como se escribiría en la terminal, relativa al repo (para el diálogo y la pestaña Operación)."""
-        partes = self.argv(aplicar, valor, python)
-        return shlex.join(p[len(str(REPO)) + 1:] if p.startswith(str(REPO) + "/") else p for p in partes)
+        return shlex.join(self.argv(aplicar, valor, python))
 
     def valor_inicial(self) -> str:
         """Lo que la entrada trae al principio: una ruta relativa al repo (la orden corre con el repo como carpeta actual)."""

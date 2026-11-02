@@ -14,8 +14,8 @@ familia». Filesystem, Dotfiles, Huella y LaTeX mostraron cómo se aplica a un s
 terminal: una ventana, una operación que corre en el panel inferior con progreso y cancelación, lo que escribe se
 simula antes (F5) y se aplica tras confirmar (Ctrl+Intro). Este documento aplica ese diseño a este studio: la
 auditoría de lo que hay (§1), las ocho preguntas de producto (§2), la arquitectura de información (§3), la ventana
-(§4), lo construido (§5), los componentes (§6), lo que el marco necesitó (§7) y las decisiones (§8). **Es un
-borrador** hasta que la reescritura esté hecha y las capturas de §5 sean reales; pasa a `hecho` cuando el autor
+(§4), lo construido (§5), los componentes (§6), lo que el marco necesitó (§7) y las decisiones (§8). **Está
+construido** (rama `wip/2026-11-02-qml`, 2026-11-02): las capturas de §5 son reales; pasa a `hecho` cuando el autor
 valide el studio en la sesión real (`../estado.md`).
 
 Tres reglas condicionan todo lo demás. **Una sola puerta de escritura** (`../CLAUDE.md`, `decisiones.md` §2.5 y
@@ -27,17 +27,17 @@ en los archivos** (§1.6): la ventana no decide nada de eso; lo deciden las suit
 
 ## 1. Auditoría de la GUI actual (Widgets, `gui-comun` 1.1)
 
-Ocho páginas en una barra lateral con la marca «Biblioteca Studio · Calibre · Zotero · KOReader» (`studio/biblioteca_app/ventana.py`,
-1.x, retirado en esta fase; se lee en `git show main:studio/biblioteca_app/ventana.py`), construidas a mano con
+Ocho páginas en una barra lateral con la marca «Biblioteca Studio · Calibre · Zotero · KOReader» (el módulo ventana.py de
+1.x, retirado en esta fase; se lee en la historia de git, commit 11372ff), construidas a mano con
 `gui_comun.widgets`: tarjetas, cifras, listas con vacío, consola como cajón, paleta Ctrl+K, avisos. La lógica está
-separada en `studio/biblioteca_app/acciones.py` (sin Qt: el catálogo de las 32 operaciones con su orden, su bandera
+separada en el módulo acciones.py de 1.x (sin Qt: el catálogo de las 32 operaciones con su orden, su bandera
 de aplicar, lo que piden y en qué base escriben; `abiertas()` y `candado_ocupado()`), que esta fase conserva como
-servicio (`biblioteca_app/servicios/operaciones.py`) y amplía con consultas.
+servicio (`studio/biblioteca_app/servicios/operaciones.py`) y amplía con consultas.
 
 | página | qué hace hoy | entidades y operaciones | lógica separada | mezclado en la ventana |
 |---|---|---|---|---|
 | Inicio | cuatro cifras del índice (libros, con Zotero, con ficha, fecha del índice), la tarjeta «Ahora mismo» (Calibre y Zotero abiertos o cerrados, candados) y un buscador de libros con resultados en lista (doble clic abre el libro) | libro (índice), puerta | `lib/indice.py` (solo lee las bases) | la búsqueda, el recuento, el pintado de la lista; es un panel de control |
-| Entrada · Adquirir · Catalogar y verificar · Sincronizar · Fichas y lecturas · Manifiestos | una tarjeta por operación con su descripción, el campo de entrada si lo pide (texto, carpeta o archivo con «…») y los botones Simular y Aplicar (o Ejecutar); Aplicar pregunta con `QMessageBox` y se apaga con la aplicación de la base abierta (reloj de 4 s) | operación (32), puerta | `acciones.py` (la orden exacta de cada una) | el `QFileDialog`, la confirmación sin mostrar la orden, el estado de la puerta por reloj, el worker; ninguna tarjeta dice qué hay por ingerir, por catalogar o sin enlazar: la operación se corre a ciegas |
+| Entrada · Adquirir · Catalogar y verificar · Sincronizar · Fichas y lecturas · Manifiestos | una tarjeta por operación con su descripción, el campo de entrada si lo pide (texto, carpeta o archivo con «…») y los botones Simular y Aplicar (o Ejecutar); Aplicar pregunta con `QMessageBox` y se apaga con la aplicación de la base abierta (reloj de 4 s) | operación (32), puerta | el catálogo de 1.x (la orden exacta de cada una) | el `QFileDialog`, la confirmación sin mostrar la orden, el estado de la puerta por reloj, el worker; ninguna tarjeta dice qué hay por ingerir, por catalogar o sin enlazar: la operación se corre a ciegas |
 | el libro (sin fila en la barra; lo abren los complementos con `biblioteca-studio://libro/<id>`) | portada, título, autores, claves (Calibre, Zotero, clave para citar), si hay nota, las fichas que lo citan (doble clic abre); Abrir en Calibre, en Zotero, el archivo, la nota, copiar la clave | libro, ficha, nota | `lib/indice.py` | los enlaces `calibre://show-book` y `zotero://select`, la lectura del índice |
 | Puerta | candados y aplicaciones, los respaldos de cada escritura por suite (doble clic abre la carpeta) con el texto de cómo deshacer, y los timers (`systemctl --user list-timers` filtrado) | puerta, respaldo, timer | — | todo: la lectura de `$RESPALDOS_DIR/biblioteca/puerta/`, el filtrado de `systemctl` |
 
@@ -120,13 +120,13 @@ de cada operación conservados, y la confirmación que dice **la orden exacta y 
 | entidad | datos | dónde |
 |---|---|---|
 | Libro (`lib/indice.py` → `$XDG_STATE_HOME/biblioteca/indice.json`; solo lectura de las bases) | `calibre_id`, título, autores, carpeta, formatos, clave de Zotero, clave para citar, apuntes, nota, fichas | tabla Libros (con los filtros de coherencia); detalles › Resumen y Fichas; contadores de la navegación y de la barra de estado |
-| Operación (`servicios/operaciones.py`: id, título, descripción, orden, bandera de aplicar, bases en las que escribe, lo que pide) | la orden exacta en simulación y al aplicar; en qué base escribe (Calibre, Zotero, ninguna); si pide texto, carpeta o archivo; lo escrito la última vez (`QSettings`) | lista de la barra; menú Método; detalles › Operación (descripción, orden, bases, entrada con `CampoRuta`; Simular y Aplicar al pie); contexto de la barra de estado |
+| Operación (`studio/biblioteca_app/servicios/operaciones.py`: id, título, descripción, orden, bandera de aplicar, bases en las que escribe, lo que pide) | la orden exacta en simulación y al aplicar; en qué base escribe (Calibre, Zotero, ninguna); si pide texto, carpeta o archivo; lo escrito la última vez (`QSettings`) | lista de la barra; menú Método; detalles › Operación (descripción, orden, bases, entrada con `CampoRuta`; Simular y Aplicar al pie); contexto de la barra de estado |
 | Corrida (`gui_comun.tareas.proceso`) | la orden, su salida línea a línea, el código de salida, la duración | panel inferior (Salida); barra de estado (tarea en curso, Esc cancela); al terminar, la tabla de la vista se relee |
 | Plan y Registro (un archivo por operación y clase en la caché del studio, §8 B7) | la salida íntegra de la última simulación (Plan) y de la última aplicación (Registro), con fecha y código | detalles › Plan y Registro (`VistaTexto`) |
 | Archivo de la entrada (`entrada/`, `ingesta/pendientes.tsv`, `ingesta/ingesta.tsv`, leídos por `lib/rutas.py`) | ruta, tamaño, paso (recibido · identificado · catalogado), título y confianza identificados, `calibre_id`, ficha provisional | tabla Entrada; detalles › Elemento |
 | Descarga (`fuentes_descargadas.tsv`) · Fila de catalogación (`catalogacion/resumen_catalogacion.tsv`) · Ficha (`catalogacion/fichas/*.md`, frontmatter) · Proyecto (`fuentes.yml`) | los campos del ledger; de la ficha: `calibre_id`, `proyecto`, `verificacion.estado`; del proyecto: entradas, sin libro | tablas Adquirir, Catalogar, Fichas, Manifiestos; detalles › Elemento (el `.md` o el `.yml` en `VistaTexto`) |
 | Comprobación de coherencia (calculada del índice y los ledgers) | nombre, recuento, nivel (positivo si 0; neutro o negativo si no), la operación que la resuelve, los primeros afectados | tabla Sincronizar; detalles › Elemento; la barra de estado (resumen) |
-| Puerta (`core/env`: `LOCK_CALIBRE`, `LOCK_ZOTERO`; `/proc` para los procesos; `lib/escribir.raiz_respaldos()`) | Calibre y Zotero abiertos o cerrados; candados libres u ocupados; respaldos por suite (cuántos, el último) | contexto de la barra de estado (cada 4 s); la disponibilidad de Aplicar; tabla Puerta |
+| Puerta (`core/env.py`: `LOCK_CALIBRE`, `LOCK_ZOTERO`; `/proc` para los procesos; la regla de `lib/escribir.py`) | Calibre y Zotero abiertos o cerrados; candados libres u ocupados; respaldos por suite (cuántos, el último) | contexto de la barra de estado (cada 4 s); la disponibilidad de Aplicar; tabla Puerta |
 | Tarea automática (`systemctl --user`; `systemd/instalar.sh --verificar`) | unidad, activa, próxima, última, resultado, instalada = plantilla | tabla Tareas automáticas |
 | Preferencias (`QSettings`) | la última vista, la última operación por vista, lo escrito en cada entrada | se recuerdan entre sesiones |
 
@@ -200,9 +200,42 @@ la última vez.
 
 ## 5. Lo construido
 
-*(Se completa con la reescritura: tres capturas reales, `docs/figuras/biblioteca-studio-{oscuro,claro,paleta}.png`,
-1280 × 800, sobre una biblioteca Calibre de muestra con libros ficticios en una carpeta temporal y con `HOME`
-temporal, para que ninguna ruta de la máquina aparezca en pantalla.)*
+Tres capturas reales (`studio/capturar.py`, 1280 × 800, el Qt del sistema con Kirigami 6.24, sin tocar el escritorio
+ni las preferencias) sobre la **biblioteca de muestra** de `studio/muestra.py`: ocho libros ficticios creados con
+`calibredb` en una carpeta temporal fuera de la carpeta de inicio, una `zotero.sqlite` mínima que enlaza cinco de
+ellos (cuatro con clave para citar), los ledgers, dos fichas canónicas, una zona de entrada con cuatro archivos y un
+`fuentes.yml`; el índice se genera con el mismo `lib/indice.py`. `HOME`, la configuración, la caché y el estado son
+temporales, así que ninguna ruta de la máquina aparece en pantalla. Antes de capturar corre de verdad «Validar las
+fichas» sobre las fichas de la muestra: la salida del panel inferior es la de la suite. En Lliphi Oscuro, la vista
+Entrada (la zona de entrada cruzada con los ledgers: identificado, recibido, catalogado, sin archivo) con la operación
+«Catalogar en Calibre» en la pestaña Operación (qué hace, que escribe en Calibre por la puerta, la orden de Simular y
+la de Aplicar); en Lliphi Claro, la vista Libros con el Resumen de un libro (claves de Calibre, Zotero y para citar,
+formatos, nota y fichas; Abrir en Calibre, en Zotero, el archivo); y la paleta de órdenes filtrando «catalogar»
+(la vista, las operaciones del menú Método y las entradas «Operación: …»), sobre la vista Sincronizar.
+
+| | |
+|---|---|
+| ![Lliphi Oscuro: Entrada, la operación Catalogar en Calibre](figuras/biblioteca-studio-oscuro.png) | ![Lliphi Claro: Libros, el Resumen de un libro](figuras/biblioteca-studio-claro.png) |
+
+![Paleta de órdenes (Ctrl+Alt+I) filtrando «catalogar»](figuras/biblioteca-studio-paleta.png)
+
+Qué hay detrás: `studio/biblioteca_app/aplicacion.py` (el registro de acciones: §3.3 íntegro; las 34 operaciones como
+`op.<id>` en un submenú por etapa; Simular se habilita con operación y sin tarea en curso, Aplicar solo si la operación
+escribe, la aplicación de la base está cerrada y el candado libre; Cancelar al revés), seis controladores (`espacio`,
+`libros`, `etapas`, `operaciones`, `puerta`, `ajustes`), tres servicios sin Qt (`operaciones`: el catálogo, con las
+órdenes relativas al repo y las suites de Python por `CORE_PYTHON`; `puerta`: procesos, candados, respaldos, timers
+por `systemctl --output=json`; `datos`: el índice, los ledgers por `lib/rutas.py`, las fichas por su frontmatter, los
+manifiestos de las raíces vigiladas, las comprobaciones de coherencia), un módulo de modelos puros (las filas de las
+nueve tablas) y `studio/biblioteca_app/qml/Main.qml` sobre `VentanaStudio` con seis componentes propios (ResumenLibro,
+FichasLibro, Elemento, Operacion, Plan, Registro y el diálogo de ajustes). `lib/indice.py` y las suites no cambian;
+los complementos «Ecosistema» tampoco. `tests/run.sh` con 32 pruebas: los servicios y los modelos (cada operación
+corre un programa que existe, simular nunca lleva `--aplicar`, lo que escribe en una base lo declara; el candado; las
+lecturas de la muestra; la coherencia), los controladores (vistas, filtros, el libro actual y el enlace de los
+complementos, las tablas de etapa y el elemento, la puerta con Calibre «abierto», la operación actual con su entrada
+recordada, simular de verdad `fichas/main.py validar` sobre la muestra y aplicar «Actualizar el índice» sobre la
+muestra), la ventana entera, cada QML y `--smoke` con `/usr/bin/python3`, y las reglas de la familia (sin colores
+propios, sin marca dentro, sin QtWidgets, sin SQL ni conexiones a las bases en el studio). **Ninguna prueba aplica una
+suite que escriba en una base.** Lo que quedó fuera está en `../estado.md` §Por hacer.
 
 ## 6. Componentes
 
@@ -216,11 +249,18 @@ temporal, para que ninguna ruta de la máquina aparezca en pantalla.)*
 | Diálogos | `Kirigami.PromptDialog` (Aplicar: la orden exacta, las bases, el estado de la puerta), `QtQuick.Dialogs` (`FileDialog` y `FolderDialog` desde `CampoRuta`), `GuiComun.DialogoAjustes` (General: la terminal) | lo que se pide y se cierra |
 | Instancia única y esquema `biblioteca-studio://` | `QLocalServer` en Python (como hoy); el enlace selecciona el libro en la vista Libros | lo que piden los complementos |
 
-## 7. Lo que el marco necesitó
+## 7. Lo que el marco necesitó (`gui-comun` 2.4.0)
 
-*(Se completa con la reescritura.)* Previsto: nada que no esté en `gui-comun` 2.3 (`VentanaStudio`, `PanelNavegacion`,
-`TablaDatos`, `PanelDetalles`, `PanelInferior`, `VistaTexto`, `CampoRuta`, `ModeloTabla`, `ModeloFiltrado`,
-`Tareas.proceso`). Si algo hace falta, va a 2.4.0 en la rama `wip/2026-11-02-qml-biblioteca` sin tocar `widgets/`.
+- **`PanelDetalles` conserva sus pestañas**: el modelo del `Repeater` de los botones pasa a ser el número de pestañas
+  y cada botón lee la suya, así cambiar un contador o la visibilidad no recrea los botones (el `TabBar` de
+  `org.kde.desktop` leía la altura del botón actual mientras se destruía y fallaba con «Cannot read property 'height'
+  of null»); si la pestaña actual pasa a oculta, el panel salta a la primera visible. Este studio cambia la lista de
+  pestañas por vista (el libro: Resumen y Fichas; una etapa: Elemento, Operación, Plan y Registro) y lo necesitaba.
+
+Nada más: `VentanaStudio`, `PanelNavegacion`, `TablaDatos`, `PanelDetalles`, `PanelInferior`, `VistaTexto`, `CampoRuta`,
+`ModeloTabla`, `ModeloFiltrado` y `Tareas.proceso` de 2.3 bastaron. Nada de `widgets/` se toca. La versión subió a
+2.4.0 con CHANGELOG, la referencia de componentes y una prueba nueva; la etiqueta `v2.4.0` queda local hasta el visto
+bueno del autor (rama `wip/2026-11-02-qml-biblioteca`).
 
 ## 8. Decisiones
 
@@ -235,5 +275,5 @@ temporal, para que ninguna ruta de la máquina aparezca en pantalla.)*
 | B7 | El plan (última simulación) y el registro (última aplicación) de cada operación se guardan íntegros en la caché del studio, un archivo por operación y clase, y se muestran en los detalles | hoy la salida se pierde al correr otra cosa; la caché no entra en el repo ni en las suites (lo mismo que LaTeX Studio, L4) |
 | B8 | Instancia única y el esquema `biblioteca-studio://libro/<id>` se conservan en Python (`QLocalServer`); el enlace selecciona el libro en Libros | lo piden los complementos de Calibre, KOReader y Zotero (§2.10), que no cambian |
 | B9 | Las capturas y las pruebas corren sobre una biblioteca Calibre mínima creada con `calibredb add --empty` en una carpeta temporal (y saltan sin `calibredb`); nunca sobre la real; con `HOME` temporal | «las bases reales son intocables en las pruebas» (`../CLAUDE.md`); repo público: ninguna ruta de la máquina en las capturas |
-| B10 | El studio corre con `/usr/bin/python3`; las suites de Python se invocan con `CORE_PYTHON` de `core/env` (el intérprete que ya usan los timers) y las de Bash con `bash` | el Qt del sistema es el que trae Kirigami; las suites no cambian de intérprete por la ventana |
+| B10 | El studio corre con `/usr/bin/python3`; las suites de Python se invocan con `CORE_PYTHON` de `core/env.py` (el intérprete que ya usan los timers) y las de Bash con `bash` | el Qt del sistema es el que trae Kirigami; las suites no cambian de intérprete por la ventana |
 | B11 | Lo sensible solo por estructura: la ventana lista `entrada/`, los ledgers, las fichas y los manifiestos de las raíces vigiladas (lo que las CLI ya imprimen); no muestra el contenido de las notas de lectura (las abre fuera, como hoy) ni lista carpetas de `sensibles:` de `meta/workspace.yml` | regla 8 del workspace: se mira el nombre, no el contenido |
