@@ -63,10 +63,10 @@ la escritura en `metadata.db` sin compartir código. Hace dos cosas:
   Calibre cada 30 minutos; la sincronización bidireccional de metadatos a diario a las 04:30). **Zotero manda** en
   los metadatos bibliográficos (`docs/citar.md` §1): cada sistema solo rellena lo vacío del otro, y los relojes de lectura de KOReader y de Zotero nunca
   se copian entre sí: Calibre los suma en `#tiempo_estudio`.
-- **Biblioteca Studio** (`studio/`): la misma cadena en una ventana de trabajo de la familia de studios (QML + Kirigami
-  sobre `gui-comun` 2.x): la tabla de lo que maneja cada etapa, la operación elegida con F5 (simular) y Ctrl+Intro
-  (aplicar, tras confirmar), la coherencia, la puerta y los timers; y los complementos «Ecosistema» de Calibre, KOReader
-  y Zotero, que llevan de un libro a las otras dos aplicaciones, a su clave y a su nota (`docs/decisiones.md` §2.10, §2.12).
+- **Biblioteca Studio** (`studio/`): un gestor bibliográfico (QML + Kirigami, `gui-comun` 3.0): catálogo con portadas,
+  búsqueda por campo, ficha editorial, bandejas y la misma cadena de etapas, con F5 (simular) y Ctrl+Intro (aplicar con
+  los seis pasos de la puerta a la vista); y los complementos «Ecosistema» de Calibre, KOReader y Zotero, que llevan de
+  un libro a las otras dos aplicaciones, a su clave y a su nota (`docs/decisiones.md` §2.10, §2.12, §2.13).
 
 Y una sola **puerta de escritura** (`lib/escribir.*`): nada escribe en `metadata.db` ni en `zotero.sqlite` sin la
 app cerrada, el candado (`LOCK_CALIBRE`, `LOCK_ZOTERO` de `core/env.sh`) y un respaldo verificado. **No es** la
@@ -120,7 +120,7 @@ para `metadatos-pdf`. Qué es automático y qué es manual: [`docs/operacion.md`
 | `fichas/`, `lecturas/`, `manifiesto/` | pasos 05, 07 y 09 sobre las fichas de un proyecto; `manifiesto/` es contrato con `datafw` y `escritura` y no cambia de nombre | a mano |
 | `koreader/`, `lectura/`, `sincronizar-zotero/` | la coherencia Calibre ⇄ KOReader ⇄ Zotero; los tres timers | a mano; timers `koreader-calibre-sync`, `ecosistema-lectura`, `ecosistema-metadatos` |
 | `zotero-series/` | retirado el 2026-10-31: el organizador por series que se pegaba en la consola de Zotero; lo reemplaza `zotero-plugin/` (§2.11) | a mano |
-| `studio/` | Biblioteca Studio: la ventana de trabajo de las suites (QML + Kirigami sobre `gui-comun` 2.x; `docs/rediseno.md`): los libros del índice, la tabla de lo que maneja cada etapa, la coherencia, la puerta y los timers; cada operación es la CLI de su suite, F5 simula y Ctrl+Intro aplica; acceso directo y esquema `biblioteca-studio://` con `studio/install.sh` | a mano |
+| `studio/` | Biblioteca Studio: el gestor bibliográfico (QML + Kirigami sobre `gui-comun` 3.0; `docs/reingenieria.md`): el catálogo con portadas, búsqueda por campo y filtros, la ficha editorial, las bandejas de trabajo, las etapas del Método Documental y la coherencia; cada operación es la CLI de su suite, F5 simula y Ctrl+Intro aplica con los seis pasos de la puerta a la vista; acceso directo y esquema `biblioteca-studio://` con `studio/install.sh` | a mano |
 | `calibre-plugin/`, `koreader-plugin/`, `zotero-plugin/` | los complementos «Ecosistema» de Calibre, KOReader y Zotero: el libro en las otras dos aplicaciones, su clave y su nota; solo leen las bases (§2.10) | a mano; paquetes en `*/dist/`, ignorados |
 | `verificacion/`, `metadatos-pdf/` | cotejo con OpenLibrary y Crossref (solo lectura); incrustador OPF → PDF | a mano |
 | `manifiestos/marco_legal/`, `registro/` | el dato del marco legal y la memoria documental que no es de ninguna herramienta | a mano |

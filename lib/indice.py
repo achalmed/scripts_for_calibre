@@ -6,6 +6,9 @@ fichas) sin abrir las bases por su cuenta: KOReader no lee `metadata.db`, Zotero
 Método: SOLO LEE (`mode=ro`) `metadata.db` y `zotero.sqlite` y las fichas de `catalogacion/fichas/`; no es una puerta
 de escritura. El JSON queda fuera del repo y de las bases: `$XDG_STATE_HOME/biblioteca/indice.json`.
 Entra: CALIBRE_DB, ZOTERO_DB y BIBLIOTECA_DIR de core/env. Sale: el JSON (con `--aplicar`); sin él, simula.
+`editorial(db)` (aditiva, 2026-11-02) lee en solo lectura lo editorial de cada libro (año, serie, etiquetas, editorial,
+idiomas, identificadores, descripción, formatos, tipo, páginas, lectura de KOReader) para el catálogo de Biblioteca
+Studio; no va al JSON (los complementos no lo necesitan y KOReader lo leería entero).
 Uso:
     python3 lib/indice.py              # simula: cuántos libros, cuántos con clave, sin escribir
     python3 lib/indice.py --aplicar    # escribe el índice (lo corre el timer de KOReader cada 30 min y «Actualizar el índice» del Studio)
@@ -123,6 +126,68 @@ def fichas(carpeta: Path) -> dict[int, list[str]]:
         if m:
             out.setdefault(int(m.group(1)), []).append(str(f.relative_to(RAIZ)))
     return out
+
+
+def _filas(c, sql: str, args=()) -> list:
+    """Una consulta que tolera las tablas que la base no tenga (una biblioteca mínima, una versión antigua)."""
+    try:
+        return c.execute(sql, args).fetchall()
+    except sqlite3.OperationalError:
+        return []
+
+
+def _columna_tolerante(c, etiqueta: str) -> dict:
+    try:
+        return _columna(c, etiqueta)
+    except sqlite3.OperationalError:
+        return {}
+
+
+def editorial(db: Path) -> dict:
+    """{libros: {id: {…}}, inmutable}: lo editorial de cada libro de `metadata.db`, en SOLO LECTURA (`mode=ro`; si la
+    base está bloqueada porque una suite escribe, `immutable`: lo último confirmado en el archivo). Las columnas
+    personalizadas, por etiqueta. Nunca escribe ni copia la base."""
+    uri = Path(db).resolve().as_uri()
+    c, inmutable = sqlite3.connect(uri + "?mode=ro", uri=True), False
+    try:
+        c.execute("select 1 from books limit 1")
+    except sqlite3.OperationalError as e:
+        c.close()
+        if "no such table" in str(e):
+            raise
+        c, inmutable = sqlite3.connect(uri + "?mode=ro&immutable=1", uri=True), True
+    try:
+        cols = {r[1] for r in _filas(c, "pragma table_info(books)")}
+        extra = ", ".join(x if x in cols else f"null as {x}" for x in ("pubdate", "series_index", "author_sort", "sort", "timestamp", "has_cover"))
+        libros = {}
+        for b, titulo, carpeta, pubdate, serie_indice, autor_orden, titulo_orden, añadido, portada in _filas(c, f"select id, title, path, {extra} from books"):
+            libros[b] = {"titulo": titulo or "", "carpeta": carpeta or "", "pubdate": pubdate, "serie_indice": serie_indice,
+                         "orden_autor": autor_orden or "", "orden_titulo": titulo_orden or "", "añadido": añadido, "has_cover": portada,
+                         "autores": [], "serie": "", "etiquetas": [], "editorial": "", "idiomas": [], "identificadores": {}, "descripcion": "",
+                         "formatos": []}
+        def poner(sql, f):
+            for fila in _filas(c, sql):
+                if fila[0] in libros:
+                    f(libros[fila[0]], *fila[1:])
+        poner("select l.book, a.name from books_authors_link l join authors a on a.id=l.author order by l.id", lambda d, n: d["autores"].append(str(n).replace("|", ",")))
+        poner("select l.book, s.name from books_series_link l join series s on s.id=l.series", lambda d, n: d.__setitem__("serie", n))
+        poner("select l.book, t.name from books_tags_link l join tags t on t.id=l.tag order by t.name", lambda d, n: d["etiquetas"].append(n))
+        poner("select l.book, p.name from books_publishers_link l join publishers p on p.id=l.publisher", lambda d, n: d.__setitem__("editorial", n))
+        poner("select l.book, g.lang_code from books_languages_link l join languages g on g.id=l.lang_code order by l.item_order", lambda d, n: d["idiomas"].append(n))
+        poner("select book, type, val from identifiers", lambda d, t, v: d["identificadores"].__setitem__(t, v))
+        poner("select book, text from comments", lambda d, t: d.__setitem__("descripcion", t or ""))
+        datos = _filas(c, "select book, format, name, uncompressed_size from data") or [(b, f, n, 0) for b, f, n in _filas(c, "select book, format, name from data")]
+        for b, fmt, nombre, tam in datos:
+            if b in libros:
+                libros[b]["formatos"].append({"formato": str(fmt).upper(), "nombre": f"{nombre}.{str(fmt).lower()}", "bytes": int(tam or 0)})
+        for clave, etiqueta in (("item_type", "item_type"), ("clasificador", "clasificador"), ("pages", "pages"), ("ko_progfloat", "ko_progfloat"),
+                                ("ko_status", "ko_status"), ("ko_tiempo", "ko_tiempo"), ("ko_lastmod", "ko_lastmod")):
+            for b, v in _columna_tolerante(c, etiqueta).items():
+                if b in libros:
+                    libros[b][clave] = v
+    finally:
+        c.close()
+    return {"libros": libros, "inmutable": inmutable}
 
 
 def construir(env=None) -> dict:

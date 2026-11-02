@@ -18,7 +18,8 @@ from pathlib import Path
 
 REPO = Path(__file__).resolve().parents[2]
 PUERTA = {"lib/escribir.py", "lib/escribir.sh", "lib/escribir_zotero.py"}
-FUERA = ("tests/",)   # las campañas de script_normalizacion_metadatos salieron al historial de git en K8
+FUERA = ("tests/",    # las campañas de script_normalizacion_metadatos salieron al historial de git en K8
+         "studio/muestra.py")  # crea la biblioteca de MUESTRA de las pruebas y capturas en un temporal; nunca abre la real
 
 # archivo → ítem de la ola 2a que lo pasa por la puerta
 PENDIENTES = {

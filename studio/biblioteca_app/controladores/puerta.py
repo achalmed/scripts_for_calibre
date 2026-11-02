@@ -33,6 +33,18 @@ class Puerta(QObject):
             self._abiertas, self._ocupados = abiertas, ocupados
             self.cambiado.emit()
 
+    @property
+    def abiertas(self) -> set[str]:
+        return set(self._abiertas)
+
+    @property
+    def ocupados(self) -> set[str]:
+        return set(self._ocupados)
+
+    def candado_libre(self, bases) -> bool:
+        """¿Los candados de esas bases están libres ahora? (se mira en el acto, no en el último refresco)."""
+        return not any(svc.candado_ocupado(getattr(self.env, "LOCK_" + b.upper(), "")) for b in bases)
+
     @Property(bool, notify=cambiado)
     def calibreAbierto(self) -> bool:
         return "calibre" in self._abiertas

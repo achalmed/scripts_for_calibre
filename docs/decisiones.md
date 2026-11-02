@@ -197,6 +197,31 @@ muestra con libros ficticios (`studio/muestra.py`; `calibredb` en un temporal), 
 aplica una suite que escriba en una base. `studio/tests` pasa a `tests/run.sh` (`tests/studio/`). Los complementos
 «Ecosistema» no cambian.
 
+### §2.13 Biblioteca Studio es un gestor bibliográfico, lee lo editorial por `lib/` y muestra los seis pasos de la puerta sin darlos (reingeniería, 2026-11-02)
+
+La reingeniería de los diez studios (`docs/reingenieria.md`, decisiones B1–B12) cambia la ventana de nueve tablas al
+mismo nivel por un gestor bibliográfico sobre la biblioteca de Calibre: **Catálogo** con portadas (o lista compacta),
+búsqueda por campo y filtros por colección, autor, año y tipo, con la **ficha editorial** del libro a la derecha;
+**Bandejas** de trabajo; y las etapas del **Método Documental** y de la **Coherencia**, donde las tablas de los ledgers
+siguen. Tres reglas nuevas, ninguna sobre la puerta:
+
+- **Lo editorial se lee por `lib/`, nunca desde la ventana**: `editorial(db)` de `lib/indice.py` lee `metadata.db` en solo
+  lectura (año, serie, etiquetas, editorial, idiomas, identificadores, descripción, tipo, páginas, lectura de KOReader;
+  columnas por etiqueta) y la ventana lo une al índice. Es aditiva: el JSON del índice y `lib/indice.py --aplicar` no
+  cambian (los complementos no la necesitan y KOReader leería un índice mayor). `test_la_ventana_no_escribe_en_las_bases`
+  sigue prohibiendo `sqlite3.connect` en `studio/biblioteca_app`.
+- **Las portadas son miniaturas de caché**: `cover.jpg` se lee en solo lectura, se escala al leerlo y la miniatura va a
+  `$XDG_CACHE_HOME/biblioteca-studio/portadas/` con un tope (200 MB); nada se escribe en la carpeta de la biblioteca.
+- **Los seis pasos de la puerta se ven, no se dan**: la ventana no abre ni cierra la puerta (eso sigue en
+  `lib/escribir.*` dentro de cada suite). Muestra el estado previo de los dos primeros (aplicación cerrada, candado
+  libre), lee en la salida de la suite la línea «── Backup:» del respaldo verificado y los «✗» de la puerta, y al
+  terminar comprueba en solo lectura la integridad (`lib/escribir.py integridad`, la misma función de la puerta) y que
+  el candado quedó libre.
+
+La muestra de las pruebas (`studio/muestra.py`) gana metadatos editoriales, lectura de KOReader y portadas que genera el
+propio Calibre (`calibre-debug`, `create_cover`), sobre su biblioteca temporal; se guarda como plantilla en la caché.
+`tests/calibre/test_puerta.py` la exime (como a `tests/`): escribe solo en esa biblioteca temporal de muestra.
+
 ## 3. KOReader
 
 ### §3.1 Sidecars por hash (2026-08-09)

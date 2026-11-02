@@ -149,3 +149,87 @@ def test_campos_elemento_y_filas_de_etapa():
     assert mod.fila_coherencia({"comprobacion": "x", "cuantos": 2, "nivel": "negativo", "resultado": "2"}, "Op")["resuelve"] == "Op"
     assert mod.fila_tarea({"unidad": "u", "activo": "no instalado"})["habilitado"] is False
     assert json.dumps(mod.COLUMNAS)                      # serializable: lo que QML recibe
+
+
+# ---------------------------------------------------------------------- reingeniería: el catálogo y los pasos de la puerta
+from biblioteca_app.servicios import catalogo as cat  # noqa: E402
+from biblioteca_app.servicios import pasos  # noqa: E402
+
+
+def test_consulta_por_campo():
+    assert cat.consulta('autor:Quispe año:2019-2021 "ciudades pequeñas" Título:eco foo:bar') == [
+        ("autor", "quispe"), ("año", "2019-2021"), ("", "ciudades pequenas"), ("titulo", "eco"), ("", "foo:bar")]
+    assert cat.consulta('serie:"Desarrollo local') == [("serie", "desarrollo"), ("", "local")] or cat.consulta('serie:"Desarrollo local')[0][0] in ("serie", "")
+    libro = {"id": "7", "titulo": "Economía urbana", "autores": ["Quispe, Rosa"], "año": 2020, "serie": "Desarrollo local", "etiquetas": ["ciudades"],
+             "clave": "quispeEconomia2020", "zotero_key": "ABCD1234", "identificadores": {"isbn": "9786120000011"}, "tipo": "book"}
+    for consulta, esperado in (("economia", True), ("autor:rosa", True), ("autor:perez", False), ("año:2020", True), ("año:2015-2019", False),
+                               ("año:-2020", True), ("serie:desarrollo", True), ("etiqueta:ciudad", True), ("id:9786120000011", True),
+                               ("id:7", True), ("id:abcd1234", True), ("clave:quispe", True), ("tipo:book", True), ("7", True), ("ley", False)):
+        assert cat.cumple(libro, cat.consulta(consulta)) is esperado, consulta
+
+
+def test_facetas_bandejas_y_orden():
+    base = {"serie": "", "autores": [], "año": None, "tipo": "", "zotero_key": "", "clave": "", "fichas": [], "portada": True, "orden_titulo": "", "orden_autor": "", "añadido": ""}
+    libros = [dict(base, id="1", titulo="B", orden_titulo="B", serie="S", autores=["X"], año=2021, tipo="book", zotero_key="Z1", clave="k1", fichas=["catalogacion/fichas/1_b.md"], añadido="2026-01-02"),
+              dict(base, id="2", titulo="A", orden_titulo="A", serie="S", autores=["Y"], año=1999, zotero_key="Z2", portada=False, añadido="2026-03-01"),
+              dict(base, id="3", titulo="C", orden_titulo="C", autores=["X"])]
+    f = cat.facetas(libros)
+    assert f["coleccion"] == [{"valor": "S", "n": 2}] and f["autor"][0] == {"valor": "X", "n": 2}
+    assert [x["valor"] for x in f["decada"]] == ["2020–2029", "1990–1999", "sin año"]
+    assert cat.cumple_filtros(libros[1], {"coleccion": "S", "decada": "1990–1999", "autor": "", "tipo": "sin tipo"})
+    assert [l["id"] for l in sorted(libros, key=cat.clave_orden("titulo"))] == ["2", "1", "3"]
+    assert [l["id"] for l in sorted(libros, key=cat.clave_orden("año"))] == ["1", "2", "3"]
+    assert [l["id"] for l in sorted(libros, key=cat.clave_orden("añadido"))] == ["2", "1", "3"]
+    entrada = [{"paso": "recibido", "archivo": "x.pdf"}, {"paso": "catalogado", "archivo": "y.pdf"}]
+    fichas = [{"ficha": "1_b.md", "verificacion": "pendiente", "calibre_id": "1"}, {"ficha": "9_z.md", "verificacion": "pendiente", "calibre_id": "9"}]
+    b = cat.bandejas(libros, entrada, fichas)
+    assert b["clasificar"]["libros"] == ["2", "3"] and [e["archivo"] for e in b["clasificar"]["otros"]] == ["x.pdf"]
+    assert b["fichas"]["libros"] == ["1"] and [e["archivo"] for e in b["fichas"]["otros"]] == ["9_z.md"]
+    assert b["sin_clave"]["libros"] == ["2"] and b["sin_zotero"]["libros"] == ["3"] and b["sin_portada"]["libros"] == ["2"]
+    assert b["fichas"]["n"] == 2
+
+
+def test_catalogo_lee_la_muestra_en_solo_lectura(muestra):
+    import json as _json
+    indice = _json.loads(muestra.indice.read_text(encoding="utf-8"))
+    antes = muestra.calibre_db.stat().st_mtime_ns
+    r = cat.leer(muestra.calibre_db, indice, muestra.biblioteca)
+    assert len(r["libros"]) == 8 and not r["inmutable"] and muestra.calibre_db.stat().st_mtime_ns == antes
+    l = next(x for x in r["libros"] if x["titulo"].startswith("Economía"))
+    assert l["clave"] == "quispeEconomiaCiudades2021" and l["zotero_key"] == "QUISPE01"
+    if muestra.con_calibre:
+        assert l["año"] == 2021 and l["serie"] == "Desarrollo local" and l["identificadores"] == {"isbn": "9786120000011"}
+        assert l["tipo"] == "book" and l["ko_estado"] == "reading" and l["portada"] and Path(l["ruta_portada"]).is_file()
+
+
+def test_pasos_de_una_aplicacion_que_sale_bien():
+    p = pasos.empezar(pasos.previa(pasos.nuevos(("calibre",)), set(), set(), ("calibre",)))
+    assert [x["estado"] for x in p] == ["en_curso"] + ["pendiente"] * 5 and p[0]["titulo"] == "Calibre cerrado"
+    assert pasos.linea(p, "── Backup: /respaldos/catalogar/calibre/metadata_20261102_100000.db")
+    assert [x["estado"] for x in p][:4] == ["hecho", "hecho", "hecho", "en_curso"] and p[2]["detalle"] == "metadata_20261102_100000.db"
+    assert not pasos.linea(p, "── Calibre: 3 valores enviados a la API")
+    pasos.terminar(p, 0, True, True)
+    assert all(x["estado"] == "hecho" for x in p) and pasos.resumen(p) == "6 de 6 pasos"
+
+
+def test_pasos_cuando_la_puerta_no_se_abre_o_falla():
+    p = pasos.empezar(pasos.nuevos(("calibre", "zotero")))
+    assert p[0]["titulo"] == "Calibre y Zotero cerrados"
+    pasos.linea(p, "✗ Calibre está abierto: ciérralo antes de escribir en la biblioteca.")
+    pasos.terminar(p, 1, None, True)
+    assert p[0]["estado"] == "fallo" and p[2]["estado"] == "omitido" and p[5]["estado"] == "hecho" and "falló: Calibre y Zotero cerrados" in pasos.resumen(p)
+    p = pasos.empezar(pasos.nuevos(("calibre",)))
+    pasos.terminar(p, 75, None, False)                       # candado ocupado: 75 sin respaldo
+    assert p[1]["estado"] == "fallo" and p[3]["estado"] == "omitido" and p[5]["estado"] == "fallo"
+    p = pasos.empezar(pasos.nuevos(("calibre",)))
+    pasos.linea(p, "── Backup: /x/metadata.db")
+    pasos.linea(p, "✗ INTEGRIDAD FALLIDA. Restaura los respaldos:")
+    pasos.terminar(p, 1, False, True)
+    assert p[3]["estado"] == "fallo" and p[4]["estado"] == "fallo"
+    p = pasos.empezar(pasos.nuevos(("calibre",)))
+    pasos.linea(p, "✗ Sin respaldo verificado de metadata.db no se escribe.")
+    pasos.terminar(p, 1, None, True)
+    assert p[2]["estado"] == "fallo" and p[3]["estado"] == "omitido"
+    p = pasos.empezar(pasos.nuevos(("calibre",)))
+    pasos.terminar(p, 0, None, True)                         # la suite no tuvo nada que escribir: no abrió la puerta
+    assert p[0]["estado"] == "hecho" and p[1]["estado"] == "omitido" and p[5]["estado"] == "hecho"

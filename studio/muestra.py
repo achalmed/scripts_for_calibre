@@ -4,7 +4,9 @@
 Nunca la biblioteca real (`../CLAUDE.md`: las bases reales son intocables en las pruebas). En una carpeta temporal crea:
 una biblioteca Calibre mínima con `calibredb add` (si `calibredb` está instalado y responde; con `unshare -rn` para no
 chocar con un Calibre abierto, como `tests/calibre`), una `zotero.sqlite` mínima con tres ítems enlazados a esos libros
-por la ruta del adjunto, un repo de datos de muestra (los ledgers, dos fichas canónicas, la zona de entrada y un
+por la ruta del adjunto, con sus metadatos editoriales, su lectura de KOReader y las portadas que genera el propio
+Calibre (`calibre-debug`, una sola vez: la biblioteca hecha queda como plantilla en la caché y las demás se copian),
+un repo de datos de muestra (los ledgers, dos fichas canónicas, la zona de entrada y un
 `fuentes.yml`) y el índice (`lib/indice.py`, el mismo código) en un `XDG_STATE_HOME` temporal. Devuelve las variables
 de entorno con las que la ventana (`core/env` las respeta) y `lib/indice.py` ven esa muestra y no la real.
 
@@ -39,6 +41,84 @@ LIBROS = [
     ("Finanzas municipales", "Pedro Sulca", "", ""),
 ]
 
+# lo editorial de cada libro (por título): año, editorial, serie y número, etiquetas, identificadores, idioma, tipo,
+# páginas y la lectura en KOReader (fracción leída, estado, minutos, última lectura); algunos vacíos a propósito: las
+# bandejas (sin tipo, sin portada) y los filtros tienen que tener qué mostrar
+META = {
+    "Economía de las ciudades pequeñas": dict(año=2021, editorial="Fondo Editorial de Muestra", serie="Desarrollo local", indice=1,
+        etiquetas=["economía urbana", "desarrollo"], ids={"isbn": "9786120000011"}, idioma="spa", tipo="book", paginas=212,
+        ko=(0.42, "reading", 185, "2026-10-30"), descripcion="<p>Un libro de muestra sobre la economía de las ciudades pequeñas.</p>"),
+    "Métodos cuantitativos para las ciencias sociales": dict(año=2019, editorial="Editorial Universitaria de Muestra", serie="Métodos",
+        indice=3, etiquetas=["métodos", "estadística"], ids={"isbn": "9786120000028"}, idioma="spa", tipo="book", paginas=388,
+        ko=(1.0, "complete", 940, "2026-09-12")),
+    "Historia del presupuesto público": dict(año=1998, editorial="Fondo Editorial de Muestra", serie="", etiquetas=["finanzas públicas", "historia"],
+        ids={"doi": "10.1000/muestra.presupuesto"}, idioma="spa", tipo="book", paginas=154),
+    "Teoría del crecimiento regional": dict(año=1987, editorial="Ediciones de Muestra", serie="Desarrollo local", indice=2,
+        etiquetas=["crecimiento", "desarrollo"], ids={}, idioma="spa", tipo="", paginas=0, portada=False),
+    "Manual de redacción académica": dict(año=2020, editorial="Editorial Universitaria de Muestra", serie="Métodos", indice=1,
+        etiquetas=["redacción"], ids={"isbn": "9786120000059"}, idioma="spa", tipo="book", paginas=120, ko=(0.08, "reading", 22, "2026-11-01")),
+    "Estadística para economistas": dict(año=2015, editorial="Ediciones de Muestra", serie="Métodos", indice=2,
+        etiquetas=["estadística"], ids={}, idioma="spa", tipo="", paginas=0),
+    "Instituciones y desarrollo local": dict(año=2022, editorial="Fondo Editorial de Muestra", serie="Desarrollo local", indice=3,
+        etiquetas=["instituciones", "desarrollo"], ids={"isbn": "9786120000073"}, idioma="spa", tipo="report", paginas=96),
+    "Finanzas municipales": dict(año=2011, editorial="Ediciones de Muestra", serie="", etiquetas=["finanzas públicas"],
+        ids={"norma": "Ley de muestra 0001"}, idioma="spa", tipo="statute", paginas=48),
+}
+
+# lo que corre DENTRO de calibre-debug (la API de Calibre) sobre la biblioteca de MUESTRA recién creada: las columnas
+# personalizadas, los metadatos y las portadas que el propio Calibre genera (create_cover). Nunca la biblioteca real.
+_ENRIQUECER = r"""
+import json, random, sys
+from datetime import datetime, timezone
+from calibre.gui2 import ensure_app
+ensure_app()
+from calibre.db.backend import DB
+from calibre.library import db as abrir
+from calibre.ebooks.covers import create_cover
+biblioteca, plan = sys.argv[-2], json.load(open(sys.argv[-1], encoding="utf-8"))
+d = abrir(biblioteca).new_api
+for etiqueta, tipo in (("item_type", "text"), ("clasificador", "text"), ("pages", "int"), ("ko_progfloat", "float"),
+                       ("ko_status", "text"), ("ko_tiempo", "int"), ("ko_lastmod", "datetime")):
+    if etiqueta not in d.field_metadata.custom_field_keys():
+        d.create_custom_column(etiqueta, etiqueta, tipo, False)
+d.close()
+d = abrir(biblioteca).new_api
+fecha = lambda t: datetime.fromisoformat(t).replace(tzinfo=timezone.utc)
+for libro, m in plan.items():
+    b = int(libro)
+    if m.get("año"):
+        d.set_field("pubdate", {b: fecha(f"{m['año']}-06-01")})
+    for campo, valor in (("publisher", m.get("editorial")), ("comments", m.get("descripcion"))):
+        if valor:
+            d.set_field(campo, {b: valor})
+    if m.get("serie"):
+        d.set_field("series", {b: m["serie"]})
+        d.set_field("series_index", {b: float(m.get("indice") or 1)})
+    if m.get("etiquetas"):
+        d.set_field("tags", {b: m["etiquetas"]})
+    if m.get("ids"):
+        d.set_field("identifiers", {b: m["ids"]})
+    if m.get("idioma"):
+        d.set_field("languages", {b: [m["idioma"]]})
+    if m.get("tipo"):
+        d.set_field("#item_type", {b: m["tipo"]})
+    if m.get("paginas"):
+        d.set_field("#pages", {b: int(m["paginas"])})
+    if m.get("ko"):
+        p, estado, minutos, ultima = m["ko"]
+        d.set_field("#ko_progfloat", {b: float(p)})
+        d.set_field("#ko_status", {b: estado})
+        d.set_field("#ko_tiempo", {b: int(minutos)})
+        d.set_field("#ko_lastmod", {b: fecha(ultima)})
+    if m.get("portada", True):
+        random.seed(b)                    # estilo y colores distintos por libro, pero siempre los mismos
+        d.set_cover({b: create_cover(m["titulo"], m["autores"], series=m.get("serie") or None, series_index=m.get("indice") or 1)})
+    else:
+        d.set_cover({b: None})            # calibredb add sacó una del PDF en blanco: este libro va sin portada
+d.close()
+print("enriquecida", len(plan))
+"""
+
 _PDF = (b"%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj\n"
         b"3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]>>endobj\nxref\n0 4\n0000000000 65535 f \n"
         b"0000000009 00000 n \n0000000052 00000 n \n0000000101 00000 n \ntrailer<</Size 4/Root 1 0 R>>\nstartxref\n160\n%%EOF\n")
@@ -72,6 +152,51 @@ def _calibredb(args: list[str], config: Path, plazo: int = 120) -> subprocess.Co
         if prueba.returncode == 0:
             orden = ["unshare", "-rn"] + orden
     return subprocess.run(orden, capture_output=True, text=True, env=env, timeout=plazo)
+
+
+def _plantilla() -> Path | None:
+    """Dónde guardar la biblioteca de muestra ya hecha (crearla cuesta unos segundos de Calibre): en la caché del usuario,
+    con la huella de este archivo (si la muestra cambia, se rehace). `BIBLIOTECA_MUESTRA_SIN_PLANTILLA=1` la desactiva."""
+    if os.environ.get("BIBLIOTECA_MUESTRA_SIN_PLANTILLA"):
+        return None
+    import hashlib
+    huella = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()[:16]
+    return Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "biblioteca-studio-muestra" / huella
+
+
+def _guardar_plantilla(biblioteca: Path, destino: Path) -> None:
+    import tempfile
+    try:
+        destino.parent.mkdir(parents=True, exist_ok=True)
+        tmp = Path(tempfile.mkdtemp(prefix=".plantilla-", dir=destino.parent))
+        shutil.copytree(biblioteca, tmp / "biblioteca")
+        (tmp / "biblioteca").rename(destino)            # atómico: otra prueba nunca ve una plantilla a medias
+        tmp.rmdir()
+    except OSError:
+        pass                                            # otra prueba la dejó primero: vale la suya
+
+
+def _enriquecer(biblioteca: Path, config: Path) -> bool:
+    """Los metadatos, las columnas y las portadas de la muestra por la API de Calibre (`calibre-debug`, una sola vez)."""
+    if not shutil.which("calibre-debug"):
+        return False
+    plan = {}
+    with sqlite3.connect(biblioteca.joinpath("metadata.db").resolve().as_uri() + "?mode=ro", uri=True) as c:
+        for b, titulo in c.execute("select id, title from books"):
+            autor = next((a for t, a, _z, _c in LIBROS if t == titulo), "")
+            plan[str(b)] = dict(META.get(titulo, {}), titulo=titulo, autores=[autor] if autor else [])
+    archivo = config / "enriquecer.json"
+    guion = config / "enriquecer.py"
+    archivo.write_text(json.dumps(plan, ensure_ascii=False), encoding="utf-8")
+    guion.write_text(_ENRIQUECER, encoding="utf-8")
+    env = dict(os.environ, CALIBRE_CONFIG_DIRECTORY=str(config), CALIBRE_TEMP_DIR=str(config / "tmp"), QT_QPA_PLATFORM="offscreen")
+    orden = ["calibre-debug", str(guion), str(biblioteca), str(archivo)]
+    if shutil.which("unshare") and subprocess.run(["unshare", "-rn", "true"], capture_output=True).returncode == 0:
+        orden = ["unshare", "-rn"] + orden
+    r = subprocess.run(orden, capture_output=True, text=True, env=env, timeout=180)
+    if r.returncode != 0:
+        print("muestra: no se pudo enriquecer la biblioteca:", (r.stderr or r.stdout)[-800:], file=sys.stderr)
+    return r.returncode == 0
 
 
 def _zotero(db: Path, adjuntos: list[tuple[str, str, str]]) -> None:
@@ -164,10 +289,17 @@ def crear(raiz: Path, con_calibre: bool | None = None) -> Muestra:
         pdfs.mkdir()
         for titulo, autor, _z, _c in LIBROS:
             (pdfs / f"{titulo} - {autor}.pdf").write_bytes(_PDF)
-        r = _calibredb(["add", "--with-library", str(biblioteca)] + sorted(str(p) for p in pdfs.glob("*.pdf")), config)
-        con_calibre = r.returncode == 0 and (biblioteca / "metadata.db").is_file()
-        if not con_calibre:
-            print("muestra: calibredb no pudo crear la biblioteca:", (r.stderr or r.stdout)[-800:], file=sys.stderr)
+        plantilla = _plantilla()
+        if plantilla is not None and (plantilla / "metadata.db").is_file():
+            shutil.rmtree(biblioteca)
+            shutil.copytree(plantilla, biblioteca)               # la misma biblioteca de muestra, ya enriquecida
+        else:
+            r = _calibredb(["add", "--with-library", str(biblioteca)] + sorted(str(p) for p in pdfs.glob("*.pdf")), config)
+            con_calibre = r.returncode == 0 and (biblioteca / "metadata.db").is_file()
+            if not con_calibre:
+                print("muestra: calibredb no pudo crear la biblioteca:", (r.stderr or r.stdout)[-800:], file=sys.stderr)
+            elif _enriquecer(biblioteca, config) and plantilla is not None:
+                _guardar_plantilla(biblioteca, plantilla)
     if not con_calibre:
         _metadata_db_minima(biblioteca / "metadata.db")
     calibre_db = biblioteca / "metadata.db"

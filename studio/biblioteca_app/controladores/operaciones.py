@@ -3,16 +3,20 @@ lo que pide (texto, carpeta o archivo; se recuerda por operación en QSettings),
 y Aplicar (Ctrl+Intro: con `--aplicar`, tras confirmar en QML con la orden exacta, las bases y el estado de la puerta)
 por `gui_comun.tareas.proceso` con la salida íntegra en el panel inferior y Esc para cancelar; el plan (la última
 simulación) y el registro (la última aplicación) de cada operación, guardados íntegros en la caché del studio (B7).
-La ventana no escribe en ninguna base: toda corrida es la CLI de una suite, por la puerta."""
+La ventana no escribe en ninguna base: toda corrida es la CLI de una suite, por la puerta. Reingeniería B9: los seis
+pasos de la puerta (`servicios/pasos.py`) se siguen desde fuera —el estado previo de la puerta, la salida de la suite
+y, al terminar, la integridad (`lib/escribir.py integridad`, solo lectura) y el candado libre—, sin abrirla."""
 
 from __future__ import annotations
 
+import subprocess
 import time
 from pathlib import Path
 
 from gui_comun.qt import QObject, QSettings, QStandardPaths, Property, Signal, Slot
 
 from biblioteca_app.servicios import operaciones as ops
+from biblioteca_app.servicios import pasos as pasos_svc
 
 
 def cache_del_studio() -> Path:
@@ -24,6 +28,7 @@ class Operaciones(QObject):
     listaCambiada = Signal()                # las operaciones de la vista
     corridaCambiada = Signal()              # en curso, plan, registro
     terminada = Signal(str, bool, int)      # id, aplicar, código de salida
+    pasosCambiados = Signal()               # los seis pasos de la puerta
     aviso = Signal(str, str)
 
     def __init__(self, espacio, puerta, consola, tareas, env, cache: Path | None = None, parent=None):
@@ -41,8 +46,13 @@ class Operaciones(QObject):
         self._lineas: list[str] = []
         self._inicio = 0.0
         self._argv: list[str] = []
+        self._pasos: list[dict] = []
+        self._pasos_de = ""                    # la operación de esos pasos
+        self._pasos_corrida = False            # ¿son los de una aplicación (no la vista previa)?
         espacio.vistaCambiada.connect(self._vista_cambio)
         puerta.cambiado.connect(self.cambiado)
+        puerta.cambiado.connect(self._previa)
+        self.cambiado.connect(self._previa)
         tareas.cambiada.connect(self.cambiado)
         tareas.linea.connect(self._linea)
 
@@ -219,6 +229,56 @@ class Operaciones(QObject):
                 + (f"Ahora: {self.puerta.estadoDe(','.join(o.bases))}.\n" if o.bases else "")
                 + "\nLa puerta vuelve a comprobarlo antes de escribir; el respaldo queda en la carpeta de la puerta (vista Puerta).")
 
+    # ------------------------------------------------------------------ los pasos de la puerta (B9)
+    def _previa(self) -> None:
+        """Fuera de una aplicación: los pasos de la operación actual como están ahora (app cerrada, candado libre)."""
+        if self._aplicando and self.enCurso:
+            return
+        o = self._op()
+        if o is None or not o.escribe or not o.bases:
+            nuevo, de = [], ""
+        elif self._pasos_corrida and self._pasos_de == o.id:
+            return                                   # se conservan los de la última aplicación de esta operación
+        else:
+            nuevo, de = pasos_svc.previa(pasos_svc.nuevos(o.bases), self.puerta.abiertas, self.puerta.ocupados, o.bases), o.id
+        if nuevo != self._pasos or de != self._pasos_de:
+            self._pasos, self._pasos_de, self._pasos_corrida = nuevo, de, False
+            self.pasosCambiados.emit()
+
+    @Property("QVariantList", notify=pasosCambiados)
+    def pasos(self) -> list:
+        return [dict(p) for p in self._pasos]
+
+    @Property(bool, notify=pasosCambiados)
+    def pasosDeCorrida(self) -> bool:
+        return self._pasos_corrida
+
+    @Property(str, notify=pasosCambiados)
+    def resumenPasos(self) -> str:
+        if not self._pasos:
+            return ""
+        return pasos_svc.resumen(self._pasos) if self._pasos_corrida else "Así está la puerta ahora; la suite la abre al aplicar"
+
+    def _bases_rutas(self, o) -> list[str]:
+        rutas = []
+        if "calibre" in o.bases:
+            rutas.append(str(getattr(self.env, "CALIBRE_DB", "") or Path(self.env.BIBLIOTECA_DIR) / "metadata.db"))
+        if "zotero" in o.bases and getattr(self.env, "ZOTERO_DB", ""):
+            rutas.append(str(self.env.ZOTERO_DB))
+        return rutas
+
+    def _integridad(self, o) -> bool | None:
+        """`lib/escribir.py integridad` (PRAGMA integrity_check en solo lectura) de las bases que toca la operación."""
+        rutas = self._bases_rutas(o)
+        if not rutas:
+            return None
+        try:
+            r = subprocess.run([self._python(), str(ops.REPO / "lib" / "escribir.py"), "integridad", *rutas],
+                               capture_output=True, text=True, timeout=300, cwd=str(ops.REPO))
+        except (OSError, subprocess.SubprocessError):
+            return None
+        return r.returncode == 0
+
     # ------------------------------------------------------------------ correr
     @Slot(result=bool)
     def simular(self) -> bool:
@@ -245,6 +305,10 @@ class Operaciones(QObject):
         argv = o.argv(aplicar, valor, self._python())
         self._argv, self._id_en_curso, self._aplicando, self._lineas, self._inicio = argv, o.id, aplicar, [], time.monotonic()
         nombre = f"{'Aplicando' if aplicar else ('Simulando' if o.escribe else 'Ejecutando')}: {o.titulo}"
+        if aplicar and o.bases:
+            self._pasos = pasos_svc.empezar(pasos_svc.previa(pasos_svc.nuevos(o.bases), self.puerta.abiertas, self.puerta.ocupados, o.bases))
+            self._pasos_de, self._pasos_corrida = o.id, True
+            self.pasosCambiados.emit()
         self._worker = self.tareas.proceso(nombre, argv, cwd=str(ops.REPO), al_terminar=lambda codigo, i=o.id, a=aplicar: self._fin(codigo, i, a))
         self.cambiado.emit()
         self.corridaCambiada.emit()
@@ -253,11 +317,19 @@ class Operaciones(QObject):
     def _linea(self, texto: str, nivel: str) -> None:
         if self._worker is not None:
             self._lineas.append(texto)
+            if self._aplicando and self._pasos_corrida and pasos_svc.linea(self._pasos, texto):
+                self.pasosCambiados.emit()
 
     def _fin(self, codigo: int, id_: str, aplicar: bool) -> None:
         self._worker = None
         segundos = time.monotonic() - self._inicio
         o = ops.operacion(id_)
+        if aplicar and o is not None and o.bases and self._pasos_corrida and self._pasos_de == id_:
+            respaldo = next((p["estado"] for p in self._pasos if p["clave"] == "respaldo"), "")
+            integridad = self._integridad(o) if respaldo == "hecho" else None
+            pasos_svc.terminar(self._pasos, codigo, integridad, self.puerta.candado_libre(o.bases))
+            self.pasosCambiados.emit()
+            self.consola.registrar("info" if "falló" not in pasos_svc.resumen(self._pasos) else "error", f"Puerta: {pasos_svc.resumen(self._pasos)}")
         cabecera = (f"# {time.strftime('%Y-%m-%d %H:%M:%S')} · {'aplicado' if aplicar else 'simulación'} · {o.titulo if o else id_}\n"
                     f"# {' '.join(self._argv)}\n# código de salida {codigo} · {segundos:.1f} s\n\n")
         self._escribir(id_, aplicar, cabecera + "\n".join(self._lineas[1:] if self._lineas and self._lineas[0].startswith("$ ") else self._lineas) + "\n")

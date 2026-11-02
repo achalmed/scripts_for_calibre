@@ -1,6 +1,7 @@
-"""biblioteca_app/controladores/espacio.py — lo transversal: la vista activa (las nueve etapas de `operaciones.ETAPAS`),
-el filtro de Libros, el resumen y el contexto de la barra de estado, el título de la ventana y las acciones sobre una
-ruta (abrir con el sistema, Dolphin, terminal, portapapeles). Se recuerda la última vista en QSettings."""
+"""biblioteca_app/controladores/espacio.py — lo transversal: el área (reingeniería B1: Catálogo, Bandejas, Método
+Documental, Coherencia), la vista activa (la etapa de `operaciones.ETAPAS` cuyas operaciones se ofrecen), el resumen y
+el contexto de la barra de estado y las acciones sobre una ruta (abrir con el sistema, Dolphin, terminal,
+portapapeles). Se recuerdan el área y la vista en QSettings."""
 
 from __future__ import annotations
 
@@ -13,10 +14,16 @@ from gui_comun.qt import QGuiApplication, QObject, QSettings, Property, Signal, 
 from biblioteca_app.servicios import operaciones as ops
 
 NOMBRES_VISTAS = ops.NOMBRES_ETAPAS
+AREAS = (("catalogo", "Catálogo", "view-preview"), ("bandejas", "Bandejas", "mail-folder-inbox"),
+         ("metodo", "Método Documental", "view-process-tree"), ("coherencia", "Coherencia", "folder-sync"))
+NOMBRES_AREAS = tuple(a for a, _t, _i in AREAS)
+VISTAS_DE = {"catalogo": ("libros",), "metodo": ("adquirir", "entrada", "catalogar", "fichas", "manifiestos"),
+             "coherencia": ("sincronizar", "puerta", "tareas")}
 
 
 class Espacio(QObject):
     vistaCambiada = Signal()
+    areaCambiada = Signal()
     resumenCambiado = Signal()
     contextoCambiado = Signal()
     aviso = Signal(str, str)                 # texto, tipo (informacion · positivo · aviso · error)
@@ -28,8 +35,47 @@ class Espacio(QObject):
         self._vista = str(self._s.value("vista", NOMBRES_VISTAS[0]) or NOMBRES_VISTAS[0])
         if self._vista not in NOMBRES_VISTAS:
             self._vista = NOMBRES_VISTAS[0]
+        self._area = str(self._s.value("area", "catalogo") or "catalogo")
+        if self._area not in NOMBRES_AREAS:
+            self._area = "catalogo"
         self._resumen = ""
         self._contexto = ""
+
+    # ------------------------------------------------------------- área
+    @Property("QVariantList", constant=True)
+    def areas(self) -> list:
+        return [{"nombre": a, "texto": t, "icono": i} for a, t, i in AREAS]
+
+    @Property(str, notify=areaCambiada)
+    def area(self) -> str:
+        return self._area
+
+    @Property(int, notify=areaCambiada)
+    def indiceArea(self) -> int:
+        return NOMBRES_AREAS.index(self._area)
+
+    @Property(str, notify=areaCambiada)
+    def textoArea(self) -> str:
+        return dict((a, t) for a, t, _i in AREAS)[self._area]
+
+    @Slot(str)
+    def fijarArea(self, area: str) -> None:
+        """Cambia de área; la vista (las operaciones que se ofrecen) pasa a una del área si no lo era ya."""
+        if area not in NOMBRES_AREAS:
+            return
+        vistas = VISTAS_DE.get(area)
+        if vistas and self._vista not in vistas:
+            guardada = str(self._s.value(f"vista/{area}", vistas[0]) or vistas[0])
+            self._fijar_vista(guardada if guardada in vistas else vistas[0], mover_area=False)
+        if area != self._area:
+            self._area = area
+            self._s.setValue("area", area)
+            self.areaCambiada.emit()
+
+    @Slot(int)
+    def fijarAreaPorIndice(self, i: int) -> None:
+        if 0 <= i < len(NOMBRES_AREAS):
+            self.fijarArea(NOMBRES_AREAS[i])
 
     # ------------------------------------------------------------- vista
     @Property("QVariantList", constant=True)
@@ -54,10 +100,25 @@ class Espacio(QObject):
 
     @Slot(str)
     def fijarVista(self, nombre: str) -> None:
-        if nombre in NOMBRES_VISTAS and nombre != self._vista:
+        """La etapa activa; el área la sigue (una operación elegida desde el menú lleva a su etapa)."""
+        self._fijar_vista(nombre, mover_area=True)
+
+    def _fijar_vista(self, nombre: str, mover_area: bool) -> None:
+        if nombre not in NOMBRES_VISTAS:
+            return
+        if nombre != self._vista:
             self._vista = nombre
             self._s.setValue("vista", nombre)
+            area = next((a for a, vs in VISTAS_DE.items() if nombre in vs), "")
+            if area:
+                self._s.setValue(f"vista/{area}", nombre)
             self.vistaCambiada.emit()
+        if mover_area:
+            area = next((a for a, vs in VISTAS_DE.items() if nombre in vs), "")
+            if area and area != self._area and self._area != "bandejas":
+                self._area = area
+                self._s.setValue("area", area)
+                self.areaCambiada.emit()
 
     @Slot(int)
     def fijarVistaPorIndice(self, i: int) -> None:
@@ -137,5 +198,8 @@ class Espacio(QObject):
 
     # --------------------------------------------------------------- paleta
     def entradas_paleta(self, _texto: str) -> list[dict]:
-        return [{"nombre": f"ir.{e.id}", "texto": f"Ir a {e.nombre}", "grupo": "Vistas", "icono": e.icono,
-                 "ejecutar": lambda n=e.id: self.fijarVista(n)} for e in ops.ETAPAS]
+        areas = [{"nombre": f"ir.area.{a}", "texto": f"Ir a {t}", "grupo": "Áreas", "icono": i,
+                  "ejecutar": lambda n=a: self.fijarArea(n)} for a, t, i in AREAS]
+        return areas + [{"nombre": f"ir.{e.id}", "texto": f"Ir a {e.nombre}", "grupo": "Etapas", "icono": e.icono,
+                         "ejecutar": lambda n=e.id: (self.fijarVista(n), self.fijarArea(next((a for a, vs in VISTAS_DE.items() if n in vs), "catalogo")))}
+                        for e in ops.ETAPAS]

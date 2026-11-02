@@ -61,6 +61,8 @@ QQC2.ScrollView {
             QQC2.Label { Kirigami.FormData.label: "Ahora:"; visible: pagina.o.escribe && !pagina.o.puedeAplicar; text: pagina.o.motivoNoAplicar; wrapMode: Text.WordWrap; Layout.fillWidth: true; color: Kirigami.Theme.neutralTextColor }
             QQC2.Label { Kirigami.FormData.label: "Ahora:"; visible: !pagina.o.escribe && !pagina.o.puedeSimular; text: pagina.o.motivoNoSimular; wrapMode: Text.WordWrap; Layout.fillWidth: true; color: Kirigami.Theme.neutralTextColor }
         }
+        Kirigami.Separator { Layout.fillWidth: true; visible: pasos.visible }
+        PasosPuerta { id: pasos; Layout.fillWidth: true }
         RowLayout {
             visible: pagina.o.hayOperacion
             Layout.fillWidth: true

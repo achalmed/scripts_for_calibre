@@ -65,7 +65,7 @@ Item {
                 QQC2.Button {
                     text: "Elegir la operación que lo resuelve"
                     icon.name: "go-jump"
-                    onClicked: { studio.operaciones.fijar(pagina.e.elementoOperacion); studio.interfaz.pedir("pestana", { indice: 3 }) }
+                    onClicked: { studio.operaciones.fijar(pagina.e.elementoOperacion); studio.interfaz.pedir("pestana", { indice: 1 }) }
                 }
             }
             Item { Layout.preferredHeight: Kirigami.Units.largeSpacing }

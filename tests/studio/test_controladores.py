@@ -1,7 +1,8 @@
 """tests/studio/test_controladores.py — los controladores de la ventana en proceso (sin QML), sobre la muestra: espacio
-(vistas), libros (tabla, filtros, libro actual, el enlace de los complementos), etapas (las tablas de cada vista, el
+(áreas y vistas), libros (el catálogo: búsqueda por campo, filtros, orden, forma, la ficha editorial, las bandejas, el
+enlace de los complementos), etapas (las tablas de cada vista, el
 elemento), puerta (impedimentos) y operaciones (la actual por vista, su entrada, la orden, simular de verdad una suite
-que solo lee, aplicar el índice sobre la muestra, el plan y el registro). Nada toca la biblioteca real y ninguna prueba
+que solo lee, aplicar el índice sobre la muestra, el plan y el registro, los pasos de la puerta). Nada toca la biblioteca real y ninguna prueba
 aplica una suite que escriba en Calibre o en Zotero (las suites leen su configuración del repo real)."""
 from __future__ import annotations
 
@@ -39,7 +40,7 @@ def piezas(app, entorno):
     tareas = Tareas(consola)
     espacio = Espacio(consola, Ajustes())
     puerta = Puerta(env, vigilar=False)
-    libros = Libros(espacio, consola, env, ruta_indice=entorno.indice)
+    libros = Libros(espacio, consola, env, ruta_indice=entorno.indice, repo=entorno.repo)
     etapas = Etapas(espacio, libros, env, consola, repo=entorno.repo)
     operaciones = Operaciones(espacio, puerta, consola, tareas, env, cache=entorno.raiz / "cache" / "studio")
     yield dict(env=env, consola=consola, tareas=tareas, espacio=espacio, puerta=puerta, libros=libros, etapas=etapas, operaciones=operaciones, muestra=entorno)
@@ -59,32 +60,115 @@ def test_espacio_y_vistas(piezas):
     assert any(x["nombre"] == "ir.puerta" for x in e.entradas_paleta(""))
 
 
+def _visible(l, i: int) -> dict:
+    """La tarjeta en la posición visible `i` del catálogo (tras la búsqueda y los filtros)."""
+    return l._filas.fila(l.modelo.filaOrigen(i))
+
+
 @requiere_binding
-def test_libros_filtros_actual_y_enlace(piezas):
+def test_espacio_areas(piezas):
+    e = piezas["espacio"]
+    assert e.area == "catalogo" and [a["nombre"] for a in e.areas] == ["catalogo", "bandejas", "metodo", "coherencia"]
+    e.fijarArea("metodo")
+    assert e.area == "metodo" and e.vista == "adquirir"                 # la primera etapa del Método
+    e.fijarVista("fichas")
+    e.fijarArea("coherencia")
+    assert e.vista == "sincronizar"
+    e.fijarArea("metodo")
+    assert e.vista == "fichas"                                         # se recuerda la etapa de cada área
+    e.fijarVista("puerta")
+    assert e.area == "coherencia"                                       # una etapa lleva a su área
+    e.fijarArea("bandejas")
+    e.fijarVista("entrada")
+    assert e.area == "bandejas"                                         # en Bandejas, la operación no saca de ahí
+    e.fijarAreaPorIndice(0)
+    assert e.area == "catalogo" and e.vista == "libros"
+    assert any(x["nombre"] == "ir.area.bandejas" for x in e.entradas_paleta(""))
+
+
+@requiere_binding
+def test_catalogo_busqueda_filtros_y_orden(piezas, muestra):
     l = piezas["libros"]
-    assert l.total == 8 and l.hayIndice and l.modelo.filas == 8
-    assert l.contadores["sin_zotero"] == 3 and l.resumen.startswith("8 libros")
-    assert [f["nombre"] for f in l.filasNavegacion] == ["libros", "libros.sin_zotero", "libros.sin_clave", "libros.sin_ficha", "libros.sin_nota"]
-    l.fijarFiltro("sin_zotero")
-    assert l.modelo.filas == 3 and l.textoFiltro == "Sin Zotero"
-    l.fijarFiltro("todos")
+    assert l.total == 8 and l.hayIndice and l.visibles == 8 and l.resumen.startswith("8 libros")
+    if not muestra.con_calibre:
+        pytest.skip("sin calibredb la muestra no tiene metadatos editoriales ni portadas")
+    assert l.contadores["con_portada"] == 7 and l.contadores["leyendo"] == 2
+    fila = _visible(l, 0)
+    assert fila["fuente"].startswith("image://portadas/") and fila["portada"] is True
+    l.buscar("autor:quispe")
+    assert l.visibles == 1 and l.hayFiltros
+    l.buscar("serie:\"desarrollo local\" año:2000-2030")
+    assert l.visibles == 2
+    l.buscar("id:9786120000028")
+    assert l.visibles == 1 and _visible(l, 0)["titulo"].startswith("Métodos")
+    l.buscar("clave:valverde")
+    assert l.visibles == 1
+    l.buscar("economia")                                               # sin tilde halla «Economía»
+    assert l.visibles >= 1
+    l.limpiarFiltros()
+    assert l.visibles == 8 and not l.hayFiltros
+    f = l.facetas
+    assert {x["valor"] for x in f["coleccion"]} == {"Desarrollo local", "Métodos"} and f["decada"][0]["valor"] == "2020–2029"
+    assert {x["valor"]: x["n"] for x in f["tipo"]}["sin tipo"] == 2
+    l.fijarFiltro("coleccion", "Métodos")
+    assert l.visibles == 3
+    l.fijarFiltro("decada", "2010–2019")
+    assert l.visibles == 2
+    l.limpiarFiltros()
+    l.fijarOrden("año")
+    assert _visible(l, 0)["año"] == "2022" and l.orden == "año"
+    l.fijarOrden("titulo")
+    assert _visible(l, 0)["titulo"].startswith("Economía")
+    forma = l.enLista
+    l.alternarForma()
+    assert l.enLista is (not forma)
+    l.alternarForma()
+
+
+@requiere_binding
+def test_ficha_editorial_y_enlace(piezas, muestra):
+    l, e = piezas["libros"], piezas["espacio"]
     assert not l.hayActual
     l.fijarFila(0)
-    assert l.hayActual and l.id == "1" and l.clave == "quispeEconomiaCiudades2021" and l.zoteroKey == "QUISPE01" and l.nFichas == 1
-    assert l.rutaArchivo.endswith(".pdf") and Path(l.rutaArchivo).is_file() and l.hayNota and not l.notaEnlazada
-    assert l.fichasModelo.filas == 1 and l.fichasModelo.fila(0)["ficha"].startswith("catalogacion/fichas/1_")
-    fila = l.filaDe("8")
-    assert fila >= 0
-    piezas["espacio"].fijarVista("fichas")
+    assert l.hayActual and l.titulo.startswith("Economía") and l.clave == "quispeEconomiaCiudades2021" and l.zoteroKey == "QUISPE01"
+    assert l.rutaArchivo.endswith(".pdf") and Path(l.rutaArchivo).is_file() and l.hayNota and l.nFichas == 1
+    f = l.ficha
+    assert f["clave"] == "quispeEconomiaCiudades2021" and f["zotero"] and f["fichas"][0]["verificacion"] == "verificada_script"
+    assert f["fichas"][0]["ruta"].startswith(str(muestra.repo))
+    if muestra.con_calibre:
+        assert f["imprenta"] == "Fondo Editorial de Muestra · 2021 · spa · 212 págs." and f["serie"] == "Desarrollo local [1]"
+        assert f["identificadores"] == [{"tipo": "ISBN", "valor": "9786120000011"}] and f["etiquetas"] == ["desarrollo", "economía urbana"]
+        assert f["koreader"].startswith("leyendo · 42 %") and "3 h 05 min" in f["koreader"] and f["koProgreso"] == pytest.approx(0.42)
+        assert f["portada"] and f["fuente"].endswith("/grande") and "economía de las ciudades" in f["descripcion"]
+    ocho = next(x["id"] for x in l.libros if x["titulo"] == "Finanzas municipales")
+    e.fijarArea("metodo")
     recibido = []
     l.seleccionar.connect(recibido.append)
-    assert l.abrirUrl("biblioteca-studio://libro/8") is True
-    assert piezas["espacio"].vista == "libros" and l.id == "8" and recibido == [fila]
-    assert l.abrirUrl("biblioteca-studio://libro/999") is False and l.id == "8"
+    l.buscar("autor:quispe")                                          # el libro pedido está oculto por la búsqueda
+    assert l.abrirUrl(f"biblioteca-studio://libro/{ocho}") is True
+    assert e.area == "catalogo" and l.id == ocho and not l.hayFiltros and recibido == [l.filaDe(ocho)]
+    assert l.abrirUrl("biblioteca-studio://libro/999") is False and l.id == ocho
     assert any(x["texto"].startswith("Libro: Finanzas") for x in l.entradas_paleta("finanzas"))
     assert l.entradas_paleta("") == []
     l.recargar()
-    assert l.id == "8"
+    assert l.id == ocho
+
+
+@requiere_binding
+def test_bandejas(piezas, muestra):
+    l = piezas["libros"]
+    nombres = [b["clave"] for b in l.bandejas]
+    assert nombres == ["clasificar", "fichas", "sin_clave", "sin_zotero", "sin_portada"]
+    n = {b["clave"]: b["n"] for b in l.bandejas}
+    assert n["sin_zotero"] == 3 and n["sin_clave"] == 1 and n["fichas"] == 1
+    l.fijarBandeja("clasificar")
+    secciones = {l.bandejaModelo.fila(i)["seccion"] for i in range(l.bandejaModelo.filas)}
+    assert "En la zona de entrada" in secciones                       # lo recibido y lo identificado, sin catalogar
+    assert l.bandejaInfo["operacion"] == "catalogar" and l.bandejaInfo["etapa"] == "entrada"
+    l.fijarBandeja("sin_zotero")
+    assert l.bandejaModelo.filas == 3 and not any(l.bandejaModelo.fila(i)["zotero"] for i in range(3))
+    if muestra.con_calibre:
+        assert n["sin_portada"] == 1 and n["clasificar"] >= 2
 
 
 @requiere_binding
@@ -185,3 +269,25 @@ def test_aplicar_el_indice_escribe_solo_el_json_de_la_muestra(piezas, app):
     o.fijar("catalogar")
     assert o.escribe and "ingesta/main.sh catalogar --aplicar" in o.textoConfirmacion
     assert o.puedeAplicar or o.motivoNoAplicar
+
+
+@requiere_binding
+def test_pasos_de_la_puerta_antes_y_la_integridad(piezas, monkeypatch):
+    """Los pasos se miran, no se dan: la vista previa con la puerta libre o con Calibre abierto, y la integridad con la
+    propia `lib/escribir.py integridad` sobre la base de la MUESTRA (solo lectura). Nada se aplica."""
+    o, p = piezas["operaciones"], piezas["puerta"]
+    from biblioteca_app.servicios import puerta as svc
+    monkeypatch.setattr(svc, "abiertas", lambda: set())             # sin depender de un Calibre (o un calibredb) que corra ahora
+    p.refrescar()
+    o.fijar("fichas_validar")
+    assert o.pasos == []                                              # no escribe en ninguna base: sin puerta
+    o.fijar("catalogar")
+    pasos = {x["clave"]: x for x in o.pasos}
+    assert list(pasos) == ["cerrada", "candado", "respaldo", "aplicar", "integridad", "liberar"]
+    assert pasos["cerrada"]["titulo"] == "Calibre cerrado" and pasos["cerrada"]["estado"] == "hecho" and not o.pasosDeCorrida
+    assert pasos["respaldo"]["estado"] == "pendiente" and "la suite la abre" in o.resumenPasos
+    monkeypatch.setattr(svc, "abiertas", lambda: {"calibre"})
+    p.refrescar()
+    assert {x["clave"]: x for x in o.pasos}["cerrada"]["estado"] == "fallo" and not o.puedeAplicar
+    from biblioteca_app.servicios import operaciones as ops_svc
+    assert o._integridad(ops_svc.operacion("catalogar")) is True     # integrity_check de la metadata.db de la muestra

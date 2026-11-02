@@ -25,7 +25,7 @@ Capturas de antes: `docs/figuras/antes/biblioteca-studio-{oscuro,claro,paleta}.p
 |---|---|---|
 | el índice | `lib/indice.py` | lee `metadata.db` y `zotero.sqlite` en solo lectura y deja un JSON con título, autores, carpeta, formatos, clave de Zotero, clave para citar, fichas y nota. **Correcto**, y es contrato de los complementos; pero no trae año, serie, etiquetas, editorial, idioma, identificadores, tipo ni lectura de KOReader |
 | la vista Libros | `studio/biblioteca_app/controladores/libros.py`, `Main.qml` | una `TablaDatos` (título, autores, Calibre, Zotero, clave, fichas, nota) con cinco filtros de coherencia es la vista principal |
-| el libro | `studio/biblioteca_app/qml/componentes/ResumenLibro.qml` | un panel de detalles con la portada a tamaño completo (el `cover.jpg` sin miniatura), las claves y los formatos; sin metadatos editoriales ni estado de lectura |
+| el libro | `ResumenLibro` (retirado) | un panel de detalles con la portada a tamaño completo (el `cover.jpg` sin miniatura), las claves y los formatos; sin metadatos editoriales ni estado de lectura |
 | las etapas | `studio/biblioteca_app/controladores/etapas.py`, `studio/biblioteca_app/servicios/datos.py` | ocho tablas más (Adquirir, Entrada, Catalogar, Fichas, Manifiestos, Sincronizar, Puerta, Tareas) con su elemento. Correctas como datos de trabajo |
 | las operaciones | `studio/biblioteca_app/servicios/operaciones.py`, `studio/biblioteca_app/controladores/operaciones.py` | cada una es la CLI de su suite: F5 simula, Ctrl+Intro aplica tras un diálogo con la orden exacta. **Correcto**: la ventana no escribe |
 | la puerta | `studio/biblioteca_app/servicios/puerta.py`, `studio/biblioteca_app/controladores/puerta.py` | dice si Calibre o Zotero están abiertos y si el candado está ocupado, y deshabilita Aplicar; los respaldos y los timers en tablas. No se ve qué paso de la puerta dio o falló una aplicación |
@@ -106,3 +106,43 @@ Capturas de antes: `docs/figuras/antes/biblioteca-studio-{oscuro,claro,paleta}.p
   acciones (lectura, simulación, escritura, instalación).
 - **B12. Atajos**: Ctrl+1–4 las áreas, Ctrl+F buscar, Ctrl+G cuadrícula o lista, F9 los filtros, Ctrl+R actualizar el
   índice, F5 simular, Ctrl+Intro aplicar tras confirmar, Ctrl+Mayús+C copiar la clave, Ctrl+K la paleta.
+
+## 4. Lo construido y cómo se verificó
+
+![El catálogo con portadas y la ficha editorial](figuras/biblioteca-studio-claro.png)
+
+| pieza | dónde |
+|---|---|
+| la ventana y las áreas (B1, B11, B12) | `studio/biblioteca_app/qml/Main.qml` sobre `VentanaBase`; `studio/biblioteca_app/controladores/espacio.py` (área y etapa); `studio/biblioteca_app/aplicacion.py` (Ctrl+1–4, Ctrl+F, Ctrl+G, F9, `escritorio`, estados de operación) |
+| lo editorial (B2) | `lib/indice.py` (`editorial`, solo lectura, aditiva) y `studio/biblioteca_app/servicios/catalogo.py` (`leer`) |
+| las portadas (B3) | `studio/biblioteca_app/controladores/portadas.py` (`image://portadas/<id>`, caché con tope) |
+| cuadrícula y lista (B4) | `studio/biblioteca_app/qml/componentes/Catalogo.qml`, `TarjetaLibro.qml`, `FilaLibro.qml` |
+| búsqueda y filtros (B5, B6) | `catalogo.consulta`, `cumple`, `facetas`, `cumple_filtros`; `studio/biblioteca_app/qml/componentes/PanelFiltros.qml` |
+| la ficha editorial (B7) | `Libros.ficha` (`studio/biblioteca_app/controladores/libros.py`); `studio/biblioteca_app/qml/componentes/FichaEditorial.qml` |
+| las bandejas (B8) | `catalogo.bandejas`; `studio/biblioteca_app/qml/componentes/Bandejas.qml` |
+| los pasos de la puerta (B9) | `studio/biblioteca_app/servicios/pasos.py`; `Operaciones.pasos` (`studio/biblioteca_app/controladores/operaciones.py`); `studio/biblioteca_app/qml/componentes/PasosPuerta.qml`, en la operación y en el diálogo de Aplicar |
+| el Método Documental (B10) | `studio/biblioteca_app/qml/componentes/EspacioEtapas.qml` |
+
+Verificación (2026-11-02, rama `wip/2026-11-02-reingenieria`):
+
+- `tests/run.sh`: 47 pruebas sobre la muestra (búsqueda por campo, facetas, orden y bandejas; la ficha editorial; el
+  catálogo leído en solo lectura sin tocar la fecha de la base; los pasos de una aplicación buena y de cada fallo de la
+  puerta; la vista previa de la puerta con Calibre abierto; la integridad con `lib/escribir.py integridad` sobre la
+  muestra; la ventana entera con sus áreas, la búsqueda y una miniatura real; cada componente QML con un libro abierto).
+  Ninguna aplica una suite que escriba.
+- `python3 -m pytest tests/calibre`: en verde salvo `test_fichas_con_proyecto_por_id`, que falla en `main` por 165
+  fichas de la ingesta del 27 y 28 de octubre (`estado.md` §Por hacer); `test_puerta.py` exime a `studio/muestra.py`
+  (fallaba en `main` desde la fase 5).
+- La lectura de lo editorial sobre la biblioteca real, en solo lectura: unas décimas de segundo para leerla entera y
+  una décima por búsqueda (`editorial` de `lib/indice.py`, medida con `time`).
+- Capturas sobre la muestra, sin rutas de la máquina: `docs/figuras/biblioteca-studio-{claro,oscuro,lista,bandejas,
+  metodo,aplicar,paleta}.png`; las de antes, en `docs/figuras/antes/`.
+
+## 5. Lo que quedó fuera
+
+- **Editar metadatos desde la ventana**: sigue siendo de las suites (catalogación, migraciones) por la puerta.
+- **Cambiar o generar portadas**: solo se leen; la bandeja «Sin portada» las señala.
+- **Los pasos de una aplicación real no se probaron con escritura**: las pruebas no aplican suites que escriban; la
+  lectura de la salida se prueba con las líneas reales de `lib/escribir.*`. La primera aplicación de verdad la mira el
+  autor (`estado.md` §Por hacer).
+- **El catálogo no se refresca solo**: F6 o Ctrl+R; un vigilante sobre `metadata.db` queda para después si hace falta.
