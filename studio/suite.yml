@@ -1,22 +1,22 @@
-# studio/suite.yml — suite biblioteca_studio: Aplicación de escritorio (PySide6) sobre las suites de la biblioteca: simular y aplicar cada paso del Método Documental, el libro de un vistazo y la puerta.
+# studio/suite.yml — suite biblioteca_studio: Biblioteca Studio, la ventana (QML + Kirigami sobre gui-comun 2.x) de las suites de la biblioteca.
 # Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
 id: biblioteca_studio
 objetivo: biblioteca
-resumen: 'Aplicación de escritorio (PySide6) sobre las suites de la biblioteca: simular y aplicar cada paso del Método Documental, el libro de un vistazo y la puerta.'
+resumen: 'Ventana de la biblioteca (QML + Kirigami sobre gui-comun 2.x): los libros del índice con sus claves, la tabla de lo que maneja cada etapa del Método Documental (adquirir, entrada, catalogar, fichas, manifiestos), las comprobaciones de coherencia Calibre ⇄ KOReader ⇄ Zotero, la puerta y las tareas automáticas; cada operación es la CLI de su suite: F5 simula, Ctrl+Intro aplica tras confirmar.'
 escribe_en:
 - calibre
 - zotero
 simula_por_defecto: true
-pruebas: python3 -m pytest -q biblioteca-studio/tests/studio   # desde ~/Documents; la ventana sin pantalla y un índice falso
+pruebas: biblioteca-studio/tests/run.sh   # desde ~/Documents; servicios, modelos y controladores sobre una biblioteca Calibre mínima en un temporal (calibredb si está), cada QML y --smoke con /usr/bin/python3
 comandos:
-- main.py
+- main.py   # ejecutable; su intérprete es /usr/bin/python3 (el Qt del sistema, con Kirigami)
 - main.py biblioteca-studio://libro/48
 - main.py --smoke
 - install.sh
 estado: activo
 interfaz: gui
 depende_de:
-- PySide6
-- gui-comun
+- /usr/bin/python3 con PySide6 del sistema (python3-pyside6.*) y Kirigami (qml6-module-org-kde-kirigami)
+- gui-comun 2.3 (módulo QML GuiComun)
 - las suites de este repo (escriben por lib/escribir*, la puerta)
-nota: 'No escribe por su cuenta: corre la CLI de cada suite, primero simulando; «Aplicar» se desactiva con Calibre o Zotero abiertos.'
+nota: 'No escribe por su cuenta: corre la CLI de cada suite, primero simulando (F5); «Aplicar» (Ctrl+Intro) confirma con la orden exacta y se desactiva con Calibre o Zotero abiertos o el candado ocupado.'

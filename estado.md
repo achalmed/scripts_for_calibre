@@ -41,7 +41,7 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 
 ## En curso
 
-- 2026-11-02 · director (sesión «biblioteca-studio QML») · **Biblioteca Studio a QML + Kirigami sobre `gui-comun` 2.3** (fase 5 de la modernización de la familia), rama `wip/2026-11-02-qml`: diseño en `docs/rediseno.md` (hecho, borrador); sigue la reescritura de `studio/`, las pruebas, las capturas y los documentos. Nada se fusiona a `main`.
+- 2026-11-02 · director (sesión «biblioteca-studio QML») · **Biblioteca Studio a QML + Kirigami sobre `gui-comun` 2.3** (fase 5 de la modernización de la familia), rama `wip/2026-11-02-qml`: diseño en `docs/rediseno.md` (borrador) y `studio/` reescrito con `tests/run.sh` (32 pruebas) hechos; en `gui-comun`, 2.4.0 (`PanelDetalles` conserva sus pestañas; rama `wip/2026-11-02-qml-biblioteca`, etiqueta local); siguen las pruebas de la familia, las capturas y los documentos. Nada se fusiona a `main`.
 
 Lo anterior: La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (migración de metadatos P0–P9,
 `meta/programa/06-olas/ola-02-reingenieria.md` §6), que la conduce el director.
