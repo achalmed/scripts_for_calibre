@@ -63,11 +63,10 @@ la escritura en `metadata.db` sin compartir código. Hace dos cosas:
   Calibre cada 30 minutos; la sincronización bidireccional de metadatos a diario a las 04:30). **Zotero manda** en
   los metadatos bibliográficos (`docs/citar.md` §1): cada sistema solo rellena lo vacío del otro, y los relojes de lectura de KOReader y de Zotero nunca
   se copian entre sí: Calibre los suma en `#tiempo_estudio`.
-- **Biblioteca Studio** (`studio/`): la misma cadena en una ventana de trabajo de la familia de studios (QML +
-  Kirigami sobre `gui-comun` 2.x): la tabla de lo que maneja cada etapa, la operación elegida con F5 (simular) y
-  Ctrl+Intro (aplicar, tras confirmar), las comprobaciones de coherencia, la puerta y los timers; y los complementos
-  «Ecosistema» de Calibre, KOReader y Zotero, que llevan de un libro a las otras dos aplicaciones, a su clave para
-  citar y a su nota de lectura (`docs/decisiones.md` §2.10 y §2.12).
+- **Biblioteca Studio** (`studio/`): la misma cadena en una ventana de trabajo de la familia de studios (QML + Kirigami
+  sobre `gui-comun` 2.x): la tabla de lo que maneja cada etapa, la operación elegida con F5 (simular) y Ctrl+Intro
+  (aplicar, tras confirmar), la coherencia, la puerta y los timers; y los complementos «Ecosistema» de Calibre, KOReader
+  y Zotero, que llevan de un libro a las otras dos aplicaciones, a su clave y a su nota (`docs/decisiones.md` §2.10, §2.12).
 
 Y una sola **puerta de escritura** (`lib/escribir.*`): nada escribe en `metadata.db` ni en `zotero.sqlite` sin la
 app cerrada, el candado (`LOCK_CALIBRE`, `LOCK_ZOTERO` de `core/env.sh`) y un respaldo verificado. **No es** la
