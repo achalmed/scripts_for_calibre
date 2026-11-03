@@ -145,4 +145,6 @@ Verificación (2026-11-02, rama `wip/2026-11-02-reingenieria`):
 - **Los pasos de una aplicación real no se probaron con escritura**: las pruebas no aplican suites que escriban; la
   lectura de la salida se prueba con las líneas reales de `lib/escribir.*`. La primera aplicación de verdad la mira el
   autor (`estado.md` §Por hacer).
-- **El catálogo no se refresca solo**: F6 o Ctrl+R; un vigilante sobre `metadata.db` queda para después si hace falta.
+- **El catálogo se refresca solo** desde el 2026-11-03: un vigilante (`QFileSystemWatcher`) sobre `metadata.db` y su
+  carpeta relee en solo lectura cuando la firma del archivo (y la de su diario) cambia, tras 1,5 s de calma; se apaga
+  en Ver › Vigilar la biblioteca de Calibre.

@@ -170,6 +170,19 @@ def cmd_grafia(a):
     return 0
 
 
+def cmd_rutas(a):
+    """RQ-SEC-01: las rutas de la máquina del cuerpo de las fichas, relativas a DOCS_ROOT (y el proyecto, por su id)."""
+    from lib import grafia
+    cambios, d = grafia.migrar_rutas(a.carpetas, config.DOCS, aplicar=a.aplicar, raiz_respaldos=config.RESPALDOS)
+    for f, _ in cambios[:12]:
+        print("  ~", f)
+    if len(cambios) > 12:
+        print(f"  … {len(cambios) - 12} más")
+    print(f"{len(cambios)} fichas {'corregidas' if a.aplicar else 'con rutas de la máquina (simulación; usa --aplicar)'}"
+          + (f" · respaldo y UNDO en {d}" if d else ""))
+    return 0
+
+
 def cmd_migrar(a):
     from lib import migrar as M
     carpeta = Path(a.carpeta).expanduser()
@@ -196,6 +209,8 @@ def main():
     p.add_argument("--fuentes", help="ruta del fuentes.yml (por defecto, el de la raíz del proyecto)"); p.add_argument("--aplicar", action="store_true")
     p = sub.add_parser("grafia", help="M2: claves y valores en snake_case (meta/NORMATIVA_ARCHIVOS.md §1)")
     p.add_argument("carpetas", nargs="+"); p.add_argument("--aplicar", action="store_true"); p.set_defaults(fn=cmd_grafia)
+    p = sub.add_parser("rutas", help="RQ-SEC-01: las rutas de la máquina del cuerpo, relativas a DOCS_ROOT")
+    p.add_argument("carpetas", nargs="+"); p.add_argument("--aplicar", action="store_true")
     p = sub.add_parser("migrar", help="FD3: lleva fichas anteriores al formato único"); p.add_argument("carpeta")
     p.add_argument("--formato", choices=["catalogacion", "hibrida"], required=True); p.add_argument("--aplicar", action="store_true"); p.add_argument("--proyecto")
     p = sub.add_parser("validar"); p.add_argument("rutas", nargs="+"); p.add_argument("--json", action="store_true")
@@ -205,7 +220,7 @@ def main():
     p = sub.add_parser("indice"); p.add_argument("carpeta"); p.add_argument("--aplicar", action="store_true"); p.add_argument("--proyecto")
     p = sub.add_parser("estado"); p.add_argument("carpeta")
     a = ap.parse_args()
-    return {"validar": cmd_validar, "verificar": cmd_verificar, "indice": cmd_indice, "estado": cmd_estado, "migrar": cmd_migrar, "claves": cmd_claves, "grafia": cmd_grafia}[a.cmd](a)
+    return {"validar": cmd_validar, "verificar": cmd_verificar, "indice": cmd_indice, "estado": cmd_estado, "migrar": cmd_migrar, "claves": cmd_claves, "grafia": cmd_grafia, "rutas": cmd_rutas}[a.cmd](a)
 
 
 if __name__ == "__main__":

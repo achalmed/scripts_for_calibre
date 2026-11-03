@@ -1,7 +1,7 @@
 ---
 tipo: estado
 estado: activo
-actualizado: 2026-11-02
+actualizado: 2026-11-03
 ---
 # estado.md — biblioteca-studio
 
@@ -13,6 +13,8 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 
 | fecha | qué | dónde se ve |
 |---|---|---|
+| 2026-11-03 | **Fichas**: las 165 de la ingesta ENAPRES con `proyecto:` como ruta pasan al id (`datafw`) con `fichas grafia`, que ahora reconoce rutas absolutas o con `~` (`lib/rutas.id_proyecto`), y 196 dejan de llevar la carpeta de inicio en el cuerpo con la orden nueva `fichas rutas` (lo bajo `DOCS_ROOT`, relativo; simulación por omisión, respaldo y `UNDO.sh` en `$RESPALDOS_DIR`); `ingesta bib` ya escribe el id y la ruta relativa (`desde_bib.py`). `test_fichas_con_proyecto_por_id` pasa | `git log`; `tests/calibre/test_privacidad_k7.py` |
+| 2026-11-03 | **Studio**: vigilante de `metadata.db` en solo lectura que relee el catálogo (Ver › Vigilar la biblioteca de Calibre); sin `Path.home()` fuera de un respaldo de XDG (`test_codigo_sin_lib_comun_ni_reparaciones` pasa) | `studio/README.md`; `tests/studio/test_controladores.py` |
 | 2026-11-02 | **Reingeniería de Biblioteca Studio: un gestor bibliográfico sobre `VentanaBase` de `gui-comun` 3.0** (carril B de la reingeniería de los diez studios; rama `wip/2026-11-02-reingenieria`, sin fusionar): catálogo con portadas en miniatura (caché acotada) o lista compacta, búsqueda por campo (`titulo:`, `autor:`, `año:` o rango, `serie:`, `etiqueta:`, `id:`, `clave:`) y filtros por colección, autor, década y tipo; ficha editorial (portada grande, pie de imprenta, serie, identificadores, etiquetas, descripción, clave para citar, Zotero, lectura de KOReader, fichas, nota; abrir con su aplicación y en Dolphin por `escritorio`); bandejas (pendientes de clasificar, fichas incompletas, sin clave, sin Zotero, sin portada) con la operación que las vacía; Método Documental y Coherencia con su recorrido de etapas; los seis pasos de la puerta visibles antes, durante y después de aplicar; `editorial` de `lib/indice.py` (solo lectura, aditiva); muestra con portadas de Calibre; `docs/decisiones.md` §2.13 | `docs/reingenieria.md`; `docs/figuras/biblioteca-studio-*.png` (antes en `docs/figuras/antes/`); `tests/run.sh` |
 | 2026-11-02 | Fase 5 dada por buena (el autor delegó la decisión al director con las pruebas en verde y las capturas sobre la muestra): `wip/2026-11-02-qml` fusionada en `main` y retirada; `docs/rediseno.md` a `hecho`; `gui-comun` 2.4.0 en `main` y en su remoto con `v2.4.0` | `git log` |
 | 2026-11-02 | **Biblioteca Studio en QML + Kirigami sobre `gui-comun` 2.4** (fase 5 de la modernización de la familia; rama `wip/2026-11-02-qml`, sin fusionar): `docs/rediseno.md` (auditoría, ocho preguntas, arquitectura de información, decisiones B1–B11, lo construido con capturas), `studio/` reescrito (nueve vistas en tres secciones con la tabla de lo que cada etapa maneja: libros del índice con filtros de coherencia, descargas, zona de entrada cruzada con los ledgers, catalogación, fichas, manifiestos, comprobaciones de coherencia, respaldos de la puerta, timers; la operación elegida se simula con F5 y se aplica con Ctrl+Intro tras un diálogo con la orden exacta, las bases y el estado de la puerta; plan y registro por operación; el libro de los complementos en Libros; `/usr/bin/python3`), `studio/muestra.py` (biblioteca de muestra con `calibredb`) y `studio/capturar.py`, 32 pruebas en `tests/run.sh` sobre la muestra, tres capturas reales sin rutas de la máquina, documentos y `CLAUDE.md` al día; `docs/decisiones.md` §2.12. En `gui-comun`, 2.4.0 (`PanelDetalles` conserva sus pestañas; rama `wip/2026-11-02-qml-biblioteca`, etiqueta local). Los cinco studios migrados siguen en verde con 2.4.0 | `tests/run.sh`; `docs/figuras/biblioteca-studio-*.png`; `/usr/bin/python3 studio/main.py` |
@@ -53,21 +55,19 @@ nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (mi
   el catálogo con la biblioteca entera (portadas, búsqueda por campo, filtros, la ficha editorial, abrir y Dolphin), un libro
   desde Calibre, KOReader o Zotero, las bandejas y una aplicación de verdad («Catalogar en Calibre» con Calibre cerrado)
   mirando sus seis pasos; lo que no convenza se anota aquí.
-- 2026-11-02 · dueño: director · 165 fichas canónicas (ingesta de los cuestionarios ENAPRES del 27 y 28 de octubre)
-  llevan `proyecto:` con una ruta y no un id: `tests/calibre/test_privacidad_k7.py::test_fichas_con_proyecto_por_id`
-  falla en `main` desde entonces (no es de la ventana).
 - 2026-11-02 · dueño: director · lo que quedó fuera de la ventana: las órdenes de suite que 1.x tampoco ofrecía (`ingesta cursos`,
   `ingesta bib`, `fichas claves|grafia|indice|migrar`, `manifiesto ruta|raiz|quitar-enlaces`, `metadatos-pdf register|limpiar-json`,
   `lectura --metadatos`, `catalogacion --ids`) se corren en la terminal; la tabla Entrada no calcula huellas (lista la zona y las filas
   de `pendientes.tsv`, también las de `datafw/data/raw` ya sin archivo); la vista Manifiestos se lee al mostrarse (recorre `escritura`);
   la nota de lectura se abre fuera (no hay pestaña Nota, regla 8); «Configurar atajos…» y «Configurar barras…» no existen (como en
   toda la familia); el plan y el registro se guardan por operación, no por corrida.
-- 2026-11-02 · dueño: quien lleva la ingesta · **165 fichas con `proyecto:` como ruta** (`catalogacion/fichas/10576_…` en adelante,
-  `proyecto: /home/…/datafw`, ingesta del 2026-10-26): el validador las marca (RQ-BIB-04, de 0 a 165 frente a la línea base); deben
-  citar el id del proyecto (`datafw`), normativa 1.10. No es de esta fase.
+- 2026-11-03 · dueño: **el autor** · las 63 fichas nuevas sin confirmar del checkout principal (de los timers y la
+  ingesta, posteriores a la rama) no se revisaron: al confirmarlas, `python3 fichas/main.py grafia catalogacion/fichas`
+  y `python3 fichas/main.py rutas catalogacion/fichas` (simulan; con `--aplicar` escriben con respaldo) dicen si traen
+  `proyecto:` como ruta o la carpeta de inicio.
 
 - 2026-11-01 · dueño: director (core) · **Nombres que imponen KOReader y Zotero**: `koreader-plugin/ecosistema.koplugin/` (sufijo obligatorio de KOReader) y `zotero-plugin/locale/en-US/`, `es-ES/` (códigos BCP 47 de Fluent) los marca RQ-IDN-03; añadir esos patrones a `CARPETAS_TERCEROS` de `core/validador/comprobaciones.py` con su caso de prueba.
-- 2026-11-01 · dueño: quien lleva la ingesta · **`ingesta/ingesta.tsv` con rutas absolutas** (filas de 2026-10-26, `/home/…/entrada/…`): el renombre a `biblioteca-studio` lo dejó fuera porque tenía cambios sin confirmar de otra sesión; pasarlas a relativas con `lib/rutas.py`.
+- 2026-11-03 · dueño: **el autor** · **ledgers con la carpeta de inicio** (`ingesta/ingesta.tsv`, `ingesta/pendientes.tsv`, `catalogacion/resumen_catalogacion.tsv`; filas de 2026-10-26 con `<carpeta de inicio>/…/entrada/…`): `test_privacidad_rutas` falla por ellos. Los tres tienen cambios sin confirmar de los timers en el checkout principal, así que no se tocaron en la rama (bloquearía la fusión). Con esos cambios confirmados: pasarlas a relativas con `lib/rutas.a_texto` (lo que hace `identificar.py` desde F5).
 - ~~2026-10-25 · dueño: agente «calibre» · **`test_sincronizar_zotero_politica_zotero_solo_rellena` falla**: `sincronizar_zotero --aplicar` escribe `f:title` en Zotero pese a la política «zotero» (§1.7). Ya fallaba antes del cambio de respaldos del 2026-10-25 (comprobado con ese cambio apartado); las otras 35 de `tests/calibre` y las 44 de `tests/fuentes` pasan.~~ **Hecho el 2026-10-27** (R9 de la auditoría posterior): el código cumplía la política; la prueba era frágil (ver §Hecho).
 - 2026-10-24 · dueño: Edison (con las apps cerradas) · **Fuentes del post «Institutos públicos de Ayacucho: sin lucha no hay victoria»** (`web/_pubs/dialectica-y-mercado/posts/2026-10-24-unidad-estudiantes-institutos-ayacucho/`): ingresar por `ingesta` las cinco fuentes web que cita (Decreto Legislativo 882 de 1996; Minedu en El Peruano, 2023-12-05, PISA 2022; Gestión, 2023-10-16, 105 IEST licenciados; Gestión, 2024-06-13; Andina, 2025-04-07) y corregir en Zotero dos fechas: Bourdieu, «La esencia del neoliberalismo», 1998 (hoy sin año: clave `bourdieuEsenciaNeoliberalismo101`), y la Política Nacional de Educación Superior y Técnico-Productiva, 2020 (hoy 2018). El `referencias.bib` del post ya usa las fechas correctas; al cambiar las claves de Better BibTeX, actualizarlas allí.
 - 2026-10-06 · dueño: Edison · **Exportación automática de Better BibTeX** a `ZOTERO_BIB` y claves fijadas: pasos en [docs/citar.md](docs/citar.md) §2 (requiere la interfaz de Zotero).

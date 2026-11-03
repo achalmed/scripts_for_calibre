@@ -7,15 +7,19 @@
 #      [--proyecto "<WRITING_DIR>/monographs/…"] [--archivo clave=ruta …]
 # Empareja cada entrada con `entrada/<clave>.pdf` (nombre que da `main.py descargar --lista "ref|clave"`), o con la
 # ruta dada en --archivo. Las entradas sin archivo se listan como pendientes de los pasos 00–01.
-import csv, hashlib, json, re, sys, unicodedata
+import csv, hashlib, importlib.util, json, re, sys, unicodedata
 from datetime import date
 from pathlib import Path
+
+_R = Path(__file__).resolve().parents[2] / "lib" / "rutas.py"   # id_proyecto (normativa 1.10)
+_s = importlib.util.spec_from_file_location("rutas", _R); R = importlib.util.module_from_spec(_s); _s.loader.exec_module(R)
 
 cfg = json.loads(sys.argv[1]); bib_path = Path(sys.argv[2]).expanduser()
 args = sys.argv[3:]
 def opt(n, d=""):
     return args[args.index(n) + 1] if n in args else d
-SERIE = opt("--serie"); TAGS = opt("--tags"); PROYECTO = opt("--proyecto", "")
+SERIE = opt("--serie"); TAGS = opt("--tags")
+PROYECTO = R.id_proyecto(opt("--proyecto", ""))   # la ficha cita el id del proyecto, nunca su ruta (normativa 1.10)
 ARCHIVOS = {a.split("=", 1)[0]: a.split("=", 1)[1] for i, a in enumerate(args) if i and args[i - 1] == "--archivo"}
 PEND = Path(cfg["PENDIENTES"]); FICHAS = Path(cfg["FICHAS_DIR"]); ENTRADA = FICHAS.parents[1] / "entrada"
 HOY = date.today().isoformat()
@@ -86,7 +90,7 @@ verificacion:
 
 ## Origen
 
-`{p}` · SHA-256 `{sha[:16]}…` · entrada BibTeX `@{kind}{{{key}}}`
+`{R.a_texto(p)}` · SHA-256 `{sha[:16]}…` · entrada BibTeX `@{kind}{{{key}}}`
 
 ## Zotero
 | Campo | Valor |

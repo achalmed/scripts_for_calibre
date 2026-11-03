@@ -87,6 +87,37 @@ def test_espacio_areas(piezas):
 
 
 @requiere_binding
+def test_vigila_metadata_db_y_relee_en_solo_lectura(piezas, app, muestra):
+    """Cuando metadata.db cambia (Calibre u otra suite escriben), el catálogo se relee solo, en solo lectura, tras una
+    espera; apagado el vigilante, no. Sobre la biblioteca de muestra (temporal): nunca la del autor."""
+    import sqlite3
+    l = piezas["libros"]
+    assert l.vigilar and l._db is not None and str(l._db) in l._vigilante.files()
+    if not muestra.con_calibre:
+        pytest.skip("sin calibredb la muestra no tiene metadata.db de Calibre")
+
+    def cambiar(titulo):
+        with sqlite3.connect(l._db) as c:                       # «otra aplicación» escribe en la base de muestra
+            c.create_function("title_sort", 1, lambda t: t)
+            c.execute("UPDATE books SET title = ? WHERE id = (SELECT min(id) FROM books)", (titulo,))
+
+    def esperar(titulo, segundos):
+        inicio = time.monotonic()
+        while not any(x.get("titulo") == titulo for x in l._libros) and time.monotonic() - inicio < segundos:
+            app.processEvents()
+            time.sleep(0.05)
+        return any(x.get("titulo") == titulo for x in l._libros)
+
+    cambiar("Un título que puso Calibre")
+    assert esperar("Un título que puso Calibre", 8)
+    l.vigilar = False
+    assert not l._vigilante.files()
+    cambiar("Otro título con el vigilante apagado")
+    assert not esperar("Otro título con el vigilante apagado", 3)
+    l.vigilar = True
+
+
+@requiere_binding
 def test_catalogo_busqueda_filtros_y_orden(piezas, muestra):
     l = piezas["libros"]
     assert l.total == 8 and l.hayIndice and l.visibles == 8 and l.resumen.startswith("8 libros")

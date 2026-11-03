@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_endes_ppr_2020.pdf` · SHA-256 `8f6ecc7e2efaaf5e…` · entrada BibTeX `@techreport{inei_endes_ppr_2020}`
+`biblioteca-studio/entrada/inei_endes_ppr_2020.pdf` · SHA-256 `8f6ecc7e2efaaf5e…` · entrada BibTeX `@techreport{inei_endes_ppr_2020}`
 
 ## Zotero
 | Campo | Valor |

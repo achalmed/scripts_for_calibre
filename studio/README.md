@@ -82,7 +82,9 @@ Los complementos: `../calibre-plugin/`, `../koreader-plugin/`, `../zotero-plugin
 
 ## Límite honesto
 
-- **El catálogo se lee al abrir y con F6 o Ctrl+R**: lo que cambia en Calibre con la ventana abierta aparece al releer.
+- **El catálogo se lee al abrir, con F6 o Ctrl+R y cuando `metadata.db` cambia** (Ver › Vigilar la biblioteca de Calibre,
+  activado por omisión): un vigilante mira el archivo y su diario y, cuando Calibre o una suite dejan de escribir, relee
+  en solo lectura como F6.
   Con una suite escribiendo, la base se lee como estaba confirmada (`immutable`) y la barra lo dice.
 - **Los pasos de la puerta se deducen de la salida de la suite** (`── Backup:` y los `✗` de `lib/escribir.*`) y de dos
   comprobaciones de solo lectura al terminar; una suite que escribiera sin imprimir su respaldo saldría como «no abrió

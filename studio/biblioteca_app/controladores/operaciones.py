@@ -9,6 +9,7 @@ y, al terminar, la integridad (`lib/escribir.py integridad`, solo lectura) y el 
 
 from __future__ import annotations
 
+import os
 import subprocess
 import time
 from pathlib import Path
@@ -20,7 +21,8 @@ from biblioteca_app.servicios import pasos as pasos_svc
 
 
 def cache_del_studio() -> Path:
-    return Path(QStandardPaths.writableLocation(QStandardPaths.StandardLocation.CacheLocation) or (Path.home() / ".cache" / "biblioteca-studio"))
+    return Path(QStandardPaths.writableLocation(QStandardPaths.StandardLocation.CacheLocation)
+                or Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "biblioteca-studio")
 
 
 class Operaciones(QObject):

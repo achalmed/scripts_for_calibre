@@ -8,10 +8,11 @@ de los complementos lo abre. La ventana no escribe: lo que cambia la biblioteca 
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 from gui_comun.modelos import ModeloFiltrado, ModeloLista
-from gui_comun.qt import QObject, QSettings, Property, Signal, Slot
+from gui_comun.qt import QFileSystemWatcher, QObject, QSettings, QTimer, Property, Signal, Slot
 
 from biblioteca_app.servicios import catalogo as cat
 from biblioteca_app.servicios import datos
@@ -50,12 +51,28 @@ def fila(l: dict, seccion: str = "") -> dict:
             "otro": False, "detalle": "", "nivel": ""}
 
 
+ESPERA_DB_MS = 1500
+
+
+def firma(ruta: Path) -> tuple:
+    """(mtime en ns, tamaño) de un archivo, y los de su diario de SQLite si existen; () si no está."""
+    partes = []
+    for r in (ruta, ruta.with_name(ruta.name + "-wal"), ruta.with_name(ruta.name + "-journal")):
+        try:
+            st = os.stat(r)
+        except OSError:
+            continue
+        partes.append((r.name, st.st_mtime_ns, st.st_size))
+    return tuple(partes)
+
+
 class Libros(QObject):
     cambiado = Signal()                 # el catálogo, las facetas, las bandejas y los contadores
     filtroCambiado = Signal()           # la búsqueda, los filtros, el orden o la forma (cuadrícula · lista)
     actualCambiado = Signal()           # el libro de la ficha
     bandejaCambiada = Signal()
     facetasCambiadas = Signal()         # las cuentas de los filtros (cambian con la búsqueda)
+    vigilarCambiado = Signal()
     seleccionar = Signal(int)           # QML: lleva la cuadrícula a ese índice visible
     aviso = Signal(str, str)
 
@@ -86,6 +103,17 @@ class Libros(QObject):
         self._modelo = ModeloFiltrado(self._filas, parent=self)
         self._modelo.aceptar_con(self._acepta)
         self._bandeja_filas = ModeloLista(ROLES, parent=self)
+        # el vigilante de metadata.db (solo mira: la firma del archivo; releer es leer en solo lectura, como F6)
+        self._db: Path | None = None
+        self._firma_db: tuple = ()
+        self._vigilar = str(self._s.value("catalogo/vigilar", "true")).lower() in ("true", "1")
+        self._vigilante = QFileSystemWatcher(self)
+        self._vigilante.fileChanged.connect(self._db_cambio)
+        self._vigilante.directoryChanged.connect(self._db_cambio)
+        self._espera_db = QTimer(self)
+        self._espera_db.setSingleShot(True)
+        self._espera_db.setInterval(ESPERA_DB_MS)
+        self._espera_db.timeout.connect(self._releer_si_cambio)
         self.recargar()
 
     modelo = Property(QObject, lambda self: self._modelo, constant=True)
@@ -98,6 +126,8 @@ class Libros(QObject):
         self._indice = datos.leer_indice(self._ruta_indice)
         biblioteca = Path(self._indice.get("biblioteca") or self.env.BIBLIOTECA_DIR)
         db = Path(getattr(self.env, "CALIBRE_DB", "") or biblioteca / "metadata.db")
+        self._db, self._firma_db = db, firma(db)
+        self._vigilar_db()
         try:
             leido = cat.leer(db, self._indice, biblioteca)
             self._libros, self._inmutable, self._error = leido["libros"], leido["inmutable"], ""
@@ -118,6 +148,38 @@ class Libros(QObject):
         self.cambiado.emit()
         if self._actual:
             self._fijar(self._por_id.get(self._actual["id"], {}))
+
+    # ------------------------------------------------------------------ el vigilante de metadata.db
+    def _vigilar_db(self) -> None:
+        """Vigila metadata.db y su carpeta (Calibre puede reemplazar el archivo o escribir su diario al lado)."""
+        actuales = set(self._vigilante.files()) | set(self._vigilante.directories())
+        if actuales:
+            self._vigilante.removePaths(list(actuales))
+        if not self._vigilar or self._db is None:
+            return
+        rutas = [str(r) for r in (self._db, self._db.parent) if r.exists()]
+        if rutas:
+            self._vigilante.addPaths(rutas)
+
+    def _db_cambio(self, _ruta: str = "") -> None:
+        if self._vigilar:
+            self._espera_db.start()             # Calibre escribe en ráfagas: se relee cuando se calma
+
+    def _releer_si_cambio(self) -> None:
+        if self._db is None or firma(self._db) == self._firma_db:
+            if self._db is not None and str(self._db) not in self._vigilante.files() and self._db.exists():
+                self._vigilante.addPath(str(self._db))   # reemplazado por uno nuevo: se vuelve a vigilar
+            return
+        self.consola.registrar("info", "metadata.db cambió (Calibre o una suite): el catálogo se relee en solo lectura.")
+        self.recargar()
+
+    def _vigilar_set(self, v: bool) -> None:
+        self._vigilar = bool(v)
+        self._s.setValue("catalogo/vigilar", "true" if self._vigilar else "false")
+        self._vigilar_db()
+        self.vigilarCambiado.emit()
+
+    vigilar = Property(bool, lambda self: self._vigilar, _vigilar_set, notify=vigilarCambiado)
 
     def _pintar(self) -> None:
         orden = sorted(self._libros, key=cat.clave_orden(self._orden))

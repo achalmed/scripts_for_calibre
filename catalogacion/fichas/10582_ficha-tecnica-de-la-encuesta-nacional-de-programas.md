@@ -3,7 +3,7 @@ tipo: ficha_catalogacion
 calibre_id: 10582
 zotero_key:
 clave_bibtex: inei_enapres_ficha_tecnica_2016
-proyecto: /home/achalmaedison/Documents/datafw
+proyecto: datafw
 verificacion:
   estado: pendiente
   metodo:
@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-`/home/achalmaedison/Documents/biblioteca-studio/entrada/inei_enapres_ficha_tecnica_2016.pdf` · SHA-256 `69c1af95ef48ffab…` · entrada BibTeX `@techreport{inei_enapres_ficha_tecnica_2016}`
+`biblioteca-studio/entrada/inei_enapres_ficha_tecnica_2016.pdf` · SHA-256 `69c1af95ef48ffab…` · entrada BibTeX `@techreport{inei_enapres_ficha_tecnica_2016}`
 
 ## Zotero
 | Campo | Valor |
@@ -44,4 +44,4 @@ verificacion:
 | #item_type | Report |
 
 ## Notas
-- Metadatos tomados del `.bib` del proyecto `/home/achalmaedison/Documents/datafw`; la clave BibTeX es la del trabajo (Better BibTeX la conserva).
+- Metadatos tomados del `.bib` del proyecto `datafw`; la clave BibTeX es la del trabajo (Better BibTeX la conserva).

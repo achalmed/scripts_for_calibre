@@ -43,7 +43,7 @@ def cargar_env():
     docs = Path(os.environ.get("DOCS_ROOT") or REPO.parent)
     biblioteca = Path(os.environ.get("BIBLIOTECA_DIR") or docs / "biblioteca")
     return SimpleNamespace(DOCS_ROOT=docs, BIBLIOTECA_DIR=biblioteca, CALIBRE_DB=Path(os.environ.get("CALIBRE_DB") or biblioteca / "metadata.db"),
-                           ZOTERO_DB=Path(os.environ.get("ZOTERO_DB") or Path.home() / "Zotero/zotero.sqlite"),
+                           ZOTERO_DB=os.environ.get("ZOTERO_DB", ""),     # fuera del espacio de trabajo, solo del entorno
                            LOCK_CALIBRE=Path(os.environ.get("LOCK_CALIBRE") or estado / "biblioteca/calibre.lock"),
                            LOCK_ZOTERO=Path(os.environ.get("LOCK_ZOTERO") or estado / "biblioteca/zotero.lock"),
                            CORE_PYTHON=Path(os.environ.get("CORE_PYTHON") or "python3"),

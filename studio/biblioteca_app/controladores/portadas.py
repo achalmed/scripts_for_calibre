@@ -31,7 +31,8 @@ CALIDAD = 85
 
 
 def cache_portadas() -> Path:
-    base = QStandardPaths.writableLocation(QStandardPaths.StandardLocation.CacheLocation) or str(Path.home() / ".cache" / "biblioteca-studio")
+    base = (QStandardPaths.writableLocation(QStandardPaths.StandardLocation.CacheLocation)
+            or str(Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "biblioteca-studio"))
     return Path(base) / "portadas"
 
 

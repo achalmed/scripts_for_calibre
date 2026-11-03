@@ -61,3 +61,28 @@ def resolver(texto, entrada, docs=None):
     if p.parts and (docs / p.parts[0]).is_dir():
         return docs / p
     return Path(entrada) / p
+
+
+def id_proyecto(valor, docs=None) -> str:
+    """El id de un proyecto (el nombre de su carpeta, normativa 1.10) a partir de lo que una ficha o una orden traigan:
+    un id se devuelve tal cual; una ruta (absoluta, con `~` o relativa a DOCS_ROOT) da la carpeta del proyecto:
+    `<DOCS_ROOT>/datafw/…` → `datafw`, `<DOCS_ROOT>/escritura/<tipo>/<proyecto>/…` → `<proyecto>`, y una ruta fuera de
+    la raíz, su última carpeta. Nunca devuelve una ruta de la máquina."""
+    texto = str(valor or "").strip()
+    if not texto or "/" not in texto:
+        return texto
+    ruta = Path(os.path.expanduser(texto))
+    base = Path(docs) if docs else docs_root()
+    if ruta.is_absolute():
+        try:
+            partes = ruta.relative_to(base).parts
+        except ValueError:
+            return ruta.name
+    else:
+        partes = Path(texto).parts
+    partes = [x for x in partes if x not in (".", "")]
+    if not partes:
+        return ""
+    if partes[0] == "escritura" and len(partes) >= 3:
+        return partes[2]
+    return partes[0]
