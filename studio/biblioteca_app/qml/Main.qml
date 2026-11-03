@@ -156,7 +156,7 @@ VentanaBase {
         ColumnLayout {
             spacing: Kirigami.Units.largeSpacing
             QQC2.Label { Layout.fillWidth: true; Layout.maximumWidth: Kirigami.Units.gridUnit * 30; text: ops.textoConfirmacion; wrapMode: Text.WordWrap }
-            PasosPuerta { Layout.fillWidth: true; Layout.maximumWidth: Kirigami.Units.gridUnit * 30 }
+            LineaPasos { Layout.fillWidth: true; Layout.maximumWidth: Kirigami.Units.gridUnit * 30; pasos: studio.operaciones.pasos; titulo: "La puerta de escritura"; resumen: studio.operaciones.resumenPasos }
         }
     }
     dialogoAjustes: DialogoAjustesStudio {}

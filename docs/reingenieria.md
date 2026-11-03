@@ -115,12 +115,12 @@ Capturas de antes: `docs/figuras/antes/biblioteca-studio-{oscuro,claro,paleta}.p
 |---|---|
 | la ventana y las áreas (B1, B11, B12) | `studio/biblioteca_app/qml/Main.qml` sobre `VentanaBase`; `studio/biblioteca_app/controladores/espacio.py` (área y etapa); `studio/biblioteca_app/aplicacion.py` (Ctrl+1–4, Ctrl+F, Ctrl+G, F9, `escritorio`, estados de operación) |
 | lo editorial (B2) | `lib/indice.py` (`editorial`, solo lectura, aditiva) y `studio/biblioteca_app/servicios/catalogo.py` (`leer`) |
-| las portadas (B3) | `studio/biblioteca_app/controladores/portadas.py` (`image://portadas/<id>`, caché con tope) |
+| las portadas (B3) | `gui_comun.miniaturas.ProveedorMiniaturas` de gui-comun 3.1 (`image://portadas/<id>[/grande]`, caché con tope; 2026-11-03, antes un proveedor propio) |
 | cuadrícula y lista (B4) | `studio/biblioteca_app/qml/componentes/Catalogo.qml`, `TarjetaLibro.qml`, `FilaLibro.qml` |
 | búsqueda y filtros (B5, B6) | `catalogo.consulta`, `cumple`, `facetas`, `cumple_filtros`; `studio/biblioteca_app/qml/componentes/PanelFiltros.qml` |
 | la ficha editorial (B7) | `Libros.ficha` (`studio/biblioteca_app/controladores/libros.py`); `studio/biblioteca_app/qml/componentes/FichaEditorial.qml` |
 | las bandejas (B8) | `catalogo.bandejas`; `studio/biblioteca_app/qml/componentes/Bandejas.qml` |
-| los pasos de la puerta (B9) | `studio/biblioteca_app/servicios/pasos.py`; `Operaciones.pasos` (`studio/biblioteca_app/controladores/operaciones.py`); `studio/biblioteca_app/qml/componentes/PasosPuerta.qml`, en la operación y en el diálogo de Aplicar |
+| los pasos de la puerta (B9) | `studio/biblioteca_app/servicios/pasos.py` (sobre `gui_comun.pasos`) y `LineaPasos` de gui-comun 3.1 (antes un componente propio); `Operaciones.pasos` (`studio/biblioteca_app/controladores/operaciones.py`); en la operación y en el diálogo de Aplicar |
 | el Método Documental (B10) | `studio/biblioteca_app/qml/componentes/EspacioEtapas.qml` |
 
 Verificación (2026-11-02, rama `wip/2026-11-02-reingenieria`):

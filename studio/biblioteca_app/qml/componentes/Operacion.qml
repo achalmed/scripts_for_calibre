@@ -62,7 +62,7 @@ QQC2.ScrollView {
             QQC2.Label { Kirigami.FormData.label: "Ahora:"; visible: !pagina.o.escribe && !pagina.o.puedeSimular; text: pagina.o.motivoNoSimular; wrapMode: Text.WordWrap; Layout.fillWidth: true; color: Kirigami.Theme.neutralTextColor }
         }
         Kirigami.Separator { Layout.fillWidth: true; visible: pasos.visible }
-        PasosPuerta { id: pasos; Layout.fillWidth: true }
+        LineaPasos { id: pasos; Layout.fillWidth: true; pasos: studio.operaciones.pasos; titulo: "La puerta de escritura"; resumen: studio.operaciones.resumenPasos }
         RowLayout {
             visible: pagina.o.hayOperacion
             Layout.fillWidth: true

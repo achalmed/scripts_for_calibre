@@ -19,15 +19,15 @@ from pathlib import Path
 
 from gui_comun.acciones import Acciones, StandardKey
 from gui_comun.consola import Consola
+from gui_comun.miniaturas import ProveedorMiniaturas
 from gui_comun.nucleo import Aplicacion
-from gui_comun.qt import QObject, Signal, Slot
+from gui_comun.qt import QObject, QStandardPaths, Signal, Slot
 from gui_comun.tareas import Tareas
 
 from biblioteca_app.controladores.ajustes import Ajustes
 from biblioteca_app.controladores.espacio import Espacio
 from biblioteca_app.controladores.etapas import Etapas
 from biblioteca_app.controladores.libros import Libros
-from biblioteca_app.controladores.portadas import ProveedorPortadas
 from biblioteca_app.controladores.operaciones import Operaciones
 from biblioteca_app.controladores.puerta import Puerta
 from biblioteca_app.servicios import datos
@@ -71,6 +71,13 @@ class Interfaz(QObject):
         self.pedir.emit(nombre, {})
 
 
+def cache_portadas() -> Path:
+    """La caché de las miniaturas de las portadas (`$XDG_CACHE_HOME/biblioteca-studio/portadas/`); nunca la biblioteca."""
+    base = (QStandardPaths.writableLocation(QStandardPaths.StandardLocation.CacheLocation)
+            or str(Path(os.environ.get("XDG_CACHE_HOME") or Path.home() / ".cache") / "biblioteca-studio"))
+    return Path(base) / "portadas"
+
+
 def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool = True, ruta_indice: Path | None = None,
               repo_datos: Path | None = None) -> dict:
     """Crea controladores y acciones, y los expone al QML. Devuelve lo creado (para las pruebas y las capturas).
@@ -85,8 +92,8 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
     ajustes = Ajustes()
     espacio = Espacio(consola, ajustes)
     puerta = Puerta(env, vigilar=vigilar_puerta)
-    portadas = ProveedorPortadas()
-    app.motor.addImageProvider("portadas", portadas)        # image://portadas/<id>: las miniaturas de cover.jpg (B3)
+    portadas = ProveedorMiniaturas(cache_portadas(), anchos={"": 220, "grande": 520})   # gui-comun 3.1 (antes, la copia propia)
+    app.motor.addImageProvider("portadas", portadas)        # image://portadas/<id>[/grande]: las miniaturas de cover.jpg (B3)
     escritorio = app.escritorio
     libros = Libros(espacio, consola, env, ruta_indice=ruta_indice, escritorio=escritorio, repo=repo_datos, portadas=portadas)
     etapas = Etapas(espacio, libros, env, consola, repo=repo_datos)

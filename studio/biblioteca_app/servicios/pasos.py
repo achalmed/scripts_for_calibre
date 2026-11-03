@@ -12,9 +12,13 @@ solo se lleva la cuenta de lo que se puede observar desde fuera:
    sobre las bases que la operación toca;
 6. liberar — al terminar el proceso, que el candado haya quedado libre.
 
-Una operación que no escribe en ninguna base no tiene pasos de puerta (`aplica()` es falso).
+Una operación que no escribe en ninguna base no tiene pasos de puerta (`aplica()` es falso). Los pasos son los de
+`LineaPasos` de gui-comun 3.1 (`gui_comun.pasos`: `linea`, `fijar`, `ESTADOS`, `NIVEL`); aquí queda lo propio de la
+puerta: qué paso es cada línea de la salida de una suite.
 """
 from __future__ import annotations
+
+from gui_comun.pasos import ESTADOS, NIVEL, fijar as _fijar, linea as _linea_de_pasos  # noqa: F401  (ESTADOS: API)
 
 PASOS = (
     ("cerrada", "La aplicación está cerrada", "Calibre (o Zotero) no puede estar abierto mientras se escribe"),
@@ -24,28 +28,13 @@ PASOS = (
     ("integridad", "Integridad verificada", "PRAGMA integrity_check de cada base tocada"),
     ("liberar", "Candado liberado", "al terminar, la base queda libre para las demás suites y los timers"),
 )
-ESTADOS = ("pendiente", "en_curso", "hecho", "fallo", "omitido")
-NIVEL = {"pendiente": "inactivo", "en_curso": "activo", "hecho": "positivo", "fallo": "negativo", "omitido": "inactivo"}
 
 
 def nuevos(bases: tuple[str, ...] | list[str] = ()) -> list[dict]:
     """Los seis pasos en espera, para una operación que escribe en `bases`."""
     que = " y ".join({"calibre": "Calibre", "zotero": "Zotero"}.get(b, b) for b in bases) or "la base"
-    salida = []
-    for clave, titulo, explicacion in PASOS:
-        if clave == "cerrada":
-            titulo = f"{que} cerrado" + ("s" if len(bases) > 1 else "")
-        salida.append({"clave": clave, "titulo": titulo,
-                       "explicacion": explicacion, "estado": "pendiente", "detalle": "", "nivel": NIVEL["pendiente"]})
-    return salida
-
-
-def _fijar(pasos: list[dict], clave: str, estado: str, detalle: str = "") -> None:
-    for p in pasos:
-        if p["clave"] == clave:
-            p["estado"], p["nivel"] = estado, NIVEL[estado]
-            if detalle:
-                p["detalle"] = detalle
+    cerrada = f"{que} cerrado" + ("s" if len(bases) > 1 else "")
+    return _linea_de_pasos([(c, cerrada if c == "cerrada" else t, e) for c, t, e in PASOS])
 
 
 def _estado(pasos: list[dict], clave: str) -> str:

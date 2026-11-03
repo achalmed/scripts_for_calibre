@@ -57,10 +57,10 @@ suite; la ventana los sigue en la salida y, al terminar, comprueba en solo lectu
 | archivo | qué es |
 |---|---|
 | `main.py` | el punto de entrada, sin lógica (`/usr/bin/python3`); una sola instancia (`QLocalServer`) |
-| `biblioteca_app/aplicacion.py` | arma la aplicación: controladores, el proveedor de portadas, el registro de acciones (menú, paleta, atajos, estados de operación) y `biblioteca_app/qml/Main.qml` |
+| `biblioteca_app/aplicacion.py` | arma la aplicación: controladores, el proveedor de portadas (`gui_comun.miniaturas.ProveedorMiniaturas`, `image://portadas/<id>`), el registro de acciones (menú, paleta, atajos, estados de operación) y `biblioteca_app/qml/Main.qml` |
 | `biblioteca_app/servicios/` | sin Qt: `catalogo` (une lo editorial al índice; búsqueda por campo, facetas, orden, bandejas), `pasos` (los seis pasos de la puerta vistos desde fuera), `operaciones` (el catálogo de órdenes), `puerta` (procesos, candados, respaldos, timers), `datos` (el índice, los ledgers, las fichas, los manifiestos, la coherencia) |
-| `biblioteca_app/controladores/` | lo que QML ve: `espacio` (áreas, etapa, barra de estado, rutas), `libros` (el catálogo, la ficha, las bandejas), `portadas` (`image://portadas/<id>`), `etapas`, `operaciones` (la actual, Simular y Aplicar, plan, registro y pasos), `puerta`, `ajustes` |
-| `biblioteca_app/qml/` | `Main.qml` sobre `GuiComun.VentanaBase` y `componentes/` (Catalogo, TarjetaLibro, FilaLibro, PanelFiltros, FichaEditorial, Bandejas, EspacioEtapas, PasosPuerta, Operacion, Elemento, Plan, Registro) |
+| `biblioteca_app/controladores/` | lo que QML ve: `espacio` (áreas, etapa, barra de estado, rutas), `libros` (el catálogo, la ficha, las bandejas), `etapas`, `operaciones` (la actual, Simular y Aplicar, plan, registro y pasos), `puerta`, `ajustes` |
+| `biblioteca_app/qml/` | `Main.qml` sobre `GuiComun.VentanaBase` y `componentes/` (Catalogo, TarjetaLibro, FilaLibro, PanelFiltros, FichaEditorial, Bandejas, EspacioEtapas, Operacion, Elemento, Plan, Registro) |
 | `biblioteca_app/recursos/marca.svg` | el icono del lanzador: la única marca del studio |
 | `muestra.py` | la biblioteca de muestra (libros ficticios con `calibredb`, metadatos y portadas por la API de Calibre, Zotero mínimo, ledgers y fichas) de las pruebas y las capturas; nunca la real |
 | `capturar.py` | las capturas de la documentación sobre la muestra, con `HOME` temporal |

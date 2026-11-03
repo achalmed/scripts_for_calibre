@@ -1,7 +1,7 @@
 """biblioteca_app/controladores/libros.py — el catálogo bibliográfico (reingeniería B2–B8, `docs/reingenieria.md`): los
 libros de Calibre con sus metadatos editoriales y su lectura en KOReader (`servicios/catalogo.py`, en solo lectura) unidos
 al índice de `lib/indice.py` (claves de Zotero y para citar, fichas, nota); la búsqueda avanzada, los filtros por
-colección, autor, década y tipo, el orden y la cuadrícula o la lista; las portadas en miniatura (`ProveedorPortadas`);
+colección, autor, década y tipo, el orden y la cuadrícula o la lista; las portadas en miniatura (`gui_comun.miniaturas.ProveedorMiniaturas`);
 la ficha editorial del libro actual y lo que se hace con él (abrir el documento con su aplicación, mostrarlo en Dolphin,
 abrir en Calibre y en Zotero, la nota, copiar la clave); y las bandejas de trabajo. El enlace `biblioteca-studio://libro/<id>`
 de los complementos lo abre. La ventana no escribe: lo que cambia la biblioteca es una operación (la CLI de su suite)."""
