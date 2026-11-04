@@ -53,7 +53,7 @@ nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (mi
 
 ## Por hacer
 
-- 2026-11-04 · dueño: **el autor** · Zotero, con la app abierta: importar el RIS de las altas 10842-10906 y correr `lectura/main.sh --enlazar --aplicar`; los informes citan con `references.bib` a mano hasta entonces.
+- 2026-11-04 · dueño: **el autor** · Zotero, con la app abierta: importar `ingesta/salida_ris/ingesta_20261103_auditoria_pl12251_10842_10843.ris` e `ingesta_20261104_biblioteca_inteligencia_10844_10906.ris` (63 ítems), y correr `lectura/main.sh --enlazar --aplicar`; los informes citan con `references.bib` a mano hasta entonces.
 - 2026-11-04 · dueño: director · Cerrar las tandas: `catalogacion/resumen_catalogacion.tsv`, `fuentes_descargadas.tsv`, `ingesta/ingesta.tsv` e `ingesta/pendientes.tsv` llevan cambios sin commit mezclados con trabajo anterior; `archivar` de los originales que siguen en `entrada/`; `ingesta.tsv` conserva el SHA antiguo de 10200, 10535 y 10275, y `#ko_md5` del 10200 quedó obsoleto.
 - 2026-11-04 · dueño: director · Dudas de catálogo: 10815 y 10816 (ROF: el portal del GORE da la Ordenanza 003-2025-GRA/CR, el archivo dice 2024 y no la nombra; falta leer la ordenanza); autor del 10200 (es del GORE y figura el Congreso; renombrar rompe el enlace de Zotero); 10141 (autor OECE, es de la DGA del MEF); identificador `ley_31589` en el 10176; autor con «|» en el 10289; fechas de archivo y no de norma en 10020, 10155, 10113, 10115 y 10029; revisar la catalogación del 10363.
 - 2026-11-04 · dueño: director · `manifiesto/lib/bibtex.py` corta el shorttitle en «Ley N»; `manifiesto verificar` no halla `fuentes.yml` sin `<proyecto>/fuentes`; el verificador de fichas da `observada` en dos columnas si la cadena se repite en otra página.
