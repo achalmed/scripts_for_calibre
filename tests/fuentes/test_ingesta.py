@@ -94,3 +94,17 @@ def test_ocr_y_paquetes_simulan(caja):
     assert "[ocr] 0 formato(s) · 0 sin libro · simulación" in r.stdout
     r = caja.ingesta("paquetes")
     assert r.returncode == 0, r.stderr
+
+
+def test_fecha_calibre_es_la_medianoche_de_lima():
+    """La fecha completa no se corre un día (antes «2026-04-29» quedaba a la 01:00 UTC, el 28 en Lima)."""
+    from pathlib import Path
+    ruta = Path(__file__).resolve().parents[2] / "ingesta" / "lib" / "catalogar.py"
+    texto = ruta.read_text(encoding="utf-8")
+    codigo = texto[texto.index("def fecha_calibre"):texto.index("def run(")]
+    ns = {}
+    exec(codigo, ns)
+    f = ns["fecha_calibre"]
+    assert f("2026-04-29") == "2026-04-29 05:00:00+00:00"
+    assert f("2025") == "2025-01-01 05:00:00+00:00"
+    assert f("2024-7") == "2024-07-01 05:00:00+00:00"

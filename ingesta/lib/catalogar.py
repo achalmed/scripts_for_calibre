@@ -44,6 +44,13 @@ def ficha_con_id(texto, bid):
     return FRONTMATTER_CATALOGACION.format(bid=bid) + texto
 
 
+def fecha_calibre(fecha):
+    """«2025», «2025-08» o «2025-08-29» → «2025-08-29 05:00:00+00:00»: la medianoche de Lima, como el resto de la biblioteca.
+    Antes se añadía «-01-01» a cualquier fecha, y una fecha completa quedaba a la 01:00 UTC: un día menos en Lima."""
+    partes = (fecha.strip().split("-") + ["01", "01"])[:3]
+    return f"{partes[0]}-{partes[1].zfill(2)}-{partes[2].zfill(2)} 05:00:00+00:00"
+
+
 def run(*args):
     return E.calibredb(BIB, *args)   # escritura solo con la puerta abierta (lib/escribir.sh)
 
@@ -106,7 +113,7 @@ def main():
         # una sola llamada con todos los campos (7 llamadas por libro eran ~40 min para 200 documentos)
         campos = ["--field", f"#clasificador:{clasif}", "--field", f"#item_type:{item}", "--field", f"title:{r['titulo']}", "--field", f"authors:{r['autores']}"]
         if r.get("editorial"): campos += ["--field", f"publisher:{r['editorial']}"]
-        if r.get("fecha"): campos += ["--field", f"pubdate:{r['fecha']}-01-01 05:00:00+00:00"]   # medianoche local, como el resto de la biblioteca
+        if r.get("fecha"): campos += ["--field", f"pubdate:{fecha_calibre(r['fecha'])}"]
         if r.get("identificador"): campos += ["--field", f"identifiers:{r['identificador']}"]
         if r.get("tags"): campos += ["--field", f"tags:{r['tags']}"]
         if r.get("serie"): campos += ["--field", f"series:{r['serie']}", "--field", f"series_index:{r.get('serie_index') or 1}"]
