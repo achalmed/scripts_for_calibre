@@ -13,6 +13,7 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 
 | fecha | qué | dónde se ve |
 |---|---|---|
+| 2026-11-03 | Tandas para la biblioteca de inteligencia económica: altas 10844-10906 por la puerta; 48 fechas corregidas (10842-10891, `fecha_calibre`, con prueba); formatos reemplazados: 10862 (D. S. 009-2025-MIDIS: el PDF de El Peruano para el dispositivo trae otras páginas, se compuso el texto oficial de su página), 10200 (era una página 404), 10535 y 10275 (OCR). Respaldos de los PDF sustituidos en `$RESPALDOS_DIR/biblioteca/puerta/ingesta/formatos/2026-11-03/` | `ingesta/lib/catalogar.py`, `tests/fuentes/test_ingesta.py`; `escritura/reports/2026-11-03-biblioteca-inteligencia-economica` |
 | 2026-11-03 | **gui-comun 3.1 adoptado**: las portadas con `gui_comun.miniaturas.ProveedorMiniaturas` y los pasos de la puerta con `LineaPasos` y `gui_comun.pasos` en lugar de las copias propias (`controladores/portadas.py`, `PasosPuerta.qml`, retiradas) | `docs/reingenieria.md` (B3, B9) |
 | 2026-11-03 | **Fichas**: las 165 de la ingesta ENAPRES con `proyecto:` como ruta pasan al id (`datafw`) con `fichas grafia`, que ahora reconoce rutas absolutas o con `~` (`lib/rutas.id_proyecto`), y 196 dejan de llevar la carpeta de inicio en el cuerpo con la orden nueva `fichas rutas` (lo bajo `DOCS_ROOT`, relativo; simulación por omisión, respaldo y `UNDO.sh` en `$RESPALDOS_DIR`); `ingesta bib` ya escribe el id y la ruta relativa (`desde_bib.py`). `test_fichas_con_proyecto_por_id` pasa | `git log`; `tests/calibre/test_privacidad_k7.py` |
 | 2026-11-03 | **Studio**: vigilante de `metadata.db` en solo lectura que relee el catálogo (Ver › Vigilar la biblioteca de Calibre); sin `Path.home()` fuera de un respaldo de XDG (`test_codigo_sin_lib_comun_ni_reparaciones` pasa) | `studio/README.md`; `tests/studio/test_controladores.py` |
@@ -52,6 +53,10 @@ nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (mi
 
 ## Por hacer
 
+- 2026-11-04 · dueño: **el autor** · Zotero, con la app abierta: importar el RIS de las altas 10842-10906 y correr `lectura/main.sh --enlazar --aplicar`; los informes citan con `references.bib` a mano hasta entonces.
+- 2026-11-04 · dueño: director · Cerrar las tandas: `catalogacion/resumen_catalogacion.tsv`, `fuentes_descargadas.tsv`, `ingesta/ingesta.tsv` e `ingesta/pendientes.tsv` llevan cambios sin commit mezclados con trabajo anterior; `archivar` de los originales que siguen en `entrada/`; `ingesta.tsv` conserva el SHA antiguo de 10200, 10535 y 10275, y `#ko_md5` del 10200 quedó obsoleto.
+- 2026-11-04 · dueño: director · Dudas de catálogo: 10815 y 10816 (ROF: el portal del GORE da la Ordenanza 003-2025-GRA/CR, el archivo dice 2024 y no la nombra; falta leer la ordenanza); autor del 10200 (es del GORE y figura el Congreso; renombrar rompe el enlace de Zotero); 10141 (autor OECE, es de la DGA del MEF); identificador `ley_31589` en el 10176; autor con «|» en el 10289; fechas de archivo y no de norma en 10020, 10155, 10113, 10115 y 10029; revisar la catalogación del 10363.
+- 2026-11-04 · dueño: director · `manifiesto/lib/bibtex.py` corta el shorttitle en «Ley N»; `manifiesto verificar` no halla `fuentes.yml` sin `<proyecto>/fuentes`; el verificador de fichas da `observada` en dos columnas si la cadena se repite en otra página.
 - 2026-11-02 · dueño: **el autor** · usar Biblioteca Studio en la sesión real (`/usr/bin/python3 ~/Documents/biblioteca-studio/studio/main.py`):
   el catálogo con la biblioteca entera (portadas, búsqueda por campo, filtros, la ficha editorial, abrir y Dolphin), un libro
   desde Calibre, KOReader o Zotero, las bandejas y una aplicación de verdad («Catalogar en Calibre» con Calibre cerrado)
