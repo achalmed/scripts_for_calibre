@@ -1,0 +1,48 @@
+---
+tipo: ficha_catalogacion
+calibre_id: 10821
+zotero_key:
+clave_bibtex: mplp2022correos
+proyecto: levantamiento del directorio institucional de Ayacucho, 2026-10-28
+verificacion:
+  estado: pendiente
+  metodo:
+  fecha:
+---
+
+> Ficha de catalogación de «Correos institucionales de la Municipalidad Provincial de Lucanas-Puquio». Generada por `scripts_for_fuentes/ingesta/lib/desde_bib.py` el 2026-10-28 desde `fuentes_directorio_ayacucho_2026-10-28.bib` del proyecto (formato de `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`). Confianza: **alta** (metadatos del .bib del autor).
+
+## Origen
+
+`mplp2022correos.pdf` · SHA-256 `d0fc26ce6ae8a14f…` · entrada BibTeX `@document{mplp2022correos}`
+
+## Zotero
+| Campo | Valor |
+|---|---|
+| Item Type | Document |
+| Title | Correos institucionales de la Municipalidad Provincial de Lucanas-Puquio |
+| Author | Municipalidad Provincial de Lucanas |
+| Date | 2022 |
+| Publication / Publisher | Municipalidad Provincial de Lucanas |
+| Volume / Issue / Pages |  /  /  |
+| DOI / URL | https://munipuquio.gob.pe/correos.pdf |
+| Language | es |
+| Tags | gestion_publica, documento_oficial |
+
+## Calibre
+| Campo | Valor |
+|---|---|
+| Title | Correos institucionales de la Municipalidad Provincial de Lucanas-Puquio |
+| Authors | Municipalidad Provincial de Lucanas |
+| Publisher | Municipalidad Provincial de Lucanas |
+| Pubdate | 2022 |
+| Languages | spa |
+| Identifiers | url:https://munipuquio.gob.pe/correos.pdf |
+| Series | Directorio Ayacucho 2026 - Fuentes [8] |
+| Tags | gestion_publica, documento_oficial |
+| #clasificador | Documento oficial |
+| #item_type | Document |
+
+## Notas
+- Metadatos tomados del `.bib` del proyecto `levantamiento del directorio institucional de Ayacucho, 2026-10-28`; la clave BibTeX es la del trabajo (Better BibTeX la conserva).
+- Levantamiento del directorio institucional de Ayacucho (2026-10-28); descargado de https://munipuquio.gob.pe/correos.pdf el 2026-10-28; clave mplp2022correos.
