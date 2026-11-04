@@ -48,10 +48,10 @@ _TIPO_CLAS = {"normativa": "legislation", "informe": "report", "informe técnico
 
 # Normas: el número que va en `shorttitle` (la cita parentética) y en la clave.
 _RE_NORMA = re.compile(
-    r"^(Ley|Decreto Legislativo|Decreto Supremo|Decreto de Urgencia|Resoluci[oó]n Ministerial|"
+    r"^(Ley|Decreto Legislativo|Decreto Ley|Decreto Supremo|Decreto de Urgencia|Resoluci[oó]n Ministerial|"
     r"Resoluci[oó]n Directoral|Resoluci[oó]n Suprema|Ordenanza Regional|Directiva|Oficio|"
     r"Texto [ÚU]nico Ordenado de la Ley|Convenio)\s+(?:N\.?\s*[°º]\s*)?([\w./-]+)", re.I)
-_ABREV = {"ley": "ley", "decreto legislativo": "dleg", "decreto supremo": "ds", "decreto de urgencia": "du",
+_ABREV = {"ley": "ley", "decreto legislativo": "dleg", "decreto ley": "dl", "decreto supremo": "ds", "decreto de urgencia": "du",
           "resolución ministerial": "rm", "resolucion ministerial": "rm", "resolución directoral": "rd",
           "resolucion directoral": "rd", "resolución suprema": "rs", "resolucion suprema": "rs",
           "ordenanza regional": "or", "directiva": "directiva", "oficio": "oficio",
@@ -194,7 +194,7 @@ def entrada(e, d, clave):
         # La cita parentética lleva el nombre corto: el número de la norma
         # («Ley N.° 30057») o, si no lo hay, el título hasta el primer
         # inciso («Constitución Política del Perú (texto actualizado…)»).
-        corto = (titulo.split(".")[0].split(",")[0] if n else re.split(r"\s[(:]", titulo)[0]).strip()
+        corto = (re.split(r"\.\s", titulo)[0].split(",")[0].rstrip(".") if n else re.split(r"\s[(:]", titulo)[0]).strip()
         if corto and corto != titulo:
             out.append(_campo("shorttitle", corto))
         if date_:

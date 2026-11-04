@@ -47,10 +47,15 @@ def cmd_generar(a):
     return 0
 
 
+def _con_manifiesto(c):
+    """La carpeta del proyecto vale como su `fuentes/`, donde vive el manifiesto (P5)."""
+    return c / "fuentes" if (c / "fuentes" / config.NOMBRE).exists() and not (c / config.NOMBRE).exists() else c
+
+
 def cmd_verificar(a):
     mal = 0
     for c in a.carpetas:
-        c = Path(c).expanduser(); c = c.parent if c.is_file() else c
+        c = Path(c).expanduser(); c = _con_manifiesto(c.parent if c.is_file() else c)
         prob, data = M.verificar(c)
         print(f"  {'✗' if prob else '✓'} {_r(c)}: {len(data['fuentes'])} entradas" + (f" · {len(prob)} problema(s)" if prob else ""))
         for p in prob[:15]: print(f"      - {p}")
@@ -78,7 +83,7 @@ def cmd_raiz(a):
 def cmd_bib(a):
     from lib import bibtex as B
     c = Path(a.carpeta).expanduser()
-    c = c / "fuentes" if (c / "fuentes" / config.NOMBRE).exists() and not (c / config.NOMBRE).exists() else c
+    c = _con_manifiesto(c)
     texto, res = B.generar(c, a.salida, a.aplicar)
     print(f"  {_r(c)}/{config.NOMBRE} → {_r(res['bib'])}: {res['entradas']} entrada(s) generada(s)")
     for k in res["sin_anio"]:

@@ -76,8 +76,9 @@ def cotejar(meta, cuerpo, desfase=None, tol=None):
     if not pags:
         return {"estado": "observada", "metodo": config.METODO_SCRIPT, "detalle": f"el ítem {cid} no tiene texto extraíble (¿escaneado sin OCR?)", "pagina_pdf": None}
     r = _cotejar_en(meta, cita, pags, desfase, tol)
-    if r["estado"] == "observada" and "no hallada" in r["detalle"]:
-        # segunda pasada en orden de lectura: en documentos a dos columnas -layout entrelaza las columnas y rompe la cadena
+    if r["estado"] == "observada":
+        # segunda pasada en orden de lectura: en documentos a dos columnas -layout entrelaza las columnas y rompe la cadena,
+        # aunque la misma cadena aparezca entera en otra página
         r2 = _cotejar_en(meta, cita, bib.texto(cid, layout=False), desfase, tol)
         if r2["estado"] == "verificada_script":
             r2["detalle"] += " (orden de lectura, documento a columnas)"; return r2

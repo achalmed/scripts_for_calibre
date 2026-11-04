@@ -4,7 +4,10 @@
 usan `cargar` y `ruta`; `manifiesto/main.py bib` es el otro contrato. Estas pruebas fijan esa interfaz.
 """
 import json
+import subprocess
+import sys
 import textwrap
+from pathlib import Path
 
 from conftest import pdf_minimo, sha256
 
@@ -163,3 +166,46 @@ def test_fichas_validar_y_estado(caja):
     assert "1 con faltas" in r.stdout
     r = caja.py("fichas/main.py", "estado", carpeta)
     assert r.returncode in (0, 1)
+
+
+def _en_suite(suite, codigo):
+    """Corre `codigo` dentro de una suite, donde su `lib` es el que se importa."""
+    repo = Path(__file__).resolve().parents[2]
+    return subprocess.run([sys.executable, "-c", textwrap.dedent(codigo)], cwd=repo / suite, capture_output=True, text=True)
+
+
+def test_bibtex_titulo_corto_conserva_el_numero():
+    """`N.°` lleva un punto: el título corto se corta en el punto que cierra el número, no en ese (antes daba «Ley N»)."""
+    r = _en_suite("manifiesto", """
+        from lib import bibtex as B
+        e = {"origen": "x", "titulo": "Ley N.° 29230. Obras por impuestos", "clave_bibtex": "x"}
+        d = {"titulo": "Ley N.° 29230. Obras por impuestos", "authors": ["Congreso"], "#item_type": "Statute", "pubdate": "2008-05-20", "id": 1}
+        print(B.entrada(e, d, "x"))
+        print(B._norma("Decreto Ley N.° 26123. Orgánica"))
+    """)
+    assert r.returncode == 0, r.stderr
+    assert "Ley N.° 29230}" in r.stdout and "shorttitle" in r.stdout
+    assert "('dl', '26123')" in r.stdout
+
+
+def test_manifiesto_verificar_acepta_la_carpeta_del_proyecto(caja):
+    raiz = _proyecto(caja, caja.libro_con_archivo())
+    r = caja.py("manifiesto/main.py", "verificar", raiz.parent)
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert "entradas" in r.stdout
+
+
+def test_verificador_dos_columnas_con_la_cadena_en_otra_pagina():
+    """Con -layout la p. 2 entrelaza las columnas y la cadena solo aparece entera en la p. 5: la lectura sin -layout la confirma en la p. 2."""
+    r = _en_suite("fichas", """
+        from lib import verificar as V
+        cita = "el empleo informal alcanza a la mayoria de la poblacion ocupada"
+        entrelazada = "el empleo informal otra columna alcanza a la mayoria otra columna de la poblacion ocupada"
+        def texto(cid, layout=True):
+            return ["a", entrelazada if layout else cita, "c", "d", cita] if layout else ["a", cita, "c", "d", "e"]
+        V.bib.texto = texto
+        cuerpo = "## Cita exacta\\n“" + cita + "”\\n"
+        print(V.cotejar({"tipo": "ficha_textual", "calibre_id": 1, "pagina": 2}, cuerpo)["estado"])
+    """)
+    assert r.returncode == 0, r.stderr
+    assert r.stdout.strip() == "verificada_script"

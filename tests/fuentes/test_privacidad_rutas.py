@@ -36,6 +36,8 @@ def test_ningun_archivo_rastreado_lleva_home_ni_correo():
             continue
         if HOME in texto:
             hallazgos.append(f"{rel}: ruta de la carpeta de inicio")
+        if "/tmp/claude-" in texto:   # el temporal de una sesión lleva dentro el nombre de la carpeta de inicio
+            hallazgos.append(f"{rel}: ruta temporal de una sesión")
         for m in CORREO.finditer(texto):
             if m.group(0) in NO_CORREOS:
                 continue
