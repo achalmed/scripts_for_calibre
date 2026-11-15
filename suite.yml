@@ -13,9 +13,10 @@ comandos:
 - main.py localizar <fuente> <ref>…
 - main.py descargar <fuente> <ref>… [--lista archivo]
 - main.py estado
+- main.py traer <norma> [--serie|--tags|--titulo|--fecha|--emisor …] [--aplicar] [--json]
 estado: activo
 depende_de:
 - python3
 - core/py-common/biblioteca.py
 - core/py-common/red.py
-metodo_documental: pasos 00 y 01
+metodo_documental: pasos 00 y 01 (00 a 03 de una norma con traer)

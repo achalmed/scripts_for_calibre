@@ -19,6 +19,7 @@ args = sys.argv[3:]
 def opt(n, d=""):
     return args[args.index(n) + 1] if n in args else d
 SERIE = opt("--serie"); TAGS = opt("--tags")
+INDICE = opt("--indice")   # el lugar en la serie (main.py traer da el siguiente libre); sin él, el orden del .bib
 PROYECTO = R.id_proyecto(opt("--proyecto", ""))   # la ficha cita el id del proyecto, nunca su ruta (normativa 1.10)
 ARCHIVOS = {a.split("=", 1)[0]: a.split("=", 1)[1] for i, a in enumerate(args) if i and args[i - 1] == "--archivo"}
 PEND = Path(cfg["PENDIENTES"]); FICHAS = Path(cfg["FICHAS_DIR"]); ENTRADA = FICHAS.parents[1] / "entrada"
@@ -98,7 +99,7 @@ verificacion:
 | Item Type | {tz} |
 | Title | {titulo} |
 | Author | {autores} |
-| Date | {f.get('year', '')} |
+| Date | {f.get('date', '') or f.get('year', '')} |
 | Publication / Publisher | {editorial} |
 | Volume / Issue / Pages | {limpio(f.get('volume', ''))} / {limpio(f.get('number', ''))} / {limpio(f.get('pages', ''))} |
 | DOI / URL | {f.get('doi', '') or f.get('url', '')} |
@@ -111,7 +112,7 @@ verificacion:
 | Title | {titulo} |
 | Authors | {autores} |
 | Publisher | {editorial} |
-| Pubdate | {f.get('year', '')} |
+| Pubdate | {f.get('date', '') or f.get('year', '')} |
 | Languages | spa |
 | Identifiers | {ident} |
 | Series | {serie} [{idx}] |
@@ -152,13 +153,17 @@ def main():
                    "resolucion_ministerial": "Resolución Ministerial", "decreto_ley": "Decreto Ley"}.get(tipo_n, tipo_n.replace("_", " ").title())
             cuerpo = re.sub(r"^\s*(ley|decreto\s+\w+|resoluci[oó]n\s+\w+)\s*n[.º°o]*\s*[\w-]+[.,:]?\s*", "", titulo, flags=re.I).strip() or titulo
             titulo = f"{rot} N.° {num.upper() if '-' in num else num}. {cuerpo[:1].upper() + cuerpo[1:]}"
-            autores = "Congreso de la República" if tipo_n in ("ley", "decreto_ley") else "Presidencia de la República"
+            # `emisor` (campo propio, que solo escribe `main.py traer`) es la institución que dio la norma según la fuente
+            # oficial (gob.pe: «MEF - Ministerio de Economía y Finanzas»); sin él, la regla de siempre.
+            autores = limpio(f.get("emisor", "")) or ("Congreso de la República" if tipo_n in ("ley", "decreto_ley") else "Presidencia de la República")
             tz, clasif, item = "Statute", "Normativa", "Statute"
-            ident = f"norma:{norma}"; editorial = editorial or "Diario Oficial El Peruano"
+            ident = f"norma:{norma}" + (f",url:{f['url']}" if f.get("url") else ""); editorial = editorial or "Diario Oficial El Peruano"
         ficha = f"{sha[:8]}_{slug(titulo)}.md"
         FICHAS.mkdir(parents=True, exist_ok=True)
-        (FICHAS / ficha).write_text(ficha_md(key, kind, f, p, sha, tz, clasif, item, autores, ident, editorial, TAGS, SERIE, idx), encoding="utf-8")
-        nuevas.append([sha, str(p), autores, titulo, tz, clasif, item, editorial, f.get("year", ""), ident, "Spanish", TAGS, "alta", f"desde {bib_path.name} ({PROYECTO}); clave {key}", ficha, SERIE, str(idx)])
+        (FICHAS / ficha).write_text(ficha_md(key, kind, f, p, sha, tz, clasif, item, autores, ident, editorial, TAGS, SERIE, INDICE or idx), encoding="utf-8")
+        fecha = f.get("date", "") if re.fullmatch(r"\d{4}(-\d{2}){0,2}", f.get("date", "")) else f.get("year", "")   # biblatex: date manda sobre year
+        nota = limpio(f.get("note", "")) if f.get("emisor") else ""   # la procedencia que deja `main.py traer`
+        nuevas.append([sha, str(p), autores, titulo, tz, clasif, item, editorial, fecha, ident, "Spanish", TAGS, "alta", nota or f"desde {bib_path.name} ({PROYECTO}); clave {key}", ficha, SERIE, INDICE or str(idx)])
         print(f"  [+] {key}: «{titulo[:60]}» · {autores[:40]} · {tz} · {ident}")
     if nuevas:
         nuevo = not PEND.exists()

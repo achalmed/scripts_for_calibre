@@ -6,6 +6,7 @@
 #   localizar <fuente> <ref>…      busca el documento (no descarga)
 #   descargar <fuente> <ref>…      descarga a entrada/ con hash y procedencia
 #   estado                         qué se ha adquirido
+#   traer <cita> [--aplicar]       pasos 00 a 03 para UNA norma peruana (lib/traer.py): simula; --aplicar trae
 #
 # La división del ecosistema (directiva de Edison, 2026-09-06):
 #   · DATOS       → los conectores de datafw (series, microdatos, APIs) → data/raw
@@ -150,6 +151,24 @@ def cmd_verificar(a):
     return {"existe": 0, "otra-edicion": 2, "no-existe": 1}[r["resultado"]]
 
 
+def cmd_traer(a):
+    """Pasos 00–03 del Método Documental para una norma: verificar, localizar y descargar, catalogar y su RIS.
+
+    Simula por omisión (no descarga ni escribe). `--aplicar` escribe por la puerta: 75 si Calibre está abierto o la
+    biblioteca ocupada, sin descargar nada. `--json` da el plan o el resultado para Inteligencia Legislativa (Qillqa).
+    """
+    from lib import traer
+    cambios = {k: getattr(a, k) or "" for k in ("serie", "tags", "titulo", "fecha", "emisor")}
+    cita = " ".join(a.cita)
+    if a.aplicar:
+        codigo, r = traer.aplicar(cita, **cambios)
+    else:
+        r = traer.plan(cita, **cambios)
+        codigo = {"por-traer": 0, "existe": 0}.get(r["estado"], 1)
+    print(traer.json_de(r)) if a.json else traer.imprimir(r)
+    return codigo
+
+
 def cmd_estado(_a):
     filas = list(comun.leer_ledger().values())
     print(f"Fuentes documentales adquiridas: {len(filas)}\n" + "─" * 62)
@@ -180,9 +199,14 @@ def main():
     for o in ("--titulo", "--autor", "--isbn", "--doi", "--norma", "--archivo"):
         p.add_argument(o)
     p.add_argument("--paginas", type=int); p.add_argument("--json", action="store_true")
+    p = sub.add_parser("traer", help="pasos 00 a 03 para una norma peruana (simula; --aplicar trae)")
+    p.add_argument("cita", nargs="+", help="Ley 28077, D.S. 005-2002-EF, Decreto Legislativo 1440…")
+    for o in ("--serie", "--tags", "--titulo", "--fecha", "--emisor"):
+        p.add_argument(o, help="reemplaza lo que propone la fuente")
+    p.add_argument("--aplicar", action="store_true"); p.add_argument("--json", action="store_true")
     a = ap.parse_args()
     return {"fuentes": cmd_fuentes, "localizar": cmd_localizar, "descargar": cmd_descargar,
-            "estado": cmd_estado, "verificar": cmd_verificar}[a.comando](a)
+            "estado": cmd_estado, "verificar": cmd_verificar, "traer": cmd_traer}[a.comando](a)
 
 
 if __name__ == "__main__":
