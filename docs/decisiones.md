@@ -469,3 +469,23 @@ BibTeX; los existentes conservan su `references.bib` generado hasta migrarlos.*
 `manifiesto/main.py bib` escribe el bloque generado de `references.bib` (APA 7 vía biblatex) y la
 `clave_bibtex` de cada entrada; un error se corrige en Calibre y se regenera. Informes y libros se
 fechan por año; la fecha completa, solo en normas.
+
+### §8.6 `traer`: los pasos 00 a 03 de una norma, para Inteligencia Legislativa (2026-11-15)
+
+Edison pidió subir normas desde Qillqa sin un módulo nuevo. `main.py traer` no escribe por su cuenta: orquesta lo que
+ya existe y pasa por la puerta (`lib/traer.py`): verificar con el resolutor; la ficha en gob.pe (sumilla, fecha,
+emisor; fuente nueva `fuentes/gobpe`, que el Congreso no tiene decretos supremos) y el PDF del Congreso para las leyes;
+`ingesta bib` con un `.bib` que arma en la caché (campos propios `emisor` y `date`, y `--indice` para el siguiente lugar
+de la serie) y `catalogar --aplicar --solo <el archivo>`; el RIS de ese libro (`RIS_IDS`). Simula por omisión; con
+Calibre abierto o el candado ocupado sale 75 antes de descargar. Propone la serie y las etiquetas de la norma que la
+nueva modifica o reglamenta (por su número o por su nombre en la sumilla). Qillqa (Yachay) solo corre esta orden con
+`--json`. Importar el RIS en Zotero sigue a mano (Zotero abierto) y `lectura --enlazar` cierra el puente.
+
+### §8.7 La campaña NORMAS y el RIS de las normas (2026-11-15)
+
+44 normas de «Marco legal» (las tandas del 2026-11-03) entraron como `Document`/«Documento oficial»: su RIS sale `GEN`.
+`migraciones/main.py NORMAS` las deja `Statute`/«Normativa» y cambia `documento_oficial` por `norma` y `legislacion`,
+sin tocar título, autor, fecha ni serie; se aplica solo con el «sí» de Edison. El RIS de una norma (`core`,
+`biblioteca.ris`) lleva ahora su número, fecha completa, título corto y URL, y ya no la serie en `T2`/`M1`, que en
+`statute` son el código y el número: unas 300 normas de Zotero quedaron así y piden una campaña propia de Zotero.
+

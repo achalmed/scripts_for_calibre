@@ -17,10 +17,14 @@ sys.path.insert(0, os.environ.get("PY_COMMON") or str(Path(__file__).resolve().p
 import biblioteca as bib  # noqa: E402
 
 ledger, salida = Path(sys.argv[1]), Path(sys.argv[2])
+# RIS_IDS=10907,10908 limita el lote a esos libros (lo usa `main.py traer`: el .ris de UNA norma, no el de todo lo pendiente)
+solo = {x.strip() for x in os.environ.get("RIS_IDS", "").split(",") if x.strip()}
 out, perdidos = [], []
 for r in csv.DictReader(open(ledger, encoding="utf-8"), delimiter="\t"):
     if r.get("estado") not in ("catalogado", "archivado") or r.get("zotero_key"):
         continue   # todo lo que aún no tiene clave de Zotero
+    if solo and r.get("calibre_id") not in solo:
+        continue
     d = bib.datos(int(r["calibre_id"])) if (r.get("calibre_id") or "").isdigit() else None
     if not d or d.get("zotero_key"):   # borrado de Calibre, o ya enlazado por ZMI o a mano
         perdidos += [] if d else [r.get("calibre_id") or r.get("titulo", "")]

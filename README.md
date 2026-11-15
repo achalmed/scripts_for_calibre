@@ -11,7 +11,7 @@ Adquisición de documentos: verifica si una referencia ya está en la biblioteca
 
 - Escribe en: archivos · simula por defecto: sí
 - Depende de: python3, core/py-common/biblioteca.py, core/py-common/red.py
-- Método Documental: pasos 00 y 01
+- Método Documental: pasos 00 y 01 (00 a 03 de una norma con traer)
 
 Comandos:
 
@@ -21,6 +21,7 @@ main.py fuentes
 main.py localizar <fuente> <ref>…
 main.py descargar <fuente> <ref>… [--lista archivo]
 main.py estado
+main.py traer <norma> [--serie|--tags|--titulo|--fecha|--emisor …] [--aplicar] [--json]
 ```
 
 <sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-11-01); no se edita a mano.</sub>
@@ -84,6 +85,7 @@ cd ~/Documents/biblioteca-studio
 python3 main.py verificar "Ley N.° 31143"             # paso 00: ¿ya está en la biblioteca?
 python3 main.py localizar congreso "Ley N.° 31143"    # paso 01: la URL, sin descargar
 python3 main.py descargar congreso --lista normas.txt # a entrada/, con hash y ledger
+python3 main.py traer "Ley 28077"                    # pasos 00 a 03 de una norma: simula; --aplicar la trae (Calibre cerrado)
 ingesta/main.sh identificar                           # paso 02: pendientes.tsv + ficha provisional
 ingesta/main.sh catalogar --aplicar                   # a Calibre por la puerta
 ingesta/main.sh zotero                                # paso 03: .ris para importar en Zotero
@@ -113,7 +115,7 @@ para `metadatos-pdf`. Qué es automático y qué es manual: [`docs/operacion.md`
 
 | carpeta | qué es | dueño / generador |
 |---|---|---|
-| `main.py`, `config.py`, `fuentes/` | suite `fuentes`: `verificar` (paso 00), `localizar` y `descargar` (paso 01), un conector por fuente de documentos; ledger `fuentes_descargadas.tsv` | a mano |
+| `main.py`, `config.py`, `fuentes/` | suite `fuentes`: `verificar` (paso 00), `localizar` y `descargar` (paso 01), `traer` (pasos 00 a 03 de una norma, `lib/traer.py`), un conector por fuente de documentos (`congreso`, `gobpe`, `articulo`); ledger `fuentes_descargadas.tsv` | a mano |
 | `entrada/` | zona de aterrizaje de lo descargado, fuera de git | runtime |
 | `ingesta/` | de la entrada a Calibre y Zotero: identificar, catalogar, RIS, archivar, OCR, paquetes, cursos; ledger `ingesta.tsv` | a mano |
 | `catalogacion/` | aplica `resumen_catalogacion.tsv` a Calibre; `fichas/` y el TSV son el registro canónico (los escribe `ingesta catalogar`) | a mano |

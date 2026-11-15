@@ -1,0 +1,351 @@
+{
+ "_": "migraciones/normas-2026-11-15/plan.json — plan de la campaña NORMAS (generado por migraciones/main.py)",
+ "campos": {
+  "#item_type": {
+   "10716": "Statute",
+   "10844": "Statute",
+   "10845": "Statute",
+   "10846": "Statute",
+   "10847": "Statute",
+   "10848": "Statute",
+   "10849": "Statute",
+   "10850": "Statute",
+   "10851": "Statute",
+   "10852": "Statute",
+   "10853": "Statute",
+   "10854": "Statute",
+   "10855": "Statute",
+   "10856": "Statute",
+   "10857": "Statute",
+   "10858": "Statute",
+   "10859": "Statute",
+   "10860": "Statute",
+   "10861": "Statute",
+   "10862": "Statute",
+   "10863": "Statute",
+   "10866": "Statute",
+   "10867": "Statute",
+   "10869": "Statute",
+   "10882": "Statute",
+   "10883": "Statute",
+   "10884": "Statute",
+   "10885": "Statute",
+   "10886": "Statute",
+   "10887": "Statute",
+   "10888": "Statute",
+   "10889": "Statute",
+   "10890": "Statute",
+   "10891": "Statute",
+   "10893": "Statute",
+   "10894": "Statute",
+   "10895": "Statute",
+   "10896": "Statute",
+   "10900": "Statute",
+   "10901": "Statute",
+   "10902": "Statute",
+   "10903": "Statute",
+   "10904": "Statute",
+   "10906": "Statute"
+  },
+  "#clasificador": {
+   "10716": "Normativa",
+   "10844": "Normativa",
+   "10845": "Normativa",
+   "10846": "Normativa",
+   "10847": "Normativa",
+   "10848": "Normativa",
+   "10849": "Normativa",
+   "10850": "Normativa",
+   "10851": "Normativa",
+   "10852": "Normativa",
+   "10853": "Normativa",
+   "10854": "Normativa",
+   "10855": "Normativa",
+   "10856": "Normativa",
+   "10857": "Normativa",
+   "10858": "Normativa",
+   "10859": "Normativa",
+   "10860": "Normativa",
+   "10861": "Normativa",
+   "10862": "Normativa",
+   "10863": "Normativa",
+   "10866": "Normativa",
+   "10867": "Normativa",
+   "10869": "Normativa",
+   "10882": "Normativa",
+   "10883": "Normativa",
+   "10884": "Normativa",
+   "10885": "Normativa",
+   "10886": "Normativa",
+   "10887": "Normativa",
+   "10888": "Normativa",
+   "10889": "Normativa",
+   "10890": "Normativa",
+   "10891": "Normativa",
+   "10893": "Normativa",
+   "10894": "Normativa",
+   "10895": "Normativa",
+   "10896": "Normativa",
+   "10900": "Normativa",
+   "10901": "Normativa",
+   "10902": "Normativa",
+   "10903": "Normativa",
+   "10904": "Normativa",
+   "10906": "Normativa"
+  },
+  "tags": {
+   "10716": [
+    "legislacion",
+    "norma"
+   ],
+   "10844": [
+    "gestion_publica",
+    "legislacion",
+    "norma",
+    "recursos_humanos"
+   ],
+   "10845": [
+    "gestion_publica",
+    "legislacion",
+    "norma",
+    "recursos_humanos"
+   ],
+   "10846": [
+    "gestion_publica",
+    "legislacion",
+    "norma",
+    "recursos_humanos"
+   ],
+   "10847": [
+    "finanzas_publicas",
+    "legislacion",
+    "norma",
+    "recursos_humanos"
+   ],
+   "10848": [
+    "legislacion",
+    "norma",
+    "recursos_humanos",
+    "salud"
+   ],
+   "10849": [
+    "gestion_publica",
+    "legislacion",
+    "norma"
+   ],
+   "10850": [
+    "inversion_publica",
+    "legislacion",
+    "norma"
+   ],
+   "10851": [
+    "finanzas_publicas",
+    "legislacion",
+    "norma",
+    "politica_fiscal"
+   ],
+   "10852": [
+    "economia_regional",
+    "gestion_publica",
+    "legislacion",
+    "norma"
+   ],
+   "10853": [
+    "economia_regional",
+    "gestion_publica",
+    "legislacion",
+    "norma"
+   ],
+   "10854": [
+    "economia_regional",
+    "gestion_publica",
+    "legislacion",
+    "norma"
+   ],
+   "10855": [
+    "economia_regional",
+    "gestion_publica",
+    "legislacion",
+    "norma"
+   ],
+   "10856": [
+    "congreso",
+    "economia_regional",
+    "legislacion",
+    "norma"
+   ],
+   "10857": [
+    "legislacion",
+    "norma",
+    "recursos_humanos",
+    "salud"
+   ],
+   "10858": [
+    "legislacion",
+    "norma",
+    "recursos_humanos",
+    "salud"
+   ],
+   "10859": [
+    "educacion",
+    "gerencia_social",
+    "legislacion",
+    "norma"
+   ],
+   "10860": [
+    "educacion",
+    "gerencia_social",
+    "legislacion",
+    "norma"
+   ],
+   "10861": [
+    "educacion",
+    "gerencia_social",
+    "legislacion",
+    "norma"
+   ],
+   "10862": [
+    "educacion",
+    "gerencia_social",
+    "legislacion",
+    "norma"
+   ],
+   "10863": [
+    "educacion",
+    "gerencia_social",
+    "legislacion",
+    "norma"
+   ],
+   "10866": [
+    "economia_desarrollo",
+    "gestion_publica",
+    "legislacion",
+    "norma"
+   ],
+   "10867": [
+    "economia_desarrollo",
+    "gestion_publica",
+    "legislacion",
+    "norma"
+   ],
+   "10869": [
+    "inversion_publica",
+    "legislacion",
+    "norma",
+    "proyectos_inversion"
+   ],
+   "10882": [
+    "economia_regional",
+    "gestion_publica",
+    "legislacion",
+    "norma"
+   ],
+   "10883": [
+    "legislacion",
+    "norma",
+    "politica_y_gobierno"
+   ],
+   "10884": [
+    "gestion_publica",
+    "legislacion",
+    "norma",
+    "presupuesto_publico"
+   ],
+   "10885": [
+    "gestion_publica",
+    "legislacion",
+    "norma"
+   ],
+   "10886": [
+    "inversion_publica",
+    "legislacion",
+    "norma",
+    "proyectos_inversion"
+   ],
+   "10887": [
+    "legislacion",
+    "norma",
+    "presupuesto_publico",
+    "recursos_naturales"
+   ],
+   "10888": [
+    "finanzas_publicas",
+    "legislacion",
+    "norma",
+    "politica_fiscal"
+   ],
+   "10889": [
+    "gestion_publica",
+    "gestion_riesgos",
+    "legislacion",
+    "norma"
+   ],
+   "10890": [
+    "derechos_humanos",
+    "legislacion",
+    "norma"
+   ],
+   "10891": [
+    "derechos_humanos",
+    "legislacion",
+    "norma"
+   ],
+   "10893": [
+    "gestion_publica",
+    "legislacion",
+    "norma"
+   ],
+   "10894": [
+    "educacion",
+    "gerencia_social",
+    "legislacion",
+    "norma"
+   ],
+   "10895": [
+    "educacion",
+    "gerencia_social",
+    "legislacion",
+    "norma"
+   ],
+   "10896": [
+    "gerencia_social",
+    "gestion_publica",
+    "legislacion",
+    "norma"
+   ],
+   "10900": [
+    "gestion_publica",
+    "legislacion",
+    "norma",
+    "recursos_naturales"
+   ],
+   "10901": [
+    "banca",
+    "legislacion",
+    "norma",
+    "politica_monetaria"
+   ],
+   "10902": [
+    "gestion_publica",
+    "legislacion",
+    "norma"
+   ],
+   "10903": [
+    "legislacion",
+    "norma",
+    "presupuesto_publico"
+   ],
+   "10904": [
+    "gerencia_social",
+    "legislacion",
+    "norma",
+    "presupuesto_publico"
+   ],
+   "10906": [
+    "gestion_publica",
+    "legislacion",
+    "norma"
+   ]
+  }
+ }
+}
