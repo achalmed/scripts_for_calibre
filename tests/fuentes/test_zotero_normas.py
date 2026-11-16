@@ -12,7 +12,7 @@ import zotero_normas as zn  # noqa: E402
 
 
 def _norma(key="AAA", titulo="Ley N.° 32069. Contrataciones públicas", numero="1", codigo="Marco legal 05 - Contrataciones", corto=""):
-    return {"itemID": 1, "key": key, "titulo": titulo, "publicLawNumber": numero, "code": codigo, "shortTitle": corto}
+    return {"itemID": 1, "key": key, "titulo": titulo, "publicLawNumber": numero, "code": codigo, "shortTitle": corto, "dateEnacted": ""}
 
 
 LIBRO = {"calibre_id": 10050, "serie": "Marco legal 05 - Contrataciones", "identificadores": {"norma": "ley_32069"}}
@@ -42,3 +42,10 @@ def test_una_norma_sin_numero_queda_para_revisar_a_mano():
 def test_lo_que_ya_esta_bien_no_cambia():
     p = zn.plan([_norma(numero="32069", codigo="", corto="Ley N.° 32069")], {"AAA": LIBRO})
     assert p["cambios"] == [] and p["sin_cambio"] == 1
+
+
+def test_la_fecha_entra_solo_si_esta_verificada():
+    norma = {**_norma(numero="32069", codigo="", corto="Ley N.° 32069"), "dateEnacted": "2025-00-00 2025"}
+    p = zn.plan([norma], {"AAA": LIBRO}, {"ley_32069": "2024-06-24"})
+    assert p["cambios"][0]["campos"] == {"dateEnacted": ["2025-00-00 2025", "2024-06-24 2024-06-24"]}
+    assert zn.plan([norma], {"AAA": LIBRO}, {})["cambios"] == []

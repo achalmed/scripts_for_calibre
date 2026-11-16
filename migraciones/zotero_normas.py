@@ -12,8 +12,10 @@ Método: lee una copia de `zotero.sqlite` (solo lectura) y la biblioteca de Cali
   aplica, lee de vuelta cada valor, deshace y comprueba que todo vuelve a ser como antes. Solo con `--aplicar` lo
   escribe en la base real por la puerta (Zotero cerrado, candado y respaldo verificado: `lib/escribir.py`), marca cada
   ítem como no sincronizado (zotero.org recibe el cambio) y deja el deshacer en `$RESPALDOS_DIR`.
-Límite: la fecha de la norma no se toca (Calibre y Zotero guardan casi siempre solo el año o el de la edición; la fecha
-  exacta se trae aparte desde el archivo del Congreso). Las que no tienen número («Constitución Política…», una NIC, un
+La fecha de la norma (`dateEnacted`) entra solo si está verificada en una fuente oficial: la que Yachay trae del
+  Archivo Digital del Congreso o de gob.pe (`python -m yachay.normas.fechas`, con su `fecha_fuente`); Calibre y Zotero
+  guardan casi siempre solo el año o el de la edición.
+Límite: las que no tienen número («Constitución Política…», una NIC, un
   informe) se listan para revisarlas a mano. Título, autores, citationKey y adjuntos no cambian.
 
     python3 migraciones/zotero_normas.py                 # simula: plan, ensayo y deshacer probado
@@ -44,7 +46,7 @@ import biblioteca as bib  # noqa: E402
 import env  # noqa: E402  (core/env.py: ZOTERO_DB)
 
 CAMPANA = "zotero-normas"
-CAMPOS = ("publicLawNumber", "code", "shortTitle")
+CAMPOS = ("publicLawNumber", "code", "shortTitle", "dateEnacted")
 NUMERO_EN_TITULO = re.compile(r"N\.° ([\w-]+)")
 TITULO_CORTO = re.compile(r"^(.+?N\.° [\w-]+)\.\s")
 
@@ -84,6 +86,19 @@ def calibre_por_clave() -> dict[str, dict]:
     return salida
 
 
+def fechas_verificadas(informe: str | None = None) -> dict[str, str]:
+    """{clave: AAAA-MM-DD} de las fechas verificadas: de Yachay (`normas.publicada` con `fecha_fuente`, solo lectura) o,
+    para ver antes de aplicarlas en Yachay, de un informe de `python -m yachay.normas.fechas --informe`."""
+    if informe:
+        datos = json.loads(Path(informe).read_text(encoding="utf-8"))
+        return {c["clave"]: c["publicada"] for c in datos.get("cambios", [])}
+    import subprocess
+    salida = subprocess.run(["docker", "exec", "qillqa-db-1", "psql", "-U", "qillqa", "-d", "qillqa_yachay", "-At", "-F", "\t", "-c",
+                             "SELECT clave, publicada FROM normas WHERE publicada IS NOT NULL AND coalesce(metadatos->>'fecha_fuente', '') <> ''"],
+                            capture_output=True, text=True, check=False).stdout
+    return dict(l.split("\t", 1) for l in salida.splitlines() if "\t" in l)
+
+
 # ------------------------------------------------------------------ el plan (puro)
 def numero_de(norma: dict, libro: dict | None) -> str:
     clave = ((libro or {}).get("identificadores") or {}).get("norma") or ""
@@ -99,9 +114,15 @@ def es_serie(codigo: str, libro: dict | None) -> bool:
     return bool(codigo) and (codigo == serie or codigo.startswith("Marco legal"))
 
 
-def plan(normas: list[dict], libros: dict[str, dict]) -> dict:
+def fecha_zotero(iso: str) -> str:
+    """La forma en que Zotero guarda una fecha completa: «AAAA-MM-DD AAAA-MM-DD» (la SQL y la escrita)."""
+    return f"{iso} {iso}"
+
+
+def plan(normas: list[dict], libros: dict[str, dict], fechas: dict[str, str] | None = None) -> dict:
     """{cambios: [{itemID, key, titulo, campos: {campo: [antes, después]}}], revisar: [...], sin_cambio: n}. Pura.
-    Un «después» vacío quita el campo."""
+    Un «después» vacío quita el campo. `fechas` ({clave de la norma: AAAA-MM-DD}) son las verificadas en una fuente
+    oficial (Yachay, `normas.publicada` con `fecha_fuente`): solo esas entran como fecha de la norma."""
     cambios, revisar, iguales = [], [], 0
     for n in normas:
         libro = libros.get(n["key"])
@@ -117,6 +138,9 @@ def plan(normas: list[dict], libros: dict[str, dict]) -> dict:
         m = TITULO_CORTO.match(n["titulo"] or "")
         if m and not n["shortTitle"]:
             campos["shortTitle"] = ["", m.group(1)]
+        clave = ((libro or {}).get("identificadores") or {}).get("norma") or ""
+        if clave and (fechas or {}).get(clave) and n["dateEnacted"] != fecha_zotero(fechas[clave]):
+            campos["dateEnacted"] = [n["dateEnacted"], fecha_zotero(fechas[clave])]
         if campos:
             cambios.append({"itemID": n["itemID"], "key": n["key"], "titulo": n["titulo"],
                             "calibre_id": (libro or {}).get("calibre_id", ""), "campos": campos})
@@ -198,14 +222,14 @@ def registrar(p: dict, carpeta: Path) -> None:
         f"# {carpeta.name}/ — la campaña ZOTERO-NORMAS (número, código y título corto de las normas)\n\n"
         f"- Normas con cambios: {len(p['cambios'])}; sin cambio: {p['sin_cambio']}; a revisar a mano: {len(p['revisar'])}.\n"
         f"- Número de la ley puesto: {cuenta['publicLawNumber']}; código (la serie de Calibre) quitado: {cuenta['code']}; "
-        f"título corto puesto: {cuenta['shortTitle']}.\n- La fecha no se toca (`migraciones/zotero_normas.py`, Límite).\n",
+        f"título corto puesto: {cuenta['shortTitle']}; fecha de la norma: {cuenta['dateEnacted']}.\n",
         encoding="utf-8")
 
 
 def resumen(p: dict) -> str:
     cuenta = {k: sum(k in c["campos"] for c in p["cambios"]) for k in CAMPOS}
     lineas = [f"normas con cambios: {len(p['cambios'])} · sin cambio: {p['sin_cambio']} · a revisar a mano: {len(p['revisar'])}",
-              f"  número de la ley: {cuenta['publicLawNumber']} · código (serie) quitado: {cuenta['code']} · título corto: {cuenta['shortTitle']}"]
+              f"  número de la ley: {cuenta['publicLawNumber']} · código (serie) quitado: {cuenta['code']} · título corto: {cuenta['shortTitle']} · fecha: {cuenta['dateEnacted']}"]
     lineas += [f"  revisar: {r['key']} {r['titulo'][:80]}" for r in p["revisar"]]
     return "\n".join(lineas)
 
@@ -215,6 +239,7 @@ def main(argv=None) -> int:
     a = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     a.add_argument("--aplicar", action="store_true", help="escribir en la base real por la puerta")
     a.add_argument("--deshacer", metavar="JSON", help="volver atrás una aplicación (el deshacer.json que dejó)")
+    a.add_argument("--fechas", metavar="INFORME", help="las fechas de un informe de yachay.normas.fechas (sin esto, las verificadas en Yachay)")
     args = a.parse_args(argv)
     real = Path(env.ZOTERO_DB)
     trabajo = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "migraciones" / CAMPANA
@@ -231,8 +256,15 @@ def main(argv=None) -> int:
         return 1 if mal else 0
 
     copia = E.copia_de_trabajo(real, trabajo / "plan.sqlite")
-    p = plan(leer_normas(copia), calibre_por_clave())
-    registrar(p, REPO / "migraciones" / f"{CAMPANA}-{p['fecha']}")
+    libros, fechas = calibre_por_clave(), fechas_verificadas(args.fechas)
+    p = plan(leer_normas(copia), libros, fechas)
+    # Una pasada nueva el mismo día no pisa el registro de la anterior (la del 2026-11-15 ya se aplicó): «-b», «-c»…
+    destino = REPO / "migraciones" / f"{CAMPANA}-{p['fecha']}"
+    for letra in "bcdefgh":
+        if not destino.exists():
+            break
+        destino = REPO / "migraciones" / f"{CAMPANA}-{p['fecha']}-{letra}"
+    registrar(p, destino)
     print(resumen(p))
     ensayo = E.copia_de_trabajo(real, trabajo / "ensayo.sqlite")
     problemas = ensayar(ensayo, p)
@@ -246,8 +278,8 @@ def main(argv=None) -> int:
     try:
         with E.puerta("migraciones", zotero=real):
             # Lo que se deshace es lo que había en la base real al abrir la puerta (no en la copia del plan).
-            p = plan(leer_normas(real), calibre_por_clave())
-            deshacer = E.raiz_respaldos() / "migraciones" / "zotero" / f"{CAMPANA}-{date.today().isoformat()}-deshacer.json"
+            p = plan(leer_normas(real), libros, fechas)
+            deshacer = E.raiz_respaldos() / "migraciones" / "zotero" / f"{destino.name}-deshacer.json"
             deshacer.parent.mkdir(parents=True, exist_ok=True)
             deshacer.write_text(json.dumps(p, ensure_ascii=False, indent=1), encoding="utf-8")
             con = Z.conexion_zotero(real)
