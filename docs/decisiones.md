@@ -397,6 +397,21 @@ frontmatter, sin leer el cuerpo) y por su fila en `ingesta.tsv`: ninguno corresp
 residuos del programa; `.gitignore` declara la carpeta temporal. Si una de esas filas se cataloga, su borrador
 se recupera de la copia o se regenera con `identificar` tras quitar la fila de `pendientes.tsv`.
 
+### §6.10 Los expedientes presupuestales del Congreso: una carpeta por libro (2026-11-16)
+
+Los 18 expedientes del ciclo presupuestal 2022-2027 (378 archivos del portal de proyectos de ley) no se catalogan
+uno por archivo: `identificar` les ponía títulos como «61710 AU2909», autor desconocido o el MEF en un reporte de
+la DIDP. Se reordenan en `datafw/data/raw/congreso/presupuesto/<año>-<PL>-<etapa>/` con `doc_<id>.pdf` (proyecto,
+dictamen, texto sustitutorio aprobado, autógrafa) y `adj_<id>_<nombre>.pdf` (oficios, votación, Junta de
+Portavoces, adhesiones, anexos), y `PAQUETES_JSON` los trata como paquete; los metadatos salen del índice del
+portal (número, etapa, fecha y descripción), no del nombre del archivo. Serie `datafw congreso - Presupuesto <año>`,
+autor del dictamen `Congreso de la República. Comisión de Presupuesto y Cuenta General de la República` (desde 2027,
+la Comisión Bicameral), como el 10841. Por decisión de Edison entran solo los anexos sin otra copia; los que repiten
+los del MEF van a la papelera. Los escaneados se pasan por `ocrmypdf -l spa --skip-text` antes de catalogar.
+Una trampa: en las leyes 2022 y 2023 (10263, 10264), el «PDF de 7 KB» del libro era su **anexo 1** puesto como
+formato provisional por `sin_principal`; al entrar el texto de la ley por `add_format` se devolvió a `data/` y se
+corrigió su entrada en el manifiesto. Antes de reemplazar el formato de un libro `sin_principal`, mirar qué es.
+
 ## 7. Maquinaria y dependencias
 
 ### §7.1 Se importa la maquinaria de `datafw`, no se reimplementa (2026-09-06)

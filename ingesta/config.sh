@@ -68,8 +68,13 @@ PAQUETES_JSON='[
                                    "leyes": {"2022": "31365", "2023": "31638"}, "autor": "Ministerio de Economía y Finanzas", "serie": "datafw mef - Presupuesto aprobado",
                                    "tags": "presupuesto_publico, politica_fiscal, legislacion", "clasificador": "Normativa", "item_type": "Statute"}}]},
   {"raiz": "'"$DATAFW_DIR"'/data/raw/mef/presupuesto/proyecto",
-   "familias": [{"principal": "^pl_presupuesto", "adjuntos": "^anexo"}]}
+   "familias": [{"principal": "^pl_presupuesto", "adjuntos": "^anexo"}]},
+  {"raiz": "'"$DATAFW_DIR"'/data/raw/congreso/presupuesto",
+   "familias": [{"principal": "^doc_", "adjuntos": "^adj_"}]}
 ]'
+# El Congreso (2026-11-16): una carpeta por libro (<año>-<PL>-<etapa>); `doc_<id>.pdf` es el documento de la etapa
+# (proyecto, dictamen, texto sustitutorio aprobado, autógrafa) y `adj_<id>_<nombre>.pdf` lo que lo acompaña en el
+# expediente (oficios, votación, acuerdos de la Junta de Portavoces, adhesiones, anexos sin otra copia).
 
 INBOX_DIRS=("02_investigacion/marco_legal" "02_investigacion/informes" "02_investigacion/articulos" "02_investigacion/bibliografia" "02_investigacion/notas_tecnicas" "02_investigacion/policy_briefs" "01_estadistica/01_bases_datos" "03_observatorio")
 EXTENSIONES="pdf|docx|epub|xlsx"

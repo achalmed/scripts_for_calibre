@@ -1,7 +1,7 @@
 ---
 tipo: estado
 estado: activo
-actualizado: 2026-11-03
+actualizado: 2026-11-16
 ---
 # estado.md — biblioteca-studio
 
@@ -13,6 +13,7 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 
 | fecha | qué | dónde se ve |
 |---|---|---|
+| 2026-11-16 | **Ciclo presupuestal 2022-2027 en Calibre** (§6.10): 94 libros nuevos (10907-11004) de los 18 expedientes del Congreso (proyecto, dictamen, texto sustitutorio aprobado, autógrafa) y 29 reportes de la DIDP, serie `datafw congreso - Presupuesto <año>`, metadatos desde el índice del portal; 113 adjuntos en `data/`; 23 escaneados con OCR; leyes 31366, 31367, 31639 y 31640 (10978-10981) y el texto de las leyes 31365 y 31638 en 10263 y 10264 (su anexo 1, que hacía de formato, vuelto a `data/`). Lo del MEF ya estaba: 302 copias a la papelera | `ingesta/config.sh` (`PAQUETES_JSON`); `datafw/data/raw/congreso/README.md` |
 | 2026-11-04 | Cierre de las tandas: 49 originales archivados, ledgers con rutas relativas (`test_privacidad_rutas` pasa y detecta también temporales de sesión), 127 fichas confirmadas. Catálogo: autores de 10200 y 10141 corregidos en Calibre y Zotero (adjuntos reescritos, 0 rotos), fechas de 10020, 10155, 10874 y 10200, identificadores erróneos de 10141 y 10176 retirados, notas en 10363 y en el ROF (10815-10817, aprobado por la Ordenanza 003-2025-GRA/CR, 10814), `#ko_md5` del 10200. El «\|» del autor del 10289 no era error: Calibre guarda así la coma. Herramientas: `manifiesto bib` (título corto), `manifiesto verificar` (carpeta del proyecto), verificador de fichas (dos columnas) | `tests/fuentes` y `tests/calibre`: 84 pasan |
 | 2026-11-03 | Tandas para la biblioteca de inteligencia económica: altas 10844-10906 por la puerta; 48 fechas corregidas (10842-10891, `fecha_calibre`, con prueba); formatos reemplazados: 10862 (D. S. 009-2025-MIDIS: el PDF de El Peruano para el dispositivo trae otras páginas, se compuso el texto oficial de su página), 10200 (era una página 404), 10535 y 10275 (OCR). Respaldos de los PDF sustituidos en `$RESPALDOS_DIR/biblioteca/puerta/ingesta/formatos/2026-11-03/` | `ingesta/lib/catalogar.py`, `tests/fuentes/test_ingesta.py`; `escritura/reports/2026-11-03-biblioteca-inteligencia-economica` |
 | 2026-11-03 | **gui-comun 3.1 adoptado**: las portadas con `gui_comun.miniaturas.ProveedorMiniaturas` y los pasos de la puerta con `LineaPasos` y `gui_comun.pasos` en lugar de las copias propias (`controladores/portadas.py`, `PasosPuerta.qml`, retiradas) | `docs/reingenieria.md` (B3, B9) |
@@ -54,6 +55,8 @@ nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (mi
 
 ## Por hacer
 
+- 2026-11-16 · dueño: **el autor** · **Importar en Zotero** `ingesta/salida_ris/ingesta_20261116_ciclo-presupuestal-2022-2027.ris` (los 98 libros del ciclo presupuestal; solo esos) y luego `lectura/main.sh --enlazar --aplicar`.
+- 2026-11-16 · dueño: director · **Títulos de 10263 y 10264**: siguen diciendo «(anexos; texto de la ley pendiente)» aunque ya tienen el texto de la ley. Tienen ítem en Zotero, así que el título cambia solo con una campaña que reescriba Zotero en la misma operación (`lib/adjuntos_zotero.py titulos`).
 - 2026-11-15 · dueño: **el autor** · **Traer una norma nueva** (`main.py traer`, §8.6; rama `wip/2026-11-15-traer-norma`, con core `wip/2026-11-15-ris-statute`): fusionar y, con Calibre cerrado, traer la Ley 28077, la Ley 28322 y el D.S. 005-2002-EF (ensayadas en una copia: `TRAER_RED=1 pytest tests/fuentes/test_traer_red.py`), revisando la fecha de gob.pe en el PDF; importar sus RIS en Zotero y `lectura/main.sh --enlazar --aplicar`.
 - 2026-11-15 · dueño: **el autor** · **Campaña NORMAS** (§8.7): `python3 migraciones/main.py NORMAS --aplicar` con Calibre cerrado (44 normas; ensayo y deshacer probados, `migraciones/normas-2026-11-15/`). Después `ingesta/main.sh zotero` y su RIS en Zotero en lugar del `ingesta_20261104_…10844_10906.ris` (que las da como documento: no importarlo). Revisar 10894 y 10895, el mismo D.S. 008-2012-MIDIS dos veces, y los identificadores `ds_008_2012_midis` y `dl_26123`, fuera de la grafía de `norma_id`.
 - 2026-11-15 · dueño: **el autor** (decidir) · **Unas 300 normas de Zotero con el índice de su serie como número de ley** (`publicLawNumber`) y la serie como código: una campaña de Zotero por la puerta, simulada, que ponga el número del identificador `norma:`.
