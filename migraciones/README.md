@@ -44,6 +44,7 @@ python3 migraciones/main.py P1 --aplicar   # aplica por la puerta (Calibre cerra
 | `leer_campos.py` | lee por la API de Calibre (solo lectura) los valores escritos, para verificarlos |
 | `pasos/pN.py` | el plan de cada paso |
 | `<paso>-<fecha>/` (p. ej. `p8-2026-10-06/`) | el registro de cada campaña: `plan.json`, `propuesta.tsv`, `resumen.md` |
+| `zotero_normas.py` | ZOTERO-NORMAS (2026-11-15): el número, el código y el título corto de las normas en Zotero; simula, ensaya sobre una copia con deshacer probado y aplica por la puerta de Zotero |
 
 ## Límite honesto
 

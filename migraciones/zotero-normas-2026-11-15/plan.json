@@ -1,0 +1,3028 @@
+{
+ "campana": "zotero-normas",
+ "fecha": "2026-11-15",
+ "cambios": [
+  {
+   "itemID": 10608,
+   "key": "22JXCGG3",
+   "titulo": "Ley N.° 32069. Contrataciones públicas",
+   "calibre_id": 10143,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "32069"
+    ],
+    "code": [
+     "Marco legal 05 - Contrataciones",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 32069"
+    ]
+   }
+  },
+  {
+   "itemID": 11554,
+   "key": "23GQJVKP",
+   "titulo": "Ley N.° 30610. Ley que modifica el artículo 316 e incorpora el artículo 316-A al Código Penal, tipificando el delito de apología de terrorismo",
+   "calibre_id": 10392,
+   "campos": {
+    "publicLawNumber": [
+     "106",
+     "30610"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 30610"
+    ]
+   }
+  },
+  {
+   "itemID": 10338,
+   "key": "2GUDSAN7",
+   "titulo": "Ley N.° 27287. Ley de títulos valores",
+   "calibre_id": 10075,
+   "campos": {
+    "publicLawNumber": [
+     "8",
+     "27287"
+    ],
+    "code": [
+     "Marco legal 07 - Economia",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 27287"
+    ]
+   }
+  },
+  {
+   "itemID": 10522,
+   "key": "2GX258X3",
+   "titulo": "Código niños adolescentes ley 27337",
+   "calibre_id": 10121,
+   "campos": {
+    "publicLawNumber": [
+     "11",
+     "27337"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10358,
+   "key": "2UHT9SF5",
+   "titulo": "Ley N.° 31143. Ley que protege de la usura topes tasas interés",
+   "calibre_id": 10080,
+   "campos": {
+    "publicLawNumber": [
+     "12",
+     "31143"
+    ],
+    "code": [
+     "Marco legal 07 - Economia",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 31143"
+    ]
+   }
+  },
+  {
+   "itemID": 10247,
+   "key": "2URWHMSM",
+   "titulo": "Ley N.° 26859. Orgánica de elecciones",
+   "calibre_id": 10053,
+   "campos": {
+    "publicLawNumber": [
+     "3",
+     "26859"
+    ],
+    "code": [
+     "Marco legal 02 - Leyes organicas",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 26859"
+    ]
+   }
+  },
+  {
+   "itemID": 11552,
+   "key": "2YQ9C47Z",
+   "titulo": "Decreto Supremo N.° 110-2026-PCM. Prórroga del estado de emergencia en distritos y centros poblados de Ayacucho, Huancavelica, Junín y Cusco (VRAEM) y en las franjas territoriales del Eje Energético de Camisea y del Corredor del Ene",
+   "calibre_id": 10391,
+   "campos": {
+    "publicLawNumber": [
+     "105",
+     "110-2026-PCM"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 110-2026-PCM"
+    ]
+   }
+  },
+  {
+   "itemID": 10612,
+   "key": "36I65HZP",
+   "titulo": "Guía técnica legislativa MINJUS 4ta ed",
+   "calibre_id": 10144,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "822"
+    ],
+    "code": [
+     "Marco legal 18 - Manuales",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10496,
+   "key": "437DN676",
+   "titulo": "Ley N.° 29338. Recursos hídricos",
+   "calibre_id": 10115,
+   "campos": {
+    "publicLawNumber": [
+     "3",
+     "29338"
+    ],
+    "code": [
+     "Marco legal 15 - Ambiente",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 29338"
+    ]
+   }
+  },
+  {
+   "itemID": 10175,
+   "key": "46NC9LBS",
+   "titulo": "Decreto Supremo N.° 090-2026-PCM. Modifica reglamento modernización",
+   "calibre_id": 10038,
+   "campos": {
+    "publicLawNumber": [
+     "14",
+     "090-2026-PCM"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 090-2026-PCM"
+    ]
+   }
+  },
+  {
+   "itemID": 10070,
+   "key": "49V4DBIM",
+   "titulo": "Ley N.° 28806. General de inspección del trabajo",
+   "calibre_id": 10012,
+   "campos": {
+    "publicLawNumber": [
+     "4",
+     "28806"
+    ],
+    "code": [
+     "Marco legal 14 - Trabajo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 28806"
+    ]
+   }
+  },
+  {
+   "itemID": 10270,
+   "key": "4CMAMV62",
+   "titulo": "Ley N.° 31307. Nuevo código procesal constitucional",
+   "calibre_id": 10058,
+   "campos": {
+    "publicLawNumber": [
+     "7",
+     "31307"
+    ],
+    "code": [
+     "Marco legal 02 - Leyes organicas",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 31307"
+    ]
+   }
+  },
+  {
+   "itemID": 10676,
+   "key": "4ZHQA5YB",
+   "titulo": "Decreto Legislativo N.° 1141. Sistema de inteligencia nacional DINI",
+   "calibre_id": 10160,
+   "campos": {
+    "publicLawNumber": [
+     "14",
+     "1141"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1141"
+    ]
+   }
+  },
+  {
+   "itemID": 10098,
+   "key": "55QB6T5E",
+   "titulo": "Decreto Supremo N.° 284-2018-EF. Reglamento D.Leg. 1252",
+   "calibre_id": 10019,
+   "campos": {
+    "publicLawNumber": [
+     "2",
+     "284-2018-EF"
+    ],
+    "code": [
+     "Marco legal 09 - Inversion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 284-2018-EF"
+    ]
+   }
+  },
+  {
+   "itemID": 10526,
+   "key": "5CXHIJKA",
+   "titulo": "Código procesal penal D.Leg. 957 actualizado",
+   "calibre_id": 10122,
+   "campos": {
+    "publicLawNumber": [
+     "13",
+     "957"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 11862,
+   "key": "5L69PNKI",
+   "titulo": "Ley N.° 31170. Ley que dispone la implementación de mesas de partes digitales y notificaciones electrónicas",
+   "calibre_id": 10544,
+   "campos": {
+    "publicLawNumber": [
+     "",
+     "31170"
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 31170"
+    ]
+   }
+  },
+  {
+   "itemID": 11092,
+   "key": "5URTZGQQ",
+   "titulo": "Ley N.° 31638. Presupuesto del sector público para el año fiscal 2023 (anexos; texto de la ley pendiente)",
+   "calibre_id": 10264,
+   "campos": {
+    "publicLawNumber": [
+     "2023",
+     "31638"
+    ],
+    "code": [
+     "datafw mef - Presupuesto aprobado",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 31638"
+    ]
+   }
+  },
+  {
+   "itemID": 10660,
+   "key": "63DCYXTL",
+   "titulo": "Decreto Supremo N.° 008-2010-SA. Reglamento ley 29344",
+   "calibre_id": 10156,
+   "campos": {
+    "publicLawNumber": [
+     "3",
+     "008-2010-SA"
+    ],
+    "code": [
+     "Marco legal 13 - Salud",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 008-2010-SA"
+    ]
+   }
+  },
+  {
+   "itemID": 10488,
+   "key": "682MZLTN",
+   "titulo": "Ley N.° 28611. General del ambiente",
+   "calibre_id": 10113,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "28611"
+    ],
+    "code": [
+     "Marco legal 15 - Ambiente",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 28611"
+    ]
+   }
+  },
+  {
+   "itemID": 10164,
+   "key": "6I6UXPDE",
+   "titulo": "Decreto Legislativo N.° 1694. Modifica ley 27658 innovación pública",
+   "calibre_id": 10035,
+   "campos": {
+    "publicLawNumber": [
+     "13",
+     "1694"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1694"
+    ]
+   }
+  },
+  {
+   "itemID": 10134,
+   "key": "6LHZBFGP",
+   "titulo": "Ley N.° 28044. General de educación",
+   "calibre_id": 10028,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "28044"
+    ],
+    "code": [
+     "Marco legal 12 - Educacion",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 28044"
+    ]
+   }
+  },
+  {
+   "itemID": 10006,
+   "key": "6LS2X88N",
+   "titulo": "Resolución Directoral N.° 0004-2025-MINEM/DGFM. Declaran concluido el proceso de formalización minera integral de 50 565 inscripciones del REINFO suspendidas por más de un año",
+   "calibre_id": 9942,
+   "campos": {
+    "publicLawNumber": [
+     "100",
+     "0004-2025-MINEM-DGFM"
+    ],
+    "code": [
+     "Marco legal 20 - Desarrollo productivo",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10102,
+   "key": "6WSV6CZ3",
+   "titulo": "Ley N.° 29230. Obras por impuestos",
+   "calibre_id": 10020,
+   "campos": {
+    "publicLawNumber": [
+     "7",
+     "29230"
+    ],
+    "code": [
+     "Marco legal 09 - Inversion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 29230"
+    ]
+   }
+  },
+  {
+   "itemID": 10538,
+   "key": "75K85BYP",
+   "titulo": "Código ejecución penal TUO D.S. 003-2021 JUS",
+   "calibre_id": 10125,
+   "campos": {
+    "publicLawNumber": [
+     "10",
+     "003-2021-"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10086,
+   "key": "77E8TSFW",
+   "titulo": "Decreto Legislativo N.° 728. Ley de fomento del empleo",
+   "calibre_id": 10016,
+   "campos": {
+    "publicLawNumber": [
+     "6",
+     "728"
+    ],
+    "code": [
+     "Marco legal 14 - Trabajo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 728"
+    ]
+   }
+  },
+  {
+   "itemID": 10708,
+   "key": "78AG6SNA",
+   "titulo": "Decreto Supremo N.° 015-2003-JUS. Reglamento código ejecución penal",
+   "calibre_id": 10168,
+   "campos": {
+    "publicLawNumber": [
+     "7",
+     "015-2003-JUS"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 015-2003-JUS"
+    ]
+   }
+  },
+  {
+   "itemID": 10220,
+   "key": "7GUZA2VC",
+   "titulo": "Compendio precedentes vinculantes TC tomo2",
+   "calibre_id": 10048,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "822"
+    ],
+    "code": [
+     "Marco legal 17 - Jurisprudencia",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 11618,
+   "key": "7LXBUQ6Q",
+   "titulo": "Ley N.° 24064. Establece el Inti como unidad monetaria (con la Regulación Inti N.° 001-85-EF/90)",
+   "calibre_id": 10424,
+   "campos": {
+    "publicLawNumber": [
+     "",
+     "24064"
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 24064"
+    ]
+   }
+  },
+  {
+   "itemID": 10147,
+   "key": "82BC3XMW",
+   "titulo": "Decreto Supremo N.° 040-2014-PCM. Reglamento general ley servicio civil",
+   "calibre_id": 10031,
+   "campos": {
+    "publicLawNumber": [
+     "2",
+     "040-2014-PCM"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 040-2014-PCM"
+    ]
+   }
+  },
+  {
+   "itemID": 10366,
+   "key": "8JE62CK4",
+   "titulo": "Decreto Legislativo N.° 1409. Sociedad por acciones cerrada simplificada SACS",
+   "calibre_id": 10082,
+   "campos": {
+    "publicLawNumber": [
+     "7",
+     "1409"
+    ],
+    "code": [
+     "Marco legal 07 - Economia",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1409"
+    ]
+   }
+  },
+  {
+   "itemID": 10118,
+   "key": "8LVRKRBU",
+   "titulo": "Decreto Supremo N.° 011-2012-ED. Reglamento ley general de educación",
+   "calibre_id": 10024,
+   "campos": {
+    "publicLawNumber": [
+     "2",
+     "011-2012-ED"
+    ],
+    "code": [
+     "Marco legal 12 - Educacion",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 011-2012-ED"
+    ]
+   }
+  },
+  {
+   "itemID": 10290,
+   "key": "8PC2VJVJ",
+   "titulo": "Ley N.° 32186. Equilibrio financiero del presupuesto del sector público para el año fiscal 2025",
+   "calibre_id": 10063,
+   "campos": {
+    "publicLawNumber": [
+     "2025.1",
+     "32186"
+    ],
+    "code": [
+     "datafw mef - Presupuesto aprobado",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 32186"
+    ]
+   }
+  },
+  {
+   "itemID": 10306,
+   "key": "95IIBXJG",
+   "titulo": "Ley N.° 32187. Endeudamiento del sector público para el año fiscal 2025",
+   "calibre_id": 10067,
+   "campos": {
+    "publicLawNumber": [
+     "2025.2",
+     "32187"
+    ],
+    "code": [
+     "datafw mef - Presupuesto aprobado",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 32187"
+    ]
+   }
+  },
+  {
+   "itemID": 10114,
+   "key": "9FLYT2AA",
+   "titulo": "Directiva N.° 001-2019-EF. 6301 directiva general invierte pe",
+   "calibre_id": 10023,
+   "campos": {
+    "publicLawNumber": [
+     "3",
+     "1252"
+    ],
+    "code": [
+     "Marco legal 09 - Inversion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Directiva N.° 001-2019-EF"
+    ]
+   }
+  },
+  {
+   "itemID": 11200,
+   "key": "9FYXGTGL",
+   "titulo": "Resolución de Consejo Universitario N.° 341-2021-UNSCH-CU. Reglamento general de grados académicos y títulos profesionales",
+   "calibre_id": 10294,
+   "campos": {
+    "publicLawNumber": [
+     "91",
+     "341-2021-UNSCH-CU"
+    ],
+    "code": [
+     "Marco legal 12 - Educacion",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Resolución de Consejo Universitario N.° 341-2021-UNSCH-CU"
+    ]
+   }
+  },
+  {
+   "itemID": 10716,
+   "key": "9N2RV9PZ",
+   "titulo": "Ley N.° 30424. Responsabilidad administrativa personas jurídicas",
+   "calibre_id": 10170,
+   "campos": {
+    "publicLawNumber": [
+     "12",
+     "30424"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 30424"
+    ]
+   }
+  },
+  {
+   "itemID": 10258,
+   "key": "9XD5DHQX",
+   "titulo": "Ley N.° 30916. Orgánica junta nacional de justicia",
+   "calibre_id": 10055,
+   "campos": {
+    "publicLawNumber": [
+     "9",
+     "30916"
+    ],
+    "code": [
+     "Marco legal 02 - Leyes organicas",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 30916"
+    ]
+   }
+  },
+  {
+   "itemID": 10066,
+   "key": "9XZIL74E",
+   "titulo": "Ley N.° 28806. Ley general de inspección del trabajo",
+   "calibre_id": 10011,
+   "campos": {
+    "publicLawNumber": [
+     "5",
+     "28806"
+    ],
+    "code": [
+     "Marco legal 14 - Trabajo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 28806"
+    ]
+   }
+  },
+  {
+   "itemID": 10122,
+   "key": "9YI6ZRAR",
+   "titulo": "Ley N.° 30512. Institutos escuelas educación superior",
+   "calibre_id": 10025,
+   "campos": {
+    "publicLawNumber": [
+     "4",
+     "30512"
+    ],
+    "code": [
+     "Marco legal 12 - Educacion",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 30512"
+    ]
+   }
+  },
+  {
+   "itemID": 10513,
+   "key": "A7HIYSGD",
+   "titulo": "Código civil D.Leg. 295 actualizado",
+   "calibre_id": 10119,
+   "campos": {
+    "publicLawNumber": [
+     "14",
+     "295"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10210,
+   "key": "A7MI6BVS",
+   "titulo": "Ley N.° 29622. Amplía facultades sancionadoras de la Contraloría",
+   "calibre_id": 10046,
+   "campos": {
+    "publicLawNumber": [
+     "4",
+     "29622"
+    ],
+    "code": [
+     "Marco legal 10 - Control",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 29622"
+    ]
+   }
+  },
+  {
+   "itemID": 10152,
+   "key": "A868WRRS",
+   "titulo": "Ley N.° 30057. Ley del servicio civil",
+   "calibre_id": 10032,
+   "campos": {
+    "publicLawNumber": [
+     "3",
+     "30057"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 30057"
+    ]
+   }
+  },
+  {
+   "itemID": 11134,
+   "key": "AFXFQXVY",
+   "titulo": "Ley N.° 30947. Ley de Salud Mental",
+   "calibre_id": 10273,
+   "campos": {
+    "publicLawNumber": [
+     "15",
+     "30947"
+    ],
+    "code": [
+     "Monografia 2026-07-18 - Ansiedad e intervencion del enfermero",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 30947"
+    ]
+   }
+  },
+  {
+   "itemID": 10106,
+   "key": "AQ8BREGK",
+   "titulo": "Decreto Legislativo N.° 1252. Invierte pe",
+   "calibre_id": 10021,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "1252"
+    ],
+    "code": [
+     "Marco legal 09 - Inversion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1252"
+    ]
+   }
+  },
+  {
+   "itemID": 10584,
+   "key": "AU6R6C9U",
+   "titulo": "Texto Único Ordenado de la Ley N.° 30225. Contrataciones estado histórico",
+   "calibre_id": 10137,
+   "campos": {
+    "publicLawNumber": [
+     "3",
+     "30225"
+    ],
+    "code": [
+     "Marco legal 05 - Contrataciones",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Texto Único Ordenado de la Ley N.° 30225"
+    ]
+   }
+  },
+  {
+   "itemID": 10142,
+   "key": "B33LFUX8",
+   "titulo": "Ley N.° 28563. Sistema nacional endeudamiento histórica",
+   "calibre_id": 10030,
+   "campos": {
+    "publicLawNumber": [
+     "7",
+     "28563"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 28563"
+    ]
+   }
+  },
+  {
+   "itemID": 10550,
+   "key": "C2AKDXWI",
+   "titulo": "Código penal D.Leg. 635 12a edición oficial",
+   "calibre_id": 10128,
+   "campos": {
+    "publicLawNumber": [
+     "5",
+     "635"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10298,
+   "key": "DEEJRSS3",
+   "titulo": "Decreto Legislativo N.° 1440. Decreto Legislativo del Sistema Nacional de Presupuesto Público",
+   "calibre_id": 10065,
+   "campos": {
+    "publicLawNumber": [
+     "7",
+     "1440"
+    ],
+    "code": [
+     "Marco legal 06 - Presupuesto",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1440"
+    ]
+   }
+  },
+  {
+   "itemID": 10628,
+   "key": "DGNMU77C",
+   "titulo": "Decreto Supremo N.° 023-2025-PCM. Parte resolutiva",
+   "calibre_id": 10148,
+   "campos": {
+    "publicLawNumber": [
+     "9",
+     "023-2025-PCM"
+    ],
+    "code": [
+     "Marco legal 18 - Manuales",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 023-2025-PCM"
+    ]
+   }
+  },
+  {
+   "itemID": 10600,
+   "key": "DK7HKFMG",
+   "titulo": "Directiva N.° 0002-2025-EF. Plan anual contrataciones",
+   "calibre_id": 10141,
+   "campos": {
+    "publicLawNumber": [
+     "5",
+     "0002-2025-EF"
+    ],
+    "code": [
+     "Marco legal 05 - Contrataciones",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Directiva N.° 0002-2025-EF"
+    ]
+   }
+  },
+  {
+   "itemID": 10314,
+   "key": "DKAGI2C4",
+   "titulo": "Ley N.° 32514. Equilibrio financiero del presupuesto del sector público para el año fiscal 2026",
+   "calibre_id": 10069,
+   "campos": {
+    "publicLawNumber": [
+     "2026.1",
+     "32514"
+    ],
+    "code": [
+     "datafw mef - Presupuesto aprobado",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 32514"
+    ]
+   }
+  },
+  {
+   "itemID": 10374,
+   "key": "DNIL5EP7",
+   "titulo": "Decreto Legislativo N.° 1436. Marco administración financiera sector público",
+   "calibre_id": 10084,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "1436"
+    ],
+    "code": [
+     "Marco legal 07 - Economia",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1436"
+    ]
+   }
+  },
+  {
+   "itemID": 10346,
+   "key": "DRN5JUXT",
+   "titulo": "Ley N.° 26702. Ley general del sistema financiero SBS",
+   "calibre_id": 10077,
+   "campos": {
+    "publicLawNumber": [
+     "11",
+     "26702"
+    ],
+    "code": [
+     "Marco legal 07 - Economia",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 26702"
+    ]
+   }
+  },
+  {
+   "itemID": 10274,
+   "key": "DZAZD5EL",
+   "titulo": "Decreto Legislativo N.° 052. Ley orgánica ministerio público",
+   "calibre_id": 10059,
+   "campos": {
+    "publicLawNumber": [
+     "6",
+     "052"
+    ],
+    "code": [
+     "Marco legal 02 - Leyes organicas",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 052"
+    ]
+   }
+  },
+  {
+   "itemID": 10484,
+   "key": "EBSRQZE5",
+   "titulo": "Decreto Supremo N.° 001-2010-AG. Reglamento ley recursos hídricos",
+   "calibre_id": 10112,
+   "campos": {
+    "publicLawNumber": [
+     "4",
+     "001-2010-AG"
+    ],
+    "code": [
+     "Marco legal 15 - Ambiente",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 001-2010-AG"
+    ]
+   }
+  },
+  {
+   "itemID": 10566,
+   "key": "EUINFEPQ",
+   "titulo": "Decreto Legislativo N.° 635. Código penal",
+   "calibre_id": 10132,
+   "campos": {
+    "publicLawNumber": [
+     "20",
+     "635"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 635"
+    ]
+   }
+  },
+  {
+   "itemID": 11858,
+   "key": "EYDXBHU6",
+   "titulo": "Decreto Supremo N.° 052-2008-PCM. Reglamento de la Ley de Firmas y Certificados Digitales (texto concordado)",
+   "calibre_id": 10542,
+   "campos": {
+    "publicLawNumber": [
+     "",
+     "052-2008-PCM"
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 052-2008-PCM"
+    ]
+   }
+  },
+  {
+   "itemID": 11620,
+   "key": "FCKQ5VII",
+   "titulo": "Ley N.° 25295. Establece el Nuevo Sol como unidad monetaria del Perú",
+   "calibre_id": 10425,
+   "campos": {
+    "publicLawNumber": [
+     "",
+     "25295"
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 25295"
+    ]
+   }
+  },
+  {
+   "itemID": 10168,
+   "key": "G52MH96S",
+   "titulo": "Ley N.° 28693. Sistema nacional tesorería histórica",
+   "calibre_id": 10036,
+   "campos": {
+    "publicLawNumber": [
+     "4",
+     "28693"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 28693"
+    ]
+   }
+  },
+  {
+   "itemID": 10266,
+   "key": "G5ENK7ZS",
+   "titulo": "Ley N.° 29158. Orgánica poder ejecutivo",
+   "calibre_id": 10057,
+   "campos": {
+    "publicLawNumber": [
+     "4",
+     "29158"
+    ],
+    "code": [
+     "Marco legal 02 - Leyes organicas",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 29158"
+    ]
+   }
+  },
+  {
+   "itemID": 10966,
+   "key": "GGJ8K3AZ",
+   "titulo": "Ley N.° 31954. Equilibrio financiero del presupuesto del sector público para el año fiscal 2024",
+   "calibre_id": 10233,
+   "campos": {
+    "publicLawNumber": [
+     "2024.1",
+     "31954"
+    ],
+    "code": [
+     "datafw mef - Presupuesto aprobado",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 31954"
+    ]
+   }
+  },
+  {
+   "itemID": 10652,
+   "key": "GPHVH9KX",
+   "titulo": "Decreto Supremo N.° 063-2021-PCM. AIR ex ante derogado",
+   "calibre_id": 10154,
+   "campos": {
+    "publicLawNumber": [
+     "10",
+     "063-2021-PCM"
+    ],
+    "code": [
+     "Marco legal 18 - Manuales",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 063-2021-PCM"
+    ]
+   }
+  },
+  {
+   "itemID": 9929,
+   "key": "GQG635F8",
+   "titulo": "Ley N.° 31335. Cooperativas agrarias",
+   "calibre_id": 9923,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "31335"
+    ],
+    "code": [
+     "Marco legal 20 - Desarrollo productivo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 31335"
+    ]
+   }
+  },
+  {
+   "itemID": 10160,
+   "key": "GRYTQX9K",
+   "titulo": "Ley N.° 28708. Sistema nacional contabilidad histórica",
+   "calibre_id": 10034,
+   "campos": {
+    "publicLawNumber": [
+     "5",
+     "28708"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 28708"
+    ]
+   }
+  },
+  {
+   "itemID": 10974,
+   "key": "GT29IY8U",
+   "titulo": "Ley N.° 31953. Presupuesto del sector público para el año fiscal 2024",
+   "calibre_id": 10235,
+   "campos": {
+    "publicLawNumber": [
+     "2024",
+     "31953"
+    ],
+    "code": [
+     "datafw mef - Presupuesto aprobado",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 31953"
+    ]
+   }
+  },
+  {
+   "itemID": 10656,
+   "key": "GV7HU32W",
+   "titulo": "Ley N.° 26842. General de salud",
+   "calibre_id": 10155,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "26842"
+    ],
+    "code": [
+     "Marco legal 13 - Salud",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 26842"
+    ]
+   }
+  },
+  {
+   "itemID": 11848,
+   "key": "GZR7ZSHF",
+   "titulo": "Decreto Supremo N.° 140-2026-EF que aprueba el Reglamento del Decreto Legislativo N.° 1252, que crea el Sistema Nacional de Programación Multianual y Gestión de Inversiones",
+   "calibre_id": 10537,
+   "campos": {
+    "publicLawNumber": [
+     "",
+     "140-2026-EF"
+    ]
+   }
+  },
+  {
+   "itemID": 11274,
+   "key": "H6KEUN38",
+   "titulo": "Decreto Legislativo N.° 1735. Subsistema especializado contra la extorsión",
+   "calibre_id": 10311,
+   "campos": {
+    "publicLawNumber": [
+     "104",
+     "1735"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1735"
+    ]
+   }
+  },
+  {
+   "itemID": 10580,
+   "key": "HBHUKZZ7",
+   "titulo": "Código civil D.Leg. 295 texto actualizado",
+   "calibre_id": 10136,
+   "campos": {
+    "publicLawNumber": [
+     "4",
+     "295"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10078,
+   "key": "HCFFEK73",
+   "titulo": "Ley N.° 29783. Seguridad y salud en el trabajo",
+   "calibre_id": 10014,
+   "campos": {
+    "publicLawNumber": [
+     "2",
+     "29783"
+    ],
+    "code": [
+     "Marco legal 14 - Trabajo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 29783"
+    ]
+   }
+  },
+  {
+   "itemID": 10596,
+   "key": "HNGN85ZB",
+   "titulo": "Directiva N.° 0005-2025-EF. Bases estándar procedimientos selección",
+   "calibre_id": 10140,
+   "campos": {
+    "publicLawNumber": [
+     "6",
+     "32069"
+    ],
+    "code": [
+     "Marco legal 05 - Contrataciones",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Directiva N.° 0005-2025-EF"
+    ]
+   }
+  },
+  {
+   "itemID": 11088,
+   "key": "HQZP979A",
+   "titulo": "Ley N.° 31365. Presupuesto del sector público para el año fiscal 2022 (anexos; texto de la ley pendiente)",
+   "calibre_id": 10263,
+   "campos": {
+    "publicLawNumber": [
+     "2022",
+     "31365"
+    ],
+    "code": [
+     "datafw mef - Presupuesto aprobado",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 31365"
+    ]
+   }
+  },
+  {
+   "itemID": 10226,
+   "key": "I4UVNCXU",
+   "titulo": "Compendio precedentes vinculantes TC tomo1",
+   "calibre_id": 10049,
+   "campos": {
+    "publicLawNumber": [
+     "3",
+     "822"
+    ],
+    "code": [
+     "Marco legal 17 - Jurisprudencia",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10746,
+   "key": "I755GBHN",
+   "titulo": "Informe técnico condiciones de vida 2026 t1",
+   "calibre_id": 10178,
+   "campos": {
+    "publicLawNumber": [
+     "13",
+     "665-2018"
+    ],
+    "code": [
+     "Marco legal 19 - Informes permanentes",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10074,
+   "key": "IKTM8KEL",
+   "titulo": "Texto Único Ordenado del Decreto Legislativo N.° 728. D.S. 003 97 tr productividad competitividad laboral",
+   "calibre_id": 10013,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "728"
+    ],
+    "code": [
+     "Marco legal 14 - Trabajo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Texto Único Ordenado del Decreto Legislativo N.° 728"
+    ]
+   }
+  },
+  {
+   "itemID": 11264,
+   "key": "IKU9R6EV",
+   "titulo": "Ley N.° 32490. Medidas extraordinarias contra la extorsión y el sicariato en el transporte",
+   "calibre_id": 10309,
+   "campos": {
+    "publicLawNumber": [
+     "104",
+     "32490"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 32490"
+    ]
+   }
+  },
+  {
+   "itemID": 10518,
+   "key": "IPUAWCMZ",
+   "titulo": "Código protección defensa consumidor ley 29571 actualizado",
+   "calibre_id": 10120,
+   "campos": {
+    "publicLawNumber": [
+     "15",
+     "29571"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10370,
+   "key": "IXD5EWRX",
+   "titulo": "Decreto Legislativo N.° 1228. Centros de innovación productiva CITE",
+   "calibre_id": 10083,
+   "campos": {
+    "publicLawNumber": [
+     "6",
+     "1228"
+    ],
+    "code": [
+     "Marco legal 07 - Economia",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1228"
+    ]
+   }
+  },
+  {
+   "itemID": 10546,
+   "key": "JA64UJBA",
+   "titulo": "Código ejecución penal TUO D.S. 003-2021 JUS actualizado",
+   "calibre_id": 10127,
+   "campos": {
+    "publicLawNumber": [
+     "16",
+     "003-2021-"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10692,
+   "key": "JDTBM33L",
+   "titulo": "Decreto Supremo N.° 026-2017-IN. Reglamento D.Leg. 1267 PNP",
+   "calibre_id": 10164,
+   "campos": {
+    "publicLawNumber": [
+     "5",
+     "026-2017-IN"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 026-2017-IN"
+    ]
+   }
+  },
+  {
+   "itemID": 10558,
+   "key": "JN7754GL",
+   "titulo": "Código procesal penal D.Leg. 957 8a edición oficial 2024",
+   "calibre_id": 10130,
+   "campos": {
+    "publicLawNumber": [
+     "6",
+     "957"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10696,
+   "key": "JUBPY7NQ",
+   "titulo": "Ley N.° 30077. Ley contra el crimen organizado",
+   "calibre_id": 10165,
+   "campos": {
+    "publicLawNumber": [
+     "2",
+     "30077"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 30077"
+    ]
+   }
+  },
+  {
+   "itemID": 10604,
+   "key": "K5ABWRWJ",
+   "titulo": "Directiva N.° 006-2019-OSCE. Subasta inversa electrónica histórico",
+   "calibre_id": 10142,
+   "campos": {
+    "publicLawNumber": [
+     "7",
+     "30225"
+    ],
+    "code": [
+     "Marco legal 05 - Contrataciones",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Directiva N.° 006-2019-OSCE"
+    ]
+   }
+  },
+  {
+   "itemID": 10554,
+   "key": "K8AST98W",
+   "titulo": "Decreto Legislativo N.° 1094. Código penal militar policial",
+   "calibre_id": 10129,
+   "campos": {
+    "publicLawNumber": [
+     "19",
+     "1094"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1094"
+    ]
+   }
+  },
+  {
+   "itemID": 10195,
+   "key": "KA8TWYIA",
+   "titulo": "Texto Único Ordenado de la Ley N.° 27444. D.S. 004-2019 JUS derogado",
+   "calibre_id": 10043,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "27444"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Texto Único Ordenado de la Ley N.° 27444"
+    ]
+   }
+  },
+  {
+   "itemID": 10334,
+   "key": "KW9JQ8LX",
+   "titulo": "Decreto Legislativo N.° 1438. Sistema nacional contabilidad",
+   "calibre_id": 10074,
+   "campos": {
+    "publicLawNumber": [
+     "3",
+     "1438"
+    ],
+    "code": [
+     "Marco legal 07 - Economia",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1438"
+    ]
+   }
+  },
+  {
+   "itemID": 10712,
+   "key": "KYX2TTTI",
+   "titulo": "Ley N.° 30096. Delitos informáticos",
+   "calibre_id": 10169,
+   "campos": {
+    "publicLawNumber": [
+     "11",
+     "30096"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 30096"
+    ]
+   }
+  },
+  {
+   "itemID": 10664,
+   "key": "L5MJBGP5",
+   "titulo": "Ley N.° 29344. Aseguramiento universal en salud",
+   "calibre_id": 10157,
+   "campos": {
+    "publicLawNumber": [
+     "2",
+     "29344"
+    ],
+    "code": [
+     "Marco legal 13 - Salud",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 29344"
+    ]
+   }
+  },
+  {
+   "itemID": 10476,
+   "key": "LAMRPBU8",
+   "titulo": "Decreto Legislativo N.° 1088. Sinaplan CEPLAN",
+   "calibre_id": 10110,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "1088"
+    ],
+    "code": [
+     "Marco legal 08 - Planeamiento",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1088"
+    ]
+   }
+  },
+  {
+   "itemID": 9897,
+   "key": "LEXNWLY2",
+   "titulo": "Decreto Ley N.° 25844. Ley de concesiones eléctricas",
+   "calibre_id": 9915,
+   "campos": {
+    "publicLawNumber": [
+     "6",
+     "25844"
+    ],
+    "code": [
+     "Marco legal 20 - Desarrollo productivo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Ley N.° 25844"
+    ]
+   }
+  },
+  {
+   "itemID": 9905,
+   "key": "LQHW3X3D",
+   "titulo": "Ley N.° 28832. Desarrollo eficiente generación eléctrica",
+   "calibre_id": 9917,
+   "campos": {
+    "publicLawNumber": [
+     "7",
+     "28832"
+    ],
+    "code": [
+     "Marco legal 20 - Desarrollo productivo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 28832"
+    ]
+   }
+  },
+  {
+   "itemID": 10592,
+   "key": "LZH2LYWG",
+   "titulo": "Reglamento ley 32069 D.S. 009-2025 EF",
+   "calibre_id": 10139,
+   "campos": {
+    "publicLawNumber": [
+     "2",
+     "32069"
+    ],
+    "code": [
+     "Marco legal 05 - Contrataciones",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 9909,
+   "key": "M4YUGERK",
+   "titulo": "Ley N.° 28890. Crea sierra exportadora",
+   "calibre_id": 9918,
+   "campos": {
+    "publicLawNumber": [
+     "4",
+     "28890"
+    ],
+    "code": [
+     "Marco legal 20 - Desarrollo productivo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 28890"
+    ]
+   }
+  },
+  {
+   "itemID": 9912,
+   "key": "M5DXYDA2",
+   "titulo": "Ley N.° 29148. Fondo de garantía para el campo fogasa",
+   "calibre_id": 9919,
+   "campos": {
+    "publicLawNumber": [
+     "2",
+     "29148"
+    ],
+    "code": [
+     "Marco legal 20 - Desarrollo productivo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 29148"
+    ]
+   }
+  },
+  {
+   "itemID": 10126,
+   "key": "M6268IK2",
+   "titulo": "Ley N.° 30220. Universitaria",
+   "calibre_id": 10026,
+   "campos": {
+    "publicLawNumber": [
+     "3",
+     "30220"
+    ],
+    "code": [
+     "Marco legal 12 - Educacion",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 30220"
+    ]
+   }
+  },
+  {
+   "itemID": 10468,
+   "key": "MPLP6D69",
+   "titulo": "Directiva N.° 10-2024. Elaboración documentos normativos segunda versión",
+   "calibre_id": 10108,
+   "campos": {
+    "publicLawNumber": [
+     "24",
+     "27269"
+    ],
+    "code": [
+     "Marco legal 03 - Congreso",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Directiva N.° 10-2024"
+    ]
+   }
+  },
+  {
+   "itemID": 10262,
+   "key": "MXBV26W9",
+   "titulo": "Ley N.° 27972. Orgánica municipalidades",
+   "calibre_id": 10056,
+   "campos": {
+    "publicLawNumber": [
+     "2",
+     "27972"
+    ],
+    "code": [
+     "Marco legal 02 - Leyes organicas",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 27972"
+    ]
+   }
+  },
+  {
+   "itemID": 11822,
+   "key": "N2RGVSTT",
+   "titulo": "Decreto Supremo N.° 007-2013-EF. Regula el otorgamiento de viáticos para viajes en comisión de servicios en el territorio nacional",
+   "calibre_id": "",
+   "campos": {
+    "publicLawNumber": [
+     "104",
+     "007-2013-EF"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 007-2013-EF"
+    ]
+   }
+  },
+  {
+   "itemID": 11558,
+   "key": "N5CN86IP",
+   "titulo": "Ley N.° 32107. Ley que precisa la aplicación y los alcances del delito de lesa humanidad y crímenes de guerra en la legislación peruana",
+   "calibre_id": 10394,
+   "campos": {
+    "publicLawNumber": [
+     "101",
+     "32107"
+    ],
+    "code": [
+     "Marco legal 16 - Derechos humanos",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 32107"
+    ]
+   }
+  },
+  {
+   "itemID": 11556,
+   "key": "N682RIWA",
+   "titulo": "Ley N.° 32419. Ley que concede amnistía a los miembros de las Fuerzas Armadas, de la Policía Nacional del Perú y de los comités de autodefensa",
+   "calibre_id": 10393,
+   "campos": {
+    "publicLawNumber": [
+     "100",
+     "32419"
+    ],
+    "code": [
+     "Marco legal 16 - Derechos humanos",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 32419"
+    ]
+   }
+  },
+  {
+   "itemID": 11259,
+   "key": "NBJ6P9EG",
+   "titulo": "Ley N.° 32645. Colegio profesional de artistas",
+   "calibre_id": 10308,
+   "campos": {
+    "publicLawNumber": [
+     "100",
+     "32645"
+    ],
+    "code": [
+     "Marco legal 20 - Desarrollo productivo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 32645"
+    ]
+   }
+  },
+  {
+   "itemID": 10330,
+   "key": "NKA9WH6D",
+   "titulo": "Decreto Legislativo N.° 1441. Sistema nacional tesorería",
+   "calibre_id": 10073,
+   "campos": {
+    "publicLawNumber": [
+     "2",
+     "1441"
+    ],
+    "code": [
+     "Marco legal 07 - Economia",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1441"
+    ]
+   }
+  },
+  {
+   "itemID": 11860,
+   "key": "NQRSYUXW",
+   "titulo": "Decreto Supremo N.° 007-2022-JUS que aprueba el Reglamento de la Ley N.° 26889, Ley Marco para la Producción y Sistematización Legislativa",
+   "calibre_id": 10543,
+   "campos": {
+    "publicLawNumber": [
+     "",
+     "007-2022-JUS"
+    ]
+   }
+  },
+  {
+   "itemID": 11146,
+   "key": "NVSYGPLZ",
+   "titulo": "Ley N.° 30714. Ley que regula el Régimen Disciplinario de la Policía Nacional del Perú",
+   "calibre_id": 10276,
+   "campos": {
+    "publicLawNumber": [
+     "11",
+     "30714"
+    ],
+    "code": [
+     "Ensayo 2026-08-25 - Tecnicas de identificacion en zonas de alto riesgo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 30714"
+    ]
+   }
+  },
+  {
+   "itemID": 9925,
+   "key": "P6BL9YF9",
+   "titulo": "Ley N.° 31145. Saneamiento físico legal predios rurales",
+   "calibre_id": 9922,
+   "campos": {
+    "publicLawNumber": [
+     "5",
+     "31145"
+    ],
+    "code": [
+     "Marco legal 20 - Desarrollo productivo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 31145"
+    ]
+   }
+  },
+  {
+   "itemID": 10530,
+   "key": "PHK7T64J",
+   "titulo": "Código protección defensa consumidor ley 29571 2a edición oficial",
+   "calibre_id": 10123,
+   "campos": {
+    "publicLawNumber": [
+     "7",
+     "29571"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 11142,
+   "key": "PJ8VSU9C",
+   "titulo": "Ley N.° 27933. Ley del Sistema Nacional de Seguridad Ciudadana",
+   "calibre_id": 10275,
+   "campos": {
+    "publicLawNumber": [
+     "6",
+     "27933"
+    ],
+    "code": [
+     "Ensayo 2026-08-25 - Tecnicas de identificacion en zonas de alto riesgo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 27933"
+    ]
+   }
+  },
+  {
+   "itemID": 10022,
+   "key": "PRZPH6JL",
+   "titulo": "Decreto Supremo N.° 012-2021-VIVIENDA. Decreto Supremo que aprueba la Política Nacional de Vivienda y Urbanismo, con horizonte temporal al 2030",
+   "calibre_id": 9946,
+   "campos": {
+    "publicLawNumber": [
+     "90",
+     "012-2021-VIVIENDA"
+    ],
+    "code": [
+     "Marco legal 21 - Vivienda urbanismo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 012-2021-VIVIENDA"
+    ]
+   }
+  },
+  {
+   "itemID": 10342,
+   "key": "PVSK54BE",
+   "titulo": "Decreto Legislativo N.° 1437. Sistema nacional endeudamiento público",
+   "calibre_id": 10076,
+   "campos": {
+    "publicLawNumber": [
+     "5",
+     "1437"
+    ],
+    "code": [
+     "Marco legal 07 - Economia",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1437"
+    ]
+   }
+  },
+  {
+   "itemID": 10668,
+   "key": "Q45GIT7T",
+   "titulo": "Decreto Legislativo N.° 1095. Uso de la fuerza fuerzas armadas",
+   "calibre_id": 10158,
+   "campos": {
+    "publicLawNumber": [
+     "13",
+     "1095"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1095"
+    ]
+   }
+  },
+  {
+   "itemID": 10294,
+   "key": "Q9CANX2A",
+   "titulo": "Ley N.° 32185. Presupuesto del sector público para el año fiscal 2025",
+   "calibre_id": 10064,
+   "campos": {
+    "publicLawNumber": [
+     "2025",
+     "32185"
+    ],
+    "code": [
+     "datafw mef - Presupuesto aprobado",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 32185"
+    ]
+   }
+  },
+  {
+   "itemID": 10090,
+   "key": "QH8U9VCF",
+   "titulo": "Resolución Directoral N.° 0002-2025-EF. 6301 modifica directiva general invierte pe",
+   "calibre_id": 10017,
+   "campos": {
+    "publicLawNumber": [
+     "4",
+     "1252"
+    ],
+    "code": [
+     "Marco legal 09 - Inversion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Resolución Directoral N.° 0002-2025-EF"
+    ]
+   }
+  },
+  {
+   "itemID": 10172,
+   "key": "QM43ZJRT",
+   "titulo": "Decreto Supremo N.° 123-2018-PCM. Reglamento sistema modernización gestión pública",
+   "calibre_id": 10037,
+   "campos": {
+    "publicLawNumber": [
+     "10",
+     "123-2018-PCM"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 123-2018-PCM"
+    ]
+   }
+  },
+  {
+   "itemID": 10110,
+   "key": "QT5LCH7U",
+   "titulo": "Ley N.° 30230. Medidas tributarias simplificación inversión",
+   "calibre_id": 10022,
+   "campos": {
+    "publicLawNumber": [
+     "5",
+     "30230"
+    ],
+    "code": [
+     "Marco legal 09 - Inversion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 30230"
+    ]
+   }
+  },
+  {
+   "itemID": 11856,
+   "key": "R6ZBXHNN",
+   "titulo": "Ley N.° 27269. Ley de Firmas y Certificados Digitales",
+   "calibre_id": 10541,
+   "campos": {
+    "publicLawNumber": [
+     "",
+     "27269"
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 27269"
+    ]
+   }
+  },
+  {
+   "itemID": 10572,
+   "key": "RBG9I2XI",
+   "titulo": "Decreto Legislativo N.° 957. Nuevo código procesal penal",
+   "calibre_id": 10134,
+   "campos": {
+    "publicLawNumber": [
+     "21",
+     "957"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 957"
+    ]
+   }
+  },
+  {
+   "itemID": 10588,
+   "key": "RF5QHFTX",
+   "titulo": "Reglamento ley 30225 D.S. 344-2018 EF histórico",
+   "calibre_id": 10138,
+   "campos": {
+    "publicLawNumber": [
+     "4",
+     "344-2018-"
+    ],
+    "code": [
+     "Marco legal 05 - Contrataciones",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10310,
+   "key": "RIVCT9FF",
+   "titulo": "Ley N.° 32515. Endeudamiento del sector público para el año fiscal 2026",
+   "calibre_id": 10068,
+   "campos": {
+    "publicLawNumber": [
+     "2026.2",
+     "32515"
+    ],
+    "code": [
+     "datafw mef - Presupuesto aprobado",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 32515"
+    ]
+   }
+  },
+  {
+   "itemID": 10183,
+   "key": "RL2FZUL3",
+   "titulo": "Texto Único Ordenado de la Ley N.° 27444. Procedimiento administrativo general vigente",
+   "calibre_id": 10040,
+   "campos": {
+    "publicLawNumber": [
+     "12",
+     "27444"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Texto Único Ordenado de la Ley N.° 27444"
+    ]
+   }
+  },
+  {
+   "itemID": 10636,
+   "key": "RY4NBKG4",
+   "titulo": "Guía técnica legislativa MINJUS 4ta ed impresa",
+   "calibre_id": 10150,
+   "campos": {
+    "publicLawNumber": [
+     "3",
+     "822"
+    ],
+    "code": [
+     "Marco legal 18 - Manuales",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 9893,
+   "key": "SAMZDETK",
+   "titulo": "Decreto Legislativo N.° 1280. Ley marco gestión servicios saneamiento",
+   "calibre_id": 9914,
+   "campos": {
+    "publicLawNumber": [
+     "8",
+     "1280"
+    ],
+    "code": [
+     "Marco legal 20 - Desarrollo productivo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1280"
+    ]
+   }
+  },
+  {
+   "itemID": 10282,
+   "key": "SQK7JZA9",
+   "titulo": "Ley N.° 27867. Orgánica gobiernos regionales",
+   "calibre_id": 10061,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "27867"
+    ],
+    "code": [
+     "Marco legal 02 - Leyes organicas",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 27867"
+    ]
+   }
+  },
+  {
+   "itemID": 10278,
+   "key": "T4V57CEM",
+   "titulo": "Ley N.° 28301. Orgánica tribunal constitucional",
+   "calibre_id": 10060,
+   "campos": {
+    "publicLawNumber": [
+     "8",
+     "28301"
+    ],
+    "code": [
+     "Marco legal 02 - Leyes organicas",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 28301"
+    ]
+   }
+  },
+  {
+   "itemID": 11811,
+   "key": "TAX4DGY9",
+   "titulo": "Decreto Supremo N.° 007-2013-EF. Regula el otorgamiento de viáticos para viajes en comisión de servicios en el territorio nacional",
+   "calibre_id": "",
+   "campos": {
+    "publicLawNumber": [
+     "104",
+     "007-2013-EF"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 007-2013-EF"
+    ]
+   }
+  },
+  {
+   "itemID": 10286,
+   "key": "TE2BWA2B",
+   "titulo": "Texto Único Ordenado. Ley orgánica poder judicial D.S. 017 93 JUS",
+   "calibre_id": 10062,
+   "campos": {
+    "publicLawNumber": [
+     "5",
+     "017-93-"
+    ],
+    "code": [
+     "Marco legal 02 - Leyes organicas",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10704,
+   "key": "TGQHMABU",
+   "titulo": "Decreto Supremo N.° 009-2007-JUS. Rof inpe",
+   "calibre_id": 10167,
+   "campos": {
+    "publicLawNumber": [
+     "8",
+     "009-2007-JUS"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 009-2007-JUS"
+    ]
+   }
+  },
+  {
+   "itemID": 10492,
+   "key": "TTNRMF4N",
+   "titulo": "Ley N.° 29763. Forestal y de fauna silvestre",
+   "calibre_id": 10114,
+   "campos": {
+    "publicLawNumber": [
+     "2",
+     "29763"
+    ],
+    "code": [
+     "Marco legal 15 - Ambiente",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 29763"
+    ]
+   }
+  },
+  {
+   "itemID": 10138,
+   "key": "TZ65T5B3",
+   "titulo": "Ley N.° 29944. Reforma magisterial",
+   "calibre_id": 10029,
+   "campos": {
+    "publicLawNumber": [
+     "6",
+     "29944"
+    ],
+    "code": [
+     "Marco legal 12 - Educacion",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 29944"
+    ]
+   }
+  },
+  {
+   "itemID": 10684,
+   "key": "U2YAVLH2",
+   "titulo": "Decreto Legislativo N.° 1182. Geolocalización datos telecomunicaciones",
+   "calibre_id": 10162,
+   "campos": {
+    "publicLawNumber": [
+     "9",
+     "1182"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1182"
+    ]
+   }
+  },
+  {
+   "itemID": 11138,
+   "key": "U955YJT3",
+   "titulo": "Decreto Legislativo N.° 1186. Decreto Legislativo que regula el uso de la fuerza por parte de la Policía Nacional del Perú",
+   "calibre_id": 10274,
+   "campos": {
+    "publicLawNumber": [
+     "4",
+     "1186"
+    ],
+    "code": [
+     "Ensayo 2026-08-25 - Tecnicas de identificacion en zonas de alto riesgo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1186"
+    ]
+   }
+  },
+  {
+   "itemID": 10700,
+   "key": "UAJLTR6X",
+   "titulo": "Decreto Legislativo N.° 1338. Registro nacional equipos terminales móviles RENTESEG",
+   "calibre_id": 10166,
+   "campos": {
+    "publicLawNumber": [
+     "10",
+     "1338"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1338"
+    ]
+   }
+  },
+  {
+   "itemID": 10568,
+   "key": "UWAX9GGA",
+   "titulo": "Código penal D.Leg. 635 actualizado",
+   "calibre_id": 10133,
+   "campos": {
+    "publicLawNumber": [
+     "12",
+     "635"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10680,
+   "key": "V4PKUKYM",
+   "titulo": "Decreto Legislativo N.° 1106. Lucha eficaz contra el lavado de activos",
+   "calibre_id": 10161,
+   "campos": {
+    "publicLawNumber": [
+     "4",
+     "1106"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1106"
+    ]
+   }
+  },
+  {
+   "itemID": 10253,
+   "key": "VFEL87XK",
+   "titulo": "Decreto Legislativo N.° 1267. Ley policía nacional del Perú",
+   "calibre_id": 10054,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "1267"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1267"
+    ]
+   }
+  },
+  {
+   "itemID": 10215,
+   "key": "VW7YBJMB",
+   "titulo": "Ley N.° 27785. Sistema nacional de control",
+   "calibre_id": 10047,
+   "campos": {
+    "publicLawNumber": [
+     "1",
+     "27785"
+    ],
+    "code": [
+     "Marco legal 10 - Control",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 27785"
+    ]
+   }
+  },
+  {
+   "itemID": 10094,
+   "key": "VY2J4JJX",
+   "titulo": "Decreto Legislativo N.° 1192. Ley marco adquisición y expropiación",
+   "calibre_id": 10018,
+   "campos": {
+    "publicLawNumber": [
+     "6",
+     "1192"
+    ],
+    "code": [
+     "Marco legal 09 - Inversion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1192"
+    ]
+   }
+  },
+  {
+   "itemID": 10302,
+   "key": "WMGA36LE",
+   "titulo": "Ley N.° 32513. Presupuesto del sector público para el año fiscal 2026",
+   "calibre_id": 10066,
+   "campos": {
+    "publicLawNumber": [
+     "2026",
+     "32513"
+    ],
+    "code": [
+     "datafw mef - Presupuesto aprobado",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 32513"
+    ]
+   }
+  },
+  {
+   "itemID": 10688,
+   "key": "WNPDDFNV",
+   "titulo": "Ley N.° 27693. Unidad de inteligencia financiera",
+   "calibre_id": 10163,
+   "campos": {
+    "publicLawNumber": [
+     "3",
+     "27693"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 27693"
+    ]
+   }
+  },
+  {
+   "itemID": 10362,
+   "key": "WQLLUAM9",
+   "titulo": "Ley N.° 28587. Protección al consumidor servicios financieros",
+   "calibre_id": 10081,
+   "campos": {
+    "publicLawNumber": [
+     "10",
+     "28587"
+    ],
+    "code": [
+     "Marco legal 07 - Economia",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 28587"
+    ]
+   }
+  },
+  {
+   "itemID": 10082,
+   "key": "WT2UPB72",
+   "titulo": "Decreto Supremo N.° 005-2012-TR. Reglamento ley 29783",
+   "calibre_id": 10015,
+   "campos": {
+    "publicLawNumber": [
+     "3",
+     "005-2012-TR"
+    ],
+    "code": [
+     "Marco legal 14 - Trabajo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 005-2012-TR"
+    ]
+   }
+  },
+  {
+   "itemID": 10351,
+   "key": "X95423J3",
+   "titulo": "Decreto Legislativo N.° 1439. Sistema nacional abastecimiento",
+   "calibre_id": 10078,
+   "campos": {
+    "publicLawNumber": [
+     "4",
+     "1439"
+    ],
+    "code": [
+     "Marco legal 07 - Economia",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1439"
+    ]
+   }
+  },
+  {
+   "itemID": 11269,
+   "key": "XBMX7R9B",
+   "titulo": "Ley N.° 32332. Plataforma de denuncia digital",
+   "calibre_id": 10310,
+   "campos": {
+    "publicLawNumber": [
+     "104",
+     "32332"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 32332"
+    ]
+   }
+  },
+  {
+   "itemID": 11464,
+   "key": "XI3VB5IL",
+   "titulo": "Plan de Salud Regular del Congreso de la República (2025)",
+   "calibre_id": 10355,
+   "campos": {
+    "publicLawNumber": [
+     "",
+     "016-2009-"
+    ]
+   }
+  },
+  {
+   "itemID": 10672,
+   "key": "XN2RDGF4",
+   "titulo": "Decreto Supremo N.° 012-2025-IN. Reglamento D.Leg. 1267 PNP vigente",
+   "calibre_id": 10159,
+   "campos": {
+    "publicLawNumber": [
+     "6",
+     "012-2025-IN"
+    ],
+    "code": [
+     "Marco legal 11 - Seguridad",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Supremo N.° 012-2025-IN"
+    ]
+   }
+  },
+  {
+   "itemID": 10978,
+   "key": "Y57MRD8W",
+   "titulo": "Ley N.° 31084. Presupuesto del sector público para el año fiscal 2021",
+   "calibre_id": 10236,
+   "campos": {
+    "publicLawNumber": [
+     "2021",
+     "31084"
+    ],
+    "code": [
+     "datafw mef - Presupuesto aprobado",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 31084"
+    ]
+   }
+  },
+  {
+   "itemID": 10191,
+   "key": "Y6E263XI",
+   "titulo": "Texto Único Ordenado de la Ley N.° 27806. Transparencia acceso información pública",
+   "calibre_id": 10042,
+   "campos": {
+    "publicLawNumber": [
+     "9",
+     "27806"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Texto Único Ordenado de la Ley N.° 27806"
+    ]
+   }
+  },
+  {
+   "itemID": 10534,
+   "key": "YJIA4L5B",
+   "titulo": "Código procesal civil TUO R.M. 010 93 JUS",
+   "calibre_id": 10124,
+   "campos": {
+    "publicLawNumber": [
+     "9",
+     "010-93-"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 10156,
+   "key": "YZACQB6K",
+   "titulo": "Ley N.° 27658. Marco modernización gestión del estado",
+   "calibre_id": 10033,
+   "campos": {
+    "publicLawNumber": [
+     "11",
+     "27658"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 27658"
+    ]
+   }
+  },
+  {
+   "itemID": 10187,
+   "key": "Z4LHHGJQ",
+   "titulo": "Ley N.° 28411. Sistema nacional presupuesto histórica",
+   "calibre_id": 10041,
+   "campos": {
+    "publicLawNumber": [
+     "6",
+     "28411"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 28411"
+    ]
+   }
+  },
+  {
+   "itemID": 10179,
+   "key": "Z4Q39HFQ",
+   "titulo": "Ley N.° 27815. Código ética función pública y reglamento",
+   "calibre_id": 10039,
+   "campos": {
+    "publicLawNumber": [
+     "8",
+     "27815"
+    ],
+    "code": [
+     "Marco legal 04 - Administracion publica",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 27815"
+    ]
+   }
+  },
+  {
+   "itemID": 10970,
+   "key": "ZD2CK8NA",
+   "titulo": "Ley N.° 31955. Endeudamiento del sector público para el año fiscal 2024",
+   "calibre_id": 10234,
+   "campos": {
+    "publicLawNumber": [
+     "2024.2",
+     "31955"
+    ],
+    "code": [
+     "datafw mef - Presupuesto aprobado",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 31955"
+    ]
+   }
+  },
+  {
+   "itemID": 9916,
+   "key": "ZF3C5LB7",
+   "titulo": "Ley N.° 30852. Exoneración requisitos damnificados bfh",
+   "calibre_id": 9920,
+   "campos": {
+    "publicLawNumber": [
+     "10",
+     "30852"
+    ],
+    "code": [
+     "Marco legal 20 - Desarrollo productivo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 30852"
+    ]
+   }
+  },
+  {
+   "itemID": 10356,
+   "key": "ZH6XDCSZ",
+   "titulo": "Decreto Legislativo N.° 1400. Régimen de garantía mobiliaria",
+   "calibre_id": 10079,
+   "campos": {
+    "publicLawNumber": [
+     "9",
+     "1400"
+    ],
+    "code": [
+     "Marco legal 07 - Economia",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Decreto Legislativo N.° 1400"
+    ]
+   }
+  },
+  {
+   "itemID": 9920,
+   "key": "ZMKFKADS",
+   "titulo": "Ley N.° 31071. Compras estatales alimentos agricultura familiar",
+   "calibre_id": 9921,
+   "campos": {
+    "publicLawNumber": [
+     "3",
+     "31071"
+    ],
+    "code": [
+     "Marco legal 20 - Desarrollo productivo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 31071"
+    ]
+   }
+  },
+  {
+   "itemID": 10576,
+   "key": "ZRCTLWME",
+   "titulo": "Código tributario TUO D.S. 133-2013 EF",
+   "calibre_id": 10135,
+   "campos": {
+    "publicLawNumber": [
+     "8",
+     "133-2013-"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  },
+  {
+   "itemID": 9900,
+   "key": "ZYMPMDAF",
+   "titulo": "Ley N.° 27829. Bono familiar habitacional",
+   "calibre_id": 9916,
+   "campos": {
+    "publicLawNumber": [
+     "9",
+     "27829"
+    ],
+    "code": [
+     "Marco legal 20 - Desarrollo productivo",
+     ""
+    ],
+    "shortTitle": [
+     "",
+     "Ley N.° 27829"
+    ]
+   }
+  },
+  {
+   "itemID": 10542,
+   "key": "ZZ8VB59B",
+   "titulo": "Código tributario TUO D.S. 133-2013 EF (El Peruano)",
+   "calibre_id": 10126,
+   "campos": {
+    "publicLawNumber": [
+     "18",
+     "133-2013-"
+    ],
+    "code": [
+     "Marco legal 01 - Normativa fundamental",
+     ""
+    ]
+   }
+  }
+ ],
+ "revisar": [
+  {
+   "key": "35P3C2TV",
+   "titulo": "NIC 1. Presentación de estados financieros (versión oficial 2021, Ministerio de Economía y Finanzas)",
+   "motivo": "sin número de norma"
+  },
+  {
+   "key": "6QWUNJ4U",
+   "titulo": "Constitución Política del Perú (texto actualizado, El Peruano)",
+   "motivo": "sin número de norma"
+  },
+  {
+   "key": "RHEVIABR",
+   "titulo": "Informe obras paralizadas 2026 03",
+   "motivo": "sin número de norma"
+  }
+ ],
+ "sin_cambio": 0
+}

@@ -56,6 +56,16 @@ def z_set_field(cur, item_id, field, value):
     z_touch(cur, item_id)
 
 
+def z_del_field(cur, item_id, field) -> bool:
+    """Quita un campo del ítem (deja el valor en itemDataValues: Zotero lo limpia solo). True si había algo que quitar."""
+    fid = z_field_id(cur, field)
+    if not cur.execute("SELECT 1 FROM itemData WHERE itemID=? AND fieldID=?", (item_id, fid)).fetchone():
+        return False
+    cur.execute("DELETE FROM itemData WHERE itemID=? AND fieldID=?", (item_id, fid))
+    z_touch(cur, item_id)
+    return True
+
+
 def z_get_field(cur, item_id, field):
     r = cur.execute(
         "SELECT v.value FROM itemData d JOIN itemDataValues v ON v.valueID=d.valueID "
