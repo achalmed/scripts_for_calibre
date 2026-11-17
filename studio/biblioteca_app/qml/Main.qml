@@ -1,6 +1,6 @@
 // Main.qml — Biblioteca Studio (reingeniería del 2026-11-02, docs/reingenieria.md): un gestor bibliográfico sobre la
-// biblioteca de Calibre, en GuiComun.VentanaBase. Arriba, las cuatro áreas (Catálogo · Bandejas · Método Documental ·
-// Coherencia, Ctrl+1–4), la búsqueda y el estado de la puerta de escritura. En el centro, el área: el catálogo con
+// biblioteca de Calibre, en GuiComun.VentanaBase. Arriba, las cinco áreas (Catálogo · Bandejas · Método Documental ·
+// Coherencia · Lectura, Ctrl+1–5), la búsqueda y el estado de la puerta de escritura. En el centro, el área: el catálogo con
 // portadas, filtros y la ficha editorial; las bandejas de trabajo; o las etapas con su tabla, su operación y los seis
 // pasos de la puerta. Abajo, la barra de estado. Ninguna llamada al disco ni a una suite aquí: todo lo hacen los
 // controladores de Python (studio.*); la ventana no escribe en ninguna base.
@@ -23,7 +23,7 @@ VentanaBase {
     readonly property string area: espacio.area
     readonly property bool enLibros: area === "catalogo" || area === "bandejas"
 
-    title: (area === "catalogo" && libros.hayActual ? libros.titulo : (enLibros ? espacio.textoArea : espacio.textoVista)) + " — Biblioteca Studio"
+    title: (area === "catalogo" && libros.hayActual ? libros.titulo : (enLibros || area === "lectura" ? espacio.textoArea : espacio.textoVista)) + " — Biblioteca Studio"
     acciones: registro
     tareas: studio.tareas
     consola: studio.consola
@@ -55,6 +55,7 @@ VentanaBase {
     Connections { target: espacio; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } function onAreaCambiada() { busqueda.text = ventana.enLibros ? libros.busqueda : "" } }
     Connections { target: libros; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } function onFiltroCambiado() { if (ventana.enLibros && !busqueda.activeFocus) busqueda.text = libros.busqueda } }
     Connections { target: etapas; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } }
+    Connections { target: studio.lectura; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } }
     Connections {
         target: ops
         function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) }
@@ -73,7 +74,7 @@ VentanaBase {
             Layout.rightMargin: Kirigami.Units.largeSpacing
             spacing: Kirigami.Units.smallSpacing
             Repeater {
-                model: 4
+                model: espacio.areas.length
                 delegate: Chip {
                     required property int index
                     readonly property var a: espacio.areas[index]
@@ -134,6 +135,7 @@ VentanaBase {
         Bandejas { id: bandejas }
         EspacioEtapas { id: metodo; filas: etapas.filasMetodo }
         EspacioEtapas { id: coherencia; filas: etapas.filasCoherencia; recorrido: false }
+        Lectura { id: lectura }
     }
 
     footer: BarraEstado {

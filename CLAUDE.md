@@ -75,6 +75,9 @@ Deshacer una escritura: copiar el respaldo de `$RESPALDOS_DIR/biblioteca/puerta/
 
 - **Calibre se excluye por un socket abstracto por usuario**: dos `calibredb` a la vez fallan; las pruebas corren
   bajo `unshare -rn`. Si corre otro `calibre*`, las pruebas de escritura de `fuentes` se saltan (75).
+- **La base de lectura (`lectura_base/`, §9.6) es propia, no una puerta**: vive en `$XDG_DATA_HOME/biblioteca/lectura.sqlite`,
+  la escribe solo `lectura_base/lib/base.py` (niega las rutas de Calibre y Zotero; `PROPIAS` en `test_puerta.py`) y lo que
+  va a Zotero pasa por la puerta. Sus pruebas: `python3 -m pytest tests/lectura_base`, en un mundo de juguete.
 - **KOReader ↔ Calibre se emparejan por el MD5 parcial** (`#ko_md5`); trampas de Calibre 9 y de `#ko_*`:
   `koreader/README.md`. El Read Time de Zotero es una nota de Ethereal Style, leída en solo lectura.
 - **`--metadatos` solo corre si alguna base cambió** desde la última orquestación aplicada.

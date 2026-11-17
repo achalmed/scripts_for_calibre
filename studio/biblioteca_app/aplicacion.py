@@ -2,8 +2,8 @@
 de portadas, el registro de acciones (menú, paleta, atajos, estados de operación) y carga `qml/Main.qml` (VentanaBase;
 reingeniería del 2026-11-02, `docs/reingenieria.md`).
 
-Toda operación existe una sola vez, aquí, en `Acciones`. Ctrl+1–4 las áreas (Catálogo, Bandejas, Método Documental,
-Coherencia), Ctrl+F buscar, Ctrl+G cuadrícula o lista, F9 los filtros. Las operaciones de las suites son acciones
+Toda operación existe una sola vez, aquí, en `Acciones`. Ctrl+1–5 las áreas (Catálogo, Bandejas, Método Documental,
+Coherencia, Lectura), Ctrl+F buscar, Ctrl+G cuadrícula o lista, F9 los filtros. Las operaciones de las suites son acciones
 `op.<id>` que eligen la operación actual (y llevan a su etapa); correrla es siempre «Simular» (F5, la orden sin
 `--aplicar`) o «Aplicar» (Ctrl+Intro, con `--aplicar`, tras confirmar con la orden exacta, las bases y los pasos de la
 puerta). Abrir el documento y mostrarlo en Dolphin son de `escritorio` de la base. Python no construye interfaz; la
@@ -28,6 +28,7 @@ from biblioteca_app.controladores.ajustes import Ajustes
 from biblioteca_app.controladores.espacio import Espacio
 from biblioteca_app.controladores.etapas import Etapas
 from biblioteca_app.controladores.fichado import Fichado
+from biblioteca_app.controladores.lectura import Lectura
 from biblioteca_app.controladores.libros import Libros
 from biblioteca_app.controladores.operaciones import Operaciones
 from biblioteca_app.controladores.puerta import Puerta
@@ -100,6 +101,7 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
     etapas = Etapas(espacio, libros, env, consola, repo=repo_datos)
     fichado = Fichado(libros, consola, cache or cache_portadas().parent)   # fichar con el PDF al lado y estudiar con la IA (§9.4, §9.5)
     operaciones = Operaciones(espacio, puerta, consola, tareas, env, cache=cache)
+    lectura = Lectura(libros)                 # el área Lectura: la base de lectura, en solo lectura (§9.6)
     acciones = Acciones()
     acciones.estandar(NOMBRE, paneles=False)
     pedir = lambda que, **datos_: (lambda *_: interfaz.pedir.emit(que, datos_))
@@ -203,6 +205,8 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
     def releer() -> None:
         if espacio.area in ("catalogo", "bandejas"):
             libros.recargar()
+        elif espacio.area == "lectura":
+            lectura.recargar()
         else:
             etapas.recargar(espacio.vista)
 
@@ -286,6 +290,8 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
                 libros.recargar()          # lo aplicado puede cambiar la biblioteca y sus bandejas
         if id_ in ("timers_instalar", "timers_verificar"):
             etapas.recargar("tareas")
+        if id_ in ("base_lectura", "lectura_a_zotero") and aplicar:
+            lectura.recargar()
 
     espacio.vistaCambiada.connect(vista_cambiada)
     espacio.areaCambiada.connect(vista_cambiada)
@@ -302,7 +308,8 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
     barra_estado()
 
     piezas = dict(env=env, consola=consola, tareas=tareas, interfaz=interfaz, ajustes=ajustes, espacio=espacio, puerta=puerta,
-                  libros=libros, etapas=etapas, operaciones=operaciones, acciones=acciones, portadas=portadas, fichado=fichado)
+                  libros=libros, etapas=etapas, operaciones=operaciones, acciones=acciones, portadas=portadas, fichado=fichado,
+                  lectura=lectura)
     for nombre, objeto in piezas.items():
         if nombre not in ("env", "portadas"):
             app.exponer(nombre, objeto)

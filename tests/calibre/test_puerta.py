@@ -25,6 +25,11 @@ FUERA = ("tests/",    # las campañas de script_normalizacion_metadatos salieron
 PENDIENTES = {
 }
 
+# las bases propias del repo, que no son de Calibre ni de Zotero: su único escritor y por qué (decisiones §9.6)
+PROPIAS = {
+    "lectura_base/lib/base.py": "la base de lectura, fuera de Calibre y de Zotero; `comprobar_ruta` niega sus bases y sus carpetas",
+}
+
 SUB_ESCRITURA = (r"add|add_format|remove|remove_format|set_metadata|set_custom|add_custom_column|"
                  r"remove_custom_column|embed_metadata|backup_metadata|restore_database|clone|fts_index")
 REGLAS = {
@@ -44,7 +49,7 @@ def _archivos(raiz: Path):
     salida = subprocess.run(["git", "-C", str(raiz), "ls-files", "-co", "--exclude-standard", "-z"],
                             capture_output=True, check=True).stdout.decode()
     for rel in sorted(filter(None, salida.split("\0"))):
-        if rel.endswith((".py", ".sh")) and rel not in PUERTA and not rel.startswith(FUERA) \
+        if rel.endswith((".py", ".sh")) and rel not in PUERTA and rel not in PROPIAS and not rel.startswith(FUERA) \
                 and (raiz / rel).is_file():
             yield rel
 
@@ -119,3 +124,13 @@ def test_ningun_escritor_fuera_de_la_puerta():
     assert fuera == [], "escrituras fuera de la puerta:\n" + "\n".join(f"{a}:{n} [{r}] {t}" for a, n, r, t in fuera)
     resueltos = set(PENDIENTES) - {h[0] for h in hallazgos}
     assert not resueltos, f"ya pasan por la puerta: quítalos de PENDIENTES: {sorted(resueltos)}"
+
+
+def test_las_bases_propias_se_niegan_a_abrir_las_de_calibre_y_zotero():
+    """Una base propia no es una puerta: escribe solo la suya, y su conexión de escritura pasa por la guarda de rutas
+    (la prueba de comportamiento es tests/lectura_base/test_base.py::test_la_base_no_se_abre_dentro_de_calibre_ni_de_zotero)."""
+    for rel in PROPIAS:
+        texto = (REPO / rel).read_text(encoding="utf-8")
+        assert "comprobar_ruta(" in texto and "RutaProhibida" in texto, rel
+        for regla in ("calibredb que escribe", "API de Calibre que escribe"):
+            assert not any(REGLAS[regla].search(l) for l in texto.splitlines() if not MENSAJE.match(l)), (rel, regla)

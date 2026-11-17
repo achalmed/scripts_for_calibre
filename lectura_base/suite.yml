@@ -1,0 +1,29 @@
+# lectura_base/suite.yml — suite lectura_base: la base de lectura de Biblioteca Studio (decisiones §9.6).
+# Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
+id: lectura_base
+objetivo: biblioteca
+resumen: Una sola base de lectura (fuera de Calibre y de Zotero) con los subrayados, notas, sesiones, horas y progreso de KOReader, Zotero, Okular y Yachay, sin duplicados entre ellos, con su cola de cambios y la vuelta a Zotero por la puerta.
+escribe_en:
+- archivos
+- zotero
+simula_por_defecto: true
+comandos:
+- 'main.py estado                       # qué hay en la base (solo lee)'
+- 'main.py sincronizar                  # simula: cada herramienta → la base'
+- main.py sincronizar --aplicar
+- 'main.py exportar zotero [--aplicar]  # la vuelta: la base → Zotero, por la puerta'
+- 'main.py libro 48 --json              # subrayados, tiempo y sesiones de un libro'
+- 'main.py cambios --consumidor X       # la cola de cambios para otros programas'
+estado: activo
+interfaz: cli
+entrada: KOReader (metadata.*.lua, statistics.sqlite3), zotero.sqlite (copia), Okular (docdata), Yachay (su API)
+depende_de:
+- python3
+- pdfinfo y pdftotext (poppler-utils)
+- lib/escribir.py y lib/escribir_zotero.py (la puerta, para Zotero)
+lee_de:
+- biblioteca
+- zotero
+pruebas: python3 -m pytest biblioteca-studio/tests/lectura_base   # desde ~/Documents; un mundo de juguete en un temporal, nunca las bases reales
+creado: 2026-11-17
+nota: 'La base vive en $XDG_DATA_HOME/biblioteca/lectura.sqlite (LECTURA_DB): datos del usuario, fuera de todo repo y de toda base de Calibre o Zotero; `lib/base.py` es su único escritor y se niega a abrir esas. Escribir en KOReader, Okular y Yachay espera la decisión del autor (§9.7).'

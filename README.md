@@ -24,11 +24,11 @@ main.py estado
 main.py traer <norma> [--serie|--tags|--titulo|--fecha|--emisor …] [--aplicar] [--json]
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-11-01); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-11-17); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 <!-- suites:inicio -->
-Suites de esta carpeta (14); índice global en `meta/INDICE_SCRIPTS.md`. Patrón: M main · C config · L lib.
+Suites de esta carpeta (15); índice global en `meta/INDICE_SCRIPTS.md`. Patrón: M main · C config · L lib.
 
 | Suite | Carpeta | Objetivo | Escribe en | Simula | Timer | Estado | Patrón |
 |---|---|---|---|---|---|---|---|
@@ -37,6 +37,7 @@ Suites de esta carpeta (14); índice global en `meta/INDICE_SCRIPTS.md`. Patrón
 | `ingesta` | [biblioteca-studio/ingesta](ingesta/) | fuentes | calibre, vault, archivos | sí |  | activo | `MCL` |
 | `koreader` | [biblioteca-studio/koreader](koreader/) | biblioteca | calibre | sí | koreader-calibre-sync.timer | activo | `MCL` |
 | `lectura` | [biblioteca-studio/lectura](lectura/) | biblioteca | calibre | sí | ecosistema-lectura.timer · ecosistema-metadatos.timer | activo | `MCL` |
+| `lectura_base` | [biblioteca-studio/lectura_base](lectura_base/) | biblioteca | archivos, zotero | sí |  | activo | `MCL` |
 | `lecturas` | [biblioteca-studio/lecturas](lecturas/) | fuentes | vault | sí |  | activo | `MCL` |
 | `manifiesto` | [biblioteca-studio/manifiesto](manifiesto/) | fuentes | vault | sí |  | activo | `MCL` |
 | `metadatos-pdf` | [biblioteca-studio/metadatos-pdf](metadatos-pdf/) | biblioteca | calibre, archivos | sí |  | activo | `MCL` |
@@ -47,7 +48,7 @@ Suites de esta carpeta (14); índice global en `meta/INDICE_SCRIPTS.md`. Patrón
 | `verificacion` | [biblioteca-studio/verificacion](verificacion/) | biblioteca | ninguno | sí |  | activo | `MCL` |
 | `zotero-series` | [biblioteca-studio/zotero-series](zotero-series/) | biblioteca | zotero | no |  | retirado | `···` |
 
-<sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-11-01); no se edita a mano.</sub>
+<sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-11-17); no se edita a mano.</sub>
 <!-- suites:fin -->
 
 Las herramientas de línea de comandos (Bash y Python) alrededor de la biblioteca Calibre (`biblioteca/`, la

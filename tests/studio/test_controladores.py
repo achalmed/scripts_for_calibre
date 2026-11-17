@@ -68,7 +68,7 @@ def _visible(l, i: int) -> dict:
 @requiere_binding
 def test_espacio_areas(piezas):
     e = piezas["espacio"]
-    assert e.area == "catalogo" and [a["nombre"] for a in e.areas] == ["catalogo", "bandejas", "metodo", "coherencia"]
+    assert e.area == "catalogo" and [a["nombre"] for a in e.areas] == ["catalogo", "bandejas", "metodo", "coherencia", "lectura"]
     e.fijarArea("metodo")
     assert e.area == "metodo" and e.vista == "adquirir"                 # la primera etapa del Método
     e.fijarVista("fichas")

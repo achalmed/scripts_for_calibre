@@ -603,3 +603,64 @@ redacción y ninguna mirada. No se importa el paquete de Yachay (arrastra Tiqsi 
 
 Las pruebas: `tests/fuentes/test_fichar_y_ayuda.py` (un escrito en un temporal, el texto del PDF simulado) y
 `tests/studio/test_fichado.py` (el controlador sobre la muestra, que trae un informe en escritura y un libro con texto).
+
+### §9.6 Una sola base de lectura, de Biblioteca Studio (2026-11-17)
+
+Pedido del autor: «yo puedo usar KOReader, otra vez Zotero, otra vez Okular o desde mi Yachay: todas esas notas,
+subrayados y resaltados deben sincronizar en una misma base de datos, en Biblioteca Studio, incluso sus horas de lectura y
+sus estadísticas». La suite `lectura_base/` la construye:
+
+- **Dónde**: `$XDG_DATA_HOME/biblioteca/lectura.sqlite` (`LECTURA_DB`). Son datos del usuario (lo subrayado solo en Yachay
+  no está en otra parte), así que no van a la caché ni al estado, y nunca a una base de Calibre o de Zotero ni a un repo.
+  `lectura_base/lib/base.py` es su único escritor y se niega a abrir `CALIBRE_DB`, `ZOTERO_DB` o algo dentro de la
+  biblioteca o de la carpeta de Zotero; `tests/calibre/test_puerta.py` la declara «base propia» (`PROPIAS`): las reglas
+  de la puerta valen para Calibre y Zotero, no para ella. Antes de escribir, el respaldo verificado de la puerta
+  (`escribir.respaldar`) en `<respaldos de la puerta>/lectura/`.
+- **El modelo**: una anotación por pasaje (libro por `calibre_id` y MD5 parcial de KOReader, hoja del PDF, página o
+  capítulo, texto, rectángulos como fracciones de la hoja con el origen arriba, igual que Yachay, color, tipo,
+  intención, nota, fechas, huella) y sus **presencias** (en qué herramienta vive y con qué identificador). Un mismo
+  subrayado en KOReader y en Zotero es una anotación con dos presencias, no dos anotaciones. Aparte, las sesiones (solo
+  KOReader guarda la hora de cada página) y el progreso por libro y por origen. Los relojes no se copian (como
+  `#ko_tiempo` y `#zot_tiempo`): cada origen guarda su tiempo y las estadísticas los suman.
+- **Sin duplicados**: un registro nuevo se une a la anotación de otro origen que sea el mismo pasaje (la misma huella:
+  libro, hoja y comienzo del texto normalizado; o el texto casi igual en la misma hoja o la vecina; o los rectángulos
+  solapados, que es como se reconoce lo de Okular, que no guarda texto). Dos subrayados iguales de una misma herramienta
+  siguen siendo dos. Lo que la base escribe en una herramienta queda como presencia y vuelve como la misma anotación.
+- **Conciliar, no copiar**: un cambio en un origen llega a la base si es más nuevo; lo que un origen leyó entero y ya no
+  trae queda «ausente» allí, y la anotación ausente en todos, «borrada» en la base. Borrar en una herramienta no borra
+  en las demás.
+- **La cola de cambios**: cada alta, cambio o baja la apuntan disparadores de SQLite en `cambios`; un consumidor lee
+  desde su cursor (`main.py cambios --consumidor X`). Es el canal de los studios y del adaptador de Yachay.
+- **Leer es seguro**: KOReader por sus `metadata.*.lua` y `statistics.sqlite3` (`mode=ro`); Zotero de una copia de
+  `zotero.sqlite` (API de respaldo de SQLite; con Zotero abierto, una copia del archivo); Okular por su docdata (el
+  texto se recorta del PDF con `pdftotext`, porque Okular no lo guarda); Calibre en `mode=ro` (títulos, archivos,
+  `#ko_md5`); Yachay solo por su API con token (§9.3.3), con el cliente que trae la fase 3b.
+- **En la ventana**: el área **Lectura** (Ctrl+5): el resumen de la base (horas, este mes, racha, sesiones, de dónde vienen
+  los subrayados), las horas de las últimas doce semanas, los libros con lectura y, del libro elegido (sigue al del
+  catálogo), su progreso y tiempo en cada herramienta, sus subrayados filtrados por origen con los chips (cada uno se
+  copia como cita) y sus sesiones. Solo lee; la base la escriben las operaciones «Base de lectura» y «Subrayados de la
+  base → Zotero» de Coherencia › Sincronizar.
+
+La primera simulación sobre los datos reales (2026-11-17, sin escribir): 61 resaltados de KOReader en 19 libros, 65
+anotaciones de Zotero, 128 sesiones de KOReader, ningún pasaje en común entre ellos y nada en el docdata de Okular.
+KOReader escribe `nan` en algunos sidecars (`percent_finished`); el lector Lua de la base lo entiende y reescribe los 287
+sidecars reales idénticos byte a byte (probado en memoria).
+
+### §9.7 La vuelta: qué se escribe en cada herramienta (2026-11-17)
+
+La sincronía de ida y vuelta lleva a cada herramienta lo que la base tiene y ella no (`main.py exportar <destino>`;
+simula siempre). Qué destino se escribe es decisión del autor, y por ahora:
+
+- **Zotero, sí, por la puerta**: Zotero cerrado, `LOCK_ZOTERO`, respaldo verificado, la primitiva nueva
+  `z_anadir_anotacion` de `lib/escribir_zotero.py` (un ítem «annotation» y su fila de `itemAnnotations` en el adjunto PDF del
+  libro, sin sincronizar para que la cuenta lo suba) e `integrity_check` al final. Con Zotero abierto no se escribe.
+- **KOReader y Okular, pendientes de decidir**: los escritores existen y están probados en copias (KOReader cerrado;
+  respaldo del archivo y escritura atómica; el `.lua` se reescribe con el mismo formato de KOReader), pero
+  `exportar.ESCRIBE` no los incluye: `--aplicar` se niega. Escribir en el `.lua` de KOReader toca los datos vivos del
+  lector principal del autor; para Okular, además, el docdata se busca por el tamaño del PDF.
+- **Yachay, pendiente de la fase 3b**: `exportar yachay` arma el cuerpo de `POST /lector/{id}/resaltados` (con el
+  `uid` de la base como `origen_id`, para que Yachay no duplique), pero no escribe hasta que el cliente con token esté y
+  el autor lo apruebe.
+- **Sin timer**: la base se sincroniza a pedido (la operación de la ventana o la CLI). Un timer, como los de KOReader y
+  Zotero, solo si el autor lo aprueba.
+

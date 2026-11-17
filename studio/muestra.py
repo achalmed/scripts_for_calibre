@@ -379,6 +379,8 @@ def crear(raiz: Path, con_calibre: bool | None = None) -> Muestra:
                "WRITING_DIR": str(raiz / "escritura"), "DATAFW_DIR": str(raiz / "datafw"), "NOTES_DIR": str(raiz / "notas")}
     (raiz / "notas").mkdir()
     _escrito_de_muestra(raiz / "escritura", libros)
+    entorno.update(LECTURA_DB=str(raiz / "datos" / "biblioteca" / "lectura.sqlite"), XDG_DATA_HOME=str(raiz / "datos"))
+    _lectura(Path(entorno["LECTURA_DB"]), libros)
     indice = _indice(entorno, repo, libros, estado / "biblioteca" / "indice.json", raiz / "notas")
     _respaldos(raiz / "respaldos" / "biblioteca" / "puerta")
     return Muestra(raiz, biblioteca, calibre_db, zotero_db, repo, estado, indice, con_calibre, entorno)
@@ -429,6 +431,41 @@ def _indice(entorno: dict, repo: Path, libros: dict, destino: Path, notas: Path)
     destino.parent.mkdir(parents=True, exist_ok=True)
     destino.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
     return destino
+
+
+def _lectura(destino: Path, libros: dict) -> None:
+    """Una base de lectura de muestra (decisiones §9.6) con el mismo código que la real (`lectura_base/lib/base.py`):
+    subrayados del primer libro en KOReader, Zotero (uno compartido con KOReader), Okular y Yachay; sesiones de las
+    últimas semanas y el progreso de dos libros. Nada de ninguna herramienta real: los registros se escriben aquí."""
+    sys.path.insert(0, str(REPO))
+    from lectura_base.lib import base as lb  # noqa: E402
+    por_titulo = {d["titulo"]: b for b, d in libros.items()}
+    b1, b2 = por_titulo.get(LIBROS[0][0]), por_titulo.get(LIBROS[1][0])
+    if b1 is None:
+        return
+    ahora = int(time.time())
+
+    def a(oid, hoja, texto, nota="", color="", y=0.3, **k):
+        return {"origen_id": oid, "calibre_id": b1, "hoja": hoja, "texto": texto, "nota": nota, "color": color,
+                "rects": [[hoja, 0.12, y, 0.7, 0.02]], "creada": "2026-10-28T15:00:00Z", "modificada": "2026-10-28T15:00:00Z", **k}
+
+    compartido = "Las ciudades pequeñas crecen cuando se integran a su región."
+    sesiones = [{"origen_id": f"muestra:{i}", "calibre_id": b1 if i % 3 else b2, "inicio": ahora - i * 3 * 86400 - 3600,
+                 "fin": ahora - i * 3 * 86400, "segundos": 1500 + (i * 437) % 2400, "paginas": 6 + i % 9} for i in range(1, 26)]
+    lecturas = [
+        lb.Lectura("koreader", anotaciones=[a("ko:1", 2, compartido, "la idea central", "yellow"),
+                                            a("ko:2", 2, "La escala importa menos que la conexión con los mercados vecinos.", color="green", y=0.36)],
+                   sesiones=sesiones, alcance=None,
+                   progreso=[{"calibre_id": b1, "fraccion": 0.42, "estado": "reading", "segundos": 185 * 60, "hoja": 2, "hojas": 3},
+                             {"calibre_id": b2, "fraccion": 1.0, "estado": "complete", "segundos": 940 * 60} if b2 else {"calibre_id": b1}],
+                   libros={b: {"titulo": libros[b]["titulo"], "autores": " & ".join(libros[b].get("autores") or [])} for b in (b1, b2) if b}),
+        lb.Lectura("zotero", anotaciones=[a("ZMUESTR1", 2, compartido.lower(), color="#ffd400", pagina="12")], alcance=None,
+                   progreso=[{"calibre_id": b1, "segundos": 20 * 60, "hoja": 3}]),
+        lb.Lectura("okular", anotaciones=[a("okular-muestra", 3, "", "revisar el dato del crédito", "#ff6666", y=0.5)], alcance=None),
+        lb.Lectura("yachay", anotaciones=[a("701", 3, "El mercado de trabajo local depende de la conectividad vial y del acceso al crédito.",
+                                            intencion="cita", pagina="13", y=0.4)], alcance=None),
+    ]
+    lb.importar(lecturas, aplicar=True, ruta=destino)
 
 
 def _respaldos(raiz: Path) -> None:

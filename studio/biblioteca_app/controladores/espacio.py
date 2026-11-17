@@ -15,7 +15,8 @@ from biblioteca_app.servicios import operaciones as ops
 
 NOMBRES_VISTAS = ops.NOMBRES_ETAPAS
 AREAS = (("catalogo", "Catálogo", "view-preview"), ("bandejas", "Bandejas", "mail-folder-inbox"),
-         ("metodo", "Método Documental", "view-process-tree"), ("coherencia", "Coherencia", "folder-sync"))
+         ("metodo", "Método Documental", "view-process-tree"), ("coherencia", "Coherencia", "folder-sync"),
+         ("lectura", "Lectura", "view-readermode"))      # la base de lectura (decisiones §9.6)
 NOMBRES_AREAS = tuple(a for a, _t, _i in AREAS)
 VISTAS_DE = {"catalogo": ("libros",), "metodo": ("adquirir", "entrada", "catalogar", "fichas", "manifiestos"),
              "coherencia": ("sincronizar", "puerta", "tareas")}

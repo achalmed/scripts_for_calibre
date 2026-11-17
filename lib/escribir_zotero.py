@@ -163,3 +163,31 @@ def z_set_attachment_path(cur, attachment_id, path):
 def z_rewrite_attachment_paths(cur, viejo: str, nuevo: str) -> int:
     """Toda ruta de adjunto igual a `viejo` pasa a `nuevo` (sin tocar la fecha, como las campañas)."""
     return cur.execute("UPDATE itemAttachments SET path = ? WHERE path = ?", (nuevo, viejo)).rowcount
+
+
+_ALFABETO_CLAVE = "23456789ABCDEFGHIJKLMNPQRSTUVWXYZ"      # el de Zotero.Utilities.generateObjectKey
+
+
+def z_nueva_clave(cur, libreria: int) -> str:
+    """Una clave de ocho caracteres que no use ningún ítem de esa biblioteca."""
+    import secrets
+    while True:
+        clave = "".join(secrets.choice(_ALFABETO_CLAVE) for _ in range(8))
+        if not cur.execute("SELECT 1 FROM items WHERE libraryID=? AND key=?", (libreria, clave)).fetchone():
+            return clave
+
+
+def z_anadir_anotacion(cur, adjunto_id: int, libreria: int, datos: dict) -> str:
+    """Una anotación nueva en un adjunto PDF (la base de lectura, decisiones §9.6): un ítem de tipo «annotation» y su fila
+    de `itemAnnotations`, sin sincronizar, para que la cuenta la suba. `datos`: tipo (1 resaltado, 2 nota, 5 subrayado),
+    texto, comentario, color (#rrggbb), etiqueta (la página impresa), orden (sortIndex) y posicion (JSON de Zotero).
+    Devuelve la clave del ítem."""
+    tipo = cur.execute("SELECT itemTypeID FROM itemTypes WHERE typeName='annotation'").fetchone()[0]
+    clave = z_nueva_clave(cur, libreria)
+    cur.execute("INSERT INTO items(itemTypeID, dateAdded, dateModified, clientDateModified, libraryID, key, version, synced) "
+                "VALUES (?,?,?,?,?,?,0,0)", (tipo, AHORA_SQL, AHORA_SQL, AHORA_SQL, libreria, clave))
+    cur.execute("INSERT INTO itemAnnotations(itemID, parentItemID, type, authorName, text, comment, color, pageLabel, sortIndex, "
+                "position, isExternal) VALUES (?,?,?,NULL,?,?,?,?,?,?,0)",
+                (cur.lastrowid, adjunto_id, int(datos["tipo"]), datos.get("texto") or None, datos.get("comentario") or None,
+                 datos.get("color") or "#ffd400", datos.get("etiqueta") or "", datos["orden"], datos["posicion"]))
+    return clave

@@ -167,6 +167,12 @@ ETAPAS = (
           "en la columna «apuntes» de su libro.", ("lib/enlazar_notas.py",), bases=("calibre",)),
         O("metadatos_pdf", "Metadatos en los PDF", "Incrusta los metadatos de Calibre en cada PDF (XMP).",
           ("metadatos-pdf/main.sh", "embed"), bases=("calibre",)),
+        # la base de lectura (decisiones §9.6): escribe solo la suya (fuera de Calibre y de Zotero), tras su respaldo
+        O("base_lectura", "Base de lectura", "Junta en una sola base los subrayados, notas, horas y progreso de KOReader, "
+          "Zotero, Okular y Yachay (solo los lee); el área Lectura la muestra.", ("lectura_base/main.py", "sincronizar")),
+        O("lectura_a_zotero", "Subrayados de la base → Zotero", "Los subrayados de KOReader, Okular o Yachay que Zotero no "
+          "tiene, en el PDF del libro en Zotero; aplicar escribe por la puerta.", ("lectura_base/main.py", "exportar", "zotero"),
+          bases=("zotero",)),
     )),
     Etapa("puerta", "Puerta", "object-locked", "Una sola puerta escribe en Calibre y en Zotero: con la aplicación cerrada, "
           "con candado y con respaldo verificado. Aquí, sus respaldos y cómo deshacer"),

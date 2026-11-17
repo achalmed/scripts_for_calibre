@@ -63,7 +63,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Captura de Biblioteca Studio sobre la biblioteca de muestra")
     parser.add_argument("salida")
     parser.add_argument("--esquema", help="archivo .colors de KDE (relanza con XDG_CONFIG_HOME temporal)")
-    parser.add_argument("--area", default="catalogo", help="catalogo · bandejas · metodo · coherencia")
+    parser.add_argument("--area", default="catalogo", help="catalogo · bandejas · metodo · coherencia · lectura")
     parser.add_argument("--vista", default="", help="la etapa: adquirir · entrada · catalogar · fichas · manifiestos · sincronizar · puerta · tareas")
     parser.add_argument("--libro", default="", help="el libro de la ficha editorial (su número de Calibre)")
     parser.add_argument("--buscar", default="", help="la búsqueda del catálogo (autor:… año:…)")

@@ -27,7 +27,7 @@ install.sh
 ## Qué es
 
 Un gestor bibliográfico sobre la biblioteca de Calibre (`../docs/reingenieria.md`), en `VentanaBase` de `gui-comun` 3.0,
-con cuatro áreas (Ctrl+1–4):
+con cinco áreas (Ctrl+1–5):
 
 ![El catálogo con portadas y la ficha editorial](../docs/figuras/biblioteca-studio-claro.png)
 
@@ -42,6 +42,10 @@ con cuatro áreas (Ctrl+1–4):
 - **Método Documental** (Adquirir → Entrada → Catalogar → Fichas → Manifiestos) y **Coherencia** (Sincronizar, Puerta,
   Tareas automáticas): cada etapa con la tabla de lo que maneja (los ledgers, aquí sí, son tablas), el elemento elegido y
   sus operaciones, con su plan, su registro y la salida de la CLI.
+- **Lectura** (`../lectura_base/`, `../docs/decisiones.md` §9.6): la base de lectura única, en solo lectura: horas,
+  este mes, racha y las últimas doce semanas; los libros con lectura; y del libro elegido (sigue al del catálogo) su
+  progreso y su tiempo en KOReader, Zotero, Okular y Yachay, sus subrayados filtrados por origen (cada uno se copia como
+  cita) y sus sesiones. La escriben las operaciones «Base de lectura» y «Subrayados de la base → Zotero».
 
 **La ventana no escribe en ninguna base ni la abre.** Lo editorial lo lee `../lib/indice.py` (`editorial`, solo lectura)
 y las portadas se leen en solo lectura y se guardan en miniatura en la caché del studio (`$XDG_CACHE_HOME/biblioteca-studio/portadas/`,
@@ -59,7 +63,7 @@ suite; la ventana los sigue en la salida y, al terminar, comprueba en solo lectu
 | `main.py` | el punto de entrada, sin lógica (`/usr/bin/python3`); una sola instancia (`QLocalServer`) |
 | `biblioteca_app/aplicacion.py` | arma la aplicación: controladores, el proveedor de portadas (`gui_comun.miniaturas.ProveedorMiniaturas`, `image://portadas/<id>`), el registro de acciones (menú, paleta, atajos, estados de operación) y `biblioteca_app/qml/Main.qml` |
 | `biblioteca_app/servicios/` | sin Qt: `catalogo` (une lo editorial al índice; búsqueda por campo, facetas, orden, bandejas), `pasos` (los seis pasos de la puerta vistos desde fuera), `operaciones` (el catálogo de órdenes), `puerta` (procesos, candados, respaldos, timers), `datos` (el índice, los ledgers, las fichas, los manifiestos, la coherencia) |
-| `biblioteca_app/controladores/` | lo que QML ve: `espacio` (áreas, etapa, barra de estado, rutas), `libros` (el catálogo, la ficha, las bandejas), `etapas`, `operaciones` (la actual, Simular y Aplicar, plan, registro y pasos), `puerta`, `ajustes` |
+| `biblioteca_app/controladores/` | lo que QML ve: `espacio` (áreas, etapa, barra de estado, rutas), `libros` (el catálogo, la ficha, las bandejas), `etapas`, `operaciones` (la actual, Simular y Aplicar, plan, registro y pasos), `puerta`, `ajustes`, `lectura` (la base de lectura, solo lee) |
 | `biblioteca_app/qml/` | `Main.qml` sobre `GuiComun.VentanaBase` y `componentes/` (Catalogo, TarjetaLibro, FilaLibro, PanelFiltros, FichaEditorial, Bandejas, EspacioEtapas, Operacion, Elemento, Plan, Registro) |
 | `biblioteca_app/recursos/marca.svg` | el icono del lanzador: la única marca del studio |
 | `muestra.py` | la biblioteca de muestra (libros ficticios con `calibredb`, metadatos y portadas por la API de Calibre, Zotero mínimo, ledgers y fichas) de las pruebas y las capturas; nunca la real |
