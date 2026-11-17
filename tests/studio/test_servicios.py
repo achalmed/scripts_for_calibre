@@ -111,8 +111,11 @@ def test_descargas_catalogacion_fichas_y_manifiestos(muestra):
     assert f[0]["titulo"].startswith("Economía") and f[0]["proyecto"] == "muestra" and f[0]["calibre_id"] == "1"
     env = datos.cargar_env()
     m = datos.manifiestos(type("E", (), {"DOCS_ROOT": muestra.raiz, "DATAFW_DIR": muestra.raiz / "datafw", "WRITING_DIR": muestra.raiz / "escritura"})(), muestra.repo)
-    assert len(m) == 1 and m[0]["proyecto"] == "proyecto-muestra" and m[0]["entradas"] == 2 and m[0]["sin_libro"] == 1 and m[0]["nivel"] == "negativo"
-    assert m[0]["carpeta"] == "repo/entrada/proyecto-muestra"
+    m = {x["proyecto"]: x for x in m}                    # la zona de entrada y el informe de muestra de escritura (§9.4)
+    assert set(m) == {"proyecto-muestra", "2026-11-17-informe-de-muestra"}
+    p = m["proyecto-muestra"]
+    assert p["entradas"] == 2 and p["sin_libro"] == 1 and p["nivel"] == "negativo"
+    assert p["carpeta"] == "repo/entrada/proyecto-muestra"
     assert env is not None
 
 

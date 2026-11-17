@@ -209,7 +209,7 @@ def test_etapas_tablas_y_elemento(piezas):
     assert c["adquirir"] == 3 and c["entrada"] == 4 and c["catalogar"] == 4 and c["fichas"] == 2 and c["puerta"] == 2 and c["tareas"] == 3
     assert c["manifiestos"] == ""                                    # perezosa: se lee al mostrarse
     piezas["espacio"].fijarVista("manifiestos")
-    assert t.contadores["manifiestos"] == 1
+    assert t.contadores["manifiestos"] == 2                         # el de la zona de entrada y el del informe de muestra (§9.4)
     assert c["sincronizar"] == 3                                     # las comprobaciones con algo que atender
     assert [f["nombre"] for f in t.filasMetodo] == ["adquirir", "entrada", "catalogar", "fichas", "manifiestos"]
     m = t.modeloDe("entrada")

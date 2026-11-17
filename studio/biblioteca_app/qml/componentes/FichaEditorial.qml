@@ -2,6 +2,8 @@
 // mención de responsabilidad, el pie de imprenta y la serie; abrir el documento con su aplicación o mostrarlo en Dolphin;
 // la clave para citar (Zotero manda en citas), el estado en Zotero y la lectura en KOReader; identificadores, materias,
 // descripción, formatos, fichas canónicas y nota de lectura. Solo lee: lo que cambia la biblioteca es una operación.
+// Desde aquí se ficha el libro en un escrito y se estudia con la IA (DialogoFicha y DialogoEstudioObra, §9.4 y §9.5):
+// eso escribe solo en las fichas del escrito, nunca en Calibre ni en Zotero.
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -120,6 +122,26 @@ QQC2.Control {
                             ayuda: a ? a.texto.replace("&", "") : ""
                             onClicked: a.disparar()
                         }
+                    }
+                }
+
+                // fichar y estudiar con la IA (decisiones §9.4 y §9.5)
+                Flow {
+                    Layout.fillWidth: true
+                    spacing: Kirigami.Units.smallSpacing
+                    Chip {
+                        objectName: "nuevaFicha"
+                        text: "Nueva ficha"
+                        icono: "document-new"
+                        ayuda: "Una ficha textual, de paráfrasis o de fuente en un escrito, con el PDF al lado y su cotejo"
+                        onClicked: dialogoFicha.abrir()
+                    }
+                    Chip {
+                        objectName: "estudiarIA"
+                        text: "Estudiar con la IA"
+                        icono: "tools-wizard"
+                        ayuda: "Copia el prompt de una mirada sobre unas hojas del libro y lee de vuelta lo que respondió el chat"
+                        onClicked: dialogoEstudio.abrir()
                     }
                 }
 
@@ -247,4 +269,7 @@ QQC2.Control {
             }
         }
     }
+
+    DialogoFicha { id: dialogoFicha; objectName: "dialogoFicha" }
+    DialogoEstudioObra { id: dialogoEstudio; objectName: "dialogoEstudio"; dialogoFicha: dialogoFicha }
 }

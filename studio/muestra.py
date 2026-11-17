@@ -124,6 +124,54 @@ _PDF = (b"%PDF-1.4\n1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n2 0 obj<</Type/P
         b"0000000009 00000 n \n0000000052 00000 n \n0000000101 00000 n \ntrailer<</Size 4/Root 1 0 R>>\nstartxref\n160\n%%EOF\n")
 
 
+# el texto de las tres hojas del primer libro: el fichado y el estudio de obra (decisiones §9.4 y §9.5) cotejan contra él
+HOJAS_CIUDADES = [
+    ["Economía de las ciudades pequeñas", "Rosa Quispe", "Fondo Editorial de Muestra, 2021"],
+    ["Capítulo 1. La escala urbana", "", "Las ciudades pequeñas crecen cuando se integran a su región.", "La escala importa menos que",
+     "la conexión con los mercados vecinos.", "", "12"],
+    ["Capítulo 2. El empleo local", "", "El mercado de trabajo local depende de la conectividad vial", "y del acceso al crédito.", "", "13"],
+]
+
+
+def pdf_con_texto(hojas: list[list[str]]) -> bytes:
+    """Un PDF mínimo con texto extraíble (Helvetica, WinAnsi), una hoja por lista de líneas: lo que pdftotext lee."""
+    objetos = [b"<</Type/Catalog/Pages 2 0 R>>", None, b"<</Type/Font/Subtype/Type1/BaseFont/Helvetica/Encoding/WinAnsiEncoding>>"]
+    kids = []
+    for lineas in hojas:
+        flujo = b"BT /F1 12 Tf 72 760 Td 16 TL " + b" ".join(
+            b"(" + l.encode("cp1252").replace(b"\\", b"\\\\").replace(b"(", b"\\(").replace(b")", b"\\)") + b") Tj T*" for l in lineas) + b" ET"
+        objetos.append(b"<</Length %d>>stream\n" % len(flujo) + flujo + b"\nendstream")
+        objetos.append(b"<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]/Resources<</Font<</F1 3 0 R>>>>/Contents %d 0 R>>" % len(objetos))
+        kids.append(len(objetos))
+    objetos[1] = b"<</Type/Pages/Kids[" + b" ".join(b"%d 0 R" % k for k in kids) + b"]/Count %d>>" % len(kids)
+    salida, marcas = bytearray(b"%PDF-1.4\n"), []
+    for i, o in enumerate(objetos, 1):
+        marcas.append(len(salida))
+        salida += b"%d 0 obj\n" % i + o + b"\nendobj\n"
+    xref = len(salida)
+    salida += b"xref\n0 %d\n0000000000 65535 f \n" % (len(objetos) + 1) + b"".join(b"%010d 00000 n \n" % m for m in marcas)
+    salida += b"trailer<</Size %d/Root 1 0 R>>\nstartxref\n%d\n%%%%EOF\n" % (len(objetos) + 1, xref)
+    return bytes(salida)
+
+
+def _escrito_de_muestra(escritura: Path, libros: dict) -> None:
+    """Un informe de muestra en escritura/ que usa el primer libro: su fuentes.yml, su references.bib y una ficha (el
+    fichado y «Usado en» tienen dónde escribir y qué mostrar; nunca un escrito real)."""
+    cid = next((b for b, l in libros.items() if l["titulo"] == LIBROS[0][0]), None)
+    d = escritura / "reports" / "2026-11-17-informe-de-muestra"
+    (d / "fuentes" / "fichas").mkdir(parents=True)
+    (d / "proyecto.yaml").write_text("titulo: Informe de muestra sobre ciudades\ntipo: informe\nesquema: informe-tecnico\n", encoding="utf-8")
+    (d / "informe.tex").write_text("% informe de muestra\n\\documentclass{article}\n\\begin{document}\nTexto.\n\\end{document}\n", encoding="utf-8")
+    if cid is None:
+        return
+    (d / "fuentes" / "fuentes.yml").write_text(
+        f"proyecto: 2026-11-17-informe-de-muestra\nfuentes:\n- calibre_id: {cid}\n  zotero_key: {LIBROS[0][2]}\n  clave_bibtex: {LIBROS[0][3]}\n"
+        f"  titulo: {LIBROS[0][0]}\n  uso: marco\n", encoding="utf-8")
+    (d / "references.bib").write_text(f"% calibre_id: {cid}\n@book{{{LIBROS[0][3]},\n  title = {{{LIBROS[0][0]}}},\n}}\n", encoding="utf-8")
+    (escritura / "theses" / "2026-tesis-de-muestra").mkdir(parents=True)
+    (escritura / "theses" / "2026-tesis-de-muestra" / "proyecto.yaml").write_text("titulo: Tesis de muestra sobre el empleo\ntipo: tesis\n", encoding="utf-8")
+
+
 @dataclass
 class Muestra:
     raiz: Path
@@ -288,7 +336,7 @@ def crear(raiz: Path, con_calibre: bool | None = None) -> Muestra:
         pdfs = raiz / "pdfs"
         pdfs.mkdir()
         for titulo, autor, _z, _c in LIBROS:
-            (pdfs / f"{titulo} - {autor}.pdf").write_bytes(_PDF)
+            (pdfs / f"{titulo} - {autor}.pdf").write_bytes(pdf_con_texto(HOJAS_CIUDADES) if titulo == LIBROS[0][0] else _PDF)
         plantilla = _plantilla()
         if plantilla is not None and (plantilla / "metadata.db").is_file():
             shutil.rmtree(biblioteca)
@@ -330,6 +378,7 @@ def crear(raiz: Path, con_calibre: bool | None = None) -> Muestra:
                "PUERTA_RESPALDOS": str(raiz / "respaldos" / "biblioteca" / "puerta"),
                "WRITING_DIR": str(raiz / "escritura"), "DATAFW_DIR": str(raiz / "datafw"), "NOTES_DIR": str(raiz / "notas")}
     (raiz / "notas").mkdir()
+    _escrito_de_muestra(raiz / "escritura", libros)
     indice = _indice(entorno, repo, libros, estado / "biblioteca" / "indice.json", raiz / "notas")
     _respaldos(raiz / "respaldos" / "biblioteca" / "puerta")
     return Muestra(raiz, biblioteca, calibre_db, zotero_db, repo, estado, indice, con_calibre, entorno)

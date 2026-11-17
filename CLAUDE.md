@@ -43,6 +43,8 @@ las suites de fuentes) y el README de la suite que se toque. Concreta `~/Documen
 - **Biblioteca Studio y los complementos no son puertas** (`docs/decisiones.md` §2.10 y §2.12): `studio/` corre las CLI
   (F5 simula, Ctrl+Intro aplica tras confirmar, con la app cerrada y el candado libre); los complementos de Calibre, KOReader y Zotero leen el índice de
   `lib/indice.py` (nunca las bases) y solo escriben texto (la nota de lectura y `por-verificar.tsv`), salvo las series de Zotero (§2.11).
+  La ficha editorial ficha en un escrito y lee lo que devolvió un chat (`lib/fichar.py`, `lib/ayuda_ia.py`, §9.4 y §9.5): solo
+  escribe en la carpeta de fichas del escrito, tras revisar, y no llama a ningún modelo.
 - **La ventana es un gestor bibliográfico en QML + Kirigami sobre `VentanaBase` de `gui-comun` 3.0** (`docs/reingenieria.md`,
   `studio/README.md`): Python expone modelos, propiedades y `@Slot` (`studio/biblioteca_app/controladores/`), QML pinta y
   pide (`studio/biblioteca_app/qml/`); cada operación existe una sola vez en `studio/biblioteca_app/aplicacion.py` y su

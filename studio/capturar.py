@@ -28,6 +28,37 @@ REPO = AQUI.parent
 sys.path.insert(0, str(AQUI))
 
 
+# lo que un chat devolvería con la mirada «Fichas textuales» sobre las hojas 2 y 3 del primer libro de la muestra
+ESTUDIO_DE_MUESTRA = """```yaml
+tipo: estudio-de-obra
+version: 1
+dimension: obra_fichas
+titulo: "Dos fichas de los capítulos 1 y 2"
+obra: "Economía de las ciudades pequeñas"
+unidad: "caps. 1 y 2, pp. 12-13"
+afirmaciones:
+  - seccion: identificacion
+    clase: H
+    texto: "Los capítulos 1 y 2 tratan la escala urbana y el empleo local."
+fichas:
+  - tipo: textual_simple
+    tema: "escala urbana"
+    categoria: "Idea principal"
+    cita: u2
+    localizador: "p. 12"
+    texto_citado: "Las ciudades pequeñas crecen cuando se integran a su región."
+    comentario: "La tesis del capítulo 1."
+  - tipo: parafrasis
+    tema: "empleo y vías"
+    categoria: "Argumento"
+    cita: u2
+    localizador: "p. 13"
+    texto_citado: "El mercado de trabajo local depende de la conectividad vial"
+    parafrasis: "El empleo de una ciudad pequeña sigue a sus caminos."
+    comentario: "Fiel: no añade causas."
+```"""
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Captura de Biblioteca Studio sobre la biblioteca de muestra")
     parser.add_argument("salida")
@@ -44,6 +75,8 @@ def main() -> int:
     parser.add_argument("--dialogo", action="store_true", help="abre el diálogo de Aplicar de la operación (solo lo muestra: no aplica)")
     parser.add_argument("--sin-correr", action="store_true", help="no corre la operación de muestra antes de capturar")
     parser.add_argument("--paleta", default=None, help="abre la paleta de órdenes con este texto")
+    parser.add_argument("--ficha", action="store_true", help="con --libro: abre «Nueva ficha» con una textual de muestra ya revisada (§9.4)")
+    parser.add_argument("--estudio", action="store_true", help="con --libro: abre «Estudiar con la IA» con una respuesta de muestra leída (§9.5)")
     parser.add_argument("--ancho", type=int, default=1440)
     parser.add_argument("--alto", type=int, default=900)
     args = parser.parse_args()
@@ -76,6 +109,8 @@ def main() -> int:
         env.update(m.entorno)
         env.update({"HOME": str(hogar), "XDG_CACHE_HOME": str(hogar / ".cache"), "XDG_DATA_HOME": str(Path.home() / ".local" / "share"),
                     "DOCS_ROOT": str(carpeta / "muestra"), "WRITING_DIR": str(carpeta / "muestra" / "escritura"), "BIBLIOTECA_STUDIO_CAPTURA": str(carpeta), "QT_QPA_PLATFORM": "offscreen"})
+        # los prompts del ecosistema y el catálogo de miradas de Yachay (código público, solo se leen): la muestra cambia DOCS_ROOT
+        env.update({"PROMPTS_DIR": str(REPO.parent / "prompts"), "YACHAY_CODIGO": str(REPO.parent / "yachay")})
         env.setdefault("QT_QPA_PLATFORMTHEME", "kde")     # sin pantalla, la paleta de Qt también lee el kdeglobals temporal
         orden = [sys.executable, str(AQUI / "capturar.py")] + [a for a in sys.argv[1:] if not a.startswith("--esquema") and a != args.esquema]
         codigo = subprocess.run(orden, env=env).returncode
@@ -133,7 +168,26 @@ def main() -> int:
             QTimer.singleShot(900, lambda: interfaz.pedir.emit("paleta", {"texto": args.paleta}))
         if args.dialogo:
             QTimer.singleShot(900, lambda: interfaz.pedir.emit("aplicar", {}))
-        app.capturar(args.salida, espera_ms=2600)
+        if args.ficha or args.estudio:
+            from gui_comun.qt import QMetaObject, QObject
+            try:
+                from PySide6.QtCore import Q_ARG
+            except ImportError:
+                from PyQt6.QtCore import Q_ARG
+
+            def llamar(nombre, valor):
+                QMetaObject.invokeMethod(raiz.findChild(QObject, nombre), "abrir", Q_ARG("QVariant", valor))
+
+            def abrir():
+                if args.ficha:
+                    llamar("dialogoFicha", {"tipo": "textual", "pagina": "12", "hoja": 2, "categoria": "Idea principal", "tema": "escala urbana",
+                             "uso": "marco", "revisar": True,
+                             "textos": {"Cita exacta": "Las ciudades pequeñas crecen cuando se integran a su región.",
+                                        "Análisis": "La tesis del capítulo: la escala importa menos que la integración regional."}})
+                else:
+                    llamar("dialogoEstudio", ESTUDIO_DE_MUESTRA)
+            QTimer.singleShot(1500, abrir)
+        app.capturar(args.salida, espera_ms=6000 if args.ficha or args.estudio else 2600)
 
     QTimer.singleShot(400, correr_siguiente)
     codigo = app.app.exec()

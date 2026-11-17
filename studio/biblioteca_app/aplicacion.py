@@ -27,6 +27,7 @@ from gui_comun.tareas import Tareas
 from biblioteca_app.controladores.ajustes import Ajustes
 from biblioteca_app.controladores.espacio import Espacio
 from biblioteca_app.controladores.etapas import Etapas
+from biblioteca_app.controladores.fichado import Fichado
 from biblioteca_app.controladores.libros import Libros
 from biblioteca_app.controladores.operaciones import Operaciones
 from biblioteca_app.controladores.puerta import Puerta
@@ -97,6 +98,7 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
     escritorio = app.escritorio
     libros = Libros(espacio, consola, env, ruta_indice=ruta_indice, escritorio=escritorio, repo=repo_datos, portadas=portadas)
     etapas = Etapas(espacio, libros, env, consola, repo=repo_datos)
+    fichado = Fichado(libros, consola, cache or cache_portadas().parent)   # fichar con el PDF al lado y estudiar con la IA (§9.4, §9.5)
     operaciones = Operaciones(espacio, puerta, consola, tareas, env, cache=cache)
     acciones = Acciones()
     acciones.estandar(NOMBRE, paneles=False)
@@ -300,7 +302,7 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
     barra_estado()
 
     piezas = dict(env=env, consola=consola, tareas=tareas, interfaz=interfaz, ajustes=ajustes, espacio=espacio, puerta=puerta,
-                  libros=libros, etapas=etapas, operaciones=operaciones, acciones=acciones, portadas=portadas)
+                  libros=libros, etapas=etapas, operaciones=operaciones, acciones=acciones, portadas=portadas, fichado=fichado)
     for nombre, objeto in piezas.items():
         if nombre not in ("env", "portadas"):
             app.exponer(nombre, objeto)

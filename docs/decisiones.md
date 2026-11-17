@@ -551,3 +551,55 @@ ficha son chips. Sin colores propios, como siempre.
    estudios, los resaltados del lector, el progreso) que los studios consultan y a la que escriben con la huella; toca
    Qillqa en producción, y su reinicio lo corre el autor.
 
+### §9.4 Fichar desde los studios, como en Yachay (2026-11-17)
+
+El punto 1 de §9.3, la mitad de las fichas. `lib/fichar.py` crea y corrige las fichas de un escrito (textual, paráfrasis,
+síntesis y fuente) en su carpeta de fichas (fuentes/fichas del escrito) con el lector y escritor único (`fichas/lib/ficha.py`: el frontmatter en su
+orden, las secciones de cada tipo, los once rótulos) y la forma de Yachay (`fuentes_escritura.py` de los estudios de Yachay): el
+nombre `<clave>-pNNN-<tipo>-<tema>.md` (o `sNN` si la obra no pagina), el literal entre comillas tipográficas, la
+localización, «Proviene de» la ficha de fuente, que lista la nueva entre sus derivadas (y nace si falta), y la firma
+«Ficha hecha en Biblioteca Studio el <fecha>» en «Observaciones». Corregir exige la **huella sha256 del archivo entero**
+con que se abrió: si en disco es otra (Yachay, LaTeX Studio o una mano la cambiaron), no se pisa y se responde
+`{"codigo": "ficha_cambiada", "actual": …}`, lo que Yachay responde con 409; una página o un tipo nuevos cambian el
+nombre y los enlaces de las otras fichas se corrigen. Cada guardado se **coteja contra el PDF** con el verificador de la
+suite (`fichas/lib/verificar.py`): una textual o paráfrasis nueva, o con otro literal, sale `verificada_script` u
+`observada` con su detalle; lo que verificó el autor no baja si el literal no cambió.
+
+`lib/consulta.py` lo sirve con `formulario` (los tipos, sus secciones editables y los rótulos: las ventanas pintan el
+formulario sin saber de la norma), `ficha`, `nueva_ficha` y `guardar_ficha` (simulan; escriben con `--aplicar`, solo en
+la carpeta de fichas y, si el libro aún no es fuente del escrito, en su `fuentes.yml` y su `references.bib` por `citar`) y
+`escritos` (todos los de escritura, para elegir el destino). En **Biblioteca Studio**, la ficha editorial suma «Nueva
+ficha»: el PDF del libro a la izquierda (el visor de gui-comun) y a la derecha el escrito (primero los que ya usan el
+libro), el tipo, la página impresa (con la hoja del PDF al lado), la categoría y las secciones; «Revisar» muestra el
+nombre, el cotejo y lo que la norma objeta, y «Guardar la ficha» escribe lo revisado (`studio/biblioteca_app/controladores/fichado.py`,
+`studio/biblioteca_app/qml/componentes/DialogoFicha.qml`). En **LaTeX Studio**, la pestaña Citas › Fichas (su decisión §1.19, por las
+órdenes que escritura declara en su `latex-studio.yml`). Ninguna de las dos toca Calibre ni Zotero: no son puertas.
+
+Trampa: `fichas/lib/verificar.py` hace `from lib import ficha`, y en Biblioteca Studio `lib` es el paquete de este repo (un
+paquete regular le gana a la carpeta sin `__init__` de la suite): `fichar._verificador()` lo carga por su ruta bajo un
+`lib` propio y devuelve el de antes (`tests/fuentes/test_fichar_y_ayuda.py` lo vigila).
+
+### §9.5 Los prompts del ecosistema en los studios (2026-11-17)
+
+La otra mitad del punto 1 de §9.3. `lib/ayuda_ia.py` copia el prompt y lee lo pegado, **sin llamar a ningún modelo**: el
+autor lo lleva a su chat y trae la respuesta. Qué prompt sirve a cada parte de un escrito lo dice el cuadro de Yachay
+(`prompts_por_parte.py` de sus estudios) y cuáles son las veinticinco miradas del estudio de una obra, su catálogo
+(`catalogo.py`): los dos son puros y se **cargan por su ruta** (`YACHAY_CODIGO`, por omisión `~/Documents/yachay`), como el
+traductor `prompts/scripts/para_ia_externa.py`, para que el cuadro viva una sola vez; sin Yachay, el prompt general de
+redacción y ninguna mirada. No se importa el paquete de Yachay (arrastra Tiqsi y su base): el canal con Yachay es su API
+(§9.3, punto 3).
+
+- **Una parte de un escrito** (`prompt_parte`, `pegar_parte`; LaTeX Studio, Ctrl+Alt+I): el prompt de su `\componente`,
+  traducido, con su sección «4 Entrada» rellena (el escrito, el texto de la parte sin comentarios, las fichas que la
+  respaldan por su `uso`, las claves de su bibliografía) y el formato de vuelta de Yachay (un bloque ```latex). Lo pegado
+  se comprueba como en `ayuda_componente.verificar`: sin `\componente`, `\section` ni preámbulo, solo claves de su
+  bibliografía, las llaves cerradas, las marcas de trabajo (`[H]`, `[VERIFICAR: …]`) quitadas o vueltas `[dato pendiente:
+  …]`; vuelve el tramo de antes y el de después, y la ventana lo pone en el editor si el autor acepta (se guarda con Ctrl+S).
+- **Un estudio de obra** (`miradas`, `prompt_obra`, `pegar_obra`; Biblioteca Studio, «Estudiar con la IA»): el prompt de
+  la mirada (`prompts/14 estudio`) con el paquete del tramo: la obra y sus hojas del PDF como unidades «[uN] hoja N» (Yachay
+  usa las de su acervo). Lo pegado es el bloque `tipo: estudio-de-obra` del contrato de Qillqa (`estudio-de-obra.yml`): sus
+  fichas propuestas se cotejan en su hoja (o se dice en cuál están) y cada una se lleva a un escrito con «Nueva ficha» ya
+  rellena, que se revisa antes de guardar. Las afirmaciones y lo demás del estudio no se guardan aquí: viven en Yachay.
+
+Las pruebas: `tests/fuentes/test_fichar_y_ayuda.py` (un escrito en un temporal, el texto del PDF simulado) y
+`tests/studio/test_fichado.py` (el controlador sobre la muestra, que trae un informe en escritura y un libro con texto).

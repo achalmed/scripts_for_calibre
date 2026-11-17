@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""lib/consulta.py — la biblioteca para los otros programas (LaTeX Studio, Datafw Studio): buscar un libro, las fichas de un escrito, citar un libro en un escrito y en qué escritos se usa un libro; en JSON.
+"""lib/consulta.py — la biblioteca para los otros programas (LaTeX Studio, Datafw Studio): buscar un libro, las fichas de un escrito, citar un libro en un escrito, en qué escritos se usa un libro, fichar desde el PDF y los prompts del ecosistema; en JSON.
 
 Objetivo: que quien escribe en LaTeX Studio cite cualquier libro de la biblioteca (no solo lo que ya está en su
   `.bib`), inserte una ficha textual con su página y abra el PDF o el libro en Biblioteca Studio, y que Biblioteca
@@ -18,6 +18,22 @@ Límite: un libro sin clave de Zotero recibe la que arma el manifiesto (`apellid
     python3 lib/consulta.py fichas <carpeta del proyecto>
     python3 lib/consulta.py citar <carpeta del proyecto> <calibre_id> [--aplicar]
     python3 lib/consulta.py usos <calibre_id>
+    python3 lib/consulta.py escritos                                    # todos los escritos de escritura
+    python3 lib/consulta.py formulario                                  # los tipos de ficha, sus secciones y los once rótulos
+    python3 lib/consulta.py ficha <proyecto> <archivo>                  # una ficha para editarla, con su huella
+    python3 lib/consulta.py nueva_ficha <proyecto> '<json>' [--aplicar]
+    python3 lib/consulta.py guardar_ficha <proyecto> <archivo> <huella> '<json>' [--aplicar]
+    python3 lib/consulta.py pasaje <calibre_id> <hoja>                  # el texto de una hoja del PDF
+    python3 lib/consulta.py miradas
+    python3 lib/consulta.py prompt_obra <calibre_id> <mirada> <desde> <hasta> [--proposito …]
+    python3 lib/consulta.py pegar_obra <calibre_id> <archivo con lo pegado>
+    python3 lib/consulta.py prompt_parte <proyecto> <archivo .tex> [--componente c]
+    python3 lib/consulta.py pegar_parte <proyecto> <archivo .tex> <archivo con lo pegado> [--componente c] [--tex buffer]
+
+Fichar y los prompts (decisiones §9.4 y §9.5): `nueva_ficha` y `guardar_ficha` escriben solo en `fuentes/fichas/` del
+  proyecto y solo con `--aplicar` (`lib/fichar.py`, con la huella sha256 del archivo: una ficha que cambió en disco
+  responde `{"codigo": "ficha_cambiada"}`); si el libro aún no es fuente del escrito, `nueva_ficha --aplicar` lo cita
+  antes (`citar`). Los prompts no escriben nada (`lib/ayuda_ia.py`). Un error de lo pedido sale como `{"error": …}`.
 """
 from __future__ import annotations
 
@@ -36,8 +52,11 @@ sys.path.insert(0, str(RAIZ / "lib"))
 
 
 def _modulo(nombre: str, ruta: Path):
+    if nombre in sys.modules:
+        return sys.modules[nombre]
     spec = importlib.util.spec_from_file_location(nombre, ruta)
     m = importlib.util.module_from_spec(spec)
+    sys.modules[nombre] = m
     spec.loader.exec_module(m)
     return m
 
@@ -205,6 +224,144 @@ def usos(calibre_id: int) -> list[dict]:
     return salida
 
 
+def escritos() -> list[dict]:
+    """Todos los escritos de escritura (las familias de `usos`), con su título y su documento principal."""
+    import yaml
+    env = _env()
+    escritura = Path(os.environ.get("WRITING_DIR") or env.WRITING_DIR)
+    salida = []
+    for fam in ("reports", "theses", "monographs", "essays", "articles", "books"):
+        for p in sorted((escritura / fam).glob("*/proyecto.yaml")):
+            proyecto = p.parent
+            try:
+                ficha = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
+            except (OSError, yaml.YAMLError):
+                ficha = {}
+            principal = ((ficha.get("productos") or {}).get("documento")) or next(
+                (n for n in ("informe.tex", "main.tex", "tesis.tex") if (proyecto / n).is_file()), "")
+            salida.append({"proyecto": f"{fam}/{proyecto.name}", "carpeta": str(proyecto), "titulo": ficha.get("titulo") or proyecto.name,
+                           "principal": str(proyecto / principal) if principal else ""})
+    return salida
+
+
+def _fichar():
+    return _modulo("biblioteca_fichar", RAIZ / "lib" / "fichar.py")
+
+
+def _ayuda():
+    return _modulo("biblioteca_ayuda_ia", RAIZ / "lib" / "ayuda_ia.py")
+
+
+def _entrada(proyecto: Path, calibre_id) -> dict | None:
+    """La fuente del proyecto que es ese libro ({clave, calibre_id, zotero_key}), de su `fuentes.yml`; None si no lo declara."""
+    import yaml
+    y = proyecto / "fuentes" / "fuentes.yml"
+    try:
+        data = (yaml.safe_load(y.read_text(encoding="utf-8")) or {}) if y.is_file() else {}
+    except (OSError, yaml.YAMLError):
+        data = {}
+    e = next((e for e in data.get("fuentes") or [] if str(e.get("calibre_id")) == str(calibre_id)), None)
+    if not e or not e.get("clave_bibtex"):
+        return None
+    return {"clave": str(e["clave_bibtex"]), "calibre_id": int(calibre_id), "zotero_key": str(e.get("zotero_key") or ""),
+            "uso": str(e.get("uso") or "")}
+
+
+def nueva_ficha(carpeta: str | Path, datos: dict, aplicar: bool = False) -> dict:
+    """Una ficha nueva del libro `datos["calibre_id"]` en el escrito (textual, paráfrasis, síntesis o fuente); simula sin
+    `aplicar`. Si el libro aún no es fuente del escrito, `aplicar` lo cita antes (fuentes.yml y references.bib)."""
+    proyecto = _proyecto(carpeta)
+    fichar = _fichar()
+    tipo = str(datos.get("tipo") or "textual")
+    entrada, nueva_fuente = None, False
+    if tipo != "sintesis":
+        cid = datos.get("calibre_id")
+        if not str(cid or "").isdigit():
+            raise ValueError("Elija el libro de la ficha (su número de Calibre).")
+        entrada = _entrada(proyecto, cid)
+        if entrada is None:
+            nueva_fuente = True
+            libro = _indice()["libros"].get(str(int(cid))) or {}
+            if aplicar:
+                citar(proyecto, int(cid), aplicar=True)
+                entrada = _entrada(proyecto, cid)
+            if entrada is None:
+                entrada = {"clave": libro.get("clave") or "", "calibre_id": int(cid), "zotero_key": libro.get("zotero_key") or ""}
+                if aplicar or not entrada["clave"]:
+                    raise ValueError("El libro no tiene clave para citar todavía (Zotero): fichelo cuando la tenga.")
+    r = fichar.guardar(proyecto, datos, entrada, aplicar=aplicar)
+    return {**r, "nueva_fuente": nueva_fuente, "clave": (entrada or {}).get("clave", "")}
+
+
+def guardar_ficha(carpeta: str | Path, archivo: str, huella: str, datos: dict, aplicar: bool = False) -> dict:
+    """Corrige una ficha con la huella con que se abrió (`{"codigo": "ficha_cambiada", "actual": …}` si cambió en disco)."""
+    proyecto = _proyecto(carpeta)
+    fichar = _fichar()
+    actual = fichar.leer(proyecto, archivo)
+    if actual.get("error"):
+        raise ValueError(actual["error"])
+    previas = {s["titulo"]: s["texto"] for s in actual.get("secciones") or []}
+    datos = {"tipo": actual["tipo"], "pagina": actual["pagina"], "categoria": actual["categoria"], "uso": actual["uso"], **datos,
+             "secciones": {**previas, **(datos.get("secciones") or {})}}
+    entrada = None
+    if actual["tipo"] != "sintesis":
+        cid = actual.get("calibre_id")
+        entrada = (_entrada(proyecto, cid) if str(cid or "").isdigit() else None) or {
+            "clave": actual["clave"], "calibre_id": cid or "", "zotero_key": ""}
+    try:
+        return fichar.guardar(proyecto, datos, entrada, archivo=archivo, huella_base=huella, aplicar=aplicar)
+    except fichar.Cambiada as e:
+        return {"codigo": "ficha_cambiada", "error": str(e), "actual": e.actual}
+
+
+def paginas(calibre_id: int) -> list[str]:
+    """Las hojas de texto del PDF del libro (índice 0 = hoja 1), por el resolutor único; [] sin texto."""
+    env = _env()
+    sys.path.insert(0, str(env.PY_COMMON))
+    import biblioteca as bib
+    return bib.texto(int(calibre_id))
+
+
+def pasaje(calibre_id: int, hoja: int) -> dict:
+    hojas = paginas(calibre_id)
+    h = max(1, min(int(hoja), len(hojas))) if hojas else 0
+    return {"calibre_id": int(calibre_id), "hoja": h, "hojas": len(hojas), "texto": hojas[h - 1] if h else ""}
+
+
+def _libro(calibre_id: int) -> dict:
+    d = _indice()["libros"].get(str(int(calibre_id)))
+    if d is None:
+        raise ValueError(f"El libro {calibre_id} no está en la biblioteca (o el índice es viejo).")
+    env = _env()
+    return {"calibre_id": int(calibre_id), "titulo": d.get("titulo", ""), "autores": d.get("autores", []), "clave": d.get("clave", ""),
+            "anio": _anios(Path(env.CALIBRE_DB), [int(calibre_id)]).get(int(calibre_id), "")}
+
+
+def prompt_obra(calibre_id: int, mirada: str, desde: int, hasta: int, proposito: str = "") -> dict:
+    return _ayuda().prompt_obra(_libro(calibre_id), mirada, paginas(calibre_id), desde, hasta, proposito)
+
+
+def pegar_obra(calibre_id: int, pegado: str) -> dict:
+    return _ayuda().pegar_obra(pegado, paginas(calibre_id))
+
+
+def prompt_parte(carpeta: str | Path, archivo: str, componente: str = "") -> dict:
+    proyecto = _proyecto(carpeta)
+    return _ayuda().prompt_parte(proyecto, archivo, componente, fichas(proyecto))
+
+
+def pegar_parte(carpeta: str | Path, archivo: str, pegado: str, componente: str = "", tex: str | None = None) -> dict:
+    return _ayuda().pegar_parte(_proyecto(carpeta), archivo, pegado, componente, tex)
+
+
+def _leer_arg(v: str) -> str:
+    """Un argumento largo (lo pegado, el texto del editor): `-` es la entrada estándar; una ruta existente, su archivo."""
+    if v == "-":
+        return sys.stdin.read()
+    p = Path(v)
+    return p.read_text(encoding="utf-8") if len(v) < 4096 and p.is_file() else v
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = ap.add_subparsers(dest="orden", required=True)
@@ -212,17 +369,59 @@ def main(argv=None) -> int:
     f = sub.add_parser("fichas"); f.add_argument("proyecto")
     c = sub.add_parser("citar"); c.add_argument("proyecto"); c.add_argument("calibre_id", type=int); c.add_argument("--aplicar", action="store_true")
     u = sub.add_parser("usos"); u.add_argument("calibre_id", type=int)
+    sub.add_parser("escritos")
+    sub.add_parser("formulario")
+    x = sub.add_parser("ficha"); x.add_argument("proyecto"); x.add_argument("archivo")
+    n = sub.add_parser("nueva_ficha"); n.add_argument("proyecto"); n.add_argument("datos"); n.add_argument("--aplicar", action="store_true")
+    g = sub.add_parser("guardar_ficha"); g.add_argument("proyecto"); g.add_argument("archivo"); g.add_argument("huella"); g.add_argument("datos")
+    g.add_argument("--aplicar", action="store_true")
+    s = sub.add_parser("pasaje"); s.add_argument("calibre_id", type=int); s.add_argument("hoja", type=int)
+    sub.add_parser("miradas")
+    po = sub.add_parser("prompt_obra"); po.add_argument("calibre_id", type=int); po.add_argument("mirada")
+    po.add_argument("desde", type=int); po.add_argument("hasta", type=int); po.add_argument("--proposito", default="")
+    pe = sub.add_parser("pegar_obra"); pe.add_argument("calibre_id", type=int); pe.add_argument("pegado")
+    pp = sub.add_parser("prompt_parte"); pp.add_argument("proyecto"); pp.add_argument("archivo"); pp.add_argument("--componente", default="")
+    pg = sub.add_parser("pegar_parte"); pg.add_argument("proyecto"); pg.add_argument("archivo"); pg.add_argument("pegado")
+    pg.add_argument("--componente", default=""); pg.add_argument("--tex", default=None)
     a = ap.parse_args(argv)
-    if a.orden == "buscar":
-        r = buscar(a.texto, a.limite)
-    elif a.orden == "fichas":
-        r = fichas(a.proyecto)
-    elif a.orden == "citar":
-        r = citar(a.proyecto, a.calibre_id, a.aplicar)
-    else:
-        r = usos(a.calibre_id)
+    try:
+        r = _orden(a)
+    except (ValueError, LookupError) as e:
+        r = {"error": str(e)}
     print(json.dumps(r, ensure_ascii=False))
     return 0
+
+
+def _orden(a):
+    if a.orden == "escritos":
+        return escritos()
+    if a.orden == "formulario":
+        return _fichar().formulario()
+    if a.orden == "ficha":
+        return _fichar().leer(_proyecto(a.proyecto), a.archivo)
+    if a.orden == "nueva_ficha":
+        return nueva_ficha(a.proyecto, json.loads(_leer_arg(a.datos)), a.aplicar)
+    if a.orden == "guardar_ficha":
+        return guardar_ficha(a.proyecto, a.archivo, a.huella, json.loads(_leer_arg(a.datos)), a.aplicar)
+    if a.orden == "pasaje":
+        return pasaje(a.calibre_id, a.hoja)
+    if a.orden == "miradas":
+        return _ayuda().miradas()
+    if a.orden == "prompt_obra":
+        return prompt_obra(a.calibre_id, a.mirada, a.desde, a.hasta, a.proposito)
+    if a.orden == "pegar_obra":
+        return pegar_obra(a.calibre_id, _leer_arg(a.pegado))
+    if a.orden == "prompt_parte":
+        return prompt_parte(a.proyecto, a.archivo, a.componente)
+    if a.orden == "pegar_parte":
+        return pegar_parte(a.proyecto, a.archivo, _leer_arg(a.pegado), a.componente, _leer_arg(a.tex) if a.tex else None)
+    if a.orden == "buscar":
+        return buscar(a.texto, a.limite)
+    if a.orden == "fichas":
+        return fichas(a.proyecto)
+    if a.orden == "citar":
+        return citar(a.proyecto, a.calibre_id, a.aplicar)
+    return usos(a.calibre_id)
 
 
 if __name__ == "__main__":
