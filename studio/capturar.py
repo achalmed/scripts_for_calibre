@@ -75,7 +75,7 @@ def main() -> int:
         (carpeta / "muestra" / "core").symlink_to(REPO.parent / "core")      # DOCS_ROOT = la muestra: las rutas se ven relativas a ella
         env.update(m.entorno)
         env.update({"HOME": str(hogar), "XDG_CACHE_HOME": str(hogar / ".cache"), "XDG_DATA_HOME": str(Path.home() / ".local" / "share"),
-                    "DOCS_ROOT": str(carpeta / "muestra"), "BIBLIOTECA_STUDIO_CAPTURA": str(carpeta), "QT_QPA_PLATFORM": "offscreen"})
+                    "DOCS_ROOT": str(carpeta / "muestra"), "WRITING_DIR": str(carpeta / "muestra" / "escritura"), "BIBLIOTECA_STUDIO_CAPTURA": str(carpeta), "QT_QPA_PLATFORM": "offscreen"})
         env.setdefault("QT_QPA_PLATFORMTHEME", "kde")     # sin pantalla, la paleta de Qt también lee el kdeglobals temporal
         orden = [sys.executable, str(AQUI / "capturar.py")] + [a for a in sys.argv[1:] if not a.startswith("--esquema") and a != args.esquema]
         codigo = subprocess.run(orden, env=env).returncode

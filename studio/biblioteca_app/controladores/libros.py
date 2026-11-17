@@ -75,6 +75,8 @@ class Libros(QObject):
     vigilarCambiado = Signal()
     seleccionar = Signal(int)           # QML: lleva la cuadrícula a ese índice visible
     aviso = Signal(str, str)
+    usosCambiados = Signal()            # los escritos que usan el libro de la ficha (decisiones §9.1)
+    _usosListos = Signal(str, "QVariantList")
 
     def __init__(self, espacio, consola, env, ruta_indice: Path | None = None, escritorio=None, repo: Path = datos.REPO,
                  portadas=None, parent=None):
@@ -88,6 +90,9 @@ class Libros(QObject):
         self._por_id: dict[str, dict] = {}
         self._inmutable = False
         self._error = ""
+        self._usos: list = []
+        self._usos_de = ""
+        self._usosListos.connect(self._poner_usos)
         self._busqueda = ""
         self._terminos: list = []
         self._filtros = {k: "" for k, _t in FILTROS}
@@ -359,6 +364,50 @@ class Libros(QObject):
     def _fijar(self, l: dict) -> None:
         self._actual = dict(l) if l else {}
         self.actualCambiado.emit()
+        self._pedir_usos()
+
+    # --------------------------------------------------------------------- en qué escritos se usa (§9.1)
+    def _pedir_usos(self) -> None:
+        """Los escritos de escritura que declaran el libro o tienen fichas de él (lib/consulta.py, en un hilo)."""
+        import threading
+        bid = str(self._actual.get("id") or "")
+        self._usos, self._usos_de = [], bid
+        self.usosCambiados.emit()
+        if not bid.isdigit():
+            return
+
+        def trabajo():
+            try:
+                import importlib.util
+                spec = importlib.util.spec_from_file_location("biblioteca_consulta", datos.REPO / "lib" / "consulta.py")
+                consulta = importlib.util.module_from_spec(spec)
+                spec.loader.exec_module(consulta)
+                r = consulta.usos(int(bid))
+            except Exception as e:                         # sin escritura o con un fuentes.yml roto: sin usos, con aviso
+                self.consola.registrar("warn", f"Usos del libro {bid}: {e}")
+                r = []
+            self._usosListos.emit(bid, r)
+        threading.Thread(target=trabajo, name="usos", daemon=True).start()
+
+    def _poner_usos(self, bid: str, usos: list) -> None:
+        if bid == self._usos_de:
+            self._usos = list(usos)
+            self.usosCambiados.emit()
+
+    @Property("QVariantList", notify=usosCambiados)
+    def usos(self) -> list:
+        return self._usos
+
+    @Slot(str)
+    def abrirEnLatex(self, principal: str) -> None:
+        """El escrito en LaTeX Studio (latex-studio/studio/main.py junto a la raíz de los documentos)."""
+        import subprocess
+        main = Path(os.environ.get("LATEX_STUDIO_DIR") or Path(self.env.DOCS_ROOT) / "latex-studio") / "studio" / "main.py"
+        if not main.is_file() or not principal:
+            self.aviso.emit("No encuentro LaTeX Studio (latex-studio/studio/main.py)", "aviso")
+            return
+        subprocess.Popen(["/usr/bin/python3", str(main), principal], start_new_session=True,
+                         stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
 
     @Slot(str)
     def fijarId(self, libro_id: str) -> None:

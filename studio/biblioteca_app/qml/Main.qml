@@ -62,31 +62,33 @@ VentanaBase {
     }
 
     // ------------------------------------------------------------------ la cabecera: áreas, búsqueda y puerta
-    header: QQC2.ToolBar {
-        position: QQC2.ToolBar.Header
-        contentItem: RowLayout {
+    // la barra de arriba (decisiones §9.2): ligera, como la de Datafw Studio y LaTeX Studio. Las cuatro áreas como chips
+    // (la elegida, rellena), la búsqueda, el estado de la puerta como un punto y una línea, y lo de siempre en ⋮ y Ctrl+K
+    header: ColumnLayout {
+        spacing: 0
+        RowLayout {
+            Layout.fillWidth: true
+            Layout.margins: Kirigami.Units.smallSpacing
+            Layout.leftMargin: Kirigami.Units.largeSpacing
+            Layout.rightMargin: Kirigami.Units.largeSpacing
             spacing: Kirigami.Units.smallSpacing
-            QQC2.TabBar {
-                id: areas
-                currentIndex: espacio.indiceArea
-                onCurrentIndexChanged: espacio.fijarAreaPorIndice(currentIndex)
-                Repeater {
-                    model: 4                       // fijas: el TabBar del estilo de KDE no admite crearse vacío
-                    delegate: QQC2.TabButton {
-                        required property int index
-                        readonly property var a: espacio.areas[index]
-                        text: a.texto + (a.nombre === "bandejas" ? "  " + (libros.contadores.sin_zotero + libros.contadores.sin_clave + libros.contadores.clasificar + libros.contadores.fichas) : "")
-                        icon.name: a.icono
-                        width: implicitWidth
-                        QQC2.ToolTip.text: "Ctrl+" + (index + 1)
-                        QQC2.ToolTip.visible: hovered
-                    }
+            Repeater {
+                model: 4
+                delegate: Chip {
+                    required property int index
+                    readonly property var a: espacio.areas[index]
+                    readonly property int pendientes: libros.contadores.sin_zotero + libros.contadores.sin_clave + libros.contadores.clasificar + libros.contadores.fichas
+                    text: a.texto + (a.nombre === "bandejas" && pendientes ? "  " + pendientes : "")
+                    icono: a.icono
+                    destacado: espacio.indiceArea === index
+                    ayuda: "Ctrl+" + (index + 1)
+                    onClicked: espacio.fijarAreaPorIndice(index)
                 }
             }
             Item { Layout.fillWidth: true }
             Kirigami.SearchField {
                 id: busqueda
-                Layout.preferredWidth: Kirigami.Units.gridUnit * 22
+                Layout.preferredWidth: Kirigami.Units.gridUnit * 20
                 placeholderText: ventana.enLibros ? "Título, autor, año:, serie:, etiqueta:, id:, clave: (Ctrl+F)" : "Filtrar la tabla (Ctrl+F)"
                 Accessible.name: "Buscar"
                 onTextChanged: espera.restart()
@@ -100,28 +102,28 @@ VentanaBase {
                     }
                 }
             }
-            // la puerta: Calibre y Zotero abiertos o cerrados, el candado
-            QQC2.Control {
+            // la puerta: Calibre y Zotero abiertos o cerrados, el candado (un clic lleva a su etapa)
+            QQC2.AbstractButton {
                 id: chipPuerta
                 readonly property bool libre: !puerta.calibreAbierto && !puerta.candadoCalibre
+                hoverEnabled: true
                 padding: Kirigami.Units.smallSpacing
-                leftPadding: Kirigami.Units.largeSpacing
-                rightPadding: Kirigami.Units.largeSpacing
-                background: Rectangle { radius: height / 2; color: chipPuerta.libre ? Kirigami.Theme.positiveBackgroundColor : Kirigami.Theme.neutralBackgroundColor }
                 contentItem: RowLayout {
                     spacing: Kirigami.Units.smallSpacing
-                    Kirigami.Icon { source: chipPuerta.libre ? "object-unlocked" : "object-locked"; implicitWidth: Kirigami.Units.iconSizes.small; implicitHeight: implicitWidth }
-                    QQC2.Label { text: puerta.calibreAbierto ? "Calibre abierto" : (puerta.candadoCalibre ? "Candado ocupado" : "Puerta lista"); font.weight: Font.DemiBold }
+                    Rectangle { implicitWidth: Kirigami.Units.smallSpacing * 2; implicitHeight: implicitWidth; radius: width / 2
+                                color: chipPuerta.libre ? Kirigami.Theme.positiveTextColor : Kirigami.Theme.neutralTextColor }
+                    QQC2.Label { text: puerta.calibreAbierto ? "Calibre abierto" : (puerta.candadoCalibre ? "Candado ocupado" : "Puerta lista")
+                                 font: Kirigami.Theme.smallFont; color: Kirigami.Theme.disabledTextColor }
                 }
+                onClicked: { espacio.fijarVista("puerta"); espacio.fijarArea("coherencia") }
                 QQC2.ToolTip.text: puerta.contexto + (chipPuerta.libre ? "" : "\nAplicar espera a que Calibre se cierre y el candado quede libre.")
-                QQC2.ToolTip.visible: zonaPuerta.hovered
-                HoverHandler { id: zonaPuerta }
-                TapHandler { onTapped: { espacio.fijarVista("puerta"); espacio.fijarArea("coherencia") } }
+                QQC2.ToolTip.visible: hovered
                 Accessible.name: "Puerta de escritura: " + puerta.contexto
             }
-            BotonAccion { accion: ventana.accion("ver.indice"); conTexto: false }
-            BotonAccion { accion: ventana.accion("ventana.paleta"); conTexto: false }
+            BotonAccion { accion: ventana.accion("ver.indice"); conTexto: false; flat: true }
+            BotonAccion { accion: ventana.accion("ventana.paleta"); conTexto: false; flat: true }
         }
+        Rectangle { Layout.fillWidth: true; implicitHeight: 1; color: Qt.alpha(Kirigami.Theme.textColor, 0.1) }
     }
 
     // ------------------------------------------------------------------ las áreas

@@ -17,8 +17,15 @@ QQC2.ItemDelegate {
 
     padding: Kirigami.Units.smallSpacing
     bottomPadding: Kirigami.Units.largeSpacing
-    highlighted: actual
+    highlighted: false                              // la elegida lleva un anillo, no el relleno (decisiones §9.2)
+    hoverEnabled: true
     onClicked: elegida(index)
+    background: Rectangle {
+        radius: Kirigami.Units.cornerRadius * 2
+        color: tarjeta.hovered ? Qt.alpha(Kirigami.Theme.textColor, 0.05) : "transparent"
+        border.width: tarjeta.actual ? 2 : 0
+        border.color: Kirigami.Theme.highlightColor
+    }
     onDoubleClicked: abierta(index)
     Accessible.name: model.titulo + ", " + model.autores + (model.año ? ", " + model.año : "")
 

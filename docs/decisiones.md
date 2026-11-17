@@ -504,3 +504,50 @@ sin tocar título, autor, fecha ni serie; se aplica solo con el «sí» de Ediso
 `biblioteca.ris`) lleva ahora su número, fecha completa, título corto y URL, y ya no la serie en `T2`/`M1`, que en
 `statute` son el código y el número: unas 300 normas de Zotero quedaron así y piden una campaña propia de Zotero.
 
+## 9. La familia de los studios y Yachay trabajan juntos
+
+Pedido del autor el 2026-11-17: que Biblioteca Studio, LaTeX Studio, Datafw Studio y Yachay (Qillqa) trabajen
+sincronizados y se complementen, con lo que Yachay ya hace (el fichado textual, los prompts del ecosistema) también en
+los studios, y que un cambio en uno se vea en los demás. Decisiones del autor (preguntadas ese día): **el canal con
+Yachay es su API con un token personal** (no la base directa ni copias en archivos); **una sola base de lectura**, de
+Biblioteca Studio, donde se juntan los subrayados, notas y resaltados de KOReader, Zotero, Okular y el lector de Yachay,
+y también las horas y estadísticas de lectura, para que todas las herramientas lean y escriban ahí; y **primero los
+studios**, luego el fichado y los prompts en ellos, y al final la sincronía con Yachay.
+
+Lo que ya estaba sincronizado sin hacer nada: el texto de un escrito y sus fichas viven en `escritura/` (Yachay no
+guarda copia en su base): una coma en Yachay es la misma coma en LaTeX Studio, que vigila el archivo y lo recarga; y
+al revés, Yachay protege lo suyo con la huella del archivo (409 si cambió).
+
+### §9.1 La biblioteca en LaTeX Studio, y los escritos en Biblioteca Studio (2026-11-17)
+
+`lib/consulta.py` sirve la biblioteca a los otros programas, en JSON: `buscar` (el índice compartido, más el año de
+`metadata.db` en solo lectura), `fichas <proyecto>` (las de la carpeta fuentes/fichas del escrito, con el lector único de
+`fichas/lib/ficha.py`, y lo que se inserta: la textual como «“cita” \parencite[p.~N]{clave}»), `citar <proyecto>
+<calibre_id>` (la única que escribe, y solo en el proyecto: añade el libro a su `fuentes.yml` con la clave de Better
+BibTeX y regenera su `references.bib` con el manifiesto, que conserva toda clave existente; simula sin `--aplicar`) y
+`usos <calibre_id>` (los escritos que lo declaran o tienen fichas de él). Escritura lo declara en la sección
+`biblioteca:` de su `escritura/core/config/latex-studio.yml` (contrato §9 de LaTeX Studio): la pestaña «Citas» busca en toda la
+biblioteca con portada y cita (si el libro aún no es fuente, lo añade tras confirmar), muestra las fichas del proyecto
+y abre el libro aquí (`biblioteca-studio://libro/<id>`). La ficha editorial suma «Usado en»: los escritos que usan el
+libro, y un clic los abre en LaTeX Studio. Las capturas apuntan `WRITING_DIR` a la muestra: ningún escrito real en una
+imagen.
+
+### §9.2 La piel de la familia (2026-11-17)
+
+La barra de arriba deja las pestañas y el óvalo de la puerta: las cuatro áreas son chips (la elegida, rellena), la
+puerta es un punto con una línea, y lo demás sigue en ⋮ y Ctrl+K, como en Datafw Studio y LaTeX Studio (el mismo
+`Chip`). La tarjeta del libro elegido lleva un anillo del color de acento en vez de pintarse entera, y los botones de la
+ficha son chips. Sin colores propios, como siempre.
+
+### §9.3 Lo que sigue del programa (en orden)
+
+1. **El fichado y los prompts de Yachay en los studios**: crear y editar fichas textuales desde el PDF (Biblioteca
+   Studio y LaTeX Studio) con la norma de fichas y su verificación contra el PDF; los prompts de `prompts/` (los de las
+   partes de un escrito y el estudio de obra) para copiar con su traductor y pegar de vuelta, como en Yachay.
+2. **La base de lectura** (una sola, de Biblioteca Studio): subrayados, notas y resaltados con su origen (KOReader,
+   Zotero, Okular, Yachay) y las sesiones y estadísticas de lectura, con adaptadores de ida y vuelta; lo que se escribe
+   en Calibre o Zotero pasa por la puerta (aplicación cerrada, candado, respaldo).
+3. **Yachay por su API con token**: un token personal emitido desde Qillqa y una ruta de cambios (las fichas de los
+   estudios, los resaltados del lector, el progreso) que los studios consultan y a la que escriben con la huella; toca
+   Qillqa en producción, y su reinicio lo corre el autor.
+

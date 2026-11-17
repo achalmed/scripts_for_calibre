@@ -107,14 +107,20 @@ QQC2.Control {
                 Flow {
                     Layout.fillWidth: true
                     spacing: Kirigami.Units.smallSpacing
-                    QQC2.Button {
-                        readonly property var a: raiz.accion("libro.archivo")
-                        text: "Abrir el documento"; icon.name: "document-open"; highlighted: true; enabled: a.habilitada
-                        onClicked: a.disparar()
+                    Repeater {
+                        model: [{ n: "libro.archivo", t: "Abrir", i: "document-open", d: true }, { n: "libro.dolphin", t: "Dolphin", i: "system-file-manager" },
+                                { n: "libro.calibre", t: "Calibre", i: "calibre" }, { n: "libro.zotero", t: "Zotero", i: "zotero" }]
+                        Chip {
+                            required property var modelData
+                            readonly property var a: raiz.accion(modelData.n)
+                            text: modelData.t
+                            icono: modelData.i
+                            destacado: !!modelData.d
+                            enabled: a ? a.habilitada : false
+                            ayuda: a ? a.texto.replace("&", "") : ""
+                            onClicked: a.disparar()
+                        }
                     }
-                    BotonAccion { accion: raiz.accion("libro.dolphin") }
-                    BotonAccion { accion: raiz.accion("libro.calibre") }
-                    BotonAccion { accion: raiz.accion("libro.zotero") }
                 }
 
                 Kirigami.FormLayout {
@@ -204,6 +210,26 @@ QQC2.Control {
                         QQC2.Label { text: modelData.formato; font.weight: Font.DemiBold }
                         QQC2.Label { text: modelData.nombre; elide: Text.ElideMiddle; Layout.fillWidth: true; color: Kirigami.Theme.disabledTextColor }
                         QQC2.Label { text: modelData.tamano; color: Kirigami.Theme.disabledTextColor }
+                    }
+                }
+                Kirigami.Heading { level: 4; text: "Usado en"; visible: raiz.l.usos.length > 0 }
+                Repeater {
+                    model: raiz.l.usos
+                    delegate: QQC2.ItemDelegate {
+                        required property var modelData
+                        Layout.fillWidth: true
+                        icon.name: "document-edit"
+                        enabled: !!modelData.principal
+                        contentItem: ColumnLayout {
+                            spacing: 0
+                            QQC2.Label { Layout.fillWidth: true; text: modelData.titulo; elide: Text.ElideRight }
+                            QQC2.Label { Layout.fillWidth: true; text: modelData.proyecto + (modelData.fichas ? " · " + modelData.fichas + " ficha" + (modelData.fichas === 1 ? "" : "s") : "")
+                                         elide: Text.ElideMiddle; font: Kirigami.Theme.smallFont; color: Kirigami.Theme.disabledTextColor }
+                        }
+                        onClicked: raiz.l.abrirEnLatex(modelData.principal)
+                        QQC2.ToolTip.text: "Abrir el escrito en LaTeX Studio"
+                        QQC2.ToolTip.visible: hovered
+                        QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
                     }
                 }
                 Kirigami.Heading { level: 4; text: "Fichas canónicas"; visible: (raiz.f.fichas || []).length > 0 }
