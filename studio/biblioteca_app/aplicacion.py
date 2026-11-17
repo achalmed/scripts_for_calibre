@@ -290,7 +290,7 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
                 libros.recargar()          # lo aplicado puede cambiar la biblioteca y sus bandejas
         if id_ in ("timers_instalar", "timers_verificar"):
             etapas.recargar("tareas")
-        if id_ in ("base_lectura", "lectura_a_zotero") and aplicar:
+        if id_ in ("base_lectura", "lectura_a_zotero", "lectura_a_koreader", "lectura_a_okular") and aplicar:
             lectura.recargar()
 
     espacio.vistaCambiada.connect(vista_cambiada)

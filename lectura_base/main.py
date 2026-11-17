@@ -102,7 +102,10 @@ def cmd_exportar(a, log) -> int:
     if not r["escribe"]:
         print(f"    (aplicar aún no: {exportar.PENDIENTES[a.destino]})")
     elif r["plan"]:
-        print("--aplicar las escribe por la puerta (aplicación cerrada, candado, respaldo verificado).")
+        como = {"zotero": "por la puerta (Zotero cerrado, candado, respaldo verificado)",
+                "koreader": "en el .lua de cada libro (KOReader cerrado, respaldo verificado, escritura atómica)",
+                "okular": "en el docdata de cada PDF (Okular cerrado, respaldo verificado; nunca en el PDF)"}.get(a.destino, "")
+        print(f"--aplicar las escribe {como}.")
     return 0
 
 

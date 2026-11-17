@@ -27,6 +27,8 @@ from lectura_base.lib.biblioteca import Resolutor, id_de_ruta, medidas
 ORIGEN = "okular"
 SUBTIPOS = {"0": "resaltado", "1": "subrayado", "2": "subrayado", "3": "tachado"}
 _VIEWPORT = re.compile(r"^(\d+);")
+_PROPIA = re.compile(r"^okular-([0-9a-f]{16})$")          # el uniqueName de lo que escribió la base (`elemento`)
+HOLGURA = 2                                               # puntos de más al recortar: la franja de un resaltado es justa
 
 
 def carpeta_docdata() -> Path:
@@ -42,8 +44,8 @@ def recortar(pdf: Path, hoja: int, rect: list, hojas: list) -> str:
         return ""
     w, h = hojas[hoja - 1]
     args = ["pdftotext", "-q", "-enc", "UTF-8", "-r", "72", "-f", str(hoja), "-l", str(hoja),
-            "-x", str(int(rect[1] * w)), "-y", str(int(rect[2] * h)), "-W", str(max(1, int(rect[3] * w + 1))),
-            "-H", str(max(1, int(rect[4] * h + 1))), str(pdf), "-"]
+            "-x", str(max(0, int(rect[1] * w - HOLGURA))), "-y", str(max(0, int(rect[2] * h - HOLGURA))),
+            "-W", str(max(1, int(rect[3] * w + 1 + 2 * HOLGURA))), "-H", str(max(1, int(rect[4] * h + 1 + 2 * HOLGURA))), str(pdf), "-"]
     try:
         r = subprocess.run(args, capture_output=True, timeout=30, check=False)
     except (OSError, subprocess.TimeoutExpired):
@@ -88,11 +90,15 @@ def anotaciones_de(raiz: ET.Element, calibre_id, pdf: Path | None, hojas: list, 
             texto = ""
             if tipo == "4" and pdf is not None and recortar_texto:
                 texto = " ".join(t for t in (recortar(pdf, hoja, r, hojas) for r in rects) if t)
-            if not texto and not nota:
-                continue
-            salida.append({"origen_id": uid or f"{calibre_id}:{hoja}:{len(salida)}", "calibre_id": calibre_id, "hoja": hoja,
-                           "texto": texto, "rects": rects, "color": b.get("color") or "", "tipo": subtipo, "nota": nota,
-                           "creada": base.iso(b.get("creationDate")), "modificada": base.iso(b.get("modifyDate") or b.get("creationDate"))})
+            if not texto and not nota and not rects:
+                continue                   # sin texto en el PDF (un escaneo, una franja fina) basta su lugar en la hoja
+            reg = {"origen_id": uid or f"{calibre_id}:{hoja}:{len(salida)}", "calibre_id": calibre_id, "hoja": hoja,
+                   "texto": texto, "rects": rects, "color": b.get("color") or "", "tipo": subtipo, "nota": nota,
+                   "creada": base.iso(b.get("creationDate")), "modificada": base.iso(b.get("modifyDate") or b.get("creationDate"))}
+            propia = _PROPIA.match(uid)
+            if propia:
+                reg["uid_base"] = propia.group(1)          # la escribió la base: es esa anotación
+            salida.append(reg)
     return salida
 
 

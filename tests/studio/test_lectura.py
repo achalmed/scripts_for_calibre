@@ -46,3 +46,6 @@ def test_las_operaciones_de_la_base_de_lectura():
     assert o.argv(False) == ["python3", "lectura_base/main.py", "sincronizar"] and o.bases == ()
     z = ops.operacion("lectura_a_zotero")
     assert z.argv(True)[-1] == "--aplicar" and z.bases == ("zotero",)
+    for destino in ("koreader", "okular"):
+        o = ops.operacion(f"lectura_a_{destino}")
+        assert o.argv(True)[-3:] == ["exportar", destino, "--aplicar"] and o.bases == ()

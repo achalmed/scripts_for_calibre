@@ -173,6 +173,12 @@ ETAPAS = (
         O("lectura_a_zotero", "Subrayados de la base → Zotero", "Los subrayados de KOReader, Okular o Yachay que Zotero no "
           "tiene, en el PDF del libro en Zotero; aplicar escribe por la puerta.", ("lectura_base/main.py", "exportar", "zotero"),
           bases=("zotero",)),
+        O("lectura_a_koreader", "Subrayados de la base → KOReader", "Los subrayados de Zotero, Okular o Yachay en los PDF "
+          "que KOReader ya abrió; aplicar escribe su .lua con KOReader cerrado, tras su respaldo.",
+          ("lectura_base/main.py", "exportar", "koreader")),
+        O("lectura_a_okular", "Subrayados de la base → Okular", "Los subrayados de KOReader, Zotero o Yachay en el docdata "
+          "de cada PDF (nunca en el PDF); aplicar escribe con Okular cerrado, tras su respaldo.",
+          ("lectura_base/main.py", "exportar", "okular")),
     )),
     Etapa("puerta", "Puerta", "object-locked", "Una sola puerta escribe en Calibre y en Zotero: con la aplicación cerrada, "
           "con candado y con respaldo verificado. Aquí, sus respaldos y cómo deshacer"),

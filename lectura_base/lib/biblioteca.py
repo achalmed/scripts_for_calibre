@@ -3,8 +3,8 @@
 - `Resolutor`: de Calibre (`metadata.db` con `mode=ro`, nunca escrita) el título, los autores y los archivos de cada libro,
   y el MD5 parcial de KOReader (`#ko_md5`, por su etiqueta), para reconocer un libro por su `calibre_id`, por la carpeta
   `(<id>)/` de una ruta o por su MD5.
-- `medidas`: el tamaño en puntos de cada hoja de un PDF (`pdfinfo`), para pasar los rectángulos de cada herramienta a
-  fracciones de la hoja y de vuelta.
+- `medidas` y `giros`: el tamaño en puntos y el giro de cada hoja de un PDF (`pdfinfo`), para pasar los rectángulos de
+  cada herramienta a fracciones de la hoja y de vuelta (y no llevar los de una hoja girada).
 - `md5_parcial`: el MD5 de KOReader (bloques de 1 KB en 0 y 1024·4^i), el mismo de `koreader/lib/sync_koreader.py`.
 """
 from __future__ import annotations
@@ -93,26 +93,41 @@ class Resolutor:
 
 
 _MEDIDA = re.compile(r"^Page\s+(\d+)\s+size:\s+([\d.]+)\s+x\s+([\d.]+)")
+_GIRO = re.compile(r"^Page\s+(\d+)\s+rot:\s+(\d+)")
 
 
 @lru_cache(maxsize=256)
-def _medidas(ruta: str, mtime: float) -> tuple:
+def _paginas(ruta: str, mtime: float) -> tuple:
+    """((ancho, alto, giro), …) de cada hoja, de una sola llamada a pdfinfo."""
     try:
         r = subprocess.run(["pdfinfo", "-f", "1", "-l", "100000", ruta], capture_output=True, timeout=120, check=False)
     except (OSError, subprocess.TimeoutExpired):
         return ()
-    hojas = {}
+    hojas, giros = {}, {}
     for linea in r.stdout.decode("utf-8", "replace").splitlines():
         m = _MEDIDA.match(linea)
         if m:
             hojas[int(m.group(1))] = (float(m.group(2)), float(m.group(3)))
-    return tuple(hojas[n] for n in sorted(hojas))
+            continue
+        g = _GIRO.match(linea)
+        if g:
+            giros[int(g.group(1))] = int(g.group(2)) % 360
+    return tuple((*hojas[n], giros.get(n, 0)) for n in sorted(hojas))
+
+
+def _de_pdf(ruta) -> tuple:
+    try:
+        p = Path(ruta)
+        return _paginas(str(p), p.stat().st_mtime)
+    except (OSError, TypeError):
+        return ()
 
 
 def medidas(ruta) -> list[tuple[float, float]]:
     """[(ancho, alto)] en puntos de cada hoja de un PDF, sin girar; [] si no se puede leer."""
-    try:
-        p = Path(ruta)
-        return list(_medidas(str(p), p.stat().st_mtime))
-    except (OSError, TypeError):
-        return []
+    return [(w, h) for w, h, _ in _de_pdf(ruta)]
+
+
+def giros(ruta) -> list[int]:
+    """El giro de cada hoja (0, 90, 180, 270): en una hoja girada cada herramienta mide sus rectángulos a su modo."""
+    return [g for _, _, g in _de_pdf(ruta)]

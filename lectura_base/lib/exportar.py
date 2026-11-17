@@ -5,8 +5,10 @@ presencia viva en el destino. El plan se calcula siempre (simular); escribir dep
 
 - **Zotero** (`ESCRIBE`): por la puerta (`lib/escribir.puerta` con Zotero cerrado, el candado y el respaldo verificado;
   `lib/escribir_zotero.z_anadir_anotacion`), en el adjunto PDF del libro; tras el commit, `integrity_check`.
-- **KOReader y Okular** (`PENDIENTES`): escribir en sus archivos (el `.lua` de KOReader, el docdata de Okular) espera la
-  decisión del autor (§9.7): el plan se muestra y `--aplicar` se niega a escribirlos.
+- **KOReader** (`ESCRIBE`, aprobado por el autor el 2026-11-17, §9.7): en el `.lua` del libro (`metadata.pdf.lua`), solo
+  si KOReader ya abrió ese PDF y está cerrado; respaldo verificado, escritura atómica y relectura antes de reemplazar.
+- **Okular** (`ESCRIBE`, aprobado el 2026-11-17): en su docdata (lo crea si falta), con Okular cerrado y el mismo respaldo;
+  nunca en el PDF (cambiaría su MD5 de KOReader).
 - **Yachay** (`PENDIENTES`): por su API (`cliente.resaltar`), cuando la fase 3b deje su cliente y el autor lo apruebe.
 
 Lo escrito se apunta como presencia (`base.registrar_presencias`): la próxima lectura de esa herramienta lo reconoce como
@@ -19,12 +21,10 @@ import sys
 from pathlib import Path
 
 from lectura_base.lib import base
-from lectura_base.lib.biblioteca import Resolutor, medidas
+from lectura_base.lib.biblioteca import Resolutor, giros, medidas
 
-ESCRIBE = {"zotero"}
-PENDIENTES = {"koreader": "escribir en los .lua de KOReader espera la decisión del autor (decisiones §9.7)",
-              "okular": "escribir en el docdata de Okular espera la decisión del autor (decisiones §9.7)",
-              "yachay": "escribir en Yachay espera su cliente con token (fase 3b) y la decisión del autor"}
+ESCRIBE = {"zotero", "koreader", "okular"}
+PENDIENTES = {"yachay": "escribir en Yachay espera su cliente con token (fase 3b) y la decisión del autor"}
 DESTINOS = ("zotero", "koreader", "okular", "yachay")
 
 
@@ -40,6 +40,28 @@ def candidatas(destino: str, ruta: Path | None = None, ids: set[int] | None = No
     if destino != "yachay":
         salida = [a for a in salida if a["hoja"] and a["rects"]]
     return salida
+
+
+def ubicables(cands: list[dict], resolutor: Resolutor) -> tuple[list[dict], list[str]]:
+    """Solo lo que cada herramienta pondría en el mismo lugar: ni una hoja girada (cada una mide ahí a su modo) ni
+    rectángulos fuera de la hoja. Lo demás queda en la base, con su aviso."""
+    salida, giradas, fuera = [], 0, 0
+    for a in cands:
+        pdf = resolutor.pdf(a["calibre_id"])
+        g = giros(pdf) if pdf else []
+        if a["hoja"] and 0 < a["hoja"] <= len(g) and g[a["hoja"] - 1]:
+            giradas += 1
+            continue
+        if any(r[1] < -0.01 or r[2] < -0.01 or r[1] + r[3] > 1.01 or r[2] + r[4] > 1.01 for r in a["rects"]):
+            fuera += 1
+            continue
+        salida.append(a)
+    avisos = []
+    if giradas:
+        avisos.append(f"{giradas} anotaciones en hojas giradas quedan solo en la base (cada herramienta las mide a su modo)")
+    if fuera:
+        avisos.append(f"{fuera} anotaciones con rectángulos fuera de la hoja quedan solo en la base")
+    return salida, avisos
 
 
 def _sys_lib():
@@ -198,6 +220,9 @@ def exportar(destino: str, aplicar: bool = False, ids: set[int] | None = None, l
         raise ValueError(f"destino desconocido: {destino} (uno de {', '.join(DESTINOS)})")
     resolutor = resolutor or Resolutor()
     cands = candidatas(destino, ruta, ids)
+    previos: list[str] = []
+    if destino != "yachay":
+        cands, previos = ubicables(cands, resolutor)
     if destino == "zotero":
         ruta_z = Path(os.environ.get("ZOTERO_DB") or Path(os.environ.get("ZOTERO_DIR") or Path.home() / "Zotero") / "zotero.sqlite")
         plan, avisos = plan_zotero(cands, ruta_z, resolutor)
@@ -207,6 +232,7 @@ def exportar(destino: str, aplicar: bool = False, ids: set[int] | None = None, l
         plan, avisos = plan_okular(cands, resolutor)
     else:
         plan, avisos = plan_yachay(cands)
+    avisos = previos + avisos
     if limite is not None:
         plan = plan[:limite]
     salida = {"destino": destino, "plan": plan, "avisos": avisos, "hechas": [], "escribe": destino in ESCRIBE}

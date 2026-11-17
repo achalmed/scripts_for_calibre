@@ -654,10 +654,18 @@ simula siempre). Qué destino se escribe es decisión del autor, y por ahora:
 - **Zotero, sí, por la puerta**: Zotero cerrado, `LOCK_ZOTERO`, respaldo verificado, la primitiva nueva
   `z_anadir_anotacion` de `lib/escribir_zotero.py` (un ítem «annotation» y su fila de `itemAnnotations` en el adjunto PDF del
   libro, sin sincronizar para que la cuenta lo suba) e `integrity_check` al final. Con Zotero abierto no se escribe.
-- **KOReader y Okular, pendientes de decidir**: los escritores existen y están probados en copias (KOReader cerrado;
-  respaldo del archivo y escritura atómica; el `.lua` se reescribe con el mismo formato de KOReader), pero
-  `exportar.ESCRIBE` no los incluye: `--aplicar` se niega. Escribir en el `.lua` de KOReader toca los datos vivos del
-  lector principal del autor; para Okular, además, el docdata se busca por el tamaño del PDF.
+- **KOReader y Okular, sí** (el autor, 2026-11-17: «También KOReader y Okular»): `exportar.ESCRIBE` los incluye.
+  KOReader, en el `metadata.pdf.lua` de cada PDF que ya abrió (no crea sidecars); Okular, en el docdata del PDF (lo crea
+  si falta), **nunca en el PDF**, que cambiaría su MD5 de KOReader. Los dos solo con la aplicación cerrada (al cerrar un
+  libro reescriben su archivo con lo que tienen en memoria y borrarían lo escrito), con respaldo verificado en
+  `<respaldos de la puerta>/lectura/<herramienta>/`, escritura atómica y relectura antes de reemplazar. El `.lua` sale
+  con el formato de KOReader (idéntico byte a byte en los 287 sidecars reales) y la entrada con la misma forma que los
+  resaltados que hace KOReader en un PDF; lo escrito en Okular lleva `uniqueName` = `okular-<uid de la base>` y vuelve
+  como la misma anotación aunque su texto no se pueda recortar del PDF (un escaneo, una franja fina).
+- **Las hojas giradas no se exportan** (a ninguna herramienta): en una hoja con `rot` 90 o 270 cada una mide sus
+  rectángulos a su modo y el subrayado caería en otro lugar; tampoco los rectángulos fuera de la hoja. Se quedan en la
+  base, con su aviso. Ensayo sobre copias de los datos reales (2026-11-17): 9 subrayados de Zotero a KOReader, 115 a
+  Okular, 8 retenidos por hoja girada (un solo libro escaneado de lado); la segunda pasada, 0 cambios.
 - **Yachay, pendiente de la fase 3b**: `exportar yachay` arma el cuerpo de `POST /lector/{id}/resaltados` (con el
   `uid` de la base como `origen_id`, para que Yachay no duplique), pero no escribe hasta que el cliente con token esté y
   el autor lo apruebe.

@@ -125,49 +125,84 @@ def test_exportar_a_zotero_por_la_puerta_y_no_duplicar(con_koreader):
 
 
 @requiere_poppler
-def test_koreader_y_okular_no_se_escriben_sin_la_decision_del_autor(con_koreader):
-    sincronizar.sincronizar(("koreader",), aplicar=True)
-    zotero_anotacion(con_koreader.zotero_db, 13, "ANOT0002", "Las instituciones reducen la incertidumbre economica.", 2, 150)
-    sincronizar.sincronizar(("zotero",), aplicar=True)
-    with pytest.raises(PermissionError):
+def test_koreader_y_okular_no_se_escriben_con_la_aplicacion_abierta(con_koreader, monkeypatch):
+    """Aprobados por el autor (§9.7, 2026-11-17), pero solo con la herramienta cerrada: al cerrar un libro, KOReader y
+    Okular reescriben su archivo con lo que tienen en memoria y borrarían lo escrito."""
+    m = con_koreader
+    zotero_anotacion(m.zotero_db, 11, "ANOT0003", "El crecimiento depende de la acumulacion de capital.", 1, 200)
+    sincronizar.sincronizar(("koreader", "zotero"), aplicar=True)
+    assert {"zotero", "koreader", "okular"} <= exportar.ESCRIBE and "yachay" not in exportar.ESCRIBE
+    sidecar = m.koreader / "hashdocsettings" / m.md5_1[:2] / f"{m.md5_1}.sdr" / "metadata.pdf.lua"
+    antes = sidecar.read_bytes()
+    monkeypatch.setattr(koreader, "abierto", lambda: True)
+    monkeypatch.setattr(okular, "abierto", lambda: True)
+    with pytest.raises(RuntimeError, match="abierto"):
+        exportar.exportar("koreader", aplicar=True)
+    with pytest.raises(RuntimeError, match="abierto"):
         exportar.exportar("okular", aplicar=True)
-    assert "okular" not in exportar.ESCRIBE and "koreader" not in exportar.ESCRIBE
+    assert sidecar.read_bytes() == antes and not list(m.docdata.glob("*.xml"))
+    with pytest.raises(PermissionError):
+        exportar.exportar("yachay", aplicar=True)
 
 
 @requiere_poppler
 def test_escribir_en_koreader_deja_el_sidecar_legible_y_reconocible(con_koreader, monkeypatch):
-    """El escritor de KOReader (aún sin aprobar en exportar.ESCRIBE) sobre un sidecar de juguete: respalda, escribe atómico
-    y lo escrito vuelve como la misma anotación."""
+    """Respalda, escribe atómico, en orden de lectura, y lo escrito vuelve como la misma anotación."""
     m = con_koreader
     monkeypatch.setattr(koreader, "abierto", lambda: False)
     zotero_anotacion(m.zotero_db, 11, "ANOT0003", "El crecimiento depende de la acumulacion de capital.", 1, 200)
     sincronizar.sincronizar(("koreader", "zotero"), aplicar=True)
-    plan = exportar.exportar("koreader")["plan"]
-    assert len(plan) == 1
-    hechas = exportar.aplicar_koreader(plan, respaldos=m.raiz / "respaldos" / "ko")
-    assert len(hechas) == 1
+    assert len(exportar.exportar("koreader")["plan"]) == 1
+    hecho = exportar.exportar("koreader", aplicar=True)
+    assert len(hecho["hechas"]) == 1
     sidecar = m.koreader / "hashdocsettings" / m.md5_1[:2] / f"{m.md5_1}.sdr" / "metadata.pdf.lua"
     datos = lua.leer(sidecar.read_bytes())
     assert len(datos["annotations"]) == 3 and datos["stats"]["highlights"] == 3
     assert [a["page"] for a in datos["annotations"].values()] == [1, 1, 2]       # en orden de lectura
-    assert list((m.raiz / "respaldos" / "ko").glob("*.lua"))
+    assert list((m.raiz / "respaldos" / "lectura" / "koreader").glob("*.lua"))
     planes = sincronizar.sincronizar(("koreader",), aplicar=True)
     assert not planes[0].altas and not planes[0].uniones
+    assert exportar.exportar("koreader")["plan"] == []
 
 
 @requiere_poppler
-def test_escribir_en_okular_crea_su_docdata(con_koreader, monkeypatch):
+def test_escribir_en_okular_crea_su_docdata_y_lo_reconoce(con_koreader, monkeypatch):
     m = con_koreader
     monkeypatch.setattr(okular, "abierto", lambda: False)
     sincronizar.sincronizar(("koreader",), aplicar=True)
-    plan = exportar.exportar("okular")["plan"]
-    assert len(plan) == 2
-    exportar.aplicar_okular(plan, respaldos=m.raiz / "respaldos" / "ok")
+    assert len(exportar.exportar("okular")["plan"]) == 2
+    exportar.exportar("okular", aplicar=True)
     xml = m.docdata / okular.nombre_docdata(m.pdf1)
     raiz = ET.parse(xml).getroot()
     assert raiz.get("url") == str(m.pdf1) and len(list(raiz.iter("annotation"))) == 2
+    leidas = okular.leer(Resolutor()).anotaciones
+    assert all(a.get("uid_base") for a in leidas)                  # lo que escribió la base se reconoce por su uid
     planes = sincronizar.sincronizar(("okular",), aplicar=True)
-    assert not planes[0].altas and not planes[0].uniones
+    assert not planes[0].altas and not planes[0].uniones and not planes[0].ausentes
+    assert exportar.exportar("okular")["plan"] == []
+
+
+@requiere_poppler
+def test_okular_sin_texto_recortable_no_se_pierde(mundo):
+    """Un resaltado sobre un escaneo (o una franja que pdftotext no recorta) sigue siendo un resaltado: basta su lugar."""
+    xml = mundo.docdata / f"{mundo.pdf1.stat().st_size}.{mundo.pdf1.name}.xml"
+    xml.write_text(f'''<?xml version="1.0" encoding="utf-8"?>
+<documentInfo url="{mundo.pdf1}"><pageList><page number="0"><annotationList>
+  <annotation type="4"><base uniqueName="okular-0123456789abcdef" creationDate="2026-11-10T09:00:00"><boundary l="0.1" t="0.9" r="0.2" b="0.92"/></base>
+   <hl type="0"><quad ax="0.1" ay="0.9" bx="0.2" by="0.9" cx="0.2" cy="0.92" dx="0.1" dy="0.92" feather="1"/></hl></annotation>
+</annotationList></page></pageList></documentInfo>''', encoding="utf-8")
+    a, = okular.leer(Resolutor()).anotaciones
+    assert a["texto"] == "" and a["rects"] and a["uid_base"] == "0123456789abcdef"
+
+
+@requiere_poppler
+def test_las_hojas_giradas_no_se_exportan(con_koreader, monkeypatch):
+    """En una hoja girada cada herramienta mide los rectángulos a su modo: lo de ahí se queda en la base, con su aviso."""
+    sincronizar.sincronizar(("koreader",), aplicar=True)
+    monkeypatch.setattr(exportar, "giros", lambda pdf: [90, 0])
+    r = exportar.exportar("okular")
+    assert [p["hoja"] for p in r["plan"]] == [2]
+    assert any("giradas" in x for x in r["avisos"])
 
 
 class ClienteFalso:

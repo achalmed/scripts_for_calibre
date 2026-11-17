@@ -26,4 +26,4 @@ lee_de:
 - zotero
 pruebas: python3 -m pytest biblioteca-studio/tests/lectura_base   # desde ~/Documents; un mundo de juguete en un temporal, nunca las bases reales
 creado: 2026-11-17
-nota: 'La base vive en $XDG_DATA_HOME/biblioteca/lectura.sqlite (LECTURA_DB): datos del usuario, fuera de todo repo y de toda base de Calibre o Zotero; `lib/base.py` es su único escritor y se niega a abrir esas. Escribir en KOReader, Okular y Yachay espera la decisión del autor (§9.7).'
+nota: 'La base vive en $XDG_DATA_HOME/biblioteca/lectura.sqlite (LECTURA_DB): datos del usuario, fuera de todo repo y de toda base de Calibre o Zotero; `lib/base.py` es su único escritor y se niega a abrir esas. La vuelta escribe en Zotero (por la puerta), KOReader (su .lua) y Okular (su docdata), con cada aplicación cerrada (§9.7); Yachay espera su cliente.'
