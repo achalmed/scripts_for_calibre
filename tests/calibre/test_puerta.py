@@ -28,6 +28,7 @@ PENDIENTES = {
 # las bases propias del repo, que no son de Calibre ni de Zotero: su único escritor y por qué (decisiones §9.6)
 PROPIAS = {
     "lectura_base/lib/base.py": "la base de lectura, fuera de Calibre y de Zotero; `comprobar_ruta` niega sus bases y sus carpetas",
+    "lib/repaso.py": "el repaso Leitner de las fichas (§9.9), junto a la base de lectura; la misma `comprobar_ruta`",
 }
 
 SUB_ESCRITURA = (r"add|add_format|remove|remove_format|set_metadata|set_custom|add_custom_column|"
