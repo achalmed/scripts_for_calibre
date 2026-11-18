@@ -1,6 +1,6 @@
 """biblioteca_app/controladores/espacio.py — lo transversal: el área (el rediseño del 2026-11-18, decisiones §9.9: Inicio,
-Catálogo, Lectura, Fichas, Método, Coherencia, con Ctrl+1–6, y Bandejas, Ctrl+7, que no es chip: se llega desde Inicio, el
-menú Ver y la paleta), la vista activa (la etapa de `operaciones.ETAPAS` cuyas operaciones se ofrecen), el resumen y
+Catálogo, Lectura, Fichas, Método, Coherencia, con Ctrl+1–6; Revisión, Ctrl+7, la revisión de literatura, §9.10; y Bandejas,
+Ctrl+8, que no es chip: se llega desde Inicio, el menú Ver y la paleta), la vista activa (la etapa de `operaciones.ETAPAS` cuyas operaciones se ofrecen), el resumen y
 el contexto de la barra de estado y las acciones sobre una ruta (abrir con el sistema, Dolphin, terminal,
 portapapeles). Se recuerdan el área y la vista en QSettings."""
 
@@ -15,11 +15,12 @@ from gui_comun.qt import QGuiApplication, QObject, QSettings, Property, Signal, 
 from biblioteca_app.servicios import operaciones as ops
 
 NOMBRES_VISTAS = ops.NOMBRES_ETAPAS
-# (nombre, texto, icono): el orden es el de los chips de la cabecera y el de Ctrl+1–7 (decisiones §9.9)
+# (nombre, texto, icono): el orden es el de los chips de la cabecera y el de Ctrl+1–8 (decisiones §9.9 y §9.10)
 AREAS = (("inicio", "Inicio", "go-home"), ("catalogo", "Catálogo", "view-preview"),
          ("lectura", "Lectura", "view-readermode"),      # la base de lectura (decisiones §9.6)
          ("fichas", "Fichas", "document-edit-verify"),   # las fichas de los escritos y el repaso (§9.9)
          ("metodo", "Método", "view-process-tree"), ("coherencia", "Coherencia", "folder-sync"),
+         ("revision", "Revisión", "view-list-details"),  # la revisión de literatura (§9.10): al final, sin mover los atajos de §9.9
          ("bandejas", "Bandejas", "mail-folder-inbox"))
 NOMBRES_AREAS = tuple(a for a, _t, _i in AREAS)
 SIN_CHIP = ("bandejas",)                 # se llega desde Inicio (Pendientes, Siguiente paso), el menú Ver y la paleta

@@ -61,11 +61,56 @@ fichas:
 ```"""
 
 
+def sembrar_flujo(escrito: Path) -> None:
+    """La revisión de muestra (tipo, bitácora, registros cribados y su diagrama PRISMA) y una ficha textual que propuso la
+    IA, en el informe de muestra del temporal (decisiones §9.10). Nada fuera de la muestra."""
+    import importlib.util
+
+    def cargar(nombre):
+        s = importlib.util.spec_from_file_location(f"muestra_{nombre}", REPO / "lib" / f"{nombre}.py")
+        m = importlib.util.module_from_spec(s)
+        sys.modules[f"biblioteca_{nombre}" if nombre == "revision" else f"muestra_{nombre}"] = m
+        s.loader.exec_module(m)
+        return m
+    rv = cargar("revision")
+    r, h = rv.leer(escrito)
+    r = rv.declarar(r, "sistematica", "¿Cuánto explica la composición del empleo la recuperación incompleta de la pobreza?",
+                    ["Perú, 2015-2025", "Estimaciones con microdatos de la ENAHO"], ["Sin método de descomposición", "Solo opinión"])
+    r, b1 = rv.buscar(r, "Scopus", 'TITLE-ABS-KEY(("pobreza monetaria" OR "poverty") AND "Peru" AND (empleo OR employment))',
+                      4, "2015-2025; artículos y documentos de trabajo; español e inglés", "2026-11-18")
+    r, b2 = rv.buscar(r, "Repositorio del BCRP", "pobreza empleo descomposición", 2, "2015-2025", "2026-11-18")
+    r, b3 = rv.buscar(r, "Búsqueda de citas", "", 1, "referencias de los incluidos", "2026-11-18", clase="citas")
+    for bq, titulo, anio, doi in ((b1, "Pobreza y empleo informal en el Perú", "2021", "10.1000/muestra.1"),
+                                  (b1, "Pobreza y empleo informal en el Perú", "2021", "10.1000/MUESTRA.1"),
+                                  (b1, "Ingresos laborales y pobreza urbana", "2019", ""), (b1, "Turismo y crecimiento", "2018", ""),
+                                  (b2, "Descomposición de la pobreza, 2019-2023", "2024", ""), (b2, "Empleo y pandemia", "2022", ""),
+                                  (b3, "Un estudio citado por los incluidos", "2017", "")):
+        r, _ = rv.registro(r, bq["id"], titulo, "Autora, Una", anio, doi)
+    for rid, fase, decision, motivo in (("r0001", 1, "incluir", ""), ("r0003", 1, "incluir", ""), ("r0004", 1, "excluir", "otro tema"),
+                                        ("r0005", 1, "incluir", ""), ("r0006", 1, "incluir", ""), ("r0007", 1, "incluir", ""),
+                                        ("r0001", 2, "incluir", ""), ("r0003", 2, "excluir", "sin descomposición"),
+                                        ("r0005", 2, "incluir", ""), ("r0006", 2, "no_recuperado", ""), ("r0007", 2, "incluir", "")):
+        r, _ = rv.cribar(r, rid, fase, decision, motivo)
+    rv.escribir(escrito, r, h, aplicar=True)
+    cargar("prisma").generar(escrito, aplicar=True)
+    fichar = cargar("fichar")
+    fichar._verificar = lambda meta, _c, _r: {"estado": "verificada_script", "metodo": "texto", "fecha": "2026-11-18", "detalle": "", "pagina_pdf": None}
+    fichar.registrar_ia = lambda *a, **k: {"registro": "ia/registro.yml", "total": 1}
+    import yaml
+    f = (yaml.safe_load((escrito / "fuentes" / "fuentes.yml").read_text(encoding="utf-8")) or {}).get("fuentes") or []
+    if f:
+        entrada = {"clave": f[0]["clave_bibtex"], "calibre_id": f[0]["calibre_id"], "zotero_key": f[0].get("zotero_key") or ""}
+        fichar.guardar(escrito, {"tipo": "textual", "pagina": "14", "categoria": "Hallazgo", "tema": "integracion regional",
+                                 "origen": {"autor": "llm", "herramienta": "Un chat de IA externo, con la mirada «Fichas textuales» de Biblioteca Studio"},
+                                 "secciones": {"Cita exacta": "Las ciudades pequeñas crecen cuando se integran a su región."}},
+                       entrada, aplicar=True)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Captura de Biblioteca Studio sobre la biblioteca de muestra")
     parser.add_argument("salida")
     parser.add_argument("--esquema", help="archivo .colors de KDE (relanza con XDG_CONFIG_HOME temporal)")
-    parser.add_argument("--area", default="catalogo", help="inicio · catalogo · lectura · fichas · metodo · coherencia · bandejas")
+    parser.add_argument("--area", default="catalogo", help="inicio · catalogo · lectura · fichas · metodo · coherencia · revision · bandejas")
     parser.add_argument("--vista", default="", help="la etapa: adquirir · entrada · catalogar · fichas · manifiestos · sincronizar · puerta · tareas")
     parser.add_argument("--libro", default="", help="el libro de la ficha editorial (su número de Calibre)")
     parser.add_argument("--buscar", default="", help="la búsqueda del catálogo (autor:… año:…)")
@@ -81,7 +126,8 @@ def main() -> int:
     parser.add_argument("--estudio", action="store_true", help="con --libro: abre «Estudiar con la IA» con una respuesta de muestra leída (§9.5)")
     parser.add_argument("--repaso", action="store_true", help="con --area fichas: el «Repaso para estudiantes» (§9.9)")
     parser.add_argument("--mostrar", action="store_true", help="con --repaso: la tarjeta con su cita a la vista")
-    parser.add_argument("--filtro", default="", help="con --area fichas: todas · textual · parafrasis · revisar")
+    parser.add_argument("--filtro", default="", help="con --area fichas: todas · textual · parafrasis · obra · revisar · ia")
+    parser.add_argument("--flujo", action="store_true", help="siembra en la muestra una revisión con su PRISMA y una ficha de la IA (§9.10)")
     parser.add_argument("--ancho", type=int, default=1440)
     parser.add_argument("--alto", type=int, default=900)
     args = parser.parse_args()
@@ -110,6 +156,8 @@ def main() -> int:
         else:
             env = dict(os.environ, XDG_CONFIG_HOME=str(hogar / ".config"))
         m = muestra.crear(carpeta / "muestra")
+        if args.flujo:
+            sembrar_flujo(carpeta / "muestra" / "escritura" / "reports" / "2026-11-17-informe-de-muestra")
         (carpeta / "muestra" / "core").symlink_to(REPO.parent / "core")      # DOCS_ROOT = la muestra: las rutas se ven relativas a ella
         env.update(m.entorno)
         env.update({"HOME": str(hogar), "XDG_CACHE_HOME": str(hogar / ".cache"), "XDG_DATA_HOME": str(Path.home() / ".local" / "share"),

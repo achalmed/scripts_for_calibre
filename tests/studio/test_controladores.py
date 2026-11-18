@@ -68,9 +68,11 @@ def _visible(l, i: int) -> dict:
 @requiere_binding
 def test_espacio_areas(piezas):
     e = piezas["espacio"]
-    # el rediseño del 2026-11-18 (§9.9): seis chips con Ctrl+1–6 y Bandejas, sin chip, con Ctrl+7; se abre en Inicio
-    assert e.area == "inicio" and [a["nombre"] for a in e.areas] == ["inicio", "catalogo", "lectura", "fichas", "metodo", "coherencia", "bandejas"]
-    assert [a["atajo"] for a in e.areas] == [f"Ctrl+{n}" for n in range(1, 8)]
+    # el rediseño del 2026-11-18 (§9.9): seis chips con Ctrl+1–6; Revisión, Ctrl+7 (§9.10); y Bandejas, sin chip, con Ctrl+8;
+    # se abre en Inicio
+    assert e.area == "inicio" and [a["nombre"] for a in e.areas] == ["inicio", "catalogo", "lectura", "fichas", "metodo", "coherencia",
+                                                                     "revision", "bandejas"]
+    assert [a["atajo"] for a in e.areas] == [f"Ctrl+{n}" for n in range(1, 9)]
     assert [a["nombre"] for a in e.areas if not a["chip"]] == ["bandejas"]
     e.fijarArea("metodo")
     assert e.area == "metodo" and e.vista == "adquirir"                 # la primera etapa del Método
@@ -237,7 +239,7 @@ def test_etapas_tablas_y_elemento(piezas):
 @requiere_binding
 def test_las_tres_tarjetas_de_coherencia(piezas):
     """Calibre ⇄ Zotero, Calibre ⇄ KOReader y las tareas automáticas, con su estado, su línea y lo que las atiende (§9.9)."""
-    zotero, koreader, tareas = piezas["etapas"].tarjetasCoherencia
+    zotero, koreader, tareas = piezas["etapas"].tarjetasCoherencia[:3]
     assert [zotero["titulo"], koreader["titulo"], tareas["titulo"]] == ["Calibre ⇄ Zotero", "Calibre ⇄ KOReader", "Tareas automáticas"]
     assert zotero["estado"] == "negativo" and zotero["linea"].startswith("3 sin Zotero") and zotero["operacion"] == "enlazar_zotero"
     assert koreader["operacion"] == "koreader" and koreader["vista"] == "sincronizar"

@@ -2,8 +2,8 @@
 de portadas, el registro de acciones (menú, paleta, atajos, estados de operación) y carga `qml/Main.qml` (VentanaBase;
 reingeniería del 2026-11-02, `docs/reingenieria.md`).
 
-Toda operación existe una sola vez, aquí, en `Acciones`. Ctrl+1–6 las áreas de la cabecera (Inicio, Catálogo, Lectura,
-Fichas, Método, Coherencia; el rediseño del 2026-11-18, decisiones §9.9) y Ctrl+7 Bandejas, que no es chip: se llega desde
+Toda operación existe una sola vez, aquí, en `Acciones`. Ctrl+1–7 las áreas de la cabecera (Inicio, Catálogo, Lectura,
+Fichas, Método, Coherencia; el rediseño del 2026-11-18, decisiones §9.9; y Revisión, §9.10) y Ctrl+8 Bandejas, que no es chip: se llega desde
 Inicio, el menú Ver y la paleta. Ctrl+F buscar, Ctrl+G cuadrícula o lista, F9 los filtros. Las operaciones de las suites son acciones
 `op.<id>` que eligen la operación actual (y llevan a su etapa); correrla es siempre «Simular» (F5, la orden sin
 `--aplicar`) o «Aplicar» (Ctrl+Intro, con `--aplicar`, tras confirmar con la orden exacta, las bases y los pasos de la
@@ -35,6 +35,7 @@ from biblioteca_app.controladores.lectura import Lectura
 from biblioteca_app.controladores.libros import Libros
 from biblioteca_app.controladores.operaciones import Operaciones
 from biblioteca_app.controladores.puerta import Puerta
+from biblioteca_app.controladores.revision import Revision
 from biblioteca_app.servicios import datos
 from biblioteca_app.servicios import operaciones as ops
 from biblioteca_app.controladores.espacio import AREAS, VISTAS_DE
@@ -107,6 +108,7 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
     lectura = Lectura(libros, tareas=tareas)  # el área Lectura: la base de lectura (§9.6) y «Sincronizar ahora» (§9.8)
     fichas = Fichas(libros, consola, repo=repo_datos)   # el área Fichas: las de los escritos, las canónicas y el repaso (§9.9)
     inicio = Inicio(espacio, libros, lectura, fichas)   # el área Inicio: «Esto es lo de hoy» (§9.9)
+    revision = Revision(fichas, consola)                 # el área Revisión: bitácora, cribado y PRISMA (§9.10)
     fichado.revisada.connect(lambda r: fichas.recargar() if r.get("escrito") else None)   # una ficha nueva entra a la lista
     acciones = Acciones()
     acciones.estandar(NOMBRE, paneles=False)
@@ -323,7 +325,7 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
 
     piezas = dict(env=env, consola=consola, tareas=tareas, interfaz=interfaz, ajustes=ajustes, espacio=espacio, puerta=puerta,
                   libros=libros, etapas=etapas, operaciones=operaciones, acciones=acciones, portadas=portadas, fichado=fichado,
-                  lectura=lectura, fichas=fichas, inicio=inicio)
+                  lectura=lectura, fichas=fichas, inicio=inicio, revision=revision)
     for nombre, objeto in piezas.items():
         if nombre not in ("env", "portadas"):
             app.exponer(nombre, objeto)

@@ -1,7 +1,7 @@
 // Main.qml — Biblioteca Studio (reingeniería del 2026-11-02, docs/reingenieria.md; rediseño del 2026-11-18, decisiones
 // §9.9): un gestor bibliográfico sobre la biblioteca de Calibre, en GuiComun.VentanaBase. Arriba, sin el nombre del studio
 // (la regla de la familia, gui-comun: el título lo pone KWin), las áreas como chips (Inicio · Catálogo · Lectura · Fichas ·
-// Método · Coherencia, Ctrl+1–6), la búsqueda y el punto de la puerta de escritura. Bandejas (Ctrl+7) no es chip: se llega
+// Método · Coherencia · Revisión, Ctrl+1–7; Revisión, §9.10), la búsqueda y el punto de la puerta. Bandejas (Ctrl+8) no es chip: se llega
 // desde Inicio, el menú Ver y la paleta. En el centro, el área: lo de hoy; el catálogo con portadas, filtros y la ficha
 // editorial; la base de lectura; las fichas y su repaso; las etapas con su tabla, su operación y los seis pasos de la
 // puerta; o las bandejas de trabajo. Abajo, la barra de estado. Ninguna llamada al disco ni a una suite aquí: todo lo
@@ -61,6 +61,7 @@ VentanaBase {
     Connections { target: etapas; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } }
     Connections { target: studio.lectura; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } }
     Connections { target: studio.fichas; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } }
+    Connections { target: studio.revision; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } }
     Connections {
         target: ops
         function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) }
@@ -144,6 +145,7 @@ VentanaBase {
         Fichas { id: fichas }
         EspacioEtapas { id: metodo; filas: etapas.filasMetodo }
         EspacioEtapas { id: coherencia; filas: etapas.filasCoherencia; recorrido: false; tarjetas: true }
+        Revision { id: revision }
         Bandejas { id: bandejas }
     }
 
