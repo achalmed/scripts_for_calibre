@@ -159,7 +159,24 @@ class Etapas(QObject):
             linea, estado = f"Las {len(timers)} en marcha y bien", "positivo"
         tareas = {"titulo": "Tareas automáticas", "estado": estado, "linea": linea, "boton": "Ver", "operacion": "",
                   "vista": "tareas", "icono": "chronometer"}
-        return [zotero, koreader, tareas]
+        # «Referencias» (C12.5, §9.10): cuántas obras tienen su DOI o ISBN resuelto y cuántas uno que no existe, del índice
+        refs = list((self.libros.indice.get("referencias") or {}).values()) if hasattr(self.libros, "indice") else []
+        con_id = [r for r in refs if r.get("doi") or r.get("isbn")]
+        malas = [r for r in con_id if (r.get("verificacion_ids") or {}).get("doi") in ("no_existe", "mal_formado")
+                 or (r.get("verificacion_ids") or {}).get("isbn") in ("no_existe", "mal_formado")]
+        sin = [r for r in con_id if r.get("doi_verificado") is None and r.get("isbn_verificado") is None
+               and "sin_consultar" in (r.get("verificacion_ids") or {}).values()]
+        bien = [r for r in con_id if r.get("doi_verificado") is True or r.get("isbn_verificado") is True]
+        if not refs:
+            ref = {"estado": "neutro", "linea": "Sin comprobar: hace falta el índice (Ctrl+R)"}
+        elif malas:
+            ref = {"estado": "negativo", "linea": f"{len(malas)} con un identificador que no existe · {len(bien)} resueltas"}
+        elif sin:
+            ref = {"estado": "neutro", "linea": f"{len(bien)} resueltas · {len(sin)} sin consultar"}
+        else:
+            ref = {"estado": "positivo", "linea": f"{len(bien)} con su DOI o ISBN resuelto"}
+        ref.update(titulo="Referencias", boton="Verificar", operacion="verificar_ids", vista="sincronizar", icono="view-certificate")
+        return [zotero, koreader, tareas, ref]
 
     # ------------------------------------------------------------ elemento
     @Slot(str, int)

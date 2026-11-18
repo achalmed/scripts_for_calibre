@@ -66,6 +66,20 @@ def firma(ruta: Path) -> tuple:
     return tuple(partes)
 
 
+
+def texto_ids(d: dict) -> str:
+    """«DOI resuelto en Crossref (2026-11-18)» o «DOI que no existe»: lo que el índice dice del identificador del libro (C12.5)."""
+    v = d.get("verificacion_ids") or {}
+    partes = []
+    for tipo, nombre in (("doi", "DOI"), ("isbn", "ISBN")):
+        e = v.get(tipo)
+        if not d.get(tipo) or not e or e == "sin_identificador":
+            continue
+        partes.append({"existe": f"{nombre} resuelto", "no_existe": f"{nombre} que no existe", "discrepa": f"{nombre} de otro título: revísalo",
+                       "mal_formado": f"{nombre} mal formado", "no_hallado": f"{nombre} no hallado en Open Library",
+                       "sin_consultar": f"{nombre} sin consultar"}.get(e, e))
+    return (" · ".join(partes) + (f" ({v['fecha']})" if v.get("fecha") else "")) if partes else ""
+
 class Libros(QObject):
     cambiado = Signal()                 # el catálogo, las facetas, las bandejas y los contadores
     filtroCambiado = Signal()           # la búsqueda, los filtros, el orden o la forma (cuadrícula · lista)
@@ -508,7 +522,8 @@ class Libros(QObject):
                         "verificacion": estados.get(Path(f).name, "pendiente")} for f in l["fichas"]],
             "nota": nota, "hayNota": bool(nota) and Path(nota).is_file(), "notaEnlazada": l["nota_enlazada"],
             "formatos": [{"formato": f["formato"], "nombre": f["nombre"], "tamano": _bytes(f["bytes"]) if f["bytes"] else ""} for f in l["formatos"]],
-            "carpeta": l["carpeta"], "añadido": l["añadido"],
+            "carpeta": l["carpeta"], "añadido": l["añadido"], "ids": texto_ids(self._indice.get("libros", {}).get(str(l["id"])) or {}),
+            "porqueIds": "Una referencia inventada tiene un DOI que no existe o que es de otra obra: se resuelve antes de entregar. · ICMJE (2025); Jergas y Baethge (2015)",
         }
 
     def _biblioteca(self) -> Path:

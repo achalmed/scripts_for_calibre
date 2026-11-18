@@ -6,6 +6,8 @@ fichas) sin abrir las bases por su cuenta: KOReader no lee `metadata.db`, Zotero
 Método: SOLO LEE (`mode=ro`) `metadata.db` y `zotero.sqlite` y las fichas de `catalogacion/fichas/`; no es una puerta
 de escritura. El JSON queda fuera del repo y de las bases: `$XDG_STATE_HOME/biblioteca/indice.json`.
 Entra: CALIBRE_DB, ZOTERO_DB y BIBLIOTECA_DIR de core/env. Sale: el JSON (con `--aplicar`); sin él, simula.
+`referencias` y los campos `doi`, `isbn`, `doi_verificado`, `isbn_verificado` y `verificacion_ids` de cada libro (aditivos,
+2026-11-18; C12.5) salen de la caché de `lib/verificar_ids.py`: el índice no consulta la red.
 `editorial(db)` (aditiva, 2026-11-02) lee en solo lectura lo editorial de cada libro (año, serie, etiquetas, editorial,
 idiomas, identificadores, descripción, formatos, tipo, páginas, lectura de KOReader) para el catálogo de Biblioteca
 Studio; no va al JSON (los complementos no lo necesitan y KOReader lo leería entero).
@@ -190,10 +192,25 @@ def editorial(db: Path) -> dict:
     return {"libros": libros, "inmutable": inmutable}
 
 
+def _verificar_ids():
+    import importlib.util
+    s = importlib.util.spec_from_file_location("biblioteca_verificar_ids", RAIZ / "lib" / "verificar_ids.py")
+    m = importlib.util.module_from_spec(s)
+    s.loader.exec_module(m)
+    return m
+
+
 def construir(env=None) -> dict:
     env = env or _env()
     libros = calibre(Path(env.CALIBRE_DB))
     claves, por_id = zotero(Path(env.ZOTERO_DB))
+    # C12.5 (2026-11-18): el DOI y el ISBN de cada obra y si se resolvieron (la caché de lib/verificar_ids.py; aquí no se
+    # consulta la red). Campos nuevos: los consumidores de antes leen lo mismo que leían.
+    vi = _verificar_ids()
+    cache = vi.leer_cache()
+    ids_cal = vi.de_calibre(Path(env.CALIBRE_DB))
+    zot = vi.de_zotero(Path(env.ZOTERO_DB))
+    por_zkey = {z["zotero_key"]: z for z in zot.values()}
     for b, f in fichas(RAIZ / "catalogacion" / "fichas").items():
         if b in libros:
             libros[b]["fichas"] = f
@@ -202,11 +219,20 @@ def construir(env=None) -> dict:
         if not d["zotero_key"] and b in por_id:
             d["zotero_key"] = por_id[b]
         d["clave"] = claves.get(d["zotero_key"], "")
+        z = por_zkey.get(d["zotero_key"]) or {}
+        c = ids_cal.get(b) or {}
+        d.update(vi.campos(z.get("doi") or c.get("doi") or "", z.get("isbn") or c.get("isbn") or "", z.get("titulo") or d["titulo"], cache))
         # la nota de lectura del libro: la de #apuntes si la hay; si no, la que crea Zotero Integration en Obsidian
         # (`notas/{{citekey | lower}}.md`), para que un libro tenga una sola nota venga de donde venga
         d["nota"] = d["apuntes"] or str(notas / f"{(d['clave'] or f'calibre-{b}').lower()}.md")
+    del_libro = {d["zotero_key"]: b for b, d in libros.items() if d["zotero_key"]}
+    referencias = {}
+    for k, z in sorted(zot.items()):
+        r = vi.campos(z["doi"], z["isbn"], z["titulo"], cache)
+        referencias[k] = {"zotero_key": z["zotero_key"], "calibre_id": del_libro.get(z["zotero_key"]), **r}
     return {"esquema": ESQUEMA, "generado": time.strftime("%Y-%m-%dT%H:%M:%S%z"), "biblioteca": str(env.BIBLIOTECA_DIR),
-            "repo": str(RAIZ), "notas": str(notas), "libros": {str(b): d for b, d in sorted(libros.items())}}
+            "repo": str(RAIZ), "notas": str(notas), "libros": {str(b): d for b, d in sorted(libros.items())},
+            "referencias": referencias}
 
 
 def main(argv=None) -> int:
@@ -222,7 +248,9 @@ def main(argv=None) -> int:
     libros = indice["libros"].values()
     resumen = (f"{len(indice['libros'])} libros · {sum(bool(d['zotero_key']) for d in libros)} con clave de Zotero · "
                f"{sum(bool(d['clave']) for d in libros)} con clave para citar · {sum(bool(d['fichas']) for d in libros)} "
-               f"con ficha · {sum(bool(d['apuntes']) for d in libros)} con apuntes")
+               f"con ficha · {sum(bool(d['apuntes']) for d in libros)} con apuntes · "
+               f"{sum(r['doi_verificado'] is True or r['isbn_verificado'] is True for r in indice['referencias'].values())} "
+               f"referencias con DOI o ISBN resuelto")
     if not a.aplicar:
         print(f"[simulación] {resumen} → {destino} (--aplicar escribe)")
         return 0

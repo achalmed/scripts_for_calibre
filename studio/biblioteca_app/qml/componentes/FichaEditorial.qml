@@ -245,6 +245,24 @@ QQC2.Control {
                             Layout.fillWidth: true
                         }
                     }
+                    // ¿existe? El DOI en Crossref y el ISBN en Open Library (C12.5, §9.10), con su por qué y su fuente
+                    QQC2.Label {
+                        Kirigami.FormData.label: "Existe:"
+                        visible: (raiz.f.ids || "") !== ""
+                        text: raiz.f.ids || ""
+                        color: (raiz.f.ids || "").indexOf("no existe") >= 0 || (raiz.f.ids || "").indexOf("mal formado") >= 0
+                               ? Kirigami.Theme.negativeTextColor : Kirigami.Theme.disabledTextColor
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
+                    QQC2.Label {
+                        visible: (raiz.f.ids || "") !== ""
+                        text: raiz.f.porqueIds || ""
+                        font: Kirigami.Theme.smallFont
+                        color: Kirigami.Theme.disabledTextColor
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                    }
                     QQC2.Label { Kirigami.FormData.label: "Añadido:"; visible: (raiz.f.añadido || "") !== ""; text: raiz.f.añadido || ""; color: Kirigami.Theme.disabledTextColor }
                 }
                 // materias (etiquetas)

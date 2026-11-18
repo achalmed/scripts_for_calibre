@@ -26,13 +26,13 @@ ColumnLayout {
     function tabla() { return tablas.children[tablas.currentIndex] }
     function accion(n) { return studio.acciones.accion(n) }
 
-    // las tres tarjetas de Coherencia
+    // las cuatro tarjetas de Coherencia (la de Referencias, §9.10)
     GridLayout {
         Layout.fillWidth: true
         Layout.margins: Kirigami.Units.largeSpacing
         Layout.bottomMargin: 0
         visible: raiz.tarjetas
-        columns: width >= Kirigami.Units.gridUnit * 48 ? 3 : 1
+        columns: width >= Kirigami.Units.gridUnit * 64 ? 4 : (width >= Kirigami.Units.gridUnit * 32 ? 2 : 1)
         columnSpacing: Kirigami.Units.largeSpacing
         rowSpacing: Kirigami.Units.smallSpacing
         Repeater {

@@ -167,6 +167,9 @@ ETAPAS = (
           "en la columna «apuntes» de su libro.", ("lib/enlazar_notas.py",), bases=("calibre",)),
         O("metadatos_pdf", "Metadatos en los PDF", "Incrusta los metadatos de Calibre en cada PDF (XMP).",
           ("metadatos-pdf/main.sh", "embed"), bases=("calibre",)),
+        # «referencia que no existe» (C12.5, §9.10): solo consulta Crossref, doi.org y Open Library y guarda su caché
+        O("verificar_ids", "¿Existen sus DOI e ISBN?", "Resuelve cada DOI en Crossref y cada ISBN en Open Library, con "
+          "caché; el índice publica si existen. No escribe en ninguna base.", ("lib/verificar_ids.py", "verificar")),
         # la base de lectura (decisiones §9.6): escribe solo la suya (fuera de Calibre y de Zotero), tras su respaldo
         O("base_lectura", "Base de lectura", "Junta en una sola base los subrayados, notas, horas y progreso de KOReader, "
           "Zotero, Okular y Yachay (solo los lee); el área Lectura la muestra.", ("lectura_base/main.py", "sincronizar")),
