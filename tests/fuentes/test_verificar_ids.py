@@ -195,3 +195,4 @@ def test_una_errata_de_la_agencia_no_es_otra_obra(vi):
     assert vi.mismo_titulo("La genealogía de la moral", "Genealgía de la Moral (Spanish Edition)") is True
     assert vi.mismo_titulo("Historia y filosofía de las matemáticas", "El café de las cuatro") is False
     assert vi.mismo_titulo("", "x") is None
+    assert vi.mismo_titulo("Economical writing: Thirty-five rules for clear and persuasive prose", "Economical Writing, Third Edition") is True

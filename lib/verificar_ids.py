@@ -50,7 +50,9 @@ PAUSA = 0.2                                   # segundos entre consultas (Crossr
 AGENTE = "biblioteca-studio/3 (verificar_ids)"
 POR_QUE = ("Una referencia inventada tiene un DOI que no existe o que es de otra obra: se resuelve antes de entregar.",
            "ICMJE (2025); Jergas y Baethge (2015)")
-VACIAS = {"the", "and", "for", "with", "from", "una", "del", "las", "los", "por", "para", "con", "como", "sobre", "entre"}
+VACIAS = {"the", "and", "for", "with", "from", "una", "del", "las", "los", "por", "para", "con", "como", "sobre", "entre",
+          # la edición no es el título («Economical Writing, Third Edition»)
+          "edition", "edicion", "second", "third", "fourth", "fifth", "sixth", "seventh", "revised", "segunda", "tercera"}
 
 
 # ------------------------------------------------------------------ identificadores
@@ -89,6 +91,10 @@ def mismo_titulo(a: str, b: str) -> bool | None:
     x, y = _palabras(a), _palabras(b)
     if not x or not y:
         return None
+    if ":" in (a or "") + (b or ""):      # el subtítulo puede faltar en uno: también se coteja el título sin él
+        principal = lambda s: re.split(r"[:.]", s or "", maxsplit=1)[0]
+        if (principal(a), principal(b)) != (a, b) and mismo_titulo(principal(a), principal(b)) is True:
+            return True
     corto, largo = (x, y) if len(x) <= len(y) else (y, x)
     from difflib import SequenceMatcher
 
