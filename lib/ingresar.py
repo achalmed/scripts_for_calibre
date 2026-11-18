@@ -202,16 +202,35 @@ def _esquema_zotero(db: Path) -> dict:
     return {"validos": validos, "base": base, "roles": roles}
 
 
+def fecha_zotero(v) -> str:
+    """La fecha como la guarda Zotero en su base («2023-00-00 2023», «2024-03-05 2024-03-05»): la parte SQL y el texto
+    original. Así queda desde el principio lo que Zotero reescribía al sincronizar (los 111 del 2026-11-18)."""
+    t = str(v or "").strip().replace("/", "-").strip("-")
+    if not t:
+        return ""
+    m = re.fullmatch(r"(\d{4})(?:-(\d{1,2}))?(?:-(\d{1,2}))?", t)
+    if m:
+        a, mes, dia = m.group(1), int(m.group(2) or 0), int(m.group(3) or 0)
+        return f"{a}-{mes:02d}-{dia:02d} {t}"
+    m = re.search(r"\b(\d{4})\b", t)
+    return f"{m.group(1) if m else '0000'}-00-00 {t}"
+
+
 def campos_zotero(obra: dict, tipo: str, esquema: dict, clave: str, hoy: str) -> dict:
-    """Los campos del ítem: los genéricos se traducen al campo de su tipo (publisher → institution en un informe…); lo
-    que el tipo no admite va a Extra («DOI: …», «ISBN: …»), como hace Zotero."""
+    """Los campos del ítem: los genéricos se traducen al campo de su tipo (publisher → institution en un informe, number →
+    publicLawNumber en una norma…); lo que el tipo no admite va a Extra («DOI: …», «ISBN: …»), como hace Zotero. Además de
+    los de `obras-flujo.json`, entiende los de un registro de `lib/importar_zotero.py` (fecha completa, título corto, serie,
+    número del documento, páginas del libro, resumen, ISSN, el libro de un capítulo y el catálogo de origen)."""
     validos = esquema["validos"].get(tipo, set())
-    genericos = {"title": obra.get("titulo"), "date": str(obra.get("anio") or ""), "url": obra.get("url"),
+    genericos = {"title": obra.get("titulo"), "date": fecha_zotero(obra.get("fecha") or obra.get("anio")), "url": obra.get("url"),
                  "language": obra.get("idioma"), "DOI": obra.get("doi"), "ISBN": obra.get("isbn"),
                  "publicationTitle": obra.get("revista"), "publisher": obra.get("editorial"), "volume": obra.get("volumen"),
                  "issue": obra.get("numero"), "pages": obra.get("paginas"), "edition": obra.get("edicion"), "place": obra.get("lugar"),
+                 "shortTitle": obra.get("titulo_corto"), "series": obra.get("serie"), "seriesNumber": obra.get("serie_numero"),
+                 "number": obra.get("numero_doc"), "numPages": obra.get("num_paginas"), "abstractNote": obra.get("resumen"),
+                 "ISSN": obra.get("issn"), "bookTitle": obra.get("libro"),
                  "citationKey": clave, "accessDate": f"{hoy} 00:00:00" if obra.get("url") else "",
-                 "libraryCatalog": "Crossref" if obra.get("doi_cotejado") else ("Open Library" if obra.get("isbn") else "")}
+                 "libraryCatalog": obra.get("catalogo") or ("Crossref" if obra.get("doi_cotejado") else ("Open Library" if obra.get("isbn") else ""))}
     campos, extra = {}, []
     for g, v in genericos.items():
         if v in (None, ""):
@@ -223,6 +242,8 @@ def campos_zotero(obra: dict, tipo: str, esquema: dict, clave: str, hoy: str) ->
             extra.append(f"{g}: {v}")
         elif g == "publicationTitle" and "websiteTitle" in validos:
             campos["websiteTitle"] = v
+        elif g == "series" and "seriesTitle" in validos:
+            campos["seriesTitle"] = v
     if extra:
         campos["extra"] = "\n".join(extra)
     return campos

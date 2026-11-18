@@ -233,6 +233,25 @@ hace la puerta (`z_rehacer_adjunto` de `lib/escribir_zotero.py`, orden `lib/adju
 por defecto y detecta los adjuntos sin sincronizar cuyo linkMode no es el que el servidor conoce o de los que no queda
 copia en `syncCache`). Regla: **el linkMode de un adjunto existente nunca se cambia en sitio**; se rehace.
 
+### §2.15 Lo que se importaba a mano en Zotero entra por la puerta, fusionado y sin duplicar (2026-11-18)
+
+Zotero se alimentaba importando a mano los RIS de `ingesta/salida_ris/` (Archivo › Importar, «enlazar a los archivos»), y
+se acumulaban pendientes de importar; un RIS repetido o uno viejo duplicaba ítems, y un adjunto que nacía copiado y luego
+se enlazaba por SQL rompía la sincronización (§2.14). Desde hoy lo hace `lib/importar_zotero.py`, como el ingreso del flujo
+de conocimiento (§9.10): toma uno o varios RIS, BibTeX o CSL-JSON, los **fusiona** (un registro repetido en otro archivo es
+una sola obra, por DOI, ISBN, id de Calibre o título + año + primer apellido), los **coteja** en solo lectura con Calibre y
+con Zotero y clasifica cada obra en **nueva**, **ya estaba** (la `#zotero_key` del libro, un adjunto que enlaza su carpeta,
+DOI, ISBN, clave de cita, o título, año y autor) o **dudosa** (el mismo título con otro año o autor, un ítem en la papelera,
+un id de Calibre que es de otra obra, un tipo que Calibre ya cambió). Simula por defecto y deja el informe y el RIS fusionado
+de lo que falta en `$XDG_STATE_HOME/biblioteca/importar-zotero/`; con `--aplicar` crea solo las nuevas por la puerta, con
+el mapeo de campos de `lib/ingresar.py` (que ahora entiende también fecha completa, título corto, serie, número del
+documento y resumen, y guarda la fecha como Zotero, «2023-00-00 2023»), la colección del lote, las etiquetas del archivo y el
+adjunto **enlazado desde el principio** al archivo de Calibre (`linkMode=2`); después escribe `#zotero_key` en Calibre.
+Reglas: **lo que ya está en Zotero no se reescribe** (Zotero manda en metadatos, §1.7); **las dudosas no se crean** salvo
+`--incluir-dudosos`, tras revisarlas; **no cataloga**: una obra sin libro en Calibre entra en Zotero sin archivo. En
+Biblioteca Studio es «Fusionar e importar a Zotero» (Método › Entrada), con los archivos elegidos en el diálogo de KDE y el
+resumen del plan en la pestaña Plan.
+
 ## 3. KOReader
 
 ### §3.1 Sidecars por hash (2026-08-09)

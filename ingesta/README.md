@@ -47,6 +47,7 @@ Simulación por defecto; `--aplicar` escribe. Desde esta carpeta:
 ./main.sh identificar                 clasifica → pendientes.tsv + fichas/<sha8>_<slug>.md
 ./main.sh catalogar [--solo REGEX]    simula; --aplicar escribe en Calibre (Calibre cerrado)
 ./main.sh zotero                      salida_ris/ingesta_<fecha>.ris, desde Calibre
+python3 ../lib/importar_zotero.py <.ris .bib .json…> [--aplicar]   funde e importa en Zotero lo que falta (§2.15)
 ./main.sh archivar [--aplicar]        retira el original y lo registra (ARCHIVAR_MODO; --mover borra sin manifiesto en esa corrida)
 ./main.sh paquetes [--aplicar]        anexos de un paquete → data/ del documento principal
 ./main.sh ocr [--aplicar]             X.ocr.pdf, X_ocr_buscable.pdf, X_texto.pdf → formato de X
@@ -125,9 +126,9 @@ completa `biblioteca-studio/catalogacion/`.
 - **Nunca edita `metadata.db` ni `zotero.sqlite`**: todo pasa por `calibredb` a través de la puerta
   (Calibre cerrado, candado, respaldo verificado); con Calibre abierto o el candado ocupado sale 75 sin
   aplicar nada. `tests/fuentes/test_puerta.py` falla si un archivo del repo llama a `calibredb` fuera de la puerta.
-- **Zotero se alimenta por RIS**: el `.ris` de `salida_ris/` se importa a mano; el alta por el
-  conector local es un intento sin garantía. Los `.ris` anteriores al 2026-09-30 no se importan
-  (`salida_ris/obsoletos_2026-09-30/`, `../docs/decisiones.md` §2.7).
+- **Zotero se alimenta por RIS, por la puerta** (`../lib/importar_zotero.py`, `../docs/decisiones.md` §2.15): funde,
+  no duplica, deja las dudosas y enlaza el archivo de Calibre; ya no se importa a mano. Los `.ris` anteriores al
+  2026-09-30 no se importan (`salida_ris/obsoletos_2026-09-30/`, §2.7).
 - **`fichas/` de esta carpeta es provisional**: la ficha que cuenta es la que `catalogar` escribe
   con `calibre_id` en `biblioteca-studio/catalogacion/fichas/`.
 - **La serie `Informe <slug> - Fuentes` solo se asigna bajo `01_fuentes/`**: un PDF identificado bajo la
