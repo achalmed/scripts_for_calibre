@@ -15,6 +15,7 @@ Kirigami.Dialog {
     property var pegado: null
     property bool esperando: false
     property var dialogoFicha: null              // el DialogoFicha de la ficha editorial (para llevar una propuesta)
+    readonly property string miradaElegida: mirada.currentIndex >= 0 && fi.miradas.length ? fi.miradas[mirada.currentIndex].nombre : ""
 
     title: "Estudiar «" + (studio.libros.ficha.titulo || "") + "» con la IA"
     preferredWidth: Kirigami.Units.gridUnit * 46
@@ -170,8 +171,11 @@ Kirigami.Dialog {
                                     const m = tarjeta.modelData
                                     const t = m.clase === "textual" ? { "Cita exacta": m.cita, "Análisis": m.analisis }
                                                                     : { "Paráfrasis": m.parafrasis, "Origen literal": m.cita, "Control de fidelidad": m.analisis }
+                                    // la marca la lleva la ficha: la propuso la IA (C3.3) y entra al registro del escrito (C12.1)
                                     if (dialogo.dialogoFicha) dialogo.dialogoFicha.abrir({ tipo: m.clase, pagina: m.pagina, hoja: m.hoja, categoria: m.categoria,
-                                                                                          tema: m.tema, textos: t })
+                                                                                          tema: m.tema, textos: t,
+                                                                                          origen: { autor: "llm", herramienta: "Un chat de IA externo, con la mirada «"
+                                                                                                    + (dialogo.miradaElegida || "estudio de obra") + "» de Biblioteca Studio" } })
                                 }
                             }
                         }

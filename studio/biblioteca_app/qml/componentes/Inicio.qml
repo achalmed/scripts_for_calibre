@@ -22,6 +22,10 @@ Item {
     }
 
     // «Fichar N subrayados»: el libro pasa a ser el de la ficha y el diálogo abre con el primero ya puesto
+    function ficharObra(d) {
+        studio.libros.fijarId(d.id)
+        dialogoFicha.abrir({ tipo: "obra" })
+    }
     function fichar(d) {
         studio.libros.fijarId(d.id)
         dialogoFicha.abrir({ tipo: "textual", pagina: d.pagina || "", hoja: d.hoja || 0, textos: { "Cita exacta": d.texto || "" } })
@@ -78,7 +82,7 @@ Item {
                             valor: modelData.valor
                             rotulo: modelData.rotulo
                             interactiva: true
-                            ayuda: modelData.accion === "bandeja" ? "Ir a las bandejas (Ctrl+7)"
+                            ayuda: modelData.accion === "bandeja" ? "Ir a las bandejas (Ctrl+8)"
                                  : (modelData.accion === "revisar" ? "Ver las fichas por revisar" : "Ir a Lectura")
                             onPulsada: raiz.ini.ir(modelData.accion, modelData.datos)
                         }
@@ -167,7 +171,7 @@ Item {
                             QQC2.Label { Layout.fillWidth: true; text: paso.modelData.texto; wrapMode: Text.WordWrap; maximumLineCount: 2; elide: Text.ElideRight }
                             Chip {
                                 text: paso.modelData.boton
-                                onClicked: paso.modelData.accion === "ficha" ? raiz.fichar(paso.modelData.datos)
+                                onClicked: paso.modelData.accion === "obra" ? raiz.ficharObra(paso.modelData.datos) : paso.modelData.accion === "ficha" ? raiz.fichar(paso.modelData.datos)
                                                                               : raiz.ini.ir(paso.modelData.accion, paso.modelData.datos)
                             }
                         }

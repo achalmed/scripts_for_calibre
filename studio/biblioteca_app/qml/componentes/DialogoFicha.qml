@@ -21,6 +21,7 @@ Kirigami.Dialog {
     property int hoja: 0
     property string categoriaPedida: "Cita clave"
     property var pendiente: null                 // lo que espera a que el libro esté listo (escritos, formulario, PDF)
+    property var origen: null                    // {autor: "llm", herramienta} si la propuso la IA (estudio de obra; C3.3)
     readonly property var def: tipos.find(t => t.clave === tipo) || ({ secciones: [], pagina: false, categoria: false })
     readonly property var escrito: escritos.currentIndex >= 0 ? fi.escritos[escritos.currentIndex] : null
     readonly property bool revisada: !!revision && !revision.error && !revision.aplicar
@@ -33,7 +34,7 @@ Kirigami.Dialog {
     // `v` (opcional): una ficha ya pensada {tipo, pagina, hoja, categoria, tema, textos, revisar} (del estudio de obra)
     function abrir(v) {
         v = v || {}
-        tipo = v.tipo || "textual"; textos = v.textos || ({}); revision = null; hoja = v.hoja || 0; version++
+        tipo = v.tipo || "textual"; textos = v.textos || ({}); revision = null; hoja = v.hoja || 0; origen = v.origen || null; version++
         pagina.text = v.pagina || ""; tema.text = v.tema || ""; uso.text = v.uso || ""
         categoriaPedida = v.categoria || "Cita clave"
         categoria.currentIndex = Math.max(0, categoria.model.indexOf(categoriaPedida))
@@ -57,6 +58,7 @@ Kirigami.Dialog {
         const c = { tipo: tipo, secciones: s, uso: uso.text, tema: tema.text }
         if (def.pagina) c.pagina = pagina.text
         if (def.categoria) c.categoria = categoria.currentText
+        if (origen) c.origen = origen
         return c
     }
     function revisar(aplicar) {
@@ -129,6 +131,20 @@ Kirigami.Dialog {
                     Accessible.name: "Escrito de la ficha"
                     onActivated: dialogo.revision = null
                 }
+                Kirigami.InlineMessage {
+                    Layout.fillWidth: true
+                    visible: !!dialogo.origen
+                    type: Kirigami.MessageType.Information
+                    text: "La propuso la IA: se guarda marcada y queda en el registro de uso de IA del escrito. No se podrá citar hasta que cotejes su página en el PDF."
+                }
+                QQC2.Label {
+                    Layout.fillWidth: true
+                    visible: !!dialogo.origen && !!dialogo.fi.formulario.origen
+                    text: dialogo.fi.formulario.origen ? dialogo.fi.formulario.origen.porque + " · " + dialogo.fi.formulario.origen.fuente : ""
+                    font: Kirigami.Theme.smallFont
+                    color: Kirigami.Theme.disabledTextColor
+                    wrapMode: Text.WordWrap
+                }
                 RowLayout {
                     spacing: Kirigami.Units.smallSpacing
                     Repeater {
@@ -140,6 +156,15 @@ Kirigami.Dialog {
                             onClicked: { dialogo.tipo = modelData.clave; dialogo.revision = null; dialogo.version++ }
                         }
                     }
+                }
+                // la línea «por qué · fuente» del tipo (la ficha de obra, C3.1)
+                QQC2.Label {
+                    Layout.fillWidth: true
+                    visible: !!dialogo.def.porque
+                    text: (dialogo.def.porque || "") + " · " + (dialogo.def.fuente || "")
+                    font: Kirigami.Theme.smallFont
+                    color: Kirigami.Theme.disabledTextColor
+                    wrapMode: Text.WordWrap
                 }
                 GridLayout {
                     Layout.fillWidth: true
@@ -181,6 +206,7 @@ Kirigami.Dialog {
                             Layout.fillWidth: true
                             Layout.minimumHeight: Kirigami.Units.gridUnit * (modelData === dialogo.def.literal ? 4 : 3)
                             wrapMode: TextEdit.Wrap
+                            placeholderText: (dialogo.def.guias || {})[modelData] || ""
                             text: dialogo.textos[modelData] || ""
                             Accessible.name: modelData
                             onTextChanged: { if (activeFocus) { dialogo.textos[modelData] = text; dialogo.revision = null } }

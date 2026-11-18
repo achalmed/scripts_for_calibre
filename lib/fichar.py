@@ -31,7 +31,8 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parents[1]
 CARPETA = Path("fuentes") / "fichas"
 FIRMA = "Ficha hecha en Biblioteca Studio"
-TIPOS = {"textual": "ficha_textual", "parafrasis": "ficha_parafrasis", "sintesis": "ficha_sintesis", "fuente": "ficha_fuente"}
+TIPOS = {"textual": "ficha_textual", "parafrasis": "ficha_parafrasis", "sintesis": "ficha_sintesis", "fuente": "ficha_fuente",
+         "obra": "ficha_obra"}
 DE_TIPO = {v: k for k, v in TIPOS.items()}
 # Las secciones que arma la herramienta (la persona no las escribe): la localización, el encadenamiento, la existencia y
 # las derivadas de la ficha de fuente.
@@ -176,7 +177,23 @@ def editables(tipo: str) -> list[str]:
     return [s for s in config.SECCIONES.get(tipo, []) if s not in AUTOMATICAS]
 
 
-NOMBRES = {"textual": "Textual", "parafrasis": "Paráfrasis", "sintesis": "Síntesis", "fuente": "Fuente"}
+NOMBRES = {"textual": "Textual", "parafrasis": "Paráfrasis", "sintesis": "Síntesis", "fuente": "Fuente", "obra": "De obra"}
+# Lo que pregunta cada sección de la ficha de obra (C3.1): se responde con palabras propias, sin mirar ni copiar.
+GUIAS_OBRA = {"Pregunta": "¿Qué pregunta responde la obra?", "Método": "¿Cómo la responde: diseño, técnica, enfoque?",
+              "Datos": "¿Con qué datos o fuentes, de dónde y de cuándo?", "Hallazgo": "¿Qué encuentra o sostiene, en una o dos oraciones?",
+              "Límites": "¿Qué no puede afirmar, por su diseño o sus datos?", "Uso que le daré": "¿Para qué parte de mi trabajo me sirve?"}
+POR_QUE = {
+    "obra": ("Escribir con palabras propias lo que la obra pregunta, hace y encuentra fija más que subrayar o releer.",
+             "Fiorella y Mayer (2016); Chi y Wylie (2014); Keshav (2007)"),
+    "origen": ("La IA no responde por lo que escribe: su ficha se coteja en la página antes de citarla.",
+               "COPE (2023); Jergas y Baethge (2015)"),
+    "registro": ("Lo que propuso la IA queda registrado y el escrito lo declara.",
+                 "COPE (2023); ICMJE (2025); Penabad-Camacho et al. (2024, Calibre 3110)"),
+}
+# Una ficha de obra que repite ocho palabras seguidas de la obra la está copiando (Roig, 2015: la paráfrasis demasiado
+# cercana también es plagio).
+COPIA_PALABRAS = 8
+HERRAMIENTA_IA = "Un chat de IA externo, con el prompt de Biblioteca Studio"
 
 
 def formulario() -> dict:
@@ -185,9 +202,13 @@ def formulario() -> dict:
     tipos = []
     for corto, tipo in TIPOS.items():
         omite = config.OMITE[tipo]
+        porque = POR_QUE.get(corto)
         tipos.append({"clave": corto, "nombre": NOMBRES[corto], "secciones": editables(tipo), "literal": LITERAL.get(tipo, ""),
-                      "pagina": "pagina" not in omite, "categoria": "categoria" not in omite, "libro": tipo != "ficha_sintesis"})
-    return {"tipos": tipos, "categorias": list(config.CATEGORIAS)}
+                      "pagina": "pagina" not in omite, "categoria": "categoria" not in omite, "libro": tipo != "ficha_sintesis",
+                      "guias": GUIAS_OBRA if corto == "obra" else {}, "porque": porque[0] if porque else "",
+                      "fuente": porque[1] if porque else ""})
+    return {"tipos": tipos, "categorias": list(config.CATEGORIAS),
+            "origen": {"porque": POR_QUE["origen"][0], "fuente": POR_QUE["origen"][1]}}
 
 
 # --- leer ---------------------------------------------------------------------------------------------------------------
@@ -213,6 +234,7 @@ def leer(proyecto: Path, archivo: str) -> dict:
             "clave": "" if isinstance(clave, list) else str(clave or ""), "pagina": str(meta.get("pagina") or ""),
             "categoria": str(meta.get("categoria") or ""), "uso": str(meta.get("uso") or ""),
             "verificacion": {k: str(v.get(k) or "") for k in config.CLAVES_VERIFICACION},
+            "origen": F.origen_de(meta, cuerpo), "citable": F.citable(meta, cuerpo)[0], "motivo": F.citable(meta, cuerpo)[1],
             "secciones": lista, "problemas": F.validar(p, meta, cuerpo)}
 
 
@@ -272,11 +294,61 @@ def _limpiar(datos: dict) -> dict:
             raise ValueError("La paráfrasis va en 120 palabras o menos (norma de fichas, §5).")
     if tipo == "ficha_sintesis" and not secs.get("Párrafo de síntesis"):
         raise ValueError("Una ficha de síntesis lleva su párrafo de síntesis.")
+    if tipo == "ficha_obra":
+        faltan = [s for s in GUIAS_OBRA if not secs.get(s)]
+        if faltan:
+            raise ValueError("La ficha de obra responde las seis preguntas con palabras propias; falta: " + ", ".join(faltan) + ".")
     for s in list(secs):
         if s in AUTOMATICAS:
             del secs[s]
     return {**datos, "tipo": tipo, "categoria": categoria, "secciones": secs, "uso": _llano(datos.get("uso")),
-            "tema": _llano(datos.get("tema"))}
+            "tema": _llano(datos.get("tema")), "origen": _origen(datos.get("origen"))}
+
+
+def _origen(o) -> dict | None:
+    """El bloque `origen` pedido (None si no se pidió): autor persona o llm, la herramienta y la fecha (hoy si falta)."""
+    if not isinstance(o, dict) or not o.get("autor"):
+        return None
+    autor = str(o["autor"]).strip().lower()
+    if autor not in config.AUTORES:
+        raise ValueError("El origen de una ficha es «persona» o «llm».")
+    herramienta = _llano(o.get("herramienta")) or (HERRAMIENTA_IA if autor == "llm" else "Biblioteca Studio")
+    return {"autor": autor, "herramienta": herramienta, "fecha": str(o.get("fecha") or date.today().isoformat())[:10]}
+
+
+def copiado(texto: str, hojas: list[str], n: int = COPIA_PALABRAS) -> list[str]:
+    """Los pasajes de `texto` que repiten `n` palabras seguidas de la obra (sus `hojas`), sin tildes ni signos."""
+    palabras = clave_literal(texto).split()
+    if len(palabras) < n or not hojas:
+        return []
+    obra = " " + clave_literal(" ".join(hojas)) + " "
+    salida, i = [], 0
+    while i <= len(palabras) - n:
+        trozo = " ".join(palabras[i:i + n])
+        if f" {trozo} " in obra:
+            j = i + n
+            while j < len(palabras) and f" {' '.join(palabras[i:j + 1])} " in obra:
+                j += 1
+            salida.append(" ".join(palabras[i:j]))
+            i = j
+        else:
+            i += 1
+    return salida
+
+
+def _hojas(calibre_id) -> list[str]:
+    """El texto de las hojas del PDF del libro por el resolutor único ([] sin texto o sin libro)."""
+    if not str(calibre_id or "").isdigit():
+        return []
+    try:
+        d = Path(__file__).resolve()
+        while d != d.parent and not (d / "core" / "py-common" / "biblioteca.py").is_file():
+            d = d.parent
+        sys.path.insert(0, str(d / "core" / "py-common"))
+        import biblioteca as bib  # noqa: E402
+        return bib.texto(int(calibre_id)) or []
+    except Exception:  # noqa: BLE001 — sin el texto del libro no se puede comprobar: se dice
+        return []
 
 
 def _verificar(meta: dict, cuerpo: str, ruta: Path) -> dict | None:
@@ -338,19 +410,22 @@ def guardar(proyecto: Path, datos: dict, entrada: dict | None, archivo: str | No
     clave = (entrada or {}).get("clave", "")
     if tipo == "ficha_fuente":
         base = f"{nombre_clave(clave)}-fuente"
+    elif tipo == "ficha_obra":
+        base = f"{nombre_clave(clave)}-obra"
     elif tipo == "ficha_sintesis":
         base = f"sintesis-{tema}"
     else:
         base = f"{nombre_clave(clave)}-{lugar}-{DE_TIPO[tipo]}-{tema}"
-    prefijo = base if tipo in ("ficha_fuente",) else (f"{nombre_clave(clave)}-{lugar}-{DE_TIPO[tipo]}-" if lugar else None)
+    prefijo = base if tipo in ("ficha_fuente", "ficha_obra") else (f"{nombre_clave(clave)}-{lugar}-{DE_TIPO[tipo]}-" if lugar else None)
     if p_vieja is not None and (p_vieja.stem == base or (prefijo and p_vieja.name.startswith(prefijo)) or tipo == "ficha_sintesis"
                                 and previa_meta.get("tipo") == tipo):
         destino = p_vieja
     else:
         destino, i = car / f"{base}.md", 2
         while destino.exists() and destino != p_vieja:
-            if tipo == "ficha_fuente":
-                raise ValueError(f"La obra ya tiene su ficha de fuente ({destino.name}): ábrala y corríjala.")
+            if tipo in ("ficha_fuente", "ficha_obra"):
+                cual = "de fuente" if tipo == "ficha_fuente" else "de obra"
+                raise ValueError(f"La obra ya tiene su ficha {cual} en este escrito ({destino.name}): ábrala y corríjala.")
             destino, i = car / f"{base}-{i}.md", i + 1
     # el frontmatter
     meta = {k: previa_meta.get(k, "") for k in config.CLAVES}
@@ -362,6 +437,18 @@ def guardar(proyecto: Path, datos: dict, entrada: dict | None, archivo: str | No
         meta["pagina"] = pagina
     if tipo != "ficha_fuente":
         meta["categoria"] = datos["categoria"]
+    # el origen (norma §1, 1.1): el que ya tenía la ficha manda (una corrección no cambia quién la propuso); una ficha nueva
+    # del LLM lleva el pedido; una de antes sin bloque, el que dice su marca de §8 si es del LLM; la de la persona, ninguno
+    origen = previa_meta.get("origen") if isinstance(previa_meta.get("origen"), dict) else None
+    if origen is None and p_vieja is not None:
+        de_antes = F.origen_de(previa_meta, cuerpo_previo)
+        origen = de_antes if de_antes["autor"] == "llm" else None
+    if origen is None and p_vieja is None and datos["origen"] and datos["origen"]["autor"] != "persona":
+        # la norma de fichas 1.1 (§1): el bloque solo va si la propuso alguien distinto de quien la firma (el LLM)
+        origen = datos["origen"]
+    if origen:
+        meta["origen"] = {k: str(origen.get(k) or "") for k in config.CLAVES_ORIGEN}
+    del_llm = bool(origen) and origen.get("autor") == "llm"
     # el cuerpo
     secs = dict(previas)
     secs.update({k: v for k, v in datos["secciones"].items()})
@@ -374,7 +461,7 @@ def guardar(proyecto: Path, datos: dict, entrada: dict | None, archivo: str | No
                 secs["Localización para el cotejo"] = (f"Calibre {meta['calibre_id']}" if meta.get("calibre_id")
                                                        else "La fuente no existe en Calibre: queda pendiente de los pasos 00–03") + (
                     f", página {pagina} del PDF (impresa)." if isinstance(pagina, int) else f", {pagina}.")
-    if tipo != "ficha_fuente":
+    if tipo not in ("ficha_fuente", "ficha_obra"):
         enc = secs.get("Encadenamiento") or ""
         if fuente and f"]({fuente})" not in enc:
             enc = f"Proviene de [{fuente[:-3]}]({fuente})." + (f"\n\n{enc}" if enc else "")
@@ -393,6 +480,10 @@ def guardar(proyecto: Path, datos: dict, entrada: dict | None, archivo: str | No
         obs = secs.get("Observaciones", "").strip()
         if not archivo and FIRMA not in obs:
             obs = (obs + "\n\n" if obs and obs.lower() not in ("ninguna", "ninguna.") else "") + f"{FIRMA} el {date.today().isoformat()}."
+        if not archivo and del_llm and F.MARCA_IA not in obs.lower():
+            # la marca legible (§8) también en el cuerpo: sobrevive a una herramienta que reescriba el frontmatter sin el bloque
+            obs += (f"\n\nPropuesta por IA el {origen['fecha']} ({origen['herramienta']}): entra a un trabajo cuando la "
+                    "persona coteja su página en el PDF.")
         secs["Observaciones"] = obs or "Ninguna."
     for s in config.SECCIONES[tipo]:
         secs.setdefault(s, "Pendiente.")
@@ -410,19 +501,42 @@ def guardar(proyecto: Path, datos: dict, entrada: dict | None, archivo: str | No
         r = _verificar(meta, cuerpo, destino)
         verif = {k: (r or {}).get(k, "") for k in config.CLAVES_VERIFICACION} if r else {"estado": "pendiente", "metodo": "", "fecha": ""}
         detalle = (r or {}).get("detalle", "")
+    elif tipo == "ficha_obra":
+        hojas = _hojas(meta.get("calibre_id"))
+        copias = copiado(" ".join(datos["secciones"].get(s, "") for s in GUIAS_OBRA), hojas)
+        if copias:
+            verif = {"estado": "observada", "metodo": "palabras propias; repite pasajes de la obra", "fecha": date.today().isoformat()}
+            detalle = "Copia de la obra: «" + "», «".join(c[:90] for c in copias[:3]) + "»; escríbelo con tus palabras."
+        elif hojas:
+            verif = {"estado": "verificada_script", "metodo": f"palabras propias; ninguna serie de {COPIA_PALABRAS} palabras de la obra",
+                     "fecha": date.today().isoformat()}
+            detalle = ""
+        else:
+            verif = {"estado": "pendiente", "metodo": "", "fecha": ""}
+            detalle = "Sin el texto del libro no se comprueba que esté escrita con palabras propias."
     else:
         verif = {k: pv.get(k, "") for k in config.CLAVES_VERIFICACION} if pv.get("estado") else {"estado": "pendiente", "metodo": "", "fecha": ""}
         detalle = ""
+    if del_llm and verif.get("estado") and verif["estado"] != "pendiente" and F.MARCA_IA not in str(verif.get("metodo") or "").lower():
+        verif = {**verif, "metodo": "propuesta por IA; " + str(verif.get("metodo") or "cotejo literal")}
     meta["verificacion"] = verif
     texto = _componer(meta, secs, tipo)
     problemas = _validar_texto(destino, texto)
     diff = "".join(difflib.unified_diff(texto_previo.splitlines(keepends=True), texto.splitlines(keepends=True),
                                         fromfile=p_vieja.name if p_vieja else "/dev/null", tofile=destino.name))
+    cuerpo_final = texto.split("---\n", 2)[-1]
+    si, motivo = F.citable(meta, cuerpo_final)
     salida = {"archivo": destino.name, "ruta": str(destino), "texto": texto, "diff": diff, "nueva": p_vieja is None,
               "renombra": bool(p_vieja is not None and destino != p_vieja), "antes": p_vieja.name if p_vieja else "",
-              "verificacion": verif, "detalle": detalle, "problemas": problemas, "escrito": False}
+              "verificacion": verif, "detalle": detalle, "problemas": problemas, "escrito": False,
+              "origen": F.origen_de(meta, cuerpo_final), "citable": si, "motivo": motivo,
+              "registro_ia": {"pendiente": True} if del_llm and p_vieja is None else {}}
+    if tipo == "ficha_obra" and verif["estado"] == "observada":
+        salida["problemas"] = list(problemas) + [detalle]
     if not aplicar:
         return salida
+    if tipo == "ficha_obra" and verif["estado"] == "observada":
+        raise ValueError(detalle)
     car.mkdir(parents=True, exist_ok=True)
     _escribir(destino, texto)
     if p_vieja is not None and destino != p_vieja:
@@ -437,7 +551,63 @@ def guardar(proyecto: Path, datos: dict, entrada: dict | None, archivo: str | No
             nuevo = _unir_derivadas(viejo, destino.name)
             if nuevo != viejo:
                 _escribir(f, nuevo)
-    return {**salida, **leer(proyecto, destino.name), "escrito": True, "diff": diff, "detalle": detalle}
+    registro = registrar_ia(proyecto, destino, meta, tipo) if del_llm and p_vieja is None else {}
+    return {**salida, **leer(proyecto, destino.name), "escrito": True, "diff": diff, "detalle": detalle, "registro_ia": registro}
+
+
+def registrar_ia(proyecto: Path, destino: Path, meta: dict, tipo: str) -> dict:
+    """C12.1: la ficha que propuso el LLM entra al registro de uso de IA del escrito (`ia/registro.yml`) y a su declaración
+    (`ia/declaracion.tex`), por la orden de escritura que los escribe (`scripts/antes_de_entregar.py registrar_ia`; su
+    `entrega/ia.py`), para que haya un solo registro por escrito. Sin escritura a mano, se dice y la ficha queda marcada."""
+    import json
+    import subprocess
+    codigo = Path(os.environ.get("ESCRITURA_CODIGO") or RAIZ.parent / "escritura") / "scripts" / "antes_de_entregar.py"
+    if not codigo.is_file():
+        return {"error": f"No se halló {codigo}: la ficha queda marcada como del LLM, sin el registro del escrito."}
+    o = meta.get("origen") or {}
+    pagina = f", p. {meta['pagina']}" if meta.get("pagina") not in (None, "") else ""
+    datos = {"fecha": o.get("fecha") or date.today().isoformat(), "archivo": f"{CARPETA.as_posix()}/{destino.name}",
+             "parte": f"Ficha {NOMBRES.get(DE_TIPO.get(tipo, ''), '').lower()} de {meta.get('clave_bibtex') or 'la obra'}{pagina}",
+             "herramienta": o.get("herramienta") or HERRAMIENTA_IA, "prompt": {"titulo": o.get("herramienta") or "estudio de obra"},
+             "resumen": "propuso la ficha; la persona la revisó en Biblioteca Studio y la guardó para cotejar su página"}
+    try:
+        r = subprocess.run([sys.executable, str(codigo), "registrar_ia", str(proyecto), json.dumps(datos, ensure_ascii=False), "--aplicar"],
+                           capture_output=True, text=True, timeout=60,
+                           env={**os.environ, "WRITING_DIR": os.environ.get("WRITING_DIR") or str(Path(proyecto).parents[1])})
+        salida = json.loads(r.stdout or "{}")
+    except (OSError, ValueError, subprocess.SubprocessError) as e:
+        return {"error": f"No se pudo registrar el uso de la IA: {e}"}
+    if salida.get("error") or not salida.get("escrito"):
+        return {"error": salida.get("error") or (r.stderr.strip()[:300] or "el registro no se escribió")}
+    return {"registro": salida.get("registro", "ia/registro.yml"), "total": salida.get("total", 0)}
+
+
+def cotejar(proyecto: Path, archivo: str, huella_base: str, aplicar: bool = False) -> dict:
+    """La persona cotejó la página en el PDF (norma §8): la ficha pasa a `verificada_autor` y, si la propuso la IA, ya se
+    puede citar. Exige la huella con que se abrió (`Cambiada` si en disco es otra); simula sin `aplicar`."""
+    p = _ruta(Path(proyecto), archivo)
+    texto = p.read_text(encoding="utf-8")
+    if huella(texto) != huella_base:
+        raise Cambiada(leer(Path(proyecto), p.name))
+    meta, cuerpo = F.leer(p)
+    if meta.get("tipo") not in ("ficha_textual", "ficha_parafrasis", "ficha_sintesis"):
+        raise ValueError("Solo se cotejan en la página las fichas textuales, de paráfrasis y de síntesis.")
+    llm = F.origen_de(meta, cuerpo)["autor"] == "llm"
+    metodo = ("propuesta por IA; " if llm else "") + "lectura del autor en la página"
+    v = {"estado": "verificada_autor", "metodo": metodo, "fecha": date.today().isoformat()}
+    # solo cambia el bloque `verificacion` del frontmatter: lo demás de la ficha queda tal cual, byte a byte
+    m = re.match(r"^---\n(.*?\n)---\n", texto, re.S)
+    if not m or not re.search(r"^verificacion:[ \t]*\n(?:[ \t]+.*\n)*", m.group(1), re.M):
+        raise ValueError("La ficha no tiene el bloque «verificacion» de la norma: corríjala a mano.")
+    bloque = "verificacion:\n" + "".join(f"  {k}: {F._y(v[k])}\n" for k in config.CLAVES_VERIFICACION)
+    front = re.sub(r"^verificacion:[ \t]*\n(?:[ \t]+.*\n)*", lambda _m: bloque, m.group(1), count=1, flags=re.M)
+    texto_nuevo = "---\n" + front + "---\n" + texto[m.end():]
+    diff = "".join(difflib.unified_diff(texto.splitlines(keepends=True), texto_nuevo.splitlines(keepends=True), fromfile=p.name, tofile=p.name))
+    r = {"archivo": p.name, "verificacion": v, "diff": diff, "escrito": False}
+    if aplicar:
+        _escribir(p, texto_nuevo)
+        r = {**r, **leer(Path(proyecto), p.name), "escrito": True}
+    return r
 
 
 def _validar_texto(destino: Path, texto: str) -> list[str]:

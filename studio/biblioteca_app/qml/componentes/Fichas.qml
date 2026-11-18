@@ -184,11 +184,28 @@ RowLayout {
                             onClicked: raiz.fi.copiar(ficha.modelData.insertar)
                         }
                         Chip {
+                            visible: ficha.modelData.porCotejar
+                            text: "Cotejé la página"
+                            icono: "checkmark"
+                            ayuda: "Comprobé en el PDF que la cita está en la página que dice: la ficha pasa a verificada por el autor y se puede citar"
+                            onClicked: { confirmarCotejo.ficha = ficha.modelData; confirmarCotejo.open() }
+                        }
+                        Chip {
                             icono: "document-open"
                             ayuda: "Abrir el archivo de la ficha"
                             Accessible.name: "Abrir la ficha"
                             onClicked: raiz.fi.abrirArchivo(ficha.modelData.archivo)
                         }
+                    }
+                    // por qué no se cita todavía (la de la IA sin cotejar o la que no casa con el PDF), con su fuente
+                    Tenue {
+                        visible: !ficha.modelData.citable && ficha.modelData.motivo !== ""
+                        color: Kirigami.Theme.neutralTextColor
+                        text: ficha.modelData.motivo
+                    }
+                    Tenue {
+                        visible: ficha.modelData.porCotejar
+                        text: raiz.fi.porqueOrigen
                     }
                 }
                 Kirigami.PlaceholderMessage {
@@ -258,6 +275,16 @@ RowLayout {
         }
     }
 
+    Kirigami.PromptDialog {
+        id: confirmarCotejo
+        property var ficha: ({})
+        title: "Cotejé la página"
+        subtitle: "¿Comprobaste en el PDF que la cita está en " + (ficha.pagina ? "la página " + ficha.pagina : "su lugar") + " de «" + (ficha.obra || "") + "»?"
+                  + (ficha.deIa ? " La propuso la IA: desde ahora se podrá citar." : "")
+        standardButtons: Kirigami.Dialog.Cancel
+        customFooterActions: [Kirigami.Action { text: "Sí, la cotejé"; icon.name: "checkmark"
+                                                onTriggered: { raiz.fi.cotejar(confirmarCotejo.ficha.clave); confirmarCotejo.close() } }]
+    }
     DialogoFicha { id: dialogoFicha; objectName: "dialogoFichaFichas" }
     DialogoEstudioObra { id: dialogoEstudio; dialogoFicha: dialogoFicha }
 }

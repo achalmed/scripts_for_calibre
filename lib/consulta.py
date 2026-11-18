@@ -23,6 +23,7 @@ Límite: un libro sin clave de Zotero recibe la que arma el manifiesto (`apellid
     python3 lib/consulta.py ficha <proyecto> <archivo>                  # una ficha para editarla, con su huella
     python3 lib/consulta.py nueva_ficha <proyecto> '<json>' [--aplicar]
     python3 lib/consulta.py guardar_ficha <proyecto> <archivo> <huella> '<json>' [--aplicar]
+    python3 lib/consulta.py cotejar_ficha <proyecto> <archivo> <huella> [--aplicar]   # la persona cotejó su página
     python3 lib/consulta.py pasaje <calibre_id> <hoja>                  # el texto de una hoja del PDF
     python3 lib/consulta.py miradas
     python3 lib/consulta.py prompt_obra <calibre_id> <mirada> <desde> <hasta> [--proposito …]
@@ -145,8 +146,13 @@ def fichas(carpeta: str | Path) -> list[dict]:
         pagina = meta.get("pagina") or ""
         cita = ficha.literal(cuerpo, tipo) if tipo else ""
         secciones = ficha.secciones(cuerpo)
-        resumen = cita or (secciones.get("Paráfrasis") or secciones.get("Síntesis") or secciones.get("Análisis") or "").strip()
-        if tipo == "ficha_textual" and cita and clave:
+        resumen = cita or (secciones.get("Paráfrasis") or secciones.get("Síntesis") or secciones.get("Hallazgo")
+                           or secciones.get("Análisis") or "").strip()
+        origen = ficha.origen_de(meta, cuerpo)
+        si, motivo = ficha.citable(meta, cuerpo)
+        if not si:
+            insertar = ""                           # C3.3: lo del LLM sin cotejar, o lo que no casa con el PDF, no se cita
+        elif tipo == "ficha_textual" and cita and clave:
             insertar = f"“{cita}” {_cita(clave, pagina)}"
         elif clave:
             insertar = _cita(clave, pagina)
@@ -156,7 +162,8 @@ def fichas(carpeta: str | Path) -> list[dict]:
                        "calibre_id": meta.get("calibre_id") or "", "pagina": str(pagina), "categoria": meta.get("categoria") or "",
                        "tema": str(meta.get("tema") or ""), "parafrasis": " ".join((secciones.get("Paráfrasis") or "").split())[:400],
                        "verificacion": (meta.get("verificacion") or {}).get("estado", "") if isinstance(meta.get("verificacion"), dict) else "",
-                       "texto": " ".join(resumen.split())[:400], "insertar": insertar})
+                       "texto": " ".join(resumen.split())[:400], "insertar": insertar,
+                       "origen": origen["autor"], "herramienta": origen["herramienta"], "citable": si, "motivo": motivo})
     return salida
 
 
@@ -315,6 +322,16 @@ def guardar_ficha(carpeta: str | Path, archivo: str, huella: str, datos: dict, a
         return {"codigo": "ficha_cambiada", "error": str(e), "actual": e.actual}
 
 
+def cotejar_ficha(carpeta: str | Path, archivo: str, huella: str, aplicar: bool = False) -> dict:
+    """La persona cotejó la página de la ficha en el PDF (`verificada_autor`); la del LLM pasa a ser citable (C3.3)."""
+    proyecto = _proyecto(carpeta)
+    fichar = _fichar()
+    try:
+        return fichar.cotejar(proyecto, archivo, huella, aplicar)
+    except fichar.Cambiada as e:
+        return {"codigo": "ficha_cambiada", "error": str(e), "actual": e.actual}
+
+
 def paginas(calibre_id: int) -> list[str]:
     """Las hojas de texto del PDF del libro (índice 0 = hoja 1), por el resolutor único; [] sin texto."""
     env = _env()
@@ -376,6 +393,8 @@ def main(argv=None) -> int:
     n = sub.add_parser("nueva_ficha"); n.add_argument("proyecto"); n.add_argument("datos"); n.add_argument("--aplicar", action="store_true")
     g = sub.add_parser("guardar_ficha"); g.add_argument("proyecto"); g.add_argument("archivo"); g.add_argument("huella"); g.add_argument("datos")
     g.add_argument("--aplicar", action="store_true")
+    k = sub.add_parser("cotejar_ficha"); k.add_argument("proyecto"); k.add_argument("archivo"); k.add_argument("huella")
+    k.add_argument("--aplicar", action="store_true")
     s = sub.add_parser("pasaje"); s.add_argument("calibre_id", type=int); s.add_argument("hoja", type=int)
     sub.add_parser("miradas")
     po = sub.add_parser("prompt_obra"); po.add_argument("calibre_id", type=int); po.add_argument("mirada")
@@ -406,6 +425,8 @@ def _orden(a):
         return guardar_ficha(a.proyecto, a.archivo, a.huella, json.loads(_leer_arg(a.datos)), a.aplicar)
     if a.orden == "pasaje":
         return pasaje(a.calibre_id, a.hoja)
+    if a.orden == "cotejar_ficha":
+        return cotejar_ficha(a.proyecto, a.archivo, a.huella, a.aplicar)
     if a.orden == "miradas":
         return _ayuda().miradas()
     if a.orden == "prompt_obra":

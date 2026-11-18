@@ -34,7 +34,7 @@ def test_fichas_de_los_escritos_y_canonicas_con_sus_filtros(areas):
     fi = areas["fichas"]
     assert fi.leidas and not fi.cargando
     cuentas = {f["clave"]: f["n"] for f in fi.filtros}
-    assert cuentas == {"todas": 5, "textual": 1, "parafrasis": 1, "revisar": 2} and fi.porRevisar == 2
+    assert cuentas == {"todas": 5, "textual": 1, "parafrasis": 1, "obra": 0, "revisar": 2, "ia": 0} and fi.porRevisar == 2
     textual = next(f for f in fi.lista if f["tipo"] == "textual")
     assert textual["cita"].startswith("La escala importa") and textual["cotejo"] == "cotejada con el PDF"
     assert textual["obra"] == "Economía de las ciudades pequeñas" and "p. 12" in textual["detalle"]

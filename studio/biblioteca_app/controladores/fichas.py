@@ -23,8 +23,13 @@ from gui_comun.qt import QGuiApplication, QObject, Property, Signal, Slot
 
 from biblioteca_app.servicios import datos
 
-TIPOS = {"textual": "Textual", "parafrasis": "Paráfrasis", "sintesis": "Síntesis", "fuente": "Fuente", "catalogacion": "Catalogación"}
-FILTROS = (("todas", "Todas"), ("textual", "Textuales"), ("parafrasis", "Paráfrasis"), ("revisar", "Por revisar"))
+TIPOS = {"textual": "Textual", "parafrasis": "Paráfrasis", "sintesis": "Síntesis", "fuente": "Fuente", "catalogacion": "Catalogación",
+         "obra": "De obra"}
+# «De la IA» (C3.3, 2026-11-18): las que propuso un LLM, que no se citan hasta que la persona coteja su página
+FILTROS = (("todas", "Todas"), ("textual", "Textuales"), ("parafrasis", "Paráfrasis"), ("obra", "De obra"), ("revisar", "Por revisar"),
+           ("ia", "De la IA"))
+POR_QUE_ORIGEN = ("La IA no responde por lo que escribe: su ficha se coteja en la página antes de citarla.",
+                  "COPE (2023); Jergas y Baethge (2015)")
 DE_REPASO = ("textual", "parafrasis", "sintesis")
 
 
@@ -47,7 +52,10 @@ def cotejo(estado: str) -> str:
 
 
 def por_revisar(f: dict) -> bool:
-    return f["tipo"] in ("textual", "parafrasis", "sintesis", "catalogacion") and not f["verificacion"].startswith("verificada")
+    """Lo que falta cotejar: lo no verificado y, de la IA, lo que la persona aún no cotejó en la página (norma de fichas §8)."""
+    if f["tipo"] not in ("textual", "parafrasis", "sintesis", "catalogacion"):
+        return False
+    return not f["verificacion"].startswith("verificada") or (f.get("origen") == "llm" and f["verificacion"] != "verificada_autor")
 
 
 def tema_de_nombre(nombre: str, tipo: str) -> str:
@@ -77,18 +85,22 @@ def leer_todas(repo: Path, titulos: dict) -> tuple[list[dict], list[dict]]:
                            "cita": cita, "literal": f["texto"], "obra": titulos.get(cid) or f.get("clave") or "sin obra", "calibreId": cid,
                            "pagina": f["pagina"], "categoria": f["categoria"], "tema": f.get("tema") or "", "temaNombre": tema_de_nombre(f["nombre"], tipo),
                            "verificacion": f["verificacion"] or "", "escrito": e["titulo"], "principal": e.get("principal") or "",
-                           "insertar": f["insertar"], "archivo": f["archivo"]})
+                           "insertar": f["insertar"], "archivo": f["archivo"], "carpeta": e["carpeta"],
+                           "origen": f.get("origen") or "persona", "citable": bool(f.get("citable", True)), "motivo": f.get("motivo") or ""})
     for f in datos.fichas(repo):
         cid = str(f.get("calibre_id") or "")
         salida.append({"clave": f"catalogacion/{Path(f['ruta']).stem}", "tipo": "catalogacion", "tipoTexto": TIPOS["catalogacion"],
                        "cita": "", "literal": "", "obra": titulos.get(cid) or f.get("titulo") or f["ficha"], "calibreId": cid, "pagina": "",
                        "categoria": "", "tema": "", "temaNombre": "", "verificacion": f.get("verificacion") or "", "escrito": "",
-                       "principal": "", "insertar": "", "archivo": f["ruta"]})
+                       "principal": "", "insertar": "", "archivo": f["ruta"], "carpeta": "", "origen": "persona", "citable": True,
+                       "motivo": ""})
     for f in salida:
         f["cotejo"] = cotejo(f["verificacion"]) if f["tipo"] != "fuente" else ""      # la de fuente no se coteja
         f["porRevisar"] = por_revisar(f)
+        f["deIa"] = f["origen"] == "llm"
+        f["porCotejar"] = f["deIa"] and f["verificacion"] != "verificada_autor" and f["tipo"] in ("textual", "parafrasis", "sintesis")
         f["detalle"] = " · ".join(x for x in (f["obra"] if f["cita"] else "", f"p. {f['pagina']}" if f["pagina"] else "", f["tipoTexto"],
-                                              f["categoria"], f["cotejo"], f["escrito"]) if x)
+                                              f["categoria"], "propuesta por la IA" if f["deIa"] else "", f["cotejo"], f["escrito"]) if x)
     return salida, escritos
 
 
@@ -171,6 +183,8 @@ class Fichas(QObject):
     def _cumple(self, f: dict, filtro: str) -> bool:
         if filtro == "revisar":
             return f["porRevisar"]
+        if filtro == "ia":
+            return f["deIa"]
         return filtro == "todas" or f["tipo"] == filtro
 
     @Property("QVariantList", notify=cambiado)
@@ -237,6 +251,30 @@ class Fichas(QObject):
         if ruta and self.libros is not None:
             self.libros.abrirFicha(ruta)
 
+    porqueOrigen = Property(str, lambda self: f"{POR_QUE_ORIGEN[0]} · {POR_QUE_ORIGEN[1]}", constant=True)
+
+    @Slot(str)
+    def cotejar(self, clave: str) -> None:
+        """«Cotejé la página»: la persona comprobó la cita en el PDF; la ficha pasa a `verificada_autor` (y, si la propuso
+        la IA, ya se puede citar). Escribe la ficha por `lib/consulta.py cotejar_ficha`, con la huella del archivo de ahora."""
+        f = next((x for x in self._todas if x["clave"] == clave), None)
+        if f is None or not f.get("carpeta"):
+            return
+        from biblioteca_app.controladores.fichado import _consulta
+        c = _consulta()
+        try:
+            ruta = Path(f["archivo"])
+            r = c.cotejar_ficha(f["carpeta"], ruta.name, c._fichar().huella(ruta.read_text(encoding="utf-8")), aplicar=True)
+        except (OSError, ValueError, LookupError, SystemExit) as e:
+            self.aviso.emit(f"No se pudo marcar la ficha: {e}", "error")
+            return
+        if r.get("error"):
+            self.aviso.emit(r["error"], "error")
+            return
+        self.consola.registrar("ok", f"Ficha cotejada por el autor: {f['archivo']}")
+        self.aviso.emit("Ficha cotejada: ya se puede citar.", "positivo")
+        self.recargar()
+
     @Slot(str)
     def copiar(self, texto: str) -> None:
         if texto:
@@ -245,7 +283,8 @@ class Fichas(QObject):
 
     # ------------------------------------------------------------------ el repaso (Leitner, §9.9)
     def _de_repaso(self) -> list[dict]:
-        return [f for f in self._todas if f["tipo"] in DE_REPASO and f["cita"]]
+        # lo que no se puede citar (de la IA sin cotejar, o que no casa con el PDF) tampoco se estudia: se repasaría un error
+        return [f for f in self._todas if f["tipo"] in DE_REPASO and f["cita"] and f.get("citable", True)]
 
     def _armar_cola(self, hoy: date | None = None) -> None:
         r = _repaso()

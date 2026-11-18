@@ -23,8 +23,14 @@ NORMA = env.PROMPTS_DIR / "00 metodo" / "fichas_formato_y_voz.md"   # «00 metod
 
 # Claves del frontmatter, en este orden (fichas_formato_y_voz.md §1; snake_case desde meta/NORMATIVA_ARCHIVOS.md §1,
 # 2026-09-13; `main.py grafia <carpeta> --aplicar` migra las fichas anteriores). Los valores vacíos se escriben vacíos.
-CLAVES = ["tipo", "calibre_id", "zotero_key", "clave_bibtex", "proyecto", "pagina", "categoria", "uso", "verificacion"]
+CLAVES = ["tipo", "calibre_id", "zotero_key", "clave_bibtex", "proyecto", "pagina", "categoria", "uso", "origen", "verificacion"]
 CLAVES_VERIFICACION = ["estado", "metodo", "fecha"]
+# Claves opcionales: solo se escriben si la ficha las trae (las fichas anteriores siguen válidas sin ellas). `origen` dice
+# quién propuso la ficha (§1 de la norma, 1.1 del 2026-11-18; FLUJO_DE_CONOCIMIENTO C3.3, COPE 2023 y Jergas y Baethge 2015):
+# `autor: persona | llm`, la herramienta y la fecha. Una ficha del LLM no se cita hasta que la persona coteja su página.
+OPCIONALES = {"origen"}
+CLAVES_ORIGEN = ["autor", "herramienta", "fecha"]
+AUTORES = ["persona", "llm"]
 
 # Qué claves omite cada tipo (§1: catalogación omite pagina/categoria/uso; síntesis, fuente y lectura omiten pagina).
 OMITE = {
@@ -33,6 +39,7 @@ OMITE = {
     "ficha_textual": set(),
     "ficha_parafrasis": set(),
     "ficha_sintesis": {"pagina"},
+    "ficha_obra": {"pagina", "categoria"},     # la ficha de obra generativa (C3.1, 2026-11-18): una por obra, sin página
     "lectura": {"pagina", "categoria"},
     "apunte": {"pagina", "categoria"},
 }
@@ -50,6 +57,7 @@ PATRON_NOMBRE = {
     "ficha_textual": rf"^{CLAVE}-(p\d{{3,}}|s\d+(-\d+)*[a-z]?)-textual-[a-z0-9-]+\.md$",
     "ficha_parafrasis": rf"^{CLAVE}-(p\d{{3,}}|s\d+(-\d+)*[a-z]?)-parafrasis-[a-z0-9-]+\.md$",
     "ficha_sintesis": r"^sintesis-[a-z0-9-]+\.md$",
+    "ficha_obra": rf"^{CLAVE}-obra\.md$",
     "lectura": rf"^{CLAVE}-lectura(-extraida)?\.md$",
     "apunte": r".*\.md$",
 }
@@ -61,6 +69,9 @@ SECCIONES = {
     "ficha_textual": ["Cita exacta", "Localización para el cotejo", "Análisis", "Encadenamiento", "Observaciones"],
     "ficha_parafrasis": ["Paráfrasis", "Origen literal", "Control de fidelidad", "Encadenamiento"],
     "ficha_sintesis": ["Fichas de entrada", "Coincidencias y divergencias", "Párrafo de síntesis", "Control de fidelidad", "Encadenamiento"],
+    # la ficha de obra generativa (C3.1): preguntas fijas que se responden con palabras propias (Fiorella y Mayer, 2016;
+    # Chi y Wylie, 2014; Keshav, 2007)
+    "ficha_obra": ["Pregunta", "Método", "Datos", "Hallazgo", "Límites", "Uso que le daré", "Observaciones"],
     "lectura": ["Propósito", "Estructura", "Ideas principales", "Datos", "Preguntas", "Vocabulario", "Uso previsto"],
     "apunte": [],
 }

@@ -41,7 +41,7 @@ def test_fichar_un_libro_en_el_informe_de_muestra(app, entorno, monkeypatch):
     fichado.preparar(1)
     _esperar(app, fichado)
     assert fichado.escritos and fichado.escritos[0]["usa"] and fichado.escritos[0]["proyecto"] == "reports/2026-11-17-informe-de-muestra"
-    assert [t["clave"] for t in fichado.formulario["tipos"]] == ["textual", "parafrasis", "sintesis", "fuente"]
+    assert [t["clave"] for t in fichado.formulario["tipos"]] == ["textual", "parafrasis", "sintesis", "fuente", "obra"]
     carpeta = fichado.escritos[0]["carpeta"]
     campos = {"tipo": "textual", "pagina": "12", "categoria": "Idea principal", "tema": "escala urbana",
               "secciones": {"Cita exacta": "Las ciudades pequeñas crecen cuando se integran a su región."}}

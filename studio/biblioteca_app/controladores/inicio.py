@@ -141,6 +141,14 @@ class Inicio(QObject):
                     pasos.append({"icono": "document-new", "texto": f"Fichar {n} subrayado{'s' if n != 1 else ''} de «{cat['titulo']}»",
                                   "boton": "Nueva ficha", "accion": "ficha",
                                   "datos": {"id": str(cid), "texto": s["texto"], "pagina": s["pagina"], "hoja": s["hoja"] or 0}})
+        if self.fichas.leidas:
+            # C3.1 (§9.10): un libro terminado sin ficha de obra no se da por leído; la ficha se escribe con palabras propias
+            con_obra = {str(f.get("calibreId")) for f in fichas if f.get("tipo") == "obra"}
+            terminado = next((l for l in getattr(self.libros, "_libros", []) if str(l.get("id")) not in con_obra
+                              and (l.get("koEstado") == "complete" or float(l.get("koProgreso") if l.get("koProgreso") is not None else -1) >= 0.99)), None)
+            if terminado is not None:
+                pasos.append({"icono": "document-edit-verify", "texto": f"Terminaste «{terminado['titulo']}»: escribe su ficha de obra",
+                              "boton": "Ficha de obra", "accion": "obra", "datos": {"id": str(terminado["id"])}})
         if self.fichas.paraHoy:
             n = self.fichas.paraHoy
             pasos.append({"icono": "view-task", "texto": f"Repaso: {n} ficha{'s' if n != 1 else ''} para hoy", "boton": "Repasar",

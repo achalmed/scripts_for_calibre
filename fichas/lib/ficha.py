@@ -57,6 +57,13 @@ def frontmatter(meta):
     for k in config.CLAVES:
         if k in omite:
             continue
+        if k in config.OPCIONALES:
+            v = meta.get(k)
+            if isinstance(v, dict) and any(v.get(kk) not in (None, "") for kk in config.CLAVES_ORIGEN):
+                out.append(f"{k}:")
+                for kk in config.CLAVES_ORIGEN:
+                    out.append(f"  {kk}: {_y(v.get(kk, ''))}".rstrip())
+            continue
         if k == "verificacion":
             v = meta.get("verificacion") or {}
             out.append("verificacion:")
@@ -119,7 +126,7 @@ def validar(path, meta, cuerpo):
         prob.append(f"tipo inválido: {tipo!r}")
         return prob
     omite = config.OMITE[tipo]
-    esperadas = [k for k in config.CLAVES if k not in omite]
+    esperadas = [k for k in config.CLAVES if k not in omite and (k not in config.OPCIONALES or k in meta)]
     presentes = [k for k in meta if k in config.CLAVES]
     faltan = [k for k in esperadas if k not in meta]
     if faltan:
@@ -129,6 +136,12 @@ def validar(path, meta, cuerpo):
     sobran = [k for k in meta if k not in config.CLAVES]
     if sobran:
         prob.append("claves ajenas al frontmatter único: " + ", ".join(sobran))
+    if "origen" in meta:
+        o = meta.get("origen")
+        if not isinstance(o, dict) or o.get("autor") not in config.AUTORES:
+            prob.append("origen debe ser un bloque con autor (persona o llm), herramienta y fecha")
+        elif o.get("fecha") not in (None, "") and not re.match(r"^\d{4}-\d{2}-\d{2}$", str(o.get("fecha"))):
+            prob.append("fecha del origen no es ISO")
     v = meta.get("verificacion")
     if not isinstance(v, dict):
         prob.append("verificacion debe ser un bloque con estado, metodo y fecha")
@@ -185,3 +198,35 @@ def fichas_en(rutas):
 def marcar(meta, estado, metodo, detalle=""):
     meta["verificacion"] = {"estado": estado, "metodo": (metodo + (f"; {detalle}" if detalle else "")).strip(), "fecha": date.today().isoformat()}
     return meta
+
+
+# --- el origen de una ficha y si se puede citar (norma de fichas §1 y §8, versión 1.1 del 2026-11-18) -------------------
+# COPE (2023): la IA no responde por lo que escribe, así que su propuesta no entra a un trabajo sin que la persona la
+# revise; Jergas y Baethge (2015): las citas mal atribuidas son frecuentes, así que la página se coteja antes de citar.
+MARCA_IA = "propuesta por ia"          # la marca de §8 en `verificacion.metodo`, de antes del bloque `origen`
+
+
+def origen_de(meta, cuerpo=""):
+    """{autor, herramienta, fecha} de una ficha: el bloque `origen` si lo tiene; si no, la marca de §8 en el método de su
+    verificación o en «Observaciones» (fichas de antes del 2026-11-18, o reescritas por una herramienta que no conoce el
+    bloque); si no hay marca, persona."""
+    o = meta.get("origen") if isinstance(meta, dict) else None
+    if isinstance(o, dict) and o.get("autor") in config.AUTORES:
+        return {k: str(o.get(k) or "") for k in config.CLAVES_ORIGEN}
+    v = meta.get("verificacion") if isinstance(meta, dict) and isinstance(meta.get("verificacion"), dict) else {}
+    obs = secciones(cuerpo).get("Observaciones", "") if cuerpo else ""
+    if MARCA_IA in str(v.get("metodo") or "").lower() or MARCA_IA in obs.lower():
+        return {"autor": "llm", "herramienta": "", "fecha": ""}
+    return {"autor": "persona", "herramienta": "", "fecha": ""}
+
+
+def citable(meta, cuerpo=""):
+    """(sí o no, por qué no): una ficha observada no se cita; una del LLM, solo cuando la persona cotejó su página
+    (`verificada_autor`, §8)."""
+    v = meta.get("verificacion") if isinstance(meta.get("verificacion"), dict) else {}
+    estado = str(v.get("estado") or "")
+    if estado == "observada":
+        return False, "La cita no coincide con el PDF: corrígela antes de citarla."
+    if origen_de(meta, cuerpo)["autor"] == "llm" and estado != "verificada_autor":
+        return False, "La propuso la IA: coteja su página en el PDF antes de citarla."
+    return True, ""
