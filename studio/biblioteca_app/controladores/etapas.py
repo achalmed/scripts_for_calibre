@@ -112,6 +112,55 @@ class Etapas(QObject):
         return [{"nombre": e.id, "texto": e.nombre, "icono": e.icono, "contador": c.get(e.id, "") or ""}
                 for e in ops.ETAPAS if e.id in ("sincronizar", "puerta", "tareas")]
 
+    @Property("QVariantList", notify=cambiado)
+    def tarjetasCoherencia(self) -> list:
+        """Las tres tarjetas de arriba de Coherencia (decisiones §9.9): Calibre ⇄ Zotero, Calibre ⇄ KOReader y las tareas
+        automáticas, cada una con su estado (positivo · neutro · negativo), una línea y la operación o la vista que la atiende."""
+        comp = {f.get("comprobacion"): f for f in self._tablas["sincronizar"].todas()}
+
+        def cuantos(nombre: str) -> int:
+            try:
+                return int((comp.get(nombre) or {}).get("cuantos") or 0)
+            except (TypeError, ValueError):
+                return 0
+        sin_zotero, sin_clave = cuantos("Libros sin clave de Zotero"), cuantos("Libros sin clave para citar")
+        if not comp:
+            zotero = {"estado": "neutro", "linea": "Sin comprobar: hace falta el índice (Ctrl+R)"}
+        elif sin_zotero or sin_clave:
+            zotero = {"estado": "negativo", "linea": " · ".join(x for x in (f"{sin_zotero} sin Zotero" if sin_zotero else "",
+                                                                             f"{sin_clave} sin clave para citar" if sin_clave else "") if x)}
+        else:
+            zotero = {"estado": "positivo", "linea": "Todo enlazado y con clave para citar"}
+        zotero.update(titulo="Calibre ⇄ Zotero", boton="Preparar", operacion="enlazar_zotero" if sin_zotero else "zotero_calibre",
+                      vista="sincronizar", icono="zotero")
+
+        timers = {f.get("unidad", ""): f for f in self._tablas["tareas"].todas()}
+        ko = timers.get("koreader-calibre-sync.timer", {})
+        leyendo = int(self.libros.contadores.get("leyendo", 0) or 0)
+        lineas = [f"{leyendo} leyéndose" if leyendo else ""]
+        if ko.get("activo") == "instalado":
+            lineas.append(f"cada 30 min, última {ko.get('ultima', '—')}")
+            estado_ko = {"positivo": "positivo", "negativo": "negativo"}.get(ko.get("nivel", ""), "neutro")
+        else:
+            lineas.append("sin la tarea de cada 30 min")
+            estado_ko = "neutro"
+        koreader = {"titulo": "Calibre ⇄ KOReader", "estado": estado_ko, "linea": " · ".join(x for x in lineas if x),
+                    "boton": "Preparar", "operacion": "koreader", "vista": "sincronizar", "icono": "view-readermode"}
+
+        instaladas = [f for f in timers.values() if f.get("activo") == "instalado"]
+        fallidas = [f for f in timers.values() if f.get("nivel") == "negativo"]
+        if not timers:
+            linea, estado = "systemd no responde", "neutro"
+        elif fallidas:
+            linea, estado = f"{len(fallidas)} con fallos de {len(timers)}", "negativo"
+        elif len(instaladas) < len(timers):
+            linea, estado = f"{len(instaladas)} de {len(timers)} instaladas", "neutro"
+        else:
+            linea, estado = f"Las {len(timers)} en marcha y bien", "positivo"
+        tareas = {"titulo": "Tareas automáticas", "estado": estado, "linea": linea, "boton": "Ver", "operacion": "",
+                  "vista": "tareas", "icono": "chronometer"}
+        return [zotero, koreader, tareas]
+
     # ------------------------------------------------------------ elemento
     @Slot(str, int)
     def fijarFila(self, vista: str, fila: int) -> None:

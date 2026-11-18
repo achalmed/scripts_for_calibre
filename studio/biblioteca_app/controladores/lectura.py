@@ -11,6 +11,11 @@ Sincronizar (decisiones §9.8): arriba, el estado del timer de cada hora (`syste
 la próxima), el botón «Sincronizar ahora», que corre una vuelta (`main.py ciclo --json`, la misma del timer) en un hilo,
 y el interruptor que enciende o apaga el timer (lo instala si falta, con `systemd/instalar.sh`). El ajuste manual
 de lo automático: apagarlo deja solo el botón. Las llamadas al sistema van por `Sincronia`, que las pruebas reemplazan.
+
+El rediseño del 2026-11-18 (decisiones §9.9) suma las cuatro cifras de arriba (subrayados, horas de las doce semanas, libros
+con lectura y racha), el mapa de calor de horas por día (`consulta.dias`) y el color de cada herramienta (`COLORES`), que
+pintan la raya de cada subrayado, las barras de lectura del catálogo y «Seguir leyendo» de Inicio. Los colores viven aquí y
+no en el QML: el QML no lleva colores propios.
 """
 
 from __future__ import annotations
@@ -30,6 +35,9 @@ from lectura_base.lib import base as lb  # noqa: E402
 from lectura_base.lib import consulta  # noqa: E402
 
 NOMBRES = {"koreader": "KOReader", "zotero": "Zotero", "okular": "Okular", "yachay": "Yachay"}
+# el color de cada herramienta (la maqueta aprobada del 2026-11-18): la raya de un subrayado, la barra de lectura
+COLORES = {"koreader": "#378ADD", "zotero": "#D85A30", "okular": "#1D9E75", "yachay": "#7F77DD"}
+DIAS_SEMANA = ("lun", "mar", "mié", "jue", "vie", "sáb", "dom")
 ESTADOS = {"reading": "leyendo", "complete": "terminado", "abandoned": "abandonado"}
 
 
@@ -154,6 +162,7 @@ class Lectura(QObject):
         self._ruta = Path(ruta) if ruta else None
         self._resumen: dict = {}
         self._semanas: list = []
+        self._dias: list = []
         self._lista: list = []
         self._libro: dict = {}
         self._id = -1
@@ -191,6 +200,7 @@ class Lectura(QObject):
         try:
             self._resumen = consulta.resumen(self.ruta())
             self._semanas = consulta.semanas(12, self.ruta())
+            self._dias = consulta.dias(12, self.ruta())
             self._lista = consulta.libros(300, self.ruta())
         except Exception as e:  # noqa: BLE001 — una base a medio escribir: se reintenta en la próxima señal
             self.aviso.emit(f"No se pudo leer la base de lectura: {e}", "aviso")
@@ -239,6 +249,35 @@ class Lectura(QObject):
                 "sesiones": r["sesiones"], "libros": r["libros"], "anotaciones": r["anotaciones"], "compartidas": r["compartidas"],
                 "origenes": " · ".join(f"{NOMBRES.get(o, o)} {n}" for o, n in sorted(r["por_origen"].items())) or "sin subrayados",
                 "ultima": consulta.utc_a_local(r["ultima_sincronia"]) or "nunca"}
+
+    @Property("QVariantMap", constant=True)
+    def colores(self) -> dict:
+        """El color de cada herramienta, por su nombre (koreader, zotero, okular, yachay)."""
+        return dict(COLORES)
+
+    @Property("QVariantList", notify=cambiado)
+    def cifras(self) -> list:
+        """Las cuatro cifras de arriba del área: subrayados, horas en doce semanas, libros con lectura y racha."""
+        r = self._resumen
+        if not r.get("existe"):
+            return []
+        doce = sum(s["segundos"] for s in self._semanas)
+        racha = int(r.get("racha") or 0)
+        return [{"valor": str(r["anotaciones"]), "rotulo": "Subrayados"},
+                {"valor": consulta.texto_duracion(doce), "rotulo": "Horas en 12 semanas"},
+                {"valor": str(len(self._lista)), "rotulo": "Libros con lectura"},
+                {"valor": f"{racha} día" + ("" if racha == 1 else "s"), "rotulo": "Racha"}]
+
+    @Property("QVariantList", notify=cambiado)
+    def dias(self) -> list:
+        """El mapa de calor: 12 semanas (columnas) × 7 días (filas), con su nivel de 0 a 4 y su texto de ayuda."""
+        from datetime import date
+        salida = []
+        for d in self._dias:
+            f = date.fromisoformat(d["fecha"])
+            texto = f"{DIAS_SEMANA[d['dia']]} {f:%d/%m}: " + (d["tiempo"] if d["segundos"] else "sin lectura")
+            salida.append({"semana": d["semana"], "dia": d["dia"], "nivel": d["nivel"], "futuro": d["futuro"], "texto": texto})
+        return salida
 
     @Property("QVariantList", notify=cambiado)
     def semanas(self) -> list:
@@ -341,7 +380,7 @@ class Lectura(QObject):
         l = self._libro
         if not l:
             return {"hay": False}
-        progreso = [{"origen": NOMBRES.get(g["origen"], g["origen"]),
+        progreso = [{"origen": NOMBRES.get(g["origen"], g["origen"]), "color": COLORES.get(g["origen"], ""),
                      "texto": " · ".join(x for x in (f"{g['porcentaje']} %" if g["porcentaje"] is not None else "",
                                                      f"hoja {g['hoja']}" + (f" de {g['hojas']}" if g["hojas"] else "") if g["hoja"] else "",
                                                      g["tiempo"] if g["segundos"] else "", ESTADOS.get(g["estado"], g["estado"])) if x) or "abierto",
@@ -350,7 +389,9 @@ class Lectura(QObject):
         datos = [x for x in (f"{l['n_sesiones']} sesiones" if l["n_sesiones"] else "", f"{l['dias']} días" if l["dias"] else "",
                              f"{l['paginas_hora']} páginas por hora" if l["paginas_hora"] else "",
                              f"de {l['primera']} a {l['ultima']}" if l["primera"] else "") if x]
-        return {"hay": True, "titulo": l["titulo"] or f"Libro {l['calibre_id']}", "autores": l["autores"], "tiempo": l["tiempo"],
+        fracciones = [g["fraccion"] for g in l["progreso"] if g["fraccion"] is not None]
+        return {"hay": True, "id": int(l["calibre_id"]), "titulo": l["titulo"] or f"Libro {l['calibre_id']}", "autores": l["autores"],
+                "tiempo": l["tiempo"], "fraccion": max(fracciones) if fracciones else -1,
                 "datos": " · ".join(datos), "progreso": progreso, "total": len(l["anotaciones"]),
                 "sesiones": [{"fecha": s["fecha"], "tiempo": s["tiempo"], "paginas": s["paginas"],
                               "texto": f"{s['fecha']} · {s['tiempo']} · {s['paginas']} páginas"} for s in l["sesiones"][:12]]}
@@ -379,7 +420,9 @@ class Lectura(QObject):
             if self._origen and self._origen not in a["vive_en"]:
                 continue
             fecha = (a.get("modificada") or a.get("creada") or "")[:10]
+            primero = a["vive_en"][0] if a["vive_en"] else ""
             salida.append({"uid": a["uid"], "texto": a["texto"], "nota": a["nota"], "color": a["color"] or "",
+                           "colorOrigen": COLORES.get(primero, ""), "origen": NOMBRES.get(primero, primero),
                            "lugar": a["lugar"], "intencion": a["intencion"], "tipo": a["tipo"],
                            "detalle": " · ".join(x for x in (a["lugar"], ", ".join(NOMBRES.get(o, o) for o in a["vive_en"]), fecha,
                                                              a["intencion"]) if x),

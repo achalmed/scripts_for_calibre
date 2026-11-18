@@ -154,6 +154,7 @@ def fichas(carpeta: str | Path) -> list[dict]:
             insertar = ""
         salida.append({"archivo": str(f), "nombre": f.stem, "tipo": tipo.replace("ficha_", ""), "clave": clave,
                        "calibre_id": meta.get("calibre_id") or "", "pagina": str(pagina), "categoria": meta.get("categoria") or "",
+                       "tema": str(meta.get("tema") or ""), "parafrasis": " ".join((secciones.get("Paráfrasis") or "").split())[:400],
                        "verificacion": (meta.get("verificacion") or {}).get("estado", "") if isinstance(meta.get("verificacion"), dict) else "",
                        "texto": " ".join(resumen.split())[:400], "insertar": insertar})
     return salida

@@ -1,5 +1,6 @@
 // FilaLibro — un libro (o un documento de la zona de entrada, en una bandeja) en la lista compacta: la portada pequeña,
-// el título, autor · año · serie · tipo, la lectura de KOReader y las marcas de Zotero y de la clave.
+// el título, autor · año · serie · tipo, la lectura de KOReader (su barra, de su color: §9.9) y las marcas de Zotero
+// y de la clave.
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -70,11 +71,11 @@ QQC2.ItemDelegate {
             elide: Text.ElideRight
             Layout.maximumWidth: Kirigami.Units.gridUnit * 12
         }
-        QQC2.ProgressBar {
+        BarraLectura {                                // del color de KOReader (§9.9)
             visible: fila.model.koProgreso >= 0
             Layout.preferredWidth: Kirigami.Units.gridUnit * 4
-            from: 0; to: 1
-            value: Math.max(0, fila.model.koProgreso)
+            fraccion: Math.max(0, fila.model.koProgreso)
+            tono: studio.lectura.colores.koreader || ""
             Accessible.name: "Leído en KOReader: " + Math.round(fila.model.koProgreso * 100) + " %"
         }
         Kirigami.Icon {

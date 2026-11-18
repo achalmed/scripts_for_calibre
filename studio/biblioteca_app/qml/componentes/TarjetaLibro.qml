@@ -1,6 +1,7 @@
 // TarjetaLibro — un libro en la cuadrícula del catálogo (reingeniería B3–B4): la portada en miniatura (la de Calibre por
 // `image://portadas/<id>`; sin portada, un sustituto con el título y el autor en los colores del tema), la barra de
-// lectura de KOReader sobre su borde inferior, el título, el autor y el año, y las marcas de Zotero y de la clave.
+// lectura de KOReader bajo la portada, del color de KOReader (BarraLectura, §9.9), el título, el autor y el año, y las
+// marcas de Zotero y de la clave.
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -78,14 +79,16 @@ QQC2.ItemDelegate {
                 smooth: true
             }
         }
-        QQC2.ProgressBar {                            // la lectura en KOReader (el hueco se guarda aunque no la haya)
+        BarraLectura {                                // la lectura en KOReader, de su color (el hueco se guarda aunque no la haya)
             Layout.fillWidth: true
+            Layout.topMargin: Kirigami.Units.smallSpacing / 2
             opacity: tarjeta.model.koProgreso >= 0 ? 1 : 0
-            from: 0; to: 1
-            value: Math.max(0, tarjeta.model.koProgreso)
+            fraccion: Math.max(0, tarjeta.model.koProgreso)
+            tono: studio.lectura.colores.koreader || ""
             Accessible.name: tarjeta.model.koProgreso >= 0 ? "Leído en KOReader: " + Math.round(tarjeta.model.koProgreso * 100) + " %" : "Sin abrir en KOReader"
             QQC2.ToolTip.text: "KOReader: " + Math.round(tarjeta.model.koProgreso * 100) + " %"
-            QQC2.ToolTip.visible: hovered && tarjeta.model.koProgreso >= 0
+            QQC2.ToolTip.visible: zonaLectura.hovered && tarjeta.model.koProgreso >= 0
+            HoverHandler { id: zonaLectura }
         }
         QQC2.Label {
             Layout.fillWidth: true

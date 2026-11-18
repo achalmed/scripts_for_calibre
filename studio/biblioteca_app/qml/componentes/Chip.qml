@@ -1,5 +1,6 @@
 // Chip — un botón ligero de contorno fino y esquinas suaves (el de Datafw Studio y LaTeX Studio, decisiones §9.2): las
-// áreas y acciones de la barra de arriba y de la ficha. Colores, radio y letra salen de Kirigami.Theme y Units.
+// áreas y acciones de la barra de arriba y de la ficha; el destacado es la acción rellena de su vista. Apagado, se
+// atenúa. Colores, radio y letra salen de Kirigami.Theme y Units.
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -17,6 +18,7 @@ QQC2.AbstractButton {
     leftPadding: Kirigami.Units.largeSpacing
     rightPadding: Kirigami.Units.largeSpacing
     font: Kirigami.Theme.defaultFont
+    opacity: enabled ? 1 : 0.45                       // apagado se ve apagado, también el relleno (§9.9)
     Accessible.name: text
 
     contentItem: RowLayout {

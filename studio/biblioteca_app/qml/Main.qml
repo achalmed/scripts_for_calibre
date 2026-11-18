@@ -1,9 +1,11 @@
-// Main.qml — Biblioteca Studio (reingeniería del 2026-11-02, docs/reingenieria.md): un gestor bibliográfico sobre la
-// biblioteca de Calibre, en GuiComun.VentanaBase. Arriba, las cinco áreas (Catálogo · Bandejas · Método Documental ·
-// Coherencia · Lectura, Ctrl+1–5), la búsqueda y el estado de la puerta de escritura. En el centro, el área: el catálogo con
-// portadas, filtros y la ficha editorial; las bandejas de trabajo; o las etapas con su tabla, su operación y los seis
-// pasos de la puerta. Abajo, la barra de estado. Ninguna llamada al disco ni a una suite aquí: todo lo hacen los
-// controladores de Python (studio.*); la ventana no escribe en ninguna base.
+// Main.qml — Biblioteca Studio (reingeniería del 2026-11-02, docs/reingenieria.md; rediseño del 2026-11-18, decisiones
+// §9.9): un gestor bibliográfico sobre la biblioteca de Calibre, en GuiComun.VentanaBase. Arriba, sin el nombre del studio
+// (la regla de la familia, gui-comun: el título lo pone KWin), las áreas como chips (Inicio · Catálogo · Lectura · Fichas ·
+// Método · Coherencia, Ctrl+1–6), la búsqueda y el punto de la puerta de escritura. Bandejas (Ctrl+7) no es chip: se llega
+// desde Inicio, el menú Ver y la paleta. En el centro, el área: lo de hoy; el catálogo con portadas, filtros y la ficha
+// editorial; la base de lectura; las fichas y su repaso; las etapas con su tabla, su operación y los seis pasos de la
+// puerta; o las bandejas de trabajo. Abajo, la barra de estado. Ninguna llamada al disco ni a una suite aquí: todo lo
+// hacen los controladores de Python (studio.*); la ventana no escribe en ninguna base.
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -22,8 +24,9 @@ VentanaBase {
     readonly property var puerta: studio.puerta
     readonly property string area: espacio.area
     readonly property bool enLibros: area === "catalogo" || area === "bandejas"
+    readonly property bool buscaLibros: enLibros || area === "inicio" || area === "lectura"     // la búsqueda lleva al catálogo
 
-    title: (area === "catalogo" && libros.hayActual ? libros.titulo : (enLibros || area === "lectura" ? espacio.textoArea : espacio.textoVista)) + " — Biblioteca Studio"
+    title: (area === "catalogo" && libros.hayActual ? libros.titulo : (area === "metodo" || area === "coherencia" ? espacio.textoVista : espacio.textoArea)) + " — Biblioteca Studio"
     acciones: registro
     tareas: studio.tareas
     consola: studio.consola
@@ -35,6 +38,7 @@ VentanaBase {
 
     function accion(nombre) { return registro.accion(nombre) }
     function espacioActual() { return area === "metodo" ? metodo : (area === "coherencia" ? coherencia : null) }
+    function textoBusqueda() { return ventana.enLibros ? libros.busqueda : (area === "fichas" ? studio.fichas.busqueda : "") }
 
     // ------------------------------------------------------------------ lo que Python pide a la interfaz
     Connections {
@@ -52,10 +56,11 @@ VentanaBase {
             }
         }
     }
-    Connections { target: espacio; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } function onAreaCambiada() { busqueda.text = ventana.enLibros ? libros.busqueda : "" } }
+    Connections { target: espacio; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } function onAreaCambiada() { busqueda.text = ventana.textoBusqueda() } }
     Connections { target: libros; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } function onFiltroCambiado() { if (ventana.enLibros && !busqueda.activeFocus) busqueda.text = libros.busqueda } }
     Connections { target: etapas; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } }
     Connections { target: studio.lectura; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } }
+    Connections { target: studio.fichas; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } }
     Connections {
         target: ops
         function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) }
@@ -63,8 +68,8 @@ VentanaBase {
     }
 
     // ------------------------------------------------------------------ la cabecera: áreas, búsqueda y puerta
-    // la barra de arriba (decisiones §9.2): ligera, como la de Datafw Studio y LaTeX Studio. Las cuatro áreas como chips
-    // (la elegida, rellena), la búsqueda, el estado de la puerta como un punto y una línea, y lo de siempre en ⋮ y Ctrl+K
+    // la barra de arriba (decisiones §9.2 y §9.9): ligera, como la de Datafw Studio y LaTeX Studio. Las seis áreas
+    // como chips (la elegida, rellena), la búsqueda, el estado de la puerta como un punto y una línea, y lo de siempre en ⋮ y Ctrl+K
     header: ColumnLayout {
         spacing: 0
         RowLayout {
@@ -78,11 +83,11 @@ VentanaBase {
                 delegate: Chip {
                     required property int index
                     readonly property var a: espacio.areas[index]
-                    readonly property int pendientes: libros.contadores.sin_zotero + libros.contadores.sin_clave + libros.contadores.clasificar + libros.contadores.fichas
-                    text: a.texto + (a.nombre === "bandejas" && pendientes ? "  " + pendientes : "")
+                    visible: a.chip
+                    text: a.texto
                     icono: a.icono
                     destacado: espacio.indiceArea === index
-                    ayuda: "Ctrl+" + (index + 1)
+                    ayuda: a.atajo
                     onClicked: espacio.fijarAreaPorIndice(index)
                 }
             }
@@ -90,7 +95,8 @@ VentanaBase {
             Kirigami.SearchField {
                 id: busqueda
                 Layout.preferredWidth: Kirigami.Units.gridUnit * 20
-                placeholderText: ventana.enLibros ? "Título, autor, año:, serie:, etiqueta:, id:, clave: (Ctrl+F)" : "Filtrar la tabla (Ctrl+F)"
+                placeholderText: ventana.buscaLibros ? "Título, autor, año:, serie:, etiqueta:, id:, clave: (Ctrl+F)"
+                                                     : (ventana.area === "fichas" ? "Buscar en las fichas (Ctrl+F)" : "Filtrar la tabla (Ctrl+F)")
                 Accessible.name: "Buscar"
                 onTextChanged: espera.restart()
                 Keys.onEscapePressed: text = ""
@@ -98,7 +104,8 @@ VentanaBase {
                     id: espera
                     interval: 250
                     onTriggered: {
-                        if (ventana.enLibros) { espacio.fijarArea("catalogo"); libros.buscar(busqueda.text) }
+                        if (ventana.area === "fichas") studio.fichas.buscar(busqueda.text)
+                        else if (ventana.buscaLibros) { if (busqueda.text !== libros.busqueda) { espacio.fijarArea("catalogo"); libros.buscar(busqueda.text) } }
                         else { const e = ventana.espacioActual(); const t = e ? e.tabla() : null; if (t && t.modelo && t.modelo.filtrar) t.modelo.filtrar(busqueda.text) }
                     }
                 }
@@ -130,12 +137,14 @@ VentanaBase {
     // ------------------------------------------------------------------ las áreas
     StackLayout {
         anchors.fill: parent
-        currentIndex: espacio.indiceArea
+        currentIndex: espacio.indiceArea           // el orden de espacio.AREAS
+        Inicio { id: inicio }
         Catalogo { id: catalogo }
-        Bandejas { id: bandejas }
-        EspacioEtapas { id: metodo; filas: etapas.filasMetodo }
-        EspacioEtapas { id: coherencia; filas: etapas.filasCoherencia; recorrido: false }
         Lectura { id: lectura }
+        Fichas { id: fichas }
+        EspacioEtapas { id: metodo; filas: etapas.filasMetodo }
+        EspacioEtapas { id: coherencia; filas: etapas.filasCoherencia; recorrido: false; tarjetas: true }
+        Bandejas { id: bandejas }
     }
 
     footer: BarraEstado {

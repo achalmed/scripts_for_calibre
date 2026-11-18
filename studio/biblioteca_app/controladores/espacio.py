@@ -1,5 +1,6 @@
-"""biblioteca_app/controladores/espacio.py — lo transversal: el área (reingeniería B1: Catálogo, Bandejas, Método
-Documental, Coherencia), la vista activa (la etapa de `operaciones.ETAPAS` cuyas operaciones se ofrecen), el resumen y
+"""biblioteca_app/controladores/espacio.py — lo transversal: el área (el rediseño del 2026-11-18, decisiones §9.9: Inicio,
+Catálogo, Lectura, Fichas, Método, Coherencia, con Ctrl+1–6, y Bandejas, Ctrl+7, que no es chip: se llega desde Inicio, el
+menú Ver y la paleta), la vista activa (la etapa de `operaciones.ETAPAS` cuyas operaciones se ofrecen), el resumen y
 el contexto de la barra de estado y las acciones sobre una ruta (abrir con el sistema, Dolphin, terminal,
 portapapeles). Se recuerdan el área y la vista en QSettings."""
 
@@ -14,10 +15,15 @@ from gui_comun.qt import QGuiApplication, QObject, QSettings, Property, Signal, 
 from biblioteca_app.servicios import operaciones as ops
 
 NOMBRES_VISTAS = ops.NOMBRES_ETAPAS
-AREAS = (("catalogo", "Catálogo", "view-preview"), ("bandejas", "Bandejas", "mail-folder-inbox"),
-         ("metodo", "Método Documental", "view-process-tree"), ("coherencia", "Coherencia", "folder-sync"),
-         ("lectura", "Lectura", "view-readermode"))      # la base de lectura (decisiones §9.6)
+# (nombre, texto, icono): el orden es el de los chips de la cabecera y el de Ctrl+1–7 (decisiones §9.9)
+AREAS = (("inicio", "Inicio", "go-home"), ("catalogo", "Catálogo", "view-preview"),
+         ("lectura", "Lectura", "view-readermode"),      # la base de lectura (decisiones §9.6)
+         ("fichas", "Fichas", "document-edit-verify"),   # las fichas de los escritos y el repaso (§9.9)
+         ("metodo", "Método", "view-process-tree"), ("coherencia", "Coherencia", "folder-sync"),
+         ("bandejas", "Bandejas", "mail-folder-inbox"))
 NOMBRES_AREAS = tuple(a for a, _t, _i in AREAS)
+SIN_CHIP = ("bandejas",)                 # se llega desde Inicio (Pendientes, Siguiente paso), el menú Ver y la paleta
+INICIAL = "inicio"
 VISTAS_DE = {"catalogo": ("libros",), "metodo": ("adquirir", "entrada", "catalogar", "fichas", "manifiestos"),
              "coherencia": ("sincronizar", "puerta", "tareas")}
 
@@ -36,16 +42,17 @@ class Espacio(QObject):
         self._vista = str(self._s.value("vista", NOMBRES_VISTAS[0]) or NOMBRES_VISTAS[0])
         if self._vista not in NOMBRES_VISTAS:
             self._vista = NOMBRES_VISTAS[0]
-        self._area = str(self._s.value("area", "catalogo") or "catalogo")
+        self._area = str(self._s.value("area", INICIAL) or INICIAL)
         if self._area not in NOMBRES_AREAS:
-            self._area = "catalogo"
+            self._area = INICIAL
         self._resumen = ""
         self._contexto = ""
 
     # ------------------------------------------------------------- área
     @Property("QVariantList", constant=True)
     def areas(self) -> list:
-        return [{"nombre": a, "texto": t, "icono": i} for a, t, i in AREAS]
+        return [{"nombre": a, "texto": t, "icono": i, "chip": a not in SIN_CHIP, "atajo": f"Ctrl+{n}"}
+                for n, (a, t, i) in enumerate(AREAS, start=1)]
 
     @Property(str, notify=areaCambiada)
     def area(self) -> str:

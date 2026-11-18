@@ -499,7 +499,7 @@ class Libros(QObject):
                 lectura += f" · última lectura {l['ko_ultima']}"
         nota = l["nota"]
         return {
-            "id": l["id"], "titulo": l["titulo"], "autores": l["autores"], "imprenta": " · ".join(imprenta), "serie": _serie(l),
+            "id": l["id"], "titulo": l["titulo"], "autores": l["autores"], "año": str(l["año"] or ""), "imprenta": " · ".join(imprenta), "serie": _serie(l),
             "tipo": l["tipo"], "etiquetas": l["etiquetas"], "identificadores": ids, "descripcion": l["descripcion"],
             "portada": l["portada"], "fuente": f"image://portadas/{l['id']}/grande" if l["portada"] else "",
             "clave": l["clave"], "zotero": bool(l["zotero_key"]), "zoteroKey": l["zotero_key"],
@@ -577,6 +577,16 @@ class Libros(QObject):
         if self.clave:
             self.espacio.copiar(self.clave)
             self.aviso.emit(f"Clave copiada: {self.clave}", "positivo")
+        elif self._actual:
+            self.aviso.emit("Este libro no tiene clave para citar (Zotero manda: enlázalo primero).", "aviso")
+
+    @Slot()
+    def copiarCita(self) -> None:
+        """«Citar en LaTeX» (decisiones §9.9): «\\parencite{clave}» al portapapeles, lista para pegar en LaTeX Studio."""
+        if self.clave:
+            cita = f"\\parencite{{{self.clave}}}"
+            self.espacio.copiar(cita)
+            self.aviso.emit(f"Copiado: {cita}. Pégalo en LaTeX Studio.", "positivo")
         elif self._actual:
             self.aviso.emit("Este libro no tiene clave para citar (Zotero manda: enlázalo primero).", "aviso")
 

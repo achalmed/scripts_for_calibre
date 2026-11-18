@@ -1,6 +1,7 @@
-// Catalogo — la vista principal (reingeniería B3–B7): los filtros a la izquierda (F9), las portadas en cuadrícula o la
-// lista compacta (Ctrl+G) en el centro, con su orden, y la ficha editorial del libro elegido a la derecha. Intro o doble
-// clic abre el documento con su aplicación.
+// Catalogo — el área «Catálogo» (Ctrl+2; reingeniería B3–B7, rediseño del 2026-11-18, decisiones §9.9): los filtros a la
+// izquierda (F9), las portadas en cuadrícula o la lista compacta (Ctrl+G) en el centro, con su orden, y la ficha editorial
+// del libro elegido a la derecha. Arriba, la fila de los filtros puestos (y la búsqueda), que se quitan con un toque; bajo
+// cada portada, la barra de lectura del color de KOReader. Intro o doble clic abre el documento con su aplicación.
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -41,17 +42,6 @@ RowLayout {
                 text: raiz.l.visibles === raiz.l.total ? raiz.l.total + " libros" : raiz.l.visibles + " de " + raiz.l.total + " libros"
                 font.weight: Font.DemiBold
             }
-            Repeater {                               // los filtros puestos, como fichas que se quitan
-                model: raiz.l.nombresFiltros.filter(n => (raiz.l.filtros[n.clave] || "") !== "")
-                delegate: QQC2.Button {
-                    required property var modelData
-                    text: modelData.titulo + ": " + raiz.l.filtros[modelData.clave]
-                    icon.name: "edit-delete-remove"
-                    flat: true
-                    font: Kirigami.Theme.smallFont
-                    onClicked: raiz.l.fijarFiltro(modelData.clave, "")
-                }
-            }
             Item { Layout.fillWidth: true }
             QQC2.Label { text: "Orden:"; color: Kirigami.Theme.disabledTextColor }
             QQC2.ComboBox {
@@ -69,6 +59,39 @@ RowLayout {
                 QQC2.ToolTip.text: (raiz.l.enLista ? "Ver las portadas" : "Ver la lista compacta") + " (Ctrl+G)"
                 QQC2.ToolTip.visible: hovered
                 Accessible.name: text
+            }
+        }
+        // los filtros puestos y la búsqueda: un toque los quita (§9.9)
+        Flow {
+            Layout.fillWidth: true
+            Layout.leftMargin: Kirigami.Units.smallSpacing
+            Layout.rightMargin: Kirigami.Units.smallSpacing
+            Layout.bottomMargin: Kirigami.Units.smallSpacing
+            visible: raiz.l.hayFiltros || raiz.l.busqueda !== ""
+            spacing: Kirigami.Units.smallSpacing
+            Chip {
+                visible: raiz.l.busqueda !== ""
+                text: "Búsqueda: " + raiz.l.busqueda
+                icono: "edit-delete-remove"
+                ayuda: "Quitar la búsqueda"
+                onClicked: raiz.l.buscar("")
+            }
+            Repeater {
+                model: raiz.l.nombresFiltros.filter(n => (raiz.l.filtros[n.clave] || "") !== "")
+                delegate: Chip {
+                    required property var modelData
+                    text: modelData.titulo + ": " + raiz.l.filtros[modelData.clave]
+                    icono: "edit-delete-remove"
+                    ayuda: "Quitar este filtro"
+                    onClicked: raiz.l.fijarFiltro(modelData.clave, "")
+                }
+            }
+            QQC2.ToolButton {
+                visible: (raiz.l.busqueda !== "" ? 1 : 0) + raiz.l.nombresFiltros.filter(n => (raiz.l.filtros[n.clave] || "") !== "").length > 1
+                text: "Quitar todo"
+                flat: true
+                font: Kirigami.Theme.smallFont
+                onClicked: { raiz.l.limpiarFiltros(); raiz.l.buscar("") }
             }
         }
         Kirigami.Separator { Layout.fillWidth: true }

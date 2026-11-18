@@ -1,5 +1,6 @@
 // Operacion — la operación elegida de la vista: qué hace, en qué base escribe, la orden exacta (simular y aplicar), lo
-// que pide (texto, carpeta o archivo) y el estado de la puerta; Simular (F5) y Aplicar (Ctrl+Intro) al pie.
+// que pide (texto, carpeta o archivo) y el estado de la puerta; Simular (F5) y Aplicar (Ctrl+Intro) al pie (en Bandejas; en
+// el Método y la Coherencia van arriba, junto a la etapa: `conBotones: false`, decisiones §9.9).
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -9,6 +10,7 @@ import GuiComun
 QQC2.ScrollView {
     id: pagina
     readonly property var o: studio.operaciones
+    property bool conBotones: true
     contentWidth: availableWidth
     QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
     ColumnLayout {
@@ -64,7 +66,7 @@ QQC2.ScrollView {
         Kirigami.Separator { Layout.fillWidth: true; visible: pasos.visible }
         LineaPasos { id: pasos; Layout.fillWidth: true; pasos: studio.operaciones.pasos; titulo: "La puerta de escritura"; resumen: studio.operaciones.resumenPasos }
         RowLayout {
-            visible: pagina.o.hayOperacion
+            visible: pagina.o.hayOperacion && pagina.conBotones
             Layout.fillWidth: true
             spacing: Kirigami.Units.smallSpacing
             Item { Layout.fillWidth: true }

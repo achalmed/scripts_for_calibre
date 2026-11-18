@@ -1,7 +1,8 @@
-// FichaEditorial — el libro leído como en un catálogo de biblioteca (reingeniería B7): la portada grande, el título, la
-// mención de responsabilidad, el pie de imprenta y la serie; abrir el documento con su aplicación o mostrarlo en Dolphin;
-// la clave para citar (Zotero manda en citas), el estado en Zotero y la lectura en KOReader; identificadores, materias,
-// descripción, formatos, fichas canónicas y nota de lectura. Solo lee: lo que cambia la biblioteca es una operación.
+// FichaEditorial — el libro leído como en un catálogo de biblioteca (reingeniería B7; reordenada el 2026-11-18, decisiones
+// §9.9): arriba, la portada, el título, el autor y el año, la clave para citar en monoespaciada (Zotero manda en citas) y
+// dos cifras (Leído y Subrayados, de la base de lectura); la fila «Abrir» (la acción rellena), «Nueva ficha», «Estudiar
+// con la IA» y «Citar en LaTeX» (copia \parencite{clave}); «Usado en»; Dolphin, Calibre y Zotero; y debajo, el estado en
+// Zotero, la lectura en KOReader, la nota, identificadores, materias, descripción, formatos y fichas canónicas. Solo lee: lo que cambia la biblioteca es una operación.
 // Desde aquí se ficha el libro en un escrito y se estudia con la IA (DialogoFicha y DialogoEstudioObra, §9.4 y §9.5):
 // eso escribe solo en las fichas del escrito, nunca en Calibre ni en Zotero.
 import QtQuick
@@ -52,83 +53,95 @@ QQC2.Control {
                     Item { Layout.fillWidth: true }
                     QQC2.ToolButton { icon.name: "window-close"; display: QQC2.AbstractButton.IconOnly; text: "Cerrar la ficha"; onClicked: raiz.cerrar(); Accessible.name: text }
                 }
-                // la portada grande
-                Item {
-                    Layout.alignment: Qt.AlignHCenter
-                    Layout.preferredWidth: Math.min(parent.width, Kirigami.Units.gridUnit * 13)
-                    Layout.preferredHeight: Layout.preferredWidth * 1.45
-                    Image {
-                        id: portada
-                        anchors.fill: parent
-                        source: raiz.f.fuente || ""
-                        visible: raiz.f.portada === true
-                        asynchronous: true
-                        fillMode: Image.PreserveAspectFit
-                        sourceSize.width: 520
-                    }
-                    Rectangle {
-                        anchors.fill: parent
-                        visible: raiz.f.portada !== true || portada.status !== Image.Ready
-                        radius: Kirigami.Units.cornerRadius
-                        color: Kirigami.Theme.alternateBackgroundColor
-                        border.color: Kirigami.Theme.disabledTextColor
-                        Kirigami.PlaceholderMessage { anchors.centerIn: parent; width: parent.width - Kirigami.Units.gridUnit; icon.name: "image-missing"; text: raiz.f.portada === true ? "" : "Sin portada" }
-                    }
-                }
-                Kirigami.Heading {
+                // la portada, el título, el autor y el año, y la clave para citar (§9.9)
+                RowLayout {
                     Layout.fillWidth: true
-                    level: 2
-                    text: raiz.f.titulo || ""
-                    wrapMode: Text.WordWrap
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                QQC2.Label {
-                    Layout.fillWidth: true
-                    text: (raiz.f.autores || []).join(" · ") || "sin autor"
-                    wrapMode: Text.WordWrap
-                    horizontalAlignment: Text.AlignHCenter
-                    font.italic: true
+                    spacing: Kirigami.Units.largeSpacing
+                    Item {
+                        Layout.alignment: Qt.AlignTop
+                        Layout.preferredWidth: Kirigami.Units.gridUnit * 7
+                        Layout.preferredHeight: Layout.preferredWidth * 1.45
+                        Image {
+                            id: portada
+                            anchors.fill: parent
+                            source: raiz.f.fuente || ""
+                            visible: raiz.f.portada === true
+                            asynchronous: true
+                            fillMode: Image.PreserveAspectFit
+                            verticalAlignment: Image.AlignTop
+                            sourceSize.width: 520
+                        }
+                        Rectangle {
+                            anchors.fill: parent
+                            visible: raiz.f.portada !== true || portada.status !== Image.Ready
+                            radius: Kirigami.Units.cornerRadius
+                            color: Kirigami.Theme.alternateBackgroundColor
+                            border.color: Qt.alpha(Kirigami.Theme.textColor, 0.15)
+                            Kirigami.Icon { anchors.centerIn: parent; source: "image-missing"; implicitWidth: Kirigami.Units.iconSizes.medium; implicitHeight: implicitWidth; opacity: 0.5 }
+                        }
+                    }
+                    ColumnLayout {
+                        Layout.fillWidth: true
+                        Layout.alignment: Qt.AlignTop
+                        spacing: Kirigami.Units.smallSpacing
+                        Kirigami.Heading {
+                            Layout.fillWidth: true
+                            level: 3
+                            text: raiz.f.titulo || ""
+                            wrapMode: Text.WordWrap
+                        }
+                        QQC2.Label {
+                            Layout.fillWidth: true
+                            text: [(raiz.f.autores || []).join(" · ") || "sin autor", raiz.f.año || ""].filter(x => x).join(" · ")
+                            wrapMode: Text.WordWrap
+                            font.italic: true
+                        }
+                        RowLayout {
+                            Layout.fillWidth: true
+                            spacing: Kirigami.Units.smallSpacing
+                            QQC2.Label {
+                                Layout.fillWidth: true
+                                text: raiz.f.clave || "sin clave (la pone Better BibTeX en Zotero)"
+                                font: raiz.f.clave ? Kirigami.Theme.fixedWidthFont : Kirigami.Theme.smallFont
+                                color: raiz.f.clave ? Kirigami.Theme.textColor : Kirigami.Theme.neutralTextColor
+                                elide: Text.ElideRight
+                                Accessible.name: "Clave para citar: " + text
+                            }
+                            BotonAccion { accion: raiz.accion("libro.copiar_clave"); conTexto: false; flat: true; visible: !!raiz.f.clave }
+                        }
+                        // dos cifras: lo leído y los subrayados (los de la base de lectura, que sigue al libro elegido)
+                        RowLayout {
+                            Layout.topMargin: Kirigami.Units.smallSpacing
+                            spacing: Kirigami.Units.largeSpacing * 2
+                            readonly property bool enBase: studio.lectura.libro.hay === true && String(studio.lectura.actualId) === String(raiz.f.id)
+                            readonly property real leido: enBase && studio.lectura.libro.fraccion >= 0 ? studio.lectura.libro.fraccion : (raiz.f.koProgreso ?? -1)
+                            Cifra { visible: parent.leido >= 0; valor: Math.round(Math.max(0, parent.leido) * 100) + " %"; rotulo: "Leído" }
+                            Cifra { visible: parent.enBase; valor: String(studio.lectura.libro.total || 0); rotulo: "Subrayados" }
+                        }
+                    }
                 }
                 QQC2.Label {
                     Layout.fillWidth: true
                     visible: text !== ""
-                    text: raiz.f.imprenta || ""
+                    text: [raiz.f.imprenta || "", (raiz.f.serie || "") !== "" ? "Colección: " + raiz.f.serie : ""].filter(x => x).join(" · ")
                     wrapMode: Text.WordWrap
-                    horizontalAlignment: Text.AlignHCenter
+                    font: Kirigami.Theme.smallFont
                     color: Kirigami.Theme.disabledTextColor
-                }
-                QQC2.Label {
-                    Layout.fillWidth: true
-                    visible: (raiz.f.serie || "") !== ""
-                    text: "Colección: " + (raiz.f.serie || "")
-                    wrapMode: Text.WordWrap
-                    horizontalAlignment: Text.AlignHCenter
-                    color: Kirigami.Theme.disabledTextColor
-                }
-                // abrir
-                Flow {
-                    Layout.fillWidth: true
-                    spacing: Kirigami.Units.smallSpacing
-                    Repeater {
-                        model: [{ n: "libro.archivo", t: "Abrir", i: "document-open", d: true }, { n: "libro.dolphin", t: "Dolphin", i: "system-file-manager" },
-                                { n: "libro.calibre", t: "Calibre", i: "calibre" }, { n: "libro.zotero", t: "Zotero", i: "zotero" }]
-                        Chip {
-                            required property var modelData
-                            readonly property var a: raiz.accion(modelData.n)
-                            text: modelData.t
-                            icono: modelData.i
-                            destacado: !!modelData.d
-                            enabled: a ? a.habilitada : false
-                            ayuda: a ? a.texto.replace("&", "") : ""
-                            onClicked: a.disparar()
-                        }
-                    }
                 }
 
-                // fichar y estudiar con la IA (decisiones §9.4 y §9.5)
+                // abrir (la acción rellena), fichar, estudiar con la IA (§9.4 y §9.5) y citar en LaTeX
                 Flow {
                     Layout.fillWidth: true
                     spacing: Kirigami.Units.smallSpacing
+                    Chip {
+                        readonly property var a: raiz.accion("libro.archivo")
+                        text: "Abrir"
+                        icono: "document-open"
+                        destacado: true
+                        enabled: a ? a.habilitada : false
+                        ayuda: "El documento con su aplicación"
+                        onClicked: a.disparar()
+                    }
                     Chip {
                         objectName: "nuevaFicha"
                         text: "Nueva ficha"
@@ -143,24 +156,60 @@ QQC2.Control {
                         ayuda: "Copia el prompt de una mirada sobre unas hojas del libro y lee de vuelta lo que respondió el chat"
                         onClicked: dialogoEstudio.abrir()
                     }
+                    Chip {
+                        text: "Citar en LaTeX"
+                        icono: "edit-copy"
+                        enabled: !!raiz.f.clave
+                        ayuda: raiz.f.clave ? "Copia \\parencite{" + raiz.f.clave + "}: pégalo en LaTeX Studio" : "Sin clave para citar: enlázalo con Zotero"
+                        onClicked: raiz.l.copiarCita()
+                    }
+                }
+
+                // en qué escritos se usa (§9.1)
+                Kirigami.Heading { level: 4; text: "Usado en"; visible: raiz.l.usos.length > 0 }
+                Repeater {
+                    model: raiz.l.usos
+                    delegate: QQC2.ItemDelegate {
+                        required property var modelData
+                        Layout.fillWidth: true
+                        icon.name: "document-edit"
+                        enabled: !!modelData.principal
+                        contentItem: ColumnLayout {
+                            spacing: 0
+                            QQC2.Label { Layout.fillWidth: true; text: modelData.titulo; elide: Text.ElideRight }
+                            QQC2.Label { Layout.fillWidth: true; text: modelData.proyecto + (modelData.fichas ? " · " + modelData.fichas + " ficha" + (modelData.fichas === 1 ? "" : "s") : "")
+                                         elide: Text.ElideMiddle; font: Kirigami.Theme.smallFont; color: Kirigami.Theme.disabledTextColor }
+                        }
+                        onClicked: raiz.l.abrirEnLatex(modelData.principal)
+                        QQC2.ToolTip.text: "Abrir el escrito en LaTeX Studio"
+                        QQC2.ToolTip.visible: hovered
+                        QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+                    }
+                }
+
+                // lo demás del libro: su carpeta, Calibre y Zotero
+                Flow {
+                    Layout.fillWidth: true
+                    spacing: Kirigami.Units.smallSpacing
+                    Repeater {
+                        model: [{ n: "libro.dolphin", t: "Dolphin", i: "system-file-manager" }, { n: "libro.calibre", t: "Calibre", i: "calibre" },
+                                { n: "libro.zotero", t: "Zotero", i: "zotero" }]
+                        Chip {
+                            required property var modelData
+                            readonly property var a: raiz.accion(modelData.n)
+                            text: modelData.t
+                            icono: modelData.i
+                            enabled: a ? a.habilitada : false
+                            ayuda: a ? a.texto.replace("&", "") : ""
+                            onClicked: a.disparar()
+                        }
+                    }
                 }
 
                 Kirigami.FormLayout {
                     Layout.fillWidth: true
                     wideMode: false
                     Kirigami.Separator { Kirigami.FormData.isSection: true; Kirigami.FormData.label: "Citar" }
-                    RowLayout {
-                        Kirigami.FormData.label: "Clave para citar:"
-                        Layout.fillWidth: true
-                        QQC2.Label {
-                            Layout.fillWidth: true
-                            text: raiz.f.clave || "sin clave (la pone Better BibTeX en Zotero)"
-                            font.family: raiz.f.clave ? Kirigami.Theme.fixedWidthFont.family : Kirigami.Theme.defaultFont.family
-                            color: raiz.f.clave ? Kirigami.Theme.textColor : Kirigami.Theme.neutralTextColor
-                            elide: Text.ElideRight
-                        }
-                        BotonAccion { accion: raiz.accion("libro.copiar_clave"); conTexto: false }
-                    }
                     RowLayout {
                         Kirigami.FormData.label: "Zotero:"
                         Kirigami.Icon {
@@ -174,7 +223,7 @@ QQC2.Control {
                         Kirigami.FormData.label: "KOReader:"
                         Layout.fillWidth: true
                         QQC2.Label { text: raiz.f.koreader || "sin abrir en KOReader"; color: raiz.f.koreader ? Kirigami.Theme.textColor : Kirigami.Theme.disabledTextColor; wrapMode: Text.WordWrap; Layout.fillWidth: true }
-                        QQC2.ProgressBar { visible: (raiz.f.koProgreso ?? -1) >= 0; from: 0; to: 1; value: Math.max(0, raiz.f.koProgreso ?? 0); Layout.fillWidth: true; Accessible.name: "Progreso de lectura" }
+                        BarraLectura { visible: (raiz.f.koProgreso ?? -1) >= 0; fraccion: Math.max(0, raiz.f.koProgreso ?? 0); tono: studio.lectura.colores.koreader || ""; Layout.fillWidth: true }
                     }
                     RowLayout {
                         Kirigami.FormData.label: "Nota de lectura:"
@@ -232,26 +281,6 @@ QQC2.Control {
                         QQC2.Label { text: modelData.formato; font.weight: Font.DemiBold }
                         QQC2.Label { text: modelData.nombre; elide: Text.ElideMiddle; Layout.fillWidth: true; color: Kirigami.Theme.disabledTextColor }
                         QQC2.Label { text: modelData.tamano; color: Kirigami.Theme.disabledTextColor }
-                    }
-                }
-                Kirigami.Heading { level: 4; text: "Usado en"; visible: raiz.l.usos.length > 0 }
-                Repeater {
-                    model: raiz.l.usos
-                    delegate: QQC2.ItemDelegate {
-                        required property var modelData
-                        Layout.fillWidth: true
-                        icon.name: "document-edit"
-                        enabled: !!modelData.principal
-                        contentItem: ColumnLayout {
-                            spacing: 0
-                            QQC2.Label { Layout.fillWidth: true; text: modelData.titulo; elide: Text.ElideRight }
-                            QQC2.Label { Layout.fillWidth: true; text: modelData.proyecto + (modelData.fichas ? " · " + modelData.fichas + " ficha" + (modelData.fichas === 1 ? "" : "s") : "")
-                                         elide: Text.ElideMiddle; font: Kirigami.Theme.smallFont; color: Kirigami.Theme.disabledTextColor }
-                        }
-                        onClicked: raiz.l.abrirEnLatex(modelData.principal)
-                        QQC2.ToolTip.text: "Abrir el escrito en LaTeX Studio"
-                        QQC2.ToolTip.visible: hovered
-                        QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
                     }
                 }
                 Kirigami.Heading { level: 4; text: "Fichas canónicas"; visible: (raiz.f.fichas || []).length > 0 }

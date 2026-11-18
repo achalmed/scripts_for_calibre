@@ -10,6 +10,8 @@ biblioteca real: las portadas son las que la muestra genera con el propio Calibr
     /usr/bin/python3 studio/capturar.py docs/figuras/biblioteca-studio-bandejas.png --area bandejas --bandeja clasificar --operacion catalogar
     /usr/bin/python3 studio/capturar.py docs/figuras/biblioteca-studio-metodo.png --area metodo --vista entrada --operacion catalogar --pestana 1
     /usr/bin/python3 studio/capturar.py salida.png --paleta "catalogar"
+    /usr/bin/python3 studio/capturar.py docs/figuras/biblioteca-studio-inicio.png --area inicio
+    /usr/bin/python3 studio/capturar.py salida.png --area fichas --repaso --mostrar      # el repaso Leitner, con la cita a la vista
 
 Antes de capturar corre de verdad una operación que solo lee la muestra («Validar las fichas» sobre sus fichas): la
 salida del panel inferior y el plan son reales.
@@ -63,7 +65,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Captura de Biblioteca Studio sobre la biblioteca de muestra")
     parser.add_argument("salida")
     parser.add_argument("--esquema", help="archivo .colors de KDE (relanza con XDG_CONFIG_HOME temporal)")
-    parser.add_argument("--area", default="catalogo", help="catalogo · bandejas · metodo · coherencia · lectura")
+    parser.add_argument("--area", default="catalogo", help="inicio · catalogo · lectura · fichas · metodo · coherencia · bandejas")
     parser.add_argument("--vista", default="", help="la etapa: adquirir · entrada · catalogar · fichas · manifiestos · sincronizar · puerta · tareas")
     parser.add_argument("--libro", default="", help="el libro de la ficha editorial (su número de Calibre)")
     parser.add_argument("--buscar", default="", help="la búsqueda del catálogo (autor:… año:…)")
@@ -77,6 +79,9 @@ def main() -> int:
     parser.add_argument("--paleta", default=None, help="abre la paleta de órdenes con este texto")
     parser.add_argument("--ficha", action="store_true", help="con --libro: abre «Nueva ficha» con una textual de muestra ya revisada (§9.4)")
     parser.add_argument("--estudio", action="store_true", help="con --libro: abre «Estudiar con la IA» con una respuesta de muestra leída (§9.5)")
+    parser.add_argument("--repaso", action="store_true", help="con --area fichas: el «Repaso para estudiantes» (§9.9)")
+    parser.add_argument("--mostrar", action="store_true", help="con --repaso: la tarjeta con su cita a la vista")
+    parser.add_argument("--filtro", default="", help="con --area fichas: todas · textual · parafrasis · revisar")
     parser.add_argument("--ancho", type=int, default=1440)
     parser.add_argument("--alto", type=int, default=900)
     args = parser.parse_args()
@@ -160,6 +165,12 @@ def main() -> int:
             libros.buscar(args.buscar)
         if args.libro:
             libros.fijarId(args.libro)
+        if args.filtro:
+            piezas["fichas"].fijarFiltro(args.filtro)
+        if args.repaso:
+            piezas["fichas"].fijarModo("repaso")
+            if args.mostrar:
+                QTimer.singleShot(1200, piezas["fichas"].mostrar)
         if args.area in ("metodo", "coherencia") and args.fila >= 0:
             QTimer.singleShot(300, lambda: interfaz.pedir.emit("seleccionar_fila", {"fila": args.fila}))
         if args.pestana >= 0:

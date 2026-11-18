@@ -168,8 +168,29 @@ def _escrito_de_muestra(escritura: Path, libros: dict) -> None:
         f"proyecto: 2026-11-17-informe-de-muestra\nfuentes:\n- calibre_id: {cid}\n  zotero_key: {LIBROS[0][2]}\n  clave_bibtex: {LIBROS[0][3]}\n"
         f"  titulo: {LIBROS[0][0]}\n  uso: marco\n", encoding="utf-8")
     (d / "references.bib").write_text(f"% calibre_id: {cid}\n@book{{{LIBROS[0][3]},\n  title = {{{LIBROS[0][0]}}},\n}}\n", encoding="utf-8")
+    _fichas_de_muestra(d, {"clave": LIBROS[0][3], "calibre_id": cid, "zotero_key": LIBROS[0][2]})
     (escritura / "theses" / "2026-tesis-de-muestra").mkdir(parents=True)
     (escritura / "theses" / "2026-tesis-de-muestra" / "proyecto.yaml").write_text("titulo: Tesis de muestra sobre el empleo\ntipo: tesis\n", encoding="utf-8")
+
+
+def _fichas_de_muestra(proyecto: Path, entrada: dict) -> None:
+    """Dos fichas del primer libro en el informe de muestra, escritas con el mismo escritor que la ventana (`lib/fichar.py`):
+    una textual cotejada y una paráfrasis por revisar (el área Fichas y el repaso tienen qué mostrar). El cotejo contra el
+    PDF se reemplaza por su resultado: aquí aún no hay entorno de muestra y no se lee ningún PDF de la máquina."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("muestra_fichar", REPO / "lib" / "fichar.py")
+    fichar = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(fichar)
+    resultado = {"ficha_textual": "verificada_script", "ficha_parafrasis": "pendiente"}
+    fichar._verificar = lambda meta, _cuerpo, _ruta: {"estado": resultado.get(meta.get("tipo"), "pendiente"), "metodo": "texto",
+                                                     "fecha": "2026-11-17", "detalle": "", "pagina_pdf": None}
+    fichar.guardar(proyecto, {"tipo": "textual", "pagina": "12", "categoria": "Idea principal", "tema": "mercados vecinos",
+                              "secciones": {"Cita exacta": "La escala importa menos que la conexión con los mercados vecinos."}},
+                   entrada, aplicar=True)
+    fichar.guardar(proyecto, {"tipo": "parafrasis", "pagina": "13", "categoria": "Argumento", "tema": "empleo y vías",
+                              "secciones": {"Paráfrasis": "El empleo de una ciudad pequeña sigue a sus caminos y a su crédito.",
+                                            "Origen literal": "El mercado de trabajo local depende de la conectividad vial"}},
+                   entrada, aplicar=True)
 
 
 @dataclass
@@ -379,8 +400,10 @@ def crear(raiz: Path, con_calibre: bool | None = None) -> Muestra:
                "WRITING_DIR": str(raiz / "escritura"), "DATAFW_DIR": str(raiz / "datafw"), "NOTES_DIR": str(raiz / "notas")}
     (raiz / "notas").mkdir()
     _escrito_de_muestra(raiz / "escritura", libros)
-    entorno.update(LECTURA_DB=str(raiz / "datos" / "biblioteca" / "lectura.sqlite"), XDG_DATA_HOME=str(raiz / "datos"))
+    entorno.update(LECTURA_DB=str(raiz / "datos" / "biblioteca" / "lectura.sqlite"), XDG_DATA_HOME=str(raiz / "datos"),
+                   REPASO_DB=str(raiz / "datos" / "biblioteca" / "repaso.sqlite"))
     _lectura(Path(entorno["LECTURA_DB"]), libros)
+    _repaso(Path(entorno["REPASO_DB"]))
     indice = _indice(entorno, repo, libros, estado / "biblioteca" / "indice.json", raiz / "notas")
     _respaldos(raiz / "respaldos" / "biblioteca" / "puerta")
     return Muestra(raiz, biblioteca, calibre_db, zotero_db, repo, estado, indice, con_calibre, entorno)
@@ -449,12 +472,15 @@ def _lectura(destino: Path, libros: dict) -> None:
         return {"origen_id": oid, "calibre_id": b1, "hoja": hoja, "texto": texto, "nota": nota, "color": color,
                 "rects": [[hoja, 0.12, y, 0.7, 0.02]], "creada": "2026-10-28T15:00:00Z", "modificada": "2026-10-28T15:00:00Z", **k}
 
+    hace_dos_dias = time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime(ahora - 2 * 86400))   # lo nuevo de la semana (Inicio)
+
     compartido = "Las ciudades pequeñas crecen cuando se integran a su región."
     sesiones = [{"origen_id": f"muestra:{i}", "calibre_id": b1 if i % 3 else b2, "inicio": ahora - i * 3 * 86400 - 3600,
                  "fin": ahora - i * 3 * 86400, "segundos": 1500 + (i * 437) % 2400, "paginas": 6 + i % 9} for i in range(1, 26)]
     lecturas = [
         lb.Lectura("koreader", anotaciones=[a("ko:1", 2, compartido, "la idea central", "yellow"),
-                                            a("ko:2", 2, "La escala importa menos que la conexión con los mercados vecinos.", color="green", y=0.36)],
+                                            a("ko:2", 2, "La escala importa menos que la conexión con los mercados vecinos.", color="green", y=0.36,
+                                              creada=hace_dos_dias, modificada=hace_dos_dias)],
                    sesiones=sesiones, alcance=None,
                    progreso=[{"calibre_id": b1, "fraccion": 0.42, "estado": "reading", "segundos": 185 * 60, "hoja": 2, "hojas": 3},
                              {"calibre_id": b2, "fraccion": 1.0, "estado": "complete", "segundos": 940 * 60} if b2 else {"calibre_id": b1}],
@@ -463,9 +489,21 @@ def _lectura(destino: Path, libros: dict) -> None:
                    progreso=[{"calibre_id": b1, "segundos": 20 * 60, "hoja": 3}]),
         lb.Lectura("okular", anotaciones=[a("okular-muestra", 3, "", "revisar el dato del crédito", "#ff6666", y=0.5)], alcance=None),
         lb.Lectura("yachay", anotaciones=[a("701", 3, "El mercado de trabajo local depende de la conectividad vial y del acceso al crédito.",
-                                            intencion="cita", pagina="13", y=0.4)], alcance=None),
+                                            intencion="cita", pagina="13", y=0.4, creada=hace_dos_dias, modificada=hace_dos_dias)], alcance=None),
     ]
     lb.importar(lecturas, aplicar=True, ruta=destino)
+
+
+def _repaso(destino: Path) -> None:
+    """El repaso de muestra (decisiones §9.9), con el mismo código que el real (`lib/repaso.py`): la ficha textual del
+    informe ya se supo una vez (caja 2, vuelve en dos días); la paráfrasis aún no se repasó (toca hoy). Una sola escritura
+    sobre una base que no existía: no hay respaldo que hacer."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("muestra_repaso", REPO / "lib" / "repaso.py")
+    repaso = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(repaso)
+    repaso.responder("reports/2026-11-17-informe-de-muestra/quispeEconomiaCiudades2021-p012-textual-mercados-vecinos",
+                     True, aplicar=True, ruta=destino)
 
 
 def _respaldos(raiz: Path) -> None:
