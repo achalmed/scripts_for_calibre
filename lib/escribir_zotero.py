@@ -191,3 +191,107 @@ def z_anadir_anotacion(cur, adjunto_id: int, libreria: int, datos: dict) -> str:
                 (cur.lastrowid, adjunto_id, int(datos["tipo"]), datos.get("texto") or None, datos.get("comentario") or None,
                  datos.get("color") or "#ffd400", datos.get("etiqueta") or "", datos["orden"], datos["posicion"]))
     return clave
+
+
+# ------------------------------------------------------------------ obras nuevas (lib/ingresar.py; decisiones §9.10)
+# Una obra que entra a la biblioteca por su DOI o ISBN (Método Documental, paso 03) nace en Zotero con la app cerrada: el
+# ítem con sus campos válidos para su tipo, sus creadores, su clave de cita (la de Better BibTeX, fijada en `citationKey`),
+# sus etiquetas, su colección y, si tiene PDF en Calibre, el adjunto enlazado a ese archivo. Todo sin sincronizar
+# (`synced=0`, `version=0`) para que la cuenta lo suba, como lo nuevo que crea Zotero.
+
+def _normalizado(t: str | None):
+    """Lo que Zotero guarda en las columnas `…Normalized`: minúsculas sin tildes, solo si el texto no es ASCII."""
+    import unicodedata
+    if not t or t.isascii():
+        return None
+    return unicodedata.normalize("NFKD", t).encode("ascii", "ignore").decode().lower()
+
+
+def z_campos_validos(cur, tipo: str) -> set[str]:
+    return {r[0] for r in cur.execute("SELECT f.fieldName FROM itemTypeFields itf JOIN itemTypes t ON t.itemTypeID=itf.itemTypeID "
+                                      "JOIN fields f ON f.fieldID=itf.fieldID WHERE t.typeName=?", (tipo,))}
+
+
+def z_creador(cur, nombre: str, apellido: str, modo: int) -> int:
+    """El creador (nombre, apellido, modo: 0 persona, 1 un solo campo, como una institución), reutilizado si ya existe."""
+    nombre = "" if modo == 1 else (nombre or "")
+    r = cur.execute("SELECT creatorID FROM creators WHERE firstName=? AND lastName=? AND fieldMode=?", (nombre, apellido, modo)).fetchone()
+    if r:
+        return r[0]
+    cur.execute("INSERT INTO creators(firstName, lastName, fieldMode, firstNameNormalized, lastNameNormalized) VALUES (?,?,?,?,?)",
+                (nombre, apellido, modo, _normalizado(nombre), _normalizado(apellido)))
+    return cur.lastrowid
+
+
+def z_nuevo_item(cur, libreria: int, tipo: str, campos: dict, creadores: list[dict]) -> tuple[int, str]:
+    """Un ítem nuevo de tipo `tipo` (journalArticle, book…) con `campos` {fieldName: valor} (solo los válidos para el tipo;
+    uno que no lo sea es un error, no se pierde en silencio) y `creadores` [{nombre, apellido, modo, rol}]. Devuelve
+    (itemID, clave del ítem)."""
+    fila = cur.execute("SELECT itemTypeID FROM itemTypes WHERE typeName=?", (tipo,)).fetchone()
+    if not fila:
+        raise ValueError(f"Zotero no tiene el tipo «{tipo}»")
+    validos = z_campos_validos(cur, tipo)
+    ajenos = [k for k, v in campos.items() if v not in (None, "") and k not in validos]
+    if ajenos:
+        raise ValueError(f"{tipo} no lleva los campos {', '.join(ajenos)}")
+    clave = z_nueva_clave(cur, libreria)
+    cur.execute("INSERT INTO items(itemTypeID, dateAdded, dateModified, clientDateModified, libraryID, key, version, synced) "
+                "VALUES (?,?,?,?,?,?,0,0)", (fila[0], AHORA_SQL, AHORA_SQL, AHORA_SQL, libreria, clave))
+    item = cur.lastrowid
+    for campo, valor in campos.items():
+        if valor not in (None, ""):
+            cur.execute("INSERT INTO itemData(itemID, fieldID, valueID) VALUES (?,?,?)",
+                        (item, z_field_id(cur, campo), z_value_id(cur, str(valor))))
+    roles = dict(cur.execute("SELECT creatorType, creatorTypeID FROM creatorTypes").fetchall())
+    for i, c in enumerate(creadores):
+        cid = z_creador(cur, c.get("nombre") or "", c["apellido"], int(c.get("modo") or 0))
+        cur.execute("INSERT INTO itemCreators(itemID, creatorID, creatorTypeID, orderIndex) VALUES (?,?,?,?)",
+                    (item, cid, roles[c.get("rol") or "author"], i))
+    return item, clave
+
+
+def z_etiquetar(cur, item_id: int, etiquetas) -> None:
+    """Añade etiquetas manuales (type=0) sin quitar las que ya tenga."""
+    for t in etiquetas:
+        tid = cur.execute("SELECT tagID FROM tags WHERE name=?", (t,)).fetchone()
+        if tid:
+            tid = tid[0]
+        else:
+            cur.execute("INSERT INTO tags(name, nameNormalized) VALUES (?,?)", (t, _normalizado(t)))
+            tid = cur.lastrowid
+        cur.execute("INSERT OR IGNORE INTO itemTags(itemID, tagID, type) VALUES (?,?,0)", (item_id, tid))
+    z_touch(cur, item_id)
+
+
+def z_coleccion(cur, libreria: int, nombre: str) -> int:
+    """La colección de primer nivel `nombre` (la crea si falta, sin sincronizar)."""
+    r = cur.execute("SELECT collectionID FROM collections WHERE libraryID=? AND collectionName=? AND parentCollectionID IS NULL",
+                    (libreria, nombre)).fetchone()
+    if r:
+        return r[0]
+    clave = z_nueva_clave(cur, libreria)
+    while cur.execute("SELECT 1 FROM collections WHERE libraryID=? AND key=?", (libreria, clave)).fetchone():
+        clave = z_nueva_clave(cur, libreria)
+    cur.execute("INSERT INTO collections(collectionName, parentCollectionID, clientDateModified, libraryID, key, version, synced) "
+                "VALUES (?,NULL,?,?,?,0,0)", (nombre, AHORA_SQL, libreria, clave))
+    return cur.lastrowid
+
+
+def z_en_coleccion(cur, coleccion_id: int, item_id: int) -> None:
+    n = cur.execute("SELECT COALESCE(MAX(orderIndex), -1) + 1 FROM collectionItems WHERE collectionID=?", (coleccion_id,)).fetchone()[0]
+    cur.execute("INSERT OR IGNORE INTO collectionItems(collectionID, itemID, orderIndex) VALUES (?,?,?)", (coleccion_id, item_id, n))
+    cur.execute("UPDATE collections SET synced=0, clientDateModified=? WHERE collectionID=?", (AHORA_SQL, coleccion_id))
+
+
+def z_adjunto_enlazado(cur, libreria: int, padre_id: int, ruta: str, titulo: str, tipo_contenido: str = "application/pdf") -> int:
+    """Un adjunto enlazado (linkMode 2) al archivo de Calibre: `ruta` = `attachments:<relativa a la biblioteca>`, como los
+    demás (Zotero lo resuelve con su baseAttachmentPath)."""
+    tipo = cur.execute("SELECT itemTypeID FROM itemTypes WHERE typeName='attachment'").fetchone()[0]
+    clave = z_nueva_clave(cur, libreria)
+    cur.execute("INSERT INTO items(itemTypeID, dateAdded, dateModified, clientDateModified, libraryID, key, version, synced) "
+                "VALUES (?,?,?,?,?,?,0,0)", (tipo, AHORA_SQL, AHORA_SQL, AHORA_SQL, libreria, clave))
+    item = cur.lastrowid
+    cur.execute("INSERT INTO itemAttachments(itemID, parentItemID, linkMode, contentType, charsetID, path, syncState) "
+                "VALUES (?,?,2,?,NULL,?,0)", (item, padre_id, tipo_contenido, ruta))
+    cur.execute("INSERT INTO itemData(itemID, fieldID, valueID) VALUES (?,?,?)", (item, z_field_id(cur, "title"), z_value_id(cur, titulo)))
+    return item
