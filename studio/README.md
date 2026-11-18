@@ -57,6 +57,12 @@ con siete áreas en chips (Ctrl+1–7: las seis del rediseño del 2026-11-18 y R
   ISBN existen, §9.10; y Sincronizar, Puerta y
   Tareas automáticas): cada etapa con su descripción, «Simular» y «Aplicar» arriba, la tabla de lo que maneja (los
   ledgers, aquí sí, son tablas), el elemento elegido y sus operaciones, con su plan, su registro y la salida de la CLI.
+  En Entrada, **«Fusionar e importar a Zotero»** (`../lib/importar_zotero.py`, `../docs/decisiones.md` §2.15): se eligen
+  uno o varios RIS, BibTeX o CSL-JSON en el diálogo de KDE; F5 deja en la pestaña Plan cuántas obras son nuevas, cuántas
+  ya estaban y cuántas son dudosas, cada una con su título y, en una línea tenue, su fuente o su porqué; Ctrl+Intro crea
+  las nuevas en Zotero por la puerta (con Zotero y Calibre cerrados).
+
+  ![El plan de «Fusionar e importar a Zotero»](../docs/figuras/biblioteca-studio-importar-zotero.png)
 - **Revisión** (Ctrl+7, `../lib/revision.py` y `../lib/prisma.py`, §9.10): la revisión de literatura de cada escrito, en
   su `<escrito>/fuentes/revision.yml`: el tipo de revisión y lo que exige, la pregunta y los criterios, la bitácora de búsqueda
   (base, cadena exacta, filtros, fecha, resultados; copiar la cadena, importar la exportación RIS o BibTeX), el cribado

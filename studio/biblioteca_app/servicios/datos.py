@@ -301,3 +301,39 @@ def coherencia(indice: dict, fichas_: list[dict], catalogacion_: list[dict]) -> 
                    "resultado": f"{len(ids)} libros · generado {g}" if ids else "no hay índice", "nivel": "positivo" if ids else "negativo",
                    "operacion": "indice", "afectados": []})
     return salida
+
+
+# ------------------------------------------------------------------ el informe de una importación (decisiones §2.15)
+def ruta_informe(relativa: str) -> Path:
+    """El JSON que deja una operación al simular (`Operacion.informe`), bajo `$XDG_STATE_HOME/biblioteca`."""
+    return Path(os.environ.get("XDG_STATE_HOME") or Path.home() / ".local/state") / "biblioteca" / relativa
+
+
+def _linea_obra(o: dict) -> str:
+    """La línea tenue de una obra del plan: de dónde viene y por qué está donde está."""
+    fuente = ", ".join(o.get("origenes") or [])
+    if o.get("estado") == "nuevo":
+        que = (f"Calibre {o['calibre_id']} · {'con su archivo' if o.get('adjunto') else 'sin archivo'}"
+               if o.get("calibre_id") else "sin libro en Calibre")
+    elif o.get("estado") == "ya":
+        que = f"{o.get('zotero_key', '')}: {o.get('motivo', '')}"
+    else:
+        que = o.get("motivo", "")
+    return " · ".join(x for x in (que, fuente) if x)
+
+
+def informe_importacion(ruta: Path, tope: int = 60) -> dict:
+    """Lo que la ventana muestra del último plan de `lib/importar_zotero.py`: las cuentas, cada archivo y, por estado,
+    las obras con su título y su línea tenue (hasta `tope` por estado). {} si no hay informe."""
+    try:
+        d = json.loads(Path(ruta).read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+    grupos = {}
+    for estado in ("nuevo", "ya", "dudoso"):
+        obras = [o for o in d.get("obras") or [] if o.get("estado") == estado]
+        grupos[estado] = {"total": len(obras), "obras": [{"titulo": f"{o.get('titulo', '')} ({o.get('anio') or 's. f.'})",
+                                                           "linea": _linea_obra(o)} for o in obras[:tope]]}
+    return {"fecha": str(d.get("fecha", "")).replace("T", " ")[:16], "coleccion": d.get("coleccion", ""),
+            "aplicado": bool(d.get("aplicado")), "cuentas": d.get("cuentas") or {},
+            "archivos": [a.get("archivo", "") for a in d.get("archivos") or []], **grupos}

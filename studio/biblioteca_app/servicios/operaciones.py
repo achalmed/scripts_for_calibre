@@ -25,9 +25,10 @@ class Operacion:
     aplicar: tuple[str, ...] | None = ("--aplicar",)   # lo que se añade para aplicar; None: una sola orden (no escribe en bases)
     simular: tuple[str, ...] = ()          # lo que se añade para simular (si la suite no simula sola)
     bases: tuple[str, ...] = ()            # «calibre», «zotero»: aplicar exige la aplicación cerrada y el candado libre
-    entrada: str = ""                      # «texto», «carpeta» o «archivo»: lo que pide antes de la orden
+    entrada: str = ""                      # «texto», «carpeta», «archivo» o «archivos»: lo que pide antes de la orden
     etiqueta: str = ""                     # qué se escribe en esa entrada
     defecto: str = ""                      # valor inicial de la entrada (relativo al repo si es una ruta)
+    informe: str = ""                      # el JSON que la CLI deja al simular, relativo a $XDG_STATE_HOME/biblioteca
 
     @property
     def escribe(self) -> bool:
@@ -50,7 +51,7 @@ class Operacion:
         # el plan llevan la carpeta de la máquina
         base = ["bash", programa] if programa.endswith(".sh") else [python, programa]
         extra: list[str] = []
-        if self.entrada == "texto":
+        if self.entrada in ("texto", "archivos"):        # varios archivos: separados como en la terminal
             extra = shlex.split(valor)
         elif self.entrada and valor:
             extra = [valor]
@@ -64,6 +65,11 @@ class Operacion:
     def valor_inicial(self) -> str:
         """Lo que la entrada trae al principio: una ruta relativa al repo (la orden corre con el repo como carpeta actual)."""
         return self.defecto
+
+
+def unir_archivos(rutas) -> str:
+    """Varios archivos en una sola entrada, relativos al repo y separados como en la terminal (`shlex`)."""
+    return shlex.join(relativa_al_repo(str(r)) for r in rutas if str(r).strip())
 
 
 def relativa_al_repo(ruta: str) -> str:
@@ -113,6 +119,11 @@ ETAPAS = (
           ("ingesta/main.sh", "catalogar"), bases=("calibre",)),
         O("zotero", "Exportar a Zotero", "El RIS de lo catalogado para importarlo en Zotero.", ("ingesta/main.sh", "zotero"),
           aplicar=None),
+        # decisiones §2.15: lo que antes se importaba a mano en Zotero (Archivo › Importar) entra por la puerta
+        O("importar_zotero", "Fusionar e importar a Zotero", "Junta RIS, BibTeX o CSL-JSON sin duplicar, los coteja con "
+          "Zotero y Calibre y crea en Zotero lo que falta, con su archivo de Calibre enlazado.", ("lib/importar_zotero.py",),
+          bases=("calibre", "zotero"), entrada="archivos", etiqueta="archivos RIS, BibTeX o CSL-JSON",
+          informe="importar-zotero/ultimo.json"),
         O("archivar", "Archivar", "Saca de la entrada lo ya catalogado y lo registra en el fuentes.yml del proyecto.",
           ("ingesta/main.sh", "archivar")),
         O("ocr", "OCR de los escaneados", "Reconoce el texto de los PDF que no lo tienen (ocrmypdf).", ("ingesta/main.sh", "ocr")),

@@ -236,3 +236,34 @@ def test_pasos_cuando_la_puerta_no_se_abre_o_falla():
     p = pasos.empezar(pasos.nuevos(("calibre",)))
     pasos.terminar(p, 0, None, True)                         # la suite no tuvo nada que escribir: no abrió la puerta
     assert p[0]["estado"] == "hecho" and p[1]["estado"] == "omitido" and p[5]["estado"] == "hecho"
+
+
+# --- fusionar e importar a Zotero (decisiones §2.15) -----------------------------------------------------------------
+
+def test_importar_a_zotero_pide_varios_archivos_y_escribe_en_las_dos_bases():
+    o = ops.operacion("importar_zotero")
+    assert o.entrada == "archivos" and set(o.bases) == {"calibre", "zotero"} and ops.etapa_de(o.id) == "entrada"
+    valor = ops.unir_archivos([ops.REPO / "ingesta" / "salida_ris" / "a b.ris", "/otra/c.bib"])
+    assert valor == "'ingesta/salida_ris/a b.ris' /otra/c.bib", "relativos al repo y con comillas si llevan espacios"
+    assert o.argv(False, valor, python="py") == ["py", "lib/importar_zotero.py", "ingesta/salida_ris/a b.ris", "/otra/c.bib"]
+    assert o.argv(True, valor, python="py")[-1] == "--aplicar"
+
+
+def test_el_informe_de_la_importacion_por_estado(tmp_path, monkeypatch):
+    monkeypatch.setenv("XDG_STATE_HOME", str(tmp_path))
+    ruta = datos.ruta_informe("importar-zotero/ultimo.json")
+    assert ruta == tmp_path / "biblioteca" / "importar-zotero" / "ultimo.json" and datos.informe_importacion(ruta) == {}
+    ruta.parent.mkdir(parents=True)
+    obras = [{"estado": "nuevo", "titulo": f"Obra {i}", "anio": "2020", "calibre_id": 10 + i, "adjunto": "attachments:x",
+              "origenes": ["a.ris"]} for i in range(3)]
+    obras += [{"estado": "ya", "titulo": "Vieja", "anio": "", "zotero_key": "ABCD1234", "motivo": "el mismo DOI", "origenes": ["b.bib"]},
+              {"estado": "dudoso", "titulo": "Parecida", "anio": "1999", "motivo": "el mismo título con otro año", "origenes": ["a.ris"]},
+              {"estado": "nuevo", "titulo": "Sin libro", "anio": "2001", "calibre_id": None, "adjunto": "", "origenes": ["c.json"]}]
+    ruta.write_text(json.dumps({"fecha": "2026-11-18T10:00:00", "coleccion": "Lote", "archivos": [{"archivo": "a.ris"}, {"archivo": "b.bib"}],
+                                "cuentas": {"nuevo": 4, "ya": 1, "dudoso": 1}, "obras": obras}), encoding="utf-8")
+    i = datos.informe_importacion(ruta, tope=2)
+    assert i["fecha"] == "2026-11-18 10:00" and i["archivos"] == ["a.ris", "b.bib"] and i["cuentas"]["nuevo"] == 4
+    assert i["nuevo"]["total"] == 4 and len(i["nuevo"]["obras"]) == 2, "hasta el tope por estado"
+    assert i["nuevo"]["obras"][0] == {"titulo": "Obra 0 (2020)", "linea": "Calibre 10 · con su archivo · a.ris"}
+    assert i["ya"]["obras"][0]["linea"] == "ABCD1234: el mismo DOI · b.bib" and i["ya"]["obras"][0]["titulo"] == "Vieja (s. f.)"
+    assert i["dudoso"]["obras"][0]["linea"] == "el mismo título con otro año · a.ris"

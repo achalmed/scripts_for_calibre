@@ -284,6 +284,27 @@ def test_operaciones_actual_entrada_y_orden(piezas):
     assert any(x["texto"] == "Operación: Catalogar en Calibre" for x in o.entradas_paleta(""))
 
 
+def test_importar_a_zotero_elige_archivos_y_lee_su_informe(piezas, tmp_path, monkeypatch):
+    """«Fusionar e importar a Zotero» (§2.15): los archivos del diálogo como entrada y el resumen del último plan."""
+    import json
+    monkeypatch.setenv("XDG_STATE_HOME", str(tmp_path))
+    o = piezas["operaciones"]
+    o.fijar("importar_zotero")
+    assert o.entradaTipo == "archivos" and o.informe == {}
+    o.fijarArchivos(["file://" + str(ops.REPO / "ingesta" / "salida_ris" / "x y.ris"), "file:///otra/z.bib"])
+    assert o.valor == "'ingesta/salida_ris/x y.ris' /otra/z.bib" and "lib/importar_zotero.py 'ingesta/salida_ris/x y.ris'" in o.ordenSimular
+    assert o.ordenAplicar.endswith("/otra/z.bib --aplicar") and "Zotero" in o.basesTexto
+    informe = tmp_path / "biblioteca" / "importar-zotero" / "ultimo.json"
+    informe.parent.mkdir(parents=True)
+    informe.write_text(json.dumps({"fecha": "2026-11-18T10:00:00", "coleccion": "Lote", "archivos": [{"archivo": "x y.ris"}],
+                                   "cuentas": {"nuevo": 1, "ya": 0, "dudoso": 0},
+                                   "obras": [{"estado": "nuevo", "titulo": "Una", "anio": "2020", "calibre_id": 1, "adjunto": "a",
+                                              "origenes": ["x y.ris"]}]}), encoding="utf-8")
+    assert o.informe["cuentas"]["nuevo"] == 1 and o.informe["nuevo"]["obras"][0]["titulo"] == "Una (2020)"
+    o.fijar("catalogar")
+    assert o.informe == {}, "solo la operación que deja informe lo muestra"
+
+
 @requiere_binding
 def test_simular_corre_la_suite_y_deja_el_plan(piezas, app):
     """`fichas/main.py validar` sobre las fichas de la muestra: solo lee; la salida queda en la consola y en el plan."""

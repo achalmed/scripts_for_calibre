@@ -1,5 +1,5 @@
 """biblioteca_app/controladores/operaciones.py — la operación actual de cada vista (del catálogo `servicios.operaciones`):
-lo que pide (texto, carpeta o archivo; se recuerda por operación en QSettings), Simular (F5: la orden sin `--aplicar`)
+lo que pide (texto, carpeta, un archivo o varios; se recuerda por operación en QSettings), Simular (F5: la orden sin `--aplicar`)
 y Aplicar (Ctrl+Intro: con `--aplicar`, tras confirmar en QML con la orden exacta, las bases y el estado de la puerta)
 por `gui_comun.tareas.proceso` con la salida íntegra en el panel inferior y Esc para cancelar; el plan (la última
 simulación) y el registro (la última aplicación) de cada operación, guardados íntegros en la caché del studio (B7).
@@ -14,8 +14,9 @@ import subprocess
 import time
 from pathlib import Path
 
-from gui_comun.qt import QObject, QSettings, QStandardPaths, Property, Signal, Slot
+from gui_comun.qt import QObject, QSettings, QStandardPaths, QUrl, Property, Signal, Slot
 
+from biblioteca_app.servicios import datos as datos_svc
 from biblioteca_app.servicios import operaciones as ops
 from biblioteca_app.servicios import pasos as pasos_svc
 
@@ -174,6 +175,18 @@ class Operaciones(QObject):
             self._s.setValue(f"entrada/{o.id}", v)
             self.cambiado.emit()
 
+    @Slot("QVariantList")
+    def fijarArchivos(self, urls: list) -> None:
+        """Los archivos elegidos en el diálogo (varios a la vez) como entrada, separados como en la terminal."""
+        rutas = [QUrl(u).toLocalFile() if str(u).startswith("file:") else str(u) for u in urls or []]
+        self.fijarValor(ops.unir_archivos(rutas))
+
+    @Property("QVariantMap", notify=corridaCambiada)
+    def informe(self) -> dict:
+        """El último plan que la CLI dejó en JSON (`Operacion.informe`): cuentas y obras por estado, para el resumen."""
+        o = self._op()
+        return datos_svc.informe_importacion(datos_svc.ruta_informe(o.informe)) if o and o.informe else {}
+
     def _python(self) -> str:
         return str(getattr(self.env, "CORE_PYTHON", "") or "python3")
 
@@ -200,7 +213,7 @@ class Operaciones(QObject):
         if self.tareas.activa:
             return "Hay una operación en curso (Esc la cancela)."
         if o.entrada and not self._valor_de(o).strip():
-            return f"Falta {o.etiqueta} (pestaña Operación)."
+            return f"Falta{'n' if o.entrada == 'archivos' else ''} {o.etiqueta} (pestaña Operación)."
         return ""
 
     @Property(bool, notify=cambiado)

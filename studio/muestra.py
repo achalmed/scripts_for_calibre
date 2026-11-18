@@ -268,6 +268,32 @@ def _enriquecer(biblioteca: Path, config: Path) -> bool:
     return r.returncode == 0
 
 
+def _informe_importacion(ruta: Path, libros: dict) -> None:
+    """El último plan de «Fusionar e importar a Zotero» (lib/importar_zotero.py, decisiones §2.15), como lo deja la CLI al
+    simular: los libros de la muestra sin Zotero son las nuevas; uno con Zotero, el que ya estaba; y una dudosa ficticia."""
+    import json
+    obras = []
+    for b, d in libros.items():
+        if d.get("zotero_key"):
+            if not any(o["estado"] == "ya" for o in obras):
+                obras.append({"estado": "ya", "titulo": d["titulo"], "anio": "2021", "calibre_id": b, "zotero_key": d["zotero_key"],
+                              "motivo": "su #zotero_key en Calibre", "origenes": ["ingesta_muestra.ris"]})
+        else:
+            obras.append({"estado": "nuevo", "titulo": d["titulo"], "anio": "2020", "calibre_id": b, "adjunto": bool(d.get("formatos")),
+                          "motivo": "", "origenes": ["ingesta_muestra.ris"]})
+    obras.append({"estado": "nuevo", "titulo": "Guía de fuentes abiertas", "anio": "2024", "calibre_id": None, "adjunto": "",
+                  "motivo": "", "origenes": ["exportacion.bib"]})
+    obras.append({"estado": "dudoso", "titulo": "Historia del presupuesto público, 2.ª edición", "anio": "2015", "calibre_id": None,
+                  "motivo": "el mismo título con otro año en Zotero: «Historia del presupuesto público» (2012), HUAMAN03",
+                  "origenes": ["exportacion.bib"]})
+    cuentas = {e: sum(1 for o in obras if o["estado"] == e) for e in ("nuevo", "ya", "dudoso")}
+    ruta.parent.mkdir(parents=True, exist_ok=True)
+    ruta.write_text(json.dumps({"fecha": "2026-11-18T10:30:00", "coleccion": "Ingesta de muestra", "aplicado": False,
+                                "archivos": [{"archivo": "ingesta_muestra.ris"}, {"archivo": "exportacion.bib"}],
+                                "cuentas": {"registros": len(obras) + 1, "obras": len(obras), "repetidos": 1, **cuentas},
+                                "obras": obras}, ensure_ascii=False, indent=1), encoding="utf-8")
+
+
 def _zotero(db: Path, adjuntos: list[tuple[str, str, str]]) -> None:
     """Una zotero.sqlite mínima: items, fields, itemData, itemDataValues, itemAttachments (lo que lee `lib/indice.zotero`)."""
     c = sqlite3.connect(db)
@@ -406,6 +432,7 @@ def crear(raiz: Path, con_calibre: bool | None = None) -> Muestra:
     _repaso(Path(entorno["REPASO_DB"]))
     indice = _indice(entorno, repo, libros, estado / "biblioteca" / "indice.json", raiz / "notas")
     _respaldos(raiz / "respaldos" / "biblioteca" / "puerta")
+    _informe_importacion(estado / "biblioteca" / "importar-zotero" / "ultimo.json", libros)
     return Muestra(raiz, biblioteca, calibre_db, zotero_db, repo, estado, indice, con_calibre, entorno)
 
 

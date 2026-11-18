@@ -1,9 +1,10 @@
 // Operacion — la operación elegida de la vista: qué hace, en qué base escribe, la orden exacta (simular y aplicar), lo
-// que pide (texto, carpeta o archivo) y el estado de la puerta; Simular (F5) y Aplicar (Ctrl+Intro) al pie (en Bandejas; en
+// que pide (texto, carpeta, un archivo o varios) y el estado de la puerta; Simular (F5) y Aplicar (Ctrl+Intro) al pie (en Bandejas; en
 // el Método y la Coherencia van arriba, junto a la etapa: `conBotones: false`, decisiones §9.9).
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
+import QtQuick.Dialogs as Dialogos
 import org.kde.kirigami as Kirigami
 import GuiComun
 
@@ -56,6 +57,30 @@ QQC2.ScrollView {
                 onAceptada: t => pagina.o.fijarValor(t)
                 Connections { target: pagina.o; function onCambiado() { if (!campoRuta.campoTexto.activeFocus) campoRuta.texto = pagina.o.valor } }
             }
+            RowLayout {                                  // varios archivos (RIS, BibTeX, CSL-JSON): el diálogo de KDE, uno o muchos
+                Kirigami.FormData.label: pagina.o.entradaEtiqueta + ":"
+                visible: pagina.o.entradaTipo === "archivos"
+                Layout.fillWidth: true
+                spacing: Kirigami.Units.smallSpacing
+                QQC2.TextField {
+                    id: campoArchivos
+                    Layout.fillWidth: true
+                    text: pagina.o.valor
+                    placeholderText: "Archivos…"
+                    onEditingFinished: pagina.o.fijarValor(text)
+                    Accessible.name: pagina.o.entradaEtiqueta
+                    Connections { target: pagina.o; function onCambiado() { if (!campoArchivos.activeFocus) campoArchivos.text = pagina.o.valor } }
+                }
+                QQC2.ToolButton {
+                    icon.name: "document-open"
+                    text: "Elegir archivos…"
+                    display: QQC2.AbstractButton.IconOnly
+                    QQC2.ToolTip.text: text
+                    QQC2.ToolTip.visible: hovered
+                    Accessible.name: text
+                    onClicked: elegirArchivos.open()
+                }
+            }
             Kirigami.Separator { Kirigami.FormData.isSection: true; Kirigami.FormData.label: "La orden" }
             QQC2.Label { Kirigami.FormData.label: pagina.o.verbo + " (F5):"; text: pagina.o.ordenSimular; font: Kirigami.Theme.fixedWidthFont; wrapMode: Text.WrapAnywhere; Layout.fillWidth: true }
             QQC2.Label { Kirigami.FormData.label: "Aplicar (Ctrl+Intro):"; visible: pagina.o.escribe; text: pagina.o.ordenAplicar; font: Kirigami.Theme.fixedWidthFont; wrapMode: Text.WrapAnywhere; Layout.fillWidth: true }
@@ -82,5 +107,12 @@ QQC2.ScrollView {
             }
         }
         Item { Layout.preferredHeight: Kirigami.Units.largeSpacing }
+    }
+    Dialogos.FileDialog {
+        id: elegirArchivos
+        title: pagina.o.entradaEtiqueta
+        fileMode: Dialogos.FileDialog.OpenFiles
+        nameFilters: ["RIS, BibTeX o CSL-JSON (*.ris *.bib *.json)", "Todos (*)"]
+        onAccepted: pagina.o.fijarArchivos(selectedFiles)
     }
 }
