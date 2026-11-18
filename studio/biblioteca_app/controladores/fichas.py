@@ -92,6 +92,17 @@ def leer_todas(repo: Path, titulos: dict) -> tuple[list[dict], list[dict]]:
     return salida, escritos
 
 
+
+def pregunta_de(f: dict) -> str:
+    """La pista de recuperación de una ficha (§9.9): una pregunta que se responde sin mirar, no un rótulo. Con tema,
+    «¿Qué sostiene la obra sobre «tema»?» (en una textual, «con sus palabras»); sin tema, la categoría como guía."""
+    tema = (f.get("tema") or "").strip()
+    textual = (f.get("tipoTexto") or "").lower().startswith("textual")
+    if tema:
+        return f"¿Qué dice la obra, con sus palabras, sobre «{tema}»?" if textual else f"¿Qué sostiene la obra sobre «{tema}»?"
+    guia = (f.get("categoria") or f.get("tipoTexto") or "esta ficha").strip()
+    return f"{guia}: ¿qué sostiene la obra en esta página?"
+
 class Fichas(QObject):
     cambiado = Signal()                 # la lista, los filtros y sus cuentas
     repasoCambiado = Signal()           # la tarjeta del repaso y lo que queda hoy
@@ -282,8 +293,7 @@ class Fichas(QObject):
         if f is None:
             return {"hay": False}
         e = _repaso().estado([clave]).get(clave)
-        pregunta = f["categoria"] or f["tema"] or f["tipoTexto"]
-        return {"hay": True, "clave": clave, "pregunta": pregunta, "tema": f["tema"] if f["categoria"] else "",
+        return {"hay": True, "clave": clave, "pregunta": pregunta_de(f), "tema": f["categoria"] if f["tema"] else "",
                 "obra": f["obra"] + (f", p. {f['pagina']}" if f["pagina"] else ""), "cita": f["cita"], "tipo": f["tipoTexto"],
                 "caja": e["caja"] if e else 1, "nueva": e is None, "escrito": f["escrito"]}
 

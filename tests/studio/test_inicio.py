@@ -58,7 +58,7 @@ def test_el_repaso_leitner_sube_y_escribe_solo_en_la_base_de_la_muestra(areas):
     db = Path(areas["muestra"].entorno["REPASO_DB"])
     assert fi.paraHoy == 1 and fi.resumenRepaso == "1 por repasar hoy · próximas en 2 días"
     t = fi.tarjeta
-    assert t["hay"] and t["pregunta"] == "Argumento" and t["caja"] == 1 and t["nueva"]
+    assert t["hay"] and t["pregunta"] == "Argumento: ¿qué sostiene la obra en esta página?" and t["caja"] == 1 and t["nueva"]
     assert t["obra"] == "Economía de las ciudades pequeñas, p. 13" and t["cita"].startswith("El empleo")
     assert not fi.mostrada
     fi.mostrar()
@@ -127,3 +127,11 @@ def test_inicio_sin_base_de_lectura_no_inventa(app, entorno, monkeypatch, tmp_pa
     assert [c["rotulo"] for c in ini.cifras] == ["Fichas por revisar", "Pendientes"]       # sin horas ni subrayados
     assert ini.seguir == [] and all(p["accion"] != "ficha" for p in ini.pasos)
     assert not (tmp_path / "no-existe").exists()
+
+
+def test_la_pregunta_del_repaso_es_una_pista_de_recuperacion():
+    """Una pregunta que se responde sin mirar (Roediger y Karpicke, 2006), no un rótulo (§9.9)."""
+    from biblioteca_app.controladores.fichas import pregunta_de
+    assert pregunta_de({"tema": "escala urbana", "tipoTexto": "Paráfrasis"}) == "¿Qué sostiene la obra sobre «escala urbana»?"
+    assert pregunta_de({"tema": "escala urbana", "tipoTexto": "Textual"}) == "¿Qué dice la obra, con sus palabras, sobre «escala urbana»?"
+    assert pregunta_de({"tema": "", "categoria": "Idea principal"}) == "Idea principal: ¿qué sostiene la obra en esta página?"
