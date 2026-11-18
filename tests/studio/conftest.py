@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import importlib.util
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -68,9 +69,12 @@ def _calibredb_responde() -> bool:
     """¿`calibredb` está y puede crear una biblioteca? (con Calibre abierto y sin `unshare`, no.)"""
     if not muestra_mod.hay_calibredb():
         return False
+    sonda = BASETEMP.parent / "sonda-calibre"
+    shutil.rmtree(sonda, ignore_errors=True)      # la de una corrida anterior haría fallar la sonda: «no hay Calibre»
     r = subprocess.run([sys.executable, "-c", "import sys; sys.path.insert(0, sys.argv[1]); import muestra, pathlib, tempfile, json\n"
-                        "m = muestra.crear(pathlib.Path(sys.argv[2]) / 'sonda'); print(m.con_calibre)", str(STUDIO), str(BASETEMP.parent / "sonda-calibre")],
+                        "m = muestra.crear(pathlib.Path(sys.argv[2]) / 'sonda'); print(m.con_calibre)", str(STUDIO), str(sonda)],
                        capture_output=True, text=True, timeout=180)
+    shutil.rmtree(sonda, ignore_errors=True)
     return r.stdout.strip().endswith("True")
 
 
