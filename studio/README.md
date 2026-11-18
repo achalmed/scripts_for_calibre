@@ -27,7 +27,7 @@ install.sh
 ## Qué es
 
 Un gestor bibliográfico sobre la biblioteca de Calibre (`../docs/reingenieria.md`), en `VentanaBase` de `gui-comun` 3.0,
-con seis áreas en chips (Ctrl+1–6) y Bandejas (Ctrl+7), según el rediseño del 2026-11-18 (`../docs/decisiones.md` §9.9):
+con siete áreas en chips (Ctrl+1–7: las seis del rediseño del 2026-11-18 y Revisión, `../docs/decisiones.md` §9.9 y §9.10) y Bandejas (Ctrl+8):
 
 ![El catálogo con portadas y la ficha editorial](../docs/figuras/biblioteca-studio-claro.png)
 
@@ -47,20 +47,27 @@ con seis áreas en chips (Ctrl+1–6) y Bandejas (Ctrl+7), según el rediseño d
   el total, este mes, las barras de las doce semanas y el mapa de calor por día; los libros con lectura; y del libro
   elegido (sigue al del catálogo) su progreso y su tiempo en KOReader, Zotero, Okular y Yachay, sus subrayados (con una
   raya del color de la herramienta donde nacieron, filtrados por origen; cada uno se copia como cita) y sus sesiones.
-- **Fichas**: las de todos los escritos y las canónicas, filtradas en lista (Todas, Textuales, Paráfrasis, Por revisar),
-  cada una con su cita, su obra y página, si está cotejada con el PDF, «Abrir en LaTeX Studio» y «Copiar la cita»; «Nueva
-  ficha» y «Estudiar con la IA»; y el **Repaso para estudiantes**: el sistema Leitner de cinco cajas (`../lib/repaso.py`,
+- **Fichas**: las de todos los escritos y las canónicas, filtradas en lista (Todas, Textuales, Paráfrasis, De obra, Por
+  revisar, De la IA), cada una con su cita, su obra y página, si está cotejada con el PDF y si la propuso la IA, «Abrir en
+  LaTeX Studio» y «Copiar la cita» (la de la IA, solo tras «Cotejé la página»: §9.10); «Nueva ficha» (también la ficha de
+  obra, con sus seis preguntas) y «Estudiar con la IA»; y el **Repaso para estudiantes**: el sistema Leitner de cinco cajas (`../lib/repaso.py`,
   su base propia `repaso.sqlite`), con la pregunta, «Mostrar la ficha», «La sabía» y «Repasar luego».
 - **Método** (Adquirir → Entrada → Catalogar → Fichas → Manifiestos, un recorrido de pasos con su contador) y
-  **Coherencia** (tres tarjetas: Calibre ⇄ Zotero, Calibre ⇄ KOReader y Tareas automáticas; y Sincronizar, Puerta y
+  **Coherencia** (cuatro tarjetas: Calibre ⇄ Zotero, Calibre ⇄ KOReader, Tareas automáticas y Referencias, si sus DOI e
+  ISBN existen, §9.10; y Sincronizar, Puerta y
   Tareas automáticas): cada etapa con su descripción, «Simular» y «Aplicar» arriba, la tabla de lo que maneja (los
   ledgers, aquí sí, son tablas), el elemento elegido y sus operaciones, con su plan, su registro y la salida de la CLI.
-- **Bandejas** (Ctrl+7, desde Inicio, el menú Ver o la paleta): pendientes de clasificar (la zona de entrada sin
+- **Revisión** (Ctrl+7, `../lib/revision.py` y `../lib/prisma.py`, §9.10): la revisión de literatura de cada escrito, en
+  su `<escrito>/fuentes/revision.yml`: el tipo de revisión y lo que exige, la pregunta y los criterios, la bitácora de búsqueda
+  (base, cadena exacta, filtros, fecha, resultados; copiar la cadena, importar la exportación RIS o BibTeX), el cribado
+  en dos fases con sus motivos y el diagrama PRISMA 2020 (`<escrito>/fuentes/prisma.pdf`, «Generar el diagrama»).
+- **Bandejas** (Ctrl+8, desde Inicio, el menú Ver o la paleta): pendientes de clasificar (la zona de entrada sin
   catalogar y los libros sin tipo), fichas incompletas, sin clave para citar, sin Zotero y sin portada; cada una con lo
   que tiene y la operación que la vacía.
 
 **La ventana no escribe en ninguna base de Calibre ni de Zotero, ni las abre.** Lo único que escribe es la base del repaso
-(`$XDG_DATA_HOME/biblioteca/repaso.sqlite`, `REPASO_DB`), del usuario y por su único escritor, `../lib/repaso.py`. Lo editorial lo lee `../lib/indice.py` (`editorial`, solo lectura)
+(`$XDG_DATA_HOME/biblioteca/repaso.sqlite`, `REPASO_DB`), del usuario y por su único escritor, `../lib/repaso.py`, y, en los
+escritos, la revisión (`<escrito>/fuentes/revision.yml` y `<escrito>/fuentes/prisma.*`) y el cotejo de una ficha (§9.10). Lo editorial lo lee `../lib/indice.py` (`editorial`, solo lectura)
 y las portadas se leen en solo lectura y se guardan en miniatura en la caché del studio (`$XDG_CACHE_HOME/biblioteca-studio/portadas/`,
 con tope). Cada operación es la CLI de su suite: **Simular (F5)**, la orden sin `--aplicar`; **Aplicar (Ctrl+Intro)**, con
 `--aplicar` tras un diálogo con la orden exacta, las bases que toca y **los seis pasos de la puerta** (aplicación

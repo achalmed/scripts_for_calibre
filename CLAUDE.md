@@ -82,6 +82,11 @@ Deshacer una escritura: copiar el respaldo de `$RESPALDOS_DIR/biblioteca/puerta/
   lectura, su único escritor es `lib/repaso.py`, con la misma guarda de rutas y un respaldo por día. Las pruebas y las
   capturas usan la `REPASO_DB` de la muestra; `tests/studio` y `tests/lectura_base` se corren por separado (sus
   `conftest.py` chocan en una sola llamada).
+- **El flujo de conocimiento (§9.10)**: la revisión de un escrito vive en `<escrito>/fuentes/revision.yml` (`lib/revision.py`,
+  con la huella; el PRISMA lo compila `lib/prisma.py` con LuaLaTeX); `lib/verificar_ids.py` guarda su caché junto al índice
+  y el índice no consulta la red; `lib/ingresar.py` crea ítems de Zotero con `z_nuevo_item` y compañía y se ensaya siempre
+  sobre copias (`CALIBRE_DB`, `BIBLIOTECA_DIR`, `ZOTERO_DB`, `INGRESAR_DATOS`, `PUERTA_RESPALDOS` y los `LOCK_*` a un temporal).
+  Una ficha del LLM (`origen: llm`) no se cita ni se repasa hasta `verificada_autor`.
 - **KOReader ↔ Calibre se emparejan por el MD5 parcial** (`#ko_md5`); trampas de Calibre 9 y de `#ko_*`:
   `koreader/README.md`. El Read Time de Zotero es una nota de Ethereal Style, leída en solo lectura.
 - **`--metadatos` solo corre si alguna base cambió** desde la última orquestación aplicada.

@@ -756,3 +756,80 @@ Referencias: Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T. y Rohrer, D. (20
 tasks: A review and quantitative synthesis. *Psychological Bulletin, 132*(3), 354–380. Roediger, H. L. y Karpicke, J. D.
 (2006). Test-enhanced learning: Taking memory tests improves long-term retention. *Psychological Science, 17*(3), 249–255.
 Las dos aún no están en la biblioteca (pendiente en `estado.md`).
+
+### §9.10 El flujo de producción de conocimiento en Biblioteca Studio (2026-11-18)
+
+El autor aprobó la norma `prompts/00 metodo/FLUJO_DE_CONOCIMIENTO.md` (67 mejoras en 13 campos, con su fundamento) y pidió
+que los programas la cumplan de manera estricta. A Biblioteca Studio le tocan siete: C2.1, C2.2, C2.3, C3.1, C3.3, C12.1 (su
+parte) y C12.5. Cada una vive en la biblioteca (`lib/`), en una orden de la CLI y en la ventana, con su línea tenue «por qué
+· fuente» tal como la cita el fundamento, y con pruebas en temporales.
+
+- **La revisión de literatura de un escrito** (C2.1, C2.2 y C2.3; `lib/revision.py`, `lib/prisma.py`, el área **Revisión**).
+  Una sola fuente de verdad por escrito, `<escrito>/fuentes/revision.yml`, junto a `fuentes.yml` y `<escrito>/fuentes/fichas/`: el **tipo** de
+  revisión (narrativa, de alcance, sistemática, metaanálisis, rápida, paraguas; Grant y Booth, 2009, y Snyder, 2019) con lo
+  que exige cada uno (obligatorio o recomendado: la pregunta, los criterios, la bitácora, el cribado y el diagrama); la
+  **bitácora** de cada búsqueda con su base, su cadena exacta, sus filtros, su fecha y sus resultados (Rethlefsen et al.,
+  2021); los **registros**, a mano o desde la exportación de la base (RIS o BibTeX), con los duplicados marcados por DOI o
+  por título y año; y el **cribado en dos fases**: título y resumen, y texto completo, donde toda exclusión lleva su motivo
+  (Page et al., 2021). El **diagrama PRISMA 2020** se dibuja de las cuentas (Haddaway et al., 2022): TikZ en un
+  `standalone`, compilado con LuaLaTeX en un temporal, y solo si compila se escriben `<escrito>/fuentes/prisma.tex` y
+  `<escrito>/fuentes/prisma.pdf`, listos para `\includegraphics{fuentes/prisma}`. La primera línea del `.tex` guarda la huella de las
+  cuentas: si la bitácora cambia, la ventana dice que el diagrama quedó viejo. Las cuentas avisan cuando no cuadran
+  (identificados − duplicados − eliminados ≠ cribados, o una búsqueda con más resultados que registros), que es el criterio
+  de aprobación de la etapa 1 del flujo. Los textos de las cajas son los de la traducción al español (Calibre 11074).
+  - **Por qué en el escrito y no en una base propia**: la revisión es parte del escrito (la lee LaTeX Studio, la cita el
+    escrito, viaja con su repositorio) y un YAML legible se puede corregir a mano; como las fichas, se escribe con la
+    huella del archivo (si otro lo cambió, no se pisa).
+  - **Por qué el área va al final de los chips** (Revisión, Ctrl+7; Bandejas pasa a Ctrl+8): ponerla junto al Catálogo
+    habría movido los atajos de la maqueta aprobada en §9.9.
+  - **Escribir al pulsar**: cada acción de la ventana (declarar el tipo, añadir una búsqueda, importar, cribar) es la
+    decisión de quien revisa y se escribe al pulsar, como el repaso (§9.9); la CLI simula por omisión.
+- **El origen de cada ficha y el cotejo antes de citar** (C3.3; `fichas/lib/ficha.py`, `lib/fichar.py`, `lib/consulta.py`,
+  el área Fichas). La ficha lleva un bloque opcional `origen` (`autor: persona | llm`, `herramienta`, `fecha`) entre `uso` y
+  `verificacion`: la norma de fichas 1.1 (su §1, su §2 y su §8; en `main` de prompts, 476018d). Opcional, para que las fichas de antes sigan válidas, y solo cuando la propuso alguien
+  distinto de quien la firma: la del LLM. Una ficha del LLM **no se cita** hasta que la persona
+  coteja su página (`verificada_autor`; COPE, 2023; Jergas y Baethge, 2015): `consulta.py fichas` la entrega con
+  `insertar` vacío, `citable: false` y su motivo, así que ni Biblioteca Studio ni LaTeX Studio la insertan; tampoco una
+  ficha `observada` (no casa con el PDF). «Cotejé la página» (la tarjeta de la ficha, tras confirmar; `cotejar_ficha`)
+  cambia solo el bloque `verificacion`, byte a byte lo demás. Para que la marca sobreviva a una herramienta que reescriba
+  el frontmatter sin conocer el bloque (Yachay, por ahora), queda también en el método de la verificación («propuesta por
+  IA; …», la marca de §8) y en «Observaciones», y `ficha.origen_de` la reconoce en cualquiera de los tres.
+- **El registro de la IA** (C12.1, la parte de Biblioteca Studio). Una ficha que propuso el LLM (el estudio de obra, §9.5)
+  entra al registro de uso de IA de su escrito, `<escrito>/ia/registro.yml`, y a su declaración, por la orden de escritura que ya los
+  escribe (`scripts/antes_de_entregar.py registrar_ia`), para que cada escrito tenga un solo registro y LaTeX Studio
+  genere la declaración con todo. Sin el código de escritura a mano, la ficha queda marcada y se dice.
+- **La ficha de obra generativa** (C3.1, la parte de Biblioteca Studio; Fiorella y Mayer, 2016; Chi y Wylie, 2014; Keshav,
+  2007). Un tipo nuevo, `ficha_obra` (`<clave>-obra.md`, una por obra en cada escrito), con seis preguntas fijas
+  (Pregunta, Método, Datos, Hallazgo, Límites, Uso que le daré) que se responden con palabras propias: si el texto repite
+  ocho palabras seguidas del PDF del libro, la ficha queda `observada` y no se guarda (Roig, 2015, la paráfrasis demasiado
+  cercana). Se hace con «Nueva ficha» (las preguntas, en cada campo) y, cuando un libro está terminado y no la tiene,
+  Inicio la propone en «Siguiente paso»: así no se da por leída una obra sin ella.
+- **La referencia que no existe** (C12.5; `lib/verificar_ids.py`, la tarjeta «Referencias» de Coherencia, la ficha
+  editorial). Cada DOI se resuelve en Crossref y, si Crossref no lo tiene, en doi.org (un DOI de DataCite, como Zenodo,
+  existe aunque Crossref no lo conozca); cada ISBN se valida por su dígito de control y se busca en Open Library, donde
+  faltar no prueba que no exista («no hallado», aviso). El título que devuelve la agencia se compara con el de la
+  biblioteca, tolerando erratas: un DOI real de otra obra «discrepa» (para revisar). La caché vive junto al índice
+  (`$XDG_STATE_HOME/biblioteca/identificadores.json`; lo que existe se vuelve a mirar a los 180 días, lo que no a los 30;
+  un error de red no se guarda) y el índice compartido publica, en cada libro, `doi`, `isbn`, `doi_verificado`,
+  `isbn_verificado` y `verificacion_ids`, y arriba `referencias` por clave de cita (también los ítems de Zotero que no
+  están en Calibre): campos nuevos, los consumidores de antes leen lo mismo (`tests/fuentes/test_verificar_ids.py`). El
+  índice no consulta la red. Primera corrida (2026-11-18): 306 identificadores; los 129 DOI existen; 63 ISBN no están en
+  Open Library; 8 títulos discrepan (traducciones y una referencia cambiada).
+- **Ingresar obras por su DOI o ISBN** (`lib/ingresar.py`): los pasos 00 a 03 para una lista ya cotejada, con o sin
+  archivo. Plan en solo lectura (cotejo por DOI, ISBN y título con Calibre y Zotero; la clave con la fórmula de Better
+  BibTeX de `docs/citar.md` §2, contrastada con las 4 687 claves de Zotero: coincide en el 85 % y el resto son claves
+  fijadas con datos viejos); aplicar por la puerta: el PDF solo si es `%PDF` de la URL de su sede oficial, Calibre
+  (`calibredb add`, `--empty` sin archivo), Zotero con las primitivas nuevas de `lib/escribir_zotero.py` (`z_nuevo_item`,
+  `z_etiquetar`, `z_coleccion`, `z_en_coleccion`, `z_adjunto_enlazado`; el ítem sin sincronizar, la clave fijada en
+  `citationKey`, `integrity_check` y `foreign_key_check` al final) y otra vez Calibre para `#zotero_key`. Lo que ya existía
+  solo recibe la etiqueta y la colección. Antes de la base real, el ensayo entero sobre copias de las dos bases.
+
+Referencias: Chi, M. T. H. y Wylie, R. (2014). The ICAP framework. *Educational Psychologist, 49*(4), 219–243. COPE
+(2023). *Authorship and AI tools*. Fiorella, L. y Mayer, R. E. (2016). Eight ways to promote generative learning.
+*Educational Psychology Review, 28*(4), 717–741. Grant, M. J. y Booth, A. (2009). A typology of reviews. *Health
+Information & Libraries Journal, 26*(2), 91–108. Haddaway, N. R. et al. (2022). PRISMA2020. *Campbell Systematic Reviews,
+18*(2), e1230. ICMJE (2025). *Recommendations*. Jergas, H. y Baethge, C. (2015). Quotation accuracy in medical journal
+articles. *PeerJ, 3*, e1364. Keshav, S. (2007). How to read a paper. *ACM SIGCOMM CCR, 37*(3), 83–84. Page, M. J. et al.
+(2021). The PRISMA 2020 statement (Calibre 11073; traducción, 11074). Penabad-Camacho et al. (2024; Calibre 3110).
+Rethlefsen, M. L. et al. (2021). PRISMA-S. *Systematic Reviews, 10*, 39. Roig, M. (2015). *Avoiding plagiarism*. ORI.
+Snyder, H. (2019). Literature review as a research methodology. *Journal of Business Research, 104*, 333–339.
