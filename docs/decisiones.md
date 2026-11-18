@@ -666,9 +666,10 @@ simula siempre). Qué destino se escribe es decisión del autor, y por ahora:
   rectángulos a su modo y el subrayado caería en otro lugar; tampoco los rectángulos fuera de la hoja. Se quedan en la
   base, con su aviso. Ensayo sobre copias de los datos reales (2026-11-17): 9 subrayados de Zotero a KOReader, 115 a
   Okular, 8 retenidos por hoja girada (un solo libro escaneado de lado); la segunda pasada, 0 cambios.
-- **Yachay, pendiente de la fase 3b**: `exportar yachay` arma el cuerpo de `POST /lector/{id}/resaltados` (con el
-  `uid` de la base como `origen_id`, para que Yachay no duplique), pero no escribe hasta que el cliente con token esté y
-  el autor lo apruebe.
+- **Yachay, por su API** (habilitado el 2026-11-17, con el cliente de la fase 3b ya fusionado y el token del autor en
+  el llavero): `exportar yachay --aplicar` escribe con `POST /lector/{id}/resaltados`, con el `uid` de la base como
+  `origen_id` para que Yachay no duplique. Admite el subrayado sin rectángulos (solo el texto). Las hojas giradas
+  también se quedan en la base: el lector de Yachay mide sobre el mismo PDF. Ensayo: 115 a Yachay, 8 retenidos.
 - **Sin timer**: la base se sincroniza a pedido (la operación de la ventana o la CLI). Un timer, como los de KOReader y
   Zotero, solo si el autor lo aprueba.
 

@@ -12,7 +12,7 @@ Una sola base de lectura (fuera de Calibre y de Zotero) con los subrayados, nota
 - Escribe en: archivos, zotero · simula por defecto: sí
 - Entrada: KOReader (metadata.*.lua, statistics.sqlite3), zotero.sqlite (copia), Okular (docdata), Yachay (su API)
 - Depende de: python3, pdfinfo y pdftotext (poppler-utils), lib/escribir.py y lib/escribir_zotero.py (la puerta, para Zotero)
-- Nota: La base vive en $XDG_DATA_HOME/biblioteca/lectura.sqlite (LECTURA_DB): datos del usuario, fuera de todo repo y de toda base de Calibre o Zotero; `lib/base.py` es su único escritor y se niega a abrir esas. La vuelta escribe en Zotero (por la puerta), KOReader (su .lua) y Okular (su docdata), con cada aplicación cerrada (§9.7); Yachay espera su cliente.
+- Nota: La base vive en $XDG_DATA_HOME/biblioteca/lectura.sqlite (LECTURA_DB): datos del usuario, fuera de todo repo y de toda base de Calibre o Zotero; `lib/base.py` es su único escritor y se niega a abrir esas. La vuelta escribe en Zotero (por la puerta), KOReader (su .lua) y Okular (su docdata), con cada aplicación cerrada (§9.7), y Yachay (por su API con el token).
 
 Comandos:
 

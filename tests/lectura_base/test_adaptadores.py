@@ -131,7 +131,7 @@ def test_koreader_y_okular_no_se_escriben_con_la_aplicacion_abierta(con_koreader
     m = con_koreader
     zotero_anotacion(m.zotero_db, 11, "ANOT0003", "El crecimiento depende de la acumulacion de capital.", 1, 200)
     sincronizar.sincronizar(("koreader", "zotero"), aplicar=True)
-    assert {"zotero", "koreader", "okular"} <= exportar.ESCRIBE and "yachay" not in exportar.ESCRIBE
+    assert {"zotero", "koreader", "okular", "yachay"} <= exportar.ESCRIBE
     sidecar = m.koreader / "hashdocsettings" / m.md5_1[:2] / f"{m.md5_1}.sdr" / "metadata.pdf.lua"
     antes = sidecar.read_bytes()
     monkeypatch.setattr(koreader, "abierto", lambda: True)
@@ -141,7 +141,7 @@ def test_koreader_y_okular_no_se_escriben_con_la_aplicacion_abierta(con_koreader
     with pytest.raises(RuntimeError, match="abierto"):
         exportar.exportar("okular", aplicar=True)
     assert sidecar.read_bytes() == antes and not list(m.docdata.glob("*.xml"))
-    with pytest.raises(PermissionError):
+    with pytest.raises(RuntimeError, match="sin cliente"):     # Yachay se escribe solo con su cliente y el token
         exportar.exportar("yachay", aplicar=True)
 
 

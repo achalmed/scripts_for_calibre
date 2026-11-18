@@ -79,7 +79,11 @@ def cmd_sincronizar(a, log) -> int:
 
 def cmd_exportar(a, log) -> int:
     try:
-        r = exportar.exportar(a.destino, aplicar=a.aplicar, ids=_ids(a.ids), limite=a.limite)
+        cliente = None
+        if a.destino == "yachay" and a.aplicar:
+            from lectura_base.lib.adaptadores import yachay as ad_yachay
+            cliente = ad_yachay.cargar_cliente()       # el token del llavero; None si no hay
+        r = exportar.exportar(a.destino, aplicar=a.aplicar, ids=_ids(a.ids), limite=a.limite, cliente=cliente)
     except PermissionError as e:
         log.error("%s", e)
         return 3
@@ -104,7 +108,8 @@ def cmd_exportar(a, log) -> int:
     elif r["plan"]:
         como = {"zotero": "por la puerta (Zotero cerrado, candado, respaldo verificado)",
                 "koreader": "en el .lua de cada libro (KOReader cerrado, respaldo verificado, escritura atómica)",
-                "okular": "en el docdata de cada PDF (Okular cerrado, respaldo verificado; nunca en el PDF)"}.get(a.destino, "")
+                "okular": "en el docdata de cada PDF (Okular cerrado, respaldo verificado; nunca en el PDF)",
+                "yachay": "por su API con tu token (sin duplicar: cada una lleva su uid como origen_id)"}.get(a.destino, "")
         print(f"--aplicar las escribe {como}.")
     return 0
 

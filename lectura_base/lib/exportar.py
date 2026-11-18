@@ -9,7 +9,9 @@ presencia viva en el destino. El plan se calcula siempre (simular); escribir dep
   si KOReader ya abrió ese PDF y está cerrado; respaldo verificado, escritura atómica y relectura antes de reemplazar.
 - **Okular** (`ESCRIBE`, aprobado el 2026-11-17): en su docdata (lo crea si falta), con Okular cerrado y el mismo respaldo;
   nunca en el PDF (cambiaría su MD5 de KOReader).
-- **Yachay** (`PENDIENTES`): por su API (`cliente.resaltar`), cuando la fase 3b deje su cliente y el autor lo apruebe.
+- **Yachay** (`ESCRIBE` desde el 2026-11-17, ya con su cliente y el token del autor): por su API (`cliente.resaltar`), con
+  el origen de la anotación y su `uid` como `origen_id`, que Yachay usa para no duplicar. Admite un subrayado sin
+  rectángulos (solo el texto); los de una hoja girada quedan en la base, como en las demás.
 
 Lo escrito se apunta como presencia (`base.registrar_presencias`): la próxima lectura de esa herramienta lo reconoce como
 la misma anotación y no la duplica.
@@ -23,8 +25,8 @@ from pathlib import Path
 from lectura_base.lib import base
 from lectura_base.lib.biblioteca import Resolutor, giros, medidas
 
-ESCRIBE = {"zotero", "koreader", "okular"}
-PENDIENTES = {"yachay": "escribir en Yachay espera su cliente con token (fase 3b) y la decisión del autor"}
+ESCRIBE = {"zotero", "koreader", "okular", "yachay"}
+PENDIENTES: dict[str, str] = {}             # destinos que se simulan pero aún no se escriben
 DESTINOS = ("zotero", "koreader", "okular", "yachay")
 
 
@@ -49,7 +51,7 @@ def ubicables(cands: list[dict], resolutor: Resolutor) -> tuple[list[dict], list
     for a in cands:
         pdf = resolutor.pdf(a["calibre_id"])
         g = giros(pdf) if pdf else []
-        if a["hoja"] and 0 < a["hoja"] <= len(g) and g[a["hoja"] - 1]:
+        if a["rects"] and a["hoja"] and 0 < a["hoja"] <= len(g) and g[a["hoja"] - 1]:
             giradas += 1
             continue
         if any(r[1] < -0.01 or r[2] < -0.01 or r[1] + r[3] > 1.01 or r[2] + r[4] > 1.01 for r in a["rects"]):
@@ -221,8 +223,7 @@ def exportar(destino: str, aplicar: bool = False, ids: set[int] | None = None, l
     resolutor = resolutor or Resolutor()
     cands = candidatas(destino, ruta, ids)
     previos: list[str] = []
-    if destino != "yachay":
-        cands, previos = ubicables(cands, resolutor)
+    cands, previos = ubicables(cands, resolutor)      # Yachay también: ahí la hoja girada caería en otro lugar
     if destino == "zotero":
         ruta_z = Path(os.environ.get("ZOTERO_DB") or Path(os.environ.get("ZOTERO_DIR") or Path.home() / "Zotero") / "zotero.sqlite")
         plan, avisos = plan_zotero(cands, ruta_z, resolutor)
