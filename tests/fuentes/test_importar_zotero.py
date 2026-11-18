@@ -147,6 +147,12 @@ def test_coteja_ya_dudoso_y_nuevo(iz):
     assert (estado, key) == ("dudoso", "BBBB0002") and "otro año" in motivo
     assert iz.cotejar_zotero(inei, None, z)[0] == "dudoso" and "papelera" in iz.cotejar_zotero(inei, None, z)[2]
     assert iz.cotejar_zotero(norma, None, z)[0] == "nuevo", "dos decretos con otro número no se confunden"
+    stc = {"key": "EEEE0005", "tipo": "case", "papelera": False, "titulo": "Sentencia del Tribunal Constitucional. Expediente N.° 00022-2009-PI/TC",
+           "anio": "2010", "doi": "", "isbn": "", "clave": "", "autor": ""}
+    z["items"]["EEEE0005"] = stc
+    z["indice"].setdefault(f"corto:{iz._corto(stc['titulo'])}", []).append("EEEE0005")
+    otra = {"titulo": "Sentencia del Tribunal Constitucional. Expediente N.° 05057-2013-PA/TC", "fecha": "2014", "autores": []}
+    assert iz.cotejar_zotero(otra, None, z)[0] == "nuevo", "dos sentencias con otro expediente no se confunden"
     libro = {"zotero_key": "", "ruta": "Autor/Libro (7)"}
     assert iz.cotejar_zotero({**norma, "titulo": "Otra cosa"}, libro, z) == ("ya", "AAAA0001", "un adjunto enlaza su archivo de Calibre")
 

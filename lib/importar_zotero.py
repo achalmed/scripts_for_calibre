@@ -590,6 +590,10 @@ def cotejar_zotero(o: dict, libro: dict | None, zot: dict) -> tuple[str, str, st
             return "ya", x, "el mismo título, año y autor"
     corto = _corto(o["titulo"])
     parecidos = list(dict.fromkeys(exactos + (idx.get(f"corto:{corto}", []) if len(corto.split()) >= 3 else [])))
+    # dos sentencias o dos decretos con otro número son otra obra aunque compartan el título corto
+    numeros = lambda s: set(re.findall(r"\d+", _normal(s)))
+    parecidos = [x for x in parecidos if not (numeros(o["titulo"]) and numeros(items[x]["titulo"])
+                                              and numeros(o["titulo"]) != numeros(items[x]["titulo"]))]
     for x in parecidos:                                # el subtítulo puede faltar en uno de los dos
         d = items[x]
         if not d["papelera"] and a and d["anio"] == a and ap and d["autor"] and ap in _normal(d["autor"]):
