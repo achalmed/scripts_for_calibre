@@ -222,6 +222,17 @@ La muestra de las pruebas (`studio/muestra.py`) gana metadatos editoriales, lect
 propio Calibre (`calibre-debug`, `create_cover`), sobre su biblioteca temporal; se guarda como plantilla en la caché.
 `tests/calibre/test_puerta.py` la exime (como a `tests/`): escribe solo en esa biblioteca temporal de muestra.
 
+### §2.14 Un adjunto cuyo linkMode cambió renace con clave nueva (2026-11-18)
+
+Zotero mostraba «Cannot change attachment linkMode» y no sincronizaba: ocho adjuntos del ingreso del 2026-10-25
+(Calibre 10537 a 10544) subieron como copia guardada (`imported_file`) y después se volvieron enlazados al archivo de
+Calibre por SQL; zotero.org no deja cambiar el linkMode de un adjunto que ya tiene. La salida es la de Zotero al
+«convertir en archivo enlazado»: un adjunto nuevo con clave nueva, la misma ruta y título, las anotaciones pasadas al
+nuevo, y el viejo borrado con su clave en `syncDeleteLog` para que la cuenta borre también la copia del servidor. Lo
+hace la puerta (`z_rehacer_adjunto` de `lib/escribir_zotero.py`, orden `lib/adjuntos_zotero.py linkmode`, que simula
+por defecto y detecta los adjuntos sin sincronizar cuyo linkMode no es el que el servidor conoce o de los que no queda
+copia en `syncCache`). Regla: **el linkMode de un adjunto existente nunca se cambia en sitio**; se rehace.
+
 ## 3. KOReader
 
 ### §3.1 Sidecars por hash (2026-08-09)

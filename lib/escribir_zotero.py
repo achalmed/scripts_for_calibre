@@ -295,3 +295,55 @@ def z_adjunto_enlazado(cur, libreria: int, padre_id: int, ruta: str, titulo: str
                 "VALUES (?,?,2,?,NULL,?,0)", (item, padre_id, tipo_contenido, ruta))
     cur.execute("INSERT INTO itemData(itemID, fieldID, valueID) VALUES (?,?,?)", (item, z_field_id(cur, "title"), z_value_id(cur, titulo)))
     return item
+
+
+# ------------------------------------------------------------------ adjuntos con el linkMode cambiado (decisiones §2.14)
+# zotero.org no deja cambiar el linkMode de un adjunto que ya subió («Cannot change attachment linkMode»): un adjunto
+# guardado (imported_file) que luego se volvió enlazado (linked_file) por SQL bloquea la sincronización. Lo que hace
+# Zotero al «convertir en archivo enlazado» es lo mismo que aquí: un adjunto nuevo, con clave nueva, y el viejo borrado
+# con su entrada en `syncDeleteLog` para que la cuenta borre también la copia del servidor.
+
+_MODOS = {0: "imported_file", 1: "imported_url", 2: "linked_file", 3: "linked_url", 4: "embedded_image"}
+
+
+def z_conflictos_linkmode(cur) -> list[dict]:
+    """Adjuntos sin sincronizar que ya existen en el servidor (`version` > 0) y cuyo linkMode local no es el que el
+    servidor conoce (`syncCache`), o de los que no queda copia en `syncCache`."""
+    filas = cur.execute(
+        "SELECT i.itemID, i.key, ia.linkMode, ia.path, json_extract(sc.data, '$.data.linkMode') "
+        "FROM itemAttachments ia JOIN items i USING(itemID) "
+        "LEFT JOIN syncCache sc ON sc.libraryID = i.libraryID AND sc.key = i.key AND sc.syncObjectTypeID = "
+        "(SELECT syncObjectTypeID FROM syncObjectTypes WHERE name = 'item') "
+        "WHERE i.synced = 0 AND i.version > 0 ORDER BY i.itemID").fetchall()
+    return [{"id": r[0], "clave": r[1], "local": _MODOS.get(r[2], str(r[2])), "ruta": r[3] or "",
+             "servidor": r[4] or "(sin copia)"}
+            for r in filas if r[4] is None or r[4] != _MODOS.get(r[2])]
+
+
+def z_borrar_item(cur, item_id: int) -> None:
+    """Borra un ítem como lo hace Zotero (sin papelera): su clave a `syncDeleteLog` y sus filas de toda tabla que lo
+    nombre por `itemID`. La conexión de la puerta no activa las claves foráneas: las cascadas se hacen aquí."""
+    libreria, clave = cur.execute("SELECT libraryID, key FROM items WHERE itemID=?", (item_id,)).fetchone()
+    tipo = cur.execute("SELECT syncObjectTypeID FROM syncObjectTypes WHERE name='item'").fetchone()[0]
+    cur.execute("INSERT OR IGNORE INTO syncDeleteLog(syncObjectTypeID, libraryID, key, dateDeleted) VALUES (?,?,?,?)",
+                (tipo, libreria, clave, AHORA_SQL))
+    tablas = [n for (n,) in cur.execute("SELECT name FROM sqlite_master WHERE type='table' AND name <> 'items'").fetchall()
+              if "itemID" in {c[1] for c in cur.execute(f'PRAGMA table_info("{n}")').fetchall()}]
+    for t in tablas:
+        cur.execute(f'DELETE FROM "{t}" WHERE itemID=?', (item_id,))
+    cur.execute("DELETE FROM items WHERE itemID=?", (item_id,))
+
+
+def z_rehacer_adjunto(cur, adjunto_id: int) -> tuple[int, str]:
+    """El adjunto `adjunto_id` renace enlazado (linkMode 2) con clave nueva, la misma ruta, título y tipo de contenido;
+    sus anotaciones pasan al nuevo y el viejo se borra con su entrada en `syncDeleteLog`. Devuelve (itemID, clave)."""
+    libreria, padre, ruta, tipo_contenido = cur.execute(
+        "SELECT i.libraryID, ia.parentItemID, ia.path, ia.contentType FROM itemAttachments ia JOIN items i USING(itemID) "
+        "WHERE ia.itemID=?", (adjunto_id,)).fetchone()
+    titulo = z_get_field(cur, adjunto_id, "title") or ""
+    nuevo = z_adjunto_enlazado(cur, libreria, padre, ruta, titulo, tipo_contenido or "application/pdf")
+    for (anot,) in cur.execute("SELECT itemID FROM itemAnnotations WHERE parentItemID=?", (adjunto_id,)).fetchall():
+        cur.execute("UPDATE itemAnnotations SET parentItemID=? WHERE itemID=?", (nuevo, anot))
+        z_touch(cur, anot)
+    z_borrar_item(cur, adjunto_id)
+    return nuevo, cur.execute("SELECT key FROM items WHERE itemID=?", (nuevo,)).fetchone()[0]

@@ -11,6 +11,9 @@ zotero.sqlite, por la puerta lib/escribir.py):
     adjuntos_zotero.py titulos PROPUESTA.tsv [--aplicar] [--salida DIR]   libro<TAB>título viejo<TAB>nuevo[<TAB>…]
     adjuntos_zotero.py autores AUTORES.tsv   [--aplicar] [--salida DIR]   libro<TAB>autores viejos<TAB>nuevos (« & »)
     adjuntos_zotero.py verificar [--rutas HECHOS.tsv]                     adjuntos `attachments:` que no resuelven
+    adjuntos_zotero.py linkmode  [--aplicar] [--salida DIR]               «Cannot change attachment linkMode»: rehace
+                                                                          con clave nueva los adjuntos cuyo linkMode ya no
+                                                                          es el del servidor (decisiones §2.14)
 Opciones comunes: --zotero DB (ZOTERO_DB de core/env), --biblioteca DIR (BIBLIOTECA_DIR de core/env).
 
 - rutas: `attachments:<vieja>` → `attachments:<nueva>` (relativas a la biblioteca = baseAttachmentPath);
@@ -156,9 +159,22 @@ def _autores(cur, tsv, out, aplicar, claves):
     return {"ítems con creadores rehechos": hechos, "omitidos": omitidos}
 
 
+def _linkmode(cur, out, aplicar):
+    """Los adjuntos que la cuenta no puede subir porque su linkMode cambió: se rehacen enlazados con clave nueva."""
+    out.write("clave vieja\tlocal\tservidor\tclave nueva\truta\n")
+    hechos = 0
+    conflictos = ez.z_conflictos_linkmode(cur)
+    for c in conflictos:
+        nueva = ez.z_rehacer_adjunto(cur, c["id"])[1] if aplicar else ""
+        hechos += bool(nueva)
+        out.write(f"{c['clave']}\t{c['local']}\t{c['servidor']}\t{nueva}\t{c['ruta']}\n")
+        print(f"  {c['clave']} {c['local']} (servidor: {c['servidor']}) → {nueva or 'por rehacer'}  {c['ruta'][:90]}")
+    return {"conflictos": len(conflictos), "rehechos": hechos}
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(prog="adjuntos_zotero.py", description=__doc__.split("\n")[0])
-    ap.add_argument("orden", choices=["rutas", "titulos", "autores", "verificar"])
+    ap.add_argument("orden", choices=["rutas", "titulos", "autores", "verificar", "linkmode"])
     ap.add_argument("tsv", nargs="?")
     ap.add_argument("--aplicar", action="store_true")
     ap.add_argument("--salida")
@@ -179,15 +195,17 @@ def main(argv=None) -> int:
               + (" (entre las rutas nuevas)" if solo is not None else ""))
         return 1 if fuera else 0
 
-    if not a.tsv:
+    if not a.tsv and a.orden != "linkmode":
         ap.error(f"{a.orden} necesita su TSV")
-    salida = Path(a.salida or Path(a.tsv).resolve().parent)
+    salida = Path(a.salida or (Path(a.tsv).resolve().parent if a.tsv else LIB.parent / "logs" / "adjuntos_zotero"))
     salida.mkdir(parents=True, exist_ok=True)
-    claves = _claves(biblioteca) if a.orden != "rutas" else {}
+    claves = _claves(biblioteca) if a.orden in ("titulos", "autores") else {}
 
     def hacer(con):
         cur = con.cursor()
         with open(salida / "zotero.tsv", "w", encoding="utf-8") as out:
+            if a.orden == "linkmode":
+                return _linkmode(cur, out, a.aplicar)
             if a.orden == "rutas":
                 return _rutas(cur, a.tsv, out, a.aplicar)
             if a.orden == "titulos":

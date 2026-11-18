@@ -102,3 +102,35 @@ def test_candado_de_zotero_ocupado_sale_75(corrida, tmp_path):
         ocupante.kill()
     assert r.returncode == 75, r.stdout + r.stderr
     assert _rutas(c.zotero) == antes
+
+
+def test_linkmode_rehace_con_clave_nueva_y_borra_en_el_servidor(corrida, tmp_path):
+    """«Cannot change attachment linkMode» (decisiones §2.14): un adjunto que el servidor conoce guardado y aquí está
+    enlazado renace con clave nueva, la misma ruta y su anotación; la clave vieja va a syncDeleteLog."""
+    c = corrida("k4linkmode")
+    z = sqlite3.connect(c.zotero)
+    adj, clave, ruta = z.execute("select i.itemID, i.key, ia.path from itemAttachments ia join items i using(itemID) "
+                                 "where ia.linkMode = 2 and ia.path like 'attachments:%' order by itemID limit 1").fetchone()
+    z.execute("update items set synced = 1 where synced = 0")    # la copia trae los conflictos reales: fuera
+    z.execute("update items set synced = 0, version = 7 where itemID = ?", (adj,))
+    tipo = z.execute("select syncObjectTypeID from syncObjectTypes where name = 'item'").fetchone()[0]
+    z.execute("delete from syncCache where key = ?", (clave,))
+    z.execute("insert into syncCache(libraryID, key, syncObjectTypeID, version, data) values (1, ?, ?, 7, ?)",
+              (clave, tipo, '{"data": {"linkMode": "imported_file"}}'))
+    z.commit()
+    z.close()
+
+    r = _correr(c, "linkmode", "--salida", str(tmp_path))       # simulación
+    assert r.returncode == 0 and "1 conflictos · 0 rehechos" in r.stdout, r.stdout + r.stderr
+    r = _correr(c, "linkmode", "--salida", str(tmp_path), "--aplicar")
+    assert r.returncode == 0 and "1 rehechos" in r.stdout and "integridad ok" in r.stdout, r.stdout + r.stderr
+
+    z = sqlite3.connect(f"file:{c.zotero}?mode=ro", uri=True)
+    assert not z.execute("select 1 from items where key = ?", (clave,)).fetchone()
+    assert z.execute("select 1 from syncDeleteLog where key = ?", (clave,)).fetchone()
+    nueva = z.execute("select i.key, i.synced, i.version from itemAttachments ia join items i using(itemID) "
+                      "where ia.path = ? and ia.linkMode = 2", (ruta,)).fetchone()
+    assert nueva and nueva[0] != clave and nueva[1:] == (0, 0)
+    assert not z.execute("pragma foreign_key_check").fetchall()
+    z.close()
+    assert _correr(c, "linkmode", "--salida", str(tmp_path)).stdout.count("0 conflictos") == 1
