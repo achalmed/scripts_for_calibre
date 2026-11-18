@@ -755,7 +755,7 @@ repasado, primero la caja más baja. Entran las textuales, las paráfrasis y las
 Referencias: Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T. y Rohrer, D. (2006). Distributed practice in verbal recall
 tasks: A review and quantitative synthesis. *Psychological Bulletin, 132*(3), 354–380. Roediger, H. L. y Karpicke, J. D.
 (2006). Test-enhanced learning: Taking memory tests improves long-term retention. *Psychological Science, 17*(3), 249–255.
-Las dos aún no están en la biblioteca (pendiente en `estado.md`).
+Las dos están en la biblioteca desde el 2026-11-18 (Calibre 11219 y 11159; §9.10).
 
 ### §9.10 El flujo de producción de conocimiento en Biblioteca Studio (2026-11-18)
 
@@ -822,7 +822,12 @@ parte) y C12.5. Cada una vive en la biblioteca (`lib/`), en una orden de la CLI 
   (`calibredb add`, `--empty` sin archivo), Zotero con las primitivas nuevas de `lib/escribir_zotero.py` (`z_nuevo_item`,
   `z_etiquetar`, `z_coleccion`, `z_en_coleccion`, `z_adjunto_enlazado`; el ítem sin sincronizar, la clave fijada en
   `citationKey`, `integrity_check` y `foreign_key_check` al final) y otra vez Calibre para `#zotero_key`. Lo que ya existía
-  solo recibe la etiqueta y la colección. Antes de la base real, el ensayo entero sobre copias de las dos bases.
+  solo recibe la etiqueta y la colección. Antes de la base real, el ensayo entero sobre copias de las dos bases. El ensayo
+  atrapó dos fallos que la prueba de unidad no veía: `set_metadata --field` no admite `#zotero_key` (columna de texto
+  largo: va con `set_custom`) y la obra omitida no tiene clave. Resultado del 2026-11-18: las 111 obras del fundamento
+  del flujo (§3 y §12.2; ninguna existía) en Calibre 11137 a 11247 y en la colección «Flujo de conocimiento» de Zotero,
+  todas con `#zotero_key`; 14 con su PDF. El control de contenido descartó tres PDF de otra versión (dos preimpresiones de
+  arXiv y una traducción de 2007): se ingresa la versión que cita el fundamento.
 
 Referencias: Chi, M. T. H. y Wylie, R. (2014). The ICAP framework. *Educational Psychologist, 49*(4), 219–243. COPE
 (2023). *Authorship and AI tools*. Fiorella, L. y Mayer, R. E. (2016). Eight ways to promote generative learning.
