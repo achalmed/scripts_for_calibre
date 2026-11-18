@@ -1,0 +1,10 @@
+[Unit]
+Description=Timer: base de lectura cada hora (decisiones §9.7)
+
+[Timer]
+OnBootSec=15min
+OnUnitActiveSec=1h
+Persistent=true
+
+[Install]
+WantedBy=timers.target

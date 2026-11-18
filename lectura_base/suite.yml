@@ -9,11 +9,11 @@ escribe_en:
 simula_por_defecto: true
 comandos:
 - 'main.py estado                       # qué hay en la base (solo lee)'
-- 'main.py sincronizar                  # simula: cada herramienta → la base'
-- main.py sincronizar --aplicar
+- 'main.py sincronizar [--aplicar]      # cada herramienta → la base (simula sin --aplicar)'
 - 'main.py exportar zotero [--aplicar]  # la vuelta: la base → Zotero, por la puerta'
 - 'main.py libro 48 --json              # subrayados, tiempo y sesiones de un libro'
 - 'main.py cambios --consumidor X       # la cola de cambios para otros programas'
+- 'main.py ciclo                        # lo que corre el timer de cada hora: la ida y la vuelta, solo si hay algo'
 estado: activo
 interfaz: cli
 entrada: KOReader (metadata.*.lua, statistics.sqlite3), zotero.sqlite (copia), Okular (docdata), Yachay (su API)

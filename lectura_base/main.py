@@ -10,6 +10,7 @@ Simula por omisión; `--aplicar` escribe (en la base, tras su respaldo verificad
     main.py libro <calibre_id> [--json]                      # los subrayados, el tiempo y las sesiones de un libro
     main.py cambios [--desde N | --consumidor X [--avanzar]] [--json]   # la cola de cambios para otros programas
     main.py ruta                                             # dónde vive la base
+    main.py ciclo [--json]                                   # lo que corre el timer: la ida y la vuelta, solo si hay algo
 """
 from __future__ import annotations
 
@@ -114,6 +115,57 @@ def cmd_exportar(a, log) -> int:
     return 0
 
 
+def cmd_ciclo(a, log) -> int:
+    """Lo que corre el timer de cada hora (systemd/lectura-base.timer): la ida (cada herramienta → la base) y la vuelta
+    (la base → cada una). Simula primero y escribe solo si hay algo, así una hora sin cambios no deja respaldos. Una
+    herramienta abierta (KOReader, Zotero, Okular) o Yachay sin token se saltan y se reintentan en la vuelta siguiente:
+    sale 75 («reintentar luego», no es un fallo). Dos ciclos a la vez no corren: el segundo sale 75."""
+    import contextlib
+    import fcntl
+    from lectura_base.lib.adaptadores import yachay as ad_yachay
+    candado = base.ruta_base().with_name("ciclo.lock")
+    candado.parent.mkdir(parents=True, exist_ok=True)
+    # lo que imprimen la puerta y los respaldos va a stderr: stdout queda para el informe (y el JSON)
+    with open(candado, "w") as fd, contextlib.redirect_stdout(sys.stderr):
+        try:
+            fcntl.flock(fd, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            log.info("otro ciclo de la base de lectura está corriendo")
+            return 75
+        cliente = ad_yachay.cargar_cliente()
+        origenes = base.ORIGENES if cliente is not None else tuple(o for o in base.ORIGENES if o != "yachay")
+        informe = {"ida": [], "vuelta": {}, "saltados": []}
+        if cliente is None:
+            informe["saltados"].append("yachay: sin cliente o sin token en el llavero")
+        planes = sincronizar.sincronizar(origenes, cliente=cliente)
+        if any(not p.vacio() for p in planes):
+            planes = sincronizar.sincronizar(origenes, aplicar=True, cliente=cliente)
+            informe["ida"] = [p.resumen() for p in planes if not p.vacio()]
+        for destino in exportar.DESTINOS:
+            if destino == "yachay" and cliente is None:
+                continue
+            try:
+                r = exportar.exportar(destino, aplicar=True, cliente=cliente if destino == "yachay" else None)
+            except Exception as e:  # noqa: BLE001 — abierta, la puerta ocupada, Yachay caído: la próxima vuelta
+                informe["saltados"].append(f"{destino}: {e}")
+                continue
+            if r["hechas"]:
+                informe["vuelta"][destino] = len(r["hechas"])
+    if a.json:
+        print(consulta.a_json(informe))
+    else:
+        for p in informe["ida"]:
+            print(f"→ base: {base.NOMBRES.get(p['origen'], p['origen'])}: +{p['altas']} nuevas, {p['cambios']} cambiadas, "
+                  f"{p['borradas']} borradas · progreso +{p['progreso']['altas']}/~{p['progreso']['cambios']}")
+        for d, n in informe["vuelta"].items():
+            print(f"← {base.NOMBRES.get(d, d)}: {n} anotaciones")
+        for s in informe["saltados"]:
+            print(f"· se reintenta luego: {s}")
+        if not informe["ida"] and not informe["vuelta"]:
+            print("= Nada nuevo: la base y las herramientas ya coinciden.")
+    return 75 if informe["saltados"] else 0
+
+
 def cmd_libro(a, log) -> int:
     r = consulta.libro(a.calibre_id)
     if a.json:
@@ -173,6 +225,8 @@ def main(argv=None) -> int:
     c.add_argument("--limite", type=int, default=500)
     c.add_argument("--json", action="store_true")
     sub.add_parser("ruta", help="dónde vive la base")
+    ci = sub.add_parser("ciclo", help="la ida y la vuelta, solo si hay algo (lo que corre el timer)")
+    ci.add_argument("--json", action="store_true")
     a = ap.parse_args(argv)
     log = config.logger(a.verbose)
     if a.orden in (None, "estado"):
@@ -182,7 +236,7 @@ def main(argv=None) -> int:
     if a.orden == "ruta":
         print(base.ruta_base())
         return 0
-    return {"sincronizar": cmd_sincronizar, "exportar": cmd_exportar, "libro": cmd_libro, "cambios": cmd_cambios}[a.orden](a, log)
+    return {"sincronizar": cmd_sincronizar, "exportar": cmd_exportar, "libro": cmd_libro, "cambios": cmd_cambios, "ciclo": cmd_ciclo}[a.orden](a, log)
 
 
 if __name__ == "__main__":

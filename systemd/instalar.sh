@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# systemd/instalar.sh — instala, verifica o retira los tres timers de usuario de la biblioteca (ola 2a, K6).
+# systemd/instalar.sh — instala, verifica o retira los timers de usuario de la biblioteca (ola 2a, K6; la base de lectura, §9.7).
 #
-# Las plantillas de esta carpeta (ecosistema-lectura, ecosistema-metadatos, koreader-calibre-sync) llevan
+# Las plantillas de esta carpeta (ecosistema-lectura, ecosistema-metadatos, koreader-calibre-sync, lectura-base) llevan
 # @RAIZ@ en lugar de la carpeta del repo; al instalarlas se escribe `%h/<ruta bajo el HOME>` (nunca la
 # carpeta de inicio literal, RQ-RUT-02). Las unidades instaladas son exactamente las plantillas
 # renderizadas: `--verificar` lo comprueba. ~/.dotfiles no las gestiona (decisiones §4.5).
@@ -11,13 +11,13 @@
 #   systemd/instalar.sh --aplicar          escribe las unidades, daemon-reload y enable --now de los timers
 #   systemd/instalar.sh --verificar        0 si lo instalado = las plantillas renderizadas; 1 y diff si no
 #   systemd/instalar.sh --desinstalar [--aplicar]   detiene y retira (simula sin --aplicar)
-# Opciones: --unidades "a b" (por defecto las tres) · --destino DIR (otra carpeta; sin systemctl) ·
+# Opciones: --unidades "a b" (por defecto todas) · --destino DIR (otra carpeta; sin systemctl) ·
 #           --renderizar DIR (solo escribe las unidades renderizadas en DIR, para systemd-analyze verify).
 set -euo pipefail
 
 AQUI="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 RAIZ="$(cd "$AQUI/.." && pwd)"
-UNIDADES="ecosistema-lectura ecosistema-metadatos koreader-calibre-sync"
+UNIDADES="ecosistema-lectura ecosistema-metadatos koreader-calibre-sync lectura-base"
 DESTINO="${XDG_CONFIG_HOME:-$HOME/.config}/systemd/user"
 SYSTEMCTL=1
 MODO=simular

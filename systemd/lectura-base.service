@@ -1,0 +1,11 @@
+[Unit]
+Description=Base de lectura: la ida y la vuelta entre KOReader, Zotero, Okular, Yachay y la base (solo si hay algo)
+
+[Service]
+Type=oneshot
+# PATH mínimo: las suites corren con CORE_PYTHON (core/env) y las herramientas del sistema, sin anaconda (P221).
+Environment="PATH=/usr/local/bin:/usr/bin:/bin"
+ExecStart=@RAIZ@/lectura_base/main.py ciclo
+# 75 = una herramienta abierta, Yachay sin token o el ciclo anterior aún corriendo: «reintentar luego», no es un fallo.
+SuccessExitStatus=75
+Nice=10

@@ -670,6 +670,9 @@ simula siempre). Qué destino se escribe es decisión del autor, y por ahora:
   el llavero): `exportar yachay --aplicar` escribe con `POST /lector/{id}/resaltados`, con el `uid` de la base como
   `origen_id` para que Yachay no duplique. Admite el subrayado sin rectángulos (solo el texto). Las hojas giradas
   también se quedan en la base: el lector de Yachay mide sobre el mismo PDF. Ensayo: 115 a Yachay, 8 retenidos.
-- **Sin timer**: la base se sincroniza a pedido (la operación de la ventana o la CLI). Un timer, como los de KOReader y
-  Zotero, solo si el autor lo aprueba.
+- **Cada hora** (el autor lo aprobó el 2026-11-17): `systemd/lectura-base.timer` corre `main.py ciclo`, la ida y la
+  vuelta. Primero simula y escribe solo si hay algo, así una hora sin cambios no deja respaldos. Una herramienta
+  abierta, Yachay sin token o un ciclo aún corriendo (candado `ciclo.lock` junto a la base) salen 75, «reintentar
+  luego». El Python del sistema no trae `keyring`: el token se lee con `secret-tool` (`libsecret-tools`), que
+  encuentra el mismo secreto (atributos `service=qillqa`, `username=studios`).
 

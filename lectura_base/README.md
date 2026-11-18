@@ -18,11 +18,11 @@ Comandos:
 
 ```bash
 main.py estado                       # qué hay en la base (solo lee)
-main.py sincronizar                  # simula: cada herramienta → la base
-main.py sincronizar --aplicar
+main.py sincronizar [--aplicar]      # cada herramienta → la base (simula sin --aplicar)
 main.py exportar zotero [--aplicar]  # la vuelta: la base → Zotero, por la puerta
 main.py libro 48 --json              # subrayados, tiempo y sesiones de un libro
 main.py cambios --consumidor X       # la cola de cambios para otros programas
+main.py ciclo                        # lo que corre el timer de cada hora: la ida y la vuelta, solo si hay algo
 ```
 
 <sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-11-17); no se edita a mano.</sub>
@@ -105,4 +105,7 @@ Lo que la base escribió en una herramienta queda apuntado como presencia y vuel
   el total del libro.
 - Okular 25 guarda las anotaciones en el propio PDF si se le pide («Guardar»): esas no están en docdata y no se leen
   (escribir en un PDF de Calibre cambiaría su MD5 de KOReader).
-- No corre sola: no hay timer (systemd solo si el autor lo aprueba).
+- Corre sola cada hora (`systemd/lectura-base.timer`, `main.py ciclo`): la ida y la vuelta, solo si hay algo. Una
+  herramienta abierta se salta y se reintenta en la vuelta siguiente. Con el Python del sistema, el token de Yachay se
+  lee con `secret-tool` (paquete `libsecret-tools`); sin él, el ciclo hace todo menos Yachay. El estado:
+  `journalctl --user -u lectura-base`.

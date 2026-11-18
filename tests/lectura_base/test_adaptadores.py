@@ -1,6 +1,7 @@
 """Los adaptadores de ida y vuelta (KOReader, Zotero, Okular, Yachay) sobre el mundo de juguete de conftest.py."""
 from __future__ import annotations
 
+import json
 import shutil
 import sqlite3
 import subprocess
@@ -243,7 +244,7 @@ def test_yachay_por_su_cliente_ida_y_vuelta(con_koreader):
 
 def test_yachay_sin_cliente_avisa_y_sigue(mundo):
     planes = sincronizar.sincronizar(("yachay",))
-    assert planes[0].avisos and "fase 3b" in planes[0].avisos[0]
+    assert planes[0].avisos and "sin canal" in planes[0].avisos[0]
 
 
 def test_lua_ida_y_vuelta_byte_a_byte():
@@ -253,3 +254,38 @@ def test_lua_ida_y_vuelta_byte_a_byte():
     datos = lua.leer(texto)
     assert datos["annotations"][1]["note"] == 'línea\notra "cita"'
     assert lua.escribir(datos, "/ruta/libro (3)/libro.pdf") == texto
+
+
+@requiere_poppler
+def test_ciclo_del_timer_ida_y_vuelta_y_luego_nada(con_koreader, monkeypatch, capsys):
+    """`main.py ciclo` (el timer de cada hora): trae, lleva, y la vuelta siguiente no escribe ni respalda nada; una
+    herramienta abierta se salta con 75 («reintentar luego»)."""
+    from lectura_base import main as cli
+    from lectura_base.lib.adaptadores import yachay as ad_yachay
+    m = con_koreader
+    cliente = ClienteFalso()
+    monkeypatch.setattr(ad_yachay, "cargar_cliente", lambda: cliente)
+    monkeypatch.setattr(koreader, "abierto", lambda: False)
+    monkeypatch.setattr(okular, "abierto", lambda: False)
+    zotero_abierto = _zotero_abierto()
+    codigo = cli.main(["ciclo", "--json"])
+    informe = json.loads(capsys.readouterr().out)
+    assert informe["ida"] and informe["vuelta"]["yachay"] == 2 and informe["vuelta"]["okular"] == 2
+    assert codigo == (75 if zotero_abierto else 0)
+    respaldos = sorted((m.raiz / "respaldos").rglob("*.sqlite"))
+    codigo = cli.main(["ciclo", "--json"])
+    informe = json.loads(capsys.readouterr().out)
+    assert not informe["ida"] and not informe["vuelta"], "la segunda vuelta no tiene nada que hacer"
+    assert sorted((m.raiz / "respaldos").rglob("*.sqlite")) == respaldos, "una hora sin cambios no deja respaldos"
+    monkeypatch.setattr(okular, "abierto", lambda: True)
+    sidecar_koreader(m.koreader, m.md5_1, m.pdf1, [                 # un subrayado nuevo en KOReader, con Okular abierto
+        ko_resaltado(1, 100, "La producti-\nvidad es casi todo en el largo plazo.", "2026-03-11 12:31:04", nota="clave"),
+        ko_resaltado(2, 150, "Las instituciones reducen la incertidumbre economica.", "2026-03-11 12:40:00"),
+        ko_resaltado(1, 300, "El ahorro financia la inversion de largo plazo.", "2026-03-12 09:00:00")])
+    codigo = cli.main(["ciclo", "--json"])
+    informe = json.loads(capsys.readouterr().out)
+    assert codigo == 75 and any(s.startswith("okular") and "abierto" in s for s in informe["saltados"])
+    assert informe["vuelta"].get("yachay") == 1, "los demás destinos siguen aunque Okular esté abierto"
+    monkeypatch.setattr(okular, "abierto", lambda: False)          # se cerró: la vuelta siguiente lo lleva
+    cli.main(["ciclo", "--json"])
+    assert json.loads(capsys.readouterr().out)["vuelta"].get("okular") == 1

@@ -33,7 +33,7 @@ def leer(origenes: tuple[str, ...] = base.ORIGENES, resolutor: Resolutor | None 
         cliente = cliente if cliente is not None else yachay.cargar_cliente()
         if cliente is None:
             lecturas.append(base.Lectura("yachay", alcance=None,
-                                         avisos=["Yachay: sin canal todavía (el cliente con token es de la fase 3b)"]))
+                                         avisos=["Yachay: sin canal (falta el cliente o el token en el llavero; con el Python del sistema, el token se lee con secret-tool, del paquete libsecret-tools)"]))
         else:
             try:
                 lectura, cursor = yachay.leer(cliente, base.leer_cursor(CONSUMIDOR_YACHAY, ruta))
