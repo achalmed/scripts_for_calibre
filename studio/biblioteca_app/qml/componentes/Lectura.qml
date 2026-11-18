@@ -4,6 +4,8 @@
 // derecha, el libro elegido: su tiempo y su progreso en cada herramienta, sus subrayados (filtrados por origen con los
 // chips; cada uno se copia como cita) y sus últimas sesiones. Solo lee (studio.lectura): la base la escribe la operación
 // «Base de lectura» de Coherencia › Sincronizar. Sin colores propios: el de cada subrayado es el que le dio su herramienta.
+// Arriba a la izquierda (§9.8), «Sincronizar ahora» (una vuelta, la misma del timer) y el interruptor de la
+// sincronización automática de cada hora, con la última vuelta y la próxima.
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -55,11 +57,12 @@ QQC2.Control {
             visible: !raiz.lec.hayBase
             icon.name: "view-readermode"
             text: "La base de lectura aún está vacía"
-            explanation: "Coherencia › Sincronizar › «Base de lectura» junta aquí los subrayados y las horas de KOReader, Zotero, Okular y Yachay (F5 simula, Ctrl+Intro aplica)."
+            explanation: "«Sincronizar ahora» junta aquí los subrayados y las horas de KOReader, Zotero, Okular y Yachay, y lleva a cada uno lo que le falta."
             helpfulAction: Kirigami.Action {
-                text: "Ir a Sincronizar"
-                icon.name: "folder-sync"
-                onTriggered: { studio.operaciones.fijar("base_lectura"); studio.espacio.fijarVista("sincronizar"); studio.espacio.fijarArea("coherencia") }
+                text: "Sincronizar ahora"
+                icon.name: "view-refresh"
+                enabled: !raiz.lec.sincronizando
+                onTriggered: raiz.lec.sincronizarAhora()
             }
         }
 
@@ -78,6 +81,40 @@ QQC2.Control {
                     Layout.fillWidth: true
                     Layout.margins: Kirigami.Units.largeSpacing
                     spacing: Kirigami.Units.largeSpacing
+
+                    // la sincronización (§9.8): el botón, el interruptor de cada hora y en qué va
+                    Tarjeta {
+                        RowLayout {
+                            Layout.fillWidth: true
+                            spacing: Kirigami.Units.smallSpacing
+                            Kirigami.Icon { source: "view-refresh"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: implicitWidth }
+                            QQC2.Label { text: "Sincronización"; font.weight: Font.DemiBold; Layout.fillWidth: true }
+                            QQC2.Switch {
+                                id: interruptor
+                                text: "Cada hora"
+                                checked: raiz.lec.timerActivo
+                                onToggled: raiz.lec.fijarTimer(checked)
+                                QQC2.ToolTip.text: "Encendido, la base se sincroniza sola cada hora; apagado, solo con el botón"
+                                QQC2.ToolTip.visible: hovered
+                                Accessible.name: "Sincronización automática cada hora"
+                            }
+                        }
+                        RowLayout {
+                            Layout.fillWidth: true
+                            spacing: Kirigami.Units.smallSpacing
+                            Tenue { text: raiz.lec.estadoSincronia }
+                            QQC2.BusyIndicator { running: raiz.lec.sincronizando; visible: running; implicitWidth: Kirigami.Units.iconSizes.small; implicitHeight: implicitWidth }
+                            QQC2.Button {
+                                text: "Sincronizar ahora"
+                                icon.name: "view-refresh"
+                                highlighted: true
+                                enabled: !raiz.lec.sincronizando
+                                onClicked: raiz.lec.sincronizarAhora()
+                                QQC2.ToolTip.text: "Trae lo nuevo de KOReader, Zotero, Okular y Yachay y lleva a cada uno lo que le falta; lo que esté abierto queda para la próxima vuelta"
+                                QQC2.ToolTip.visible: hovered
+                            }
+                        }
+                    }
 
                     Tarjeta {
                         RowLayout {

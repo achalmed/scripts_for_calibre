@@ -101,7 +101,7 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
     etapas = Etapas(espacio, libros, env, consola, repo=repo_datos)
     fichado = Fichado(libros, consola, cache or cache_portadas().parent)   # fichar con el PDF al lado y estudiar con la IA (§9.4, §9.5)
     operaciones = Operaciones(espacio, puerta, consola, tareas, env, cache=cache)
-    lectura = Lectura(libros)                 # el área Lectura: la base de lectura, en solo lectura (§9.6)
+    lectura = Lectura(libros, tareas=tareas)  # el área Lectura: la base de lectura (§9.6) y «Sincronizar ahora» (§9.8)
     acciones = Acciones()
     acciones.estandar(NOMBRE, paneles=False)
     pedir = lambda que, **datos_: (lambda *_: interfaz.pedir.emit(que, datos_))

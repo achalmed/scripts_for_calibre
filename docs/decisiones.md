@@ -676,3 +676,14 @@ simula siempre). Qué destino se escribe es decisión del autor, y por ahora:
   luego». El Python del sistema no trae `keyring`: el token se lee con `secret-tool` (`libsecret-tools`), que
   encuentra el mismo secreto (atributos `service=qillqa`, `username=studios`).
 
+
+### §9.8 Sincronizar desde la ventana (2026-11-17)
+
+- **Botón y timer, en el mismo lugar.** El área Lectura abre con la tarjeta «Sincronización». «Sincronizar ahora» corre
+  una vuelta, `main.py ciclo --json`, la misma del timer, en un hilo. Al terminar dice qué trajo, qué llevó y qué quedó
+  para la próxima vuelta. El interruptor «Cada hora» enciende o apaga `lectura-base.timer`, y lo instala con
+  `systemd/instalar.sh` si falta. Apagado, la base se sincroniza solo con el botón: es el ajuste manual de lo automático.
+- **La próxima vuelta se calcula.** Con `OnUnitActiveSec=1h`, systemd da la próxima solo en tiempo monótono. La ventana
+  la cuenta desde la última vuelta, del timer o a mano (`ExecMainStartTimestamp` del servicio), más una hora.
+- **Las llamadas al sistema van por `Sincronia`**, que las pruebas reemplazan por una falsa: ninguna prueba toca el timer
+  real ni corre una vuelta sobre los datos reales.
