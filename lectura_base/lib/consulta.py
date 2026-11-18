@@ -3,11 +3,15 @@
 Las horas: cada origen es dueño de su reloj (CLAUDE.md: «los relojes de lectura no se copian entre sí»). El tiempo de un
 libro es la suma, por origen, del total que ese origen lleva (`progreso.segundos`: el `total_read_time` de KOReader, el
 readingTime de Zotero); las sesiones (solo KOReader trae la hora de cada página) dan las semanas, los días y la racha.
+
+Para Inicio y Lectura de Biblioteca Studio (decisiones §9.9): `dias` (el mapa de calor de horas por día), `nuevas` (los
+subrayados de los últimos días), `en_curso` (los libros empezados y sin terminar, con la herramienta donde se leyeron por
+última vez) y `subrayados` (los que tienen texto, para saber cuáles faltan fichar).
 """
 from __future__ import annotations
 
 import json
-from datetime import date, datetime, timedelta
+from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
 from lectura_base.lib import base
@@ -86,6 +90,83 @@ def semanas(n: int = 12, ruta: Path | None = None, hoy: date | None = None) -> l
         s["horas"] = _horas(s["segundos"])
         s["proporcion"] = round(s["segundos"] / maximo, 3)
     return salida
+
+
+def dias(n_semanas: int = 12, ruta: Path | None = None, hoy: date | None = None) -> list[dict]:
+    """El mapa de calor de las últimas `n_semanas` (lunes a domingo, de la más vieja a la actual): un día por casilla, con
+    sus horas, su semana (columna), su día de la semana (fila, 0 = lunes) y su nivel de 0 a 4 (más horas, más oscuro).
+    Los días que aún no llegan salen con `futuro`."""
+    hoy = hoy or date.today()
+    lunes = hoy - timedelta(days=hoy.weekday())
+    primero = lunes - timedelta(weeks=n_semanas - 1)
+    salida = [{"fecha": (primero + timedelta(days=k)).isoformat(), "semana": k // 7, "dia": k % 7, "segundos": 0, "sesiones": 0,
+               "futuro": primero + timedelta(days=k) > hoy} for k in range(n_semanas * 7)]
+    with base.lector(ruta) as c:
+        if c is not None:
+            desde = int(datetime.combine(primero, datetime.min.time()).timestamp())
+            for inicio, seg in c.execute("SELECT inicio, segundos FROM sesiones WHERE inicio >= ?", (desde,)):
+                k = (_dia_local(inicio) - primero).days
+                if 0 <= k < len(salida):
+                    salida[k]["segundos"] += seg or 0
+                    salida[k]["sesiones"] += 1
+    maximo = max((d["segundos"] for d in salida), default=0)
+    for d in salida:
+        d["horas"] = _horas(d["segundos"])
+        d["tiempo"] = texto_duracion(d["segundos"])
+        d["nivel"] = 0 if not d["segundos"] or not maximo else min(4, 1 + int(4 * d["segundos"] / (maximo + 1)))
+    return salida
+
+
+def nuevas(n_dias: int = 7, ruta: Path | None = None, ahora: datetime | None = None) -> int:
+    """Cuántos subrayados activos nacieron en los últimos `n_dias` (su fecha de creación; sin ella, la de su último cambio)."""
+    ahora = ahora or datetime.now(timezone.utc)
+    desde = (ahora.astimezone(timezone.utc) - timedelta(days=n_dias)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    with base.lector(ruta) as c:
+        if c is None:
+            return 0
+        return int(c.execute("SELECT count(*) FROM anotaciones WHERE borrada IS NULL "
+                             "AND coalesce(nullif(creada, ''), modificada) >= ?", (desde,)).fetchone()[0])
+
+
+def en_curso(limite: int = 3, ruta: Path | None = None) -> list[dict]:
+    """Los libros que se están leyendo (empezados y sin terminar), el último leído primero, con la herramienta donde se
+    leyeron por última vez y su avance allí."""
+    with base.lector(ruta) as c:
+        if c is None:
+            return []
+        filas: dict = {}
+        for g in c.execute("SELECT * FROM progreso WHERE calibre_id IS NOT NULL"):
+            f = filas.setdefault(int(g["calibre_id"]), {"calibre_id": int(g["calibre_id"]), "ultima": "", "fraccion": None, "origen": "",
+                                                       "terminado": False})
+            if g["estado"] in ("complete", "abandoned") or (g["fraccion"] or 0) >= 0.999:
+                f["terminado"] = True
+            if g["fraccion"] is not None and (g["ultima"] or "") >= f["ultima"]:
+                f.update(ultima=g["ultima"] or "", fraccion=g["fraccion"], origen=g["origen"])
+        titulos = {r["calibre_id"]: (r["titulo"], r["autores"]) for r in c.execute("SELECT calibre_id, titulo, autores FROM libros")}
+    salida = []
+    for f in sorted(filas.values(), key=lambda f: f["ultima"], reverse=True):
+        if f["terminado"] or not f["fraccion"] or f["fraccion"] <= 0:
+            continue
+        titulo, autores = titulos.get(f["calibre_id"], ("", ""))
+        salida.append({"calibre_id": f["calibre_id"], "titulo": titulo or f"Libro {f['calibre_id']}", "autores": autores,
+                       "fraccion": round(f["fraccion"], 4), "porcentaje": int(round(f["fraccion"] * 100)), "origen": f["origen"],
+                       "ultima": f["ultima"]})
+        if len(salida) >= limite:
+            break
+    return salida
+
+
+def subrayados(ruta: Path | None = None) -> list[dict]:
+    """Los subrayados activos con texto (libro, texto, página, hoja, creación): lo que se compara con las fichas para saber
+    qué queda por fichar."""
+    with base.lector(ruta) as c:
+        if c is None:
+            return []
+        return [{"calibre_id": int(a["calibre_id"]), "texto": a["texto"], "pagina": a["pagina"], "hoja": a["hoja"],
+                 "creada": a["creada"] or a["modificada"]}
+                for a in c.execute("SELECT calibre_id, texto, pagina, hoja, creada, modificada FROM anotaciones "
+                                   "WHERE borrada IS NULL AND calibre_id IS NOT NULL AND trim(texto) != '' "
+                                   "ORDER BY calibre_id, coalesce(hoja, 1000000), creada")]
 
 
 def libros(limite: int = 200, ruta: Path | None = None) -> list[dict]:
