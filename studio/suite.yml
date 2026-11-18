@@ -2,10 +2,11 @@
 # Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
 id: biblioteca_studio
 objetivo: biblioteca
-resumen: 'Gestor bibliográfico sobre la biblioteca de Calibre (QML + Kirigami sobre gui-comun 3.0): el catálogo con portadas, la búsqueda por campo y los filtros por colección, autor, año y tipo; la ficha editorial con la clave para citar, Zotero y la lectura de KOReader; las bandejas de trabajo; las etapas del Método Documental y la coherencia. Cada operación es la CLI de su suite: F5 simula, Ctrl+Intro aplica tras confirmar, con los seis pasos de la puerta a la vista.'
+resumen: 'Gestor bibliográfico sobre la biblioteca de Calibre (QML + Kirigami sobre gui-comun 3.0): Inicio con lo de hoy; el catálogo con portadas, la búsqueda por campo y los filtros por colección, autor, año y tipo; la ficha editorial con la clave para citar, Zotero y la lectura; la base de lectura; las fichas de los escritos con su repaso Leitner; las etapas del Método Documental, la coherencia y las bandejas de trabajo. Cada operación es la CLI de su suite: F5 simula, Ctrl+Intro aplica tras confirmar, con los seis pasos de la puerta a la vista.'
 escribe_en:
 - calibre
 - zotero
+- archivos
 simula_por_defecto: true
 pruebas: biblioteca-studio/tests/run.sh   # desde ~/Documents; servicios y controladores sobre una biblioteca Calibre de muestra en un temporal (calibredb y calibre-debug si están: metadatos y portadas), cada QML y --smoke con /usr/bin/python3
 comandos:
@@ -19,4 +20,4 @@ depende_de:
 - /usr/bin/python3 con PySide6 del sistema (python3-pyside6.*) y Kirigami (qml6-module-org-kde-kirigami)
 - gui-comun 3.0 (módulo QML GuiComun: VentanaBase, escritorio, estados de operación)
 - las suites de este repo (escriben por lib/escribir*, la puerta)
-nota: 'No escribe por su cuenta ni abre las bases (lo editorial lo lee lib/indice.editorial en solo lectura; las portadas, en miniatura a su caché): corre la CLI de cada suite, primero simulando (F5); «Aplicar» (Ctrl+Intro) confirma con la orden exacta y los pasos de la puerta, y se desactiva con Calibre o Zotero abiertos o el candado ocupado.'
+nota: 'No escribe por su cuenta en Calibre ni en Zotero ni abre sus bases (lo editorial lo lee lib/indice.editorial en solo lectura; las portadas, en miniatura a su caché); lo único que escribe es la base del repaso de las fichas (repaso.sqlite, REPASO_DB, por lib/repaso.py). Corre la CLI de cada suite, primero simulando (F5); «Aplicar» (Ctrl+Intro) confirma con la orden exacta y los pasos de la puerta, y se desactiva con Calibre o Zotero abiertos o el candado ocupado.'

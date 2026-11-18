@@ -687,3 +687,72 @@ simula siempre). Qué destino se escribe es decisión del autor, y por ahora:
   la cuenta desde la última vuelta, del timer o a mano (`ExecMainStartTimestamp` del servicio), más una hora.
 - **Las llamadas al sistema van por `Sincronia`**, que las pruebas reemplazan por una falsa: ninguna prueba toca el timer
   real ni corre una vuelta sobre los datos reales.
+
+### §9.9 El rediseño de la ventana y el repaso de las fichas (2026-11-18)
+
+Pedido del autor: rehacer Biblioteca Studio según una maqueta que aprobó, más interactiva, intuitiva y fácil de usar, sin
+perder nada de lo que hace, y sumar un repaso de las fichas para estudiantes.
+
+- **La cabecera**: seis áreas como chips, en este orden y con Ctrl+1 a Ctrl+6: **Inicio · Catálogo · Lectura · Fichas ·
+  Método · Coherencia**; después, la búsqueda y el punto de la puerta. **Bandejas** deja de ser chip pero no desaparece:
+  Ctrl+7, el menú Ver, la paleta (Ctrl+K) y, desde Inicio, la cifra «Pendientes» y cada fila de «Siguiente paso» que la
+  nombra (`SIN_CHIP` en `studio/biblioteca_app/controladores/espacio.py`). La ventana abre en Inicio. La maqueta ponía el nombre del studio antes
+  de los chips; no se puso, porque la familia no lleva nombre ni logotipo dentro de la ventana (gui-comun, y
+  `tests/studio/test_studio.py` lo vigila): el título lo pone KWin. Si el autor lo quiere, se decide para toda la familia.
+- **Inicio** (`studio/biblioteca_app/controladores/inicio.py` y su `Inicio.qml`): «Esto es lo de hoy» con el estado breve de la sincronización;
+  cuatro cifras (leído esta semana, subrayados nuevos de los últimos siete días, fichas por revisar y pendientes de las
+  bandejas), «Seguir leyendo» (hasta tres libros en curso con su portada y la barra del color de la herramienta donde se
+  leyeron por última vez) y «Siguiente paso» (hasta cuatro filas: fichar los subrayados que ninguna ficha de su libro
+  contiene, con el primero ya puesto en «Nueva ficha»; el repaso del día; el escrito cuyo `fuentes.yml` cambió en la
+  semana, «Abrir en LaTeX Studio»; las bandejas con algo). Lo que no tiene datos no se muestra: sin base de lectura no
+  hay horas ni «Seguir leyendo».
+- **Catálogo**: la fila de los filtros puestos (y la búsqueda), que se quitan de un toque; la barra de lectura bajo cada
+  portada, del color de KOReader; y la ficha del libro reordenada: portada, título, autor y año, clave en monoespaciada,
+  dos cifras (Leído y Subrayados, de la base de lectura), «Abrir» (la acción rellena), «Nueva ficha», «Estudiar con la IA»
+  y «Citar en LaTeX» (copia `\parencite{clave}`), «Usado en», y lo de antes debajo.
+- **Lectura**: cuatro cifras arriba (subrayados, horas en doce semanas, libros con lectura, racha), el mapa de calor de
+  horas por día (7 × 12, más oscuro con más horas: `dias` de `lectura_base/lib/consulta.py`) y una raya a la izquierda de cada
+  subrayado con el color de la herramienta donde nació. **Los colores de las herramientas son de la maqueta y viven en
+  Python** (`COLORES` en `studio/biblioteca_app/controladores/lectura.py`: KOReader `#378ADD`, Zotero `#D85A30`, Okular `#1D9E75`, Yachay `#7F77DD`):
+  el QML no lleva colores propios. Las consultas nuevas (`dias`, `nuevas`, `en_curso`, `subrayados`) solo leen.
+- **Fichas** (`studio/biblioteca_app/controladores/fichas.py` y su `Fichas.qml`): las de todos los escritos (`lib/consulta.py` `escritos` y
+  `fichas`, que ahora da también el tema y la paráfrasis) y las canónicas, con los filtros en lista (Todas, Textuales,
+  Paráfrasis, Por revisar, con su cuenta); cada ficha con su cita en letra de lectura y, tenue, la obra, la página, el
+  tipo, si está cotejada con el PDF y el escrito, con «Abrir en LaTeX Studio» (LaTeX Studio no recibe una inserción
+  desde fuera: lo más cercano es abrir el escrito) y «Copiar la cita» (lo que se insertaría). «Ver en Yachay» no se puso:
+  Yachay no tiene una dirección por ficha de escrito. «Nueva ficha» y «Estudiar con la IA» son los diálogos de §9.4 y
+  §9.5, sobre el libro de la ficha elegida.
+- **Método y Coherencia** (`EspacioEtapas.qml`): el Método es un recorrido de pasos numerados con su contador, la elegida
+  resaltada; debajo, la descripción de la etapa, «Simular (F5)» y «Aplicar (Ctrl+Intro)» con la línea tenue «respaldo
+  verificado · se puede deshacer» cuando la operación escribe en una base (en la pestaña Operación ya no se repiten). La
+  Coherencia suma arriba tres tarjetas (Calibre ⇄ Zotero, Calibre ⇄ KOReader y Tareas automáticas: un punto de estado,
+  una línea tenue y el botón que elige su operación o su etapa; `etapas.tarjetasCoherencia`). La tabla, el elemento, el
+  plan, el registro y la salida siguen igual.
+- **Piezas comunes**: `Tarjeta` (la de Lectura, ahora un componente: el fondo de la vista, una línea fina y esquinas
+  suaves), `Cifra` y `BarraLectura`.
+
+**El repaso para estudiantes** (`lib/repaso.py`). Se apoya en dos resultados: la **práctica de recuperación**, recordar
+fija más que releer (Roediger y Karpicke, 2006), y el **repaso espaciado**, repasos separados retienen más que los
+seguidos (Cepeda et al., 2006). Por eso la tarjeta muestra primero la pregunta (la categoría o el tema de la ficha y su
+obra) y solo con «Mostrar la ficha» la cita, y por eso cada ficha vuelve cada vez más tarde: el **sistema Leitner de
+cinco cajas**. Una ficha nueva entra en la caja 1; «La sabía» la sube una caja (hasta la 5) y «Repasar luego» la vuelve
+a la 1. La caja 1 vuelve cada día, la 2 cada 2, la 3 cada 4, la 4 cada 8 y la 5 cada 16. Toca hoy lo vencido y lo nunca
+repasado, primero la caja más baja. Entran las textuales, las paráfrasis y las síntesis con texto.
+
+- **Su base**: `$XDG_DATA_HOME/biblioteca/repaso.sqlite` (`REPASO_DB`), junto a la base de lectura y por la misma razón:
+  es del usuario. No es Calibre ni Zotero, así que no pasa por la puerta; `lib/repaso.py` es su único escritor, su
+  conexión de escritura pasa por la guarda de rutas de la base de lectura (`comprobar_ruta`), y `tests/calibre/test_puerta.py`
+  la declara base propia. Antes de la primera escritura de cada día deja un respaldo verificado (`escribir.respaldar`)
+  en `<respaldos de la puerta>/repaso/`: uno por día y no uno por tarjeta, para no llenar el disco con copias. Una ficha
+  se nombra por su clave (`<familia>/<escrito>/<nombre>`), no por su ruta.
+- **Simular**: `python3 lib/repaso.py responder <clave> --sabia` dice lo que haría; con `--aplicar` lo escribe. La
+  ventana escribe al pulsar, que es la decisión de quien estudia.
+- **Las pruebas**: `tests/studio/test_repaso.py` (las cajas, subir, bajar, qué toca hoy, la simulación, el respaldo del
+  día, la guarda), `tests/studio/test_inicio.py` (Inicio y Fichas sobre la muestra, que trae dos fichas en su informe y
+  una tarjeta ya repasada) y `tests/lectura_base/test_consulta.py` (las consultas nuevas). Las capturas, con
+  `studio/capturar.py --area inicio|fichas|…` (y `--repaso --mostrar`), sobre la muestra.
+
+Referencias: Cepeda, N. J., Pashler, H., Vul, E., Wixted, J. T. y Rohrer, D. (2006). Distributed practice in verbal recall
+tasks: A review and quantitative synthesis. *Psychological Bulletin, 132*(3), 354–380. Roediger, H. L. y Karpicke, J. D.
+(2006). Test-enhanced learning: Taking memory tests improves long-term retention. *Psychological Science, 17*(3), 249–255.
+Las dos aún no están en la biblioteca (pendiente en `estado.md`).

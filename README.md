@@ -24,7 +24,7 @@ main.py estado
 main.py traer <norma> [--serie|--tags|--titulo|--fecha|--emisor …] [--aplicar] [--json]
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-11-17); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-11-18); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 <!-- suites:inicio -->
@@ -43,12 +43,12 @@ Suites de esta carpeta (15); índice global en `meta/INDICE_SCRIPTS.md`. Patrón
 | `metadatos-pdf` | [biblioteca-studio/metadatos-pdf](metadatos-pdf/) | biblioteca | calibre, archivos | sí |  | activo | `MCL` |
 | `migraciones` | [biblioteca-studio/migraciones](migraciones/) | biblioteca | calibre | sí |  | activo | `M··` |
 | `sincronizar-zotero` | [biblioteca-studio/sincronizar-zotero](sincronizar-zotero/) | biblioteca | calibre, zotero | sí |  | activo | `MCL` |
-| `biblioteca_studio` | [biblioteca-studio/studio](studio/) | biblioteca | calibre, zotero | sí |  | activo | `M··` |
+| `biblioteca_studio` | [biblioteca-studio/studio](studio/) | biblioteca | calibre, zotero, archivos | sí |  | activo | `M··` |
 | `fuentes` | [biblioteca-studio](./) | fuentes | archivos | sí |  | activo | `MCL` |
 | `verificacion` | [biblioteca-studio/verificacion](verificacion/) | biblioteca | ninguno | sí |  | activo | `MCL` |
 | `zotero-series` | [biblioteca-studio/zotero-series](zotero-series/) | biblioteca | zotero | no |  | retirado | `···` |
 
-<sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-11-17); no se edita a mano.</sub>
+<sub>Bloque generado desde los `suite.yml` por `core/suites.py generar` (2026-11-18); no se edita a mano.</sub>
 <!-- suites:fin -->
 
 Las herramientas de línea de comandos (Bash y Python) alrededor de la biblioteca Calibre (`biblioteca/`, la
