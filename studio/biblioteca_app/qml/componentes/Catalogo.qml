@@ -105,7 +105,8 @@ RowLayout {
                 anchors.margins: Kirigami.Units.smallSpacing
                 visible: !raiz.l.enLista
                 clip: true
-                model: raiz.l.modelo
+                // el modelo, solo en la forma a la vista (cuadrícula o lista): la oculta rehacía sus filas en cada búsqueda o filtro (2026-11-19)
+                model: raiz.l.enLista ? null : raiz.l.modelo
                 readonly property int columnas: Math.max(1, Math.floor(width / (Kirigami.Units.gridUnit * 9)))
                 cellWidth: width / columnas
                 cellHeight: cellWidth * 1.45 + Kirigami.Units.gridUnit * 6
@@ -129,7 +130,7 @@ RowLayout {
                 anchors.fill: parent
                 visible: raiz.l.enLista
                 clip: true
-                model: raiz.l.modelo
+                model: raiz.l.enLista ? raiz.l.modelo : null
                 keyNavigationEnabled: true
                 activeFocusOnTab: true
                 currentIndex: -1

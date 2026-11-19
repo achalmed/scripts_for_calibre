@@ -6,7 +6,7 @@ B6 y B8; `docs/reingenieria.md`).
   `#ko_status`, `#ko_tiempo`, `#ko_lastmod`), que `lib/indice.editorial` lee de `metadata.db` en SOLO LECTURA (la
   ventana no abre las bases), unidos al índice (clave de Zotero, clave para citar, fichas, nota). El JSON del índice y
   su orden no cambian: son contrato de los complementos.
-- `consulta(texto)` y `cumple(libro, terminos)`: la búsqueda avanzada (`titulo:`, `autor:`, `año:` o un rango,
+- `consulta(texto)`, `planos(libro)` y `cumple(libro, terminos)`: la búsqueda avanzada (`titulo:`, `autor:`, `año:` o un rango,
   `serie:`, `etiqueta:`, `id:`, `clave:`; palabras sueltas en todo; comillas para agrupar), sin tildes ni mayúsculas.
 - `facetas(libros)`: los valores de los filtros (colección = la serie, autor, década, tipo) con su cuenta.
 - `bandejas(libros, entrada, fichas)`: las bandejas de trabajo y lo que hay en cada una.
@@ -142,30 +142,38 @@ def _en_año(año: int | None, valor: str) -> bool:
     return str(año).startswith(valor)
 
 
-def cumple(libro: dict, terminos: list[tuple[str, str]]) -> bool:
-    """¿El libro cumple todos los términos? (y lógico)."""
+def planos(libro: dict) -> dict:
+    """Los campos de la búsqueda ya sin tildes ni mayúsculas: se calculan una vez por libro al leer el catálogo, no en
+    cada tecla (con 4775 libros, normalizar en cada búsqueda costaba de 0,2 a 0,7 s en el hilo de la ventana)."""
+    return {"titulo": _plano(libro["titulo"]), "autores": [_plano(a) for a in libro["autores"]], "serie": _plano(libro["serie"]),
+            "etiquetas": [_plano(t) for t in libro["etiquetas"]], "clave": _plano(libro["clave"]), "tipo": _plano(libro["tipo"]),
+            "zotero": _plano(libro["zotero_key"]), "ids": [_plano(v) for v in libro["identificadores"].values()]}
+
+
+def cumple(libro: dict, terminos: list[tuple[str, str]], p: dict | None = None) -> bool:
+    """¿El libro cumple todos los términos? (y lógico). `p`: sus `planos`, si ya se calcularon."""
+    p = p or planos(libro)
     for campo, valor in terminos:
         if campo == "titulo":
-            ok = valor in _plano(libro["titulo"])
+            ok = valor in p["titulo"]
         elif campo == "autor":
-            ok = any(valor in _plano(a) for a in libro["autores"])
+            ok = any(valor in a for a in p["autores"])
         elif campo == "año":
             ok = _en_año(libro["año"], valor)
         elif campo == "serie":
-            ok = valor in _plano(libro["serie"])
+            ok = valor in p["serie"]
         elif campo == "etiqueta":
-            ok = any(valor in _plano(t) for t in libro["etiquetas"])
+            ok = any(valor in t for t in p["etiquetas"])
         elif campo == "id":
-            ok = (valor == libro["id"] or valor == _plano(libro["zotero_key"])
-                  or any(valor in _plano(v) for v in libro["identificadores"].values()))
+            ok = valor == libro["id"] or valor == p["zotero"] or any(valor in v for v in p["ids"])
         elif campo == "clave":
-            ok = valor in _plano(libro["clave"])
+            ok = valor in p["clave"]
         elif campo == "tipo":
-            ok = valor in _plano(libro["tipo"])
+            ok = valor in p["tipo"]
         else:
-            ok = (valor in _plano(libro["titulo"]) or any(valor in _plano(a) for a in libro["autores"]) or valor in _plano(libro["serie"])
-                  or any(valor in _plano(t) for t in libro["etiquetas"]) or valor in _plano(libro["clave"]) or valor == libro["id"]
-                  or any(valor == _plano(v) for v in libro["identificadores"].values()))
+            ok = (valor in p["titulo"] or any(valor in a for a in p["autores"]) or valor in p["serie"]
+                  or any(valor in t for t in p["etiquetas"]) or valor in p["clave"] or valor == libro["id"]
+                  or any(valor == v for v in p["ids"]))
         if not ok:
             return False
     return True

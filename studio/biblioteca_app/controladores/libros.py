@@ -91,6 +91,7 @@ class Libros(QObject):
     aviso = Signal(str, str)
     usosCambiados = Signal()            # los escritos que usan el libro de la ficha (decisiones §9.1)
     _usosListos = Signal(str, "QVariantList")
+    _leido = Signal(object)             # la relectura en segundo plano terminó (llega al hilo de la ventana)
 
     def __init__(self, espacio, consola, env, ruta_indice: Path | None = None, escritorio=None, repo: Path = datos.REPO,
                  portadas=None, parent=None):
@@ -102,6 +103,11 @@ class Libros(QObject):
         self._indice: dict = {"libros": {}}
         self._libros: list[dict] = []
         self._por_id: dict[str, dict] = {}
+        self._planos: dict[str, dict] = {}      # los campos de la búsqueda ya normalizados, por id (catalogo.planos)
+        self._coinciden: set[str] | None = None  # los ids que cumplen la búsqueda; None = sin búsqueda
+        self._leyendo = False                   # una relectura en segundo plano en curso
+        self._releer_otra = False               # y otra pedida mientras tanto
+        self._leido.connect(self._aplicar)
         self._inmutable = False
         self._error = ""
         self._usos: list = []
@@ -142,31 +148,68 @@ class Libros(QObject):
     @Slot()
     def recargar(self) -> None:
         """Relee el índice y Calibre (en solo lectura), la entrada y las fichas: tras «Actualizar el índice», F6 o una aplicación."""
-        self._indice = datos.leer_indice(self._ruta_indice)
-        biblioteca = Path(self._indice.get("biblioteca") or self.env.BIBLIOTECA_DIR)
+        self._aplicar(self._leer())
+
+    def recargar_en_segundo_plano(self) -> None:
+        """La misma relectura, fuera del hilo de la ventana (la pide el vigilante de metadata.db: Calibre o la
+        sincronización de KOReader escriben a cualquier hora, y releer 4775 libros y la zona de entrada toma 1 a 2 s)."""
+        if self._leyendo:
+            self._releer_otra = True
+            return
+        import threading
+        self._leyendo, self._releer_otra = True, False
+
+        def trabajo():
+            try:
+                r = self._leer()
+            except Exception as e:                  # noqa: BLE001  se informa en la ventana, no tumba el hilo
+                r = {"fallo": str(e)}
+            self._leido.emit(r)
+        threading.Thread(target=trabajo, name="catalogo", daemon=True).start()
+
+    def _leer(self) -> dict:
+        """Todo lo que la relectura necesita, sin tocar la ventana (corre también en un hilo)."""
+        indice = datos.leer_indice(self._ruta_indice)
+        biblioteca = Path(indice.get("biblioteca") or self.env.BIBLIOTECA_DIR)
         db = Path(getattr(self.env, "CALIBRE_DB", "") or biblioteca / "metadata.db")
-        self._db, self._firma_db = db, firma(db)
-        self._vigilar_db()
+        r = {"indice": indice, "db": db, "firma": firma(db), "error": ""}
         try:
-            leido = cat.leer(db, self._indice, biblioteca)
-            self._libros, self._inmutable, self._error = leido["libros"], leido["inmutable"], ""
+            leido = cat.leer(db, indice, biblioteca)
+            r["libros"], r["inmutable"] = leido["libros"], leido["inmutable"]
         except Exception as e:      # noqa: BLE001  una base que no se puede leer no tumba la ventana
-            self._libros, self._inmutable, self._error = [], False, f"No se pudo leer la biblioteca de Calibre: {e}"
-            self.consola.registrar("error", self._error)
-        self._por_id = {l["id"]: l for l in self._libros}
-        if self.portadas is not None:
-            self.portadas.fijar_rutas({l["id"]: l["ruta_portada"] for l in self._libros if l["portada"]})
+            r["libros"], r["inmutable"], r["error"] = [], False, f"No se pudo leer la biblioteca de Calibre: {e}"
+        r["planos"] = {l["id"]: cat.planos(l) for l in r["libros"]}
         try:
-            self._entrada = datos.entrada(self.repo, Path(self.env.DOCS_ROOT))
-            self._fichas_meta = datos.fichas(self.repo)
+            r["entrada"] = datos.entrada(self.repo, Path(self.env.DOCS_ROOT))
+            r["fichas"] = datos.fichas(self.repo)
         except OSError:
-            self._entrada, self._fichas_meta = [], []
-        self._bandejas = cat.bandejas(self._libros, self._entrada, self._fichas_meta)
-        self._pintar()
-        self._pintar_bandeja()
-        self.cambiado.emit()
-        if self._actual:
-            self._fijar(self._por_id.get(self._actual["id"], {}))
+            r["entrada"], r["fichas"] = [], []
+        r["bandejas"] = cat.bandejas(r["libros"], r["entrada"], r["fichas"])
+        return r
+
+    def _aplicar(self, r: dict) -> None:
+        """Pone lo leído en los modelos (en el hilo de la ventana)."""
+        en_hilo, self._leyendo = self._leyendo, False
+        if "fallo" in r:
+            self.consola.registrar("error", f"No se pudo releer el catálogo: {r['fallo']}")
+        else:
+            self._indice, self._db, self._firma_db = r["indice"], r["db"], r["firma"]
+            self._vigilar_db()
+            self._libros, self._inmutable, self._error = r["libros"], r["inmutable"], r["error"]
+            if self._error:
+                self.consola.registrar("error", self._error)
+            self._por_id = {l["id"]: l for l in self._libros}
+            self._planos = r["planos"]
+            if self.portadas is not None:
+                self.portadas.fijar_rutas({l["id"]: l["ruta_portada"] for l in self._libros if l["portada"]})
+            self._entrada, self._fichas_meta, self._bandejas = r["entrada"], r["fichas"], r["bandejas"]
+            self._pintar()
+            self._pintar_bandeja()
+            self.cambiado.emit()
+            if self._actual:
+                self._fijar(self._por_id.get(self._actual["id"], {}))
+        if en_hilo and self._releer_otra:
+            self.recargar_en_segundo_plano()
 
     # ------------------------------------------------------------------ el vigilante de metadata.db
     def _vigilar_db(self) -> None:
@@ -190,7 +233,7 @@ class Libros(QObject):
                 self._vigilante.addPath(str(self._db))   # reemplazado por uno nuevo: se vuelve a vigilar
             return
         self.consola.registrar("info", "metadata.db cambió (Calibre o una suite): el catálogo se relee en solo lectura.")
-        self.recargar()
+        self.recargar_en_segundo_plano()
 
     def _vigilar_set(self, v: bool) -> None:
         self._vigilar = bool(v)
@@ -200,21 +243,39 @@ class Libros(QObject):
 
     vigilar = Property(bool, lambda self: self._vigilar, _vigilar_set, notify=vigilarCambiado)
 
-    def _pintar(self) -> None:
+    def _pintar(self, facetas: bool = True) -> None:
+        """Las filas en su orden; el proxy las filtra al recibirlas (no hace falta otra pasada). Las facetas no dependen
+        del orden: cambiar el orden no las recuenta."""
+        if facetas:
+            self._buscar_ids()
         orden = sorted(self._libros, key=cat.clave_orden(self._orden))
         self._filas.poner([fila(l) for l in orden])
-        self._recalcular()
+        if facetas:
+            self._contar_facetas()
 
-    def _recalcular(self) -> None:
+    def _buscar_ids(self) -> None:
+        """Los ids que cumplen la búsqueda, una vez por búsqueda (el filtro de cada fila solo mira el conjunto)."""
+        if self._terminos:
+            self._coinciden = {l["id"] for l in self._libros if cat.cumple(l, self._terminos, self._planos.get(l["id"]))}
+        else:
+            self._coinciden = None
+
+    def _contar_facetas(self) -> None:
         """Las facetas se cuentan sobre lo que cumple la búsqueda (no los filtros: se ve cuánto da cada uno)."""
-        buscados = [l for l in self._libros if cat.cumple(l, self._terminos)] if self._terminos else self._libros
+        buscados = self._libros if self._coinciden is None else [l for l in self._libros if l["id"] in self._coinciden]
         self._facetas = cat.facetas(buscados)
-        self._modelo.aceptar_con(self._acepta)
         self.facetasCambiadas.emit()
 
+    def _recalcular(self) -> None:
+        """Tras cambiar la búsqueda: el conjunto, el filtro (una pasada) y las facetas."""
+        self._buscar_ids()
+        self._modelo.aceptar_con(self._acepta)
+        self._contar_facetas()
+
     def _acepta(self, i: int) -> bool:
-        l = self._por_id.get(self._filas.fila(i).get("id", ""))
-        return bool(l) and cat.cumple_filtros(l, self._filtros) and (not self._terminos or cat.cumple(l, self._terminos))
+        bid = self._filas.fila(i).get("id", "")
+        l = self._por_id.get(bid)
+        return bool(l) and (self._coinciden is None or bid in self._coinciden) and cat.cumple_filtros(l, self._filtros)
 
     @property
     def indice(self) -> dict:
@@ -321,7 +382,7 @@ class Libros(QObject):
         if orden in dict(cat.ORDENES) and orden != self._orden:
             self._orden = orden
             self._s.setValue("catalogo/orden", orden)
-            self._pintar()
+            self._pintar(facetas=False)
             self.filtroCambiado.emit()
 
     def _lista_get(self) -> bool:
@@ -619,7 +680,7 @@ class Libros(QObject):
         terminos = cat.consulta(t)
         salida = []
         for l in self._libros:
-            if cat.cumple(l, terminos):
+            if cat.cumple(l, terminos, self._planos.get(l["id"])):
                 salida.append({"nombre": f"libro.{l['id']}", "texto": f"Libro: {l['titulo']}", "grupo": "Catálogo", "icono": "folder-book",
                                "ejecutar": lambda i=l["id"]: self.irA(i)})
                 if len(salida) >= 40:

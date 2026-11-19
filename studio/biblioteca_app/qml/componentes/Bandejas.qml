@@ -88,7 +88,9 @@ RowLayout {
             Layout.fillHeight: true
             ListView {
                 id: contenido
-                model: raiz.l.bandejaModelo
+                // solo con el área a la vista: oculta en el StackLayout, la vista creaba las ~1500 filas de la bandeja
+                // en cada relectura del catálogo y congelaba la ventana (medido: 20–35 s; 2026-11-19)
+                model: raiz.visible ? raiz.l.bandejaModelo : null
                 clip: true
                 section.property: "seccion"
                 section.delegate: Kirigami.ListSectionHeader { required property string section; width: ListView.view.width; text: section }
