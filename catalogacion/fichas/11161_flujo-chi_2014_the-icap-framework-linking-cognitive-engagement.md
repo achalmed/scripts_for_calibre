@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-Sin archivo: la obra no tiene un PDF de acceso abierto en su sede oficial; queda el registro con sus metadatos e identificadores.
+`biblioteca-studio/entrada/2026-11-19-lectura-guiada-adjuntos/11161.pdf` · SHA-256 `f8c36893bc649964…` · https://education.asu.edu/sites/default/files/lcl/chiwylie2014icap_2.pdf (añadido el 2026-11-19 por `lib/ingresar.py adjuntar`)
 
 ## Zotero
 | Campo | Valor |

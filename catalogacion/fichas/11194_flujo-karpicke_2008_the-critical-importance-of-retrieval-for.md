@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-Sin archivo: la obra no tiene un PDF de acceso abierto en su sede oficial; queda el registro con sus metadatos e identificadores.
+`biblioteca-studio/entrada/2026-11-19-lectura-guiada-adjuntos/11194.pdf` · SHA-256 `174c2c2520351933…` · https://learninglab.psych.purdue.edu/downloads/2008/2008_Karpicke_Roediger_Science.pdf (añadido el 2026-11-19 por `lib/ingresar.py adjuntar`)
 
 ## Zotero
 | Campo | Valor |
