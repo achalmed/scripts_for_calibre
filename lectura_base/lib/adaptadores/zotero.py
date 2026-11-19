@@ -32,7 +32,9 @@ TIPO_DE = {"resaltado": 1, "subrayado": 5, "nota": 2, "tachado": 5}
 def ruta_zotero() -> Path:
     if os.environ.get("ZOTERO_DB"):
         return Path(os.environ["ZOTERO_DB"])
-    return Path(os.environ.get("ZOTERO_DIR") or Path.home() / "Zotero") / "zotero.sqlite"
+    if os.environ.get("ZOTERO_DIR"):
+        return Path(os.environ["ZOTERO_DIR"]) / "zotero.sqlite"
+    return Path(base.env("ZOTERO_DB"))
 
 
 @contextmanager

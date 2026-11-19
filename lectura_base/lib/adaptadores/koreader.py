@@ -43,7 +43,8 @@ def carpeta_koreader() -> Path | None:
         candidatos.append(Path(os.environ["KOREADER_DIR"]).expanduser())
     if os.environ.get("KOREADER_STATS"):
         candidatos.append(Path(os.environ["KOREADER_STATS"]).expanduser().parent.parent)
-    candidatos.append(Path.home() / ".config" / "koreader")
+    elif base.env("KOREADER_STATS"):                     # el de core/env.py: ~/.config/koreader/settings/statistics.sqlite3
+        candidatos.append(Path(base.env("KOREADER_STATS")).expanduser().parent.parent)
     if os.environ.get("KOREADER_RESPALDO_DIR"):
         candidatos.append(Path(os.environ["KOREADER_RESPALDO_DIR"]).expanduser())
     for c in candidatos:

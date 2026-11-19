@@ -225,7 +225,8 @@ def exportar(destino: str, aplicar: bool = False, ids: set[int] | None = None, l
     previos: list[str] = []
     cands, previos = ubicables(cands, resolutor)      # Yachay también: ahí la hoja girada caería en otro lugar
     if destino == "zotero":
-        ruta_z = Path(os.environ.get("ZOTERO_DB") or Path(os.environ.get("ZOTERO_DIR") or Path.home() / "Zotero") / "zotero.sqlite")
+        from lectura_base.lib.adaptadores.zotero import ruta_zotero
+        ruta_z = ruta_zotero()
         plan, avisos = plan_zotero(cands, ruta_z, resolutor)
     elif destino == "koreader":
         plan, avisos = plan_koreader(cands, resolutor, ruta)

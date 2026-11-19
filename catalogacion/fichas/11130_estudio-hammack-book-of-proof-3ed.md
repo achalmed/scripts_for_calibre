@@ -18,4 +18,4 @@ verificacion:
 `biblioteca-studio/entrada/estudio-por-partes-2026-11-16/H-matematicas/hammack-book-of-proof-3ed/BookOfProof-Main.pdf` · SHA-256 `e0e471ca794ddda7…` · https://richardhammack.github.io/BookOfProof/Main.pdf · CC BY-NC-ND 4.0 (descarga libre del PDF por el autor)
 
 ## Notas
-- Edición 3.4 (5-02-2025; ISBN 978-0-9894721-2-8 en rústica). La antigua página de VCU (people.vcu.edu/~rhammack) no responde; el autor mantiene el libro en su GitHub Pages y da rhammack@vcu.edu como contacto.
+- Edición 3.4 (5-02-2025; ISBN 978-0-9894721-2-8 en rústica). La antigua página de VCU (people.vcu.edu/~rhammack) no responde; el autor mantiene el libro en su GitHub Pages y da como contacto su correo institucional de VCU.

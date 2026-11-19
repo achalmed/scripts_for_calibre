@@ -32,7 +32,7 @@ def cargar_cliente():
     """El cliente de Yachay (`YACHAY_CLIENTE` o `<YACHAY_DIR|~/Documents/yachay>/cliente/yachay_cliente.py`) con su token del
     llavero, o None si aún no está (la fase 3b lo trae) o no hay token."""
     candidatos = [os.environ.get("YACHAY_CLIENTE") or ""]
-    raiz = os.environ.get("YACHAY_DIR") or str(Path(os.environ.get("DOCS_ROOT") or Path.home() / "Documents") / "yachay")
+    raiz = os.environ.get("YACHAY_DIR") or str(Path(base.env("DOCS_ROOT")) / "yachay")
     candidatos += [str(Path(raiz) / "cliente" / "yachay_cliente.py"),       # donde lo dejó la fase 3b
                    str(Path(raiz) / "yachay" / "cliente.py")]               # la ruta del encargo
     for c in candidatos:

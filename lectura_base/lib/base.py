@@ -195,9 +195,15 @@ class RutaProhibida(RuntimeError):
     """Se intentó abrir como base de lectura una base de Calibre o de Zotero."""
 
 
-def _env_core() -> dict:
-    """Las rutas de core/env.py (sin fallar si no está): CALIBRE_DB, ZOTERO_DB, BIBLIOTECA_DIR y ZOTERO_DIR."""
-    salida = {k: os.environ.get(k, "") for k in ("CALIBRE_DB", "ZOTERO_DB", "BIBLIOTECA_DIR", "ZOTERO_DIR")}
+def env(nombre: str) -> str:
+    """Una ruta del espacio de trabajo: la variable del entorno o, si no está, la de core/env.py (normativa 5.1); «» si
+    ninguno la da. Así los adaptadores no escriben la carpeta de inicio del usuario como literal."""
+    return _env_core((nombre,))[nombre]
+
+
+def _env_core(claves=("CALIBRE_DB", "ZOTERO_DB", "BIBLIOTECA_DIR", "ZOTERO_DIR")) -> dict:
+    """Las rutas de core/env.py (sin fallar si no está): por omisión CALIBRE_DB, ZOTERO_DB, BIBLIOTECA_DIR y ZOTERO_DIR."""
+    salida = {k: os.environ.get(k, "") for k in claves}
     if all(salida.values()):
         return salida
     try:
