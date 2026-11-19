@@ -28,7 +28,8 @@ pone `lib/comun.py`. Se prueba en este orden:
 ```bash
 python3 main.py fuentes                          # aparece, con su descripción y sus tipos
 python3 main.py localizar <nombre> "<ref>"       # solo lectura: ¿encuentra la URL?
-python3 main.py descargar <nombre> "<ref>"       # escribe en entrada/ y en el ledger
+python3 main.py descargar <nombre> "<ref>"       # simula: qué archivo bajaría
+python3 main.py descargar <nombre> "<ref>" --aplicar   # escribe en entrada/ y en el ledger
 ```
 
 Solo acceso abierto: una fuente no usa credenciales institucionales, proxies ni nada que esquive

@@ -3,7 +3,8 @@
 // cada uno, la pregunta y los criterios; los requisitos que faltan; la bitácora de búsqueda (cada búsqueda con su base, su
 // cadena exacta, sus filtros, su fecha y sus resultados, y una nueva); el cribado en dos fases por registro; y el diagrama
 // PRISMA 2020 que sale de todo eso. Cada parte lleva su línea tenue «por qué · fuente». La acción rellena es «Generar el
-// diagrama». Todo lo escribe studio.revision en fuentes/revision.yml del escrito; Calibre y Zotero no se tocan.
+// diagrama». Cada botón simula (cambia una copia que se pinta y suma un cambio sin aplicar); la barra de arriba muestra la
+// diferencia y «Aplicar» lo escribe studio.revision en fuentes/revision.yml del escrito; Calibre y Zotero no se tocan.
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -106,11 +107,23 @@ RowLayout {
                 Chip {
                     text: "Generar el diagrama"
                     icono: "office-chart-area-focus-peak-node"
-                    destacado: true
-                    enabled: !raiz.rv.ocupado && (raiz.r.busquedas || []).length > 0
+                    destacado: raiz.rv.pendientes === 0
+                    enabled: !raiz.rv.ocupado && raiz.rv.pendientes === 0 && (raiz.r.busquedas || []).length > 0
                     ayuda: "PRISMA 2020 desde la bitácora: fuentes/prisma.pdf, listo para \\includegraphics"
                     onClicked: raiz.rv.generarPrisma()
                 }
+            }
+            // los cambios simulados: nada está en fuentes/revision.yml hasta «Aplicar»
+            Kirigami.InlineMessage {
+                Layout.fillWidth: true
+                visible: !!raiz.rv.escrito && raiz.rv.pendientes > 0
+                type: Kirigami.MessageType.Information
+                text: raiz.rv.resumenPendientes + ". Lo que ves es la simulación; «Aplicar» lo escribe."
+                actions: [
+                    Kirigami.Action { text: "Ver la diferencia"; icon.name: "vcs-diff"; onTriggered: dialogoDiferencia.open() },
+                    Kirigami.Action { text: "Descartar"; icon.name: "edit-undo"; onTriggered: raiz.rv.descartar() },
+                    Kirigami.Action { text: "Aplicar"; icon.name: "dialog-ok-apply"; onTriggered: raiz.rv.aplicar() }
+                ]
             }
             Titulo { visible: !!raiz.rv.escrito; text: "Tipo de revisión" }
             Flow {
@@ -329,6 +342,24 @@ RowLayout {
         }
     }
 
+    Kirigami.Dialog {
+        id: dialogoDiferencia
+        title: "Lo que «Aplicar» escribirá en fuentes/revision.yml"
+        standardButtons: Kirigami.Dialog.Close
+        preferredWidth: Kirigami.Units.gridUnit * 44
+        preferredHeight: Kirigami.Units.gridUnit * 28
+        customFooterActions: [Kirigami.Action { text: "Aplicar"; icon.name: "dialog-ok-apply"
+                                                onTriggered: { raiz.rv.aplicar(); dialogoDiferencia.close() } }]
+        QQC2.ScrollView {
+            QQC2.TextArea {
+                readOnly: true
+                text: raiz.rv.diferencia
+                font: Kirigami.Theme.fixedWidthFont
+                wrapMode: TextEdit.NoWrap
+                Accessible.name: "La diferencia de la revisión"
+            }
+        }
+    }
     Dialogos.FileDialog {
         id: elegirArchivo
         property string busqueda: ""

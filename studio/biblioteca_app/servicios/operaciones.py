@@ -103,8 +103,8 @@ ETAPAS = (
           aplicar=None),
         O("localizar", "Localizar en una fuente", "Busca la referencia en una fuente sin descargar.", ("main.py", "localizar"),
           aplicar=None, entrada="texto", etiqueta="fuente y referencia"),
-        O("descargar", "Descargar", "Descarga la referencia de la fuente a la zona de entrada (con hash y procedencia).",
-          ("main.py", "descargar"), aplicar=None, entrada="texto", etiqueta="fuente y referencia"),
+        O("descargar", "Descargar", "Descarga la referencia de la fuente a la zona de entrada (con hash y procedencia); "
+          "simular dice qué archivo bajaría.", ("main.py", "descargar"), entrada="texto", etiqueta="fuente y referencia"),
         O("estado_fuentes", "Estado de lo descargado", "El ledger de descargas.", ("main.py", "estado"), aplicar=None),
     )),
     Etapa("entrada", "Entrada", "document-import", "De la zona de entrada a la biblioteca: identificar, catalogar en Calibre y "
@@ -150,6 +150,10 @@ ETAPAS = (
           aplicar=None, entrada="carpeta", etiqueta="carpeta de fichas", defecto="catalogacion/fichas"),
         O("fichas_verificar", "Verificar textuales y paráfrasis", "Coteja cada cita contra el texto del libro.",
           ("fichas/main.py", "verificar"), entrada="carpeta", etiqueta="carpeta de fichas", defecto="catalogacion/fichas"),
+        # FLUJO_DE_CONOCIMIENTO C14.3: el cotejo a mano de las paráfrasis, sobre una muestra con su semilla registrada
+        O("fichas_muestra", "Muestra de paráfrasis para cotejar", "Saca al azar el 20 % de las paráfrasis de un escrito "
+          "(con su semilla) y la registra en registro/ del escrito, para cotejarlas a mano.", ("fichas/main.py", "muestra"),
+          entrada="carpeta", etiqueta="carpeta de fichas del escrito"),
         O("lecturas", "Pasajes por concepto", "Del lecturas.yml de un curso o proyecto: cada concepto con su página.",
           ("lecturas/main.py",), entrada="archivo", etiqueta="lecturas.yml"),
     )),

@@ -271,6 +271,26 @@ RowLayout {
                     explanation: raiz.fi.resumenRepaso || "Las fichas textuales, de paráfrasis y de síntesis entran aquí solas"
                 }
                 Tenue { visible: raiz.t.hay === true; horizontalAlignment: Text.AlignHCenter; text: raiz.fi.resumenRepaso }
+                // las respuestas se simulan: nada va a la base del repaso hasta «Guardar el repaso»
+                RowLayout {
+                    Layout.fillWidth: true
+                    visible: raiz.fi.sinGuardar > 0
+                    spacing: Kirigami.Units.smallSpacing
+                    Tenue { Layout.fillWidth: true; text: raiz.fi.resumenSinGuardar }
+                    Chip {
+                        text: "Descartar"
+                        icono: "edit-undo"
+                        ayuda: "Olvida estas respuestas: las fichas vuelven a la cola de hoy"
+                        onClicked: raiz.fi.descartarRepaso()
+                    }
+                    Chip {
+                        text: "Guardar el repaso"
+                        icono: "document-save"
+                        destacado: true
+                        ayuda: "Escribe las respuestas en la base del repaso (con respaldo del día)"
+                        onClicked: raiz.fi.guardarRepaso()
+                    }
+                }
             }
         }
     }

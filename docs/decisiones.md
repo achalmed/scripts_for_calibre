@@ -776,7 +776,7 @@ repasado, primero la caja más baja. Entran las textuales, las paráfrasis y las
   en `<respaldos de la puerta>/repaso/`: uno por día y no uno por tarjeta, para no llenar el disco con copias. Una ficha
   se nombra por su clave (`<familia>/<escrito>/<nombre>`), no por su ruta.
 - **Simular**: `python3 lib/repaso.py responder <clave> --sabia` dice lo que haría; con `--aplicar` lo escribe. La
-  ventana escribe al pulsar, que es la decisión de quien estudia.
+  ventana escribía al pulsar; desde el 2026-11-18 simula y guarda al final (§9.11).
 - **Las pruebas**: `tests/studio/test_repaso.py` (las cajas, subir, bajar, qué toca hoy, la simulación, el respaldo del
   día, la guarda), `tests/studio/test_inicio.py` (Inicio y Fichas sobre la muestra, que trae dos fichas en su informe y
   una tarjeta ya repasada) y `tests/lectura_base/test_consulta.py` (las consultas nuevas). Las capturas, con
@@ -812,8 +812,8 @@ parte) y C12.5. Cada una vive en la biblioteca (`lib/`), en una orden de la CLI 
     huella del archivo (si otro lo cambió, no se pisa).
   - **Por qué el área va al final de los chips** (Revisión, Ctrl+7; Bandejas pasa a Ctrl+8): ponerla junto al Catálogo
     habría movido los atajos de la maqueta aprobada en §9.9.
-  - **Escribir al pulsar**: cada acción de la ventana (declarar el tipo, añadir una búsqueda, importar, cribar) es la
-    decisión de quien revisa y se escribe al pulsar, como el repaso (§9.9); la CLI simula por omisión.
+  - **Escribir al pulsar** (retirado el mismo día por §9.11): cada acción de la ventana se escribía al pulsar; ahora se
+    simula y «Aplicar» la escribe.
 - **El origen de cada ficha y el cotejo antes de citar** (C3.3; `fichas/lib/ficha.py`, `lib/fichar.py`, `lib/consulta.py`,
   el área Fichas). La ficha lleva un bloque opcional `origen` (`autor: persona | llm`, `herramienta`, `fecha`) entre `uso` y
   `verificacion`: la norma de fichas 1.1 (su §1, su §2 y su §8; en `main` de prompts, 476018d). Opcional, para que las fichas de antes sigan válidas, y solo cuando la propuso alguien
@@ -868,3 +868,26 @@ articles. *PeerJ, 3*, e1364. Keshav, S. (2007). How to read a paper. *ACM SIGCOM
 (2021). The PRISMA 2020 statement (Calibre 11073; traducción, 11074). Penabad-Camacho et al. (2024; Calibre 3110).
 Rethlefsen, M. L. et al. (2021). PRISMA-S. *Systematic Reviews, 10*, 39. Roig, M. (2015). *Avoiding plagiarism*. ORI.
 Snyder, H. (2019). Literature review as a research methodology. *Journal of Business Research, 104*, 333–339.
+### §9.11 Simular antes de escribir en la ventana, la descarga y la muestra de paráfrasis (2026-11-18)
+
+La guía práctica del flujo (`prompts/00 metodo/GUIA_FLUJO_DE_CONOCIMIENTO.md` §9) halló tres escrituras sin simulación
+previa, contra la normativa 5.10 y la convención de la ventana (F5 simula, Ctrl+Intro aplica):
+
+- **El área Revisión** (`studio/biblioteca_app/controladores/revision.py`): cada botón (el tipo, una búsqueda, importar, un registro, cribar)
+  cambia una copia en memoria que la ventana pinta (`lib/revision.py ver(escrito, r)`), suma un cambio sin aplicar y guarda
+  la diferencia unificada; una barra dice «N cambios sin aplicar: …» con «Ver la diferencia», «Descartar» y «Aplicar». Se
+  aplica de una vez con la huella con que se leyó: si otro cambió la bitácora del escrito («fuentes/revision.yml») entre la simulación y «Aplicar», no
+  se pisa (se avisa, se descarta y la diferencia queda en la consola). Con cambios sin aplicar no se cambia de escrito ni se
+  genera el diagrama, que sale del archivo. Se descartó confirmar cada clic: el cribado son decenas de decisiones seguidas.
+- **El repaso** (`studio/biblioteca_app/controladores/fichas.py`): «La sabía» y «Repasar luego» simulan (`repaso.responder` sin `aplicar`, que
+  ya existía) y la respuesta queda en la sesión; «Guardar el repaso» las escribe por el único escritor, con su respaldo del
+  día, y «Descartar» las devuelve a la cola de hoy.
+- **`main.py descargar`** simula por omisión (localiza y dice qué archivo bajaría) y `--aplicar` descarga y anota en el
+  ledger; la operación de la ventana pasa a tener «Simular» y «Aplicar». Su mensaje final apuntaba a una ruta retirada
+  (`scripts_for_fuentes/ingesta`): ahora, `bash ingesta/main.sh todo`.
+- **La muestra de paráfrasis** (C14.3; `fichas/lib/muestra.py`, `fichas/main.py muestra` y `muestra-resultado`, la
+  operación «Muestra de paráfrasis para cotejar» de la etapa Fichas): ⌈20 %⌉ de las `ficha_parafrasis` en orden de nombre
+  con `random.Random(semilla)`, registrada con su semilla en `registro/` del escrito y con el resultado de cada cotejo
+  (`coincide`, o `difiere` con su nota). Fuente: fundamento §8.2; Jergas y Baethge (2015). Pruebas:
+  `tests/fuentes/test_muestra_parafrasis.py`, `tests/studio/test_flujo.py` y `tests/studio/test_inicio.py`.
+

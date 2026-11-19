@@ -21,10 +21,12 @@ main.py verificar <carpeta> [--aplicar] [--desfase N]
 main.py claves|grafia <carpeta> [--aplicar]
 main.py indice <carpeta> --aplicar
 main.py estado <carpeta>
+main.py muestra <carpeta> [--proporcion 0.2] [--semilla N] [--aplicar]
+main.py muestra-resultado <registro> [<ficha> coincide|difiere [--nota …]] [--aplicar]
 main.py migrar <carpeta> --formato hibrida
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-10-04); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-11-18); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 ## Qué es
@@ -46,7 +48,17 @@ python3 main.py claves "../../escritura/reports/<slug>/fuentes/fichas" --aplicar
 python3 main.py indice "../../escritura/reports/<slug>/fuentes/fichas" --aplicar        # 00-indice_fichas.md
 python3 main.py estado "../../escritura/reports/<slug>/fuentes/fichas"                  # código 1 si hay «observada» o «pendiente» en uso
 python3 main.py migrar "../../escritura/<tipo>/<slug>/notes/fichas" --formato hibrida   # simula; --aplicar con respaldo y UNDO antes
+python3 main.py muestra "../../escritura/reports/<slug>/fuentes/fichas"                 # C14.3: el 20 % de las paráfrasis al azar, con su semilla; --aplicar la registra
+python3 main.py muestra-resultado "../../escritura/reports/<slug>/registro/muestra-parafrasis-<fecha>.yml" <ficha> coincide --aplicar
+python3 main.py muestra-resultado "<registro>" <ficha> difiere --nota "invierte la causalidad" --aplicar   # sin ficha: el resumen
 ```
+
+La muestra (FLUJO_DE_CONOCIMIENTO C14.3; Jergas y Baethge, 2015): el script coteja las textuales palabra por palabra, pero
+una paráfrasis solo la juzga quien lee el original. `muestra` toma las `ficha_parafrasis` de la carpeta en orden de nombre
+y saca ⌈20 %⌉ (al menos una; `--proporcion` cambia la parte) con `random.Random(semilla)`: la misma `--semilla` sobre las
+mismas fichas repite la muestra. Con `--aplicar` la deja en `registro/muestra-parafrasis-<fecha>.yml` del escrito (la carpeta
+con `proyecto.yaml`; fuera de un escrito, `--registro`), con la semilla, la población y cada ficha con su `resultado` por
+llenar. `muestra-resultado` anota `coincide` o `difiere` (este, con su nota) y sale 1 mientras alguna difiera.
 
 ## Qué escribe y qué no
 
@@ -56,6 +68,7 @@ python3 main.py migrar "../../escritura/<tipo>/<slug>/notes/fichas" --formato hi
 | `verificar --aplicar` | `verificacion.estado`, `verificacion.metodo`, `verificacion.fecha` del frontmatter | la propia ficha |
 | `claves --aplicar` | `calibre_id` y `zotero_key` vacíos, tomados por `clave_bibtex` del `fuentes.yml` de la raíz del proyecto (`--fuentes` para otro); retira la nota «pendiente de los pasos 00–03» del cuerpo | la propia ficha |
 | `indice --aplicar` | `00-indice_fichas.md` (por tipo, conteo por estado) | la carpeta indicada |
+| `muestra --aplicar`, `muestra-resultado --aplicar` | el registro de la muestra (semilla, población, fichas y su resultado) | `registro/` del escrito, o `--registro` |
 | `grafia --aplicar`, `migrar --aplicar` | reescriben el frontmatter (y `migrar --formato hibrida` reparte una ficha en fuente + textuales + paráfrasis) | las fichas dadas; las dos dejan antes un respaldo `tar.gz` y su `UNDO.sh` en `$RESPALDOS_DIR/biblioteca/fuentes/fichas/` (ola 2, F5) |
 
 Nunca escribe en Calibre: el texto del libro lo lee el resolutor (`core/py-common/biblioteca.py`, caché de `pdftotext`

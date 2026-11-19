@@ -5,13 +5,16 @@ PRISMA 2020.
 Objetivo: que quien revisa la literatura deje escrito cómo halló cada obra y por qué la descartó, sin salir de la ventana, y
   que el diagrama salga solo de eso.
 Método: todo pasa por `lib/revision.py` y `lib/prisma.py` (cargados por su ruta): `ver` lo que se pinta; cada acción
-  (declarar el tipo, añadir una búsqueda, importar o añadir registros, cribar) escribe `fuentes/revision.yml` del escrito
-  con la huella con que se leyó (si otro la cambió, se dice y se relee). Escribir al pulsar es la decisión de quien revisa,
-  como el repaso (§9.9); la CLI simula por omisión. El diagrama se compila en un hilo y su vista previa (un PNG) va a la caché.
+  (declarar el tipo, añadir una búsqueda, importar o añadir registros, cribar) se simula: cambia una copia en memoria, que
+  la ventana pinta, y suma un cambio sin aplicar con su diferencia; «Aplicar» escribe `fuentes/revision.yml` del escrito
+  con la huella con que se leyó (si otro la cambió, se dice y se relee) y «Descartar» olvida la copia (normativa 5.10, como
+  la CLI, que simula por omisión). El diagrama se compila en un hilo, con los cambios ya aplicados, y su vista previa (un
+  PNG) va a la caché.
 Límite: no es una puerta: nunca toca Calibre ni Zotero, solo `fuentes/revision.yml` y `fuentes/prisma.*` del escrito.
 """
 from __future__ import annotations
 
+import copy
 import importlib.util
 import sys
 import threading
@@ -48,6 +51,10 @@ class Revision(QObject):
         self._fase = "fase1"
         self._ocupado = False
         self._vista = ""
+        self._trabajo: dict | None = None      # la revisión simulada, aún sin escribir
+        self._base: str | None = None          # la huella del archivo cuando se empezó a simular
+        self._cambios: list[str] = []          # qué se simuló, en orden
+        self._diff = ""
         self._hecho.connect(self._poner)
         if fichas is not None:
             fichas.cambiado.connect(self._escritos_listos)
@@ -75,6 +82,10 @@ class Revision(QObject):
 
     @Slot(str)
     def elegir(self, carpeta: str) -> None:
+        if self._cambios and (carpeta or "") != self._escrito:
+            self.aviso.emit(f"Aplica o descarta los {len(self._cambios)} cambios de «{self.tituloEscrito}» antes de cambiar de escrito.", "aviso")
+            self.cambiado.emit()
+            return
         self._escrito = carpeta or ""
         self._s.setValue("revision/escrito", self._escrito)
         self._vista = ""
@@ -87,7 +98,7 @@ class Revision(QObject):
             self.cambiado.emit()
             return
         try:
-            self._ver = _lib("revision").ver(Path(self._escrito))
+            self._ver = _lib("revision").ver(Path(self._escrito), self._trabajo)
         except (ValueError, OSError) as e:
             self._ver = {"error": str(e)}
         self._previa()
@@ -164,31 +175,92 @@ class Revision(QObject):
                 salida.append({**x, "detalle": detalle, "recuperadoTexto": "sí" if x.get("recuperado") is True else ""})
         return salida
 
-    # ------------------------------------------------------------------ escribir
+    # ------------------------------------------------------------------ simular y aplicar
+    @Property(int, notify=cambiado)
+    def pendientes(self) -> int:
+        """Los cambios simulados que aún no están en `fuentes/revision.yml`."""
+        return len(self._cambios)
+
+    @Property(str, notify=cambiado)
+    def resumenPendientes(self) -> str:
+        """«3 cambios sin aplicar: tipo, búsqueda, cribado» (lo que escribiría «Aplicar»)."""
+        n = len(self._cambios)
+        if not n:
+            return ""
+        vistos = list(dict.fromkeys(self._cambios))
+        return f"{n} cambio" + ("s" if n != 1 else "") + " sin aplicar: " + ", ".join(vistos)
+
+    @Property(str, notify=cambiado)
+    def diferencia(self) -> str:
+        """La diferencia unificada entre el archivo y la revisión simulada."""
+        return self._diff
+
+    def _olvidar(self) -> None:
+        self._trabajo, self._base, self._cambios, self._diff = None, None, [], ""
+
     def _cambiar(self, que: str, fn) -> dict | None:
-        """Lee, aplica `fn(r) -> (r, extra)` y escribe con la huella leída; avisa si otro cambió la bitácora."""
+        """Simula: aplica `fn(r) -> (r, extra)` sobre la copia en memoria (o sobre lo leído, con su huella) y calcula la
+        diferencia sin escribir; avisa si otro cambió la bitácora desde que se leyó."""
         m = _lib("revision")
         try:
-            r, h = m.leer(Path(self._escrito))
+            if self._trabajo is None:
+                r, self._base = m.leer(Path(self._escrito))
+            else:
+                r = copy.deepcopy(self._trabajo)
             r, extra = fn(r)
-            m.escribir(Path(self._escrito), r, h, aplicar=True)
+            sim = m.escribir(Path(self._escrito), r, self._base, aplicar=False)
         except m.Cambiada as e:
             self.aviso.emit(str(e), "aviso")
+            self._olvidar()
             self.releer()
             return None
         except (ValueError, LookupError, OSError) as e:
             self.aviso.emit(str(e), "error")
             return None
-        self.consola.registrar("ok", f"Revisión ({que}): {Path(self._escrito).name}/fuentes/revision.yml")
+        self._trabajo = r
+        self._cambios.append(que)
+        self._diff = sim["diff"]
+        self.consola.registrar("info", f"Revisión ({que}), simulado: {Path(self._escrito).name}/fuentes/revision.yml sin escribir")
         self.releer()
         return extra or {}
+
+    @Slot()
+    def aplicar(self) -> None:
+        """Escribe la revisión simulada con la huella con que se leyó; si otro la cambió, no pisa: avisa y descarta."""
+        if self._trabajo is None:
+            return
+        m = _lib("revision")
+        n = len(self._cambios)
+        try:
+            m.escribir(Path(self._escrito), self._trabajo, self._base, aplicar=True)
+        except m.Cambiada as e:
+            self.consola.registrar("warn", "Revisión: no se aplicó; la diferencia descartada era:\n" + self._diff)
+            self.aviso.emit(f"{e} Los {n} cambios sin aplicar se descartaron (su diferencia quedó en la consola).", "aviso")
+            self._olvidar()
+            self.releer()
+            return
+        except OSError as e:
+            self.aviso.emit(str(e), "error")
+            return
+        self.consola.registrar("ok", f"Revisión: {n} cambios en {Path(self._escrito).name}/fuentes/revision.yml")
+        self._olvidar()
+        self.aviso.emit(f"Revisión aplicada: {n} cambio" + ("s" if n != 1 else "") + " en fuentes/revision.yml.", "positivo")
+        self.releer()
+
+    @Slot()
+    def descartar(self) -> None:
+        """Olvida la revisión simulada y vuelve a lo que dice el archivo."""
+        if self._cambios:
+            self.consola.registrar("info", f"Revisión: {len(self._cambios)} cambios descartados sin escribir")
+        self._olvidar()
+        self.releer()
 
     @Slot(str, str, str, str)
     def declarar(self, tipo: str, pregunta: str, inclusion: str, exclusion: str) -> None:
         m = _lib("revision")
         lineas = lambda t: [l.strip(" -•\t") for l in (t or "").splitlines() if l.strip(" -•\t")]
         if self._cambiar("tipo", lambda r: (m.declarar(r, tipo, pregunta, lineas(inclusion), lineas(exclusion)), {})) is not None:
-            self.aviso.emit(f"Revisión declarada: {m.TIPOS[tipo]['nombre'].lower()}.", "positivo")
+            self.aviso.emit(f"Revisión declarada: {m.TIPOS[tipo]['nombre'].lower()} (sin aplicar todavía).", "positivo")
 
     @Slot("QVariantMap")
     def anadirBusqueda(self, b: dict) -> None:
@@ -198,7 +270,7 @@ class Revision(QObject):
                                                         str(b.get("filtros") or ""), str(b.get("fecha") or "") or None,
                                                         str(b.get("clase") or "base"), str(b.get("nota") or "")))
         if e is not None:
-            self.aviso.emit(f"Búsqueda {e.get('id', '')} en la bitácora.", "positivo")
+            self.aviso.emit(f"Búsqueda {e.get('id', '')} en la bitácora (sin aplicar todavía).", "positivo")
 
     @Slot(str, str)
     def importar(self, busqueda: str, archivo: str) -> None:
@@ -211,7 +283,7 @@ class Revision(QObject):
             return
         e = self._cambiar("importar", lambda r: m.importar(r, busqueda, texto))
         if e is not None:
-            self.aviso.emit(f"{e['importados']} registros importados; {e['duplicados']} duplicados.", "positivo")
+            self.aviso.emit(f"{e['importados']} registros importados; {e['duplicados']} duplicados (sin aplicar todavía).", "positivo")
 
     @Slot(str, "QVariantMap")
     def anadirRegistro(self, busqueda: str, x: dict) -> None:
@@ -227,7 +299,11 @@ class Revision(QObject):
 
     @Slot()
     def generarPrisma(self) -> None:
-        """Compila el diagrama con LuaLaTeX en un hilo y escribe `fuentes/prisma.tex` y `.pdf` del escrito."""
+        """Compila el diagrama con LuaLaTeX en un hilo y escribe `fuentes/prisma.tex` y `.pdf` del escrito (sale del
+        archivo: con cambios sin aplicar, pide aplicarlos antes)."""
+        if self._cambios:
+            self.aviso.emit("Aplica primero los cambios de la revisión: el diagrama sale de fuentes/revision.yml.", "aviso")
+            return
         escrito = Path(self._escrito)
         self._ocupado = True
         self.cambiado.emit()

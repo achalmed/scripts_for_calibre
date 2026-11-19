@@ -7,7 +7,8 @@ Método: las fichas de los escritos salen de `lib/consulta.py` (`escritos` y `fi
   hilo; las canónicas, de `catalogacion/fichas/` (`servicios.datos.fichas`, lo mismo que la etapa Fichas). El repaso es el
   sistema Leitner de cinco cajas de `lib/repaso.py` (su base propia, `REPASO_DB`): la tarjeta muestra la pregunta (la
   categoría o el tema de la ficha y su obra), «Mostrar la ficha» revela la cita, «La sabía» la sube de caja y «Repasar
-  luego» la baja a la 1. Entran al repaso las textuales, las paráfrasis y las síntesis que tienen texto.
+  luego» la baja a la 1, en simulación: las respuestas quedan en la sesión y «Guardar el repaso» las escribe (o
+  «Descartar» las olvida). Entran al repaso las textuales, las paráfrasis y las síntesis que tienen texto.
 Límite: solo lee las fichas; lo único que escribe es la base del repaso, por su único escritor. «Nueva ficha» y «Estudiar
   con la IA» son los diálogos de la ficha editorial (§9.4 y §9.5), sobre el libro de la ficha elegida.
 """
@@ -133,6 +134,7 @@ class Fichas(QObject):
         self._cargando = False
         self._actual = ""
         self._cola: list[str] = []
+        self._respuestas: list[dict] = []       # el repaso de la sesión, simulado: se guarda con «Guardar el repaso»
         self._mostrada = False
         self._proxima: int | None = None
         self._listas.connect(self._poner)
@@ -290,7 +292,8 @@ class Fichas(QObject):
         r = _repaso()
         claves = [f["clave"] for f in self._de_repaso()]
         try:
-            self._cola = r.para_hoy(claves, hoy=hoy)
+            pendientes = {x["clave"] for x in self._respuestas}
+            self._cola = [k for k in r.para_hoy(claves, hoy=hoy) if k not in pendientes]
             self._proxima = r.proxima(claves, hoy=hoy)
         except Exception as e:  # noqa: BLE001 — una base del repaso ilegible: sin repaso, con aviso
             self.consola.registrar("warn", f"Repaso: {e}")
@@ -348,15 +351,61 @@ class Fichas(QObject):
 
     @Slot(bool)
     def responder(self, sabia: bool) -> None:
-        """«La sabía» (sube una caja) o «Repasar luego» (vuelve a la caja 1); se escribe en la base del repaso."""
+        """«La sabía» (sube una caja) o «Repasar luego» (vuelve a la caja 1). Simula: la respuesta queda en la sesión, con
+        la caja que tendría, y nada se escribe hasta «Guardar el repaso» (normativa 5.10)."""
         if not self._cola:
             return
         clave = self._cola[0]
         try:
-            r = _repaso().responder(clave, bool(sabia), aplicar=True)
+            r = _repaso().responder(clave, bool(sabia), aplicar=False)
         except Exception as e:  # noqa: BLE001 — se dice en la ventana
-            self.aviso.emit(f"No se pudo guardar el repaso: {e}", "error")
+            self.aviso.emit(f"No se pudo leer el repaso: {e}", "error")
             return
-        dias = (date.fromisoformat(r["proxima"]) - date.today()).days
-        self.consola.registrar("info", f"Repaso: {clave} → caja {r['caja']} (vuelve en {dias} días)")
+        self._respuestas.append({"clave": clave, "sabia": bool(sabia), "caja": r["caja"], "proxima": r["proxima"]})
+        self.consola.registrar("info", f"Repaso (simulado): {clave} → caja {r['caja']}; se guarda con «Guardar el repaso»")
+        self._cola.pop(0)
+        self._mostrada = False
+        self.repasoCambiado.emit()
+
+    @Property(int, notify=repasoCambiado)
+    def sinGuardar(self) -> int:
+        """Las respuestas de esta sesión que aún no están en la base del repaso."""
+        return len(self._respuestas)
+
+    @Property(str, notify=repasoCambiado)
+    def resumenSinGuardar(self) -> str:
+        """«3 respuestas sin guardar: 2 suben de caja, 1 vuelve a la 1» (lo que escribiría «Guardar el repaso»)."""
+        n = len(self._respuestas)
+        if not n:
+            return ""
+        suben = sum(1 for x in self._respuestas if x["sabia"])
+        partes = [f"{suben} sube" + ("n" if suben != 1 else "") + " de caja"] if suben else []
+        if n - suben:
+            partes.append(f"{n - suben} vuelve" + ("n" if n - suben != 1 else "") + " a la caja 1")
+        return f"{n} respuesta" + ("s" if n != 1 else "") + " sin guardar: " + ", ".join(partes)
+
+    @Slot()
+    def guardarRepaso(self) -> None:
+        """Escribe en la base del repaso, por su único escritor, las respuestas simuladas de la sesión."""
+        r, hechas = _repaso(), 0
+        for x in list(self._respuestas):
+            try:
+                e = r.responder(x["clave"], x["sabia"], aplicar=True)
+            except Exception as exc:  # noqa: BLE001 — se dice en la ventana; lo no guardado sigue pendiente
+                self.aviso.emit(f"No se pudo guardar el repaso: {exc}", "error")
+                break
+            dias = (date.fromisoformat(e["proxima"]) - date.today()).days
+            self.consola.registrar("info", f"Repaso: {x['clave']} → caja {e['caja']} (vuelve en {dias} días)")
+            self._respuestas.remove(x)
+            hechas += 1
+        if hechas:
+            self.aviso.emit(f"Repaso guardado: {hechas} respuesta" + ("s" if hechas != 1 else "") + ".", "positivo")
+        self._armar_cola()
+
+    @Slot()
+    def descartarRepaso(self) -> None:
+        """Olvida las respuestas sin guardar: esas fichas vuelven a la cola de hoy."""
+        if self._respuestas:
+            self.consola.registrar("info", f"Repaso: {len(self._respuestas)} respuestas descartadas sin escribir")
+            self._respuestas.clear()
         self._armar_cola()

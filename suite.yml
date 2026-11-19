@@ -11,7 +11,7 @@ comandos:
 - main.py verificar <referencia>… [--archivo RUTA] [--titulo|--autor|--isbn|--doi|--norma …]
 - main.py fuentes
 - main.py localizar <fuente> <ref>…
-- main.py descargar <fuente> <ref>… [--lista archivo]
+- main.py descargar <fuente> <ref>… [--lista archivo] [--aplicar]
 - main.py estado
 - main.py traer <norma> [--serie|--tags|--titulo|--fecha|--emisor …] [--aplicar] [--json]
 estado: activo

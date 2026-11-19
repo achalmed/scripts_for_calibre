@@ -19,7 +19,7 @@ Comandos:
 main.py verificar <referencia>… [--archivo RUTA] [--titulo|--autor|--isbn|--doi|--norma …]
 main.py fuentes
 main.py localizar <fuente> <ref>…
-main.py descargar <fuente> <ref>… [--lista archivo]
+main.py descargar <fuente> <ref>… [--lista archivo] [--aplicar]
 main.py estado
 main.py traer <norma> [--serie|--tags|--titulo|--fecha|--emisor …] [--aplicar] [--json]
 ```
@@ -85,7 +85,7 @@ cd ~/Documents/biblioteca-studio
 # Método Documental
 python3 main.py verificar "Ley N.° 31143"             # paso 00: ¿ya está en la biblioteca?
 python3 main.py localizar congreso "Ley N.° 31143"    # paso 01: la URL, sin descargar
-python3 main.py descargar congreso --lista normas.txt # a entrada/, con hash y ledger
+python3 main.py descargar congreso --lista normas.txt --aplicar # a entrada/, con hash y ledger (sin --aplicar, simula)
 python3 main.py traer "Ley 28077"                    # pasos 00 a 03 de una norma: simula; --aplicar la trae (Calibre cerrado)
 ingesta/main.sh identificar                           # paso 02: pendientes.tsv + ficha provisional
 ingesta/main.sh catalogar --aplicar                   # a Calibre por la puerta

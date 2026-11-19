@@ -396,9 +396,11 @@ def requisitos(r: dict, prisma_al_dia: bool | None = None) -> list[dict]:
     return salida
 
 
-def ver(escrito: Path) -> dict:
-    """Todo lo que la ventana pinta de la revisión de un escrito."""
-    r, h = leer(escrito)
+def ver(escrito: Path, r: dict | None = None) -> dict:
+    """Todo lo que la ventana pinta de la revisión de un escrito; con `r`, la de una revisión aún sin escribir (la
+    simulación de la ventana), con la huella del archivo tal como está."""
+    leida, h = leer(escrito)
+    r = leida if r is None else r
     import importlib.util
     s = importlib.util.spec_from_file_location("biblioteca_prisma", Path(__file__).resolve().parent / "prisma.py")
     prisma = importlib.util.module_from_spec(s)

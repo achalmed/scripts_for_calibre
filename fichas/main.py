@@ -7,6 +7,11 @@
 #                                          escribe verificacion.{estado,metodo,fecha} solo con --aplicar
 #   indice    <carpeta> [--aplicar]        genera 00-indice_fichas.md (por tipo, conteo por estado)   (paso 09)
 #   estado    <carpeta>                    resumen por estado; código 1 si hay fichas «observada» o «pendiente» en uso
+#   muestra   <carpeta> [--proporcion 0.2] [--semilla N] [--registro R] [--aplicar]
+#                                          muestra aleatoria de las paráfrasis para cotejar a mano (C14.3); --aplicar
+#                                          la registra con su semilla en registro/ del escrito
+#   muestra-resultado <registro> [<ficha> coincide|difiere [--nota …] [--aplicar]]
+#                                          anota el cotejo de una ficha de la muestra; sin ficha, el resumen
 #
 # Nunca escribe en Calibre; lee el texto del libro por el resolutor core/py-common/biblioteca.py.
 # Simula por defecto: sin --aplicar solo informa. Orquestación aquí; reglas en config.py; lógica en lib/.
@@ -127,6 +132,63 @@ def cmd_estado(a):
     return 1 if en_uso_mal else 0
 
 
+def cmd_muestra(a):
+    from lib import muestra as M
+    carpeta = Path(a.carpeta).expanduser().resolve()
+    fichas = []
+    for p in F.fichas_en([carpeta]):
+        try:
+            fichas.append((p, F.leer(p)[0]))
+        except ValueError:
+            continue
+    rutas = M.parafrasis(fichas)
+    if not rutas:
+        print("[fichas] ninguna ficha de paráfrasis en la carpeta"); return 1
+    try:
+        m = M.sacar(rutas, a.proporcion, a.semilla)
+        destino = Path(a.registro).expanduser() if a.registro else M.destino(carpeta)
+    except ValueError as e:
+        print(f"[fichas] {e}"); return 2
+    print(f"[fichas] muestra de paráfrasis · semilla {m['semilla']} · {len(m['fichas'])} de {m['poblacion']} "
+          f"({m['proporcion']:.0%})")
+    for r in m["fichas"]:
+        print(f"  · {r.relative_to(carpeta) if r.is_relative_to(carpeta) else r.name}")
+    datos = M.registro(m, carpeta)
+    if a.json:
+        print(json.dumps({**datos, "registro": str(destino)}, ensure_ascii=False, indent=2))
+    if a.aplicar:
+        M.escribir(destino, datos)
+        print(f"[fichas] registrada en {destino}: coteje cada una con su página y anote con `muestra-resultado`")
+    else:
+        print(f"[fichas] simulación: --aplicar la registra en {destino} (la misma muestra con --semilla {m['semilla']})")
+    return 0
+
+
+def cmd_muestra_resultado(a):
+    from lib import muestra as M
+    ruta = Path(a.registro).expanduser()
+    try:
+        datos = M.leer(ruta)
+        if a.ficha:
+            if not a.resultado:
+                print("[fichas] falta el resultado: coincide o difiere"); return 2
+            datos = M.anotar(datos, a.ficha, a.resultado, a.nota or "")
+    except (ValueError, LookupError, OSError) as e:
+        print(f"[fichas] {e}"); return 2
+    s = M.resumen(datos)
+    print(f"[fichas] muestra de {s['muestra']} (semilla {datos.get('semilla')}): {s['coincide']} coinciden · "
+          f"{s['difiere']} difieren · {s['por_cotejar']} por cotejar")
+    for f in datos.get("fichas") or []:
+        if f.get("resultado") == "difiere":
+            print(f"  ✗ {f['ficha']}: {f.get('nota', '')}")
+    if a.ficha:
+        if a.aplicar:
+            M.escribir(ruta, datos); print(f"[fichas] anotado en {ruta}")
+        else:
+            print(f"[fichas] simulación: --aplicar lo anota en {ruta}")
+    return 1 if s["difiere"] else 0
+
+
 def cmd_claves(a):
     """Rellena calibre_id y zotero_key de las fichas desde el fuentes.yml del proyecto (por clave_bibtex)."""
     carpeta = Path(a.carpeta).expanduser()
@@ -219,8 +281,17 @@ def main():
     p.add_argument("--tolerancia", type=int, help=f"páginas vecinas que se prueban (defecto {config.TOLERANCIA_PAGINAS})")
     p = sub.add_parser("indice"); p.add_argument("carpeta"); p.add_argument("--aplicar", action="store_true"); p.add_argument("--proyecto")
     p = sub.add_parser("estado"); p.add_argument("carpeta")
+    p = sub.add_parser("muestra", help="C14.3: muestra aleatoria de las paráfrasis para cotejar a mano (simula; --aplicar la registra)")
+    p.add_argument("carpeta"); p.add_argument("--proporcion", type=float, default=0.2, help="parte de las paráfrasis (defecto 0.2)")
+    p.add_argument("--semilla", type=int, help="la de una muestra anterior, para repetirla (sin ella, una nueva)")
+    p.add_argument("--registro", help="dónde registrarla (defecto: registro/muestra-parafrasis-<fecha>.yml del escrito)")
+    p.add_argument("--aplicar", action="store_true"); p.add_argument("--json", action="store_true")
+    p = sub.add_parser("muestra-resultado", help="C14.3: anota el cotejo de una ficha de la muestra (sin ficha, el resumen)")
+    p.add_argument("registro"); p.add_argument("ficha", nargs="?"); p.add_argument("resultado", nargs="?", choices=["coincide", "difiere"])
+    p.add_argument("--nota", help="qué cambia el sentido (obligatoria si difiere)"); p.add_argument("--aplicar", action="store_true")
     a = ap.parse_args()
-    return {"validar": cmd_validar, "verificar": cmd_verificar, "indice": cmd_indice, "estado": cmd_estado, "migrar": cmd_migrar, "claves": cmd_claves, "grafia": cmd_grafia, "rutas": cmd_rutas}[a.cmd](a)
+    return {"validar": cmd_validar, "verificar": cmd_verificar, "indice": cmd_indice, "estado": cmd_estado, "migrar": cmd_migrar, "claves": cmd_claves, "grafia": cmd_grafia, "rutas": cmd_rutas,
+            "muestra": cmd_muestra, "muestra-resultado": cmd_muestra_resultado}[a.cmd](a)
 
 
 if __name__ == "__main__":

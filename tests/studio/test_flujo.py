@@ -43,7 +43,12 @@ def test_la_revision_de_un_escrito_desde_la_ventana(piezas):
     rv.declarar("sistematica", "¿Qué explica la pobreza?", "Perú\n- 2015-2025", "Sin datos")
     r = rv.datos["revision"]
     assert r["tipo"] == "sistematica" and r["criterios"]["inclusion"] == ["Perú", "2015-2025"]
-    assert (informe / "fuentes" / "revision.yml").is_file()
+    assert not (informe / "fuentes" / "revision.yml").is_file(), "el botón simula: nada escrito todavía"
+    assert rv.pendientes == 1 and rv.resumenPendientes == "1 cambio sin aplicar: tipo" and "+tipo: sistematica" in rv.diferencia
+    rv.elegir(str(informe.parent))                                  # con cambios sin aplicar no se cambia de escrito
+    assert rv.escrito == str(informe)
+    rv.aplicar()
+    assert (informe / "fuentes" / "revision.yml").is_file() and rv.pendientes == 0 and rv.diferencia == ""
     assert rv.datos["porque"]["tipo"]["fuente"] == "Grant y Booth (2009); Snyder (2019)"
     rv.anadirBusqueda({"base": "Scopus", "clase": "base", "cadena": "pobreza AND empleo", "filtros": "2015-2025", "fecha": "2026-11-18",
                        "resultados": 2})
@@ -56,7 +61,13 @@ def test_la_revision_de_un_escrito_desde_la_ventana(piezas):
     rv.fijarFase("fase2")
     assert [x["id"] for x in rv.registros] == ["r0001"]
     rv.cribar("r0001", 2, "incluir", "")
+    assert rv.pendientes == 5 and rv.resumenPendientes == "5 cambios sin aplicar: búsqueda, importar, cribado"
     assert rv.datos["cuentas"]["incluidos"] == 1 and rv.datos["cuentas"]["cuadra"]
+    rv.generarPrisma()                                              # el diagrama sale del archivo: pide aplicar antes
+    assert not (informe / "fuentes" / "prisma.pdf").is_file()
+    rv.aplicar()
+    import biblioteca_app.controladores.revision as mod
+    assert mod._lib("revision").leer(informe)[0]["registros"][0]["fase2"] == "incluido"
     req = {x["clave"]: x["cumple"] for x in rv.datos["requisitos"]}
     assert req == {"pregunta": True, "criterios": True, "bitacora": True, "cribado": True, "prisma": True}
     if shutil.which("lualatex"):
@@ -71,6 +82,7 @@ def test_otra_mano_cambio_la_bitacora_y_no_se_pisa(piezas):
     informe = _informe(piezas)
     rv.elegir(str(informe))
     rv.declarar("narrativa", "", "", "")
+    rv.aplicar()
     avisos = []
     rv.aviso.connect(lambda texto, tipo: avisos.append((texto, tipo)))
     import biblioteca_app.controladores.revision as mod
@@ -82,7 +94,14 @@ def test_otra_mano_cambio_la_bitacora_y_no_se_pisa(piezas):
     finally:
         m.leer = leer
     assert avisos and avisos[-1][1] == "aviso" and "cambió fuera" in avisos[-1][0]
-    assert rv.datos["revision"]["busquedas"] == []
+    assert rv.datos["revision"]["busquedas"] == [] and rv.pendientes == 0
+    # y si otra mano escribe entre la simulación y «Aplicar», tampoco se pisa
+    rv.anadirBusqueda({"base": "SciELO", "cadena": "y", "resultados": 1})
+    assert rv.pendientes == 1
+    (informe / "fuentes" / "revision.yml").write_text((informe / "fuentes" / "revision.yml").read_text(encoding="utf-8") + "# otra mano\n",
+                                                       encoding="utf-8")
+    rv.aplicar()
+    assert "cambió fuera" in avisos[-1][0] and rv.pendientes == 0 and rv.datos["revision"]["busquedas"] == []
 
 
 @requiere_binding

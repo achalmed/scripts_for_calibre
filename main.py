@@ -4,7 +4,7 @@
 #   verificar <referencia>…        ¿ya está en la biblioteca? (paso 00 del Método Documental; FD2)
 #   fuentes                        qué fuentes sabe adquirir
 #   localizar <fuente> <ref>…      busca el documento (no descarga)
-#   descargar <fuente> <ref>…      descarga a entrada/ con hash y procedencia
+#   descargar <fuente> <ref>…      simula; con --aplicar descarga a entrada/ con hash y procedencia
 #   estado                         qué se ha adquirido
 #   traer <cita> [--aplicar]       pasos 00 a 03 para UNA norma peruana (lib/traer.py): simula; --aplicar trae
 #
@@ -87,14 +87,19 @@ def cmd_localizar(a):
 
 
 def cmd_descargar(a):
+    """Simula por omisión: localiza cada referencia y dice qué archivo bajaría a entrada/; `--aplicar` lo descarga
+    con su hash y lo anota en el ledger (normativa 5.10)."""
     cfg, mod = cargar(a.fuente)
-    print(f"descargar de «{a.fuente}» → {config.ENTRADA.name}/\n" + "─" * 62)
+    modo = "" if a.aplicar else " (simulación: nada se descarga)"
+    print(f"descargar de «{a.fuente}» → {config.ENTRADA.name}/{modo}\n" + "─" * 62)
     ok = mal = rep = 0
     for ref, nombre in _refs(a):
         r = mod.localizar(ref, cfg)
         if not r.get("url"):
             print(f"  ✗ {ref}: {r.get('error', 'no localizada')}"); mal += 1; continue
         base = nombre or f"{a.fuente}__{r.get('tipo', 'doc').replace(' ', '_')}_{r.get('numero', '')}".rstrip("_")
+        if not a.aplicar:
+            print(f"  → {ref:<26} {base} · {r['fuente']} · {r['url']}"); ok += 1; continue
         try:
             ruta, sha, n = comun.descargar(r["url"], config.ENTRADA, base)
         except Exception as exc:
@@ -107,11 +112,14 @@ def cmd_descargar(a):
                       "referencia": ref, "titulo": r.get("titulo", ref),
                       "url": r["url"], "origen": r["fuente"],
                       "archivo": ruta.name, "bytes": n, "estado": "descargado"})
+    if not a.aplicar:
+        print("─" * 62 + f"\nSe descargarían: {ok} | No localizadas: {mal}\n"
+              "  Nada se ha escrito. Para descargarlas, la misma orden con --aplicar.")
+        return 0
     print("─" * 62 + f"\nNuevos: {ok} | Ya estaban: {rep} | Fallidos: {mal}")
     if ok:
-        print("\n  Siguiente paso — catalogar en Calibre y generar la referencia:\n"
-              "    cd ~/Documents/scripts_for_fuentes/ingesta\n"
-              "    ./main.sh todo --aplicar\n"
+        print("\n  Siguiente paso, catalogar en Calibre y generar la referencia (simula; después --aplicar):\n"
+              "    bash ingesta/main.sh todo\n"
               f"  `entrada/` está declarada como raíz de entrada y se archiva en modo\n"
               f"  «{config.ARCHIVAR_MODO}»: el archivo pasa a Calibre y no queda copia aquí.")
     return 0
@@ -193,6 +201,8 @@ def main():
         p = sub.add_parser(n, help=h)
         p.add_argument("fuente"); p.add_argument("referencias", nargs="*")
         p.add_argument("--lista", help="archivo con una referencia por línea")
+        if n == "descargar":
+            p.add_argument("--aplicar", action="store_true", help="descarga de verdad (sin ella, simula)")
     sub.add_parser("estado", help="qué se ha adquirido")
     p = sub.add_parser("verificar", help="¿ya está en la biblioteca? (paso 00 del Método Documental)")
     p.add_argument("referencias", nargs="*", help="cita, título, número de norma, ISBN o DOI en texto libre")

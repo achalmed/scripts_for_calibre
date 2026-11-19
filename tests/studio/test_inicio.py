@@ -63,10 +63,20 @@ def test_el_repaso_leitner_sube_y_escribe_solo_en_la_base_de_la_muestra(areas):
     assert not fi.mostrada
     fi.mostrar()
     assert fi.mostrada
-    fi.responder(True)                                                       # «La sabía»: a la caja 2
-    assert fi.paraHoy == 0 and not fi.tarjeta["hay"] and not fi.mostrada
-    assert fi.resumenRepaso == "0 por repasar hoy · próximas en 2 días"
     import sqlite3
+    antes = sqlite3.connect(f"file:{db}?mode=ro", uri=True).execute("select clave, caja from tarjetas").fetchall()
+    fi.responder(True)                                                       # «La sabía»: a la caja 2, simulado
+    assert fi.paraHoy == 0 and not fi.tarjeta["hay"] and not fi.mostrada
+    assert fi.sinGuardar == 1 and fi.resumenSinGuardar == "1 respuesta sin guardar: 1 sube de caja"
+    with sqlite3.connect(f"file:{db}?mode=ro", uri=True) as c:
+        assert c.execute("select clave, caja from tarjetas").fetchall() == antes, "simular no escribe"
+    fi.descartarRepaso()                                                     # descartar: la ficha vuelve a la cola
+    assert fi.sinGuardar == 0 and fi.paraHoy == 1
+    fi.mostrar()
+    fi.responder(True)
+    fi.guardarRepaso()                                                       # ahora sí se escribe
+    assert fi.sinGuardar == 0 and fi.paraHoy == 0
+    assert fi.resumenRepaso == "0 por repasar hoy · próximas en 2 días"
     with sqlite3.connect(f"file:{db}?mode=ro", uri=True) as c:
         cajas = dict(c.execute("select clave, caja from tarjetas"))
     assert sorted(cajas.values()) == [2, 2] and all(k.startswith("reports/2026-11-17-informe-de-muestra/") for k in cajas)

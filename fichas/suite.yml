@@ -13,6 +13,8 @@ comandos:
 - main.py claves|grafia <carpeta> [--aplicar]
 - main.py indice <carpeta> --aplicar
 - main.py estado <carpeta>
+- main.py muestra <carpeta> [--proporcion 0.2] [--semilla N] [--aplicar]
+- main.py muestra-resultado <registro> [<ficha> coincide|difiere [--nota …]] [--aplicar]
 - main.py migrar <carpeta> --formato hibrida
 estado: activo
 depende_de:
