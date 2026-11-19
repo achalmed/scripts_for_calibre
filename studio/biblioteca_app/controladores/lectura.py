@@ -16,6 +16,10 @@ El rediseño del 2026-11-18 (decisiones §9.9) suma las cuatro cifras de arriba 
 con lectura y racha), el mapa de calor de horas por día (`consulta.dias`) y el color de cada herramienta (`COLORES`), que
 pintan la raya de cada subrayado, las barras de lectura del catálogo y «Seguir leyendo» de Inicio. Los colores viven aquí y
 no en el QML: el QML no lleva colores propios.
+
+La ficha de obra de Yachay (decisiones §9.13): `fichaObra` es la del libro elegido como la guarda la base (las seis
+respuestas, los temas, el signo, si la dio por leída y su versión), que la ficha editorial muestra con su procedencia y
+«Nueva ficha» usa para rellenar la de obra.
 """
 
 from __future__ import annotations
@@ -39,6 +43,24 @@ NOMBRES = {"koreader": "KOReader", "zotero": "Zotero", "okular": "Okular", "yach
 COLORES = {"koreader": "#378ADD", "zotero": "#D85A30", "okular": "#1D9E75", "yachay": "#7F77DD"}
 DIAS_SEMANA = ("lun", "mar", "mié", "jue", "vie", "sáb", "dom")
 ESTADOS = {"reading": "leyendo", "complete": "terminado", "abandoned": "abandonado"}
+SIGNOS = {"positivo": "Positivo", "negativo": "Negativo", "nulo": "Nulo", "mixto": "Mixto", "no_aplica": "No aplica"}
+
+
+def ficha_obra_vista(f: dict | None) -> dict:
+    """La ficha de obra de Yachay como la pinta la ventana: las seis con su título, los temas, el signo y una línea tenue
+    con la versión, cuántas respondió y si la dio por leída."""
+    if not f:
+        return {"hay": False}
+    ficha = f.get("ficha") or {}
+    preguntas = [{"titulo": lb.TITULOS_OBRA[k], "texto": ficha.get(k) or ""} for k in lb.CAMPOS_OBRA]
+    leida = consulta.utc_a_local(f.get("leida_en") or "")[:10] if f.get("leida") else ""
+    detalle = " · ".join(x for x in (f"versión {f.get('version')}", f"{f.get('escritas')} de {f.get('total')} respondidas",
+                                     f"leída el {leida}" if leida else "sin dar por leída",
+                                     f"actualizada el {consulta.utc_a_local(f.get('modificada') or '')[:10]}" if f.get("modificada") else "") if x)
+    return {"hay": True, "calibreId": int(f["calibre_id"]), "version": int(f.get("version") or 0), "preguntas": preguntas,
+            "secciones": {p["titulo"]: p["texto"] for p in preguntas}, "temas": ", ".join(ficha.get("temas") or []),
+            "signo": SIGNOS.get(ficha.get("signo") or "", ""), "leida": bool(f.get("leida")), "detalle": detalle,
+            "completa": all(p["texto"] for p in preguntas), "procedencia": "Ficha de obra en Yachay"}
 
 
 def _cita(a: dict) -> str:
@@ -395,6 +417,11 @@ class Lectura(QObject):
                 "datos": " · ".join(datos), "progreso": progreso, "total": len(l["anotaciones"]),
                 "sesiones": [{"fecha": s["fecha"], "tiempo": s["tiempo"], "paginas": s["paginas"],
                               "texto": f"{s['fecha']} · {s['tiempo']} · {s['paginas']} páginas"} for s in l["sesiones"][:12]]}
+
+    @Property("QVariantMap", notify=libroCambiado)
+    def fichaObra(self) -> dict:
+        """La ficha de obra de Yachay del libro elegido (§9.13), o {hay: False}."""
+        return ficha_obra_vista((self._libro or {}).get("ficha_obra"))
 
     @Property("QVariantList", notify=libroCambiado)
     def origenes(self) -> list:

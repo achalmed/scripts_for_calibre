@@ -12,6 +12,7 @@ biblioteca real: las portadas son las que la muestra genera con el propio Calibr
     /usr/bin/python3 studio/capturar.py salida.png --paleta "catalogar"
     /usr/bin/python3 studio/capturar.py docs/figuras/biblioteca-studio-inicio.png --area inicio
     /usr/bin/python3 studio/capturar.py salida.png --area fichas --repaso --mostrar      # el repaso Leitner, con la cita a la vista
+    /usr/bin/python3 studio/capturar.py salida.png --libro 1 --ficha-obra               # «Nueva ficha» de obra rellena con la de Yachay (§9.13)
 
 Antes de capturar corre de verdad una operación que solo lee la muestra («Validar las fichas» sobre sus fichas): la
 salida del panel inferior y el plan son reales.
@@ -123,6 +124,7 @@ def main() -> int:
     parser.add_argument("--sin-correr", action="store_true", help="no corre la operación de muestra antes de capturar")
     parser.add_argument("--paleta", default=None, help="abre la paleta de órdenes con este texto")
     parser.add_argument("--ficha", action="store_true", help="con --libro: abre «Nueva ficha» con una textual de muestra ya revisada (§9.4)")
+    parser.add_argument("--ficha-obra", action="store_true", help="con --libro: abre «Nueva ficha» de obra rellena con la de Yachay de la muestra, revisada (§9.13)")
     parser.add_argument("--estudio", action="store_true", help="con --libro: abre «Estudiar con la IA» con una respuesta de muestra leída (§9.5)")
     parser.add_argument("--repaso", action="store_true", help="con --area fichas: el «Repaso para estudiantes» (§9.9)")
     parser.add_argument("--mostrar", action="store_true", help="con --repaso: la tarjeta con su cita a la vista")
@@ -227,7 +229,7 @@ def main() -> int:
             QTimer.singleShot(900, lambda: interfaz.pedir.emit("paleta", {"texto": args.paleta}))
         if args.dialogo:
             QTimer.singleShot(900, lambda: interfaz.pedir.emit("aplicar", {}))
-        if args.ficha or args.estudio:
+        if args.ficha or args.ficha_obra or args.estudio:
             from gui_comun.qt import QMetaObject, QObject
             try:
                 from PySide6.QtCore import Q_ARG
@@ -238,7 +240,9 @@ def main() -> int:
                 QMetaObject.invokeMethod(raiz.findChild(QObject, nombre), "abrir", Q_ARG("QVariant", valor))
 
             def abrir():
-                if args.ficha:
+                if args.ficha_obra:
+                    llamar("dialogoFicha", {"tipo": "obra", "revisar": True})
+                elif args.ficha:
                     llamar("dialogoFicha", {"tipo": "textual", "pagina": "12", "hoja": 2, "categoria": "Idea principal", "tema": "escala urbana",
                              "uso": "marco", "revisar": True,
                              "textos": {"Cita exacta": "Las ciudades pequeñas crecen cuando se integran a su región.",
@@ -246,7 +250,7 @@ def main() -> int:
                 else:
                     llamar("dialogoEstudio", ESTUDIO_DE_MUESTRA)
             QTimer.singleShot(1500, abrir)
-        app.capturar(args.salida, espera_ms=6000 if args.ficha or args.estudio else 2600)
+        app.capturar(args.salida, espera_ms=6000 if args.ficha or args.ficha_obra or args.estudio else 2600)
 
     QTimer.singleShot(400, correr_siguiente)
     codigo = app.app.exec()

@@ -11,6 +11,11 @@ HTTP: recibe un objeto con la forma del cliente y traduce.
   `uid` de una anotación) se reconoce como esa misma anotación.
 - Enviar: las anotaciones de otros orígenes que Yachay no tiene, con `cliente.resaltar(...)`: su origen (el primero de
   la anotación: koreader, zotero u okular) y como `origen_id` el `uid` de la base, para que Yachay no duplique.
+- La ficha de obra (2026-11-19, decisiones §9.13): `leer_fichas` trae la entidad `ficha_obra` (`clave` = id de la fila
+  en Yachay; `datos` con `calibre_id`, `ficha` {las seis, `temas`, `signo`}, `secciones`, `escritas`, `total`, `leida`,
+  `leida_en`, `version` y fechas; `baja` sin datos) con su propio cursor («yachay-fichas-obra»), pedido solo por esa
+  entidad: así la primera lectura empieza en 0 aunque el cursor de los resaltados ya vaya más adelante. La vuelta (corregir
+  la ficha con `version_base`) vive en `lectura_base/lib/ficha_obra.py`.
 
 Límite (fase 3a): la hoja de Yachay es la del PDF de lectura; para un libro con PDF es la misma que la de KOReader y
 Zotero; para un EPUB convertido no, y esos resaltados se unen solo por su texto.
@@ -95,6 +100,40 @@ def leer(cliente, desde: int | str = 0) -> tuple[base.Lectura, str]:
         if not r.get("mas"):
             break
     lectura.bajas = bajas
+    return lectura, cursor
+
+
+def de_ficha_obra(d: dict) -> dict:
+    """Los `datos` de una `ficha_obra` de la ruta de cambios como registro de la base (`base.Lectura.fichas_obra`)."""
+    return {"origen_id": str(d.get("id") or ""), "calibre_id": d.get("calibre_id"), "ficha": d.get("ficha") or {},
+            "secciones": d.get("secciones") or {}, "escritas": d.get("escritas"), "total": d.get("total"),
+            "leida": bool(d.get("leida")), "leida_en": base.iso(d.get("leida_en"), local=False),
+            "version": d.get("version") or 0, "creada": base.iso(d.get("creado_en"), local=False),
+            "modificada": base.iso(d.get("actualizado_en") or d.get("creado_en"), local=False)}
+
+
+def leer_fichas(cliente, desde: int | str = 0) -> tuple[base.Lectura, str]:
+    """(lectura con `fichas_obra` y `bajas_fichas`, cursor nuevo): las fichas de obra de la persona, pedidas solo por la
+    entidad `ficha_obra`. Una fila con `escritas: 0` (una lectura sin ficha: pasadas o mapa) también entra, porque su
+    `version` es la que una vuelta debe mandar; la ventana no la muestra como ficha."""
+    lectura = base.Lectura(ORIGEN, alcance=None)
+    cursor = str(desde or 0)
+    while True:
+        r = cliente.cambios(desde=cursor, entidades=["ficha_obra"])
+        if r.get("reiniciar"):
+            cursor, lectura = "0", base.Lectura(ORIGEN, alcance=None)
+            continue
+        for c in r.get("cambios") or []:
+            if c.get("entidad") != "ficha_obra":
+                continue
+            datos = c.get("datos") or {}
+            if c.get("accion") == "baja" or not datos:
+                lectura.bajas_fichas.append(str(c.get("clave") or ""))
+            elif datos.get("calibre_id") is not None:
+                lectura.fichas_obra.append(de_ficha_obra(datos))
+        cursor = str(r.get("cursor") or cursor)
+        if not r.get("mas"):
+            break
     return lectura, cursor
 
 

@@ -4,7 +4,8 @@
 // con la IA» y «Citar en LaTeX» (copia \parencite{clave}); «Usado en»; Dolphin, Calibre y Zotero; y debajo, el estado en
 // Zotero, la lectura en KOReader, la nota, identificadores, materias, descripción, formatos y fichas canónicas. Solo lee: lo que cambia la biblioteca es una operación.
 // Desde aquí se ficha el libro en un escrito y se estudia con la IA (DialogoFicha y DialogoEstudioObra, §9.4 y §9.5):
-// eso escribe solo en las fichas del escrito, nunca en Calibre ni en Zotero.
+// eso escribe solo en las fichas del escrito, nunca en Calibre ni en Zotero. Debajo de «Usado en», la ficha de obra de la
+// persona en Yachay (§9.13: las seis respuestas, temas, signo, si está leída), con «Llevar a un escrito».
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -184,6 +185,58 @@ QQC2.Control {
                         QQC2.ToolTip.text: "Abrir el escrito en LaTeX Studio"
                         QQC2.ToolTip.visible: hovered
                         QQC2.ToolTip.delay: Kirigami.Units.toolTipDelay
+                    }
+                }
+
+                // la ficha de obra de la persona en Yachay (§9.13), como la trajo la base de lectura
+                ColumnLayout {
+                    id: obraYachay
+                    objectName: "fichaObraYachay"
+                    readonly property var fo: studio.lectura.fichaObra
+                    Layout.fillWidth: true
+                    visible: fo.hay === true && String(fo.calibreId) === String(raiz.f.id)
+                    spacing: Kirigami.Units.smallSpacing
+                    RowLayout {
+                        Layout.fillWidth: true
+                        Kirigami.Heading { level: 4; text: obraYachay.fo.procedencia || "Ficha de obra en Yachay"; Layout.fillWidth: true }
+                        Chip {
+                            objectName: "fichaObraAlEscrito"
+                            text: "Llevar a un escrito"
+                            icono: "document-new"
+                            ayuda: "Una ficha de obra en un escrito, rellena con esta: ajusta «Uso que le daré» a ese escrito"
+                            onClicked: dialogoFicha.abrir({ tipo: "obra", textos: Object.assign({}, obraYachay.fo.secciones) })
+                        }
+                    }
+                    QQC2.Label {
+                        Layout.fillWidth: true
+                        text: obraYachay.fo.detalle || ""
+                        font: Kirigami.Theme.smallFont
+                        color: Kirigami.Theme.disabledTextColor
+                        wrapMode: Text.WordWrap
+                    }
+                    Repeater {
+                        model: obraYachay.visible ? obraYachay.fo.preguntas : []
+                        delegate: ColumnLayout {
+                            required property var modelData
+                            Layout.fillWidth: true
+                            spacing: 0
+                            QQC2.Label { text: modelData.titulo; font: Kirigami.Theme.smallFont; color: Kirigami.Theme.disabledTextColor }
+                            QQC2.Label {
+                                Layout.fillWidth: true
+                                text: modelData.texto || "Sin responder"
+                                color: modelData.texto ? Kirigami.Theme.textColor : Kirigami.Theme.disabledTextColor
+                                wrapMode: Text.WordWrap
+                                textFormat: Text.PlainText
+                            }
+                        }
+                    }
+                    QQC2.Label {
+                        Layout.fillWidth: true
+                        visible: text !== ""
+                        text: [obraYachay.fo.temas ? "Temas: " + obraYachay.fo.temas : "", obraYachay.fo.signo ? "Signo: " + obraYachay.fo.signo : ""].filter(x => x).join(" · ")
+                        font: Kirigami.Theme.smallFont
+                        color: Kirigami.Theme.disabledTextColor
+                        wrapMode: Text.WordWrap
                     }
                 }
 

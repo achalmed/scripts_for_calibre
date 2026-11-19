@@ -941,3 +941,46 @@ queda sin archivo; las demás son de pago. Dos cambios de `lib/ingresar.py`:
   los 28 PDF del flujo que esperaban: cuatro editoriales que hoy responden a un programa (APA, Springer y dos de BMC), dos
   del conjunto abierto de PMC de la NLM y el Código de CONCYTEC con OCR. Los otros 21 responden 403 o un desafío y se bajan
   con el navegador (`estado.md`).
+
+### §9.13 La ficha de obra de Yachay y la del escrito: una de la persona, una copia por escrito (2026-11-19)
+
+Yachay publicó en producción (2026-11-19, su commit `fd2dcf5`) la ficha de obra de su lector en la ruta de cambios, la entidad
+`ficha_obra`, y su escritura con `version_base` (contrato en `yachay/estado.md`, «Contrato: leer y escribir la ficha de obra
+de Yachay»). Biblioteca Studio ya tenía la suya (§9.10, C3.1): el tipo `ficha_obra` de `lib/fichar.py`, `<clave>-obra.md` en
+las fichas del escrito («fuentes/fichas»). Las dos responden las mismas seis preguntas con los mismos títulos. La decisión:
+
+- **La de Yachay es la ficha de la persona sobre la obra**: una por libro (`calibre_id`) y por persona, independiente de todo
+  escrito, con lo que no cabe en un escrito (los temas, el signo y si la dio por leída). **La del escrito es su copia para
+  ese escrito**: nace de la de Yachay, cuando existe, y se puede ajustar (sobre todo «Uso que le daré», que cambia de un
+  escrito a otro), se versiona con el escrito y la citan sus herramientas. Por qué no una sola: la del escrito viaja con
+  su repositorio y la lee LaTeX Studio sin red; la de Yachay vive en una base del despacho y es de la persona, no de un
+  escrito. Por qué no dos independientes: la persona respondería lo mismo dos veces y las dos se separarían en silencio.
+- **Leer**: la base de lectura trae la ficha de obra con los resaltados de Yachay (`lectura_base/lib/adaptadores/yachay.py`
+  `leer_fichas`), pedida solo por esa entidad y con su propio cursor («yachay-fichas-obra»): el de los resaltados ya iba
+  más adelante cuando Yachay la publicó, y la primera lectura debe empezar en 0. Va a la tabla nueva `fichas_obra` (esquema
+  2 de la base, aditivo: `CREATE TABLE IF NOT EXISTS`; una por libro y origen), con sus disparadores en la cola de cambios.
+  Una fila con `escritas: 0` (una lectura con pasadas o mapa, sin ficha) se guarda, porque su versión es la que una vuelta
+  debe mandar, pero no se muestra. En la ventana: la ficha editorial la muestra bajo «Usado en» como «Ficha de obra en
+  Yachay» (las seis, temas, signo, versión, leída) y el área Fichas la lista entre las «De obra», sin escrito ni archivo.
+- **«Nueva ficha» de obra se rellena con la de Yachay** si existe (de la base, sin llamar a la red), con un aviso de que es
+  la copia para ese escrito.
+- **La vuelta** (la de §9.7, para la ficha): `lectura_base/lib/ficha_obra.py` y `main.py ficha-a-yachay`. Viaja la ficha
+  entera (la de la base con las respuestas nuevas encima), porque el PUT de Yachay la reemplaza, y la `version_base` de la
+  base. Simula por omisión: dice qué preguntas cambian, sobre qué versión y qué falta para darla por leída. Con `--aplicar`,
+  por el cliente de Yachay; lo aceptado entra a la base (su único escritor, tras su respaldo) para que la ventana muestre
+  la versión nueva sin esperar a la sincronía; `--leida` pide después darla por leída (un 422 deja la ficha guardada y dice
+  qué falta). **Un 409 no pisa**: no se escribe nada en Yachay ni en la base, sale 4 y se muestra lo que hay en Yachay; la
+  persona elige llevar la suya sobre esa versión (`--sobre N`) o quedarse con la de Yachay (la sincronía de Yachay). En la
+  ventana, al guardar la ficha de obra del escrito, si la simulación dice que algo cambiaría, se ofrece «¿Llevarla también a
+  Yachay?» con la versión y lo que cambia; un 409 abre «Tu ficha de obra cambió en Yachay» con las dos respuestas lado a lado
+  y «Llevar la mía sobre la versión N» o «Quedarme con la de Yachay». La ventana no escribe la base ni guarda el token:
+  corre la CLI (`CanalYachay` de `studio/biblioteca_app/controladores/fichado.py`, que las pruebas reemplazan).
+- **Lo que no se hace aquí**: las palabras propias las mide Yachay al guardar (su revisión vuelve en la respuesta) y
+  `lib/fichar.py` en la del escrito; la vuelta no escribe en Calibre, en Zotero ni en el escrito. La vuelta no es
+  automática: el ciclo de cada hora trae la ficha, pero llevarla es siempre una decisión de la persona.
+
+Pruebas: `tests/lectura_base/test_ficha_obra.py` (un Yachay falso en memoria: la ida con su cursor, un cambio y una baja, la
+simulación, la escritura con `version_base`, el 409, el 422 y la migración del esquema 1 al 2), `tests/studio/test_fichado.py`
+(el canal falso: simular, el 409, «sobre la versión» y quedarse; el canal de verdad simula por la CLI sobre la muestra) y
+`tests/studio/test_inicio.py` (la de Yachay en Fichas y en la ficha editorial). Primera lectura de producción (2026-11-19,
+solo `cambios`): la entidad responde y aún no hay fichas de obra.

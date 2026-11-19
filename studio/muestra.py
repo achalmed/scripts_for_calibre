@@ -516,7 +516,16 @@ def _lectura(destino: Path, libros: dict) -> None:
                    progreso=[{"calibre_id": b1, "segundos": 20 * 60, "hoja": 3}]),
         lb.Lectura("okular", anotaciones=[a("okular-muestra", 3, "", "revisar el dato del crédito", "#ff6666", y=0.5)], alcance=None),
         lb.Lectura("yachay", anotaciones=[a("701", 3, "El mercado de trabajo local depende de la conectividad vial y del acceso al crédito.",
-                                            intencion="cita", pagina="13", y=0.4, creada=hace_dos_dias, modificada=hace_dos_dias)], alcance=None),
+                                            intencion="cita", pagina="13", y=0.4, creada=hace_dos_dias, modificada=hace_dos_dias)], alcance=None,
+                   # la ficha de obra de la persona en Yachay (§9.13): cinco de seis respondidas, sin dar por leída
+                   fichas_obra=[{"origen_id": "41", "calibre_id": b1, "version": 3, "creada": "2026-11-12T15:00:00Z",
+                                 "modificada": hace_dos_dias, "ficha": {
+                                     "pregunta": "Por qué unas ciudades pequeñas crecen más que otras de su mismo tamaño.",
+                                     "metodo": "Compara distritos con y sin conexión vial a lo largo de dos décadas.",
+                                     "datos": "Censos y encuestas de hogares de 1993 a 2017, por distrito.",
+                                     "hallazgo": "Crecen las que se integran a los mercados de su región, no las más grandes.",
+                                     "limites": "", "uso": "El marco del informe: la conectividad antes que la escala.",
+                                     "temas": ["conectividad", "empleo local"], "signo": "positivo"}}]),
     ]
     lb.importar(lecturas, aplicar=True, ruta=destino)
 

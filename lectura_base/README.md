@@ -7,7 +7,7 @@ estado: activo
 <!-- suite:inicio -->
 **Suite `lectura_base`** · objetivo *biblioteca* · estado *activo* · python · interfaz cli
 
-Una sola base de lectura (fuera de Calibre y de Zotero) con los subrayados, notas, sesiones, horas y progreso de KOReader, Zotero, Okular y Yachay, sin duplicados entre ellos, con su cola de cambios y la vuelta a Zotero por la puerta.
+Una sola base de lectura (fuera de Calibre y de Zotero) con los subrayados, notas, sesiones, horas y progreso de KOReader, Zotero, Okular y Yachay, y la ficha de obra de Yachay, sin duplicados entre ellos, con su cola de cambios y la vuelta a Zotero por la puerta y a Yachay por su API.
 
 - Escribe en: archivos, zotero · simula por defecto: sí
 - Entrada: KOReader (metadata.*.lua, statistics.sqlite3), zotero.sqlite (copia), Okular (docdata), Yachay (su API)
@@ -23,15 +23,19 @@ main.py exportar zotero [--aplicar]  # la vuelta: la base → Zotero, por la pue
 main.py libro 48 --json              # subrayados, tiempo y sesiones de un libro
 main.py cambios --consumidor X       # la cola de cambios para otros programas
 main.py ciclo                        # lo que corre el timer de cada hora: la ida y la vuelta, solo si hay algo
+main.py ficha 48                     # la ficha de obra de Yachay de un libro, como la guarda la base (solo lee)
+main.py ficha-a-yachay 48 <json> [--leida] [--sobre N] [--aplicar]   # la vuelta de la ficha de obra (§9.13)
 ```
 
-<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-11-17); no se edita a mano.</sub>
+<sub>Bloque generado desde `suite.yml` por `core/suites.py generar` (2026-11-19); no se edita a mano.</sub>
 <!-- suite:fin -->
 
 Edison lee en KOReader, en Zotero, en Okular y en el lector de Yachay. Esta suite junta lo que cada uno guarda en **una
 sola base, de Biblioteca Studio**: los subrayados, resaltados y notas (con su origen) y las sesiones, el tiempo y el
 progreso de cada libro. Los studios la leen (el área «Lectura» de Biblioteca Studio) y otros programas siguen su cola
-de cambios. El porqué, en `../docs/decisiones.md` §9.6 y §9.7.
+de cambios. También guarda la **ficha de obra** que la persona escribe de cada libro en Yachay (las seis preguntas, los
+temas, el signo, si la dio por leída) y la lleva de vuelta cuando se corrige en Biblioteca Studio. El porqué, en
+`../docs/decisiones.md` §9.6, §9.7 y §9.13.
 
 ```
 KOReader  metadata.*.lua · statistics.sqlite3 ─┐
@@ -62,7 +66,17 @@ python3 main.py exportar koreader --aplicar      # en el .lua de cada PDF que KO
 python3 main.py exportar okular --aplicar        # en el docdata de cada PDF, nunca en el PDF (Okular cerrado)
 python3 main.py libro 48                         # un libro: progreso por herramienta, subrayados, sesiones
 python3 main.py cambios --consumidor mi-studio --avanzar --aplicar   # la cola desde su cursor, y lo guarda
+python3 main.py ficha 48                         # la ficha de obra de Yachay del libro 48, como la guarda la base
+python3 main.py ficha-a-yachay 48 '{"Límites": "…"}'           # SIMULA: qué iría a Yachay y sobre qué versión
+python3 main.py ficha-a-yachay 48 respuestas.json --aplicar    # la envía con version_base (un 409 sale 4 y no pisa)
+python3 main.py ficha-a-yachay 48 respuestas.json --sobre 5 --aplicar   # tras un 409: la tuya sobre la versión 5
+python3 main.py ficha-a-yachay 48 - --leida --aplicar          # de la entrada estándar, y después darla por leída
 ```
+
+Las respuestas van por la clave de Yachay (`pregunta`, `metodo`, `datos`, `hallazgo`, `limites`, `uso`, `temas`, `signo`)
+o por el título de la norma de fichas («Pregunta» … «Uso que le daré»); viaja la ficha entera (la de la base con las
+respuestas encima), porque el PUT de Yachay la reemplaza. Ante un 409, quedarse con la de Yachay es
+`main.py sincronizar --origen yachay --aplicar`.
 
 En la ventana: Coherencia › Sincronizar › «Base de lectura» (F5 simula, Ctrl+Intro aplica) y «Subrayados de la base →
 Zotero», «→ KOReader» y «→ Okular»; el área **Lectura** (Ctrl+5) muestra la base.
@@ -77,6 +91,7 @@ Zotero», «→ KOReader» y «→ Okular»; el área **Lectura** (Ctrl+5) muest
 | `progreso` | por libro y por origen: hoja, fracción, estado, segundos (cada origen es dueño de su reloj: las horas se suman, nunca se copian) |
 | `cambios`, `cursores` | la cola: cada alta, cambio o baja (disparadores), y hasta dónde leyó cada consumidor |
 | `libros`, `corridas` | título y MD5 de cada libro visto; el informe de cada conciliación |
+| `fichas_obra` | (esquema 2, §9.13) la ficha de obra de la persona en Yachay, una por libro: las seis respuestas, temas y signo (`ficha`, JSON), sus `secciones` por título, `escritas` de `total`, `leida` y `leida_en`, la `version` que viaja como `version_base`, el id de Yachay (`origen_id`) y `baja` si la quitó |
 
 ## Sin duplicados al cruzar orígenes
 
@@ -93,7 +108,7 @@ Lo que la base escribió en una herramienta queda apuntado como presencia y vuel
 | KOReader | `hashdocsettings/*/*.sdr/metadata.*.lua` (resaltados con `drawer`, progreso) y `statistics.sqlite3` (`mode=ro`) | sí (§9.7): en el `.lua` de los PDF que ya abrió, con KOReader cerrado, respaldo y escritura atómica (el `.lua` se reescribe idéntico byte a byte) |
 | Zotero | `itemAnnotations` de los adjuntos PDF de la biblioteca, el readingTime de Ethereal Style y la última hoja, de una copia | sí, por la puerta: `z_anadir_anotacion` de `lib/escribir_zotero.py` |
 | Okular | `docdata/*.xml` de los PDF de la biblioteca (el texto se recorta del PDF con `pdftotext`) | sí (§9.7): en el docdata (nunca en el PDF), con Okular cerrado y respaldo |
-| Yachay | su API con token (`cliente.cambios`), cuando la fase 3b deje el cliente de Yachay (`cliente.py` de su repo) | **espera** el cliente y la aprobación del autor |
+| Yachay | su API con token (`cliente.cambios`): los `resaltado` y el `progreso` desde el cursor «yachay-entrada», y la `ficha_obra` sola desde el suyo, «yachay-fichas-obra» | sí: los resaltados con `POST /lector/{id}/resaltados` (`exportar yachay`) y la ficha de obra con `PUT /lectura/{id}/ficha` y `version_base` (`ficha-a-yachay`, §9.13) |
 
 ## Límite honesto
 

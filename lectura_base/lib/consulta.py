@@ -7,6 +7,9 @@ readingTime de Zotero); las sesiones (solo KOReader trae la hora de cada página
 Para Inicio y Lectura de Biblioteca Studio (decisiones §9.9): `dias` (el mapa de calor de horas por día), `nuevas` (los
 subrayados de los últimos días), `en_curso` (los libros empezados y sin terminar, con la herramienta donde se leyeron por
 última vez) y `subrayados` (los que tienen texto, para saber cuáles faltan fichar).
+
+La ficha de obra de Yachay (decisiones §9.13): `libro` la trae en `ficha_obra` (o None) y `fichas_obra` lista las que
+tienen alguna respuesta o están leídas; una fila con `escritas: 0` y sin leer es una lectura sin ficha y no se lista.
 """
 from __future__ import annotations
 
@@ -241,7 +244,30 @@ def libro(calibre_id: int, ruta: Path | None = None, sesiones_max: int = 30) -> 
             "dias": len(dias),
             "primera": datetime.fromtimestamp(totales[3]).strftime("%Y-%m-%d") if totales[3] else "",
             "ultima": datetime.fromtimestamp(totales[4]).strftime("%Y-%m-%d") if totales[4] else "",
-            "por_origen": {o: sum(1 for a in anotaciones if o in a["vive_en"]) for o in base.ORIGENES}}
+            "por_origen": {o: sum(1 for a in anotaciones if o in a["vive_en"]) for o in base.ORIGENES},
+            "ficha_obra": ficha_obra_de(int(calibre_id), ruta)}
+
+
+def ficha_obra_de(calibre_id: int, ruta: Path | None = None) -> dict | None:
+    """La ficha de obra de Yachay del libro, si tiene algo escrito o está leída (si no, es una lectura sin ficha)."""
+    f = base.ficha_obra(int(calibre_id), "yachay", ruta)
+    return f if f and (f["escritas"] or f["leida"] or f["ficha"]["temas"] or f["ficha"]["signo"]) else None
+
+
+def fichas_obra(ruta: Path | None = None) -> list[dict]:
+    """Las fichas de obra de Yachay de la base, con su título, la más reciente primero (las sin nada escrito, fuera)."""
+    with base.lector(ruta) as c:
+        if c is None:
+            return []
+        filas = c.execute("SELECT f.*, coalesce(l.titulo, '') AS titulo FROM fichas_obra f LEFT JOIN libros l ON l.calibre_id = f.calibre_id "
+                          "WHERE f.origen = 'yachay' AND f.baja IS NULL ORDER BY f.modificada DESC, f.id DESC").fetchall()
+        salida = []
+        for f in filas:
+            d = base.ficha_obra_publica(f)
+            d["titulo"] = f["titulo"]
+            if d["escritas"] or d["leida"] or d["ficha"]["temas"] or d["ficha"]["signo"]:
+                salida.append(d)
+    return salida
 
 
 def a_json(valor) -> str:

@@ -7,12 +7,22 @@ Método: todo pasa por `lib/consulta.py` (cargado por su ruta, como «Usado en»
   usan el libro, primero), `formulario`, `nueva_ficha` (simula; escribe con `aplicar` tras la revisión del diálogo, solo
   en `fuentes/fichas/` del escrito y, si el libro aún no es su fuente, su `fuentes.yml` y su `references.bib`),
   `miradas`, `prompt_obra` (al portapapeles) y `pegar_obra`. El PDF lo pinta el visor de gui-comun (`VisorPdf`).
+La ficha de obra de Yachay (decisiones §9.13): la de la persona sobre la obra, una por libro, que la base de lectura trae
+  de Yachay; la del escrito es su copia para ese escrito. «Nueva ficha» de obra se rellena con ella, y al guardar la del
+  escrito la ventana ofrece llevarla de vuelta: `simularYachay` dice qué se enviaría y con qué versión, y `llevarAYachay`
+  la envía tras confirmar, siempre por la CLI de la base (`lectura_base/main.py ficha-a-yachay`, la que tiene el token y
+  el único escritor de la base). Un 409 no pisa: vuelve la versión actual y la persona elige llevar la suya sobre ella o
+  quedarse con la de Yachay (`quedarseConYachay`: la sincronía de Yachay, `main.py sincronizar --origen yachay --aplicar`).
+  Las llamadas a la CLI van por `CanalYachay`, que las pruebas reemplazan: nada contra el Yachay real.
 Límite: no es una puerta: nunca escribe en Calibre ni en Zotero, ni llama a ningún modelo. Las capturas y las pruebas, sobre
   `studio/muestra.py` (WRITING_DIR de la muestra).
 """
 from __future__ import annotations
 
 import importlib.util
+import json
+import subprocess
+import sys
 import threading
 from pathlib import Path
 
@@ -33,17 +43,45 @@ def _consulta():
     return m
 
 
+class CanalYachay:
+    """La ficha de obra en Yachay por la CLI de la base de lectura (el token lo lee ella, del llavero)."""
+
+    def _correr(self, argv: list[str], entrada: str = "", tiempo: int = 120) -> tuple[dict, int, str]:
+        r = subprocess.run([sys.executable, str(datos.REPO / "lectura_base" / "main.py"), *argv], input=entrada,
+                           capture_output=True, text=True, timeout=tiempo)
+        try:
+            salida = json.loads(r.stdout) if r.stdout.strip() else {}
+        except ValueError:
+            salida = {}
+        error = (r.stderr or "").strip().splitlines()[-1:] or [""]
+        return salida if isinstance(salida, dict) else {}, r.returncode, error[0].replace("[ERROR] ", "")
+
+    def ficha_a_yachay(self, calibre_id: int, respuestas: dict, aplicar: bool, sobre: int | None = None) -> dict:
+        argv = ["ficha-a-yachay", str(int(calibre_id)), "-", "--json"] + (["--aplicar"] if aplicar else []) \
+            + (["--sobre", str(int(sobre))] if sobre is not None else [])
+        r, codigo, error = self._correr(argv, json.dumps(respuestas, ensure_ascii=False))
+        if codigo not in (0, 4) or not r:
+            return {"error": error or f"la CLI salió con {codigo}", "sinCanal": codigo == 3}
+        return r
+
+    def sincronizar_yachay(self) -> dict:
+        r, codigo, error = self._correr(["sincronizar", "--origen", "yachay", "--aplicar", "--json"], tiempo=300)
+        return {"ok": codigo == 0, "error": "" if codigo == 0 else (error or f"la CLI salió con {codigo}")}
+
+
 class Fichado(QObject):
     cambiado = Signal()
     revisada = Signal("QVariantMap")                 # lo que escribiría una ficha (simulación) o lo que escribió
     promptObra = Signal("QVariantMap")               # el prompt de la mirada (ya en el portapapeles) o {error}
     pegadoObra = Signal("QVariantMap")               # lo pegado, leído: {ok, errores, avisos, estudio, fichas}
+    yachay = Signal("QVariantMap")                   # la ficha de obra en Yachay: lo que se enviaría, lo enviado o el 409
     aviso = Signal(str, str)
     _listo = Signal(str, "QVariant")                 # (qué, dato) desde los hilos
 
-    def __init__(self, libros, consola, cache: Path, parent=None):
+    def __init__(self, libros, consola, cache: Path, parent=None, canal: CanalYachay | None = None):
         super().__init__(parent)
         self.libros, self.consola = libros, consola
+        self.canal = canal or CanalYachay()
         self._visor = VisorPdf(Path(cache), "BIBLIOTECA_STUDIO_VISOR", parent=self)
         self._escritos: list = []
         self._formulario: dict = {}
@@ -111,6 +149,14 @@ class Fichado(QObject):
             self.promptObra.emit(r)
         elif que == "pegar":
             self.pegadoObra.emit(r)
+        elif que == "yachay":
+            if r.get("escrita"):
+                self.consola.registrar("ok", f"Ficha de obra del libro {r.get('calibre_id')} llevada a Yachay (versión {r.get('version')})")
+            elif r.get("codigo") == "lectura_modificada":
+                self.consola.registrar("warn", f"Yachay: la ficha de obra cambió allí (versión {r.get('version')}); no se envió nada")
+            elif r.get("error"):
+                self.consola.registrar("warn", f"Yachay: {r['error']}")
+            self.yachay.emit(r)
         self.cambiado.emit()
 
     # ------------------------------------------------------------------ lo que pide la ventana
@@ -138,6 +184,25 @@ class Fichado(QObject):
         def trabajo():
             return {**_consulta().nueva_ficha(carpeta, campos, aplicar), "aplicar": aplicar}
         self._en_hilo("revisar", trabajo)
+
+    # ------------------------------------------------------------------ la ficha de obra en Yachay (§9.13)
+    @Slot("QVariantMap")
+    def simularYachay(self, secciones: dict) -> None:
+        """Qué se enviaría a la ficha de obra de Yachay de este libro y sobre qué versión (`yachay`, sin escribir)."""
+        cid, respuestas = self._calibre_id, dict(secciones)
+        self._en_hilo("yachay", lambda: {**self.canal.ficha_a_yachay(cid, respuestas, False), "accion": "simular"})
+
+    @Slot("QVariantMap", int)
+    def llevarAYachay(self, secciones: dict, sobre: int) -> None:
+        """La envía (tras confirmar en la ventana); `sobre` ≥ 0 tras un 409: llevar la suya sobre esa versión."""
+        cid, respuestas = self._calibre_id, dict(secciones)
+        sobre_v = int(sobre) if int(sobre) >= 0 else None
+        self._en_hilo("yachay", lambda: {**self.canal.ficha_a_yachay(cid, respuestas, True, sobre_v), "accion": "llevar"})
+
+    @Slot()
+    def quedarseConYachay(self) -> None:
+        """Ante un 409, la de Yachay: la sincronía de Yachay la trae a la base (nada se envía)."""
+        self._en_hilo("yachay", lambda: {**self.canal.sincronizar_yachay(), "accion": "quedarse"})
 
     @Slot(str, int, int, str)
     def copiarPrompt(self, mirada: str, desde: int, hasta: int, proposito: str) -> None:

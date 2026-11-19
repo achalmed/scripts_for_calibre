@@ -34,7 +34,7 @@ def test_fichas_de_los_escritos_y_canonicas_con_sus_filtros(areas):
     fi = areas["fichas"]
     assert fi.leidas and not fi.cargando
     cuentas = {f["clave"]: f["n"] for f in fi.filtros}
-    assert cuentas == {"todas": 5, "textual": 1, "parafrasis": 1, "obra": 0, "revisar": 2, "ia": 0} and fi.porRevisar == 2
+    assert cuentas == {"todas": 6, "textual": 1, "parafrasis": 1, "obra": 1, "revisar": 2, "ia": 0} and fi.porRevisar == 2
     textual = next(f for f in fi.lista if f["tipo"] == "textual")
     assert textual["cita"].startswith("La escala importa") and textual["cotejo"] == "cotejada con el PDF"
     assert textual["obra"] == "Economía de las ciudades pequeñas" and "p. 12" in textual["detalle"]
@@ -50,6 +50,27 @@ def test_fichas_de_los_escritos_y_canonicas_con_sus_filtros(areas):
     fi.buscar("")
     fi.elegir(textual["clave"])
     assert fi.actual == textual["clave"] and areas["libros"].id == textual["calibreId"]   # «Nueva ficha» va sobre su libro
+
+
+@requiere_binding
+def test_la_ficha_de_obra_de_yachay_en_fichas_y_en_la_ficha_editorial(areas):
+    """La que la base de lectura trajo de Yachay (§9.13): en Fichas, «De obra» sin archivo ni escrito, con su procedencia; en
+    la ficha editorial (por `studio.lectura.fichaObra`), las seis, los temas, el signo y su versión."""
+    fi, lec = areas["fichas"], areas["lectura"]
+    obra = next(f for f in fi.lista if f["clave"].startswith("yachay/"))
+    assert obra["tipo"] == "obra" and obra["archivo"] == "" and obra["insertar"] == "" and not obra["porRevisar"]
+    assert obra["cita"].startswith("Crecen las que se integran") and "Ficha de obra en Yachay" in obra["detalle"]
+    assert obra["obra"] == "Economía de las ciudades pequeñas" and obra["tema"] == "conectividad, empleo local"
+    fi.elegir(obra["clave"])
+    assert areas["libros"].id == obra["calibreId"]
+    fo = lec.fichaObra
+    assert fo["hay"] and str(fo["calibreId"]) == obra["calibreId"] and fo["procedencia"] == "Ficha de obra en Yachay"
+    assert [p["titulo"] for p in fo["preguntas"]] == ["Pregunta", "Método", "Datos", "Hallazgo", "Límites", "Uso que le daré"]
+    assert fo["secciones"]["Límites"] == "" and not fo["completa"] and fo["signo"] == "Positivo" and fo["temas"] == "conectividad, empleo local"
+    assert fo["detalle"].startswith("versión 3 · 5 de 6 respondidas · sin dar por leída")
+    otro = next(l for l in areas["libros"]._libros if str(l["id"]) != obra["calibreId"])
+    lec.elegir(int(otro["id"]))
+    assert not lec.fichaObra["hay"]
 
 
 @requiere_binding

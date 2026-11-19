@@ -16,6 +16,9 @@ El modelo:
   segundos). Los relojes no se copian entre sí: cada origen guarda su tiempo y las estadísticas los suman.
 - `cambios`: la cola que llenan los disparadores en cada alta, cambio o baja; un consumidor (Yachay por su API, otro
   studio) lee desde su número y guarda su cursor en `cursores`.
+- `fichas_obra` (esquema 2, 2026-11-19, decisiones §9.13): la ficha de obra de la persona sobre un libro, como la da Yachay
+  (las seis respuestas, los temas, el signo, si la dio por leída y su `version`, que viaja como `version_base` en la
+  vuelta). Una por libro y origen: Yachay da a cada persona solo las suyas y una por `calibre_id`.
 
 Conciliar (`importar`): una lectura de un origen se compara con la base. Lo ya visto (misma presencia) se actualiza si
 cambió en el origen y es más nuevo; lo nuevo se une a una anotación de otro origen si es el mismo pasaje (la misma huella,
@@ -41,7 +44,7 @@ from pathlib import Path
 from lectura_base.lib import texto as tx
 
 REPO = Path(__file__).resolve().parents[2]
-ESQUEMA = 1
+ESQUEMA = 2          # 2 (2026-11-19): `fichas_obra`, aditiva (CREATE … IF NOT EXISTS)
 ORIGENES = ("koreader", "zotero", "okular", "yachay")
 NOMBRES = {"koreader": "KOReader", "zotero": "Zotero", "okular": "Okular", "yachay": "Yachay", "base": "Biblioteca Studio"}
 
@@ -147,6 +150,26 @@ CREATE TABLE IF NOT EXISTS corridas (
     resumen TEXT NOT NULL DEFAULT '{}'
 );
 
+CREATE TABLE IF NOT EXISTS fichas_obra (
+    id INTEGER PRIMARY KEY,
+    origen TEXT NOT NULL DEFAULT 'yachay',
+    origen_id TEXT NOT NULL DEFAULT '',
+    calibre_id INTEGER NOT NULL,
+    ficha TEXT NOT NULL DEFAULT '{}',
+    secciones TEXT NOT NULL DEFAULT '{}',
+    escritas INTEGER NOT NULL DEFAULT 0,
+    total INTEGER NOT NULL DEFAULT 6,
+    leida INTEGER NOT NULL DEFAULT 0,
+    leida_en TEXT NOT NULL DEFAULT '',
+    version INTEGER NOT NULL DEFAULT 0,
+    creada TEXT NOT NULL DEFAULT '',
+    modificada TEXT NOT NULL DEFAULT '',
+    visto TEXT,
+    baja TEXT,
+    UNIQUE (origen, calibre_id)
+);
+CREATE INDEX IF NOT EXISTS fichas_obra_origen_id ON fichas_obra(origen, origen_id);
+
 CREATE TRIGGER IF NOT EXISTS anotaciones_alta AFTER INSERT ON anotaciones BEGIN
     INSERT INTO cambios(tabla, fila, uid, operacion, origen, calibre_id)
     VALUES ('anotaciones', NEW.id, NEW.uid, 'alta', NEW.origen_ultimo, NEW.calibre_id);
@@ -173,6 +196,15 @@ CREATE TRIGGER IF NOT EXISTS sesiones_cambio AFTER UPDATE ON sesiones WHEN NEW.s
 END;
 CREATE TRIGGER IF NOT EXISTS progreso_alta AFTER INSERT ON progreso BEGIN
     INSERT INTO cambios(tabla, fila, operacion, origen, calibre_id) VALUES ('progreso', NEW.id, 'alta', NEW.origen, NEW.calibre_id);
+END;
+CREATE TRIGGER IF NOT EXISTS fichas_obra_alta AFTER INSERT ON fichas_obra BEGIN
+    INSERT INTO cambios(tabla, fila, operacion, origen, calibre_id) VALUES ('fichas_obra', NEW.id, 'alta', NEW.origen, NEW.calibre_id);
+END;
+CREATE TRIGGER IF NOT EXISTS fichas_obra_cambio AFTER UPDATE ON fichas_obra
+WHEN NEW.ficha IS NOT OLD.ficha OR NEW.version IS NOT OLD.version OR NEW.leida IS NOT OLD.leida OR NEW.baja IS NOT OLD.baja BEGIN
+    INSERT INTO cambios(tabla, fila, operacion, origen, calibre_id)
+    VALUES ('fichas_obra', NEW.id, CASE WHEN NEW.baja IS NOT NULL AND OLD.baja IS NULL THEN 'baja' ELSE 'cambio' END,
+            NEW.origen, NEW.calibre_id);
 END;
 CREATE TRIGGER IF NOT EXISTS progreso_cambio AFTER UPDATE ON progreso
 WHEN NEW.hoja IS NOT OLD.hoja OR NEW.fraccion IS NOT OLD.fraccion OR NEW.estado IS NOT OLD.estado OR NEW.segundos IS NOT OLD.segundos BEGIN
@@ -320,7 +352,8 @@ class Lectura:
     `anotaciones`: [{origen_id, calibre_id, md5, hoja, pagina, capitulo, texto, rects, color, tipo, intencion, nota, creada,
     modificada}]; `sesiones`: [{origen_id, calibre_id, md5, inicio, fin, segundos, paginas, desde, hasta}]; `progreso`:
     [{calibre_id, md5, hoja, hojas, fraccion, estado, segundos, primera, ultima}]; `libros`: {calibre_id: {md5, titulo,
-    autores}}; `alcance`: las claves de libro (`clave_libro`) que se leyeron enteras (lo que falta de ellas queda ausente;
+    autores}}; `fichas_obra`: [{origen_id, calibre_id, ficha, secciones, escritas, total, leida, leida_en,
+    version, creada, modificada}] (Yachay; `bajas_fichas`, las que quitó); `alcance`: las claves de libro (`clave_libro`) que se leyeron enteras (lo que falta de ellas queda ausente;
     `None`: nada se marca ausente); `avisos`: lo que no se pudo leer; `bajas`: lo que el origen avisa que quitó. Un registro
     con `uid_base` es una anotación que la base le dio a ese origen (Yachay devuelve su `uid` como `origen_id`)."""
     origen: str
@@ -331,6 +364,8 @@ class Lectura:
     alcance: set[str] | None = field(default_factory=set)
     avisos: list[str] = field(default_factory=list)
     bajas: list[str] = field(default_factory=list)       # origen_id que el origen dice haber quitado (Yachay)
+    fichas_obra: list[dict] = field(default_factory=list)    # la ficha de obra de cada libro (Yachay, §9.13)
+    bajas_fichas: list[str] = field(default_factory=list)    # el id de Yachay de las fichas de obra que quitó
 
 
 def clave_libro(calibre_id, md5: str = "") -> str:
@@ -349,16 +384,18 @@ class Plan:
     borradas: list[dict] = field(default_factory=list)    # ya no está en ningún origen
     sesiones: dict = field(default_factory=lambda: {"altas": 0, "cambios": 0})
     progreso: dict = field(default_factory=lambda: {"altas": 0, "cambios": 0})
+    fichas_obra: dict = field(default_factory=lambda: {"altas": 0, "cambios": 0, "bajas": 0})
     avisos: list[str] = field(default_factory=list)
 
     def resumen(self) -> dict:
         return {"origen": self.origen, "leidas": self.leidas, "altas": len(self.altas), "uniones": len(self.uniones),
                 "cambios": len(self.cambios), "ausentes": len(self.ausentes), "borradas": len(self.borradas),
-                "sesiones": dict(self.sesiones), "progreso": dict(self.progreso), "avisos": list(self.avisos)}
+                "sesiones": dict(self.sesiones), "progreso": dict(self.progreso), "fichas_obra": dict(self.fichas_obra),
+                "avisos": list(self.avisos)}
 
     def vacio(self) -> bool:
         return not (self.altas or self.uniones or self.cambios or self.ausentes or self.borradas
-                    or any(self.sesiones.values()) or any(self.progreso.values()))
+                    or any(self.sesiones.values()) or any(self.progreso.values()) or any(self.fichas_obra.values()))
 
 
 # --------------------------------------------------------------------------------------------------------------- conciliar
@@ -596,6 +633,8 @@ def _conciliar(c: sqlite3.Connection, lectura: Lectura, plan: Plan) -> None:
             c.execute(f"UPDATE progreso SET {', '.join(f'{k} = ?' for k in valores)} WHERE id = ?", (*valores.values(), previa["id"]))
             plan.progreso["cambios"] += 1
 
+    _conciliar_fichas(c, lectura, plan, momento)
+
     for calibre_id, d in lectura.libros.items():
         c.execute("INSERT INTO libros(calibre_id, md5, titulo, autores, actualizado) VALUES (?,?,?,?,?) "
                   "ON CONFLICT(calibre_id) DO UPDATE SET md5 = CASE WHEN excluded.md5 != '' THEN excluded.md5 ELSE libros.md5 END, "
@@ -608,6 +647,98 @@ def _conciliar(c: sqlite3.Connection, lectura: Lectura, plan: Plan) -> None:
             c.execute("UPDATE sesiones SET calibre_id = ? WHERE calibre_id IS NULL AND md5 = ?", (int(calibre_id), d["md5"]))
     plan.avisos += lectura.avisos
     c.execute("INSERT INTO corridas(momento, origen, resumen) VALUES (?,?,?)", (momento, origen, json.dumps(plan.resumen(), ensure_ascii=False)))
+
+
+# ----------------------------------------------------------------------------------------- la ficha de obra (§9.13)
+CAMPOS_OBRA = ("pregunta", "metodo", "datos", "hallazgo", "limites", "uso")
+# los títulos de las seis en la norma de fichas (`GUIAS_OBRA` de `lib/fichar.py`, los mismos que Yachay da en `secciones`)
+TITULOS_OBRA = {"pregunta": "Pregunta", "metodo": "Método", "datos": "Datos", "hallazgo": "Hallazgo", "limites": "Límites",
+                "uso": "Uso que le daré"}
+SIGNOS = ("", "positivo", "negativo", "nulo", "mixto", "no_aplica")
+
+
+def ficha_limpia(f: dict | None) -> dict:
+    """La ficha de obra en su forma: las seis respuestas como texto, los temas como lista y el signo en su vocabulario
+    (el de `lectura_obra.limpiar_ficha` de Yachay; lo que no lo es queda vacío)."""
+    f = f if isinstance(f, dict) else {}
+    salida = {k: str(f.get(k) or "").strip() for k in CAMPOS_OBRA}
+    temas = f.get("temas") or []
+    if isinstance(temas, str):
+        temas = [x for x in (t.strip() for t in temas.replace(";", ",").split(",")) if x]
+    salida["temas"] = [str(x).strip() for x in temas if str(x).strip()]
+    signo = str(f.get("signo") or "")
+    salida["signo"] = signo if signo in SIGNOS else ""
+    return salida
+
+
+def _registro_ficha(d: dict) -> dict:
+    ficha = ficha_limpia(d.get("ficha"))
+    escritas = d.get("escritas")
+    return {"origen_id": str(d.get("origen_id") or d.get("id") or ""), "calibre_id": int(d["calibre_id"]),
+            "ficha": json.dumps(ficha, ensure_ascii=False, sort_keys=True),
+            "secciones": json.dumps(d.get("secciones") or {TITULOS_OBRA[k]: ficha[k] for k in CAMPOS_OBRA},
+                                    ensure_ascii=False, sort_keys=True),
+            "escritas": int(escritas if escritas is not None else sum(1 for k in CAMPOS_OBRA if ficha[k])),
+            "total": int(d.get("total") or len(CAMPOS_OBRA)), "leida": 1 if d.get("leida") or d.get("leida_en") else 0,
+            "leida_en": str(d.get("leida_en") or ""), "version": int(d.get("version") or 0),
+            "creada": str(d.get("creada") or d.get("creado_en") or ""),
+            "modificada": str(d.get("modificada") or d.get("actualizado_en") or "")}
+
+
+def _conciliar_fichas(c: sqlite3.Connection, lectura: Lectura, plan: Plan, momento: str) -> None:
+    """La ficha de obra de cada libro: se guarda tal como la dio el origen si su versión es otra (o es nueva); una baja la
+    marca. Una por libro y origen: Yachay da a cada persona las suyas, una por `calibre_id`."""
+    for crudo in lectura.fichas_obra:
+        if crudo.get("calibre_id") in (None, ""):
+            continue
+        r = _registro_ficha(crudo)
+        previa = c.execute("SELECT * FROM fichas_obra WHERE origen = ? AND calibre_id = ?", (lectura.origen, r["calibre_id"])).fetchone()
+        if previa is None:
+            c.execute(f"INSERT INTO fichas_obra(origen, visto, {', '.join(r)}) VALUES (?, ?, {', '.join('?' * len(r))})",
+                      (lectura.origen, momento, *r.values()))
+            plan.fichas_obra["altas"] += 1
+            continue
+        if previa["baja"] is None and all(previa[k] == v for k, v in r.items()):
+            c.execute("UPDATE fichas_obra SET visto = ? WHERE id = ?", (momento, previa["id"]))
+            continue
+        c.execute(f"UPDATE fichas_obra SET {', '.join(f'{k} = ?' for k in r)}, visto = ?, baja = NULL WHERE id = ?",
+                  (*r.values(), momento, previa["id"]))
+        plan.fichas_obra["cambios"] += 1
+    for origen_id in lectura.bajas_fichas:
+        f = c.execute("SELECT id FROM fichas_obra WHERE origen = ? AND origen_id = ? AND baja IS NULL",
+                      (lectura.origen, str(origen_id))).fetchone()
+        if f is not None:
+            c.execute("UPDATE fichas_obra SET baja = ? WHERE id = ?", (momento, f["id"]))
+            plan.fichas_obra["bajas"] += 1
+
+
+def ficha_obra_publica(f) -> dict:
+    """Una fila de `fichas_obra` como la leen la ventana y la CLI."""
+    d = {k: f[k] for k in f.keys() if k not in ("ficha", "secciones")}
+    d["ficha"] = ficha_limpia(json.loads(f["ficha"] or "{}"))
+    d["secciones"] = json.loads(f["secciones"] or "{}")
+    d["leida"] = bool(f["leida"])
+    return d
+
+
+def ficha_obra(calibre_id: int, origen: str = "yachay", ruta: Path | None = None) -> dict | None:
+    """La ficha de obra del libro en la base (solo lee); None si no hay o si el origen la quitó."""
+    with lector(ruta) as c:
+        if c is None:
+            return None
+        f = c.execute("SELECT * FROM fichas_obra WHERE origen = ? AND calibre_id = ? AND baja IS NULL",
+                      (origen, int(calibre_id))).fetchone()
+        return ficha_obra_publica(f) if f is not None else None
+
+
+def guardar_ficha_obra(registro: dict, origen: str = "yachay", aplicar: bool = False, ruta: Path | None = None) -> Plan:
+    """Lo que el origen respondió al escribirle la ficha (la vuelta) o lo que la persona eligió quedarse de él (un 409), en
+    la base, para que muestre la versión nueva sin esperar a la próxima lectura. Es la conciliación de una sola ficha:
+    simula sin `aplicar`; con él, tras el respaldo verificado. El `origen_id` que el origen no devuelva se conserva."""
+    previa = ficha_obra(int(registro["calibre_id"]), origen, ruta)
+    if previa and not str(registro.get("origen_id") or registro.get("id") or ""):
+        registro = {**registro, "origen_id": previa["origen_id"]}
+    return importar([Lectura(origen, alcance=None, fichas_obra=[registro])], aplicar=aplicar, ruta=ruta)[0]
 
 
 def importar(lecturas: list[Lectura], aplicar: bool = False, ruta: Path | None = None) -> list[Plan]:
@@ -672,6 +803,9 @@ def cambios_desde(seq: int = 0, limite: int = 500, ruta: Path | None = None) -> 
             elif f["tabla"] in ("sesiones", "progreso"):
                 fila = c.execute(f"SELECT * FROM {f['tabla']} WHERE id = ?", (f["fila"],)).fetchone()
                 d["datos"] = dict(fila) if fila is not None else None
+            elif f["tabla"] == "fichas_obra":
+                fila = c.execute("SELECT * FROM fichas_obra WHERE id = ?", (f["fila"],)).fetchone()
+                d["datos"] = ficha_obra_publica(fila) if fila is not None else None
             salida.append(d)
     return {"cambios": salida, "hasta": salida[-1]["seq"] if salida else int(seq)}
 

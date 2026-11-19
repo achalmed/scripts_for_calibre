@@ -2,7 +2,7 @@
 # Contrato: core/suite.schema.yml; core/suites.py validar lo comprueba y generar escribe los índices y README.
 id: lectura_base
 objetivo: biblioteca
-resumen: Una sola base de lectura (fuera de Calibre y de Zotero) con los subrayados, notas, sesiones, horas y progreso de KOReader, Zotero, Okular y Yachay, sin duplicados entre ellos, con su cola de cambios y la vuelta a Zotero por la puerta.
+resumen: Una sola base de lectura (fuera de Calibre y de Zotero) con los subrayados, notas, sesiones, horas y progreso de KOReader, Zotero, Okular y Yachay, y la ficha de obra de Yachay, sin duplicados entre ellos, con su cola de cambios y la vuelta a Zotero por la puerta y a Yachay por su API.
 escribe_en:
 - archivos
 - zotero
@@ -14,6 +14,8 @@ comandos:
 - 'main.py libro 48 --json              # subrayados, tiempo y sesiones de un libro'
 - 'main.py cambios --consumidor X       # la cola de cambios para otros programas'
 - 'main.py ciclo                        # lo que corre el timer de cada hora: la ida y la vuelta, solo si hay algo'
+- 'main.py ficha 48                     # la ficha de obra de Yachay de un libro, como la guarda la base (solo lee)'
+- 'main.py ficha-a-yachay 48 <json> [--leida] [--sobre N] [--aplicar]   # la vuelta de la ficha de obra (§9.13)'
 estado: activo
 interfaz: cli
 entrada: KOReader (metadata.*.lua, statistics.sqlite3), zotero.sqlite (copia), Okular (docdata), Yachay (su API)

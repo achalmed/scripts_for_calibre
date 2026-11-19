@@ -11,6 +11,9 @@ Simula por omisión; `--aplicar` escribe (en la base, tras su respaldo verificad
     main.py cambios [--desde N | --consumidor X [--avanzar]] [--json]   # la cola de cambios para otros programas
     main.py ruta                                             # dónde vive la base
     main.py ciclo [--json]                                   # lo que corre el timer: la ida y la vuelta, solo si hay algo
+    main.py ficha <calibre_id> [--json]                      # la ficha de obra de Yachay que guarda la base (solo lee)
+    main.py ficha-a-yachay <calibre_id> '<json>' [--leida] [--sobre N] [--aplicar] [--json]
+                                                             # la vuelta de la ficha de obra (§9.13): simula; un 409 no pisa
 """
 from __future__ import annotations
 
@@ -52,6 +55,9 @@ def _imprimir_plan(p: base.Plan, aplicar: bool) -> None:
     print(f"{verbo}{base.NOMBRES.get(p.origen, p.origen)}: {r['leidas']} leídas · {r['altas']} nuevas · {r['uniones']} unidas a otra "
           f"herramienta · {r['cambios']} cambiadas · {r['ausentes']} ya no están · {r['borradas']} borradas · sesiones "
           f"+{r['sesiones']['altas']}/~{r['sesiones']['cambios']} · progreso +{r['progreso']['altas']}/~{r['progreso']['cambios']}")
+    fo = r.get("fichas_obra") or {}
+    if any(fo.values()):
+        print(f"    fichas de obra: +{fo.get('altas', 0)} nuevas · {fo.get('cambios', 0)} cambiadas · {fo.get('bajas', 0)} quitadas")
     for u in p.uniones[:5]:
         print(f"    = libro {u.get('calibre_id')} hoja {u.get('hoja')}: «{(u.get('texto') or u.get('nota') or '')[:60]}» "
               f"(también en {', '.join(base.NOMBRES.get(o, o) for o in u.get('con', []))})")
@@ -155,8 +161,10 @@ def cmd_ciclo(a, log) -> int:
         print(consulta.a_json(informe))
     else:
         for p in informe["ida"]:
+            fo = p.get("fichas_obra") or {}
             print(f"→ base: {base.NOMBRES.get(p['origen'], p['origen'])}: +{p['altas']} nuevas, {p['cambios']} cambiadas, "
-                  f"{p['borradas']} borradas · progreso +{p['progreso']['altas']}/~{p['progreso']['cambios']}")
+                  f"{p['borradas']} borradas · progreso +{p['progreso']['altas']}/~{p['progreso']['cambios']}"
+                  + (f" · fichas de obra +{fo.get('altas', 0)}/~{fo.get('cambios', 0)}" if any(fo.values()) else ""))
         for d, n in informe["vuelta"].items():
             print(f"← {base.NOMBRES.get(d, d)}: {n} anotaciones")
         for s in informe["saltados"]:
@@ -164,6 +172,56 @@ def cmd_ciclo(a, log) -> int:
         if not informe["ida"] and not informe["vuelta"]:
             print("= Nada nuevo: la base y las herramientas ya coinciden.")
     return 75 if informe["saltados"] else 0
+
+
+def cmd_ficha(a, log) -> int:
+    f = consulta.ficha_obra_de(a.calibre_id)
+    if a.json:
+        print(consulta.a_json(f))
+        return 0
+    if not f:
+        print(f"El libro {a.calibre_id} no tiene ficha de obra de Yachay en la base (`main.py sincronizar --origen yachay --aplicar` la trae).")
+        return 0
+    print(f"Ficha de obra en Yachay · libro {a.calibre_id} · versión {f['version']} · {f['escritas']} de {f['total']} respondidas"
+          + (f" · leída el {consulta.utc_a_local(f['leida_en'])}" if f["leida"] else " · sin dar por leída"))
+    for k in base.CAMPOS_OBRA:
+        print(f"  {base.TITULOS_OBRA[k]}: {f['ficha'][k] or '—'}")
+    if f["ficha"]["temas"]:
+        print(f"  Temas: {', '.join(f['ficha']['temas'])}")
+    if f["ficha"]["signo"]:
+        print(f"  Signo: {f['ficha']['signo']}")
+    return 0
+
+
+def cmd_ficha_a_yachay(a, log) -> int:
+    """La vuelta de la ficha de obra: simula (qué se enviaría y con qué versión); con --aplicar, por el cliente."""
+    import json as _json
+    from lectura_base.lib import ficha_obra
+    texto = sys.stdin.read() if a.datos == "-" else (Path(a.datos).read_text(encoding="utf-8")
+                                                     if len(a.datos) < 4096 and Path(a.datos).is_file() else a.datos)
+    try:
+        p = ficha_obra.plan(a.calibre_id, _json.loads(texto), sobre=a.sobre, leida=a.leida)
+    except (ValueError, TypeError) as e:
+        log.error("%s", e)
+        return 2
+    cliente = None
+    if a.aplicar:
+        from lectura_base.lib.adaptadores import yachay as ad_yachay
+        cliente = ad_yachay.cargar_cliente()
+    try:
+        r = ficha_obra.llevar(p, cliente, aplicar=a.aplicar)
+    except ficha_obra.SinCanal as e:
+        log.error("%s", e)
+        return 3
+    except Exception as e:  # noqa: BLE001 — Yachay caído o sin permiso
+        log.error("Yachay: %s", e)
+        return 1
+    if a.json:
+        print(consulta.a_json(r))
+    else:
+        for linea in ficha_obra.texto(r):
+            print(linea)
+    return 4 if r.get("codigo") == "lectura_modificada" else 0
 
 
 def cmd_libro(a, log) -> int:
@@ -227,6 +285,17 @@ def main(argv=None) -> int:
     sub.add_parser("ruta", help="dónde vive la base")
     ci = sub.add_parser("ciclo", help="la ida y la vuelta, solo si hay algo (lo que corre el timer)")
     ci.add_argument("--json", action="store_true")
+    fo = sub.add_parser("ficha", help="la ficha de obra de Yachay de un libro, como la guarda la base (solo lee)")
+    fo.add_argument("calibre_id", type=int)
+    fo.add_argument("--json", action="store_true")
+    fy = sub.add_parser("ficha-a-yachay", help="llevar la ficha de obra a Yachay (simula; --aplicar la envía con version_base)")
+    fy.add_argument("calibre_id", type=int)
+    fy.add_argument("datos", help="JSON con las respuestas (pregunta, metodo, datos, hallazgo, limites, uso o sus títulos; "
+                                  "temas, signo); «-» lo lee de la entrada estándar; una ruta, de su archivo")
+    fy.add_argument("--leida", action="store_true", help="después, darla por leída (Yachay la exige completa)")
+    fy.add_argument("--sobre", type=int, help="tras un conflicto: llevar la tuya sobre esta versión de Yachay")
+    fy.add_argument("--aplicar", action="store_true")
+    fy.add_argument("--json", action="store_true")
     a = ap.parse_args(argv)
     log = config.logger(a.verbose)
     if a.orden in (None, "estado"):
@@ -236,7 +305,8 @@ def main(argv=None) -> int:
     if a.orden == "ruta":
         print(base.ruta_base())
         return 0
-    return {"sincronizar": cmd_sincronizar, "exportar": cmd_exportar, "libro": cmd_libro, "cambios": cmd_cambios, "ciclo": cmd_ciclo}[a.orden](a, log)
+    return {"sincronizar": cmd_sincronizar, "exportar": cmd_exportar, "libro": cmd_libro, "cambios": cmd_cambios, "ciclo": cmd_ciclo,
+            "ficha": cmd_ficha, "ficha-a-yachay": cmd_ficha_a_yachay}[a.orden](a, log)
 
 
 if __name__ == "__main__":

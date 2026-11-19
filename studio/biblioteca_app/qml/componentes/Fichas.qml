@@ -191,6 +191,7 @@ RowLayout {
                             onClicked: { confirmarCotejo.ficha = ficha.modelData; confirmarCotejo.open() }
                         }
                         Chip {
+                            visible: ficha.modelData.archivo !== ""      // la ficha de obra de Yachay no tiene archivo (§9.13)
                             icono: "document-open"
                             ayuda: "Abrir el archivo de la ficha"
                             Accessible.name: "Abrir la ficha"

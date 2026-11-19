@@ -2,7 +2,8 @@
 
 El orden importa poco (la conciliación une el mismo pasaje venga primero de donde venga), pero se fija para que el
 informe sea estable: KOReader, Zotero, Okular, Yachay. Yachay se lee por su cliente desde el cursor que la base guarda
-(«yachay» en `cursores`); sin cliente, se avisa y se sigue con los demás.
+(«yachay» en `cursores`); sin cliente, se avisa y se sigue con los demás. Las fichas de obra de Yachay (§9.13) llegan en
+la misma lectura de Yachay, con su propio cursor («yachay-fichas-obra»).
 """
 from __future__ import annotations
 
@@ -12,11 +13,13 @@ from lectura_base.lib import base
 from lectura_base.lib.biblioteca import Resolutor
 
 CONSUMIDOR_YACHAY = "yachay-entrada"
+CONSUMIDOR_FICHAS = "yachay-fichas-obra"
 
 
 def leer(origenes: tuple[str, ...] = base.ORIGENES, resolutor: Resolutor | None = None, ruta: Path | None = None,
          cliente=None, recortar_okular: bool = True) -> tuple[list[base.Lectura], dict]:
-    """(lecturas, extra) de los orígenes pedidos; `extra["cursor_yachay"]` es el cursor nuevo de Yachay, si se leyó."""
+    """(lecturas, extra) de los orígenes pedidos; `extra["cursor_yachay"]` y `extra["cursor_fichas"]` son los cursores nuevos
+    de Yachay (resaltados y progreso; fichas de obra), si se leyeron."""
     resolutor = resolutor or Resolutor()
     lecturas, extra = [], {}
     if "koreader" in origenes:
@@ -37,10 +40,17 @@ def leer(origenes: tuple[str, ...] = base.ORIGENES, resolutor: Resolutor | None 
         else:
             try:
                 lectura, cursor = yachay.leer(cliente, base.leer_cursor(CONSUMIDOR_YACHAY, ruta))
-                lecturas.append(lectura)
                 extra["cursor_yachay"] = cursor
             except Exception as e:  # noqa: BLE001 — Yachay caído o sin permiso: los demás orígenes siguen
-                lecturas.append(base.Lectura("yachay", alcance=None, avisos=[f"Yachay: no respondió ({e})"]))
+                lectura = base.Lectura("yachay", alcance=None, avisos=[f"Yachay: no respondió ({e})"])
+            if "cursor_yachay" in extra:
+                try:
+                    fichas, cursor = yachay.leer_fichas(cliente, base.leer_cursor(CONSUMIDOR_FICHAS, ruta))
+                    lectura.fichas_obra, lectura.bajas_fichas = fichas.fichas_obra, fichas.bajas_fichas
+                    extra["cursor_fichas"] = cursor
+                except Exception as e:  # noqa: BLE001 — sin las fichas de obra, lo demás de Yachay entra igual
+                    lectura.avisos.append(f"Yachay: no dio las fichas de obra ({e})")
+            lecturas.append(lectura)
     return lecturas, extra
 
 
@@ -50,4 +60,6 @@ def sincronizar(origenes: tuple[str, ...] = base.ORIGENES, aplicar: bool = False
     planes = base.importar(lecturas, aplicar=aplicar, ruta=ruta)
     if aplicar and "cursor_yachay" in extra:
         base.guardar_cursor(CONSUMIDOR_YACHAY, extra["cursor_yachay"], ruta)
+    if aplicar and "cursor_fichas" in extra:
+        base.guardar_cursor(CONSUMIDOR_FICHAS, extra["cursor_fichas"], ruta)
     return planes

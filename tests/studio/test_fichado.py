@@ -68,3 +68,71 @@ def test_fichar_un_libro_en_el_informe_de_muestra(app, entorno, monkeypatch):
         assert r["ok"] and r["fichas"][0]["clase"] == "textual" and r["fichas"][0]["pagina"] == "12"
         if HAY_CALIBREDB:
             assert r["fichas"][0]["verificacion"] == "verificada_script"
+
+
+class CanalFalso:
+    """La CLI de la ficha de obra en Yachay (`ficha-a-yachay`, `sincronizar --origen yachay`), en memoria: nada contra el
+    Yachay real. La primera vez que se aplica responde un 409; sobre la versión que dio, acepta."""
+
+    def __init__(self):
+        self.llamadas = []
+
+    def ficha_a_yachay(self, calibre_id, respuestas, aplicar, sobre=None):
+        self.llamadas.append(("ficha", calibre_id, dict(respuestas), aplicar, sobre))
+        plan = {"calibre_id": calibre_id, "ficha": {"limites": respuestas.get("Límites", "")}, "version_base": sobre if sobre is not None else 3,
+                "cambian": ["Límites"], "nueva": False, "leida": False, "faltan": [], "escrita": False}
+        if not aplicar:
+            return plan
+        if sobre is None:
+            return {**plan, "codigo": "lectura_modificada", "version": 4, "actual": {"ficha": {"limites": "Otra cosa"}, "version": 4}}
+        return {**plan, "escrita": True, "version": sobre + 1, "aviso": ""}
+
+    def sincronizar_yachay(self):
+        self.llamadas.append(("sincronizar",))
+        return {"ok": True, "error": ""}
+
+
+@requiere_binding
+def test_la_vuelta_a_yachay_simula_choca_y_deja_elegir(app, entorno):
+    """«Nueva ficha» de obra ofrece llevarla a Yachay (§9.13): simula (qué y sobre qué versión), un 409 no pisa y trae la
+    versión actual, y la persona elige llevar la suya sobre ella o quedarse con la de Yachay. Todo por el canal (la CLI)."""
+    from gui_comun.consola import Consola
+    from biblioteca_app.controladores.ajustes import Ajustes
+    from biblioteca_app.controladores.espacio import Espacio
+    from biblioteca_app.controladores.fichado import CanalYachay, Fichado
+    from biblioteca_app.controladores.libros import Libros
+    from biblioteca_app.servicios import datos
+    assert hasattr(CanalYachay, "ficha_a_yachay") and hasattr(CanalYachay, "sincronizar_yachay")
+    consola = Consola()
+    libros = Libros(Espacio(consola, Ajustes()), consola, datos.cargar_env(), ruta_indice=entorno.indice, repo=entorno.repo)
+    canal = CanalFalso()
+    fichado = Fichado(libros, consola, entorno.raiz / "cache" / "fichado", canal=canal)
+    vistos = []
+    fichado.yachay.connect(lambda r: vistos.append(dict(r)))
+    fichado._calibre_id = 1
+    secciones = {"Límites": "No separa la carretera de otras obras del mismo año."}
+    fichado.simularYachay(secciones)
+    _esperar(app, fichado)
+    assert vistos[-1]["accion"] == "simular" and vistos[-1]["version_base"] == 3 and canal.llamadas[-1][3] is False
+    fichado.llevarAYachay(secciones, -1)
+    _esperar(app, fichado)
+    assert vistos[-1]["codigo"] == "lectura_modificada" and vistos[-1]["version"] == 4 and canal.llamadas[-1][4] is None
+    fichado.llevarAYachay(secciones, 4)                 # «Llevar la mía sobre la versión 4»
+    _esperar(app, fichado)
+    assert vistos[-1]["escrita"] and vistos[-1]["version"] == 5 and canal.llamadas[-1][3:] == (True, 4)
+    fichado.quedarseConYachay()                         # o «Quedarme con la de Yachay»: la sincronía, nada se envía
+    _esperar(app, fichado)
+    assert vistos[-1]["accion"] == "quedarse" and vistos[-1]["ok"] and canal.llamadas[-1] == ("sincronizar",)
+
+
+def test_el_canal_simula_por_la_cli_sobre_la_base_de_la_muestra(entorno):
+    """El canal de verdad, sin `--aplicar`: la CLI solo lee la base de la muestra (no carga el cliente ni el token)."""
+    import sys
+    sys.path.insert(0, str(REPO))
+    from lectura_base.lib import consulta
+    from biblioteca_app.controladores.fichado import CanalYachay
+    obra = consulta.fichas_obra()[0]
+    r = CanalYachay().ficha_a_yachay(obra["calibre_id"], {"Límites": "No separa la carretera de otras obras del mismo año."}, False)
+    assert not r.get("error"), r
+    assert r["version_base"] == 3 and r["cambian"] == ["Límites"] and not r["escrita"] and r["faltan"] == []
+    assert r["ficha"]["hallazgo"].startswith("Crecen las que se integran"), "viaja la ficha entera"

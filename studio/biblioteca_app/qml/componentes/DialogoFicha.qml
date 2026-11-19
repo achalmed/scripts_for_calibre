@@ -3,6 +3,10 @@
 // lo describe `lib/consulta.py formulario` (la norma de fichas); «Revisar» simula (el nombre, el cotejo contra el PDF, lo
 // que la norma objeta) y «Guardar la ficha» escribe lo revisado en fuentes/fichas/ del escrito (y, si el libro aún no es
 // su fuente, en su fuentes.yml y su references.bib). Nunca toca Calibre ni Zotero.
+// La ficha de obra (§9.13): si la persona tiene la suya en Yachay (la trae la base de lectura), la de obra nace rellena con
+// ella; al revisar se simula también qué iría a Yachay y sobre qué versión, y al guardar se ofrece llevarla de vuelta, tras
+// confirmar. Un 409 no pisa: se muestra lo que hay en Yachay y se elige llevar la tuya sobre esa versión o quedarte con la de
+// Yachay. Todo pasa por `studio.fichado` (la CLI de la base de lectura, con el token del llavero).
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -22,6 +26,11 @@ Kirigami.Dialog {
     property string categoriaPedida: "Cita clave"
     property var pendiente: null                 // lo que espera a que el libro esté listo (escritos, formulario, PDF)
     property var origen: null                    // {autor: "llm", herramienta} si la propuso la IA (estudio de obra; C3.3)
+    property bool deYachay: false                // la ficha de obra nació rellena con la de Yachay (§9.13)
+    property var planYachay: null                // lo que iría a Yachay (simulación) o {error}
+    property var conflicto: null                 // el 409: lo que hay en Yachay ahora
+    readonly property var obraYachay: studio.lectura.fichaObra.hay === true
+                                      && Number(studio.lectura.fichaObra.calibreId) === Number(studio.libros.ficha.id) ? studio.lectura.fichaObra : null
     readonly property var def: tipos.find(t => t.clave === tipo) || ({ secciones: [], pagina: false, categoria: false })
     readonly property var escrito: escritos.currentIndex >= 0 ? fi.escritos[escritos.currentIndex] : null
     readonly property bool revisada: !!revision && !revision.error && !revision.aplicar
@@ -34,7 +43,10 @@ Kirigami.Dialog {
     // `v` (opcional): una ficha ya pensada {tipo, pagina, hoja, categoria, tema, textos, revisar} (del estudio de obra)
     function abrir(v) {
         v = v || {}
-        tipo = v.tipo || "textual"; textos = v.textos || ({}); revision = null; hoja = v.hoja || 0; origen = v.origen || null; version++
+        tipo = v.tipo || "textual"; textos = v.textos || ({}); revision = null; hoja = v.hoja || 0; origen = v.origen || null
+        deYachay = !!v.textos && tipo === "obra" && !!obraYachay; planYachay = null; conflicto = null
+        if (tipo === "obra" && !v.textos) rellenarObra()
+        version++
         pagina.text = v.pagina || ""; tema.text = v.tema || ""; uso.text = v.uso || ""
         categoriaPedida = v.categoria || "Cita clave"
         categoria.currentIndex = Math.max(0, categoria.model.indexOf(categoriaPedida))
@@ -52,6 +64,19 @@ Kirigami.Dialog {
         if (v.revisar) Qt.callLater(revisar, false)
     }
     Timer { id: irAHoja; interval: 400; onTriggered: pdf.irA(dialogo.hoja, 0) }
+    // la de obra, con la de Yachay si existe y aún no se escribió nada en sus seis preguntas
+    function rellenarObra() {
+        if (!obraYachay) return
+        const guias = Object.keys(obraYachay.secciones)
+        if (guias.some(k => (textos[k] || "") !== "")) return
+        textos = Object.assign({}, obraYachay.secciones)
+        deYachay = true
+    }
+    function seccionesObra() {
+        const s = {}
+        for (const k of Object.keys((def.guias || {}))) s[k] = textos[k] || ""
+        return s
+    }
     function campos() {
         const s = {}
         for (const k of def.secciones) s[k] = textos[k] || ""
@@ -64,8 +89,11 @@ Kirigami.Dialog {
     function revisar(aplicar) {
         if (!escrito) { ventana.mensajes.mostrar("Elige el escrito de la ficha.", "aviso"); return }
         esperando = true
+        if (!aplicar && tipo === "obra") { planYachay = null; fi.simularYachay(seccionesObra()) }
         fi.revisar(escrito.carpeta, campos(), aplicar)
     }
+    // hay algo que llevar a Yachay: la simulación salió bien y cambia alguna respuesta
+    readonly property bool llevable: tipo === "obra" && !!planYachay && !planYachay.error && (planYachay.cambian || []).length > 0
 
     Connections {
         target: dialogo.fi
@@ -75,10 +103,29 @@ Kirigami.Dialog {
             if (!dialogo.visible) return
             if (r.aplicar && r.escrito) {
                 ventana.mensajes.mostrar("Ficha guardada en «" + dialogo.escrito.titulo + "»: " + r.archivo, "positivo")
+                if (dialogo.llevable) { confirmarYachay.open(); return }      // ofrecer la vuelta a Yachay (§9.13)
                 dialogo.close()
                 return
             }
             dialogo.revision = r
+        }
+        function onYachay(r) {
+            if (!dialogo.visible) return
+            if (r.accion === "simular") { dialogo.planYachay = r; return }
+            if (r.codigo === "lectura_modificada") { dialogo.conflicto = r; conflictoYachay.open(); return }
+            if (r.error) {
+                ventana.mensajes.mostrar(r.sinCanal ? "Yachay: no hay token en el llavero; la ficha quedó solo en el escrito."
+                                                    : "Yachay: " + r.error, "aviso")
+                return
+            }
+            if (r.accion === "quedarse") {
+                ventana.mensajes.mostrar(r.ok ? "Te quedaste con la ficha de obra de Yachay: la base ya la tiene." : "Yachay: " + r.error,
+                                         r.ok ? "positivo" : "aviso")
+            } else if (r.escrita) {
+                ventana.mensajes.mostrar("Ficha de obra llevada a Yachay (versión " + r.version + ")" + (r.aviso ? ". " + r.aviso : "."), r.aviso ? "aviso" : "positivo")
+            }
+            studio.lectura.recargar()
+            dialogo.close()
         }
     }
 
@@ -153,7 +200,11 @@ Kirigami.Dialog {
                             required property var modelData
                             text: modelData.nombre
                             destacado: dialogo.tipo === modelData.clave
-                            onClicked: { dialogo.tipo = modelData.clave; dialogo.revision = null; dialogo.version++ }
+                            onClicked: {
+                                dialogo.tipo = modelData.clave; dialogo.revision = null; dialogo.planYachay = null
+                                if (modelData.clave === "obra") dialogo.rellenarObra()
+                                dialogo.version++
+                            }
                         }
                     }
                 }
@@ -165,6 +216,14 @@ Kirigami.Dialog {
                     font: Kirigami.Theme.smallFont
                     color: Kirigami.Theme.disabledTextColor
                     wrapMode: Text.WordWrap
+                }
+                Kirigami.InlineMessage {
+                    objectName: "rellenaDeYachay"
+                    Layout.fillWidth: true
+                    visible: dialogo.tipo === "obra" && dialogo.deYachay && !!dialogo.obraYachay
+                    type: Kirigami.MessageType.Information
+                    text: "Rellena con tu ficha de obra de Yachay (" + (dialogo.obraYachay ? dialogo.obraYachay.detalle : "") + "). "
+                          + "Esta es su copia para el escrito: ajusta «Uso que le daré» a él."
                 }
                 GridLayout {
                     Layout.fillWidth: true
@@ -260,6 +319,20 @@ Kirigami.Dialog {
                               + (dialogo.revision.nueva_fuente ? "; el libro aún no es su fuente: se añade a su fuentes.yml y a su references.bib" : "")
                               + ". Calibre y Zotero no se tocan."
                     }
+                    // lo que iría a la ficha de obra de Yachay (§9.13): se ofrece al guardar, tras confirmar
+                    QQC2.Label {
+                        objectName: "planYachay"
+                        Layout.fillWidth: true
+                        visible: dialogo.tipo === "obra" && !!dialogo.planYachay
+                        wrapMode: Text.WordWrap
+                        color: dialogo.planYachay && dialogo.planYachay.error ? Kirigami.Theme.neutralTextColor : Kirigami.Theme.textColor
+                        text: !dialogo.planYachay ? ""
+                              : dialogo.planYachay.error ? "Yachay: " + (dialogo.planYachay.sinCanal ? "sin token en el llavero; la ficha queda solo en el escrito." : dialogo.planYachay.error)
+                              : !dialogo.llevable ? "Tu ficha de obra en Yachay ya dice esto."
+                              : "En Yachay: " + (dialogo.planYachay.nueva && !dialogo.planYachay.version_base ? "sería tu primera ficha de obra de este libro"
+                                                 : "tu ficha de obra va en la versión " + dialogo.planYachay.version_base)
+                                + "; cambiarían " + dialogo.planYachay.cambian.join(", ") + ". Al guardar se te ofrece llevarla."
+                    }
                     Repeater {
                         model: dialogo.revisada ? dialogo.revision.problemas : []
                         QQC2.Label {
@@ -274,5 +347,42 @@ Kirigami.Dialog {
             }
         }
     }
+    }
+
+    // la vuelta a Yachay, tras confirmar (§9.13)
+    Kirigami.PromptDialog {
+        id: confirmarYachay
+        objectName: "confirmarYachay"
+        title: "¿Llevarla también a Yachay?"
+        subtitle: !dialogo.planYachay ? "" : "Tu ficha de obra de «" + (studio.libros.ficha.titulo || "") + "» en Yachay "
+                  + (dialogo.planYachay.nueva && !dialogo.planYachay.version_base ? "aún no existe: nacería con estas respuestas."
+                                                                                  : "va en la versión " + dialogo.planYachay.version_base + ".")
+                  + " Cambiarían: " + (dialogo.planYachay.cambian || []).join(", ") + ". Yachay mide que sean palabras propias; "
+                  + "si otro la cambió allí después, no se pisa."
+        standardButtons: Kirigami.Dialog.NoButton
+        customFooterActions: [
+            Kirigami.Action { text: "Llevar a Yachay"; icon.name: "go-up"
+                              onTriggered: { confirmarYachay.close(); dialogo.fi.llevarAYachay(dialogo.seccionesObra(), -1) } },
+            Kirigami.Action { text: "Ahora no"; icon.name: "dialog-cancel"; onTriggered: { confirmarYachay.close(); dialogo.close() } }
+        ]
+    }
+    // un 409: otro guardó en Yachay después; nada se envió
+    Kirigami.PromptDialog {
+        id: conflictoYachay
+        objectName: "conflictoYachay"
+        readonly property var actual: dialogo.conflicto && dialogo.conflicto.actual ? dialogo.conflicto.actual.ficha || ({}) : ({})
+        readonly property var mia: dialogo.conflicto ? dialogo.conflicto.ficha || ({}) : ({})
+        readonly property var claves: ({ pregunta: "Pregunta", metodo: "Método", datos: "Datos", hallazgo: "Hallazgo", limites: "Límites", uso: "Uso que le daré" })
+        title: "Tu ficha de obra cambió en Yachay"
+        subtitle: !dialogo.conflicto ? "" : "Va en la versión " + dialogo.conflicto.version + " desde la última sincronía y no se envió nada. "
+                  + Object.keys(claves).filter(k => (actual[k] || "") !== (mia[k] || ""))
+                          .map(k => claves[k] + ": en Yachay «" + (actual[k] || "") + "»; la tuya «" + (mia[k] || "") + "»").join(" · ")
+        standardButtons: Kirigami.Dialog.Cancel
+        customFooterActions: [
+            Kirigami.Action { text: "Llevar la mía sobre la versión " + (dialogo.conflicto ? dialogo.conflicto.version : ""); icon.name: "go-up"
+                              onTriggered: { conflictoYachay.close(); dialogo.fi.llevarAYachay(dialogo.seccionesObra(), Number(dialogo.conflicto.version)) } },
+            Kirigami.Action { text: "Quedarme con la de Yachay"; icon.name: "go-down"
+                              onTriggered: { conflictoYachay.close(); dialogo.fi.quedarseConYachay() } }
+        ]
     }
 }

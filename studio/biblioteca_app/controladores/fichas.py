@@ -9,6 +9,9 @@ Método: las fichas de los escritos salen de `lib/consulta.py` (`escritos` y `fi
   categoría o el tema de la ficha y su obra), «Mostrar la ficha» revela la cita, «La sabía» la sube de caja y «Repasar
   luego» la baja a la 1, en simulación: las respuestas quedan en la sesión y «Guardar el repaso» las escribe (o
   «Descartar» las olvida). Entran al repaso las textuales, las paráfrasis y las síntesis que tienen texto.
+La ficha de obra de Yachay (decisiones §9.13): las que la base de lectura trajo de Yachay entran a la lista como fichas
+  «De obra» sin escrito, con su procedencia («Ficha de obra en Yachay») en la línea tenue; elegir una lleva su libro al
+  catálogo, donde la ficha editorial la muestra entera.
 Límite: solo lee las fichas; lo único que escribe es la base del repaso, por su único escritor. «Nueva ficha» y «Estudiar
   con la IA» son los diálogos de la ficha editorial (§9.4 y §9.5), sobre el libro de la ficha elegida.
 """
@@ -95,6 +98,15 @@ def leer_todas(repo: Path, titulos: dict) -> tuple[list[dict], list[dict]]:
                        "categoria": "", "tema": "", "temaNombre": "", "verificacion": f.get("verificacion") or "", "escrito": "",
                        "principal": "", "insertar": "", "archivo": f["ruta"], "carpeta": "", "origen": "persona", "citable": True,
                        "motivo": ""})
+    for f in fichas_de_yachay():
+        cid = str(f["calibre_id"])
+        ficha = f["ficha"]
+        salida.append({"clave": f"yachay/{cid}", "tipo": "obra", "tipoTexto": TIPOS["obra"],
+                       "cita": ficha.get("hallazgo") or ficha.get("pregunta") or "", "literal": "",
+                       "obra": titulos.get(cid) or f.get("titulo") or f"Libro {cid}", "calibreId": cid, "pagina": "", "categoria": "",
+                       "tema": ", ".join(ficha.get("temas") or []), "temaNombre": "", "verificacion": "",
+                       "escrito": "Ficha de obra en Yachay" + (" · leída" if f.get("leida") else ""), "principal": "",
+                       "insertar": "", "archivo": "", "carpeta": "", "origen": "persona", "citable": True, "motivo": ""})
     for f in salida:
         f["cotejo"] = cotejo(f["verificacion"]) if f["tipo"] != "fuente" else ""      # la de fuente no se coteja
         f["porRevisar"] = por_revisar(f)
@@ -104,6 +116,17 @@ def leer_todas(repo: Path, titulos: dict) -> tuple[list[dict], list[dict]]:
                                               f["categoria"], "propuesta por la IA" if f["deIa"] else "", f["cotejo"], f["escrito"]) if x)
     return salida, escritos
 
+
+
+def fichas_de_yachay() -> list[dict]:
+    """Las fichas de obra de Yachay que guarda la base de lectura (§9.13), en solo lectura; [] sin base."""
+    try:
+        if str(datos.REPO) not in sys.path:
+            sys.path.insert(0, str(datos.REPO))
+        from lectura_base.lib import consulta as lectura_consulta
+        return lectura_consulta.fichas_obra()
+    except Exception:  # noqa: BLE001 — sin base de lectura o a medio escribir: la lista sigue sin ellas
+        return []
 
 
 def pregunta_de(f: dict) -> str:

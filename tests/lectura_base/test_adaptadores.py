@@ -212,8 +212,8 @@ class ClienteFalso:
     def __init__(self):
         self.resaltados, self.n = [], 500
 
-    def cambios(self, desde="0"):
-        filas = [r for r in self.resaltados if r["_orden"] > int(desde or 0)]
+    def cambios(self, desde="0", entidades=None):
+        filas = [r for r in self.resaltados if r["_orden"] > int(desde or 0) and (not entidades or "resaltado" in entidades)]
         cambios = [{"orden": r["_orden"], "entidad": "resaltado", "clave": str(r["id"]), "accion": "alta",
                     "datos": {k: v for k, v in r.items() if not k.startswith("_")}} for r in filas]
         return {"cursor": str(max([int(desde or 0)] + [r["_orden"] for r in filas])), "mas": False, "reiniciar": False, "cambios": cambios}
