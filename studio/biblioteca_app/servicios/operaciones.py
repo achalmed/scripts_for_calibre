@@ -134,10 +134,12 @@ ETAPAS = (
           "cotejarlos contra bases públicas", (
         O("catalogacion", "Aplicar la catalogación", "Lleva a Calibre lo de resumen_catalogacion.tsv (autor «Nombre, "
           "Apellidos», serie, etiquetas del vocabulario cerrado).", ("catalogacion/main.sh",), bases=("calibre",)),
-        O("verificacion", "Verificar contra bases públicas", "Coteja los metadatos de Calibre y deja un informe (solo lee).",
-          ("verificacion/main.sh",), aplicar=None),
-        O("verificacion_isbn", "Verificar por ISBN", "Lo mismo, solo con los ISBN.", ("verificacion/main.sh", "--modo", "isbn"),
-          aplicar=None),
+        # decisiones §6.11: dos selecciones que no se pisan (con identificador, exacta; sin él, aproximada), no dos nombres
+        O("verificacion", "Verificar por ISBN", "Los libros con ISBN (u otro identificador de libro): coincidencia exacta en "
+          "Open Library; deja un informe de discrepancias (solo lee).", ("verificacion/main.sh", "--modo", "isbn"), aplicar=None),
+        O("verificacion_titulo", "Verificar por título y autor", "Los libros publicados sin identificador: búsqueda "
+          "aproximada en Open Library y Crossref, con su confianza; deja un informe (solo lee).",
+          ("verificacion/main.sh", "--modo", "titulo"), aplicar=None),
         O("migracion", "Campaña de migración", "Una campaña de metadatos (P1–P9): plan, ensayo sobre una copia y "
           "deshacer probado; aplicar la lleva a la base real por la puerta.", ("migraciones/main.py",), bases=("calibre",),
           entrada="texto", etiqueta="campaña (P1…P9)"),

@@ -24,6 +24,16 @@ select_candidates() {
     fi
     [[ "$LIMIT" -gt 0 ]] && limit_clause="LIMIT $LIMIT"
 
+    # Las columnas personalizadas por su etiqueta, nunca por su número (#item_type, #pages).
+    local col_tipo col_paginas
+    col_tipo="$(sql_ro "$METADATA_DB" "SELECT id FROM custom_columns WHERE label='item_type'")"
+    col_paginas="$(sql_ro "$METADATA_DB" "SELECT id FROM custom_columns WHERE label='pages'")"
+    if [[ ! "$col_tipo" =~ ^[0-9]+$ ]]; then
+        log_error "La biblioteca no tiene la columna #item_type: el modo titulo no puede elegir los publicados"; return 1
+    fi
+    local expr_paginas="''"
+    [[ "$col_paginas" =~ ^[0-9]+$ ]] && expr_paginas="(SELECT c.value FROM custom_column_${col_paginas} c WHERE c.book=b.id)"
+
     # Verifiable-id subquery: pick one id per book, preferring isbn.
     local id_expr="
       (SELECT i.val FROM identifiers i
@@ -51,8 +61,8 @@ select_candidates() {
         in_list="${in_list%,}"
         having="AND NOT EXISTS(SELECT 1 FROM identifiers i
             WHERE i.book=b.id AND i.type IN ('isbn','google','amazon','goodreads'))
-          AND EXISTS(SELECT 1 FROM books_custom_column_39_link l
-            JOIN custom_column_39 it ON it.id=l.value AND it.value IN ($in_list)
+          AND EXISTS(SELECT 1 FROM books_custom_column_${col_tipo}_link l
+            JOIN custom_column_${col_tipo} it ON it.id=l.value AND it.value IN ($in_list)
             WHERE l.book=b.id)"
     fi
 
@@ -67,7 +77,7 @@ select_candidates() {
                         JOIN publishers p ON p.id=l.publisher
                         WHERE l.book=b.id), ''),
              COALESCE(strftime('%Y', b.pubdate), ''),
-             COALESCE((SELECT c.value FROM custom_column_31 c WHERE c.book=b.id), '')
+             COALESCE($expr_paginas, '')
       FROM books b
       WHERE 1=1 $having $id_filter
       GROUP BY b.id

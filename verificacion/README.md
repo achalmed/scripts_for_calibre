@@ -34,7 +34,7 @@ el año de otra edición o un número de páginas erróneo.
 ```bash
 main.sh --limite 5        # prueba rápida sobre 5 libros con identificador
 main.sh                   # modo isbn: todos los libros con identificador
-main.sh --modo titulo     # además busca por título y autor los que no lo tienen
+main.sh --modo titulo     # los publicados SIN identificador, por título y autor (aproximada)
 main.sh --ids 425,739     # solo esos libros
 main.sh --help            # opciones; --verbose da trazas
 ```

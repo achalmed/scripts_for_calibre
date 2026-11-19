@@ -43,6 +43,14 @@ def test_lo_que_escribe_en_una_base_lo_declara():
         assert not ops.operacion(i).escribe, i
 
 
+
+def test_las_dos_verificaciones_eligen_libros_distintos():
+    # decisiones §6.11: con el modo por omisión ya en isbn, «contra bases públicas» y «por ISBN» corrían lo mismo
+    isbn, titulo = ops.operacion("verificacion"), ops.operacion("verificacion_titulo")
+    assert isbn.texto_orden(False) == "bash verificacion/main.sh --modo isbn"
+    assert titulo.texto_orden(False) == "bash verificacion/main.sh --modo titulo"
+    assert isbn.titulo != titulo.titulo and not isbn.escribe and not titulo.escribe
+
 def test_la_orden_es_la_de_la_terminal_relativa_al_repo():
     o = ops.operacion("localizar")
     assert o.argv(False, 'openalex "Teoría general"', python="/usr/bin/python3")[-2:] == ["openalex", "Teoría general"]
