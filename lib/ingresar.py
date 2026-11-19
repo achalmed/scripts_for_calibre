@@ -21,9 +21,19 @@ Fundamento: normativa 9.6 (primero en la biblioteca, después la cita); docs/cit
   METODO_DOCUMENTAL.md pasos 00–03; las descargas solo de la sede oficial y de acceso abierto (regla 9 de la noche).
 Límite: no busca obras ni descarga de otra parte que la URL dada; no inventa metadatos (los trae la lista). Con Calibre o
   Zotero abiertos sale 75 sin escribir.
+`adjuntar` (2026-11-18): el PDF que faltaba a un libro que ya entró sin archivo (la sede no dejaba bajarlo, o el escaneado
+  pedía OCR). La lista es `[{calibre_id, url | archivo, sede, ocr, sin_control_de_anio}]` (`archivo`: el PDF que el
+  autor bajó con el navegador, cuando la sede no deja a un programa); sin `--aplicar` SOLO LEE y dice qué
+  haría (el libro existe y no tiene PDF, su `#zotero_key` y su ítem sin adjunto PDF); con `--aplicar` baja el PDF (solo
+  `%PDF` de la URL dada; `ocr`: `ocrmypdf -l <idioma>` antes de comprobarlo), comprueba que sea la obra (el año, salvo
+  `sin_control_de_anio` con su motivo, que va a la ficha), lo añade como formato por la puerta de Calibre
+  (`add_format --dont-replace`), crea el adjunto enlazado (`linkMode=2`) en Zotero por su puerta y anota el origen en la
+  ficha de catalogación y en `ingesta.tsv`.
 
     python3 lib/ingresar.py plan <obras.json> [--etiqueta flujo-de-conocimiento] [--coleccion «Flujo de conocimiento»] [--json]
-    python3 lib/ingresar.py aplicar <obras.json> --lote <nombre> [--etiqueta …] [--coleccion …] [--salida resultado.json]
+    python3 lib/ingresar.py aplicar <obras.json> --lote <nombre> [--etiqueta …] [--coleccion …] [--proyecto prompts]
+                                    [--motivo «…»] [--salida resultado.json]
+    python3 lib/ingresar.py adjuntar <lista.json> [--aplicar --lote <nombre>] [--salida resultado.json]
 """
 from __future__ import annotations
 
@@ -133,8 +143,10 @@ def _titulo_corto(t: str) -> str:
 def _autores_calibre(autores: list[dict]) -> str:
     """«Matthew J., Page & Joanne E., McKenzie»: la grafía de la biblioteca (nombre, apellido); una institución, tal cual."""
     # la coma separa el nombre del apellido en Calibre: un «Henry L., III» pasa a «Henry L. III»
+    # los editores de un capítulo no son autores del registro (sí van a Zotero con su rol); una obra editada sin autores, sí
+    propios = [a for a in autores if (a.get("rol") or "author") == "author"] or autores
     return " & ".join(a["corporativo"] if a.get("corporativo") else (f"{a['nombre'].replace(',', '')}, {a['apellido']}" if a.get("nombre") else a["apellido"])
-                      for a in autores) or "Unknown"
+                      for a in propios) or "Unknown"
 
 
 def _slug(t: str, n: int = 50) -> str:
@@ -383,23 +395,31 @@ def _pdf_de(env, bid: int) -> str:
     return f"attachments:{fila[0]}/{fila[1]}.pdf" if fila else ""
 
 
-def _ficha_catalogacion(bid: str, p: dict, origen: str, sha: str, zkey: str, hoy: str, lote: str) -> tuple[str, str]:
+MOTIVO_FLUJO = "Obra del flujo de producción de conocimiento (prompts/00 metodo/FLUJO_DE_CONOCIMIENTO.md, {hoy})"
+
+
+def _ficha_catalogacion(bid: str, p: dict, origen: str, sha: str, zkey: str, hoy: str, lote: str,
+                        proyecto: str = "prompts", motivo: str = "") -> tuple[str, str]:
+    """La ficha de catalogación de una obra ingresada: `proyecto` es el que la cita y `motivo`, por qué entró (por omisión, el
+    flujo de conocimiento, el primer lote); el nombre lleva «flujo» para prompts y el proyecto en los demás."""
     c = p["calibre"]
     a0 = (c["authors"].split(" & ")[0].split(", ")[-1] if c["authors"] else "anonimo")
-    nombre = f"{bid}_flujo-{_slug(a0, 24)}_{c['pubdate'][:4] or 'sf'}_{_slug(p['titulo'], 48)}.md"
+    prefijo = "flujo" if proyecto == "prompts" else _slug(proyecto, 16)
+    motivo = (motivo or MOTIVO_FLUJO).format(hoy=hoy)
+    nombre = f"{bid}_{prefijo}-{_slug(a0, 24)}_{c['pubdate'][:4] or 'sf'}_{_slug(p['titulo'], 48)}.md"
     texto = f"""---
 tipo: ficha_catalogacion
 calibre_id: {bid}
 zotero_key: {zkey}
 clave_bibtex: {p['clave']}
-proyecto: prompts
+proyecto: {proyecto}
 verificacion:
   estado: pendiente
   metodo:
   fecha:
 ---
 
-> Ficha de catalogación de «{p['titulo']}». Obra del flujo de producción de conocimiento (prompts/00 metodo/FLUJO_DE_CONOCIMIENTO.md, {hoy}), ingresada por `lib/ingresar.py` (lote `{lote}`): metadatos cotejados en {'Crossref' if 'doi:' in c['identifiers'] else 'Open Library' if 'isbn:' in c['identifiers'] else 'su sede oficial'}. Confianza: **alta**.
+> Ficha de catalogación de «{p['titulo']}». {motivo}, ingresada por `lib/ingresar.py` (lote `{lote}`): metadatos cotejados en {'Crossref' if 'doi:' in c['identifiers'] else 'Open Library' if 'isbn:' in c['identifiers'] else 'su sede oficial'}. Confianza: **alta**.
 
 ## Origen
 
@@ -431,9 +451,10 @@ verificacion:
     return nombre, texto
 
 
-def aplicar(planes: list[dict], env, lote: str, hoy: str | None = None) -> list[dict]:
+def aplicar(planes: list[dict], env, lote: str, hoy: str | None = None, proyecto: str = "prompts", motivo: str = "") -> list[dict]:
     """Escribe por la puerta: los PDF, Calibre, Zotero y el `#zotero_key`. Devuelve una fila por obra."""
     hoy = hoy or date.today().isoformat()
+    en_registro = "flujo de conocimiento" if proyecto == "prompts" else f"citada por {proyecto}"
     E = _cargar("biblioteca_escribir", RAIZ / "lib" / "escribir.py")
     if _app_abierta(r"^calibre") or _app_abierta(r"^zotero"):
         raise SystemExit(SALIDA_PUERTA)
@@ -451,10 +472,10 @@ def aplicar(planes: list[dict], env, lote: str, hoy: str | None = None) -> list[
             destino = entrada / f"{p['clave']}.pdf"
             r = bajar(p["pdf"], destino)
             if not r.get("error"):
-                motivo = es_la_obra(destino, p["titulo"], p["calibre"]["pubdate"])
-                if motivo:
+                fallo = es_la_obra(destino, p["titulo"], p["calibre"]["pubdate"])
+                if fallo:
                     destino.unlink(missing_ok=True)
-                    r = {"error": motivo}
+                    r = {"error": fallo}
             archivos[p["clave"]] = {**r, "ruta": destino} if not r.get("error") else r
             print(f"  PDF {p['clave']}: {'✓ ' + str(r['bytes']) + ' bytes' if not r.get('error') else '✗ ' + r['error']}")
     # 2. Calibre: los registros que faltan
@@ -530,12 +551,12 @@ def aplicar(planes: list[dict], env, lote: str, hoy: str | None = None) -> list[
         a = archivos.get(p["clave"]) or {}
         origen = (str(Path(a["ruta"]).relative_to(datos.parent)) if Path(a["ruta"]).is_relative_to(datos.parent) else str(a["ruta"])) if a.get("ruta") else ""
         if p["accion"] in ("nueva", "calibre") and bid:
-            nombre, texto = _ficha_catalogacion(bid, p, origen, a.get("sha256", ""), zkeys.get(p["clave"], ""), hoy, lote)
+            nombre, texto = _ficha_catalogacion(bid, p, origen, a.get("sha256", ""), zkeys.get(p["clave"], ""), hoy, lote, proyecto, motivo)
             (fichas / nombre).write_text(texto, encoding="utf-8")
             c = p["calibre"]
             filas_cat.append([bid, c["authors"], c["title"], p["tipo_zotero"], c["#clasificador"], c["publisher"], c["pubdate"], c["identifiers"],
                               {"eng": "English", "spa": "Spanish"}.get(c["languages"], c["languages"]), c["tags"], "alta",
-                              f"ingresar {hoy} ({lote}); flujo de conocimiento; " + ("PDF de acceso abierto de " + p["pdf"] if origen else "sin archivo: registro con sus identificadores")])
+                              f"ingresar {hoy} ({lote}); {en_registro}; " + ("PDF de acceso abierto de " + p["pdf"] if origen else "sin archivo: registro con sus identificadores")])
             if origen:
                 filas_led.append([hoy, a["sha256"], origen, c["title"], c["authors"], p["tipo_zotero"], c["#clasificador"], c["pubdate"],
                                   c["publisher"], c["tags"], bid, "", zkeys.get(p["clave"], ""), "catalogado"])
@@ -552,6 +573,184 @@ def aplicar(planes: list[dict], env, lote: str, hoy: str | None = None) -> list[
     return hechos
 
 
+# ------------------------------------------------------------------ adjuntar: el PDF que faltaba a un libro que ya entró
+def plan_adjuntar(lista: list[dict], env) -> list[dict]:
+    """SOLO LEE (`mode=ro`): para cada `{calibre_id, url, sede, ocr}` dice qué haría. `adjuntar`: el libro existe, no tiene
+    PDF y su ítem de Zotero (por `#zotero_key`) no tiene adjunto PDF; `calibre`: solo el formato (sin clave o sin ítem, o el
+    ítem ya tiene un PDF); `omitir`, con su motivo (no existe el libro, ya tiene PDF, falta la URL)."""
+    c = _ro(Path(env.CALIBRE_DB))
+    try:
+        sys.path.insert(0, str(RAIZ / "lib"))
+        indice = _cargar("biblioteca_indice", RAIZ / "lib" / "indice.py")
+        zkeys = indice._columna(c, "zotero_key")
+        libros = {b: {"titulo": t, "pubdate": d or "", "path": pa} for b, t, d, pa in c.execute("select id, title, pubdate, path from books")}
+        con_pdf = {b for (b,) in c.execute("select book from data where format='PDF'")}
+    finally:
+        c.close()
+    z = _ro(Path(env.ZOTERO_DB))
+    try:
+        items = {k: i for i, k in z.execute("select itemID, key from items")}
+        con_adjunto = {pa for (pa,) in z.execute("select parentItemID from itemAttachments where parentItemID is not null "
+                                                 "and contentType='application/pdf'")}
+    finally:
+        z.close()
+    salida = []
+    for e in lista:
+        bid = int(e.get("calibre_id") or 0)
+        p = {"calibre_id": bid, "url": e.get("url") or "", "archivo": e.get("archivo") or "", "sede": e.get("sede") or "",
+             "ocr": e.get("ocr") or "",
+             "sin_control_de_anio": e.get("sin_control_de_anio") or "",
+             "titulo": (libros.get(bid) or {}).get("titulo", ""), "anio": str((libros.get(bid) or {}).get("pubdate", ""))[:4],
+             "zotero_key": zkeys.get(bid, ""), "accion": "adjuntar", "motivo": ""}
+        if bid not in libros:
+            p.update(accion="omitir", motivo="no hay libro con ese id en Calibre")
+        elif bid in con_pdf:
+            p.update(accion="omitir", motivo="el libro ya tiene un PDF")
+        elif not p["url"] and not p["archivo"]:
+            p.update(accion="omitir", motivo="falta la URL de la sede (o el archivo ya bajado)")
+        elif p["archivo"] and not Path(p["archivo"]).expanduser().is_file():
+            p.update(accion="omitir", motivo=f"no existe el archivo {p['archivo']}")
+        elif not p["zotero_key"] or p["zotero_key"] not in items:
+            p.update(accion="calibre", motivo="sin ítem de Zotero (#zotero_key vacía o ausente): solo el formato en Calibre")
+        elif items[p["zotero_key"]] in con_adjunto:
+            p.update(accion="calibre", motivo="el ítem de Zotero ya tiene un adjunto PDF: no se duplica")
+        salida.append(p)
+    return salida
+
+
+def _copiar_pdf(origen: Path, destino: Path) -> dict:
+    """El PDF que el autor bajó con el navegador (la sede no deja a un programa): las mismas reglas que `bajar`."""
+    datos = origen.read_bytes()
+    if len(datos) > MAX_PDF:
+        return {"error": "más de 80 MB"}
+    if not datos.startswith(b"%PDF"):
+        return {"error": "no es un PDF"}
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    destino.write_bytes(datos)
+    return {"sha256": hashlib.sha256(datos).hexdigest(), "bytes": len(datos)}
+
+
+def _ocr(pdf: Path, idioma: str) -> str:
+    """El PDF escaneado con su capa de texto (`ocrmypdf -l <idioma>`, como los del Congreso): «» si salió, o el error."""
+    import subprocess
+    salida = pdf.with_suffix(".ocr.pdf")
+    r = subprocess.run(["ocrmypdf", "-q", "-l", idioma, "--skip-text", str(pdf), str(salida)], capture_output=True, text=True, timeout=1800)
+    if r.returncode or not salida.is_file():
+        salida.unlink(missing_ok=True)
+        return f"ocrmypdf salió {r.returncode}: {(r.stderr or '').strip()[:160]}"
+    salida.replace(pdf)
+    return ""
+
+
+def _anotar_ficha(fichas: Path, bid: int, linea: str) -> str:
+    """Cambia en la ficha de catalogación de `bid` el «Sin archivo: …» de su §Origen por la línea del PDF. Devuelve la ficha."""
+    for f in sorted(fichas.glob(f"{bid}_*.md")):
+        texto = f.read_text(encoding="utf-8")
+        nuevo = re.sub(r"^Sin archivo:.*$", lambda _m: linea, texto, count=1, flags=re.M)
+        if nuevo == texto:
+            nuevo = texto.rstrip("\n") + f"\n- {linea}\n"
+        f.write_text(nuevo, encoding="utf-8")
+        return f.name
+    return ""
+
+
+def aplicar_adjuntar(planes: list[dict], env, lote: str, hoy: str | None = None) -> list[dict]:
+    """Escribe por la puerta: baja cada PDF, lo comprueba, lo añade como formato y crea su adjunto enlazado en Zotero."""
+    hoy = hoy or date.today().isoformat()
+    E = _cargar("biblioteca_escribir", RAIZ / "lib" / "escribir.py")
+    if _app_abierta(r"^calibre") or _app_abierta(r"^zotero"):
+        raise SystemExit(SALIDA_PUERTA)
+    sys.path.insert(0, str(RAIZ / "lib"))
+    Z = _cargar("escribir_zotero", RAIZ / "lib" / "escribir_zotero.py")
+    biblioteca = Path(env.BIBLIOTECA_DIR)
+    datos = Path(os.environ.get("INGRESAR_DATOS") or RAIZ)
+    entrada = datos / "entrada" / lote
+    hechos: list[dict] = []
+    listos = []
+    # 1. bajar, OCR si se pide, y comprobar que sea la obra
+    for p in planes:
+        if p["accion"] == "omitir":
+            hechos.append({**p, "pdf": False})
+            continue
+        destino = entrada / f"{p['calibre_id']}.pdf"
+        r = bajar(p["url"], destino) if not p.get("archivo") else _copiar_pdf(Path(p["archivo"]).expanduser(), destino)
+        if not r.get("error") and p.get("ocr"):
+            err = _ocr(destino, p["ocr"])
+            r = {"error": err} if err else {**r, "sha256": hashlib.sha256(destino.read_bytes()).hexdigest(), "bytes": destino.stat().st_size}
+        if not r.get("error"):
+            # el control del año se omite solo con su motivo declarado (un escaneado cuya portada no lleva el año)
+            fallo = es_la_obra(destino, p["titulo"], "" if p.get("sin_control_de_anio") else p["anio"])
+            if fallo:
+                r = {"error": fallo}
+        if r.get("error"):
+            destino.unlink(missing_ok=True)
+            hechos.append({**p, "pdf": False, "pdf_error": r["error"]})
+            print(f"  PDF {p['calibre_id']}: ✗ {r['error']}")
+            continue
+        listos.append({**p, "ruta": destino, "sha256": r["sha256"], "bytes": r["bytes"]})
+        print(f"  PDF {p['calibre_id']}: ✓ {r['bytes']} bytes")
+    if not listos:
+        return hechos
+    # 2. Calibre: el formato (sin reemplazar uno que ya estuviera)
+    with E.puerta("ingresar", calibre=biblioteca):
+        for p in listos:
+            out = E.calibredb(biblioteca, "add_format", "--dont-replace", str(p["calibre_id"]), str(p["ruta"]))
+            p["formato"] = not out.returncode
+            if out.returncode:
+                p["pdf_error"] = f"add_format: {(out.stdout + out.stderr).strip()[:200]}"
+                print(f"  Calibre {p['calibre_id']}: ✗ {p['pdf_error']}", file=sys.stderr)
+        E.calibredb(biblioteca, "backup_metadata")
+    # 3. Zotero: el adjunto enlazado al archivo de Calibre
+    con_item = [p for p in listos if p.get("formato") and p["accion"] == "adjuntar"]
+    if con_item:
+        zdb = Path(env.ZOTERO_DB)
+        with E.puerta("ingresar", zotero=zdb):
+            con = Z.conexion_zotero(zdb)
+            try:
+                cur = con.cursor()
+                libreria = cur.execute("SELECT libraryID FROM libraries WHERE type='user'").fetchone()[0]
+                for p in con_item:
+                    ruta = _pdf_de(env, p["calibre_id"])
+                    item = cur.execute("SELECT itemID FROM items WHERE key=? AND libraryID=?", (p["zotero_key"], libreria)).fetchone()
+                    if ruta and item:
+                        Z.z_adjunto_enlazado(cur, libreria, item[0], ruta, "PDF")
+                        p["adjunto"] = ruta
+                con.commit()
+                bien = con.execute("PRAGMA integrity_check").fetchone()[0] == "ok" and not con.execute("PRAGMA foreign_key_check").fetchall()
+            finally:
+                con.close()
+            if not bien:
+                raise RuntimeError("zotero.sqlite no pasó integrity_check o foreign_key_check: restaure el respaldo de la puerta")
+    # 4. la ficha de catalogación y el ledger
+    fichas = datos / "catalogacion" / "fichas"
+    filas = []
+    c = _ro(Path(env.CALIBRE_DB))
+    try:
+        for p in listos:
+            if not p.get("formato"):
+                hechos.append({k: v for k, v in p.items() if k != "ruta"} | {"pdf": False})
+                continue
+            origen = str(p["ruta"].relative_to(datos.parent)) if p["ruta"].is_relative_to(datos.parent) else str(p["ruta"])
+            p["ficha"] = _anotar_ficha(fichas, p["calibre_id"], f"`{origen}` · SHA-256 `{p['sha256'][:16]}…` · "
+                                       f"{p['url'] or 'bajado con el navegador de ' + (p['sede'] or 'su sede')}"
+                                       f" (añadido el {hoy} por `lib/ingresar.py adjuntar`{', con OCR' if p.get('ocr') else ''}"
+                                       f"{'; sin control del año: ' + p['sin_control_de_anio'] if p.get('sin_control_de_anio') else ''})")
+            t, a, d, pu = c.execute("select b.title, (select group_concat(replace(name, '|', ','), ' & ') from authors x join books_authors_link l "
+                                    "on l.author=x.id where l.book=b.id), b.pubdate, (select name from publishers x join "
+                                    "books_publishers_link l on l.publisher=x.id where l.book=b.id) from books b where b.id=?",
+                                    (p["calibre_id"],)).fetchone()
+            filas.append([hoy, p["sha256"], origen, t, a or "", "", "", str(d or "")[:10], pu or "", "", str(p["calibre_id"]), "",
+                          p["zotero_key"], "catalogado"])
+            hechos.append({k: v for k, v in p.items() if k != "ruta"} | {"pdf": True, "origen": origen})
+    finally:
+        c.close()
+    if filas:
+        (datos / "ingesta").mkdir(parents=True, exist_ok=True)
+        with open(datos / "ingesta" / "ingesta.tsv", "a", encoding="utf-8", newline="") as fh:
+            csv.writer(fh, delimiter="\t", lineterminator="\n").writerows(filas)
+    return hechos
+
+
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     sub = ap.add_subparsers(dest="orden", required=True)
@@ -564,9 +763,43 @@ def main(argv=None) -> int:
         s.add_argument("--salida", default="")
         if n == "aplicar":
             s.add_argument("--lote", required=True)
+            s.add_argument("--proyecto", default="prompts", help="el que cita las obras (va a la ficha de catalogación)")
+            s.add_argument("--motivo", default="", help="por qué entran, para la ficha (por omisión, el flujo de conocimiento)")
+    s = sub.add_parser("adjuntar", help="el PDF que faltaba a libros que ya entraron (simula; --aplicar escribe)")
+    s.add_argument("lista")
+    s.add_argument("--aplicar", action="store_true")
+    s.add_argument("--lote", default="")
+    s.add_argument("--json", action="store_true")
+    s.add_argument("--salida", default="")
     a = ap.parse_args(argv)
-    obras = json.loads(Path(a.obras).read_text(encoding="utf-8"))
     env = _env()
+    if a.orden == "adjuntar":
+        planes = plan_adjuntar(json.loads(Path(a.lista).read_text(encoding="utf-8")), env)
+        if not a.aplicar:
+            for p in planes:
+                print(f"  {p['accion']:8} {p['calibre_id']} {p['titulo'][:60]}" + (f" · {p['motivo']}" if p["motivo"] else f" ← {p['archivo'] or p['sede'] or p['url']}"))
+            print("[simulación] " + " · ".join(f"{k} {sum(1 for p in planes if p['accion'] == k)}" for k in ("adjuntar", "calibre", "omitir"))
+                  + ("\n  Calibre o Zotero abiertos: --aplicar saldría 75" if _app_abierta(r"^calibre") or _app_abierta(r"^zotero") else "")
+                  + "\n  Nada se escribió. Para hacerlo: la misma orden con --aplicar --lote <nombre>.")
+            if a.salida:
+                Path(a.salida).write_text(json.dumps(planes, ensure_ascii=False, indent=1), encoding="utf-8")
+            return 0
+        if not a.lote:
+            ap.error("adjuntar --aplicar pide --lote")
+        try:
+            hechos = aplicar_adjuntar(planes, env, a.lote)
+        except SystemExit as e:
+            if e.code == SALIDA_PUERTA:
+                print("[puerta] Calibre o Zotero abiertos: no se escribió nada; reintente con los dos cerrados (75)", file=sys.stderr)
+                return SALIDA_PUERTA
+            raise
+        if a.salida:
+            Path(a.salida).write_text(json.dumps(hechos, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
+        print(json.dumps(hechos, ensure_ascii=False, default=str) if a.json else
+              f"✓ {sum(1 for h in hechos if h.get('pdf'))} PDF añadidos · {sum(1 for h in hechos if h.get('adjunto'))} adjuntos en Zotero · "
+              f"{sum(1 for h in hechos if not h.get('pdf'))} sin archivo")
+        return 0
+    obras = json.loads(Path(a.obras).read_text(encoding="utf-8"))
     ex = existentes(env)
     planes = plan(obras, ex, _esquema_zotero(Path(env.ZOTERO_DB)), a.etiqueta, a.coleccion)
     if a.orden == "plan":
@@ -579,7 +812,7 @@ def main(argv=None) -> int:
               + ("\n  Calibre abierto: aplicar saldría 75" if r["calibre_abierto"] else "") + ("\n  Zotero abierto: aplicar saldría 75" if r["zotero_abierto"] else ""))
         return 0
     try:
-        hechos = aplicar(planes, env, a.lote)
+        hechos = aplicar(planes, env, a.lote, proyecto=a.proyecto, motivo=a.motivo)
     except SystemExit as e:
         if e.code == SALIDA_PUERTA:
             print("[puerta] Calibre o Zotero abiertos: no se escribió nada; reintente con los dos cerrados (75)", file=sys.stderr)

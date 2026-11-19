@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-Sin archivo: la obra no tiene un PDF de acceso abierto en su sede oficial; queda el registro con sus metadatos e identificadores.
+`biblioteca-studio/entrada/2026-11-19-flujo-pdf/11168.pdf` · SHA-256 `6a3146a6821e6a05…` · https://cdn.www.gob.pe/uploads/document/file/6008024/5323788-r-p-028-2024-concytec-p-codigo-nacional-de-integridad.pdf (añadido el 2026-11-19 por `lib/ingresar.py adjuntar`, con OCR; sin control del año: el escaneado es el código sin la resolución que lo aprueba (R. P. 028-2024-CONCYTEC-P); cita una resolución de 2020 y su PDF se creó el 2024-03-06)
 
 ## Zotero
 | Campo | Valor |

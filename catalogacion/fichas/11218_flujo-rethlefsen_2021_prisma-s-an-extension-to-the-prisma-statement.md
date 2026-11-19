@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-Sin archivo: la obra no tiene un PDF de acceso abierto en su sede oficial; queda el registro con sus metadatos e identificadores.
+`biblioteca-studio/entrada/2026-11-19-flujo-pdf/11218.pdf` · SHA-256 `82a893638c69647c…` · https://systematicreviewsjournal.biomedcentral.com/counter/pdf/10.1186/s13643-020-01542-z (añadido el 2026-11-19 por `lib/ingresar.py adjuntar`)
 
 ## Zotero
 | Campo | Valor |

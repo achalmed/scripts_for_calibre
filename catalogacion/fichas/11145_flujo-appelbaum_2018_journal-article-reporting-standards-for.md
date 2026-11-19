@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-Sin archivo: la obra no tiene un PDF de acceso abierto en su sede oficial; queda el registro con sus metadatos e identificadores.
+`biblioteca-studio/entrada/2026-11-19-flujo-pdf/11145.pdf` · SHA-256 `65b882cef33b08cb…` · https://www.apa.org/pubs/journals/releases/amp-amp0000191.pdf (añadido el 2026-11-19 por `lib/ingresar.py adjuntar`)
 
 ## Zotero
 | Campo | Valor |

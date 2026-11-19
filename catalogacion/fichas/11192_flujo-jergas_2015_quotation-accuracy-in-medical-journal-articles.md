@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-Sin archivo: la obra no tiene un PDF de acceso abierto en su sede oficial; queda el registro con sus metadatos e identificadores.
+`biblioteca-studio/entrada/2026-11-19-flujo-pdf/11192.pdf` · SHA-256 `a032b1039c1c2781…` · https://pmc-oa-opendata.s3.amazonaws.com/PMC4627914.1/PMC4627914.1.pdf (añadido el 2026-11-19 por `lib/ingresar.py adjuntar`)
 
 ## Zotero
 | Campo | Valor |

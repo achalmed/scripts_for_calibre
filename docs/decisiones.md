@@ -86,8 +86,8 @@ ocupado sale 75; lo toman todos los escritores por la puerta (§2.5).
 ### §2.2 Simulación por defecto y `--aplicar` explícito (2026-07-28)
 
 Con respaldo verificado antes de escribir y `PRAGMA integrity_check` después. Desde la ola 2a no
-quedan excepciones: `metadatos_calibre` también simula por defecto (K5) y `--apuntes` de
-`koreader_estudio` es una orden explícita que escribe por la puerta.
+quedan excepciones: `metadatos_calibre` también simula por defecto (K5) y, desde el 2026-11-18 (§3.3), `--apuntes`
+de `koreader_estudio` también simula y escribe con `--aplicar`.
 
 ### §2.3 Tras escribir por SQLite, `calibredb backup_metadata --all` (2026-07-28)
 
@@ -266,6 +266,17 @@ en Calibre ya no rompe el emparejamiento, que se hace por el MD5 parcial de KORe
 `kosync`. *Precisión (ola 2a, K6):* el volcado de `statistics.sqlite3` se hace con `CORE_PYTHON`
 (`iterdump`), porque los timers ya no llevan el `sqlite3` de anaconda.
 
+### §3.3 `--apuntes` simula por omisión (2026-11-18)
+
+`koreader/main.sh --apuntes ID RUTA [TEXTO]` escribía en `#apuntes` al invocarse: era la última orden de la suite sin
+simulación previa (normativa 5.10; lo halló la guía práctica del flujo, `prompts/00 metodo/GUIA_FLUJO_DE_CONOCIMIENTO.md`
+§9). Ahora dice qué enlace escribiría y en qué libro, sin abrir la puerta, y solo con `--aplicar` escribe (Calibre cerrado,
+candado y respaldo). Los dos llamadores del repo piden `--aplicar` (`lib/enlazar_notas.py`, que ya simulaba por su
+cuenta, y el complemento de KOReader, que lo pide tras el gesto del lector; `koreader-plugin/prueba_koreader.sh` lo
+comprueba). De paso, el TEXTO opcional ya no se traga la opción siguiente, y sin TEXTO la orden ya no salía en silencio
+(el `shift` de más con `set -e`). Lo que la llama desde fuera (el preset `apuntes_clase` de la skill `learning`, el paso
+08 del Método, la guía del flujo) añade `--aplicar` tras simular; si no, el enlace no se escribe y la orden lo dice.
+
 ## 4. Organización del repositorio
 
 ### §4.1 `lib_comun/` son envoltorios de `core/` (FS2, 2026-09-07)
@@ -441,6 +452,19 @@ los del MEF van a la papelera. Los escaneados se pasan por `ocrmypdf -l spa --sk
 Una trampa: en las leyes 2022 y 2023 (10263, 10264), el «PDF de 7 KB» del libro era su **anexo 1** puesto como
 formato provisional por `sin_principal`; al entrar el texto de la ley por `add_format` se devolvió a `data/` y se
 corrigió su entrada en el manifiesto. Antes de reemplazar el formato de un libro `sin_principal`, mirar qué es.
+
+### §6.11 Las dos verificaciones contra bases públicas eligen libros distintos (2026-11-18)
+
+Biblioteca Studio ofrecía «Verificar contra bases públicas» (`verificacion/main.sh`) y «Verificar por ISBN»
+(`--modo isbn`), y como el modo por omisión ya es `isbn` las dos corrían lo mismo (lo halló la guía práctica del flujo,
+`prompts/00 metodo/GUIA_FLUJO_DE_CONOCIMIENTO.md` §9). La suite tiene dos selecciones que no se pisan: `isbn`, los
+libros con ISBN (o Google, Amazon, Goodreads), con coincidencia exacta en Open Library; y `titulo`, los publicados
+**sin** identificador, buscados por título y autor en Open Library y Crossref, con su confianza aproximada. Quedan las
+dos operaciones con su nombre: «Verificar por ISBN» (id `verificacion`, `--modo isbn` explícito) y «Verificar por título
+y autor» (`verificacion_titulo`, `--modo titulo`), que la ventana no ofrecía. Se descartó unirlas en una sola: la de
+título es aproximada y lenta (una consulta por libro, sin caché) y su informe se lee con otra cautela que el de una
+coincidencia exacta. De paso, `verificacion/lib/db.sh` resuelve `#item_type` y `#pages` por su etiqueta y no por el
+número de su columna (eran la 39 y la 31).
 
 ## 7. Maquinaria y dependencias
 
@@ -891,3 +915,29 @@ previa, contra la normativa 5.10 y la convención de la ventana (F5 simula, Ctrl
   (`coincide`, o `difiere` con su nota). Fuente: fundamento §8.2; Jergas y Baethge (2015). Pruebas:
   `tests/fuentes/test_muestra_parafrasis.py`, `tests/studio/test_flujo.py` y `tests/studio/test_inicio.py`.
 
+
+### §9.12 Las obras de los métodos de datafw y el PDF que faltaba, por la misma puerta (2026-11-18)
+
+Las fichas de los métodos de datafw (`datafw/docs/biblio/fichas/ficha-descomposiciones.md`, `ficha-incidencia.md` y
+`ficha-mincer-oaxaca.md`) citaban dieciséis obras «fuera de la biblioteca» con DOI escritos de memoria. Entraron por
+`lib/ingresar.py` como las del flujo (§9.10), con la etiqueta `datafw-metodos` y la colección «Métodos de datafw»
+(Calibre 11248 a 11263). El cotejo: los trece DOI existen y son de esa obra (Crossref); Huppi y Ravallion (1991) y
+Kolenikov y Shorrocks (2005) no traían DOI y se hallaron en Crossref; las páginas finales de los cinco artículos de JSTOR,
+que Crossref no da, y los subtítulos que Crossref corta, se cotejaron en RePEc; los editores del manual de Heckman et al.
+(2006), en Open Library. Una grafía por autor: Oaxaca y Shorrocks con la de su obra más reciente. Solo Jann (2008) tiene PDF
+de acceso abierto en su sede (Stata Journal); Mincer (1974) es libre en la NBER pero en doce PDF, uno por capítulo, y
+queda sin archivo; las demás son de pago. Dos cambios de `lib/ingresar.py`:
+
+- **`--proyecto` y `--motivo`**: la ficha de catalogación decía siempre «obra del flujo» y `proyecto: prompts`; ahora dice
+  quién cita la obra y por qué entró (por omisión, lo de antes). Los editores de un capítulo van a Zotero con su rol y no
+  son autores del registro de Calibre.
+- **`adjuntar`**: el PDF que faltaba a un libro que ya entró sin archivo. Simula por omisión (el libro existe y no tiene
+  PDF, su `#zotero_key` y su ítem sin adjunto PDF) y con `--aplicar` baja el PDF de la URL dada o toma el que el autor
+  bajó con el navegador (`archivo`; solo `%PDF` en los dos casos), le pasa
+  OCR si se pide (`ocrmypdf -l`), comprueba que sea la obra (`es_la_obra`; el control del año se omite solo con
+  `sin_control_de_anio` y su motivo, que queda en la ficha), lo añade con `add_format --dont-replace` por la puerta de
+  Calibre y crea el adjunto enlazado (`linkMode=2`) por la de Zotero; anota el origen en la ficha y en `ingesta.tsv`. Se
+  descartó `metadatos-pdf register`, que pide dejar antes el PDF dentro de la carpeta del libro. Con él entraron siete de
+  los 28 PDF del flujo que esperaban: cuatro editoriales que hoy responden a un programa (APA, Springer y dos de BMC), dos
+  del conjunto abierto de PMC de la NLM y el Código de CONCYTEC con OCR. Los otros 21 responden 403 o un desafío y se bajan
+  con el navegador (`estado.md`).

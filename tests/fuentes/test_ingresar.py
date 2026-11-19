@@ -109,3 +109,70 @@ def test_el_pdf_tiene_que_ser_la_obra_citada(ing, tmp_path):
     assert "otra version" in ing._normal(ing.es_la_obra(pdf("b.pdf", "arXiv 20 Sep 2022 When Should You Adjust Standard Errors for Clustering"), titulo, "2023"))
     assert ing.es_la_obra(pdf("c.pdf", "Data and Code Availability Standard About Journals"), "Data and code availability standard", "2022") == ""
     assert "titulo" in ing._normal(ing.es_la_obra(pdf("d.pdf", "Una obra cualquiera sobre otra cosa"), titulo, "2023"))
+
+
+def test_los_editores_no_son_autores_del_registro(ing):
+    # Heckman, Lochner y Todd (2006), un capítulo: los editores del manual van a Zotero con su rol, no a Calibre
+    autores = [{"apellido": "Heckman", "nombre": "James J."}, {"apellido": "Hanushek", "nombre": "E. A.", "rol": "editor"}]
+    assert ing._autores_calibre(autores) == "James J., Heckman"
+    assert ing._autores_calibre([{"apellido": "Hanushek", "nombre": "E. A.", "rol": "editor"}]) == "E. A., Hanushek", \
+        "una obra editada sin autores conserva a sus editores"
+
+
+def test_la_ficha_dice_quien_cita_la_obra(ing):
+    p = ing.plan([ROEDIGER], {"cal": {}, "zot": {}, "autor_cal": {}, "rutas": {}, "claves": set()}, ESQUEMA,
+                 "datafw-metodos", "Métodos de datafw", hoy="2026-11-18")[0]
+    nombre, texto = ing._ficha_catalogacion("9", p, "", "", "K", "2026-11-18", "lote", "datafw", "Obra que cita datafw ({hoy})")
+    assert nombre.startswith("9_datafw-roediger_2006_") and "proyecto: datafw" in texto
+    assert "Obra que cita datafw (2026-11-18), ingresada por" in texto and "flujo" not in texto
+    nombre, texto = ing._ficha_catalogacion("9", p, "", "", "K", "2026-11-18", "lote")
+    assert nombre.startswith("9_flujo-") and "proyecto: prompts" in texto and "FLUJO_DE_CONOCIMIENTO" in texto
+
+
+def _mundo_adjuntar(tmp_path):
+    """Un Calibre y un Zotero de juguete: 1 sin PDF con ítem, 2 con PDF, 3 sin clave, 4 con ítem que ya tiene PDF."""
+    import sqlite3
+    from types import SimpleNamespace
+    cal, zot = tmp_path / "metadata.db", tmp_path / "zotero.sqlite"
+    c = sqlite3.connect(cal)
+    c.executescript("""create table books(id integer primary key, title text, pubdate text, path text);
+        create table data(book integer, format text, name text);
+        create table custom_columns(id integer primary key, label text);
+        create table custom_column_7(book integer, value text);
+        insert into custom_columns values (7, 'zotero_key');
+        insert into books values (1, 'Uno', '2015-01-01', 'A/Uno (1)'), (2, 'Dos', '2016-01-01', 'A/Dos (2)'),
+                                 (3, 'Tres', '2017-01-01', 'A/Tres (3)'), (4, 'Cuatro', '2018-01-01', 'A/Cuatro (4)');
+        insert into data values (2, 'PDF', 'Dos - A');
+        insert into custom_column_7 values (1, 'KUNO0001'), (2, 'KDOS0002'), (4, 'KCUA0004');""")
+    c.commit(); c.close()
+    z = sqlite3.connect(zot)
+    z.executescript("""create table items(itemID integer primary key, key text);
+        create table itemAttachments(itemID integer, parentItemID integer, contentType text);
+        insert into items values (10, 'KUNO0001'), (20, 'KDOS0002'), (40, 'KCUA0004'), (41, 'ADJ00041');
+        insert into itemAttachments values (41, 40, 'application/pdf');""")
+    z.commit(); z.close()
+    return SimpleNamespace(CALIBRE_DB=str(cal), ZOTERO_DB=str(zot))
+
+
+def test_adjuntar_solo_donde_falta_el_pdf(ing, tmp_path):
+    env = _mundo_adjuntar(tmp_path)
+    lista = [{"calibre_id": i, "url": "https://sede/x.pdf"} for i in (1, 2, 3, 4, 99)] + [{"calibre_id": 1}]
+    acciones = [(p["calibre_id"], p["accion"]) for p in ing.plan_adjuntar(lista, env)]
+    assert acciones == [(1, "adjuntar"), (2, "omitir"), (3, "calibre"), (4, "calibre"), (99, "omitir"), (1, "omitir")]
+    (tmp_path / "bajado.pdf").write_bytes(b"%PDF-1.4 x")
+    bajado = ing.plan_adjuntar([{"calibre_id": 1, "archivo": str(tmp_path / "bajado.pdf")}, {"calibre_id": 1, "archivo": str(tmp_path / "no.pdf")}], env)
+    assert [b["accion"] for b in bajado] == ["adjuntar", "omitir"], "el PDF bajado con el navegador, si existe"
+    assert ing._copiar_pdf(tmp_path / "bajado.pdf", tmp_path / "e" / "1.pdf")["bytes"] == 10
+    (tmp_path / "pagina.pdf").write_bytes(b"<html>desafio</html>")
+    assert "no es un PDF" in ing._copiar_pdf(tmp_path / "pagina.pdf", tmp_path / "e" / "2.pdf")["error"]
+    uno = ing.plan_adjuntar([{"calibre_id": 1, "url": "u", "ocr": "spa"}], env)[0]
+    assert uno["titulo"] == "Uno" and uno["anio"] == "2015" and uno["zotero_key"] == "KUNO0001" and uno["ocr"] == "spa"
+
+
+def test_adjuntar_anota_el_origen_en_la_ficha(ing, tmp_path):
+    f = tmp_path / "11145_flujo-x.md"
+    f.write_text("---\ntipo: ficha_catalogacion\n---\n\n## Origen\n\nSin archivo: la obra no tiene un PDF.\n\n## Zotero\n", encoding="utf-8")
+    assert ing._anotar_ficha(tmp_path, 11145, "`entrada/l/11145.pdf` · SHA-256 `ab…`") == f.name
+    texto = f.read_text(encoding="utf-8")
+    assert "Sin archivo" not in texto and "`entrada/l/11145.pdf` · SHA-256 `ab…`" in texto and "## Zotero" in texto
+    assert ing._anotar_ficha(tmp_path, 1, "x") == ""
