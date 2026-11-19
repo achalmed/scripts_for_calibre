@@ -61,7 +61,7 @@ Fuera del repo quedan solo las copias renderizadas; la fuente es siempre `../sys
 |---|---|
 | Terminaste de LEER un libro | En KOReader: menú del libro → estado → **Terminado** (o marca `Leído` en Calibre). Eso dispara ✅ Finalizado + fecha |
 | Estado de ESTUDIO (≠ lectura) | Edita a mano la columna **`#estudio`** (⬜/📖/🔁/✅). Ningún script la toca |
-| Creamos una nota de clase nueva | `../koreader/main.sh --apuntes <id_libro> "<ruta.md>" "<texto>"` (escribe al invocarse, con Calibre cerrado; el asistente lo hace en la sesión de estudio) |
+| Creamos una nota de clase nueva | `../koreader/main.sh --apuntes <id_libro> "<ruta.md>" "<texto>"` simula; con `--aplicar` escribe (Calibre cerrado; el asistente lo hace en la sesión de estudio) |
 | Quieres publicar los respaldos al remoto | `git -C ~/.local/share/koreader-respaldo push` (los commits locales ya están hechos) |
 | Llevar a Zotero los libros que no están | `../lectura/main.sh --enlazar --ris` → importar el `.ris` en Zotero (enlazar archivos) → `--enlazar --aplicar` (escribe las claves «adjunto») → los de ISBN o título, pegar la clave en ZKey |
 | Ver los apuntes desde Calibre | Selecciona el libro → panel **Detalles del libro** (derecha) → clic en «📝 …» (abre en **Obsidian**) o «abrir como archivo» (MarkText). El **doble clic** sobre el libro siempre abre el PDF: es el comportamiento normal de Calibre, no un error |
@@ -72,7 +72,7 @@ Fuera del repo quedan solo las copias renderizadas; la fuente es siempre `../sys
 cd "$SCRIPTS_CALIBRE/koreader"        # SCRIPTS_CALIBRE: core/env.sh --print
 ./main.sh                              # KOReader → Calibre: simulación (ver qué haría)
 ./main.sh --aplicar                    # forzar una pasada YA (Calibre cerrado)
-./main.sh --apuntes ID RUTA "TEXTO"    # enlazar apuntes .md a un libro
+./main.sh --apuntes ID RUTA "TEXTO" [--aplicar]   # enlazar apuntes .md a un libro (simula sin --aplicar)
 ./main.sh --migrar-sdr                 # ya ejecutada; solo si aparecieran .sdr nuevos
 
 cd "$SCRIPTS_CALIBRE/lectura"

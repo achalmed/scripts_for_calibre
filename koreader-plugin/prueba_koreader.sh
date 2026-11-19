@@ -179,5 +179,6 @@ else
     echo "✗ un solo bloque"; fallos=$((fallos + 1))
 fi
 esperar "--apuntes" "$W/repo/apuntes.args" "se pidió el enlace por koreader/main.sh --apuntes"
+esperar "--aplicar" "$W/repo/apuntes.args" "y con --aplicar (--apuntes simula por omisión, decisiones §3.3)"
 echo "$fallos fallos"
 [ "$fallos" = 0 ]

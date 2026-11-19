@@ -322,7 +322,8 @@ function Ecosistema:anadirResaltados(id, libro, indice, ruta, resaltados)
         return
     end
     self:avisar(hecho .. "\n\nEnlazando la nota en Calibre…", 3)
-    self:ejecutar({ orden, "--apuntes", id, ruta, "Apuntes de lectura" }, function(codigo, ultima)
+    -- --apuntes simula por omisión (decisiones §3.3): el enlace se pide con --aplicar
+    self:ejecutar({ orden, "--apuntes", id, ruta, "Apuntes de lectura", "--aplicar" }, function(codigo, ultima)
         if codigo == 0 then
             libro.apuntes = "enlazado"   -- en memoria, hasta que se regenere el índice
             self:avisar("La nota quedó enlazada en Calibre (#apuntes del libro " .. id .. ").", 4)

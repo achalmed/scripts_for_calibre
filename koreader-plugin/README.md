@@ -27,7 +27,7 @@ código no lleva ninguna.
 **La puerta de escritura se respeta**: el complemento no escribe en la base de Calibre. Lo único que
 escribe es la nota de lectura del libro (la ruta `nota` del índice), y solo añadiendo al final. Si el
 libro no tenía apuntes enlazados, pide el enlace a `<repo>/koreader/main.sh --apuntes <id> "<nota>"
-"Apuntes de lectura"`, que escribe por la puerta; si sale 75 o con error porque Calibre está abierto,
+"Apuntes de lectura" --aplicar`, que escribe por la puerta; si sale 75 o con error porque Calibre está abierto,
 avisa que la nota se enlazará desde Biblioteca Studio y sigue. Las órdenes externas corren en
 segundo plano y su resultado se sondea con `UIManager:scheduleIn`: nada bloquea la interfaz.
 

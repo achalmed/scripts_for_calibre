@@ -4,7 +4,7 @@
 Objetivo: que la nota de un libro (`notas/<clave>.md`, la que crean el complemento de KOReader y Zotero Integration)
 quede enlazada en su libro aunque se haya creado con Calibre abierto.
 Método: lee el índice (`lib/indice.py`) y, por cada libro sin «apuntes» cuya nota existe, llama a la orden que ya
-escribe por la puerta: `koreader/main.sh --apuntes ID RUTA TÍTULO`. Este archivo no escribe en ninguna base.
+escribe por la puerta: `koreader/main.sh --apuntes ID RUTA TÍTULO --aplicar`. Este archivo no escribe en ninguna base.
 Uso:
     python3 lib/enlazar_notas.py             # simula: qué notas enlazaría
     python3 lib/enlazar_notas.py --aplicar   # las enlaza (con Calibre cerrado; si está abierto, sale 75)
@@ -46,7 +46,7 @@ def main(argv=None) -> int:
         print(f"[simulación] {len(lista)} nota(s); --aplicar las enlaza por la puerta (Calibre cerrado)")
         return 0
     for b, nota, _titulo in lista:
-        r = subprocess.run(["bash", str(RAIZ / "koreader" / "main.sh"), "--apuntes", b, nota, "Apuntes de lectura"])
+        r = subprocess.run(["bash", str(RAIZ / "koreader" / "main.sh"), "--apuntes", b, nota, "Apuntes de lectura", "--aplicar"])
         if r.returncode != 0:
             print(f"✗ {b}: la puerta devolvió {r.returncode} (75: Calibre abierto u otra suite con el candado)")
             return r.returncode

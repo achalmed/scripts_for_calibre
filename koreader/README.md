@@ -61,7 +61,8 @@ valores que cambiaron.
 ./main.sh                  # SIMULACIÓN: muestra qué haría (no escribe)
 ./main.sh --aplicar        # por la puerta: respaldo verificado, columnas faltantes y sync real
 ./main.sh --migrar-sdr [--aplicar]   # .sdr → hash central (de una vez; KOReader cerrado)
-./main.sh --apuntes ID "/ruta/apuntes.md" "Clase 01"   # orden explícita: escribe YA, por la puerta
+./main.sh --apuntes ID "/ruta/apuntes.md" "Clase 01"             # simula: qué enlace escribiría (decisiones §3.3)
+./main.sh --apuntes ID "/ruta/apuntes.md" "Clase 01" --aplicar   # lo escribe por la puerta (Calibre cerrado)
 ./main.sh --instalar-timer | --desinstalar-timer       # desde ../systemd/ (../docs/operacion.md §1.1)
 ```
 

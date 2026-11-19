@@ -30,8 +30,9 @@ Uso: ./main.sh [opciones]
   --migrar-sdr          Migra los sidecars .sdr de las carpetas de libros a la
                         ubicación hash central de KOReader (con --aplicar).
   --apuntes ID RUTA [TEXTO]
-                        Escribe en #apuntes del libro ID un enlace clicable al
-                        archivo .md indicado (TEXTO opcional para el enlace).
+                        Enlace clicable en #apuntes del libro ID al archivo .md
+                        indicado (TEXTO opcional). Simula: dice qué escribiría;
+                        con --aplicar lo escribe por la puerta (Calibre cerrado).
   --instalar-timer      Instala y activa el timer systemd de usuario (cada 30
                         min; se salta la ejecución si Calibre está abierto).
   --desinstalar-timer   Detiene y elimina el timer.
@@ -47,7 +48,9 @@ while [ $# -gt 0 ]; do
         --apuntes)
             ACCION="apuntes"
             APUNTES_ID="${2:?falta el ID del libro}"; APUNTES_RUTA="${3:?falta la ruta del .md}"
-            APUNTES_TEXTO="${4:-}"; shift 3 ;;
+            shift 2
+            # TEXTO es opcional: lo que sigue y empieza por «--» es otra opción (--aplicar), no el texto
+            if [ $# -ge 2 ] && [[ "$2" != --* ]]; then APUNTES_TEXTO="$2"; shift; fi ;;
         --migrar-sdr) ACCION="migrar" ;;
         --instalar-timer) ACCION="timer_on" ;;
         --desinstalar-timer) ACCION="timer_off" ;;
@@ -60,8 +63,7 @@ done
 # --- Acción: enlace de apuntes ---------------------------------------------
 accion_apuntes() {
     [ -f "$APUNTES_RUTA" ] || { echo "✗ No existe el archivo: $APUNTES_RUTA" >&2; exit 1; }
-    # La puerta (K2): Calibre cerrado, candado compartido con los timers y respaldo verificado.
-    puerta_calibre_abrir koreader_estudio "$BIBLIOTECA"
+    [[ "$APUNTES_ID" =~ ^[0-9]+$ ]] || { echo "✗ El ID del libro no es un número: $APUNTES_ID" >&2; exit 1; }
     local abs texto html
     abs="$(readlink -f "$APUNTES_RUTA")"
     texto="${APUNTES_TEXTO:-$(basename "$APUNTES_RUTA" .md)}"
@@ -75,6 +77,14 @@ print('<div><p><a href="%s">📝 %s</a></p>'
       % (obs, texto, fil))
 EOF
 )"
+    if [ "$MODO" != "aplicar" ]; then
+        # normativa 5.10 (decisiones §3.3): simula por omisión, como el resto de la suite
+        echo "· [SIMULACIÓN] #$COL_APUNTES del libro $APUNTES_ID → enlace «$texto» a: $abs"
+        echo "· Nada se escribió. Para escribirlo (Calibre cerrado): la misma orden con --aplicar"
+        return 0
+    fi
+    # La puerta (K2): Calibre cerrado, candado compartido con los timers y respaldo verificado.
+    puerta_calibre_abrir koreader_estudio "$BIBLIOTECA"
     calibredb_escribe set_custom "$COL_APUNTES" "$APUNTES_ID" "$html"
     echo "✓ #$COL_APUNTES del libro $APUNTES_ID → enlace a: $abs"
 }
