@@ -3,181 +3,820 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Maqueta — Biblioteca Studio</title>
+<title>Maqueta de Biblioteca Studio</title>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
-/* Variables de respaldo: imitan las del anfitrión donde se mostró la maqueta. */
-:root{color-scheme:light;
---bg-primary:#ffffff;--surface-1:#f4f3ef;--surface-2:#ffffff;
---text-primary:#1c1c1e;--text-secondary:#6b6b66;--text-muted:#8e8e88;
---text-accent:#2563eb;--text-success:#15803d;--text-warning:#b45309;--text-danger:#b91c1c;
---border:rgba(0,0,0,.12);--border-strong:rgba(0,0,0,.24);--border-accent:#2563eb;--border-danger:#dc2626;--border-warning:#d97706;
---bg-accent:#dbe7fd;--bg-accent-muted:#eef3fe;--bg-success:#dcfce7;--bg-warning:#fef3c7;--bg-danger:#fee2e2;
---fill-accent:#2563eb;--fill-success:#16a34a;--fill-warning:#d97706;--fill-danger:#dc2626;--fill-ghost-selected:rgba(0,0,0,.06);
---on-accent:#ffffff;--radius:8px;
---font-sans:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;--font-mono:"JetBrains Mono",ui-monospace,monospace;--font-voice:Georgia,"Source Serif 4",serif}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
---bg-primary:#1c1c1e;--surface-1:#242426;--surface-2:#2c2c2e;
---text-primary:#f5f5f0;--text-secondary:#a0a09a;--text-muted:#7c7c76;
---text-accent:#7aa7ff;--text-success:#4ade80;--text-warning:#fbbf24;--text-danger:#f87171;
---border:rgba(255,255,255,.12);--border-strong:rgba(255,255,255,.24);--border-accent:#7aa7ff;
---bg-accent:#1e3a6e;--bg-accent-muted:#1a2740;--bg-success:#14532d;--bg-warning:#4a3410;--bg-danger:#4c1d1d;
---fill-ghost-selected:rgba(255,255,255,.08)}}
-body{margin:0;padding:24px 16px;background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-sans);font-size:14px;line-height:1.5}
-main{max-width:1100px;margin:0 auto}
-.encabezado{margin:0 0 14px}.encabezado h1{font-size:18px;font-weight:600;margin:0}
-.encabezado p{margin:4px 0 0;color:var(--text-secondary);font-size:12px}
-button{font:inherit;color:var(--text-primary);background:var(--surface-2);border:0.5px solid var(--border-strong);border-radius:var(--radius);cursor:pointer}
-input,select,textarea{font:inherit;color:inherit}
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* La metáfora: el mostrador de una biblioteca. Arriba las áreas como chips (la elegida, rellena de tinta); cada herramienta de
+   lectura tiene su color (KOReader azul, Zotero naranja, Okular verde, Yachay violeta) y la puerta de escritura es un punto.
+   Colores: Lliphi Claro y Oscuro (en la app salen de Kirigami.Theme). */
+:root{
+  --n0:#fbfcfd;--n1:#f2f3f5;--n2:#ecedef;--n3:#e0e1e5;--n4:#ccced2;--n5:#66676c;--n6:#4b4d53;--n7:#1d1f24;
+  --tinta:#1d1f24;--sobre-tinta:#fbfcfd;--pos:#137738;--neg:#b63132;--neu:#915b00;--info:#286cab;--sel:#315bef;
+  --kor:#378add;--zot:#d85a30;--oku:#1d9e75;--yac:#7f77dd;
+  --ui:Inter,"Noto Sans",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,monospace;--voz:Literata,"Noto Serif",Georgia,serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --n0:#101012;--n1:#161719;--n2:#1b1c1e;--n3:#232426;--n4:#3d3e42;--n5:#97989c;--n6:#bcbec1;--n7:#eaebed;
+  --tinta:#eaebed;--sobre-tinta:#101012;--pos:#6fc884;--neg:#fb817a;--neu:#ebb25f;--info:#7fb6ee;--sel:#7fa0ff;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --n0:#101012;--n1:#161719;--n2:#1b1c1e;--n3:#232426;--n4:#3d3e42;--n5:#97989c;--n6:#bcbec1;--n7:#eaebed;
+  --tinta:#eaebed;--sobre-tinta:#101012;--pos:#6fc884;--neg:#fb817a;--neu:#ebb25f;--info:#7fb6ee;--sel:#7fa0ff;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--n2);color:var(--n7);font:13px/1.5 var(--ui);padding:16px}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sel);outline-offset:1px}
+.mandos{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;margin:0 auto 10px;max-width:1280px}
+.mandos .grupo{display:flex;gap:2px;flex-wrap:wrap;align-items:center}
+.mandos .rot{color:var(--n5);margin-right:6px}
+.mandos button{border:1px solid var(--n4);background:var(--n0);padding:4px 10px;border-radius:4px}
+.mandos button[aria-pressed="true"]{background:var(--tinta);border-color:var(--tinta);color:var(--sobre-tinta)}
+.nota-maqueta{max-width:1280px;margin:0 auto 10px;color:var(--n5)}
+.ventana{max-width:1280px;margin:0 auto;background:var(--n1);border:1px solid var(--n4);border-radius:8px;overflow:hidden;box-shadow:0 8px 30px rgb(0 0 0 / .12);display:flex;flex-direction:column;position:relative}
+.ventana.celular{max-width:390px}
+.titulo{display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--n2);border-bottom:1px solid var(--n3);color:var(--n6)}
+.titulo .t{flex:1;text-align:center;font-weight:500;color:var(--n7);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.titulo i{width:12px;height:12px;border-radius:50%;background:var(--n4);display:inline-block}
+.menu{display:flex;gap:14px;padding:4px 12px;border-bottom:1px solid var(--n3);flex-wrap:wrap}
+.cabecera{display:flex;align-items:center;gap:4px;padding:6px 12px;border-bottom:1px solid var(--n3);flex-wrap:wrap;background:var(--n1)}
+.chip{border:1px solid var(--n4);border-radius:999px;padding:3px 11px;background:transparent;color:var(--n6);display:inline-flex;align-items:center;gap:5px;white-space:nowrap;font-size:12.5px}
+.chip:hover{background:var(--n2)}
+.chip.on{background:var(--tinta);color:var(--sobre-tinta);border-color:var(--tinta)}
+.chip .x{opacity:.7;margin-left:2px}
+.esp{flex:1}
+.buscar{border:1px solid var(--n4);background:var(--n0);border-radius:4px;padding:4px 9px;color:var(--n7);width:300px;font:inherit}
+.puerta{display:inline-flex;align-items:center;gap:6px;color:var(--n5);font-size:12px;border:0;background:none;padding:3px 6px;border-radius:4px}
+.punto{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none;background:var(--c,var(--n5))}
+.ib{border:0;background:none;padding:3px 6px;border-radius:4px;color:var(--n6);font-size:15px;line-height:1}
+.ib:hover{background:var(--n2)}
+.area{display:none;min-height:600px}
+.area.on{display:block}
+.pad{padding:14px 16px}
+.estado{display:flex;gap:14px;padding:4px 12px;border-top:1px solid var(--n3);background:var(--n2);color:var(--n5);font-size:11.5px;flex-wrap:wrap}
+.abajo-cel{display:none}
+h3.sec{margin:0 0 8px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--n5);font-weight:500}
+.tar{background:var(--n0);border:1px solid var(--n3);border-radius:6px;padding:10px 12px;min-width:0}
+.tar>.cab{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.tar>.cab b{font-weight:500}
+.cifras{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.cifra{background:var(--n0);border:1px solid var(--n3);border-radius:6px;padding:8px 10px;min-width:0}
+.cifra span{color:var(--n5);font-size:12px}
+.cifra b{display:block;font-size:20px;font-weight:500;font-variant-numeric:tabular-nums}
+.suave{color:var(--n5);font-size:12px}
+.mono{font-family:var(--mono);font-size:11.5px}
+.fila{display:flex;align-items:center;gap:8px;min-width:0}
+.btn{border:1px solid var(--n4);background:var(--n0);border-radius:4px;padding:3px 9px;font-size:12px;white-space:nowrap}
+.btn:hover:not(:disabled){background:var(--n2)}
+.btn.prim{background:var(--tinta);border-color:var(--tinta);color:var(--sobre-tinta)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.dos{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:10px}
+.barra-l{height:4px;background:var(--n3);border-radius:2px;margin-top:4px;position:relative;overflow:hidden;display:block}
+.barra-l i{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:var(--c)}
+.tapa{border-radius:2px 4px 4px 2px;color:#fff;font:600 10.5px/1.2 var(--voz);padding:7px;display:flex;flex-direction:column;justify-content:flex-end;background:var(--c);box-shadow:inset 3px 0 0 rgb(0 0 0 / .18);overflow:hidden}
+.tapa small{font:10px var(--ui);opacity:.85}
+.mini-tapa{width:28px;height:40px;flex:none;padding:0}
+.paso-sig{display:flex;align-items:center;gap:8px;padding:6px 0;border-top:1px solid var(--n3)}
+.paso-sig:first-of-type{border-top:0}
+.paso-sig .ti{font-size:16px;color:var(--n5)}
+.paso-sig>span{flex:1;min-width:0}
+/* catálogo */
+.cat{display:grid;grid-template-columns:190px minmax(0,1fr) 330px;min-height:600px}
+.filtros{border-right:1px solid var(--n3);padding:10px;display:grid;gap:2px;align-content:start}
+.filtros h4{margin:10px 0 3px;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--n5);font-weight:500}
+.filtros h4:first-child{margin-top:0}
+.faceta{display:flex;justify-content:space-between;gap:6px;padding:3px 7px;border-radius:4px;border:0;background:none;text-align:left;color:var(--n6);width:100%}
+.faceta:hover{background:var(--n2)}
+.faceta.on{background:color-mix(in oklab,var(--tinta) 12%,transparent);color:var(--n7)}
+.faceta small{color:var(--n5);font-variant-numeric:tabular-nums}
+.cat.sin-filtros{grid-template-columns:minmax(0,1fr) 330px}
+.cat.sin-filtros .filtros{display:none}
+.centro{padding:10px 14px;min-width:0}
+.puestos{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px;min-height:26px}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:14px 12px}
+.libro{border:0;background:none;padding:0;text-align:left;display:grid;gap:4px;min-width:0;align-content:start}
+.libro .tapa{aspect-ratio:2/3}
+.libro.sel .tapa{outline:2px solid var(--sel);outline-offset:2px}
+.libro .t{font-size:12px;line-height:1.3;color:var(--n7);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.libro .a{font-size:11.5px;color:var(--n5);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+table{border-collapse:collapse;width:100%;font-size:12.5px}
+th{font-weight:500;color:var(--n5);text-align:left;padding:5px 8px;border-bottom:1px solid var(--n3);white-space:nowrap}
+td{padding:5px 8px;border-bottom:1px solid var(--n3);vertical-align:top}
+tr:last-child td{border-bottom:0}
+tr.clic{cursor:pointer}
+tr.clic:hover td{background:var(--n2)}
+tr.sel td{background:color-mix(in oklab,var(--sel) 12%,transparent)}
+.tabla{overflow-x:auto;border:1px solid var(--n3);border-radius:6px;background:var(--n0)}
+.ficha-ed{border-left:1px solid var(--n3);padding:12px;display:grid;gap:10px;align-content:start;background:var(--n1);min-width:0}
+.ficha-ed .tit{font:600 15px/1.3 var(--voz)}
+.kv{display:grid;grid-template-columns:auto minmax(0,1fr);gap:3px 10px;font-size:12px;margin:0}
+.kv dt{color:var(--n5)}
+.kv dd{margin:0;min-width:0;overflow-wrap:anywhere}
+.acciones{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.obra{border:1px solid var(--n3);border-left:3px solid var(--yac);border-radius:0 6px 6px 0;padding:8px 10px;background:var(--n0);display:grid;gap:4px;font-size:12px}
+.obra b{font-weight:500}
+/* lectura */
+.sw{width:32px;height:18px;border-radius:9px;background:var(--pos);position:relative;border:0;flex:none;padding:0}
+.sw i{position:absolute;top:2px;left:16px;width:14px;height:14px;border-radius:50%;background:#fff;transition:left .2s}
+.sw[aria-checked="false"]{background:var(--n4)}
+.sw[aria-checked="false"] i{left:2px}
+.herrs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-top:10px}
+.herr{background:var(--n1);border-radius:6px;padding:6px 8px;font-size:12px;display:grid;gap:2px;min-width:0}
+.herr.corre{outline:1px solid var(--sel)}
+.semanas{display:flex;align-items:flex-end;gap:4px;height:70px;margin-top:6px}
+.semanas i{flex:1;background:var(--oku);border-radius:2px 2px 0 0;opacity:.85}
+.calor{display:grid;grid-template-rows:repeat(7,9px);grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:3px;margin-top:8px}
+.calor i{border-radius:2px;background:var(--oku)}
+.sub{border-left:3px solid var(--c);padding:4px 9px;margin:6px 0;font:13px/1.45 var(--voz);display:grid;gap:4px}
+.sub .suave{font-family:var(--ui);flex-wrap:wrap}
+.origen{border:1px solid var(--n4);border-radius:999px;background:none;padding:1px 8px;font-size:11.5px;display:inline-flex;align-items:center;gap:4px;color:var(--n6)}
+.origen.on{background:var(--n2);border-color:var(--n6);color:var(--n7)}
+.lista-lib{display:grid;gap:2px}
+.lista-lib button{border:0;background:none;text-align:left;padding:5px 6px;border-radius:4px;display:flex;gap:8px;align-items:center;min-width:0}
+.lista-lib button.on{background:color-mix(in oklab,var(--sel) 12%,transparent)}
+.tres{display:grid;grid-template-columns:240px minmax(0,1fr) minmax(0,1fr);gap:10px}
+/* fichas */
+.ficha{border:1px solid var(--n3);border-radius:6px;background:var(--n0);padding:9px 11px;display:grid;gap:5px}
+.ficha q{font-family:var(--voz);quotes:"«" "»"}
+.ficha .ia{color:var(--neu);font-size:11.5px}
+.ficha .ok{color:var(--pos);font-size:11.5px}
+.cajas{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;text-align:center;font-size:11px;color:var(--n5)}
+.cajas div{background:var(--n1);border:1px solid var(--n3);border-radius:4px;padding:4px 0}
+.cajas div b{display:block;font-size:15px;font-weight:500;color:var(--n7)}
+.cajas div.hoy{border-color:var(--tinta)}
+.tarjeta-r{border:1px solid var(--n4);border-radius:6px;padding:12px;display:grid;gap:8px;font-family:var(--voz);background:var(--n0);min-height:110px;align-content:start}
+.tarjeta-r .dorso{border-top:1px dashed var(--n4);padding-top:8px}
+/* método */
+.recorrido{display:flex;gap:10px;margin-bottom:12px}
+.etapa{flex:1;border:1px solid var(--n3);background:var(--n0);border-radius:6px;padding:6px 8px;text-align:left;display:grid;gap:1px;position:relative}
+.etapa b{font-size:18px;font-weight:500;font-variant-numeric:tabular-nums}
+.etapa.on{border-color:var(--tinta);box-shadow:inset 0 -2px 0 var(--tinta)}
+.etapa:not(:last-child)::after{content:"›";position:absolute;right:-9px;top:50%;transform:translateY(-50%);color:var(--n5)}
+.esp-etapa{display:grid;grid-template-columns:250px minmax(0,1fr);gap:12px}
+.ops{display:grid;gap:2px;align-content:start}
+.op{border:0;background:none;text-align:left;padding:6px 8px;border-radius:4px;display:grid;gap:1px}
+.op:hover{background:var(--n2)}
+.op.on{background:color-mix(in oklab,var(--tinta) 10%,transparent)}
+.op small{color:var(--n5)}
+.op .esc{color:var(--neu);font-size:11px}
+.pestanas{display:flex;border-bottom:1px solid var(--n3);gap:2px;overflow-x:auto}
+.pestanas button{border:0;background:none;padding:7px 10px;color:var(--n5);border-bottom:2px solid transparent;white-space:nowrap}
+.pestanas button.on{color:var(--n7);border-bottom-color:var(--tinta)}
+.panel{display:none;padding:10px 0;gap:8px;flex-direction:column}
+.panel.on{display:flex}
+.salida{background:var(--n2);border-radius:6px;padding:8px 10px;font:11.5px/1.6 var(--mono);white-space:pre-wrap;overflow-wrap:anywhere;color:var(--n6);max-height:220px;overflow:auto}
+.mensaje{border:1px solid color-mix(in oklab,var(--c) 45%,transparent);background:color-mix(in oklab,var(--c) 10%,transparent);border-radius:4px;padding:6px 9px;font-size:12px}
+.pasos{display:grid;gap:4px}
+.pasos div{display:flex;gap:8px;align-items:center;font-size:12.5px}
+.pasos .m{width:18px;height:18px;border-radius:50%;border:1.5px solid var(--n4);display:grid;place-items:center;font-size:11px;flex:none}
+.pasos .hecho .m{background:var(--pos);border-color:var(--pos);color:var(--n0)}
+.pasos .corre .m{border-color:var(--sel);border-top-color:transparent;animation:gira .8s linear infinite}
+@keyframes gira{to{transform:rotate(360deg)}}
+.cuatro{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px}
+/* revisión */
+.prisma{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr);gap:6px 10px;font-size:12px}
+.prisma div{border:1px solid var(--n4);border-radius:4px;padding:6px 8px;background:var(--n0)}
+.prisma .fase{grid-column:1/-1;border:0;background:none;padding:2px 0;color:var(--n5);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.prisma b{font-variant-numeric:tabular-nums;font-weight:500}
+.prisma .exc{border-style:dashed;color:var(--n6)}
+.cri{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;align-items:center;padding:6px 0;border-top:1px solid var(--n3)}
+.cri .dec{display:flex;gap:4px}
+.cri .dec .btn.on-in{background:var(--pos);border-color:var(--pos);color:var(--n0)}
+.cri .dec .btn.on-ex{background:var(--neg);border-color:var(--neg);color:var(--n0)}
+td.nw{white-space:nowrap}
+/* bandejas */
+.band{display:grid;grid-template-columns:230px minmax(0,1fr) 300px;min-height:600px}
+.band .izq{border-right:1px solid var(--n3);padding:10px;display:grid;gap:2px;align-content:start}
+.band .der{border-left:1px solid var(--n3);padding:12px;background:var(--n1);display:grid;gap:8px;align-content:start}
+.band-cel{display:none}
+/* capas */
+.capa{position:absolute;inset:0;background:rgb(16 16 18 / .42);display:flex;align-items:flex-start;justify-content:center;padding-top:70px;z-index:5}
+.dialogo{background:var(--n1);border:1px solid var(--n4);border-radius:8px;width:min(580px,94%);box-shadow:0 12px 40px rgb(0 0 0 / .3);display:grid;max-height:calc(100% - 90px);overflow:auto}
+.dialogo .cab{padding:10px 14px;border-bottom:1px solid var(--n3);font-weight:500;display:flex;justify-content:space-between;gap:8px}
+.dialogo .cuerpo-d{padding:12px 14px;display:grid;gap:10px}
+.dialogo .pie{padding:10px 14px;border-top:1px solid var(--n3);display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.campo{border:1px solid var(--n4);background:var(--n0);border-radius:4px;padding:5px 8px;min-height:28px;width:100%;font:inherit;color:inherit}
+textarea.campo{min-height:56px;resize:vertical;font-family:var(--voz)}
+.lbl{font-size:11.5px;color:var(--n5);display:flex;justify-content:space-between;gap:8px;margin-bottom:2px}
+.rej2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px}
+.segm{display:inline-flex;border:1px solid var(--n4);border-radius:4px;overflow:hidden;flex-wrap:wrap}
+.segm button{border:0;padding:3px 10px;background:var(--n0)}
+.segm button.on{background:var(--tinta);color:var(--sobre-tinta)}
+.paleta{width:min(520px,94%)}
+.paleta input{border:0;border-bottom:1px solid var(--n3);background:none;padding:12px 14px;font:inherit;font-size:14px;width:100%;color:inherit}
+.paleta ul{list-style:none;margin:0;padding:6px;max-height:320px;overflow:auto}
+.paleta li{display:flex;justify-content:space-between;padding:6px 8px;border-radius:4px;cursor:pointer;gap:8px}
+.paleta li:hover,.paleta li.on{background:var(--n2)}
+.paleta li kbd{font:11px var(--mono);color:var(--n5)}
+.aviso{position:absolute;left:50%;bottom:40px;transform:translateX(-50%);background:var(--tinta);color:var(--sobre-tinta);padding:7px 14px;border-radius:6px;box-shadow:0 6px 20px rgb(0 0 0 / .25);font-size:12.5px;z-index:6;width:max-content;max-width:90%;opacity:0;pointer-events:none;transition:opacity .2s}
+.aviso.on{opacity:1}
+.notas{max-width:1280px;margin:22px auto 0;background:var(--n0);border:1px solid var(--n3);border-radius:8px;padding:16px 20px;line-height:1.6}
+.notas h2{font-size:15px;font-weight:600;margin:0 0 8px}
+.notas h3{font-size:13px;font-weight:600;margin:14px 0 4px}
+.notas p,.notas li{color:var(--n6);max-width:80ch}
+.notas ul{padding-left:18px;margin:4px 0}
+[hidden]{display:none!important}
+/* celular */
+.celular .menu,.celular .cabecera .chip,.celular .puerta .txt,.celular .solo-esc{display:none!important}
+.celular .buscar{width:auto;flex:1;min-width:0}
+.celular .cifras,.celular .cuatro{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.celular .dos,.celular .tres,.celular .esp-etapa,.celular .rej2{grid-template-columns:minmax(0,1fr)}
+.celular .cat,.celular .cat.sin-filtros,.celular .band{grid-template-columns:minmax(0,1fr)}
+.celular .filtros,.celular .band .izq{display:none}
+.celular .band-cel{display:flex;gap:6px;overflow-x:auto;padding:10px 12px 0}
+.celular .ficha-ed,.celular .band .der{border-left:0;border-top:1px solid var(--n3)}
+.celular .rejilla{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 8px}
+.celular .recorrido{overflow-x:auto;padding-bottom:4px}
+.celular .etapa{min-width:96px}
+.celular .herrs{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.celular .area{min-height:0}
+.celular .estado{display:none}
+.celular .abajo-cel{display:flex;justify-content:space-around;border-top:1px solid var(--n3);background:var(--n1);padding:6px 4px 8px;font-size:11px;color:var(--n5)}
+.abajo-cel button{border:0;background:none;display:grid;justify-items:center;gap:1px;color:inherit;font-size:11px}
+.abajo-cel button .ti{font-size:19px}
+.abajo-cel button.on{color:var(--n7);font-weight:500}
+.celular .capa{padding-top:0;align-items:flex-end}
+.celular .dialogo{width:100%;border-radius:12px 12px 0 0;max-height:92%}
+.celular .prisma{grid-template-columns:minmax(0,1fr)}
+.celular .pad{padding:12px}
+.celular .cri{grid-template-columns:minmax(0,1fr)}
 </style>
 </head>
 <body>
-<main>
-<header class="encabezado"><h1>Maqueta — Biblioteca Studio</h1>
-<p>Recuperada de la sesión del 2026-11-18 (widget «biblioteca_studio_rediseno»).</p></header>
-<h2 class="sr-only">Maqueta interactiva del rediseño de Biblioteca Studio con seis áreas: inicio, catálogo, lectura, fichas, método y coherencia.</h2>
-<style>
-.bs{border:0.5px solid var(--border);border-radius:12px;overflow:hidden;font-size:13px;background:var(--surface-2)}
-.bar{display:flex;align-items:center;gap:6px;padding:8px 10px;border-bottom:0.5px solid var(--border);flex-wrap:wrap}
-.chip{border:0.5px solid var(--border-strong);border-radius:999px;padding:3px 10px;font-size:12px;background:transparent;color:var(--text-secondary);cursor:pointer;display:inline-flex;align-items:center;gap:4px}
-.chip.on{background:var(--text-primary);color:var(--surface-2);border-color:var(--text-primary)}
-.card{border:0.5px solid var(--border);border-radius:var(--radius);padding:10px 12px;background:var(--surface-2)}
-.met{background:var(--surface-1);border-radius:var(--radius);padding:8px 10px}
-.met b{display:block;font-size:20px;font-weight:500;color:var(--text-primary)}
-.mut{color:var(--text-secondary);font-size:12px}
-.row{display:flex;align-items:center;gap:8px}
-.cov{border-radius:4px;color:#fff;font-size:11px;padding:6px;display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:2/3;cursor:pointer;line-height:1.25}
-.cov.sel{outline:2px solid var(--border-accent);outline-offset:2px}
-.btn{font-size:12px;padding:4px 10px}
-.pri{background:var(--text-primary);color:var(--surface-2);border-color:var(--text-primary)}
-.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
-.hl{border-left:3px solid var(--border-strong);border-radius:0;padding:4px 8px;margin:6px 0;font-family:var(--font-voice);font-size:13px}
-.view{padding:12px}
-.sw{width:30px;height:16px;border-radius:9px;background:var(--text-success);position:relative;cursor:pointer;flex:none}
-.sw i{position:absolute;top:2px;left:16px;width:12px;height:12px;border-radius:50%;background:#fff;transition:left .2s}
-.sw.off{background:var(--border-strong)} .sw.off i{left:2px}
-.step{flex:1;text-align:center;padding:6px 4px;border-radius:var(--radius);background:var(--surface-1);font-size:12px;cursor:pointer}
-.step.on{background:var(--bg-accent);color:var(--text-accent)}
-</style>
-<div class="bs">
-<div class="bar">
-<span style="font-weight:500;margin-right:6px"><i class="ti ti-books" aria-hidden="true"></i> Biblioteca</span>
-<button class="chip on" data-v="inicio"><i class="ti ti-home" aria-hidden="true"></i>Inicio</button>
-<button class="chip" data-v="catalogo"><i class="ti ti-layout-grid" aria-hidden="true"></i>Catálogo</button>
-<button class="chip" data-v="lectura"><i class="ti ti-book-2" aria-hidden="true"></i>Lectura</button>
-<button class="chip" data-v="fichas"><i class="ti ti-notes" aria-hidden="true"></i>Fichas</button>
-<button class="chip" data-v="metodo"><i class="ti ti-route" aria-hidden="true"></i>Método</button>
-<button class="chip" data-v="coherencia"><i class="ti ti-arrows-exchange" aria-hidden="true"></i>Coherencia</button>
-<span style="flex:1"></span>
-<input placeholder="Título, autor, clave: (Ctrl+F)" style="width:170px;height:28px;font-size:12px">
-<span class="row mut"><span class="dot" style="background:#1D9E75"></span>Puerta lista</span>
+
+<div class="mandos" role="toolbar" aria-label="Mandos de la maqueta">
+  <div class="grupo" id="g-pantalla"><span class="rot">Pantalla</span></div>
+  <div class="grupo" id="g-tema"><span class="rot">Tema</span>
+    <button data-t="light" aria-pressed="true">Lliphi Claro</button><button data-t="dark" aria-pressed="false">Lliphi Oscuro</button></div>
+  <div class="grupo" id="g-ancho"><span class="rot">Ancho</span>
+    <button data-w="escritorio" aria-pressed="true">Escritorio</button><button data-w="celular" aria-pressed="false">Celular (390 px)</button></div>
+  <div class="grupo" id="g-puerta"><span class="rot">Puerta</span>
+    <button data-g="lista" aria-pressed="true">Lista</button><button data-g="calibre" aria-pressed="false">Calibre abierto</button></div>
+</div>
+<p class="nota-maqueta">Maqueta de composición: las obras son reales; las cifras, los subrayados y las fichas son de ejemplo. Todo responde al clic: chips, filtros, portadas, Simular (F5), Aplicar (Ctrl+Intro), la paleta (Ctrl+K). En la aplicación, el color y los tamaños salen del tema de KDE.</p>
+
+<div class="ventana" id="ventana">
+  <div class="titulo"><i></i><i></i><i></i><span class="t" id="t-ventana">Inicio — Biblioteca Studio</span></div>
+  <div class="menu"><span>Archivo</span><span>Editar</span><span>Ver</span><span>Libro</span><span>Método</span><span>Herramientas</span><span>Ayuda</span></div>
+  <div class="cabecera" id="cabecera">
+    <span id="chips" style="display:contents"></span>
+    <span class="esp"></span>
+    <input class="buscar" id="buscar" placeholder="Título, autor, año:, serie:, etiqueta:, id:, clave: (Ctrl+F)" aria-label="Buscar">
+    <button class="puerta" id="puerta" title="La puerta de escritura: un clic lleva a Coherencia › Puerta"><span class="punto" id="puerta-punto" style="--c:var(--pos)"></span><span class="txt" id="puerta-txt">Puerta lista</span></button>
+    <button class="ib solo-esc" id="b-indice" title="Actualizar el índice (Ctrl+R)" aria-label="Actualizar el índice"><i class="ti ti-refresh"></i></button>
+    <button class="ib" id="b-paleta" title="Todas las órdenes (Ctrl+K)" aria-label="Todas las órdenes"><i class="ti ti-dots-vertical"></i></button>
+  </div>
+
+  <!-- INICIO -->
+  <section class="area pad" id="a-inicio">
+    <div class="fila" style="justify-content:space-between;margin-bottom:10px;flex-wrap:wrap"><span style="font-size:15px;font-weight:500">Esto es lo de hoy</span><span class="suave" id="sync-mini">Base de lectura sincronizada a las 09:00 · próxima 10:00</span></div>
+    <div class="cifras">
+      <div class="cifra"><span>Leído esta semana</span><b>6 h 40 min</b></div>
+      <div class="cifra"><span>Subrayados nuevos, 7 días</span><b id="c-subs">24</b></div>
+      <div class="cifra"><span>Fichas por revisar</span><b id="c-revisar">3</b></div>
+      <div class="cifra"><span>Pendientes en bandejas</span><b>19</b></div>
+    </div>
+    <div class="dos">
+      <div class="tar"><div class="cab"><b>Seguir leyendo</b><span class="suave">la barra lleva el color de la herramienta donde se lee</span></div><div id="seguir"></div></div>
+      <div class="tar"><div class="cab"><b>Siguiente paso</b></div>
+        <div class="paso-sig"><i class="ti ti-notes"></i><span>Fichar 9 subrayados de Wooldridge (2015)<br><span class="suave">6 en KOReader, 3 en Zotero; la página ya está</span></span><button class="btn" data-ir="ficha">Fichar</button></div>
+        <div class="paso-sig"><i class="ti ti-school"></i><span>Repaso del día: <b id="c-rep-ini">7</b> tarjetas<br><span class="suave">Econometría I y la tesis de retornos</span></span><button class="btn" data-ir="fichas">Repasar</button></div>
+        <div class="paso-sig"><i class="ti ti-file-text"></i><span>Tesis de retornos: 4 fuentes nuevas<br><span class="suave">fichas cotejadas desde el lunes</span></span><button class="btn" data-aviso="Se abre la tesis en LaTeX Studio, en la pestaña Citas">Abrir en LaTeX</button></div>
+        <div class="paso-sig"><i class="ti ti-key"></i><span>3 libros sin clave para citar<br><span class="suave">sin ella no se cita: Zotero manda en las claves</span></span><button class="btn" data-ir="bandejas" data-b="clave">Resolver</button></div>
+        <div class="paso-sig"><i class="ti ti-inbox"></i><span>5 archivos en la zona de entrada<br><span class="suave">2 identificados, 1 escaneado sin texto</span></span><button class="btn" data-ir="bandejas" data-b="clasificar">Bandejas</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATÁLOGO -->
+  <section class="area" id="a-catalogo">
+    <div class="cat" id="cat">
+      <aside class="filtros" id="filtros" aria-label="Filtros (F9)"></aside>
+      <div class="centro">
+        <div class="fila" style="justify-content:space-between;margin-bottom:8px;flex-wrap:wrap">
+          <span class="suave" id="n-libros"></span>
+          <span class="fila"><span class="suave solo-esc">Orden: leídos recientes</span>
+            <span class="segm"><button id="v-tar" class="on">Portadas</button><button id="v-lis" title="Ctrl+G">Lista</button></span>
+            <button class="btn solo-esc" id="b-filtros" title="F9">Filtros</button></span>
+        </div>
+        <div class="puestos" id="puestos"></div>
+        <div id="libros"></div>
+      </div>
+      <aside class="ficha-ed" id="ficha-ed" aria-label="Ficha editorial"></aside>
+    </div>
+  </section>
+
+  <!-- LECTURA -->
+  <section class="area pad" id="a-lectura">
+    <div class="tar" style="margin-bottom:10px">
+      <div class="fila" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+        <div class="fila"><i class="ti ti-refresh" style="font-size:18px"></i><div><div style="font-weight:500">Sincronización de la base de lectura</div><div class="suave" id="sync-txt">Última vuelta 09:00 · nada nuevo · próxima 10:00</div></div></div>
+        <div class="fila"><span class="suave">Cada hora</span><button class="sw" id="sw" role="switch" aria-checked="true" aria-label="Sincronizar cada hora"><i></i></button><button class="btn prim" id="sync-btn">Sincronizar ahora</button></div>
+      </div>
+      <div class="herrs" id="herrs"></div>
+    </div>
+    <div class="cifras">
+      <div class="cifra"><span>Subrayados</span><b id="n-sub">431</b></div>
+      <div class="cifra"><span>Horas, 12 semanas</span><b>78 h</b></div>
+      <div class="cifra"><span>Libros con lectura</span><b>46</b></div>
+      <div class="cifra"><span>Racha</span><b>9 días</b></div>
+    </div>
+    <div class="tres">
+      <div class="tar"><div class="cab"><b>Libros con lectura</b></div><div class="lista-lib" id="lec-libros"></div></div>
+      <div class="tar"><div class="cab"><b>Doce semanas</b><span class="suave">este mes 21 h</span></div>
+        <div class="semanas" id="semanas"></div><div class="calor" id="calor"></div>
+        <div class="suave" style="margin-top:6px">Por semana y por día, de KOReader: la única herramienta que guarda la hora de cada página.</div>
+        <h3 class="sec" style="margin-top:12px">Últimas sesiones</h3><div id="sesiones" class="suave"></div></div>
+      <div class="tar"><div class="cab"><b id="lec-tit">Subrayados</b><span class="fila" id="origenes" style="gap:4px;flex-wrap:wrap"></span></div>
+        <div id="lec-prog" style="display:grid;gap:4px;margin-bottom:6px"></div><div id="subs"></div></div>
+    </div>
+  </section>
+
+  <!-- FICHAS -->
+  <section class="area pad" id="a-fichas">
+    <div class="fila" style="gap:6px;margin-bottom:10px;flex-wrap:wrap" id="f-filtros"></div>
+    <div class="dos">
+      <div style="display:grid;gap:8px;align-content:start" id="f-lista"></div>
+      <div class="tar" style="display:grid;gap:8px;align-content:start">
+        <div class="cab"><b>Repaso para estudiantes</b><span class="suave">Leitner, cinco cajas</span></div>
+        <div class="cajas" id="cajas"></div>
+        <div class="suave" id="rep-estado"></div>
+        <div class="tarjeta-r" id="tarjeta-r"></div>
+        <div class="acciones"><button class="btn" id="r-mostrar">Mostrar la ficha</button><button class="btn" id="r-sabia">La sabía</button><button class="btn" id="r-luego">Repasar luego</button><span class="esp"></span><button class="btn prim" id="r-guardar">Guardar el repaso</button></div>
+        <div class="suave">Las que fallas vuelven antes; lo escribe solo <span class="mono">lib/repaso.py</span> en su base propia, <span class="mono">repaso.sqlite</span>.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÉTODO -->
+  <section class="area pad" id="a-metodo">
+    <div class="recorrido" id="recorrido"></div>
+    <div class="esp-etapa">
+      <div><div class="suave" id="et-para" style="margin-bottom:8px"></div><h3 class="sec">Operaciones</h3><div class="ops" id="ops"></div></div>
+      <div class="tar">
+        <div class="fila" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+          <div style="min-width:0"><b style="font-weight:500" id="op-tit"></b><div class="suave" id="op-desc"></div></div>
+          <div class="acciones"><button class="btn" id="b-simular">Simular · F5</button><button class="btn prim" id="b-aplicar">Aplicar… · Ctrl+Intro</button></div>
+        </div>
+        <div class="mono suave" id="op-orden" style="margin:6px 0;overflow-wrap:anywhere"></div>
+        <div class="pestanas" id="pest-op"><button data-p="tabla" class="on">Lo que maneja</button><button data-p="plan">Plan</button><button data-p="registro">Registro</button><button data-p="salida">Salida</button></div>
+        <div class="panel on" id="p-tabla"><div class="tabla" id="et-tabla"></div><div class="suave" id="et-elem"></div></div>
+        <div class="panel" id="p-plan"></div>
+        <div class="panel" id="p-registro"></div>
+        <div class="panel" id="p-salida"><div class="salida" id="salida">Aún no se corrió esta operación.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COHERENCIA -->
+  <section class="area pad" id="a-coherencia">
+    <div class="cuatro" id="tarjetas-coh"></div>
+    <div class="pestanas" id="pest-coh"><button data-p="sincronizar" class="on">Sincronizar</button><button data-p="puertav">Puerta</button><button data-p="tareas">Tareas automáticas</button></div>
+    <div class="panel on" id="p-sincronizar"><div class="tabla"><table><thead><tr><th>Operación</th><th class="solo-esc">Bases</th><th>Último</th><th></th></tr></thead><tbody id="t-sinc"></tbody></table></div></div>
+    <div class="panel" id="p-puertav">
+      <div class="rej2">
+        <div class="tar"><div class="cab"><b>Estado</b></div><dl class="kv" id="kv-puerta"></dl></div>
+        <div class="tar"><div class="cab"><b>Los seis pasos de toda escritura</b></div>
+          <div class="pasos"><div class="hecho"><span class="m">1</span>La aplicación, cerrada (Calibre, Zotero)</div><div class="hecho"><span class="m">2</span>El candado de la base</div><div class="hecho"><span class="m">3</span>El respaldo, verificado</div><div class="hecho"><span class="m">4</span>Aplicar</div><div class="hecho"><span class="m">5</span>La integridad</div><div class="hecho"><span class="m">6</span>Liberar el candado</div></div>
+          <div class="suave" style="margin-top:8px">Los da <span class="mono">lib/escribir.*</span> dentro de la suite; la ventana los sigue en la salida. Restaurar un respaldo sigue siendo a mano.</div></div>
+      </div>
+    </div>
+    <div class="panel" id="p-tareas"><div class="tabla"><table><thead><tr><th>Timer de systemd</th><th>Cada</th><th>Última corrida</th><th></th></tr></thead><tbody id="t-timers"></tbody></table></div></div>
+  </section>
+
+  <!-- REVISIÓN -->
+  <section class="area pad" id="a-revision">
+    <div class="fila" style="justify-content:space-between;flex-wrap:wrap;margin-bottom:10px;gap:8px">
+      <div class="fila"><span class="suave">Escrito</span><span class="btn">Tesis de retornos ▾</span><span class="suave solo-esc mono">escritura/tesis-retornos/fuentes/revision.yml</span></div>
+      <div class="fila"><span class="suave">Tipo</span><span class="segm" id="tipo-rev"><button>Narrativa</button><button class="on">De alcance</button><button>Sistemática</button></span></div>
+    </div>
+    <div class="mensaje" style="--c:var(--info);margin-bottom:10px" id="exige">Lo que exige una revisión de alcance: pregunta PCC, bitácora reproducible de cada búsqueda, cribado en dos fases con sus motivos y el diagrama PRISMA (extensión ScR).</div>
+    <div class="dos">
+      <div style="display:grid;gap:10px;align-content:start;min-width:0">
+        <div class="tar"><div class="cab"><b>Pregunta y criterios</b><button class="btn" data-aviso="Pregunta y criterios guardados en revision.yml">Guardar</button></div>
+          <div class="lbl">Pregunta</div><div class="campo" style="font-family:var(--voz)">¿Qué se sabe del retorno privado de la educación superior en el Perú y de cómo se identifica?</div>
+          <div class="rej2" style="margin-top:8px"><div><div class="lbl">Se incluye</div><div class="campo suave">estudios con datos del Perú o de América Latina; estimación del retorno; 1990 a 2025</div></div><div><div class="lbl">Se excluye</div><div class="campo suave">sin estimación propia; solo educación básica; opinión</div></div></div></div>
+        <div class="tar"><div class="cab"><b>Bitácora de búsqueda</b><button class="btn" data-aviso="Elige la exportación RIS o BibTeX en el diálogo de KDE">Importar registros…</button></div>
+          <div class="tabla"><table><thead><tr><th>Base</th><th>Cadena exacta</th><th class="solo-esc">Fecha</th><th>Result.</th></tr></thead><tbody id="bitacora"></tbody></table></div></div>
+        <div class="tar"><div class="cab"><b>Cribado</b><span class="segm" id="fase"><button class="on">Título y resumen</button><button>Texto completo</button></span></div><div id="cribado"></div></div>
+      </div>
+      <div class="tar" style="align-content:start;display:grid;gap:8px">
+        <div class="cab"><b>Diagrama PRISMA 2020</b><button class="btn prim" id="b-prisma">Generar el diagrama</button></div>
+        <div class="prisma" id="prisma"></div>
+        <div class="suave" id="prisma-est"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BANDEJAS -->
+  <section class="area" id="a-bandejas">
+    <div class="band-cel" id="band-cel"></div>
+    <div class="band">
+      <aside class="izq" id="band-lista"></aside>
+      <div class="centro"><div class="fila" style="justify-content:space-between;margin-bottom:8px"><b style="font-weight:500" id="band-tit"></b><span class="suave" id="band-n"></span></div><div class="tabla" id="band-tabla"></div></div>
+      <aside class="der" id="band-op"></aside>
+    </div>
+  </section>
+
+  <div class="estado" id="estado"><span id="e-resumen"></span><span class="esp"></span><span id="e-contexto"></span></div>
+  <div class="abajo-cel" id="abajo-cel"></div>
+
+  <div class="capa" id="capa-aplicar" hidden>
+    <div class="dialogo" role="dialog" aria-modal="true" aria-labelledby="ap-tit">
+      <div class="cab"><span id="ap-tit">Aplicar</span><span class="suave">Esc</span></div>
+      <div class="cuerpo-d">
+        <div id="ap-texto"></div>
+        <div class="salida" id="ap-orden"></div>
+        <div><h3 class="sec">La puerta de escritura</h3><div class="pasos" id="ap-pasos"></div></div>
+        <div class="suave" id="ap-resumen">Nada se escribe hasta pulsar «Aplicar».</div>
+      </div>
+      <div class="pie"><button class="btn" data-cerrar>Cancelar</button><button class="btn prim" id="ap-ok">Aplicar</button></div>
+    </div>
+  </div>
+
+  <div class="capa" id="capa-ficha" hidden>
+    <div class="dialogo" role="dialog" aria-modal="true" aria-label="Nueva ficha">
+      <div class="cab"><span>Nueva ficha</span><span class="suave">Esc</span></div>
+      <div class="cuerpo-d">
+        <div class="fila" style="flex-wrap:wrap"><span class="segm" id="nf-tipo"><button class="on">Textual</button><button>Paráfrasis</button><button>De obra</button></span><label class="fila suave"><input type="checkbox" id="nf-ia"> La propuso la IA</label></div>
+        <div class="rej2"><div><div class="lbl">Libro</div><div class="campo">Wooldridge (2015), Introducción a la econometría</div></div><div><div class="lbl">Escrito</div><div class="campo">Curso Econometría I</div></div></div>
+        <div><div class="lbl">Cita exacta</div><textarea class="campo" id="nf-cita">El supuesto clave es que el valor esperado del error, dado cualquier valor de la variable explicativa, es cero.</textarea></div>
+        <div class="rej2"><div><div class="lbl"><span>Página o lugar</span><span style="color:var(--pos)">cotejada en el PDF</span></div><input class="campo" value="24" aria-label="Página"></div><div><div class="lbl">Categoría</div><input class="campo" value="supuesto" aria-label="Categoría"></div>
+          <div><div class="lbl">Tema</div><input class="campo" value="media condicional cero" aria-label="Tema"></div><div><div class="lbl">Uso</div><input class="campo" value="Sesión 3: sesgo de variable omitida" aria-label="Uso"></div></div>
+        <div class="mensaje" style="--c:var(--neu)" id="nf-aviso-ia" hidden>La propuso la IA: se guarda marcada y queda en el registro de uso de IA del escrito. No se podrá citar hasta que cotejes su página en el PDF.</div>
+        <div class="mensaje" style="--c:var(--info);overflow-wrap:anywhere" id="nf-sim" hidden>Simulación: se escribirá <span class="mono">docencia/econometria-1/fuentes/fichas/wooldridge2015-p024-textual-media-condicional-cero.md</span>; pasa la validación y nace verificada_script.</div>
+      </div>
+      <div class="pie"><button class="btn" data-cerrar>Cancelar</button><button class="btn" id="nf-revisar">Revisar · F5</button><button class="btn prim" id="nf-guardar">Guardar la ficha · Ctrl+Intro</button></div>
+    </div>
+  </div>
+
+  <div class="capa" id="capa-paleta" hidden>
+    <div class="dialogo paleta" role="dialog" aria-modal="true" aria-label="Todas las órdenes">
+      <input id="pal-q" placeholder="Escribe una orden: sincronizar, simular, ficha…" aria-label="Buscar una orden">
+      <ul id="pal-lista"></ul>
+    </div>
+  </div>
+  <div class="aviso" id="aviso" role="status" aria-live="polite"></div>
 </div>
 
-<div class="view" id="v-inicio">
-<div class="row" style="justify-content:space-between;margin-bottom:10px"><span style="font-size:15px;font-weight:500">Hola, Edison. Esto es lo de hoy</span><span class="mut" id="sync-mini">Sincronizado hace 3 min · próxima 00:18</span></div>
-<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px">
-<div class="met"><span class="mut">Leído esta semana</span><b>6 h 40</b></div>
-<div class="met"><span class="mut">Subrayados nuevos</span><b>24</b></div>
-<div class="met"><span class="mut">Fichas por revisar</span><b>7</b></div>
-<div class="met"><span class="mut">Pendientes</span><b>12</b></div>
-</div>
-<div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:10px">
-<div class="card"><div class="row" style="justify-content:space-between;margin-bottom:6px"><span style="font-weight:500">Seguir leyendo</span><span class="mut">KOReader · Zotero · Okular · Yachay</span></div>
-<div id="seguir"></div></div>
-<div class="card"><div style="font-weight:500;margin-bottom:6px">Siguiente paso</div>
-<div class="row" style="margin:6px 0"><i class="ti ti-notes" aria-hidden="true"></i><span style="flex:1">Fichar 9 subrayados de Wooldridge</span><button class="btn">Fichar</button></div>
-<div class="row" style="margin:6px 0"><i class="ti ti-key" aria-hidden="true"></i><span style="flex:1">3 libros sin clave para citar</span><button class="btn">Resolver</button></div>
-<div class="row" style="margin:6px 0"><i class="ti ti-file-text" aria-hidden="true"></i><span style="flex:1">Informe de pobreza: 4 fuentes</span><button class="btn">Abrir en LaTeX</button></div>
-<div class="row" style="margin:6px 0"><i class="ti ti-school" aria-hidden="true"></i><span style="flex:1">Repaso de fichas del curso: 15</span><button class="btn">Repasar</button></div>
-</div></div>
-</div>
+<section class="notas" aria-labelledby="notas-t">
+  <h2 id="notas-t">Notas de método</h2>
+  <p>Esta maqueta reproduce la ventana de Biblioteca Studio tal como la arman <span class="mono">studio/biblioteca_app/qml/Main.qml</span> y sus componentes: ocho áreas (siete chips, Ctrl+1 a 7, y Bandejas, Ctrl+8, a la que se llega desde Inicio, el menú Ver y la paleta), la búsqueda por campo, el punto de la puerta y la barra de estado. Cada pantalla es un flujo real del studio; los diálogos son los suyos.</p>
+  <h3>Lo que se decidió y por qué</h3>
+  <ul>
+    <li><b>La tinta es el acento.</b> El chip elegido, el botón principal y la etapa en curso se rellenan con el color del texto, no con un azul de marca: el studio no compite con las portadas, que son el color de la ventana.</li>
+    <li><b>Un color por herramienta de lectura</b> (KOReader, Zotero, Okular, Yachay), el mismo en la barra de Inicio, en la cuadrícula del catálogo, en la raya de cada subrayado y en la sincronización: dónde nació un dato se ve sin leer.</li>
+    <li><b>Simular antes de aplicar.</b> Toda operación es la CLI de su suite: F5 corre la orden sin <span class="mono">--aplicar</span> y deja el plan; Ctrl+Intro abre el diálogo con la orden exacta, las bases que toca y los seis pasos de la puerta. Con Calibre abierto (pruébalo en «Puerta», arriba), «Aplicar» se apaga y dice por qué.</li>
+    <li><b>La ventana no escribe en Calibre ni en Zotero.</b> Lo único suyo es la base del repaso; por eso «Guardar el repaso» es directo y todo lo demás pasa por la puerta.</li>
+    <li><b>Las fichas de la IA no se citan sin cotejo.</b> «Copiar la cita» espera a «Cotejé la página»; la ficha nace marcada y queda en el registro de uso de IA del escrito.</li>
+    <li><b>Nada de nubes de pastillas.</b> Las facetas son listas con su cuenta; una pastilla solo es un filtro puesto, que se quita con un toque en ×.</li>
+    <li><b>Celular primero.</b> A menos de 760 px la ventana pasa a una columna, los chips se vuelven la barra de abajo y los diálogos, hojas que suben.</li>
+  </ul>
+  <h3>Cómo usarla</h3>
+  <p>Los mandos de arriba cambian la pantalla, el tema, el ancho y el estado de la puerta; <span class="mono">#catalogo</span>, <span class="mono">#metodo</span>, <span class="mono">#aplicar</span> o <span class="mono">#ficha</span> al final de la dirección abren una pantalla o un diálogo directo. Los atajos de la ventana funcionan aquí cuando el navegador los deja pasar (Ctrl+K, F5, F9, Ctrl+G, Ctrl+F, Esc; Ctrl+1 a 8 los toma a veces el navegador).</p>
+</section>
 
-<div class="view" id="v-catalogo">
-<div class="row" style="gap:6px;margin-bottom:10px;flex-wrap:wrap"><span class="mut">Filtros</span><button class="chip">Econometría ×</button><button class="chip">2010–2024</button><button class="chip">Con PDF</button><span style="flex:1"></span><span class="mut">Orden: leídos recientes</span></div>
-<div style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:12px">
-<div id="grid" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px"></div>
-<div class="card" id="ficha"></div>
-</div></div>
-
-<div class="view" id="v-lectura">
-<div class="card" style="margin-bottom:10px">
-<div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
-<div class="row"><i class="ti ti-refresh" aria-hidden="true" style="font-size:18px"></i><div><div style="font-weight:500">Sincronización de la lectura</div><div class="mut" id="sync-txt">Última vuelta 23:21 · nada nuevo · próxima 00:18</div></div></div>
-<div class="row"><span class="mut">Automática cada hora</span><span class="sw" id="sw" role="switch" aria-checked="true" tabindex="0"><i></i></span><button class="btn pri" id="sync-btn"><i class="ti ti-refresh" aria-hidden="true"></i> Sincronizar ahora</button></div>
-</div>
-<div class="row" style="gap:6px;margin-top:10px" id="pasos"></div>
-</div>
-<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:10px">
-<div class="met"><span class="mut">Subrayados</span><b id="n-sub">431</b></div>
-<div class="met"><span class="mut">Horas, 12 semanas</span><b>78 h</b></div>
-<div class="met"><span class="mut">Libros con lectura</span><b>46</b></div>
-<div class="met"><span class="mut">Racha</span><b>9 días</b></div>
-</div>
-<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:10px">
-<div class="card"><div style="font-weight:500;margin-bottom:6px">Horas por día</div><div id="heat" style="display:grid;grid-template-columns:repeat(12,1fr);gap:3px"></div><div class="mut" style="margin-top:6px">Doce semanas; más oscuro, más horas</div></div>
-<div class="card"><div class="row" style="justify-content:space-between;margin-bottom:4px"><span style="font-weight:500">Subrayados recientes</span><span class="row" id="origenes" style="gap:4px"></span></div><div id="subs"></div></div>
-</div></div>
-
-<div class="view" id="v-fichas">
-<div class="row" style="gap:6px;margin-bottom:10px;flex-wrap:wrap"><button class="chip on">Todas 128</button><button class="chip">Textuales 74</button><button class="chip">Paráfrasis 39</button><button class="chip">Por revisar 7</button><span style="flex:1"></span><button class="btn pri"><i class="ti ti-plus" aria-hidden="true"></i> Nueva ficha</button><button class="btn"><i class="ti ti-sparkles" aria-hidden="true"></i> Estudiar con la IA</button></div>
-<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px">
-<div class="card"><div style="font-weight:500;margin-bottom:6px">Fichas del informe de pobreza</div>
-<div class="hl">«La pobreza monetaria mide la insuficiencia del gasto…»<div class="mut" style="font-family:var(--font-sans)">INEI 2024 · p. 12 · textual · cotejada con el PDF</div></div>
-<div class="hl">El gasto social focalizado reduce la brecha más que el universal.<div class="mut" style="font-family:var(--font-sans)">Banco Mundial 2022 · p. 45 · paráfrasis</div></div>
-<div class="row" style="gap:6px;margin-top:8px"><button class="btn">Insertar en LaTeX Studio</button><button class="btn">Ver en Yachay</button></div></div>
-<div class="card"><div style="font-weight:500;margin-bottom:6px">Repaso para estudiantes</div><div class="mut" style="margin-bottom:8px">Preguntas salidas de las fichas del curso; las que fallas vuelven antes</div>
-<div class="met" style="margin-bottom:8px"><span class="mut">¿Qué supuesto rompe el sesgo de variable omitida?</span></div>
-<div class="row" style="gap:6px"><button class="btn">Mostrar la ficha</button><button class="btn">La sabía</button><button class="btn">Repasar luego</button></div>
-<div class="mut" style="margin-top:8px">15 por repasar hoy · próximas en 3 días</div></div>
-</div></div>
-
-<div class="view" id="v-metodo">
-<div class="row" style="gap:6px;margin-bottom:10px" id="etapas"></div>
-<div class="card" id="etapa-det"></div>
-</div>
-
-<div class="view" id="v-coherencia">
-<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
-<div class="card"><div class="row"><span class="dot" style="background:#1D9E75"></span><b style="font-weight:500">Calibre ⇄ Zotero</b></div><div class="mut">Coinciden 1 284 · por revisar 3</div><button class="btn" style="margin-top:6px">Simular</button></div>
-<div class="card"><div class="row"><span class="dot" style="background:#1D9E75"></span><b style="font-weight:500">Calibre ⇄ KOReader</b></div><div class="mut">Lectura al día · 30 min</div><button class="btn" style="margin-top:6px">Simular</button></div>
-<div class="card"><div class="row"><span class="dot" style="background:#BA7517"></span><b style="font-weight:500">Tareas automáticas</b></div><div class="mut">4 timers · 1 con aviso</div><button class="btn" style="margin-top:6px">Ver registro</button></div>
-</div></div>
-</div>
 <script>
-const L=[
-{t:"Introducción a la econometría",a:"Wooldridge",y:2015,c:"#185FA5",p:64,o:"KOReader",k:"wooldridge2015introduccion",h:42,u:["Informe de pobreza","Curso Econometría I"]},
-{t:"Mostly harmless econometrics",a:"Angrist y Pischke",y:2009,c:"#534AB7",p:30,o:"Zotero",k:"angrist2009mostly",h:18,u:["Tesis de evaluación"]},
-{t:"Desarrollo y libertad",a:"Sen",y:2000,c:"#0F6E56",p:88,o:"Okular",k:"sen2000desarrollo",h:57,u:["Informe de pobreza"]},
-{t:"Por qué fracasan los países",a:"Acemoglu y Robinson",y:2012,c:"#993C1D",p:12,o:"Yachay",k:"acemoglu2012fracasan",h:6,u:[]},
-{t:"Metodología de la investigación",a:"Hernández Sampieri",y:2014,c:"#3B6D11",p:45,o:"KOReader",k:"hernandez2014metodologia",h:31,u:["Curso Metodología"]},
-{t:"Macroeconomía",a:"Mankiw",y:2014,c:"#993556",p:71,o:"Zotero",k:"mankiw2014macroeconomia",h:25,u:["Curso Macro II"]},
-{t:"Economical writing",a:"McCloskey",y:2019,c:"#5F5E5A",p:100,o:"KOReader",k:"mccloskey2019economical",h:14,u:["Guía de redacción"]},
-{t:"Causal inference: the mixtape",a:"Cunningham",y:2021,c:"#854F0B",p:22,o:"Okular",k:"cunningham2021causal",h:9,u:[]}];
-const O={KOReader:"#378ADD",Zotero:"#D85A30",Okular:"#1D9E75",Yachay:"#7F77DD"};
-let sel=0;
-function vista(v){document.querySelectorAll('.view').forEach(e=>e.style.display=e.id==='v-'+v?'block':'none');document.querySelectorAll('.bar .chip').forEach(c=>c.classList.toggle('on',c.dataset.v===v))}
-document.querySelectorAll('.bar .chip').forEach(c=>c.onclick=()=>vista(c.dataset.v));
-document.getElementById('seguir').innerHTML=L.filter(b=>b.p<100).slice(0,3).map(b=>`<div class="row" style="margin:6px 0"><span style="width:26px;height:38px;border-radius:3px;background:${b.c};flex:none"></span><div style="flex:1;min-width:0"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${b.t}</div><div style="height:4px;background:var(--surface-1);border-radius:2px;margin-top:4px"><div style="width:${b.p}%;height:4px;background:${O[b.o]};border-radius:2px"></div></div><div class="mut">${b.p}% · en ${b.o}</div></div><button class="btn">Abrir</button></div>`).join('');
-function grid(){document.getElementById('grid').innerHTML=L.map((b,i)=>`<div><div class="cov${i===sel?' sel':''}" style="background:${b.c}" onclick="elegir(${i})"><span>${b.t}</span><span style="opacity:.85">${b.a}</span></div><div style="height:3px;background:var(--surface-1);margin-top:4px;border-radius:2px"><div style="width:${b.p}%;height:3px;background:${O[b.o]};border-radius:2px"></div></div></div>`).join('')}
-function ficha(){const b=L[sel];document.getElementById('ficha').innerHTML=`<div class="row" style="align-items:flex-start;gap:10px"><span style="width:52px;height:78px;border-radius:4px;background:${b.c};flex:none"></span><div><div style="font-weight:500;font-size:14px">${b.t}</div><div class="mut">${b.a} · ${b.y}</div><div class="mut" style="font-family:var(--font-mono);margin-top:4px">${b.k}</div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0"><div class="met"><span class="mut">Leído</span><b style="font-size:16px">${b.p}%</b></div><div class="met"><span class="mut">Subrayados</span><b style="font-size:16px">${b.h}</b></div></div><div class="mut">Usado en</div><div style="margin:4px 0 10px">${b.u.length?b.u.map(u=>`<div class="row"><i class="ti ti-file-text" aria-hidden="true"></i>${u}</div>`).join(''):'<span class="mut">Aún en ningún escrito</span>'}</div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn pri">Abrir</button><button class="btn">Nueva ficha</button><button class="btn">Estudiar con la IA</button><button class="btn">Citar en LaTeX</button></div>`}
-window.elegir=i=>{sel=i;grid();ficha()};grid();ficha();
-const heat=document.getElementById('heat');let s=7;for(let w=0;w<12;w++){for(let d=0;d<7;d++){s=(s*9301+49297)%233280;const v=s/233280;const op=v<.25?0:(.25+v*.75).toFixed(2);const c=document.createElement('div');c.style.cssText=`aspect-ratio:1;border-radius:2px;background:${op?'#1D9E75':'var(--surface-1)'};opacity:${op||1}`;c.title=`${Math.round(v*3*10)/10} h`;heat.appendChild(c)}}
-heat.style.gridTemplateColumns='repeat(12,1fr)';heat.style.gridAutoFlow='column';heat.style.gridTemplateRows='repeat(7,10px)';
-const SUB=[["La productividad es casi todo en el largo plazo.","Krugman · p. 11","KOReader"],["El sesgo de selección desaparece con asignación aleatoria.","Angrist y Pischke · p. 15","Zotero"],["La pobreza es privación de capacidades.","Sen · p. 114","Okular"],["Las instituciones inclusivas permiten el crecimiento.","Acemoglu · p. 73","Yachay"]];
-let filtro=null;function subs(){document.getElementById('subs').innerHTML=SUB.filter(x=>!filtro||x[2]===filtro).map(x=>`<div class="hl" style="border-left-color:${O[x[2]]}">${x[0]}<div class="mut" style="font-family:var(--font-sans)">${x[1]} · ${x[2]}</div></div>`).join('')}
-document.getElementById('origenes').innerHTML=Object.keys(O).map(k=>`<button class="chip" style="padding:1px 7px" onclick="filtrar('${k}',this)"><span class="dot" style="background:${O[k]}"></span>${k}</button>`).join('');
-window.filtrar=(k,el)=>{filtro=filtro===k?null:k;document.querySelectorAll('#origenes .chip').forEach(c=>c.classList.remove('on'));if(filtro)el.classList.add('on');subs()};subs();
-const P=["KOReader","Zotero","Okular","Yachay"];
-function pasos(estado){document.getElementById('pasos').innerHTML=P.map((p,i)=>`<div class="step" style="cursor:default"><span class="dot" style="background:${O[p]}"></span> ${p} <span class="mut">${estado[i]||''}</span></div>`).join('')}
-pasos(["al día","al día","al día","al día"]);
-const sw=document.getElementById('sw');sw.onclick=()=>{sw.classList.toggle('off');const on=!sw.classList.contains('off');sw.setAttribute('aria-checked',on);document.getElementById('sync-txt').textContent=on?'Última vuelta 23:21 · nada nuevo · próxima 00:18':'Automática apagada · solo con el botón';document.getElementById('sync-mini').textContent=on?'Sincronizado hace 3 min · próxima 00:18':'Sincronización automática apagada'};
-document.getElementById('sync-btn').onclick=()=>{const b=document.getElementById('sync-btn');b.disabled=true;const e=["","","",""];let i=0;document.getElementById('sync-txt').textContent='Trayendo lo nuevo de cada programa…';const t=setInterval(()=>{e[i]=i===0?'+2 subrayados':(i===3?'+1 ficha':'al día');pasos(e);i++;if(i===4){clearInterval(t);b.disabled=false;document.getElementById('sync-txt').textContent='Última vuelta ahora · 2 subrayados de KOReader llevados a Zotero, Okular y Yachay';document.getElementById('n-sub').textContent='433'}},600)};
-const E=[["Adquirir",3,"3 libros en la lista de deseos; buscar el PDF legal o pedirlo a la biblioteca."],["Entrada",5,"5 documentos esperan en la zona de entrada: revisar metadatos y moverlos a Calibre por la puerta."],["Catalogar",4,"4 libros sin serie ni etiquetas; la sugerencia sale del título y del ISBN."],["Fichas",7,"7 fichas por revisar: el cotejo contra el PDF encontró 2 citas con otra página."],["Manifiestos",0,"Todos los manifiestos al día."]];
-let et=3;function etapas(){document.getElementById('etapas').innerHTML=E.map((x,i)=>`<div class="step${i===et?' on':''}" onclick="etapa(${i})">${x[0]}<div style="font-size:16px;font-weight:500">${x[1]}</div></div>`).join('');document.getElementById('etapa-det').innerHTML=`<div style="font-weight:500;margin-bottom:4px">${E[et][0]}</div><div class="mut" style="margin-bottom:8px">${E[et][2]}</div><div class="row" style="gap:6px"><button class="btn">Simular (F5)</button><button class="btn pri">Aplicar (Ctrl+Intro)</button><span class="mut">respaldo verificado · se puede deshacer</span></div>`}
-window.etapa=i=>{et=i;etapas()};etapas();
-vista('inicio');
+(function(){
+'use strict';
+var $=function(s){return document.querySelector(s)}, $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+var V=$('#ventana'), raiz=document.documentElement;
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var tAviso;function aviso(t){var a=$('#aviso');a.textContent=t;a.classList.add('on');clearTimeout(tAviso);tAviso=setTimeout(function(){a.classList.remove('on')},2600)}
+var HERR={KOReader:'var(--kor)',Zotero:'var(--zot)',Okular:'var(--oku)',Yachay:'var(--yac)'};
+var AREAS=[['inicio','Inicio','home'],['catalogo','Catálogo','layout-grid'],['lectura','Lectura','book-2'],['fichas','Fichas','notes'],['metodo','Método','route'],['coherencia','Coherencia','arrows-exchange'],['revision','Revisión','list-details'],['bandejas','Bandejas','inbox']];
+var ESTADO={inicio:['1 287 libros · 431 subrayados · 128 fichas','Índice de las 09:12'],catalogo:['','Calibre: metadata.db, solo lectura · vigilando'],lectura:['Base de lectura: 431 subrayados de 46 libros','lectura_base/lectura.sqlite · solo lectura'],fichas:['128 fichas en 9 escritos · 74 textuales · 39 paráfrasis · 15 de obra','Repaso: repaso.sqlite'],metodo:['',''],coherencia:['Calibre ⇄ Zotero: 1 284 coinciden · 3 por revisar','5 timers · 1 con aviso'],revision:['Tesis de retornos · revisión de alcance','fuentes/revision.yml'],bandejas:['19 pendientes en 5 bandejas','cada bandeja se vacía con su operación']};
+var puertaLibre=true, areaActual='inicio';
+var L=[
+ {id:48,t:'Introducción a la econometría: un enfoque moderno',a:'Wooldridge, J. M.',y:2015,tipo:'Libro',s:'Econometría',c:'#185fa5',p:64,o:'KOReader',k:'wooldridge2015introduccion',h:42,u:['Curso Econometría I','Tesis de retornos'],z:'enlazado',isbn:'978-607-522-310-8',et:['econometría','manual']},
+ {id:112,t:'Mostly harmless econometrics',a:'Angrist, J. D. y Pischke, J.-S.',y:2009,tipo:'Libro',s:'Econometría',c:'#534ab7',p:61,o:'Zotero',k:'angrist2009mostly',h:91,u:['Tesis de retornos'],z:'enlazado',isbn:'978-0-691-12035-5',et:['inferencia causal'],obra:true},
+ {id:8812,t:'Human capital: a theoretical and empirical analysis',a:'Becker, G. S.',y:1964,tipo:'Libro',s:'Capital humano',c:'#5b3a29',p:38,o:'Okular',k:'becker1964',h:48,u:['Tesis de retornos'],z:'enlazado',isbn:'978-0-226-04120-9',et:['capital humano','clásico'],obra:true},
+ {id:8813,t:'Schooling, experience, and earnings',a:'Mincer, J.',y:1974,tipo:'Libro',s:'Capital humano',c:'#3c5a3a',p:12,o:'KOReader',k:'',h:6,u:[],z:'sin clave',isbn:'978-0-87014-265-9',et:['capital humano']},
+ {id:301,t:'Desarrollo y libertad',a:'Sen, A.',y:2000,tipo:'Libro',s:'Desarrollo',c:'#0f6e56',p:88,o:'Okular',k:'sen2000desarrollo',h:57,u:['Informe de pobreza multidimensional'],z:'enlazado',isbn:'978-84-08-03520-8',et:['desarrollo','pobreza']},
+ {id:302,t:'Por qué fracasan los países',a:'Acemoglu, D. y Robinson, J. A.',y:2012,tipo:'Libro',s:'Desarrollo',c:'#993c1d',p:12,o:'Yachay',k:'acemoglu2012fracasan',h:6,u:[],z:'enlazado',isbn:'978-84-234-1266-2',et:['instituciones']},
+ {id:77,t:'Macroeconomía',a:'Mankiw, N. G.',y:2014,tipo:'Libro',s:'Macroeconomía',c:'#993556',p:71,o:'Zotero',k:'mankiw2014macroeconomia',h:25,u:['Curso Macroeconomía II'],z:'enlazado',isbn:'978-84-9969-156-0',et:['manual']},
+ {id:415,t:'Economical writing',a:'McCloskey, D. N.',y:2019,tipo:'Libro',s:'Escritura',c:'#5f5e5a',p:100,o:'KOReader',k:'mccloskey2019economical',h:14,u:['Guía de redacción'],z:'enlazado',isbn:'978-0-226-44807-7',et:['redacción']},
+ {id:520,t:'Causal inference: the mixtape',a:'Cunningham, S.',y:2021,tipo:'Libro',s:'Econometría',c:'#854f0b',p:22,o:'Okular',k:'cunningham2021causal',h:9,u:[],z:'sin Zotero',isbn:'978-0-300-25168-5',et:['inferencia causal']},
+ {id:633,t:'The great escape: health, wealth, and the origins of inequality',a:'Deaton, A.',y:2013,tipo:'Libro',s:'Desarrollo',c:'#2d4a6b',p:0,o:'KOReader',k:'deaton2013great',h:0,u:[],z:'enlazado',isbn:'978-0-691-15354-4',et:['desigualdad']},
+ {id:640,t:'Metodología de la investigación',a:'Hernández Sampieri, R. et al.',y:2014,tipo:'Libro',s:'Metodología',c:'#3b6d11',p:45,o:'KOReader',k:'hernandez2014metodologia',h:31,u:['Curso Metodología'],z:'enlazado',isbn:'978-1-4562-2396-0',et:['metodología']},
+ {id:702,t:'Returns to investment in education: a decennial review of the global literature',a:'Psacharopoulos, G. y Patrinos, H. A.',y:2018,tipo:'Artículo',s:'Capital humano',c:'#6a46c2',p:100,o:'Zotero',k:'psacharopoulos2018returns',h:17,u:['Tesis de retornos'],z:'enlazado',isbn:'DOI 10.1080/09645292.2018.1484426',et:['retornos']},
+ {id:703,t:'Does compulsory school attendance affect schooling and earnings?',a:'Angrist, J. D. y Krueger, A. B.',y:1991,tipo:'Artículo',s:'Capital humano',c:'#286cab',p:100,o:'Zotero',k:'angrist1991compulsory',h:11,u:['Tesis de retornos'],z:'enlazado',isbn:'DOI 10.2307/2937954',et:['retornos','variables instrumentales']},
+ {id:704,t:'Schooling and labor market consequences of school construction in Indonesia',a:'Duflo, E.',y:2001,tipo:'Artículo',s:'Capital humano',c:'#137738',p:55,o:'Okular',k:'duflo2001schooling',h:8,u:[],z:'enlazado',isbn:'DOI 10.1257/aer.91.4.795',et:['retornos']},
+ {id:840,t:'Econometría',a:'Gujarati, D. N. y Porter, D. C.',y:2010,tipo:'Libro',s:'Econometría',c:'#7a2e3a',p:30,o:'KOReader',k:'',h:4,u:['Curso Econometría I'],z:'sin clave',isbn:'978-607-15-0294-0',et:['manual']},
+ {id:912,t:'Retornos a la educación superior en el mercado laboral',a:'Yamada, G.',y:2007,tipo:'Informe',s:'Capital humano',c:'#915b00',p:80,o:'Yachay',k:'yamada2007retornos',h:12,u:['Tesis de retornos'],z:'enlazado',isbn:'documento de trabajo, Universidad del Pacífico',et:['Perú','retornos']}
+];
+var sel=0, enLista=false, filtros={}, busqueda='';
+function libroPor(id){for(var i=0;i<L.length;i++)if(L[i].id===id)return i;return 0}
+/* ---------- área ---------- */
+function area(a){
+  areaActual=a;
+  $$('.area').forEach(function(s){s.classList.toggle('on',s.id==='a-'+a)});
+  $$('#chips .chip').forEach(function(c){c.classList.toggle('on',c.dataset.a===a)});
+  $$('#g-pantalla button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.a===a))});
+  $$('#abajo-cel button').forEach(function(b){b.classList.toggle('on',b.dataset.a===a||(b.dataset.a==='mas'&&['metodo','coherencia','revision','bandejas'].indexOf(a)>=0))});
+  var nombre=AREAS.filter(function(x){return x[0]===a})[0][1];
+  var t=a==='catalogo'?L[sel].t:(a==='metodo'?E[et].nombre:nombre);
+  $('#t-ventana').textContent=t+' — Biblioteca Studio';
+  var e=ESTADO[a];
+  $('#e-resumen').textContent=a==='catalogo'?$('#n-libros').textContent:(a==='metodo'?E[et].resumen:e[0]);
+  $('#e-contexto').textContent=a==='metodo'?'Operación: '+opActual().nombre:e[1];
+  $('#buscar').placeholder=a==='fichas'?'Buscar en las fichas (Ctrl+F)':(a==='metodo'||a==='coherencia'?'Filtrar la tabla (Ctrl+F)':'Título, autor, año:, serie:, etiqueta:, id:, clave: (Ctrl+F)');
+  try{history.replaceState(null,'','#'+a)}catch(err){}
+}
+$('#chips').innerHTML=AREAS.filter(function(x){return x[0]!=='bandejas'}).map(function(x,i){return '<button class="chip" data-a="'+x[0]+'" title="Ctrl+'+(i+1)+'"><i class="ti ti-'+x[2]+'" aria-hidden="true"></i>'+x[1]+'</button>'}).join('');
+$('#g-pantalla').insertAdjacentHTML('beforeend',AREAS.map(function(x){return '<button data-a="'+x[0]+'" aria-pressed="false">'+x[1]+'</button>'}).join(''));
+$('#abajo-cel').innerHTML=[['inicio','Inicio','home'],['catalogo','Catálogo','layout-grid'],['lectura','Lectura','book-2'],['fichas','Fichas','notes'],['mas','Método','route']].map(function(x){return '<button data-a="'+x[0]+'"><i class="ti ti-'+x[2]+'" aria-hidden="true"></i>'+x[1]+'</button>'}).join('');
+document.addEventListener('click',function(ev){
+  var b=ev.target.closest('[data-a]');
+  if(b&&(b.closest('#chips')||b.closest('#g-pantalla')||b.closest('#abajo-cel'))){area(b.dataset.a==='mas'?'metodo':b.dataset.a);return}
+  var ir=ev.target.closest('[data-ir]');
+  if(ir){if(ir.dataset.ir==='ficha'){abrir('ficha')}else{if(ir.dataset.b)banda(ir.dataset.b);area(ir.dataset.ir)}return}
+  var av=ev.target.closest('[data-aviso]');if(av){aviso(av.dataset.aviso);return}
+  if(ev.target.closest('[data-cerrar]'))cerrar();
+});
+/* ---------- inicio ---------- */
+$('#seguir').innerHTML=[0,2,1].map(function(i){var b=L[i];return '<div class="fila" style="margin:8px 0"><span class="tapa mini-tapa" style="--c:'+b.c+'"></span><div style="flex:1;min-width:0"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(b.t)+'</div><span class="barra-l"><i style="width:'+b.p+'%;--c:'+HERR[b.o]+'"></i></span><div class="suave">'+b.p+' % · en '+b.o+' · '+b.h+' subrayados</div></div><button class="btn" data-libro="'+b.id+'">Abrir</button></div>'}).join('');
+$('#seguir').addEventListener('click',function(ev){var b=ev.target.closest('[data-libro]');if(b){elegir(libroPor(+b.dataset.libro));area('catalogo')}});
+/* ---------- catálogo ---------- */
+var FACETAS=[['s','Colección'],['a','Autor'],['d','Década'],['tipo','Tipo']];
+function valor(b,f){return f==='d'?(Math.floor(b.y/10)*10)+'s':(f==='a'?b.a.split(',')[0]:b[f])}
+function pasa(b,saltar){
+  for(var f in filtros){if(f!==saltar&&filtros[f]&&valor(b,f)!==filtros[f])return false}
+  var q=busqueda.trim().toLowerCase();if(!q)return true;
+  var m=q.match(/^(titulo|autor|año|serie|etiqueta|id|clave):(.*)$/);
+  if(m){var v=m[2].trim();if(m[1]==='año'){var r=v.split('-');return b.y>=+r[0]&&b.y<=+(r[1]||r[0])}
+    var campo={titulo:b.t,autor:b.a,serie:b.s,etiqueta:b.et.join(' '),id:b.id+' '+b.isbn,clave:b.k}[m[1]];return String(campo).toLowerCase().indexOf(v)>=0}
+  return (b.t+' '+b.a+' '+b.y+' '+b.k+' '+b.s).toLowerCase().indexOf(q)>=0;
+}
+function pintarCatalogo(){
+  var vis=L.map(function(b,i){return i}).filter(function(i){return pasa(L[i])});
+  $('#n-libros').textContent=(vis.length===L.length?'1 287 libros':vis.length+' de 1 287 libros')+' · muestra de '+L.length;
+  if(areaActual==='catalogo')$('#e-resumen').textContent=$('#n-libros').textContent;
+  $('#filtros').innerHTML=FACETAS.map(function(F){
+    var cuenta={};L.forEach(function(b){if(pasa(b,F[0])){var v=valor(b,F[0]);cuenta[v]=(cuenta[v]||0)+1}});
+    return '<h4>'+F[1]+'</h4>'+Object.keys(cuenta).sort().map(function(v){return '<button class="faceta'+(filtros[F[0]]===v?' on':'')+'" data-f="'+F[0]+'" data-v="'+esc(v)+'"><span>'+esc(v)+'</span><small>'+cuenta[v]+'</small></button>'}).join('');
+  }).join('');
+  var ps=Object.keys(filtros).filter(function(f){return filtros[f]}).map(function(f){return '<button class="chip on" data-quitar="'+f+'">'+esc(filtros[f])+'<span class="x">×</span></button>'});
+  if(busqueda)ps.push('<button class="chip on" data-quitar="q">«'+esc(busqueda)+'»<span class="x">×</span></button>');
+  $('#puestos').innerHTML=ps.length?ps.join(''):'<span class="suave">Sin filtros: F9 los muestra; la búsqueda acepta autor:, año:1990-2000, clave:…</span>';
+  if(!vis.length){$('#libros').innerHTML='<div class="suave" style="padding:30px 0;text-align:center">Nada coincide con la búsqueda y los filtros.</div>';return}
+  if(enLista){
+    $('#libros').innerHTML='<div class="tabla"><table><thead><tr><th>Título</th><th>Autor</th><th>Año</th><th class="solo-esc">Leído</th><th class="solo-esc">Clave</th></tr></thead><tbody>'+vis.map(function(i){var b=L[i];return '<tr class="clic'+(i===sel?' sel':'')+'" data-i="'+i+'"><td>'+esc(b.t)+'</td><td>'+esc(b.a)+'</td><td>'+b.y+'</td><td class="solo-esc">'+b.p+' %</td><td class="solo-esc mono">'+(b.k||'<span style="color:var(--neu)">sin clave</span>')+'</td></tr>'}).join('')+'</tbody></table></div>';
+  }else{
+    $('#libros').innerHTML='<div class="rejilla">'+vis.map(function(i){var b=L[i];return '<button class="libro'+(i===sel?' sel':'')+'" data-i="'+i+'"><span class="tapa" style="--c:'+b.c+'">'+esc(b.t.split(':')[0])+'<small>'+esc(b.a.split(',')[0])+'</small></span><span class="barra-l"><i style="width:'+b.p+'%;--c:'+HERR[b.o]+'"></i></span><span class="t">'+esc(b.t)+'</span><span class="a">'+esc(b.a)+' · '+b.y+'</span></button>'}).join('')+'</div>';
+  }
+}
+function pintarFicha(){
+  var b=L[sel];
+  $('#ficha-ed').innerHTML='<div class="fila" style="align-items:flex-start;gap:12px"><span class="tapa" style="--c:'+b.c+';width:64px;height:96px;flex:none"></span><div style="min-width:0"><div class="tit">'+esc(b.t)+'</div><div class="suave">'+esc(b.a)+' · '+b.y+' · '+b.tipo+'</div><div class="mono" style="margin-top:4px;overflow-wrap:anywhere">'+(b.k?esc(b.k):'<span style="color:var(--neu)">sin clave para citar</span>')+'</div></div></div>'+
+  '<div class="cifras" style="grid-template-columns:1fr 1fr;margin:0"><div class="cifra"><span>Leído</span><b style="font-size:16px">'+b.p+' %</b></div><div class="cifra"><span>Subrayados</span><b style="font-size:16px">'+b.h+'</b></div></div>'+
+  '<div class="acciones"><button class="btn prim" data-aviso="Se abre en '+b.o+' en la página donde quedó">Abrir</button><button class="btn" data-ir="ficha">Nueva ficha</button><button class="btn" data-aviso="Copiado el prompt de estudio de la obra: pégalo en tu chat">Estudiar con la IA</button><button class="btn" id="b-citar"'+(b.k?'':' disabled')+'>Citar en LaTeX</button><button class="btn" id="b-clave"'+(b.k?'':' disabled')+' title="Ctrl+Mayús+C">Copiar la clave</button></div>'+
+  (b.k?'':'<div class="mensaje" style="--c:var(--neu)">Sin clave de Zotero no se puede citar. La bandeja «Sin clave para citar» la resuelve por la puerta.</div>')+
+  '<div><h3 class="sec">Usado en</h3>'+(b.u.length?b.u.map(function(u){return '<div class="fila"><i class="ti ti-file-text" aria-hidden="true"></i>'+esc(u)+'</div>'}).join(''):'<span class="suave">Aún en ningún escrito</span>')+'</div>'+
+  (b.obra?'<div class="obra"><div class="fila" style="justify-content:space-between;flex-wrap:wrap"><b>Ficha de obra en Yachay</b><span class="suave">versión 4 · leída</span></div><div><span class="suave">Pregunta</span> ¿Qué determina cuánto se invierte en formación y cómo se mide su retorno?</div><div><span class="suave">Método</span> teoría de la inversión y tasas de retorno</div><div><span class="suave">Temas · signo</span> retorno de la educación, crédito · +</div><div class="acciones"><button class="btn" data-aviso="La ficha de obra pasa al escrito elegido">Llevar a un escrito</button><button class="btn" data-aviso="Las seis respuestas se abren para corregir; van a Yachay tras confirmar">Corregir…</button></div></div>':'')+
+  '<dl class="kv"><dt>Zotero</dt><dd>'+(b.z==='enlazado'?'<span style="color:var(--pos)">enlazado</span> · adjunto de Calibre':'<span style="color:var(--neu)">'+b.z+'</span>')+'</dd><dt>KOReader</dt><dd>'+(b.o==='KOReader'?b.p+' % · hace 2 días':'sin abrir')+'</dd><dt>Calibre</dt><dd class="mono">id '+b.id+'</dd><dt>Identificador</dt><dd class="mono">'+esc(b.isbn)+'</dd><dt>Serie</dt><dd>'+esc(b.s)+'</dd><dt>Etiquetas</dt><dd>'+b.et.map(esc).join(', ')+'</dd></dl>'+
+  '<div class="acciones"><button class="btn" data-aviso="Dolphin se abre en la carpeta del libro">Dolphin</button><button class="btn" data-aviso="Calibre se abre en el libro '+b.id+'">Calibre</button><button class="btn" data-aviso="Zotero se abre en la ficha del libro">Zotero</button></div>';
+  if(b.k){$('#b-citar').onclick=function(){aviso('\\parencite{'+b.k+'} va a LaTeX Studio, en el cursor')};$('#b-clave').onclick=function(){copiar(b.k)}}
+  if(areaActual==='catalogo')$('#t-ventana').textContent=b.t+' — Biblioteca Studio';
+}
+function copiar(t){try{navigator.clipboard.writeText(t).catch(function(){})}catch(e){}aviso('Copiado: '+t)}
+function elegir(i){sel=i;pintarCatalogo();pintarFicha();if(L[i].h>0){libLec=i;pintarLectura()}}
+$('#libros').addEventListener('click',function(ev){var b=ev.target.closest('[data-i]');if(b)elegir(+b.dataset.i)});
+$('#filtros').addEventListener('click',function(ev){var b=ev.target.closest('.faceta');if(!b)return;var f=b.dataset.f;filtros[f]=filtros[f]===b.dataset.v?null:b.dataset.v;pintarCatalogo()});
+$('#puestos').addEventListener('click',function(ev){var b=ev.target.closest('[data-quitar]');if(!b)return;if(b.dataset.quitar==='q'){busqueda='';$('#buscar').value=''}else filtros[b.dataset.quitar]=null;pintarCatalogo()});
+function forma(lista){enLista=lista;$('#v-lis').classList.toggle('on',lista);$('#v-tar').classList.toggle('on',!lista);pintarCatalogo()}
+$('#v-tar').onclick=function(){forma(false)};$('#v-lis').onclick=function(){forma(true)};
+function alternarFiltros(){$('#cat').classList.toggle('sin-filtros');area('catalogo')}
+$('#b-filtros').onclick=alternarFiltros;
+var tBus;$('#buscar').addEventListener('input',function(){clearTimeout(tBus);var v=this.value;tBus=setTimeout(function(){
+  if(areaActual==='fichas'){qFichas=v;pintarFichas();return}
+  busqueda=v;if(areaActual!=='catalogo')area('catalogo');pintarCatalogo()},250)});
+$('#buscar').addEventListener('keydown',function(ev){if(ev.key==='Escape'){this.value='';busqueda='';qFichas='';pintarCatalogo();pintarFichas()}});
+/* ---------- lectura ---------- */
+var libLec=0, filtroO=null;
+var SUBS=[
+ [48,'El supuesto clave es que el valor esperado del error, dado cualquier valor de la variable explicativa, es cero.','p. 24','KOReader'],
+ [48,'Omitir una variable relevante correlacionada con las incluidas sesga los estimadores de MCO.','p. 88','KOReader'],
+ [48,'La heterocedasticidad no causa sesgo, pero invalida los errores estándar habituales.','p. 268','Zotero'],
+ [112,'El sesgo de selección desaparece con la asignación aleatoria.','p. 15','Zotero'],
+ [112,'Un instrumento sirve cuando mueve la variable tratada y no toca el resultado por otro camino.','p. 117','Yachay'],
+ [8812,'El rendimiento llega después del gasto y queda incorporado en quien lo recibe.','p. 47','Okular'],
+ [8812,'Quien financia su formación con préstamo no puede ofrecer su capacidad como garantía.','p. 48','KOReader'],
+ [301,'La pobreza debe concebirse como la privación de capacidades básicas y no solo como falta de ingresos.','p. 114','Okular'],
+ [301,'El desarrollo puede concebirse como un proceso de expansión de las libertades reales.','p. 19','Yachay']];
+function pintarHerrs(estado){$('#herrs').innerHTML=Object.keys(HERR).map(function(h,i){return '<div class="herr'+(estado&&estado[i]==='…'?' corre':'')+'"><span class="fila"><span class="punto" style="--c:'+HERR[h]+'"></span>'+h+'</span><span class="suave">'+(estado?estado[i]:'al día')+'</span></div>'}).join('')}
+pintarHerrs();
+function pintarLectura(){
+  var conLec=L.map(function(b,i){return i}).filter(function(i){return L[i].h>0}).slice(0,9);
+  if(conLec.indexOf(libLec)<0)libLec=conLec[0];
+  $('#lec-libros').innerHTML=conLec.map(function(i){var b=L[i];return '<button data-i="'+i+'" class="'+(i===libLec?'on':'')+'"><span class="tapa mini-tapa" style="--c:'+b.c+';width:20px;height:28px"></span><span style="min-width:0;flex:1"><span style="display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(b.t)+'</span><span class="suave">'+b.h+' subrayados · '+b.p+' %</span></span></button>'}).join('');
+  var b=L[libLec];$('#lec-tit').textContent=b.a.split(',')[0]+' ('+b.y+')';
+  $('#lec-prog').innerHTML=Object.keys(HERR).map(function(h,i){var v=h===b.o?b.p:Math.max(0,b.p-[9,22,31,40][i]);return '<div class="fila" style="font-size:12px"><span style="width:72px;flex:none" class="suave">'+h+'</span><span class="barra-l" style="flex:1;margin:0"><i style="width:'+v+'%;--c:'+HERR[h]+'"></i></span><span class="suave" style="width:38px;text-align:right;flex:none">'+v+' %</span></div>'}).join('');
+  var lista=SUBS.filter(function(s){return s[0]===b.id&&(!filtroO||s[3]===filtroO)});
+  $('#subs').innerHTML=lista.length?lista.map(function(s){return '<div class="sub" style="--c:'+HERR[s[3]]+'">'+esc(s[1])+'<span class="suave fila" style="justify-content:space-between">'+s[2]+' · '+s[3]+'<button class="btn" data-copiar="«'+esc(s[1])+'» ('+esc(b.a.split(',')[0])+', '+b.y+', '+s[2]+')">Copiar como cita</button></span></div>'}).join(''):'<div class="suave" style="padding:10px 0">'+(filtroO?'Nada de '+filtroO+' en este libro.':'Los subrayados de este libro llegan en la próxima vuelta.')+'</div>';
+  $('#sesiones').innerHTML=['hoy 07:40 · 48 min · KOReader · pp. 20 a 31','ayer 22:05 · 35 min · KOReader','lun 18:10 · 1 h 12 min · Okular'].map(function(s){return '<div>'+s+'</div>'}).join('');
+}
+$('#lec-libros').addEventListener('click',function(ev){var b=ev.target.closest('[data-i]');if(b){libLec=+b.dataset.i;pintarLectura()}});
+$('#subs').addEventListener('click',function(ev){var b=ev.target.closest('[data-copiar]');if(b)copiar(b.dataset.copiar)});
+$('#origenes').innerHTML=Object.keys(HERR).map(function(h){return '<button class="origen" data-o="'+h+'"><span class="punto" style="--c:'+HERR[h]+'"></span>'+h+'</button>'}).join('');
+$('#origenes').addEventListener('click',function(ev){var b=ev.target.closest('[data-o]');if(!b)return;filtroO=filtroO===b.dataset.o?null:b.dataset.o;$$('#origenes .origen').forEach(function(x){x.classList.toggle('on',x.dataset.o===filtroO)});pintarLectura()});
+(function(){var s=7,h='',c='';[5,7,4,8,6,9,3,7,8,6,9,7].forEach(function(v){h+='<i style="height:'+(v*10)+'%" title="'+v+' h"></i>'});$('#semanas').innerHTML=h;
+ for(var i=0;i<84;i++){s=(s*9301+49297)%233280;var v=s/233280;c+='<i style="opacity:'+(v<.22?0.08:(.25+v*.75).toFixed(2))+'"></i>'}$('#calor').innerHTML=c})();
+var sw=$('#sw');sw.onclick=function(){var on=sw.getAttribute('aria-checked')!=='true';sw.setAttribute('aria-checked',String(on));$('#sync-txt').textContent=on?'Última vuelta 09:00 · nada nuevo · próxima 10:00':'Automática apagada · solo con el botón';$('#sync-mini').textContent=on?'Base de lectura sincronizada a las 09:00 · próxima 10:00':'Sincronización automática apagada';aviso(on?'La base se sincroniza sola cada hora':'Apagada: solo con «Sincronizar ahora»')};
+function sincronizar(){var b=$('#sync-btn');if(b.disabled)return;b.disabled=true;var e=['…','…','…','…'],i=0;$('#sync-txt').textContent='Trayendo lo nuevo de cada programa…';pintarHerrs(e);
+ var t=setInterval(function(){e[i]=['+2 subrayados','al día','abierto: a la próxima','+1 subrayado'][i];i++;pintarHerrs(e);if(i===4){clearInterval(t);b.disabled=false;$('#sync-txt').textContent='Última vuelta ahora · 3 subrayados nuevos, llevados a Zotero y KOReader';$('#n-sub').textContent='434';$('#c-subs').textContent='27';aviso('Base de lectura al día: 3 subrayados nuevos')}},650)}
+$('#sync-btn').onclick=sincronizar;
+/* ---------- fichas ---------- */
+var F=[
+ {tipo:'textual',cita:'El supuesto clave es que el valor esperado del error, dado cualquier valor de la variable explicativa, es cero.',obra:'Wooldridge (2015)',k:'wooldridge2015introduccion',p:'p. 24',esc:'Curso Econometría I',cot:true},
+ {tipo:'parafrasis',cita:'Si se omite una variable que se correlaciona con las incluidas, los estimadores de MCO quedan sesgados.',obra:'Wooldridge (2015)',k:'wooldridge2015introduccion',p:'p. 88',esc:'Curso Econometría I',cot:true},
+ {tipo:'textual',cita:'Su rasgo común es que el rendimiento llega después del gasto y queda incorporado en quien lo recibe.',obra:'Becker (1964)',k:'becker1964',p:'p. 47',esc:'Tesis de retornos',cot:true},
+ {tipo:'parafrasis',cita:'El retorno privado de un año más de educación ronda el 9 % en el promedio mundial.',obra:'Psacharopoulos y Patrinos (2018)',k:'psacharopoulos2018returns',p:'p. 445',esc:'Tesis de retornos',cot:false,ia:true,rev:true},
+ {tipo:'parafrasis',cita:'El trimestre de nacimiento sirve de instrumento para los años de escolaridad.',obra:'Angrist y Krueger (1991)',k:'angrist1991compulsory',p:'p. 979',esc:'Tesis de retornos',cot:false,ia:true,rev:true},
+ {tipo:'obra',cita:'Pregunta: ¿qué identifica el retorno de la escuela? Método: variables instrumentales. Límites: el instrumento débil.',obra:'Angrist y Pischke (2009)',k:'angrist2009mostly',p:'cap. 4',esc:'Tesis de retornos',cot:true,yac:true},
+ {tipo:'textual',cita:'La pobreza debe concebirse como la privación de capacidades básicas y no solo como falta de ingresos.',obra:'Sen (2000)',k:'sen2000desarrollo',p:'p. 114',esc:'Informe de pobreza multidimensional',cot:false,rev:true}];
+var FF=[['todas','Todas'],['textual','Textuales'],['parafrasis','Paráfrasis'],['obra','De obra'],['rev','Por revisar'],['ia','De la IA']], ff='todas', qFichas='';
+function enFiltro(f,k){return k==='todas'||(k==='rev'?f.rev:(k==='ia'?f.ia:f.tipo===k))}
+function pintarFichas(){
+  $('#f-filtros').innerHTML=FF.map(function(x){return '<button class="chip'+(ff===x[0]?' on':'')+'" data-ff="'+x[0]+'">'+x[1]+' '+F.filter(function(f){return enFiltro(f,x[0])}).length+'</button>'}).join('')+'<span class="esp"></span><button class="btn prim" data-ir="ficha">Nueva ficha</button><button class="btn" data-aviso="Copiado el prompt de estudio de las fichas del escrito">Estudiar con la IA</button>';
+  var vis=F.map(function(f,i){return i}).filter(function(i){var f=F[i];return enFiltro(f,ff)&&(!qFichas||(f.cita+f.obra+f.esc).toLowerCase().indexOf(qFichas.toLowerCase())>=0)});
+  $('#f-lista').innerHTML=vis.length?vis.map(function(i){var f=F[i];return '<div class="ficha"><q>'+esc(f.cita)+'</q><div class="suave">'+f.obra+' · '+f.p+' · '+({textual:'textual',parafrasis:'paráfrasis',obra:'de obra'})[f.tipo]+' · '+esc(f.esc)+(f.yac?' · de Yachay':'')+'</div>'+
+    (f.cot?'<span class="ok">Cotejada con el PDF</span>':(f.ia?'<span class="ia">La propuso la IA: coteja su página antes de citarla</span>':'<span class="ia">Sin cotejar: el literal está en otra página del PDF</span>'))+
+    '<div class="acciones"><button class="btn" data-aviso="LaTeX Studio abre la ficha en su escrito">Abrir en LaTeX Studio</button><button class="btn" data-fc="'+i+'"'+(f.cot?'':' disabled')+'>Copiar la cita</button>'+(f.cot?'':'<button class="btn" data-cotejo="'+i+'">Cotejé la página</button>')+'<button class="btn" data-aviso="La ficha se abre con su huella: al guardar se compara con la del escrito">Corregir…</button></div></div>'}).join(''):'<div class="suave">Nada en este filtro.</div>';
+  $('#c-revisar').textContent=F.filter(function(f){return f.rev}).length;
+}
+$('#f-filtros').addEventListener('click',function(ev){var b=ev.target.closest('[data-ff]');if(b){ff=b.dataset.ff;pintarFichas()}});
+$('#f-lista').addEventListener('click',function(ev){var b=ev.target.closest('[data-cotejo]');if(b){var f=F[+b.dataset.cotejo];f.cot=true;f.rev=false;pintarFichas();aviso('Cotejada: '+f.obra+', '+f.p+'. Ya se puede citar');return}
+  b=ev.target.closest('[data-fc]');if(b){var g=F[+b.dataset.fc];copiar('\\parencite['+g.p.replace('p. ','p.~')+']{'+g.k+'}')}});
+var R=[['¿Qué supuesto, si falla, produce el sesgo de variable omitida?','Que el error tenga media cero dada cualquier variable explicativa (Wooldridge, 2015, p. 24).','Wooldridge (2015) · caja 2'],
+ ['¿Qué tienen en común todas las formas de inversión en capital humano?','El rendimiento llega después del gasto y queda incorporado en quien lo recibe (Becker, 1964, p. 47).','Becker (1964) · caja 1'],
+ ['¿Qué dos condiciones debe cumplir un instrumento?','Relevancia (mueve la variable tratada) y exclusión (no toca el resultado por otro camino).','Angrist y Pischke (2009) · caja 4'],
+ ['¿Cómo define Sen la pobreza?','Como privación de capacidades básicas, no solo como falta de ingresos (Sen, 2000, p. 114).','Sen (2000) · caja 1']];
+var ri=0, cajas=[2,3,5,2,9], resp=0, visto=false;
+function pintarRepaso(){
+  $('#cajas').innerHTML=cajas.map(function(n,i){return '<div class="'+([0,1,3].indexOf(i)>=0?'hoy':'')+'">caja '+(i+1)+'<b>'+n+'</b></div>'}).join('');
+  var quedan=Math.max(0,7-resp);$('#rep-estado').textContent='Hoy '+quedan+' por repasar · respondidas '+resp+(resp?' (sin guardar)':'');$('#c-rep-ini').textContent=quedan;
+  if(quedan===0){$('#tarjeta-r').innerHTML='<div>Nada por repasar hoy. Las próximas, en 3 días.</div>';return}
+  var r=R[ri%R.length];$('#tarjeta-r').innerHTML='<div class="suave" style="font-family:var(--ui)">'+r[2]+'</div><div>'+r[0]+'</div>'+(visto?'<div class="dorso">'+r[1]+'</div>':'');
+}
+$('#r-mostrar').onclick=function(){visto=true;pintarRepaso()};
+function responder(bien){if(resp>=7)return;var c=[1,0,3,0][ri%4];if(bien&&c<4){cajas[c]--;cajas[c+1]++}else if(!bien&&c>0){cajas[c]--;cajas[0]++}resp++;ri++;visto=false;pintarRepaso()}
+$('#r-sabia').onclick=function(){responder(true)};$('#r-luego').onclick=function(){responder(false)};
+$('#r-guardar').onclick=function(){if(!resp){aviso('Nada que guardar todavía');return}aviso('Repaso guardado: '+resp+' tarjetas en repaso.sqlite');$('#rep-estado').textContent='Guardado · '+Math.max(0,7-resp)+' por repasar hoy'};
+/* ---------- método ---------- */
+var E=[
+ {nombre:'Adquirir',n:3,para:'¿Ya está en la biblioteca? Y si no, descargarlo de una fuente abierta (suite fuentes; ledger fuentes_descargadas.tsv).',resumen:'3 referencias por conseguir · 41 descargas en el ledger',
+  ops:[['verificar','¿Ya está en la biblioteca?','main.py verificar "Card 1999 causal effect of education"',0],['localizar','Localizar en una fuente','main.py localizar repec "Ashenfelter Krueger 1994"',0],['descargar','Descargar','main.py descargar repec "Ashenfelter Krueger 1994"',1],['estado_fuentes','Estado de lo descargado','main.py estado',0]],
+  cols:['Referencia','Fuente','Estado'],filas:[['Card (1999), The causal effect of education on earnings','RePEc','por descargar'],['Lavado, Martínez y Yamada (2014), ¿Una promesa incumplida?','BCRP','por descargar'],['Ashenfelter y Krueger (1994), Estimates of the economic return to schooling','RePEc','localizada']]},
+ {nombre:'Entrada',n:5,para:'De la zona de entrada a la biblioteca: identificar, catalogar en Calibre y exportar el RIS para Zotero (suite ingesta).',resumen:'5 archivos en la zona de entrada · 2 identificados',
+  ops:[['estado','Estado de la entrada','ingesta/main.sh estado',0],['identificar','Identificar','ingesta/main.sh identificar',0],['catalogar','Catalogar en Calibre','ingesta/main.sh catalogar',1,'calibre'],['importar_zotero','Fusionar e importar a Zotero','lib/importar_zotero.py retornos-scopus.ris retornos-wos.bib',1,'calibre y zotero'],['ocr','OCR de los escaneados','ingesta/main.sh ocr',1],['todo','Todo el recorrido','ingesta/main.sh todo',1,'calibre']],
+  cols:['Archivo','Paso','Identificado como'],filas:[['card1999-handbook.pdf','identificado','Card (1999), Handbook of Labor Economics 3A'],['yamada2007-retornos.pdf','identificado','Yamada (2007), Universidad del Pacífico'],['enaho-metodologia-2023.pdf','recibido','sin identificar'],['scan-0412.pdf','recibido','escaneado: pide OCR'],['retornos-scopus.ris','recibido','172 registros RIS']]},
+ {nombre:'Catalogar',n:4,para:'Los metadatos de Calibre: aplicar lo catalogado (resumen_catalogacion.tsv) y cotejarlos contra bases públicas.',resumen:'4 libros sin serie, etiquetas o autor normalizado',
+  ops:[['catalogacion','Aplicar la catalogación','catalogacion/main.sh',1,'calibre'],['verificacion','Verificar por ISBN','verificacion/main.sh --modo isbn',0],['verificacion_titulo','Verificar por título y autor','verificacion/main.sh --modo titulo',0],['migracion','Campaña de migración','migraciones/main.py P7',1,'calibre']],
+  cols:['Libro','Falta','Sugerencia'],filas:[['Mincer (1974)','serie, etiquetas','Capital humano · capital humano, clásico'],['Gujarati y Porter (2010)','serie','Econometría'],['Deaton (2013)','etiquetas','desigualdad, salud'],['Cunningham (2021)','autor «Nombre, Apellidos»','Cunningham, Scott']]},
+ {nombre:'Fichas',n:3,para:'Las fichas canónicas del Método Documental (catalogacion/fichas/) y los pasajes con su página.',resumen:'128 fichas · 3 por revisar',
+  ops:[['fichas_validar','Validar las fichas','fichas/main.py validar catalogacion/fichas',0],['fichas_verificar','Verificar textuales y paráfrasis','fichas/main.py verificar catalogacion/fichas',1],['fichas_muestra','Muestra de paráfrasis para cotejar','fichas/main.py muestra escritura/tesis-retornos/fuentes/fichas',1],['lecturas','Pasajes por concepto','lecturas/main.py docencia/econometria-1/lecturas.yml',0]],
+  cols:['Ficha','Estado','Por qué'],filas:[['psacharopoulos2018-p445-parafrasis','por revisar','la propuso la IA'],['angrist1991-p979-parafrasis','por revisar','la propuso la IA'],['sen2000-p114-textual','por revisar','el literal está en la hoja 121, no en la 114']]},
+ {nombre:'Manifiestos',n:0,para:'El fuentes.yml de cada proyecto en vez de enlaces a la biblioteca.',resumen:'9 proyectos vigilados · todos al día',
+  ops:[['manifiesto_todo','Todos los fuentes.yml','manifiesto/main.py todo',1],['manifiesto_verificar','Verificar un proyecto','manifiesto/main.py verificar escritura/tesis-retornos',0],['manifiesto_bib','Bibliografía de un proyecto','manifiesto/main.py bib escritura/tesis-retornos',1]],
+  cols:['Proyecto','Fuentes','Estado'],filas:[['escritura/tesis-retornos','23','al día'],['docencia/econometria-1','14','al día'],['escritura/informe-pobreza','9','al día']]}];
+var et=1, opi=[0,3,0,0,0];
+function opActual(){var o=E[et].ops[opi[et]];return {id:o[0],nombre:o[1],orden:o[2],escribe:!!o[3],bases:o[4]||'archivos'}}
+function pintarMetodo(){
+  $('#recorrido').innerHTML=E.map(function(x,i){return '<button class="etapa'+(i===et?' on':'')+'" data-et="'+i+'"><span>'+x.nombre+'</span><b>'+x.n+'</b></button>'}).join('');
+  var e=E[et];$('#et-para').textContent=e.para;
+  $('#ops').innerHTML=e.ops.map(function(o,i){return '<button class="op'+(i===opi[et]?' on':'')+'" data-op="'+i+'"><span>'+o[1]+'</span><small>'+(o[3]?'<span class="esc">escribe en '+(o[4]||'archivos')+'</span>':'solo lee')+'</small></button>'}).join('');
+  var o=opActual();$('#op-tit').textContent=o.nombre;$('#op-desc').textContent=o.escribe?'Simular deja el plan; aplicar escribe en '+o.bases+' por la puerta.':'No escribe en ninguna base: una sola orden.';
+  $('#op-orden').textContent='$ '+o.orden;
+  $('#b-aplicar').disabled=!o.escribe||!puertaLibre;$('#b-aplicar').title=!o.escribe?'Esta operación no escribe':(!puertaLibre?'Calibre está abierto: ciérralo para aplicar':'Ctrl+Intro');
+  $('#et-tabla').innerHTML='<table><thead><tr>'+e.cols.map(function(c,i){return '<th'+(i===1?' class="solo-esc"':'')+'>'+c+'</th>'}).join('')+'</tr></thead><tbody>'+e.filas.map(function(f,i){return '<tr class="clic" data-fila="'+i+'">'+f.map(function(c,j){return '<td'+(j===1?' class="solo-esc"':'')+'>'+esc(c)+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table>';
+  $('#et-elem').textContent='Elige una fila para ver el elemento y su operación.';
+  $('#p-plan').innerHTML='<div class="suave">El plan aparece al simular (F5).</div>';
+  $('#p-registro').innerHTML='<div class="tabla"><table><thead><tr><th>Cuándo</th><th>Qué</th><th>Resultado</th></tr></thead><tbody><tr><td>ayer 18:42</td><td>Simular</td><td>sin cambios</td></tr><tr><td>lun 09:10</td><td>Aplicar</td><td style="color:var(--pos)">6 de 6 pasos · respaldo 2026-11-16_0910</td></tr></tbody></table></div>';
+  $('#salida').textContent='Aún no se corrió esta operación.';pestOp('tabla');
+  if(areaActual==='metodo')area('metodo');
+}
+function pestOp(p){$$('#pest-op button').forEach(function(b){b.classList.toggle('on',b.dataset.p===p)});['tabla','plan','registro','salida'].forEach(function(n){$('#p-'+n).classList.toggle('on',n===p)})}
+$('#pest-op').addEventListener('click',function(ev){var b=ev.target.closest('[data-p]');if(b)pestOp(b.dataset.p)});
+$('#recorrido').addEventListener('click',function(ev){var b=ev.target.closest('[data-et]');if(b){et=+b.dataset.et;pintarMetodo()}});
+$('#ops').addEventListener('click',function(ev){var b=ev.target.closest('[data-op]');if(b){opi[et]=+b.dataset.op;pintarMetodo()}});
+$('#et-tabla').addEventListener('click',function(ev){var r=ev.target.closest('[data-fila]');if(!r)return;$$('#et-tabla tr').forEach(function(x){x.classList.toggle('sel',x===r)});$('#et-elem').innerHTML='Elemento: <b style="font-weight:500">'+esc(E[et].filas[+r.dataset.fila][0])+'</b> · su operación: '+esc(opActual().nombre)});
+function planDe(o){
+  if(o.id==='importar_zotero')return '<div class="cifras" style="grid-template-columns:repeat(3,minmax(0,1fr));margin:0"><div class="cifra"><span>Nuevas</span><b>118</b></div><div class="cifra"><span>Ya estaban</span><b>49</b></div><div class="cifra"><span>Dudosas</span><b>5</b></div></div><div class="tabla"><table><tbody><tr><td>Lavado, Martínez y Yamada (2014), ¿Una promesa incumplida?<br><span class="suave">nueva · Scopus</span></td></tr><tr><td>Psacharopoulos y Patrinos (2018), Returns to investment in education<br><span class="suave">ya estaba · el mismo DOI en Zotero</span></td></tr><tr><td>Yamada (2007), Retornos a la educación superior<br><span class="suave">dudosa · el título coincide, el año no</span></td></tr></tbody></table></div>';
+  if(!o.escribe)return '<div class="mensaje" style="--c:var(--info)">Esta operación solo lee: su resultado está en Salida.</div>';
+  return '<div class="tabla"><table><thead><tr><th>Elemento</th><th>Cambio</th></tr></thead><tbody>'+E[et].filas.map(function(f){return '<tr><td>'+esc(f[0])+'</td><td class="suave">'+esc(f[2])+'</td></tr>'}).join('')+'</tbody></table></div><div class="suave">'+E[et].filas.length+' cambios previstos en '+o.bases+'. Nada se escribió.</div>';
+}
+var simulando=false;
+function simular(){if(simulando)return;if(areaActual!=='metodo')area('metodo');var o=opActual();simulando=true;$('#salida').textContent='$ '+o.orden+'\n── Simulación (sin --aplicar)\n';pestOp('salida');var lin=['Leyendo el ledger… ok','Comparando con Calibre (solo lectura)… ok',o.escribe?'Plan: '+E[et].filas.length+' cambios; nada se escribió':'Listo'],i=0;
+  var t=setInterval(function(){$('#salida').textContent+=lin[i]+'\n';i++;if(i===lin.length){clearInterval(t);simulando=false;$('#p-plan').innerHTML=planDe(o);pestOp(o.escribe?'plan':'salida');aviso('Simulado: '+o.nombre+(o.escribe?'. Revisa el plan y aplica con Ctrl+Intro':''))}},380)}
+$('#b-simular').onclick=simular;
+var PASOS=['La aplicación, cerrada','El candado','El respaldo, verificado','Aplicar','La integridad','Liberar'];
+function abrirAplicar(){var o=opActual();if(areaActual!=='metodo')area('metodo');
+  if(!o.escribe){aviso('Esta operación no escribe: basta con Simular (F5)');return}
+  if(!puertaLibre){aviso('Calibre está abierto: ciérralo para aplicar. El candado espera.');return}
+  $('#ap-tit').textContent='Aplicar: '+o.nombre;
+  $('#ap-texto').innerHTML='Se correrá la orden de abajo con <span class="mono">--aplicar</span>. Toca '+o.bases+'; antes se respalda y al final se comprueba la integridad.';
+  $('#ap-orden').textContent='$ '+o.orden+' --aplicar';
+  $('#ap-pasos').innerHTML=PASOS.map(function(p,i){return '<div data-paso="'+i+'"><span class="m">'+(i+1)+'</span>'+p+'</div>'}).join('');
+  $('#ap-resumen').textContent='Nada se escribe hasta pulsar «Aplicar».';$('#ap-ok').disabled=false;$('#ap-ok').textContent='Aplicar';mostrar('aplicar')}
+$('#b-aplicar').onclick=abrirAplicar;
+$('#ap-ok').onclick=function(){var b=this;if(b.textContent==='Cerrar'){cerrar();return}b.disabled=true;var i=0;
+  var t=setInterval(function(){if(i>0)$('[data-paso="'+(i-1)+'"]').className='hecho';if(i<6){$('[data-paso="'+i+'"]').className='corre';$('#ap-resumen').textContent='Paso '+(i+1)+' de 6: '+PASOS[i]+'…'}
+   else{clearInterval(t);$('#ap-resumen').innerHTML='<span style="color:var(--pos)">Hecho: 6 de 6 pasos.</span> Respaldo <span class="mono">2026-11-19_1004</span> verificado; integridad ok; candado libre.';b.disabled=false;b.textContent='Cerrar';
+    E[et].n=Math.max(0,E[et].n-1);$('#p-registro tbody').insertAdjacentHTML('afterbegin','<tr><td>ahora</td><td>Aplicar</td><td style="color:var(--pos)">6 de 6 pasos</td></tr>');$$('#recorrido .etapa b')[et].textContent=E[et].n;aviso('Aplicado por la puerta: '+opActual().nombre)}i++},520)};
+/* ---------- coherencia ---------- */
+function pintarCoherencia(){
+  $('#tarjetas-coh').innerHTML=[['Calibre ⇄ Zotero','1 284 coinciden · 3 por revisar','var(--neu)','Simular'],['Calibre ⇄ KOReader','lectura al día · hace 12 min','var(--pos)','Simular'],['Tareas automáticas','5 timers · 1 con aviso','var(--neu)','Ver registro'],['Referencias','612 DOI e ISBN existen · 2 no','var(--neg)','Ver cuáles']].map(function(c){return '<div class="tar"><div class="fila"><span class="punto" style="--c:'+c[2]+'"></span><b style="font-weight:500">'+c[0]+'</b></div><div class="suave">'+c[1]+'</div><button class="btn" style="margin-top:6px" data-aviso="'+c[0]+': '+(c[3]==='Simular'?'simulado, nada se escribió':'abierto el detalle')+'">'+c[3]+'</button></div>'}).join('');
+  $('#t-sinc').innerHTML=[['Zotero ⇄ Calibre','calibre, zotero','ayer 23:00 · 3 por revisar'],['KOReader → Calibre','calibre','hace 12 min · al día'],['Base de lectura','la suya','09:00 · al día'],['Subrayados de la base → Zotero','zotero','lun · 14 llevados'],['¿Existen sus DOI e ISBN?','ninguna','dom · 2 no existen'],['Metadatos en los PDF','calibre','hace 9 días']].map(function(r){return '<tr><td>'+r[0]+'</td><td class="solo-esc suave">'+r[1]+'</td><td class="suave">'+r[2]+'</td><td><button class="btn" data-aviso="'+r[0]+': simulado, nada se escribió">Simular</button></td></tr>'}).join('');
+  $('#t-timers').innerHTML=[['biblioteca-koreader','30 min','10:00 · ok'],['biblioteca-lectura-base','1 h','09:00 · ok'],['biblioteca-indice','1 h','09:12 · ok'],['biblioteca-zotero','1 día','ayer 23:00 · ok'],['biblioteca-verificar-ids','1 semana','dom 03:00 · aviso: Crossref respondió 429 dos veces']].map(function(r){return '<tr><td class="mono">'+r[0]+'</td><td>'+r[1]+'</td><td class="suave">'+r[2]+'</td><td><span class="punto" style="--c:'+(r[2].indexOf('aviso')>=0?'var(--neu)':'var(--pos)')+'"></span></td></tr>'}).join('');
+  $('#kv-puerta').innerHTML='<dt>Calibre</dt><dd>'+(puertaLibre?'<span style="color:var(--pos)">cerrado</span>':'<span style="color:var(--neu)">abierto: Aplicar espera</span>')+'</dd><dt>Zotero</dt><dd><span style="color:var(--pos)">cerrado</span></dd><dt>Candado</dt><dd>libre</dd><dt>Último respaldo</dt><dd class="mono">2026-11-16_0910 · verificado</dd><dt>Respaldos</dt><dd class="mono">$RESPALDOS_DIR/biblioteca/</dd>';
+}
+function pestCoh(p){$$('#pest-coh button').forEach(function(b){b.classList.toggle('on',b.dataset.p===p)});['sincronizar','puertav','tareas'].forEach(function(n){$('#p-'+n).classList.toggle('on',n===p)})}
+$('#pest-coh').addEventListener('click',function(ev){var b=ev.target.closest('[data-p]');if(b)pestCoh(b.dataset.p)});
+$('#puerta').onclick=function(){pestCoh('puertav');area('coherencia')};
+function fijarPuerta(libre){puertaLibre=libre;$('#puerta-punto').style.setProperty('--c',libre?'var(--pos)':'var(--neu)');$('#puerta-txt').textContent=libre?'Puerta lista':'Calibre abierto';$$('#g-puerta button').forEach(function(b){b.setAttribute('aria-pressed',String((b.dataset.g==='lista')===libre))});pintarCoherencia();pintarMetodo();aviso(libre?'Puerta lista: se puede aplicar':'Calibre abierto: Aplicar queda en espera')}
+$$('#g-puerta button').forEach(function(b){b.onclick=function(){fijarPuerta(b.dataset.g==='lista')}});
+/* ---------- revisión ---------- */
+$('#bitacora').innerHTML=[['Scopus','TITLE-ABS-KEY("returns to education" AND (Peru OR "Latin America"))','12 nov','412'],['Web of Science','TS=("return* to schooling" AND Peru)','12 nov','268'],['RePEc (IDEAS)','"retornos a la educación" Perú','13 nov','151']].map(function(r){return '<tr><td>'+r[0]+'</td><td><span class="mono" style="overflow-wrap:anywhere">'+esc(r[1])+'</span> <button class="btn" data-copiar="'+esc(r[1])+'">Copiar</button></td><td class="solo-esc nw">'+r[2]+'</td><td>'+r[3]+'</td></tr>'}).join('');
+$('#bitacora').addEventListener('click',function(ev){var b=ev.target.closest('[data-copiar]');if(b)copiar(b.dataset.copiar)});
+var CR=[['Yamada, G. (2007). Retornos a la educación superior en el mercado laboral',null],['Lavado, P., Martínez, J. y Yamada, G. (2014). ¿Una promesa incumplida? La calidad de la educación superior universitaria y el subempleo profesional en el Perú',null],['Psacharopoulos, G. y Patrinos, H. A. (2018). Returns to investment in education: a decennial review',null],['Duflo, E. (2001). Schooling and labor market consequences of school construction in Indonesia',null],['Ashenfelter, O. y Krueger, A. (1994). Estimates of the economic return to schooling from a new sample of twins',null],['Angrist, J. D. y Krueger, A. B. (1991). Does compulsory school attendance affect schooling and earnings?',null]];
+function pintarCribado(){
+  $('#cribado').innerHTML=CR.map(function(c,i){return '<div class="cri"><span>'+esc(c[0])+(c[1]==='ex'?'<br><span class="suave">Se excluye: sin datos del Perú ni de América Latina</span>':'')+'</span><span class="dec"><button class="btn'+(c[1]==='in'?' on-in':'')+'" data-cr="'+i+'" data-d="in">Incluir</button><button class="btn'+(c[1]==='ex'?' on-ex':'')+'" data-cr="'+i+'" data-d="ex">Excluir</button></span></div>'}).join('');
+  var inc=CR.filter(function(c){return c[1]==='in'}).length,exc=CR.filter(function(c){return c[1]==='ex'}).length,pend=CR.length-inc-exc;
+  $('#prisma').innerHTML='<div class="fase">Identificación</div><div>Registros de las bases<br><b>831</b> (Scopus 412, WoS 268, RePEc 151)</div><div class="exc">Duplicados quitados<br><b>187</b></div><div class="fase">Cribado</div><div>Cribados por título y resumen<br><b>644</b>'+(pend?' · <span style="color:var(--neu)">'+pend+' por cribar</span>':'')+'</div><div class="exc">Excluidos<br><b>'+(565+exc)+'</b></div><div>Evaluados a texto completo<br><b>'+(73+inc)+'</b></div><div class="exc">Excluidos con su motivo<br><b>41</b> · sin estimación propia 23, solo básica 18</div><div class="fase">Incluidos</div><div style="grid-column:1/-1">Estudios incluidos en la revisión<br><b>'+(32+inc)+'</b></div>';
+  $('#b-prisma').disabled=pend>0;$('#prisma-est').innerHTML=pend?'Faltan '+pend+' registros por cribar: el diagrama se genera con todo decidido.':'Todo cribado. «Generar el diagrama» escribe <span class="mono">fuentes/prisma.pdf</span>.';
+}
+$('#cribado').addEventListener('click',function(ev){var b=ev.target.closest('[data-cr]');if(!b)return;var c=CR[+b.dataset.cr];c[1]=c[1]===b.dataset.d?null:b.dataset.d;pintarCribado()});
+$('#b-prisma').onclick=function(){$('#prisma-est').innerHTML='<span style="color:var(--pos)">Diagrama generado:</span> <span class="mono" style="overflow-wrap:anywhere">escritura/tesis-retornos/fuentes/prisma.pdf</span>, con las cifras de hoy.';aviso('PRISMA 2020 generado')};
+function segm(id,cb){$(id).addEventListener('click',function(ev){var b=ev.target.closest('button');if(!b)return;$$(id+' button').forEach(function(x){x.classList.toggle('on',x===b)});if(cb)cb(b.textContent)})}
+segm('#tipo-rev',function(t){$('#exige').textContent={'Narrativa':'Lo que exige una revisión narrativa: la pregunta y una bitácora de lo buscado; el cribado y el diagrama son opcionales.','De alcance':'Lo que exige una revisión de alcance: pregunta PCC, bitácora reproducible de cada búsqueda, cribado en dos fases con sus motivos y el diagrama PRISMA (extensión ScR).','Sistemática':'Lo que exige una revisión sistemática: protocolo previo, dos revisores en el cribado, evaluación del riesgo de sesgo y PRISMA 2020 completo.'}[t]});
+segm('#fase');segm('#nf-tipo');
+/* ---------- bandejas ---------- */
+var B=[{id:'clasificar',n:'Pendientes de clasificar',items:[['enaho-metodologia-2023.pdf','zona de entrada sin catalogar'],['scan-0412.pdf','escaneado sin texto'],['Deaton (2013)','libro sin tipo'],['retornos-scopus.ris','172 registros sin importar'],['card1999-handbook.pdf','identificado, sin catalogar']],op:'Entrada › Todo el recorrido',orden:'ingesta/main.sh todo',et:1,o:5},
+ {id:'incompletas',n:'Fichas incompletas',items:[['sen2000-p114-textual','página que no coincide'],['psacharopoulos2018-p445-parafrasis','de la IA, sin cotejo'],['angrist1991-p979-parafrasis','de la IA, sin cotejo']],op:'Fichas › Verificar textuales y paráfrasis',orden:'fichas/main.py verificar',et:3,o:1},
+ {id:'clave',n:'Sin clave para citar',items:[['Mincer (1974), Schooling, experience, and earnings','no está en Zotero'],['Gujarati y Porter (2010), Econometría','en Zotero sin clave de Better BibTeX'],['Card (1999), The causal effect of education','recién catalogado']],op:'Catalogar › Aplicar la catalogación',orden:'catalogacion/main.sh',et:2,o:0},
+ {id:'zotero',n:'Sin Zotero',items:[['Cunningham (2021), Causal inference','sin entrada en Zotero'],['Mincer (1974)','sin entrada en Zotero']],op:'Entrada › Fusionar e importar a Zotero',orden:'lib/importar_zotero.py',et:1,o:3},
+ {id:'portada',n:'Sin portada',items:[['Yamada (2007)','PDF sin portada'],['Lavado et al. (2014)','documento de trabajo'],['Angrist y Krueger (1991)','artículo'],['Duflo (2001)','artículo'],['Card (1999)','capítulo'],['Ashenfelter y Krueger (1994)','artículo']],op:'Catalogar › Aplicar la catalogación',orden:'catalogacion/main.sh',et:2,o:0}];
+var bi=0;
+function banda(id){for(var i=0;i<B.length;i++)if(B[i].id===id)bi=i;pintarBandejas()}
+function pintarBandejas(){
+  $('#band-lista').innerHTML='<h3 class="sec">Bandejas</h3>'+B.map(function(b,i){return '<button class="faceta'+(i===bi?' on':'')+'" data-bi="'+i+'"><span>'+b.n+'</span><small>'+b.items.length+'</small></button>'}).join('');
+  $('#band-cel').innerHTML=B.map(function(b,i){return '<button class="chip'+(i===bi?' on':'')+'" data-bi="'+i+'">'+b.n+' '+b.items.length+'</button>'}).join('');
+  var b=B[bi];$('#band-tit').textContent=b.n;$('#band-n').textContent=b.items.length+' pendientes';
+  $('#band-tabla').innerHTML='<table><thead><tr><th>Elemento</th><th>Lo que tiene</th></tr></thead><tbody>'+b.items.map(function(x){return '<tr><td style="overflow-wrap:anywhere">'+esc(x[0])+'</td><td class="suave">'+esc(x[1])+'</td></tr>'}).join('')+'</tbody></table>';
+  $('#band-op').innerHTML='<h3 class="sec">La operación que la vacía</h3><div class="tar"><b style="font-weight:500">'+b.op+'</b><div class="mono suave" style="margin-top:4px">$ '+b.orden+'</div></div><div class="suave">Se simula con F5 y se aplica con Ctrl+Intro por la puerta.</div><div class="acciones"><button class="btn prim" id="band-prep">Preparar la operación</button></div>';
+  $('#band-prep').onclick=function(){et=b.et;opi[et]=b.o;pintarMetodo();area('metodo');aviso('Lista para simular: '+opActual().nombre)};
+}
+['#band-lista','#band-cel'].forEach(function(id){$(id).addEventListener('click',function(ev){var b=ev.target.closest('[data-bi]');if(b){bi=+b.dataset.bi;pintarBandejas()}})});
+/* ---------- capas ---------- */
+var abierta=null;
+function mostrar(n){cerrar();abierta=n;$('#capa-'+n).hidden=false;if(n==='paleta'){$('#pal-q').value='';pintarPaleta('');$('#pal-q').focus()}else{var f=$('#capa-'+n+' button.prim');if(f)f.focus()}}
+function cerrar(){$$('.capa').forEach(function(c){c.hidden=true});abierta=null}
+$$('.capa').forEach(function(c){c.addEventListener('click',function(ev){if(ev.target===c)cerrar()})});
+function abrir(n){if(n==='ficha'){$('#nf-sim').hidden=true;$('#nf-ia').checked=false;$('#nf-aviso-ia').hidden=true;mostrar('ficha')}else if(n==='aplicar'){abrirAplicar()}else mostrar(n)}
+$('#nf-ia').onchange=function(){$('#nf-aviso-ia').hidden=!this.checked};
+$('#nf-revisar').onclick=function(){$('#nf-sim').hidden=false};
+$('#nf-guardar').onclick=function(){var ia=$('#nf-ia').checked;F.unshift({tipo:'textual',cita:$('#nf-cita').value,obra:'Wooldridge (2015)',k:'wooldridge2015introduccion',p:'p. 24',esc:'Curso Econometría I',cot:!ia,ia:ia,rev:ia});cerrar();pintarFichas();aviso('Ficha guardada'+(ia?': marcada como de la IA, por cotejar':' y verificada'))};
+var ORDENES=[['Ir a Inicio','Ctrl+1',function(){area('inicio')}],['Ir al Catálogo','Ctrl+2',function(){area('catalogo')}],['Ir a Lectura','Ctrl+3',function(){area('lectura')}],['Ir a Fichas','Ctrl+4',function(){area('fichas')}],['Ir a Método','Ctrl+5',function(){area('metodo')}],['Ir a Coherencia','Ctrl+6',function(){area('coherencia')}],['Ir a Revisión','Ctrl+7',function(){area('revision')}],['Ir a Bandejas','Ctrl+8',function(){area('bandejas')}],
+ ['Sincronizar la lectura ahora','',function(){area('lectura');sincronizar()}],['Nueva ficha','',function(){abrir('ficha')}],['Simular la operación','F5',simular],['Aplicar…','Ctrl+Intro',abrirAplicar],['Ver como lista o portadas','Ctrl+G',function(){area('catalogo');forma(!enLista)}],['Mostrar u ocultar los filtros','F9',alternarFiltros],['Actualizar el índice','Ctrl+R',function(){aviso('Índice actualizado: 1 287 libros (no toca ninguna base)')}],['Releer el catálogo','F6',function(){aviso('Catálogo releído de metadata.db, en solo lectura')}],['Copiar la clave para citar','Ctrl+Mayús+C',function(){if(L[sel].k)copiar(L[sel].k);else aviso('Este libro no tiene clave')}]];
+var palSel=0, palVis=[];
+function pintarPaleta(q){palVis=ORDENES.filter(function(o){return o[0].toLowerCase().indexOf(q.toLowerCase())>=0});palSel=0;dibPal()}
+function dibPal(){$('#pal-lista').innerHTML=palVis.map(function(o,i){return '<li class="'+(i===palSel?'on':'')+'" data-pi="'+i+'"><span>'+o[0]+'</span><kbd>'+o[1]+'</kbd></li>'}).join('')||'<li class="suave">Ninguna orden coincide</li>'}
+$('#pal-q').addEventListener('input',function(){pintarPaleta(this.value)});
+$('#pal-q').addEventListener('keydown',function(ev){if(ev.key==='ArrowDown'){palSel=Math.min(palSel+1,palVis.length-1);dibPal();ev.preventDefault()}else if(ev.key==='ArrowUp'){palSel=Math.max(palSel-1,0);dibPal();ev.preventDefault()}else if(ev.key==='Enter'&&palVis[palSel]){var f=palVis[palSel][2];cerrar();f()}});
+$('#pal-lista').addEventListener('click',function(ev){var li=ev.target.closest('[data-pi]');if(li){var f=palVis[+li.dataset.pi][2];cerrar();f()}});
+$('#b-paleta').onclick=function(){mostrar('paleta')};
+$('#b-indice').onclick=function(){aviso('Índice actualizado: 1 287 libros (no toca ninguna base)')};
+/* ---------- atajos ---------- */
+document.addEventListener('keydown',function(ev){
+  var k=ev.key;
+  if(k==='Escape'&&abierta){cerrar();return}
+  if(ev.ctrlKey&&!ev.altKey&&/^[1-8]$/.test(k)){ev.preventDefault();cerrar();area(AREAS[+k-1][0]);return}
+  if(ev.ctrlKey&&(k==='k'||k==='K')){ev.preventDefault();mostrar('paleta');return}
+  if(abierta==='paleta')return;
+  if(ev.ctrlKey&&(k==='f'||k==='F')){ev.preventDefault();$('#buscar').focus();$('#buscar').select();return}
+  if(ev.ctrlKey&&(k==='g'||k==='G')){ev.preventDefault();area('catalogo');forma(!enLista);return}
+  if(k==='F9'){ev.preventDefault();alternarFiltros();return}
+  if(k==='F5'){ev.preventDefault();if(abierta==='ficha')$('#nf-sim').hidden=false;else if(!abierta)simular();return}
+  if(ev.ctrlKey&&k==='Enter'){ev.preventDefault();if(abierta==='ficha')$('#nf-guardar').click();else if(abierta==='aplicar')$('#ap-ok').click();else abrirAplicar()}
+});
+/* ---------- mandos ---------- */
+function tema(t){raiz.setAttribute('data-theme',t);$$('#g-tema button').forEach(function(x){x.setAttribute('aria-pressed',String(x.dataset.t===t))})}
+$$('#g-tema button').forEach(function(b){b.onclick=function(){tema(b.dataset.t)}});
+function ancho(cel){V.classList.toggle('celular',cel);$$('#g-ancho button').forEach(function(x){x.setAttribute('aria-pressed',String((x.dataset.w==='celular')===cel))})}
+var celElegido=false;
+$$('#g-ancho button').forEach(function(b){b.onclick=function(){celElegido=b.dataset.w==='celular';alAncho()}});
+function alAncho(){ancho(celElegido||window.innerWidth<760)}
+window.addEventListener('resize',alAncho);
+try{matchMedia('(max-width: 759px)').addEventListener('change',alAncho)}catch(e){}
+/* ---------- arranque ---------- */
+if(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)tema('dark');
+pintarCatalogo();pintarFicha();pintarLectura();pintarFichas();pintarRepaso();pintarMetodo();pintarCoherencia();pintarCribado();pintarBandejas();alAncho();
+var h=(location.hash||'').slice(1);
+if(h==='aplicar'){et=1;opi[1]=2;pintarMetodo();area('metodo');abrirAplicar()}
+else if(h==='ficha'){area('fichas');abrir('ficha')}
+else if(h==='paleta'){area('inicio');mostrar('paleta')}
+else area(AREAS.some(function(x){return x[0]===h})?h:'inicio');
+})();
 </script>
-</main>
 </body>
 </html>
