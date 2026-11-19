@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maqueta — Biblioteca Studio</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
+<style>
+/* Variables de respaldo: imitan las del anfitrión donde se mostró la maqueta. */
+:root{color-scheme:light;
+--bg-primary:#ffffff;--surface-1:#f4f3ef;--surface-2:#ffffff;
+--text-primary:#1c1c1e;--text-secondary:#6b6b66;--text-muted:#8e8e88;
+--text-accent:#2563eb;--text-success:#15803d;--text-warning:#b45309;--text-danger:#b91c1c;
+--border:rgba(0,0,0,.12);--border-strong:rgba(0,0,0,.24);--border-accent:#2563eb;--border-danger:#dc2626;--border-warning:#d97706;
+--bg-accent:#dbe7fd;--bg-accent-muted:#eef3fe;--bg-success:#dcfce7;--bg-warning:#fef3c7;--bg-danger:#fee2e2;
+--fill-accent:#2563eb;--fill-success:#16a34a;--fill-warning:#d97706;--fill-danger:#dc2626;--fill-ghost-selected:rgba(0,0,0,.06);
+--on-accent:#ffffff;--radius:8px;
+--font-sans:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;--font-mono:"JetBrains Mono",ui-monospace,monospace;--font-voice:Georgia,"Source Serif 4",serif}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;
+--bg-primary:#1c1c1e;--surface-1:#242426;--surface-2:#2c2c2e;
+--text-primary:#f5f5f0;--text-secondary:#a0a09a;--text-muted:#7c7c76;
+--text-accent:#7aa7ff;--text-success:#4ade80;--text-warning:#fbbf24;--text-danger:#f87171;
+--border:rgba(255,255,255,.12);--border-strong:rgba(255,255,255,.24);--border-accent:#7aa7ff;
+--bg-accent:#1e3a6e;--bg-accent-muted:#1a2740;--bg-success:#14532d;--bg-warning:#4a3410;--bg-danger:#4c1d1d;
+--fill-ghost-selected:rgba(255,255,255,.08)}}
+body{margin:0;padding:24px 16px;background:var(--bg-primary);color:var(--text-primary);font-family:var(--font-sans);font-size:14px;line-height:1.5}
+main{max-width:1100px;margin:0 auto}
+.encabezado{margin:0 0 14px}.encabezado h1{font-size:18px;font-weight:600;margin:0}
+.encabezado p{margin:4px 0 0;color:var(--text-secondary);font-size:12px}
+button{font:inherit;color:var(--text-primary);background:var(--surface-2);border:0.5px solid var(--border-strong);border-radius:var(--radius);cursor:pointer}
+input,select,textarea{font:inherit;color:inherit}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+</style>
+</head>
+<body>
+<main>
+<header class="encabezado"><h1>Maqueta — Biblioteca Studio</h1>
+<p>Recuperada de la sesión del 2026-11-18 (widget «biblioteca_studio_rediseno»).</p></header>
+<h2 class="sr-only">Maqueta interactiva del rediseño de Biblioteca Studio con seis áreas: inicio, catálogo, lectura, fichas, método y coherencia.</h2>
+<style>
+.bs{border:0.5px solid var(--border);border-radius:12px;overflow:hidden;font-size:13px;background:var(--surface-2)}
+.bar{display:flex;align-items:center;gap:6px;padding:8px 10px;border-bottom:0.5px solid var(--border);flex-wrap:wrap}
+.chip{border:0.5px solid var(--border-strong);border-radius:999px;padding:3px 10px;font-size:12px;background:transparent;color:var(--text-secondary);cursor:pointer;display:inline-flex;align-items:center;gap:4px}
+.chip.on{background:var(--text-primary);color:var(--surface-2);border-color:var(--text-primary)}
+.card{border:0.5px solid var(--border);border-radius:var(--radius);padding:10px 12px;background:var(--surface-2)}
+.met{background:var(--surface-1);border-radius:var(--radius);padding:8px 10px}
+.met b{display:block;font-size:20px;font-weight:500;color:var(--text-primary)}
+.mut{color:var(--text-secondary);font-size:12px}
+.row{display:flex;align-items:center;gap:8px}
+.cov{border-radius:4px;color:#fff;font-size:11px;padding:6px;display:flex;flex-direction:column;justify-content:flex-end;aspect-ratio:2/3;cursor:pointer;line-height:1.25}
+.cov.sel{outline:2px solid var(--border-accent);outline-offset:2px}
+.btn{font-size:12px;padding:4px 10px}
+.pri{background:var(--text-primary);color:var(--surface-2);border-color:var(--text-primary)}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex:none}
+.hl{border-left:3px solid var(--border-strong);border-radius:0;padding:4px 8px;margin:6px 0;font-family:var(--font-voice);font-size:13px}
+.view{padding:12px}
+.sw{width:30px;height:16px;border-radius:9px;background:var(--text-success);position:relative;cursor:pointer;flex:none}
+.sw i{position:absolute;top:2px;left:16px;width:12px;height:12px;border-radius:50%;background:#fff;transition:left .2s}
+.sw.off{background:var(--border-strong)} .sw.off i{left:2px}
+.step{flex:1;text-align:center;padding:6px 4px;border-radius:var(--radius);background:var(--surface-1);font-size:12px;cursor:pointer}
+.step.on{background:var(--bg-accent);color:var(--text-accent)}
+</style>
+<div class="bs">
+<div class="bar">
+<span style="font-weight:500;margin-right:6px"><i class="ti ti-books" aria-hidden="true"></i> Biblioteca</span>
+<button class="chip on" data-v="inicio"><i class="ti ti-home" aria-hidden="true"></i>Inicio</button>
+<button class="chip" data-v="catalogo"><i class="ti ti-layout-grid" aria-hidden="true"></i>Catálogo</button>
+<button class="chip" data-v="lectura"><i class="ti ti-book-2" aria-hidden="true"></i>Lectura</button>
+<button class="chip" data-v="fichas"><i class="ti ti-notes" aria-hidden="true"></i>Fichas</button>
+<button class="chip" data-v="metodo"><i class="ti ti-route" aria-hidden="true"></i>Método</button>
+<button class="chip" data-v="coherencia"><i class="ti ti-arrows-exchange" aria-hidden="true"></i>Coherencia</button>
+<span style="flex:1"></span>
+<input placeholder="Título, autor, clave: (Ctrl+F)" style="width:170px;height:28px;font-size:12px">
+<span class="row mut"><span class="dot" style="background:#1D9E75"></span>Puerta lista</span>
+</div>
+
+<div class="view" id="v-inicio">
+<div class="row" style="justify-content:space-between;margin-bottom:10px"><span style="font-size:15px;font-weight:500">Hola, Edison. Esto es lo de hoy</span><span class="mut" id="sync-mini">Sincronizado hace 3 min · próxima 00:18</span></div>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:12px">
+<div class="met"><span class="mut">Leído esta semana</span><b>6 h 40</b></div>
+<div class="met"><span class="mut">Subrayados nuevos</span><b>24</b></div>
+<div class="met"><span class="mut">Fichas por revisar</span><b>7</b></div>
+<div class="met"><span class="mut">Pendientes</span><b>12</b></div>
+</div>
+<div style="display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:10px">
+<div class="card"><div class="row" style="justify-content:space-between;margin-bottom:6px"><span style="font-weight:500">Seguir leyendo</span><span class="mut">KOReader · Zotero · Okular · Yachay</span></div>
+<div id="seguir"></div></div>
+<div class="card"><div style="font-weight:500;margin-bottom:6px">Siguiente paso</div>
+<div class="row" style="margin:6px 0"><i class="ti ti-notes" aria-hidden="true"></i><span style="flex:1">Fichar 9 subrayados de Wooldridge</span><button class="btn">Fichar</button></div>
+<div class="row" style="margin:6px 0"><i class="ti ti-key" aria-hidden="true"></i><span style="flex:1">3 libros sin clave para citar</span><button class="btn">Resolver</button></div>
+<div class="row" style="margin:6px 0"><i class="ti ti-file-text" aria-hidden="true"></i><span style="flex:1">Informe de pobreza: 4 fuentes</span><button class="btn">Abrir en LaTeX</button></div>
+<div class="row" style="margin:6px 0"><i class="ti ti-school" aria-hidden="true"></i><span style="flex:1">Repaso de fichas del curso: 15</span><button class="btn">Repasar</button></div>
+</div></div>
+</div>
+
+<div class="view" id="v-catalogo">
+<div class="row" style="gap:6px;margin-bottom:10px;flex-wrap:wrap"><span class="mut">Filtros</span><button class="chip">Econometría ×</button><button class="chip">2010–2024</button><button class="chip">Con PDF</button><span style="flex:1"></span><span class="mut">Orden: leídos recientes</span></div>
+<div style="display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:12px">
+<div id="grid" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px"></div>
+<div class="card" id="ficha"></div>
+</div></div>
+
+<div class="view" id="v-lectura">
+<div class="card" style="margin-bottom:10px">
+<div class="row" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+<div class="row"><i class="ti ti-refresh" aria-hidden="true" style="font-size:18px"></i><div><div style="font-weight:500">Sincronización de la lectura</div><div class="mut" id="sync-txt">Última vuelta 23:21 · nada nuevo · próxima 00:18</div></div></div>
+<div class="row"><span class="mut">Automática cada hora</span><span class="sw" id="sw" role="switch" aria-checked="true" tabindex="0"><i></i></span><button class="btn pri" id="sync-btn"><i class="ti ti-refresh" aria-hidden="true"></i> Sincronizar ahora</button></div>
+</div>
+<div class="row" style="gap:6px;margin-top:10px" id="pasos"></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:10px">
+<div class="met"><span class="mut">Subrayados</span><b id="n-sub">431</b></div>
+<div class="met"><span class="mut">Horas, 12 semanas</span><b>78 h</b></div>
+<div class="met"><span class="mut">Libros con lectura</span><b>46</b></div>
+<div class="met"><span class="mut">Racha</span><b>9 días</b></div>
+</div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:10px">
+<div class="card"><div style="font-weight:500;margin-bottom:6px">Horas por día</div><div id="heat" style="display:grid;grid-template-columns:repeat(12,1fr);gap:3px"></div><div class="mut" style="margin-top:6px">Doce semanas; más oscuro, más horas</div></div>
+<div class="card"><div class="row" style="justify-content:space-between;margin-bottom:4px"><span style="font-weight:500">Subrayados recientes</span><span class="row" id="origenes" style="gap:4px"></span></div><div id="subs"></div></div>
+</div></div>
+
+<div class="view" id="v-fichas">
+<div class="row" style="gap:6px;margin-bottom:10px;flex-wrap:wrap"><button class="chip on">Todas 128</button><button class="chip">Textuales 74</button><button class="chip">Paráfrasis 39</button><button class="chip">Por revisar 7</button><span style="flex:1"></span><button class="btn pri"><i class="ti ti-plus" aria-hidden="true"></i> Nueva ficha</button><button class="btn"><i class="ti ti-sparkles" aria-hidden="true"></i> Estudiar con la IA</button></div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px">
+<div class="card"><div style="font-weight:500;margin-bottom:6px">Fichas del informe de pobreza</div>
+<div class="hl">«La pobreza monetaria mide la insuficiencia del gasto…»<div class="mut" style="font-family:var(--font-sans)">INEI 2024 · p. 12 · textual · cotejada con el PDF</div></div>
+<div class="hl">El gasto social focalizado reduce la brecha más que el universal.<div class="mut" style="font-family:var(--font-sans)">Banco Mundial 2022 · p. 45 · paráfrasis</div></div>
+<div class="row" style="gap:6px;margin-top:8px"><button class="btn">Insertar en LaTeX Studio</button><button class="btn">Ver en Yachay</button></div></div>
+<div class="card"><div style="font-weight:500;margin-bottom:6px">Repaso para estudiantes</div><div class="mut" style="margin-bottom:8px">Preguntas salidas de las fichas del curso; las que fallas vuelven antes</div>
+<div class="met" style="margin-bottom:8px"><span class="mut">¿Qué supuesto rompe el sesgo de variable omitida?</span></div>
+<div class="row" style="gap:6px"><button class="btn">Mostrar la ficha</button><button class="btn">La sabía</button><button class="btn">Repasar luego</button></div>
+<div class="mut" style="margin-top:8px">15 por repasar hoy · próximas en 3 días</div></div>
+</div></div>
+
+<div class="view" id="v-metodo">
+<div class="row" style="gap:6px;margin-bottom:10px" id="etapas"></div>
+<div class="card" id="etapa-det"></div>
+</div>
+
+<div class="view" id="v-coherencia">
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px">
+<div class="card"><div class="row"><span class="dot" style="background:#1D9E75"></span><b style="font-weight:500">Calibre ⇄ Zotero</b></div><div class="mut">Coinciden 1 284 · por revisar 3</div><button class="btn" style="margin-top:6px">Simular</button></div>
+<div class="card"><div class="row"><span class="dot" style="background:#1D9E75"></span><b style="font-weight:500">Calibre ⇄ KOReader</b></div><div class="mut">Lectura al día · 30 min</div><button class="btn" style="margin-top:6px">Simular</button></div>
+<div class="card"><div class="row"><span class="dot" style="background:#BA7517"></span><b style="font-weight:500">Tareas automáticas</b></div><div class="mut">4 timers · 1 con aviso</div><button class="btn" style="margin-top:6px">Ver registro</button></div>
+</div></div>
+</div>
+<script>
+const L=[
+{t:"Introducción a la econometría",a:"Wooldridge",y:2015,c:"#185FA5",p:64,o:"KOReader",k:"wooldridge2015introduccion",h:42,u:["Informe de pobreza","Curso Econometría I"]},
+{t:"Mostly harmless econometrics",a:"Angrist y Pischke",y:2009,c:"#534AB7",p:30,o:"Zotero",k:"angrist2009mostly",h:18,u:["Tesis de evaluación"]},
+{t:"Desarrollo y libertad",a:"Sen",y:2000,c:"#0F6E56",p:88,o:"Okular",k:"sen2000desarrollo",h:57,u:["Informe de pobreza"]},
+{t:"Por qué fracasan los países",a:"Acemoglu y Robinson",y:2012,c:"#993C1D",p:12,o:"Yachay",k:"acemoglu2012fracasan",h:6,u:[]},
+{t:"Metodología de la investigación",a:"Hernández Sampieri",y:2014,c:"#3B6D11",p:45,o:"KOReader",k:"hernandez2014metodologia",h:31,u:["Curso Metodología"]},
+{t:"Macroeconomía",a:"Mankiw",y:2014,c:"#993556",p:71,o:"Zotero",k:"mankiw2014macroeconomia",h:25,u:["Curso Macro II"]},
+{t:"Economical writing",a:"McCloskey",y:2019,c:"#5F5E5A",p:100,o:"KOReader",k:"mccloskey2019economical",h:14,u:["Guía de redacción"]},
+{t:"Causal inference: the mixtape",a:"Cunningham",y:2021,c:"#854F0B",p:22,o:"Okular",k:"cunningham2021causal",h:9,u:[]}];
+const O={KOReader:"#378ADD",Zotero:"#D85A30",Okular:"#1D9E75",Yachay:"#7F77DD"};
+let sel=0;
+function vista(v){document.querySelectorAll('.view').forEach(e=>e.style.display=e.id==='v-'+v?'block':'none');document.querySelectorAll('.bar .chip').forEach(c=>c.classList.toggle('on',c.dataset.v===v))}
+document.querySelectorAll('.bar .chip').forEach(c=>c.onclick=()=>vista(c.dataset.v));
+document.getElementById('seguir').innerHTML=L.filter(b=>b.p<100).slice(0,3).map(b=>`<div class="row" style="margin:6px 0"><span style="width:26px;height:38px;border-radius:3px;background:${b.c};flex:none"></span><div style="flex:1;min-width:0"><div style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${b.t}</div><div style="height:4px;background:var(--surface-1);border-radius:2px;margin-top:4px"><div style="width:${b.p}%;height:4px;background:${O[b.o]};border-radius:2px"></div></div><div class="mut">${b.p}% · en ${b.o}</div></div><button class="btn">Abrir</button></div>`).join('');
+function grid(){document.getElementById('grid').innerHTML=L.map((b,i)=>`<div><div class="cov${i===sel?' sel':''}" style="background:${b.c}" onclick="elegir(${i})"><span>${b.t}</span><span style="opacity:.85">${b.a}</span></div><div style="height:3px;background:var(--surface-1);margin-top:4px;border-radius:2px"><div style="width:${b.p}%;height:3px;background:${O[b.o]};border-radius:2px"></div></div></div>`).join('')}
+function ficha(){const b=L[sel];document.getElementById('ficha').innerHTML=`<div class="row" style="align-items:flex-start;gap:10px"><span style="width:52px;height:78px;border-radius:4px;background:${b.c};flex:none"></span><div><div style="font-weight:500;font-size:14px">${b.t}</div><div class="mut">${b.a} · ${b.y}</div><div class="mut" style="font-family:var(--font-mono);margin-top:4px">${b.k}</div></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:10px 0"><div class="met"><span class="mut">Leído</span><b style="font-size:16px">${b.p}%</b></div><div class="met"><span class="mut">Subrayados</span><b style="font-size:16px">${b.h}</b></div></div><div class="mut">Usado en</div><div style="margin:4px 0 10px">${b.u.length?b.u.map(u=>`<div class="row"><i class="ti ti-file-text" aria-hidden="true"></i>${u}</div>`).join(''):'<span class="mut">Aún en ningún escrito</span>'}</div><div style="display:flex;gap:6px;flex-wrap:wrap"><button class="btn pri">Abrir</button><button class="btn">Nueva ficha</button><button class="btn">Estudiar con la IA</button><button class="btn">Citar en LaTeX</button></div>`}
+window.elegir=i=>{sel=i;grid();ficha()};grid();ficha();
+const heat=document.getElementById('heat');let s=7;for(let w=0;w<12;w++){for(let d=0;d<7;d++){s=(s*9301+49297)%233280;const v=s/233280;const op=v<.25?0:(.25+v*.75).toFixed(2);const c=document.createElement('div');c.style.cssText=`aspect-ratio:1;border-radius:2px;background:${op?'#1D9E75':'var(--surface-1)'};opacity:${op||1}`;c.title=`${Math.round(v*3*10)/10} h`;heat.appendChild(c)}}
+heat.style.gridTemplateColumns='repeat(12,1fr)';heat.style.gridAutoFlow='column';heat.style.gridTemplateRows='repeat(7,10px)';
+const SUB=[["La productividad es casi todo en el largo plazo.","Krugman · p. 11","KOReader"],["El sesgo de selección desaparece con asignación aleatoria.","Angrist y Pischke · p. 15","Zotero"],["La pobreza es privación de capacidades.","Sen · p. 114","Okular"],["Las instituciones inclusivas permiten el crecimiento.","Acemoglu · p. 73","Yachay"]];
+let filtro=null;function subs(){document.getElementById('subs').innerHTML=SUB.filter(x=>!filtro||x[2]===filtro).map(x=>`<div class="hl" style="border-left-color:${O[x[2]]}">${x[0]}<div class="mut" style="font-family:var(--font-sans)">${x[1]} · ${x[2]}</div></div>`).join('')}
+document.getElementById('origenes').innerHTML=Object.keys(O).map(k=>`<button class="chip" style="padding:1px 7px" onclick="filtrar('${k}',this)"><span class="dot" style="background:${O[k]}"></span>${k}</button>`).join('');
+window.filtrar=(k,el)=>{filtro=filtro===k?null:k;document.querySelectorAll('#origenes .chip').forEach(c=>c.classList.remove('on'));if(filtro)el.classList.add('on');subs()};subs();
+const P=["KOReader","Zotero","Okular","Yachay"];
+function pasos(estado){document.getElementById('pasos').innerHTML=P.map((p,i)=>`<div class="step" style="cursor:default"><span class="dot" style="background:${O[p]}"></span> ${p} <span class="mut">${estado[i]||''}</span></div>`).join('')}
+pasos(["al día","al día","al día","al día"]);
+const sw=document.getElementById('sw');sw.onclick=()=>{sw.classList.toggle('off');const on=!sw.classList.contains('off');sw.setAttribute('aria-checked',on);document.getElementById('sync-txt').textContent=on?'Última vuelta 23:21 · nada nuevo · próxima 00:18':'Automática apagada · solo con el botón';document.getElementById('sync-mini').textContent=on?'Sincronizado hace 3 min · próxima 00:18':'Sincronización automática apagada'};
+document.getElementById('sync-btn').onclick=()=>{const b=document.getElementById('sync-btn');b.disabled=true;const e=["","","",""];let i=0;document.getElementById('sync-txt').textContent='Trayendo lo nuevo de cada programa…';const t=setInterval(()=>{e[i]=i===0?'+2 subrayados':(i===3?'+1 ficha':'al día');pasos(e);i++;if(i===4){clearInterval(t);b.disabled=false;document.getElementById('sync-txt').textContent='Última vuelta ahora · 2 subrayados de KOReader llevados a Zotero, Okular y Yachay';document.getElementById('n-sub').textContent='433'}},600)};
+const E=[["Adquirir",3,"3 libros en la lista de deseos; buscar el PDF legal o pedirlo a la biblioteca."],["Entrada",5,"5 documentos esperan en la zona de entrada: revisar metadatos y moverlos a Calibre por la puerta."],["Catalogar",4,"4 libros sin serie ni etiquetas; la sugerencia sale del título y del ISBN."],["Fichas",7,"7 fichas por revisar: el cotejo contra el PDF encontró 2 citas con otra página."],["Manifiestos",0,"Todos los manifiestos al día."]];
+let et=3;function etapas(){document.getElementById('etapas').innerHTML=E.map((x,i)=>`<div class="step${i===et?' on':''}" onclick="etapa(${i})">${x[0]}<div style="font-size:16px;font-weight:500">${x[1]}</div></div>`).join('');document.getElementById('etapa-det').innerHTML=`<div style="font-weight:500;margin-bottom:4px">${E[et][0]}</div><div class="mut" style="margin-bottom:8px">${E[et][2]}</div><div class="row" style="gap:6px"><button class="btn">Simular (F5)</button><button class="btn pri">Aplicar (Ctrl+Intro)</button><span class="mut">respaldo verificado · se puede deshacer</span></div>`}
+window.etapa=i=>{et=i;etapas()};etapas();
+vista('inicio');
+</script>
+</main>
+</body>
+</html>
