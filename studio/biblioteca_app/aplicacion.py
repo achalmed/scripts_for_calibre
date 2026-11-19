@@ -26,6 +26,7 @@ from gui_comun.qt import QObject, QStandardPaths, Signal, Slot
 from gui_comun.tareas import Tareas
 
 from biblioteca_app.controladores.ajustes import Ajustes
+from biblioteca_app.controladores.catalogado import Catalogado
 from biblioteca_app.controladores.espacio import Espacio
 from biblioteca_app.controladores.etapas import Etapas
 from biblioteca_app.controladores.fichado import Fichado
@@ -109,6 +110,7 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
     fichas = Fichas(libros, consola, repo=repo_datos)   # el área Fichas: las de los escritos, las canónicas y el repaso (§9.9)
     inicio = Inicio(espacio, libros, lectura, fichas)   # el área Inicio: «Esto es lo de hoy» (§9.9)
     revision = Revision(fichas, consola)                 # el área Revisión: bitácora, cribado y PRISMA (§9.10)
+    catalogado = Catalogado(etapas, operaciones, consola)   # catalogar con un chat: el prompt del paso 02 y su vuelta (§9.15)
     fichado.revisada.connect(lambda r: fichas.recargar() if r.get("escrito") else None)   # una ficha nueva entra a la lista
     acciones = Acciones()
     acciones.estandar(NOMBRE, paneles=False)
@@ -164,6 +166,10 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
                        descripcion="Muestra la orden exacta, las bases que toca y los pasos de la puerta; si confirmas, corre con --aplicar")
     acciones.registrar("op.cancelar", "&Cancelar la operación", "process-stop", None, "Método", habilitada=False, al_disparar=operaciones.cancelar,
                        descripcion="Detiene la corrida en curso y el proceso que lanzó")
+    acciones.registrar("metodo.catalogar_ia", "Catalogar con un &chat…", "tools-wizard", "Ctrl+Shift+I", "Método", habilitada=False,
+                       al_disparar=pedir("catalogar_ia"),
+                       descripcion="Copia el prompt del paso 02 con la portada de la fila elegida (Entrada o Catalogar), lee lo que respondió "
+                                   "el chat, lo comprueba sin IA y, si lo aceptas, lo guarda en su registro para aplicarlo después")
     # --- Libro (el libro actual de la vista Libros)
     acciones.registrar("libro.calibre", "Abrir en &Calibre", "folder-book", None, "Libro", habilitada=False, al_disparar=libros.abrirCalibre,
                        descripcion="calibre://show-book: el libro en la ventana de Calibre")
@@ -198,7 +204,7 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
         ("&Editar", ["editar.filtrar", "editar.todo"]),
         ("&Ver", [f"ver.area.{a}" for a, _t, _i in AREAS] + ["|", "ver.forma", "ver.filtros", "|",
                   ("&Etapa", [f"ver.vista.{e.id}" for e in ops.ETAPAS if e.id != "libros"]), "|", "ver.releer", "ver.indice", "|", "ventana.pantalla_completa"]),
-        ("&Método", ["op.simular", "op.aplicar", "op.cancelar", "|"]
+        ("&Método", ["op.simular", "op.aplicar", "op.cancelar", "|", "metodo.catalogar_ia", "|"]
                     + [(f"&{e.nombre}", [f"op.{o.id}" for o in e.operaciones]) for e in ops.ETAPAS if e.operaciones]),
         ("&Libro", ["libro.archivo", "libro.dolphin", "|", "libro.calibre", "libro.zotero", "libro.nota", "|", "libro.copiar_clave", "libro.fichas"]),
         ("&Herramientas", ["herr.lanzador", "|", "ventana.paleta"]),
@@ -286,6 +292,8 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
         b.visible = operaciones.escribe
         acciones.habilitar("op.aplicar", operaciones.puedeAplicar)
         acciones.habilitar("op.cancelar", operaciones.enCurso)
+        acciones.habilitar("metodo.catalogar_ia", espacio.area == "metodo" and espacio.vista in ("entrada", "catalogar")
+                           and etapas.hayElemento and etapas.vistaElemento == espacio.vista)
         acciones.habilitar("ver.releer", not activa)
         acciones.habilitar("ver.indice", not activa)
         acciones.habilitar("herr.lanzador", not activa)
@@ -325,7 +333,7 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
 
     piezas = dict(env=env, consola=consola, tareas=tareas, interfaz=interfaz, ajustes=ajustes, espacio=espacio, puerta=puerta,
                   libros=libros, etapas=etapas, operaciones=operaciones, acciones=acciones, portadas=portadas, fichado=fichado,
-                  lectura=lectura, fichas=fichas, inicio=inicio, revision=revision)
+                  catalogado=catalogado, lectura=lectura, fichas=fichas, inicio=inicio, revision=revision)
     for nombre, objeto in piezas.items():
         if nombre not in ("env", "portadas"):
             app.exponer(nombre, objeto)

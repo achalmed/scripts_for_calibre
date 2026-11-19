@@ -65,6 +65,11 @@ con siete áreas en chips (Ctrl+1–7: las seis del rediseño del 2026-11-18 y R
   uno o varios RIS, BibTeX o CSL-JSON en el diálogo de KDE; F5 deja en la pestaña Plan cuántas obras son nuevas, cuántas
   ya estaban y cuántas son dudosas, cada una con su título y, en una línea tenue, su fuente o su porqué; Ctrl+Intro crea
   las nuevas en Zotero por la puerta (con Zotero y Calibre cerrados).
+  Sobre cada tabla, sus **filtros por columna** (clic derecho en una celda: «Solo este valor»; o «Filtrar», con cuántas
+  filas tiene cada valor), que se quitan de un toque; el clic en una cabecera ordena, arrastrar su borde la ensancha y
+  «Ampliar la tabla» oculta el panel de la derecha. En Entrada y Catalogar, **«Catalogar con un chat…»** (Ctrl+Mayús+I,
+  `../lib/catalogar_ia.py`, §9.15): copia el prompt del paso 02 con la portada de la fila, lee lo que respondió el chat,
+  lo comprueba sin IA y lo guarda en su registro; después se aplica como siempre, F5 y Ctrl+Intro.
 
   ![El plan de «Fusionar e importar a Zotero»](../docs/figuras/biblioteca-studio-importar-zotero.png)
 - **Revisión** (Ctrl+7, `../lib/revision.py` y `../lib/prisma.py`, §9.10): la revisión de literatura de cada escrito, en

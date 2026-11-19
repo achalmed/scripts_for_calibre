@@ -1,9 +1,12 @@
 // PanelFiltros — los filtros del catálogo (reingeniería B6): colección (la serie de Calibre), autor, año (por décadas) y
 // tipo, cada uno con sus valores y cuántos libros da cada uno dentro de la búsqueda actual; un clic filtra, otro lo
 // quita. Arriba, la ayuda de la búsqueda por campo.
+// Cada grupo se pliega con un clic en su título (y se recuerda); «Ver los N» muestra todos sus valores, y en un grupo largo
+// (las colecciones son más de cien) un campo busca entre ellos (2026-11-19).
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
+import QtCore
 import org.kde.kirigami as Kirigami
 
 QQC2.Control {
@@ -13,6 +16,9 @@ QQC2.Control {
 
     padding: 0
     Accessible.name: "Filtros del catálogo"
+
+    Settings { id: recuerdo; category: "catalogo/filtros"; property var plegados: ({}) }
+    function plegar(clave, si) { const p = Object.assign({}, recuerdo.plegados || {}); p[clave] = si; recuerdo.plegados = p }
 
     contentItem: QQC2.ScrollView {
         id: desplazable
@@ -39,12 +45,50 @@ QQC2.Control {
                     required property var modelData
                     readonly property var valores: raiz.l.facetas[modelData.clave] || []
                     readonly property string elegido: raiz.l.filtros[modelData.clave] || ""
+                    readonly property bool plegado: !!(recuerdo.plegados || {})[modelData.clave]
+                    readonly property var hallados: busca.text === "" ? grupo.valores
+                                                    : grupo.valores.filter(v => String(v.valor).toLowerCase().indexOf(busca.text.toLowerCase()) >= 0)
                     property bool todos: false
                     Layout.fillWidth: true
                     spacing: 0
-                    Kirigami.ListSectionHeader { Layout.fillWidth: true; text: grupo.modelData.titulo + (grupo.elegido ? " · " + grupo.elegido : "") }
+                    // el título del grupo: un clic lo pliega o lo despliega
+                    QQC2.AbstractButton {
+                        id: cabecera
+                        Layout.fillWidth: true
+                        Layout.topMargin: Kirigami.Units.smallSpacing
+                        hoverEnabled: true
+                        padding: Kirigami.Units.smallSpacing
+                        leftPadding: Kirigami.Units.largeSpacing
+                        onClicked: raiz.plegar(grupo.modelData.clave, !grupo.plegado)
+                        Accessible.name: grupo.modelData.titulo + (grupo.plegado ? ", plegado" : ", desplegado")
+                        contentItem: RowLayout {
+                            spacing: Kirigami.Units.smallSpacing
+                            QQC2.Label {
+                                Layout.fillWidth: true
+                                text: grupo.modelData.titulo + (grupo.elegido ? " · " + grupo.elegido : "")
+                                font.weight: Font.DemiBold
+                                elide: Text.ElideRight
+                            }
+                            QQC2.Label { text: grupo.valores.length; font: Kirigami.Theme.smallFont; color: Kirigami.Theme.disabledTextColor }
+                            Kirigami.Icon {
+                                source: grupo.plegado ? "go-next-symbolic" : "go-down-symbolic"
+                                implicitWidth: Kirigami.Units.iconSizes.small; implicitHeight: implicitWidth
+                                color: Kirigami.Theme.disabledTextColor
+                            }
+                        }
+                        background: Rectangle { color: cabecera.hovered ? Qt.alpha(Kirigami.Theme.textColor, 0.06) : "transparent" }
+                    }
+                    Kirigami.SearchField {
+                        id: busca
+                        Layout.fillWidth: true
+                        Layout.leftMargin: Kirigami.Units.smallSpacing
+                        Layout.rightMargin: Kirigami.Units.smallSpacing
+                        visible: !grupo.plegado && grupo.todos && grupo.valores.length > 15
+                        placeholderText: "Buscar en " + grupo.modelData.titulo.toLowerCase()
+                        font: Kirigami.Theme.smallFont
+                    }
                     Repeater {
-                        model: grupo.todos ? grupo.valores : grupo.valores.slice(0, 7)
+                        model: grupo.plegado ? [] : (grupo.todos ? grupo.hallados : grupo.valores.slice(0, 7))
                         delegate: QQC2.ItemDelegate {
                             required property var modelData
                             Layout.fillWidth: true
@@ -66,13 +110,15 @@ QQC2.Control {
                             }
                         }
                     }
-                    QQC2.ToolButton {
-                        Layout.leftMargin: Kirigami.Units.smallSpacing
-                        visible: grupo.valores.length > 7
-                        text: grupo.todos ? "Menos" : "Ver los " + grupo.valores.length
-                        flat: true
+                    // «Ver los N»: una fila entera, como las de los valores (el botón de antes se cortaba en «Ver los …»)
+                    QQC2.ItemDelegate {
+                        Layout.fillWidth: true
+                        visible: !grupo.plegado && grupo.valores.length > 7
+                        text: grupo.todos ? "Ver menos" : "Ver los " + grupo.valores.length
+                        icon.name: grupo.todos ? "go-up-symbolic" : "go-down-symbolic"
                         font: Kirigami.Theme.smallFont
-                        onClicked: grupo.todos = !grupo.todos
+                        onClicked: { grupo.todos = !grupo.todos; if (!grupo.todos) busca.text = "" }
+                        Accessible.name: grupo.todos ? "Ver menos " + grupo.modelData.titulo : "Ver todos los valores de " + grupo.modelData.titulo
                     }
                 }
             }

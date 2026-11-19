@@ -1,7 +1,12 @@
 """biblioteca_app/controladores/etapas.py — las tablas de las vistas de etapa (Adquirir, Entrada, Catalogar, Fichas,
 Manifiestos, Sincronizar, Puerta, Tareas automáticas), leídas tal cual de los ledgers, las fichas, los manifiestos, los
 respaldos y systemd (`servicios.datos`, `servicios.puerta`); el elemento seleccionado con sus campos y, si es un `.md`
-o un `.yml`, su texto (pestaña Elemento); y lo que se hace con él: abrir, abrir su carpeta, copiar la ruta. Solo lee."""
+o un `.yml`, su texto (pestaña Elemento); y lo que se hace con él: abrir, abrir su carpeta, copiar la ruta. Solo lee.
+
+Los filtros por columna (2026-11-19): en cada tabla, «solo las filas cuyo Tipo es Book» o «cuya Confianza es baja», de uno
+o varios valores a la vez, que se suman a la búsqueda de la cabecera (Ctrl+F). Los pone el clic derecho en una celda o el
+botón «Filtrar», y cada uno es un chip que se quita con un toque; `valoresDe` da los valores de una columna con cuántas
+filas tienen cada uno entre las que dejan pasar los demás filtros."""
 
 from __future__ import annotations
 
@@ -15,11 +20,14 @@ from biblioteca_app.servicios import datos, operaciones as ops, puerta as svc_pu
 
 VISTAS_DATOS = ("adquirir", "entrada", "catalogar", "fichas", "manifiestos", "sincronizar", "puerta", "tareas")
 MAX_TEXTO = 200_000
+VACIO = "(vacío)"                        # el valor de una celda vacía en los filtros por columna
+MAX_VALORES = 60
 _PEREZOSAS = ("manifiestos",)          # recorren carpetas grandes: se leen la primera vez que se muestran
 
 
 class Etapas(QObject):
     cambiado = Signal()                 # las tablas y sus contadores
+    filtrosCambiados = Signal()         # los filtros por columna de alguna tabla
     elementoCambiado = Signal()
     aviso = Signal(str, str)
 
@@ -29,6 +37,7 @@ class Etapas(QObject):
         self._tablas = {v: ModeloTabla(mod.COLUMNAS[v], parent=self) for v in VISTAS_DATOS}
         self._modelos = {v: ModeloFiltrado(self._tablas[v], parent=self) for v in VISTAS_DATOS}
         self._leidas: set[str] = set()
+        self._filtros: dict[str, dict[int, str]] = {v: {} for v in VISTAS_DATOS}
         self._fichas: list[dict] = []
         self._catalogacion: list[dict] = []
         self._elemento: dict = {}
@@ -46,6 +55,73 @@ class Etapas(QObject):
     @Slot(str, result=QObject)
     def tablaDe(self, vista: str):
         return self._tablas.get(vista)
+
+    # ------------------------------------------------------ filtros por columna
+    def _valor(self, vista: str, fila: dict, columna: int) -> str:
+        cols = mod.COLUMNAS[vista]
+        if not 0 <= columna < len(cols):
+            return ""
+        v = fila.get(cols[columna][1])
+        return VACIO if v is None or str(v).strip() == "" else str(v)
+
+    def _aplicar_filtros(self, vista: str) -> None:
+        filtros = dict(self._filtros[vista])
+        tabla = self._tablas[vista]
+        if not filtros:
+            self._modelos[vista].aceptar_con(None)
+        else:
+            self._modelos[vista].aceptar_con(
+                lambda r: all(self._valor(vista, tabla.fila(r), c) == v for c, v in filtros.items()))
+        self.filtrosCambiados.emit()
+
+    @Slot(str, int, str)
+    def filtrarColumna(self, vista: str, columna: int, valor: str) -> None:
+        """Solo las filas cuyo valor en `columna` es `valor` (vacío quita el filtro de esa columna)."""
+        if vista not in self._filtros or not 0 <= columna < len(mod.COLUMNAS[vista]):
+            return
+        if valor == "":
+            self._filtros[vista].pop(columna, None)
+        else:
+            self._filtros[vista][columna] = valor
+        self._aplicar_filtros(vista)
+
+    @Slot(str)
+    def quitarFiltrosColumna(self, vista: str) -> None:
+        if self._filtros.get(vista):
+            self._filtros[vista] = {}
+            self._aplicar_filtros(vista)
+
+    @Property("QVariantMap", notify=filtrosCambiados)
+    def filtrosColumna(self) -> dict:
+        """{vista: [{columna, titulo, valor}]}: los chips de los filtros puestos en cada tabla."""
+        return {v: [{"columna": c, "titulo": mod.COLUMNAS[v][c][0], "valor": valor} for c, valor in sorted(f.items())]
+                for v, f in self._filtros.items()}
+
+    @Slot(str, result="QVariantList")
+    def columnasDe(self, vista: str) -> list:
+        return [{"columna": i, "titulo": t} for i, (t, _c) in enumerate(mod.COLUMNAS.get(vista, []))]
+
+    @Slot(str, int, result="QVariantList")
+    def valoresDe(self, vista: str, columna: int) -> list:
+        """Los valores de una columna con cuántas filas tiene cada uno (entre las que dejan pasar los demás filtros de
+        columna), los más frecuentes primero; sin más de MAX_VALORES."""
+        if vista not in self._tablas or not 0 <= columna < len(mod.COLUMNAS[vista]):
+            return []
+        otros = {c: v for c, v in self._filtros[vista].items() if c != columna}
+        cuenta: dict[str, int] = {}
+        for f in self._tablas[vista].todas():
+            if all(self._valor(vista, f, c) == v for c, v in otros.items()):
+                valor = self._valor(vista, f, columna)
+                cuenta[valor] = cuenta.get(valor, 0) + 1
+        return [{"valor": v, "n": n} for v, n in sorted(cuenta.items(), key=lambda x: (-x[1], x[0].lower()))[:MAX_VALORES]]
+
+    @Slot(str, int, int, result=str)
+    def valorCelda(self, vista: str, fila: int, columna: int) -> str:
+        """El valor de una celda visible, como lo compara el filtro (el de una celda vacía es «(vacío)»)."""
+        modelo = self._modelos.get(vista)
+        if modelo is None or not 0 <= fila < modelo.rowCount():
+            return ""
+        return self._valor(vista, self._tablas[vista].fila(modelo.filaOrigen(fila)), columna)
 
     def _al_cambiar_vista(self) -> None:
         v = self.espacio.vista

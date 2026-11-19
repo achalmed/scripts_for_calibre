@@ -360,3 +360,69 @@ def test_pasos_de_la_puerta_antes_y_la_integridad(piezas, monkeypatch):
     assert {x["clave"]: x for x in o.pasos}["cerrada"]["estado"] == "fallo" and not o.puedeAplicar
     from biblioteca_app.servicios import operaciones as ops_svc
     assert o._integridad(ops_svc.operacion("catalogar")) is True     # integrity_check de la metadata.db de la muestra
+
+
+@requiere_binding
+def test_filtros_por_columna_de_una_etapa(piezas):
+    """Los filtros por columna (2026-11-19): solo las filas con un valor, varios a la vez, sumados a la búsqueda."""
+    t = piezas["etapas"]
+    m = t.modeloDe("entrada")
+    assert m.filas == 5
+    pasos = {v["valor"]: v["n"] for v in t.valoresDe("entrada", 1)}
+    assert pasos["identificado"] >= 1 and sum(pasos.values()) == 5
+    t.filtrarColumna("entrada", 1, "identificado")
+    assert m.filas == pasos["identificado"]
+    assert t.filtrosColumna["entrada"] == [{"columna": 1, "titulo": "Paso", "valor": "identificado"}]
+    assert all(t.valorCelda("entrada", i, 1) == "identificado" for i in range(m.filas))
+    assert sum(v["n"] for v in t.valoresDe("entrada", 3)) == m.filas          # los valores de otra columna, entre las que pasan
+    t.filtrarColumna("entrada", 3, "(vacío)")                                  # el valor de una celda vacía
+    assert m.filas == sum(1 for i in range(t.tablaDe("entrada").filas)
+                          if t.tablaDe("entrada").fila(i).get("paso") == "identificado" and not t.tablaDe("entrada").fila(i).get("confianza"))
+    t.recargar("entrada")                                                     # releer no quita los filtros
+    assert len(t.filtrosColumna["entrada"]) == 2
+    m.filtrar("ningún texto así")                                             # la búsqueda de la cabecera se suma
+    assert m.filas == 0
+    m.filtrar("")
+    t.filtrarColumna("entrada", 3, "")
+    assert len(t.filtrosColumna["entrada"]) == 1
+    t.quitarFiltrosColumna("entrada")
+    assert m.filas == 5 and t.filtrosColumna["entrada"] == [] and t.filtrosColumna["catalogar"] == []
+
+
+@requiere_binding
+def test_catalogar_con_un_chat_desde_la_etapa(piezas, app):
+    """«Catalogar con un chat» (§9.15) sobre la muestra: elegir la fila, revisar lo pegado y guardarlo en su registro."""
+    from biblioteca_app.controladores.catalogado import Catalogado
+    t, ops_ = piezas["etapas"], piezas["operaciones"]
+    ca = Catalogado(t, ops_, piezas["consola"])
+    vistos = {}
+    ca.revisado.connect(lambda r: vistos.__setitem__("revisado", r))
+    ca.guardado.connect(lambda r: vistos.__setitem__("guardado", r))
+
+    def esperar(clave):
+        inicio = time.monotonic()
+        while clave not in vistos and time.monotonic() - inicio < 30:
+            app.processEvents()
+            time.sleep(0.02)
+        return vistos.get(clave, {})
+
+    entrada = t.modeloDe("entrada")
+    catalogado = next(i for i in range(entrada.filas) if t.valorCelda("entrada", i, 1) == "catalogado")
+    assert not ca.elegir("entrada", catalogado)                               # lo ya catalogado se corrige en Catalogar
+    assert not ca.elegir("fichas", 0)
+    assert ca.elegir("catalogar", 0) and ca.vista == "catalogar" and ca.clave and ca.operacion == "Aplicar la catalogación"
+    pegado = ("```yaml\ntipo: catalogacion\nautores: \"Rosa, Quispe Huamán\"\ntitulo: \"Economía de las ciudades pequeñas\"\n"
+              "tipo_zotero: Book\nfecha: 2021\nconfianza: media\n```")
+    ca.revisar(pegado)
+    r = esperar("revisado")
+    assert r.get("ok"), r
+    assert any(c["campo"] == "autores" for c in r["cambios"])
+    ruta = piezas["muestra"].repo / "catalogacion" / "resumen_catalogacion.tsv"
+    antes = ruta.read_text(encoding="utf-8")
+    ca.guardar(pegado)
+    g = esperar("guardado")
+    assert g.get("escrito"), g
+    despues = ruta.read_text(encoding="utf-8")
+    assert despues != antes and "Rosa, Quispe Huamán" in despues
+    assert len(despues.splitlines()) == len(antes.splitlines())
+    assert ops_.actual == "catalogacion"                                       # queda elegida la operación que lo aplica

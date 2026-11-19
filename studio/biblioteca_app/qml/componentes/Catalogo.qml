@@ -2,17 +2,24 @@
 // izquierda (F9), las portadas en cuadrícula o la lista compacta (Ctrl+G) en el centro, con su orden, y la ficha editorial
 // del libro elegido a la derecha. Arriba, la fila de los filtros puestos (y la búsqueda), que se quitan con un toque; bajo
 // cada portada, la barra de lectura del color de KOReader. Intro o doble clic abre el documento con su aplicación.
+// Los tres paneles van en un divisor (2026-11-19): el borde entre los filtros, el centro y la ficha se arrastra y el ancho
+// se recuerda entre sesiones.
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
+import QtCore
 import org.kde.kirigami as Kirigami
 
-RowLayout {
+QQC2.SplitView {
     id: raiz
     readonly property var l: studio.libros
     property bool mostrarFiltros: true
     property bool mostrarFicha: true
-    spacing: 0
+    orientation: Qt.Horizontal
+
+    Settings { id: recuerdo; category: "catalogo"; property var divisor }
+    Component.onCompleted: if (recuerdo.divisor) raiz.restoreState(recuerdo.divisor)
+    onResizingChanged: if (!resizing) recuerdo.divisor = raiz.saveState()
 
     function irA(i) {
         if (i < 0) return
@@ -26,14 +33,14 @@ RowLayout {
 
     PanelFiltros {
         visible: raiz.mostrarFiltros
-        Layout.preferredWidth: Kirigami.Units.gridUnit * 14
-        Layout.fillHeight: true
+        QQC2.SplitView.preferredWidth: Kirigami.Units.gridUnit * 16
+        QQC2.SplitView.minimumWidth: Kirigami.Units.gridUnit * 9
+        QQC2.SplitView.maximumWidth: Kirigami.Units.gridUnit * 40
     }
-    Kirigami.Separator { Layout.fillHeight: true; visible: raiz.mostrarFiltros }
 
     ColumnLayout {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
+        QQC2.SplitView.fillWidth: true
+        QQC2.SplitView.minimumWidth: Kirigami.Units.gridUnit * 14
         spacing: 0
         RowLayout {
             Layout.fillWidth: true
@@ -156,12 +163,11 @@ RowLayout {
             }
         }
     }
-    Kirigami.Separator { Layout.fillHeight: true; visible: ficha.visible }
     FichaEditorial {
         id: ficha
         visible: raiz.mostrarFicha && raiz.l.hayActual
-        Layout.preferredWidth: Kirigami.Units.gridUnit * 24
-        Layout.fillHeight: true
+        QQC2.SplitView.preferredWidth: Kirigami.Units.gridUnit * 24
+        QQC2.SplitView.minimumWidth: Kirigami.Units.gridUnit * 16
         onCerrar: raiz.mostrarFicha = false
     }
 }

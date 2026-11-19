@@ -197,9 +197,11 @@ QQC2.Control {
                     Layout.fillWidth: true
                     visible: fo.hay === true && String(fo.calibreId) === String(raiz.f.id)
                     spacing: Kirigami.Units.smallSpacing
-                    RowLayout {
+                    // el título en su línea y los botones debajo: en una sola fila, a un ancho estrecho, se pisaban (2026-11-19)
+                    Kirigami.Heading { level: 4; text: obraYachay.fo.procedencia || "Ficha de obra en Yachay"; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+                    Flow {
                         Layout.fillWidth: true
-                        Kirigami.Heading { level: 4; text: obraYachay.fo.procedencia || "Ficha de obra en Yachay"; Layout.fillWidth: true }
+                        spacing: Kirigami.Units.smallSpacing
                         Chip {
                             objectName: "fichaObraAlEscrito"
                             text: "Llevar a un escrito"

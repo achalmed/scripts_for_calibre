@@ -1045,3 +1045,45 @@ Pruebas: `tests/lectura_base/test_posicion.py` (los orígenes; `posicion_limpia`
 `pos0`/`pos1` de KOReader; la posición que llega sin contar como edición; un vacío que no la borra; la vuelta de lo de
 Ñawinchay a un sidecar de EPUB y su reconocimiento en la lectura siguiente; sin sidecar no hay dónde escribir). Sin
 probar: abrir en KOReader un EPUB con una entrada escrita así (se verá en la primera vuelta real).
+
+### §9.15 Catalogar con un chat y los filtros por columna de las etapas (2026-11-19)
+
+La catalogación de `identificar` es heurística: lee el título y el autor del PDF y, en un artículo, puede tomar el nombre
+de la revista por título y a la OIT por autor (`entrada/2026-11-01-cka-peru/acunaascencio2024incidence.pdf`). El método
+para corregirla ya existía (el paso 02, `prompts/skills/fuentes-documentales/references/paso-02-catalogar.md`), pero había
+que copiar a mano la portada, la ficha y los vocabularios. La decisión, con el mismo trato que §9.5:
+
+- **`lib/catalogar_ia.py`, sin llamar a ningún modelo**: `prompt` rellena la «4 Entrada» del paso 02 con lo que la fila tiene
+  (el archivo, su carpeta, `pdfinfo` y el texto de las primeras hojas —seis si las tres primeras son imagen—, la ficha
+  heurística, la clave de cita si el nombre del archivo lo es, y los vocabularios cerrados de Calibre: clasificador,
+  item_type y las 160 etiquetas más usadas, leídos en solo lectura y por etiqueta de columna) y pide de vuelta un solo
+  bloque ```yaml `tipo: catalogacion`. `leer` lo comprueba sin IA: tipo de Zotero, clasificador e item_type en su
+  enumeración (la grafía se corrige si solo difiere en mayúsculas o tildes), autores sin «Desconocido», fecha AAAA o
+  AAAA-MM-DD que no esté en el futuro, serie e índice juntos; las etiquetas que no existen en Calibre se quitan y se
+  proponen en la nota (si no queda ninguna, se conservan las de la fila); una grafía de autor nueva que se parece a una
+  que ya existe se avisa; y, en un libro con ítem en Zotero, cambiar título o autor se avisa (CLAUDE.md). La nota dice
+  «revisada con un chat y por el autor el <fecha>» y lleva lo que el chat marcó por verificar.
+- **Dónde se guarda**: solo la fila de su registro, `ingesta/pendientes.tsv` (Entrada, por la ruta del archivo o su
+  huella; con `csv.DictWriter`, como `identificar`, que no reescribe una fila que ya existe) o
+  `catalogacion/resumen_catalogacion.tsv` (Catalogar, por el id; sin comillas, porque lo lee Bash por tabuladores). Lo que
+  el registro no tiene (item_type y serie en el resumen) no se guarda y se dice. Simula por defecto; con problemas no
+  escribe. Calibre y Zotero no se tocan: lo aplica después la operación de siempre, que queda elegida («Catalogar en
+  Calibre» o «Aplicar la catalogación»: F5 simula, Ctrl+Intro aplica por la puerta).
+- **En la ventana**: «Catalogar con un chat…» (Ctrl+Mayús+I; menú Método, el botón junto a «Simular» y el clic derecho en
+  una fila), en Entrada (solo un archivo identificado) y en Catalogar: copiar el prompt, pegar la respuesta, revisar los
+  cambios (ahora → propuesto, los problemas que impiden guardar y los avisos) y «Guardar en el registro»
+  (`controladores/catalogado.py`, `DialogoCatalogarIA.qml`). Ctrl+Alt+I ya era la paleta.
+
+Y en las tablas de las etapas, a pedido del autor: **filtros por columna** (`Etapas.filtrarColumna`, `valoresDe`,
+`filtrosColumna`; el criterio va por `ModeloFiltrado.aceptar_con` y se suma a la búsqueda de la cabecera): el clic derecho
+en una celda filtra por su valor y «Filtrar» elige columna y valor con cuántas filas tiene cada uno; cada filtro es un chip.
+«Ampliar la tabla» oculta el panel de la derecha y el divisor se recuerda (`Settings`); ordenar con un clic en la cabecera
+y ensanchar arrastrando su borde ya lo daba `TablaDatos` de gui-comun, y ahora la barra lo dice. En el catálogo, los tres
+paneles van en un `SplitView` que se recuerda, los grupos de filtros se pliegan, «Ver los N» es una fila entera (el botón
+se cortaba en «Ver los …») y un grupo de más de quince valores tiene su buscador. El panel Elemento partía cada valor palabra
+por palabra: pedía `availableWidth` al contentItem del Flickable, que no lo tiene.
+
+Pruebas: `tests/fuentes/test_catalogar_ia.py` (un repo y una metadata.db mínimos en un temporal: el prompt, lo que se
+corrige, lo que se rechaza, simular, no escribir con problemas, reescribir solo la fila) y, en `tests/studio/
+test_controladores.py`, los filtros por columna y «Catalogar con un chat» sobre la muestra. Capturas: `studio/capturar.py
+--catalogar-ia`, `--filtro-columna` y `--sin-panel`.

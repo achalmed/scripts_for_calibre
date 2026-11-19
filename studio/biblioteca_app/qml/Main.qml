@@ -50,7 +50,13 @@ VentanaBase {
             case "seleccionar_todo": { const e = espacioActual(); const t = e ? e.tabla() : null; if (t && t.seleccionarTodo) t.seleccionarTodo(); break }
             case "seleccionar_fila": { const e = espacioActual(); const t = e ? e.tabla() : null; if (t && datos.fila >= 0) t.seleccionarFila(datos.fila, true); break }
             case "aplicar": dialogoAplicar.abrir(); break
-            case "pestana": { const e = espacioActual(); if (e) e.pestana = datos.indice; break }
+            case "pestana": { const e = espacioActual(); if (e) e.mostrarPestana(datos.indice); break }
+            case "catalogar_ia": {
+                const e = espacioActual(); const t = e ? e.tabla() : null
+                if (!t || t.filaActual < 0) { ventana.mensajes.mostrar("Elige primero una fila de la tabla (Entrada o Catalogar).", "aviso"); break }
+                if (studio.catalogado.elegir(espacio.vista, t.filaActual)) dialogoCatalogarIA.abrir(datos.texto || "")
+                break
+            }
             case "paleta": ventana.paleta.abrir(datos.texto || ""); break
             case "aviso": ventana.mensajes.mostrar(datos.texto, datos.tipo || "informacion"); break
             }
@@ -62,10 +68,11 @@ VentanaBase {
     Connections { target: studio.lectura; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } }
     Connections { target: studio.fichas; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } }
     Connections { target: studio.revision; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } }
+    Connections { target: studio.catalogado; function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) } }
     Connections {
         target: ops
         function onAviso(texto, tipo) { ventana.mensajes.mostrar(texto, tipo) }
-        function onTerminada(id, aplicar, codigo) { const e = espacioActual(); if (e) e.pestana = aplicar ? 1 : 2 }
+        function onTerminada(id, aplicar, codigo) { const e = espacioActual(); if (e) e.mostrarPestana(aplicar ? 1 : 2) }
     }
 
     // ------------------------------------------------------------------ la cabecera: áreas, búsqueda y puerta
@@ -143,8 +150,8 @@ VentanaBase {
         Catalogo { id: catalogo }
         Lectura { id: lectura }
         Fichas { id: fichas }
-        EspacioEtapas { id: metodo; filas: etapas.filasMetodo }
-        EspacioEtapas { id: coherencia; filas: etapas.filasCoherencia; recorrido: false; tarjetas: true }
+        EspacioEtapas { id: metodo; objectName: "metodo"; filas: etapas.filasMetodo }
+        EspacioEtapas { id: coherencia; objectName: "coherencia"; filas: etapas.filasCoherencia; recorrido: false; tarjetas: true }
         Revision { id: revision }
         Bandejas { id: bandejas }
     }
@@ -153,7 +160,7 @@ VentanaBase {
         resumen: espacio.resumen
         contexto: espacio.contexto
         tareas: studio.tareas
-        onProgresoPulsado: { const e = ventana.espacioActual(); if (e) e.pestana = 4 }
+        onProgresoPulsado: { const e = ventana.espacioActual(); if (e) e.mostrarPestana(4) }
     }
 
     // ------------------------------------------------------------------ Aplicar: la orden, las bases y los pasos de la puerta
@@ -174,5 +181,6 @@ VentanaBase {
             LineaPasos { Layout.fillWidth: true; Layout.maximumWidth: Kirigami.Units.gridUnit * 30; pasos: studio.operaciones.pasos; titulo: "La puerta de escritura"; resumen: studio.operaciones.resumenPasos }
         }
     }
+    DialogoCatalogarIA { id: dialogoCatalogarIA }      // catalogar con un chat (Ctrl+Shift+I, §9.15)
     dialogoAjustes: DialogoAjustesStudio {}
 }

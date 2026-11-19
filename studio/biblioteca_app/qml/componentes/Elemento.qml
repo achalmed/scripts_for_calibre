@@ -22,12 +22,15 @@ Item {
         nombreAccesible: "Texto de " + pagina.e.elementoTitulo
     }
     QQC2.ScrollView {
+        id: desplazable
         anchors.fill: parent
         visible: !pagina.conTexto
         contentWidth: availableWidth
         QQC2.ScrollBar.horizontal.policy: QQC2.ScrollBar.AlwaysOff
         ColumnLayout {
-            width: parent.availableWidth - Kirigami.Units.largeSpacing * 2
+            // el ancho del ScrollView, no el de su padre (el contentItem del Flickable no tiene availableWidth: sin
+            // esto, cada valor se partía palabra por palabra, 2026-11-19)
+            width: desplazable.availableWidth - Kirigami.Units.largeSpacing * 2
             x: Kirigami.Units.largeSpacing
             y: Kirigami.Units.largeSpacing
             spacing: Kirigami.Units.largeSpacing

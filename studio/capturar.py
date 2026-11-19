@@ -13,6 +13,8 @@ biblioteca real: las portadas son las que la muestra genera con el propio Calibr
     /usr/bin/python3 studio/capturar.py docs/figuras/biblioteca-studio-inicio.png --area inicio
     /usr/bin/python3 studio/capturar.py salida.png --area fichas --repaso --mostrar      # el repaso Leitner, con la cita a la vista
     /usr/bin/python3 studio/capturar.py salida.png --libro 1 --ficha-obra               # «Nueva ficha» de obra rellena con la de Yachay (§9.13)
+    /usr/bin/python3 studio/capturar.py salida.png --area metodo --vista catalogar --catalogar-ia   # catalogar con un chat (§9.15)
+    /usr/bin/python3 studio/capturar.py salida.png --area metodo --vista catalogar --filtro-columna 5=alta --sin-panel
 
 Antes de capturar corre de verdad una operación que solo lee la muestra («Validar las fichas» sobre sus fichas): la
 salida del panel inferior y el plan son reales.
@@ -30,6 +32,29 @@ AQUI = Path(__file__).resolve().parent
 REPO = AQUI.parent
 sys.path.insert(0, str(AQUI))
 
+
+# lo que un chat devolvería con el prompt del paso 02 sobre la primera fila de Catalogar de la muestra (§9.15)
+CATALOGACION_DE_MUESTRA = """Tipo Book: libro con ISBN y editorial.
+
+```yaml
+tipo: catalogacion
+autores: "Rosa, Quispe Huamán"
+titulo: "Economía de las ciudades pequeñas"
+tipo_zotero: Book
+clasificador: Libro
+item_type: Book
+editorial: "Fondo Editorial de Muestra"
+fecha: 2021
+identificador: "isbn:9786120000000"
+idioma: Spanish
+tags: [economia, economia_regional]
+serie: ""
+serie_index: ""
+confianza: media
+verificar: ["identificador: el ISBN no se lee en la página legal"]
+nota: ""
+```
+"""
 
 # lo que un chat devolvería con la mirada «Fichas textuales» sobre las hojas 2 y 3 del primer libro de la muestra
 ESTUDIO_DE_MUESTRA = """```yaml
@@ -130,6 +155,9 @@ def main() -> int:
     parser.add_argument("--mostrar", action="store_true", help="con --repaso: la tarjeta con su cita a la vista")
     parser.add_argument("--filtro", default="", help="con --area fichas: todas · textual · parafrasis · obra · revisar · ia")
     parser.add_argument("--flujo", action="store_true", help="siembra en la muestra una revisión con su PRISMA y una ficha de la IA (§9.10)")
+    parser.add_argument("--catalogar-ia", action="store_true", help="con --area metodo y --vista entrada o catalogar: «Catalogar con un chat» con una respuesta de muestra revisada (§9.15)")
+    parser.add_argument("--filtro-columna", default="", help="en una etapa, un filtro por columna: «<número de columna>=<valor>»")
+    parser.add_argument("--sin-panel", action="store_true", help="en una etapa, la tabla ampliada (sin el panel de la derecha)")
     parser.add_argument("--ancho", type=int, default=1440)
     parser.add_argument("--alto", type=int, default=900)
     args = parser.parse_args()
@@ -225,6 +253,14 @@ def main() -> int:
             QTimer.singleShot(300, lambda: interfaz.pedir.emit("seleccionar_fila", {"fila": args.fila}))
         if args.pestana >= 0:
             QTimer.singleShot(600, lambda: interfaz.pedir.emit("pestana", {"indice": args.pestana}))
+        if args.filtro_columna:
+            columna, _, valor = args.filtro_columna.partition("=")
+            piezas["etapas"].filtrarColumna(args.vista, int(columna), valor)
+        if args.sin_panel:
+            from gui_comun.qt import QObject as _Q
+            QTimer.singleShot(700, lambda: raiz.findChild(_Q, "metodo" if args.area == "metodo" else "coherencia").setProperty("conPanel", False))
+        if args.catalogar_ia:
+            QTimer.singleShot(1200, lambda: interfaz.pedir.emit("catalogar_ia", {"texto": CATALOGACION_DE_MUESTRA}))
         if args.paleta is not None:
             QTimer.singleShot(900, lambda: interfaz.pedir.emit("paleta", {"texto": args.paleta}))
         if args.dialogo:
@@ -250,7 +286,7 @@ def main() -> int:
                 else:
                     llamar("dialogoEstudio", ESTUDIO_DE_MUESTRA)
             QTimer.singleShot(1500, abrir)
-        app.capturar(args.salida, espera_ms=6000 if args.ficha or args.ficha_obra or args.estudio else 2600)
+        app.capturar(args.salida, espera_ms=6000 if args.ficha or args.ficha_obra or args.estudio or args.catalogar_ia else 2600)
 
     QTimer.singleShot(400, correr_siguiente)
     codigo = app.app.exec()

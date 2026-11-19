@@ -6,11 +6,16 @@
 // la vista) con la línea tenue «respaldo verificado · se puede deshacer» cuando la operación escribe en una base. Y lo de
 // siempre: la tabla de lo que maneja la etapa y, a la derecha, el elemento elegido, la operación con los pasos de la
 // puerta, el plan, el registro y la salida de la CLI.
+// Sobre la tabla (2026-11-19), sus filtros por columna: el clic derecho en una celda filtra por su valor, «Filtrar» elige
+// columna y valor, y cada filtro es un chip que se quita con un toque; «Ampliar la tabla» oculta el panel de la derecha (y
+// el divisor entre los dos se arrastra y se recuerda). El clic en una cabecera ordena y arrastrar su borde la ensancha.
+// En Entrada y Catalogar, «Catalogar con un chat» (Ctrl+Shift+I, decisiones §9.15).
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
 import GuiComun
+import QtCore
 
 ColumnLayout {
     id: raiz
@@ -21,10 +26,21 @@ ColumnLayout {
     readonly property var ops: studio.operaciones
     readonly property string vista: studio.espacio.vista
     property alias pestana: lado.currentIndex
+    property alias conPanel: recuerdo.conPanel        // falso: la tabla ocupa todo el ancho
+    readonly property var filtrosPuestos: etapas.filtrosColumna[vista] || []
+    readonly property bool catalogable: vista === "entrada" || vista === "catalogar"
     spacing: 0
 
     function tabla() { return tablas.children[tablas.currentIndex] }
     function accion(n) { return studio.acciones.accion(n) }
+    function mostrarPestana(i) { lado.currentIndex = i; raiz.conPanel = true }
+
+    Settings {
+        id: recuerdo
+        category: "etapas/" + (raiz.recorrido ? "metodo" : "coherencia")
+        property bool conPanel: true
+        property var divisor
+    }
 
     // las cuatro tarjetas de Coherencia (la de Referencias, §9.10)
     GridLayout {
@@ -56,7 +72,7 @@ ColumnLayout {
                         ayuda: tarjeta.modelData.operacion !== "" ? "Elige la operación: se simula con F5 y se aplica con Ctrl+Intro" : "Ver la etapa"
                         onClicked: {
                             studio.espacio.fijarVista(tarjeta.modelData.vista)
-                            if (tarjeta.modelData.operacion !== "") { studio.operaciones.fijar(tarjeta.modelData.operacion); lado.currentIndex = 1 }
+                            if (tarjeta.modelData.operacion !== "") { studio.operaciones.fijar(tarjeta.modelData.operacion); raiz.mostrarPestana(1) }
                         }
                     }
                 }
@@ -165,6 +181,7 @@ ColumnLayout {
                 elide: Text.ElideRight
             }
         }
+        BotonAccion { accion: raiz.accion("metodo.catalogar_ia"); visible: raiz.catalogable }
         BotonAccion { accion: raiz.accion("op.cancelar"); conTexto: false; visible: raiz.ops.enCurso }
         BotonAccion { accion: raiz.accion("op.simular"); visible: raiz.ops.hayOperacion }
         QQC2.Button {
@@ -178,10 +195,201 @@ ColumnLayout {
     }
     Kirigami.Separator { Layout.fillWidth: true }
 
+    // los filtros de la tabla y su ancho
+    RowLayout {
+        id: barraTabla
+        readonly property var modelo: raiz.etapas.modeloDe(raiz.vista)
+        readonly property var origen: raiz.etapas.tablaDe(raiz.vista)
+        Layout.fillWidth: true
+        Layout.leftMargin: Kirigami.Units.largeSpacing
+        Layout.rightMargin: Kirigami.Units.smallSpacing
+        Layout.topMargin: Kirigami.Units.smallSpacing / 2
+        Layout.bottomMargin: Kirigami.Units.smallSpacing / 2
+        spacing: Kirigami.Units.smallSpacing
+        QQC2.Label {
+            text: !barraTabla.modelo || !barraTabla.origen ? ""
+                  : (barraTabla.modelo.filas === barraTabla.origen.filas ? barraTabla.origen.filas + " filas"
+                                                                         : barraTabla.modelo.filas + " de " + barraTabla.origen.filas + " filas")
+            font: Kirigami.Theme.smallFont
+            color: Kirigami.Theme.disabledTextColor
+        }
+        Flow {
+            Layout.fillWidth: true
+            spacing: Kirigami.Units.smallSpacing
+            Repeater {
+                model: raiz.filtrosPuestos
+                delegate: Chip {
+                    required property var modelData
+                    text: modelData.titulo + ": " + modelData.valor
+                    icono: "edit-delete-remove"
+                    ayuda: "Quitar este filtro"
+                    onClicked: raiz.etapas.filtrarColumna(raiz.vista, modelData.columna, "")
+                }
+            }
+            QQC2.Label {
+                visible: raiz.filtrosPuestos.length === 0
+                text: "Clic en una cabecera: ordenar · arrastrar su borde: ensanchar · clic derecho en una celda: filtrar por su valor"
+                font: Kirigami.Theme.smallFont
+                color: Kirigami.Theme.disabledTextColor
+                elide: Text.ElideRight
+                width: Math.min(implicitWidth, barraTabla.width - Kirigami.Units.gridUnit * 16)
+            }
+        }
+        QQC2.ToolButton {
+            visible: raiz.filtrosPuestos.length > 1
+            text: "Quitar todo"
+            font: Kirigami.Theme.smallFont
+            onClicked: raiz.etapas.quitarFiltrosColumna(raiz.vista)
+        }
+        QQC2.ToolButton {
+            id: botonFiltrar
+            text: "Filtrar"
+            icon.name: "view-filter"
+            onClicked: elegirFiltro.abrir(-1)
+            QQC2.ToolTip.text: "Solo las filas con un valor en una columna (se suma a la búsqueda, Ctrl+F)"
+            QQC2.ToolTip.visible: hovered
+        }
+        QQC2.ToolButton {
+            icon.name: raiz.conPanel ? "view-fullscreen" : "view-split-left-right"
+            text: raiz.conPanel ? "Ampliar la tabla" : "Mostrar el panel"
+            display: QQC2.AbstractButton.IconOnly
+            onClicked: raiz.conPanel = !raiz.conPanel
+            QQC2.ToolTip.text: raiz.conPanel ? "Ampliar la tabla: ocultar el panel de la derecha (elemento, operación, plan…)" : "Mostrar el panel de la derecha"
+            QQC2.ToolTip.visible: hovered
+            Accessible.name: text
+        }
+    }
+
+    // elegir el filtro: la columna y uno de sus valores, con cuántas filas tiene cada uno
+    QQC2.Popup {
+        id: elegirFiltro
+        property int columna: 0
+        readonly property var valores: visible ? raiz.etapas.valoresDe(raiz.vista, columna) : []
+        function abrir(c) {
+            columna = c >= 0 ? c : Math.max(0, columnaFiltro.currentIndex)
+            columnaFiltro.currentIndex = columna
+            buscaValor.text = ""
+            open()
+            buscaValor.forceActiveFocus()
+        }
+        x: barraTabla.x + barraTabla.width - width
+        y: barraTabla.y + barraTabla.height
+        width: Kirigami.Units.gridUnit * 20
+        height: Math.min(Kirigami.Units.gridUnit * 26, implicitHeight)
+        padding: Kirigami.Units.smallSpacing
+        contentItem: ColumnLayout {
+            spacing: Kirigami.Units.smallSpacing
+            QQC2.ComboBox {
+                id: columnaFiltro
+                Layout.fillWidth: true
+                model: raiz.etapas.columnasDe(raiz.vista).map(c => c.titulo)
+                onActivated: i => elegirFiltro.columna = i
+                Accessible.name: "Columna"
+            }
+            Kirigami.SearchField {
+                id: buscaValor
+                Layout.fillWidth: true
+                placeholderText: "Buscar un valor"
+            }
+            ListView {
+                id: listaValores
+                Layout.fillWidth: true
+                Layout.preferredHeight: Math.min(contentHeight, Kirigami.Units.gridUnit * 18)
+                clip: true
+                model: elegirFiltro.valores.filter(v => buscaValor.text === "" || v.valor.toLowerCase().indexOf(buscaValor.text.toLowerCase()) >= 0)
+                QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
+                delegate: QQC2.ItemDelegate {
+                    required property var modelData
+                    width: listaValores.width
+                    onClicked: { raiz.etapas.filtrarColumna(raiz.vista, elegirFiltro.columna, modelData.valor); elegirFiltro.close() }
+                    contentItem: RowLayout {
+                        QQC2.Label { Layout.fillWidth: true; text: modelData.valor; elide: Text.ElideRight }
+                        QQC2.Label { text: modelData.n; font: Kirigami.Theme.smallFont; color: Kirigami.Theme.disabledTextColor }
+                    }
+                }
+            }
+            QQC2.Label {
+                visible: listaValores.count === 0
+                text: "Ningún valor"
+                color: Kirigami.Theme.disabledTextColor
+            }
+        }
+    }
+
+    // el clic derecho en una celda de la tabla
+    QQC2.Menu {
+        id: menuTabla
+        property int fila: -1
+        property int columna: -1
+        property string valor: ""
+        property string titulo: ""
+        onAboutToShow: {
+            const t = raiz.tabla()
+            const c = t ? t.celdaSobre : null
+            fila = c ? c.row : (t ? t.filaActual : -1)
+            columna = c ? c.column : -1
+            valor = columna >= 0 ? raiz.etapas.valorCelda(raiz.vista, fila, columna) : ""
+            const cols = raiz.etapas.columnasDe(raiz.vista)
+            titulo = columna >= 0 && columna < cols.length ? cols[columna].titulo : ""
+        }
+        QQC2.MenuItem {
+            visible: menuTabla.columna >= 0
+            height: visible ? implicitHeight : 0
+            text: "Solo «" + (menuTabla.valor.length > 40 ? menuTabla.valor.slice(0, 40) + "…" : menuTabla.valor) + "» en " + menuTabla.titulo
+            icon.name: "view-filter"
+            onTriggered: raiz.etapas.filtrarColumna(raiz.vista, menuTabla.columna, menuTabla.valor)
+        }
+        QQC2.MenuItem {
+            visible: menuTabla.columna >= 0
+            height: visible ? implicitHeight : 0
+            text: "Filtrar " + menuTabla.titulo + " por otro valor…"
+            icon.name: "view-list-details"
+            onTriggered: elegirFiltro.abrir(menuTabla.columna)
+        }
+        QQC2.MenuItem {
+            visible: raiz.filtrosPuestos.length > 0
+            height: visible ? implicitHeight : 0
+            text: "Quitar los filtros"
+            icon.name: "edit-clear-all"
+            onTriggered: raiz.etapas.quitarFiltrosColumna(raiz.vista)
+        }
+        QQC2.MenuSeparator {}
+        QQC2.MenuItem {
+            visible: raiz.catalogable
+            height: visible ? implicitHeight : 0
+            readonly property var a: raiz.accion("metodo.catalogar_ia")
+            text: a.textoPlano
+            icon.name: a.icono
+            enabled: a.habilitada
+            onTriggered: a.disparar()
+        }
+        QQC2.MenuItem {
+            text: "Abrir"
+            icon.name: "document-open"
+            enabled: raiz.etapas.hayElemento && raiz.etapas.elementoRuta !== ""
+            onTriggered: raiz.etapas.abrirElemento()
+        }
+        QQC2.MenuItem {
+            visible: menuTabla.columna >= 0
+            height: visible ? implicitHeight : 0
+            text: "Copiar el valor"
+            icon.name: "edit-copy"
+            onTriggered: studio.espacio.copiar(menuTabla.valor)
+        }
+        QQC2.MenuItem {
+            text: raiz.conPanel ? "Ampliar la tabla" : "Mostrar el panel"
+            icon.name: raiz.conPanel ? "view-fullscreen" : "view-split-left-right"
+            onTriggered: raiz.conPanel = !raiz.conPanel
+        }
+    }
+
     QQC2.SplitView {
+        id: divisor
         Layout.fillWidth: true
         Layout.fillHeight: true
         orientation: Qt.Horizontal
+        Component.onCompleted: if (recuerdo.divisor) divisor.restoreState(recuerdo.divisor)
+        onResizingChanged: if (!resizing) recuerdo.divisor = divisor.saveState()
 
         StackLayout {
             id: tablas
@@ -218,6 +426,7 @@ ColumnLayout {
                         puerta: [{ ancho: 0, minimo: 10, conIcono: true }, { ancho: 6, alinear: "derecha" }, { ancho: 9, secundaria: true }, { ancho: 18, secundaria: true, estrecho: true }],
                         tareas: [{ ancho: 0, minimo: 12, conIcono: true }, { ancho: 7, secundaria: true }, { ancho: 9, secundaria: true, estrecho: true }, { ancho: 9, secundaria: true, estrecho: true }, { ancho: 14, semantica: true }]
                     })[nombre] || []
+                    menuContextual: menuTabla
                     onOrdenar: (columna, descendente) => modelo.ordenar(columna, descendente)
                     onFilaActualCambiada: fila => { raiz.etapas.fijarFila(nombre, fila); if (fila >= 0 && lado.currentIndex > 1) lado.currentIndex = 0 }
                     onActivada: fila => { raiz.etapas.fijarFila(nombre, fila); raiz.etapas.abrirElemento() }
@@ -225,6 +434,7 @@ ColumnLayout {
             }
         }
         ColumnLayout {
+            visible: raiz.conPanel
             QQC2.SplitView.preferredWidth: Kirigami.Units.gridUnit * 28
             QQC2.SplitView.minimumWidth: Kirigami.Units.gridUnit * 18
             spacing: 0
