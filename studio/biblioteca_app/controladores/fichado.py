@@ -14,6 +14,11 @@ La ficha de obra de Yachay (decisiones §9.13): la de la persona sobre la obra, 
   el único escritor de la base). Un 409 no pisa: vuelve la versión actual y la persona elige llevar la suya sobre ella o
   quedarse con la de Yachay (`quedarseConYachay`: la sincronía de Yachay, `main.py sincronizar --origen yachay --aplicar`).
   Las llamadas a la CLI van por `CanalYachay`, que las pruebas reemplazan: nada contra el Yachay real.
+Corregir (decisiones §9.13, nota del 2026-11-19): `leerFicha` abre una ficha que ya existe en un escrito con su huella
+  (`corregible`) y `corregir` la reescribe por `lib/consulta.py guardar_ficha` (simula; escribe con `aplicar` y la huella con
+  que se abrió: si cambió en disco, `ficha_cambiada` con la de ahora, y no pisa). La de obra corregida ofrece la misma vuelta
+  a Yachay. `simularYachayDe` y `llevarAYachayDe` llevan el libro explícito: los usa «Corregir…» de la ficha de obra en
+  Yachay, que no pasa por un escrito ni prepara el PDF.
 Límite: no es una puerta: nunca escribe en Calibre ni en Zotero, ni llama a ningún modelo. Las capturas y las pruebas, sobre
   `studio/muestra.py` (WRITING_DIR de la muestra).
 """
@@ -75,6 +80,7 @@ class Fichado(QObject):
     promptObra = Signal("QVariantMap")               # el prompt de la mirada (ya en el portapapeles) o {error}
     pegadoObra = Signal("QVariantMap")               # lo pegado, leído: {ok, errores, avisos, estudio, fichas}
     yachay = Signal("QVariantMap")                   # la ficha de obra en Yachay: lo que se enviaría, lo enviado o el 409
+    corregible = Signal("QVariantMap")               # una ficha del escrito para corregirla (sus secciones y su huella) o {error}
     aviso = Signal(str, str)
     _listo = Signal(str, "QVariant")                 # (qué, dato) desde los hilos
 
@@ -140,7 +146,7 @@ class Fichado(QObject):
                 self.consola.registrar("warn", f"Fichar: {r['error']}")
         elif que == "revisar":
             if r.get("escrito"):
-                self.consola.registrar("ok", f"Ficha guardada: {r.get('ruta') or r.get('archivo')}")
+                self.consola.registrar("ok", f"Ficha {'corregida' if r.get('correccion') else 'guardada'}: {r.get('ruta') or r.get('archivo')}")
                 self.libros._pedir_usos()                 # «Usado en» suma el escrito
             self.revisada.emit(r)
         elif que == "prompt":
@@ -149,6 +155,8 @@ class Fichado(QObject):
             self.promptObra.emit(r)
         elif que == "pegar":
             self.pegadoObra.emit(r)
+        elif que == "ficha":
+            self.corregible.emit(r)
         elif que == "yachay":
             if r.get("escrita"):
                 self.consola.registrar("ok", f"Ficha de obra del libro {r.get('calibre_id')} llevada a Yachay (versión {r.get('version')})")
@@ -185,17 +193,49 @@ class Fichado(QObject):
             return {**_consulta().nueva_ficha(carpeta, campos, aplicar), "aplicar": aplicar}
         self._en_hilo("revisar", trabajo)
 
+    @Slot(str, str)
+    def leerFicha(self, carpeta: str, archivo: str) -> None:
+        """Una ficha que ya existe en el escrito `carpeta`, para corregirla (`corregible`): sus secciones, su página, su
+        categoría, su uso y la huella con que se abrió (`lib/fichar.py leer`)."""
+        nombre = Path(archivo).name
+
+        def trabajo():
+            c = _consulta()
+            return {**c._fichar().leer(c._proyecto(carpeta), nombre), "carpeta": carpeta}
+        self._en_hilo("ficha", trabajo)
+
+    @Slot(str, str, str, "QVariantMap", bool)
+    def corregir(self, carpeta: str, archivo: str, huella: str, campos: dict, aplicar: bool) -> None:
+        """Corrige una ficha que ya existe con la huella con que se abrió (`lib/consulta.py guardar_ficha`): sin `aplicar`
+        simula; con él escribe (`revisada`). Si cambió en disco: `{codigo: "ficha_cambiada", actual}`, sin escribir."""
+        nombre, campos = Path(archivo).name, dict(campos)
+
+        def trabajo():
+            r = _consulta().guardar_ficha(carpeta, nombre, huella, campos, aplicar)
+            return {**r, "aplicar": aplicar, "correccion": True}
+        self._en_hilo("revisar", trabajo)
+
     # ------------------------------------------------------------------ la ficha de obra en Yachay (§9.13)
     @Slot("QVariantMap")
     def simularYachay(self, secciones: dict) -> None:
         """Qué se enviaría a la ficha de obra de Yachay de este libro y sobre qué versión (`yachay`, sin escribir)."""
-        cid, respuestas = self._calibre_id, dict(secciones)
+        self.simularYachayDe(self._calibre_id, secciones)
+
+    @Slot(int, "QVariantMap")
+    def simularYachayDe(self, calibre_id: int, secciones: dict) -> None:
+        """Lo mismo, del libro `calibre_id` (la de Yachay corregida sin pasar por un escrito)."""
+        cid, respuestas = int(calibre_id), dict(secciones)
         self._en_hilo("yachay", lambda: {**self.canal.ficha_a_yachay(cid, respuestas, False), "accion": "simular"})
 
     @Slot("QVariantMap", int)
     def llevarAYachay(self, secciones: dict, sobre: int) -> None:
         """La envía (tras confirmar en la ventana); `sobre` ≥ 0 tras un 409: llevar la suya sobre esa versión."""
-        cid, respuestas = self._calibre_id, dict(secciones)
+        self.llevarAYachayDe(self._calibre_id, secciones, sobre)
+
+    @Slot(int, "QVariantMap", int)
+    def llevarAYachayDe(self, calibre_id: int, secciones: dict, sobre: int) -> None:
+        """Lo mismo, del libro `calibre_id`."""
+        cid, respuestas = int(calibre_id), dict(secciones)
         sobre_v = int(sobre) if int(sobre) >= 0 else None
         self._en_hilo("yachay", lambda: {**self.canal.ficha_a_yachay(cid, respuestas, True, sobre_v), "accion": "llevar"})
 

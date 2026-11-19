@@ -43,7 +43,8 @@ con siete áreas en chips (Ctrl+1–7: las seis del rediseño del 2026-11-18 y R
   subrayados, «Abrir», «Nueva ficha», «Estudiar con la IA» y «Citar en LaTeX», «Usado en», Dolphin, Calibre y Zotero, y
   debajo su estado en Zotero, su lectura en KOReader, su nota, identificadores, etiquetas, descripción y fichas canónicas.
   Bajo «Usado en», la **Ficha de obra en Yachay** (§9.13): las seis respuestas, temas, signo, versión y si está leída, con
-  «Llevar a un escrito»; «Nueva ficha» de obra nace rellena con ella y, al guardar, ofrece llevarla de vuelta a Yachay.
+  «Llevar a un escrito» y «Corregir…» (las seis, a Yachay tras confirmar, sin pasar por un escrito); «Nueva ficha» de obra
+  nace rellena con ella y, al guardar, ofrece llevarla de vuelta a Yachay.
 - **Lectura** (`../lectura_base/`, `../docs/decisiones.md` §9.6 y §9.8): la base de lectura única, en solo lectura. Arriba,
   subrayados, horas en doce semanas, libros con lectura y racha; la sincronización («Sincronizar ahora» y «Cada hora»);
   el total, este mes, las barras de las doce semanas y el mapa de calor por día; los libros con lectura; y del libro
@@ -51,8 +52,9 @@ con siete áreas en chips (Ctrl+1–7: las seis del rediseño del 2026-11-18 y R
   raya del color de la herramienta donde nacieron, filtrados por origen; cada uno se copia como cita) y sus sesiones.
 - **Fichas**: las de todos los escritos y las canónicas, filtradas en lista (Todas, Textuales, Paráfrasis, De obra, Por
   revisar, De la IA), cada una con su cita, su obra y página, si está cotejada con el PDF y si la propuso la IA, «Abrir en
-  LaTeX Studio» y «Copiar la cita» (la de la IA, solo tras «Cotejé la página»: §9.10), y entre las de obra las de Yachay
-  (§9.13); «Nueva ficha» (también la ficha de obra, con sus seis preguntas) y «Estudiar con la IA»; y el **Repaso para estudiantes**: el sistema Leitner de cinco cajas (`../lib/repaso.py`,
+  LaTeX Studio», «Copiar la cita» (la de la IA, solo tras «Cotejé la página»: §9.10) y «Corregir…» (la que ya existe en
+  su escrito, con su huella; la de obra ofrece después llevarla a Yachay), y entre las de obra las de Yachay (§9.13);
+  «Nueva ficha» (también la ficha de obra, con sus seis preguntas) y «Estudiar con la IA»; y el **Repaso para estudiantes**: el sistema Leitner de cinco cajas (`../lib/repaso.py`,
   su base propia `repaso.sqlite`), con la pregunta, «Mostrar la ficha», «La sabía» y «Repasar luego».
 - **Método** (Adquirir → Entrada → Catalogar → Fichas → Manifiestos, un recorrido de pasos con su contador) y
   **Coherencia** (cuatro tarjetas: Calibre ⇄ Zotero, Calibre ⇄ KOReader, Tareas automáticas y Referencias, si sus DOI e

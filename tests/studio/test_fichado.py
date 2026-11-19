@@ -136,3 +136,98 @@ def test_el_canal_simula_por_la_cli_sobre_la_base_de_la_muestra(entorno):
     assert not r.get("error"), r
     assert r["version_base"] == 3 and r["cambian"] == ["Límites"] and not r["escrita"] and r["faltan"] == []
     assert r["ficha"]["hallazgo"].startswith("Crecen las que se integran"), "viaja la ficha entera"
+
+
+@requiere_binding
+def test_corregir_una_ficha_de_obra_que_ya_existe_y_llevarla_a_yachay(app, entorno, monkeypatch):
+    """Corregir desde el área Fichas (§9.13, nota del 2026-11-19): la ficha de obra que ya existe en el escrito se abre con
+    su huella, la corrección se simula y se escribe por `guardar_ficha`, una huella vieja no pisa (`ficha_cambiada`) y la
+    vuelta a Yachay es la misma (el canal, con el libro explícito)."""
+    from gui_comun.consola import Consola
+    from biblioteca_app.controladores.ajustes import Ajustes
+    from biblioteca_app.controladores.espacio import Espacio
+    from biblioteca_app.controladores.fichado import Fichado
+    from biblioteca_app.controladores.libros import Libros
+    from biblioteca_app.servicios import datos
+    monkeypatch.setenv("PROMPTS_DIR", str(REPO.parent / "prompts"))
+    consola = Consola()
+    libros = Libros(Espacio(consola, Ajustes()), consola, datos.cargar_env(), ruta_indice=entorno.indice, repo=entorno.repo)
+    canal = CanalFalso()
+    fichado = Fichado(libros, consola, entorno.raiz / "cache" / "fichado", canal=canal)
+    revisadas, leidas, yachay = [], [], []
+    fichado.revisada.connect(lambda r: revisadas.append(dict(r)))
+    fichado.corregible.connect(lambda r: leidas.append(dict(r)))
+    fichado.yachay.connect(lambda r: yachay.append(dict(r)))
+    fichado.preparar(1)
+    _esperar(app, fichado)
+    carpeta = fichado.escritos[0]["carpeta"]
+    seis = {"Pregunta": "Si las ciudades chicas ganan algo al unirse a su región.", "Método": "Compara series de varias décadas.",
+            "Datos": "Censos nacionales.", "Hallazgo": "Las que se unen a su región ganan más.",
+            "Límites": "No separa el efecto de la carretera.", "Uso que le daré": "El marco del capítulo dos."}
+    fichado.revisar(carpeta, {"tipo": "obra", "secciones": seis}, True)
+    _esperar(app, fichado)
+    assert revisadas[-1].get("escrito"), revisadas[-1]
+    archivo = revisadas[-1]["archivo"]
+    ruta = Path(carpeta) / "fuentes" / "fichas" / archivo
+    assert archivo.endswith("-obra.md") and ruta.is_file()
+
+    fichado.leerFicha(carpeta, str(ruta))                 # el área Fichas da la ruta entera
+    _esperar(app, fichado)
+    abierta = leidas[-1]
+    assert not abierta.get("error") and abierta["tipo"] == "obra" and abierta["huella"]
+    assert {s["titulo"]: s["texto"] for s in abierta["secciones"]}["Límites"] == seis["Límites"]
+
+    corregidas = {**seis, "Límites": "No separa la carretera de otras obras del mismo año."}
+    antes = ruta.read_text(encoding="utf-8")
+    fichado.corregir(carpeta, archivo, abierta["huella"], {"secciones": corregidas, "uso": "", "tema": ""}, False)
+    _esperar(app, fichado)
+    sim = revisadas[-1]
+    assert sim["correccion"] and not sim["escrito"] and not sim.get("error") and sim["archivo"] == archivo, sim
+    assert ruta.read_text(encoding="utf-8") == antes, "simular no escribe"
+
+    fichado.simularYachayDe(1, corregidas)                # la misma vuelta: qué cambia y sobre qué versión
+    _esperar(app, fichado)
+    assert yachay[-1]["accion"] == "simular" and canal.llamadas[-1][1] == 1 and canal.llamadas[-1][3] is False
+
+    fichado.corregir(carpeta, archivo, abierta["huella"], {"secciones": corregidas, "uso": "", "tema": ""}, True)
+    _esperar(app, fichado)
+    assert revisadas[-1]["escrito"] and revisadas[-1]["correccion"]
+    assert corregidas["Límites"] in ruta.read_text(encoding="utf-8")
+
+    fichado.corregir(carpeta, archivo, abierta["huella"], {"secciones": seis, "uso": "", "tema": ""}, True)   # la huella vieja
+    _esperar(app, fichado)
+    assert revisadas[-1]["codigo"] == "ficha_cambiada" and revisadas[-1]["actual"]["huella"] != abierta["huella"]
+    assert corregidas["Límites"] in ruta.read_text(encoding="utf-8"), "una huella vieja no pisa"
+
+    fichado.llevarAYachayDe(1, corregidas, -1)            # y se lleva tras confirmar, con el libro explícito
+    _esperar(app, fichado)
+    assert yachay[-1]["codigo"] == "lectura_modificada" and canal.llamadas[-1][:2] == ("ficha", 1) and canal.llamadas[-1][3] is True
+
+
+@requiere_binding
+def test_corregir_la_de_yachay_sin_escrito_no_toca_ningun_escrito(app, entorno):
+    """«Corregir…» de la ficha de obra en Yachay (§9.13): solo el canal, con el libro explícito y sin preparar el PDF ni
+    elegir un escrito; ninguna ficha de un escrito cambia."""
+    from gui_comun.consola import Consola
+    from biblioteca_app.controladores.ajustes import Ajustes
+    from biblioteca_app.controladores.espacio import Espacio
+    from biblioteca_app.controladores.fichado import Fichado
+    from biblioteca_app.controladores.libros import Libros
+    from biblioteca_app.servicios import datos
+    consola = Consola()
+    libros = Libros(Espacio(consola, Ajustes()), consola, datos.cargar_env(), ruta_indice=entorno.indice, repo=entorno.repo)
+    canal = CanalFalso()
+    fichado = Fichado(libros, consola, entorno.raiz / "cache" / "fichado", canal=canal)
+    vistos = []
+    fichado.yachay.connect(lambda r: vistos.append(dict(r)))
+    escritura = entorno.raiz / "escritura"                # el WRITING_DIR de la muestra
+    antes = {p: p.stat().st_mtime_ns for p in escritura.rglob("fuentes/fichas/*.md")}
+    assert antes, "la muestra tiene fichas en sus escritos"
+    secciones = {"Límites": "No separa la carretera de otras obras del mismo año."}
+    fichado.simularYachayDe(1, secciones)
+    _esperar(app, fichado)
+    assert vistos[-1]["accion"] == "simular" and fichado.calibreId == 0, "no prepara el libro: el diálogo de ficha sigue igual"
+    fichado.llevarAYachayDe(1, secciones, 4)
+    _esperar(app, fichado)
+    assert vistos[-1]["escrita"] and canal.llamadas[-1] == ("ficha", 1, secciones, True, 4)
+    assert {p: p.stat().st_mtime_ns for p in escritura.rglob("fuentes/fichas/*.md")} == antes

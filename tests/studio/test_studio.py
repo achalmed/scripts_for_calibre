@@ -175,3 +175,130 @@ def test_la_ventana_no_escribe_en_las_bases():
         texto = py.read_text(encoding="utf-8").lower()
         assert not re.search(r"\b(insert into|update \w+ set|delete from)\b", texto), py
         assert "mode=rw" not in texto and "sqlite3.connect" not in texto, py
+
+
+CORREGIR = """
+import sys, json, os, time; sys.path.insert(0, sys.argv[1])
+from pathlib import Path
+from biblioteca_app import aplicacion
+from gui_comun.nucleo import Aplicacion
+from gui_comun.qt import QMetaObject, QObject
+try:
+    from PySide6.QtCore import Q_ARG
+except ImportError:
+    from PyQt6.QtCore import Q_ARG
+app = Aplicacion("biblioteca-studio", "Biblioteca Studio", version="prueba", nombre_ajustes="BibliotecaStudio")
+piezas = aplicacion.construir(app, vigilar_puerta=False)
+errores = []
+app.motor.warnings.connect(lambda avisos: errores.extend(a.toString() for a in avisos))
+
+class Falso:                                   # el Yachay de las pruebas: la primera vez, un 409; sobre la versión que dio, acepta
+    def __init__(self):
+        self.llamadas = []
+    def ficha_a_yachay(self, calibre_id, respuestas, aplicar, sobre=None):
+        self.llamadas.append([calibre_id, dict(respuestas), aplicar, sobre])
+        plan = {"calibre_id": calibre_id, "ficha": {"limites": respuestas.get("Límites", "")}, "version_base": sobre if sobre is not None else 3,
+                "cambian": ["Límites"], "nueva": False, "leida": False, "faltan": [], "escrita": False}
+        if not aplicar:
+            return plan
+        if sobre is None:
+            return {**plan, "codigo": "lectura_modificada", "version": 4, "actual": {"ficha": {"limites": "Otra cosa"}, "version": 4}}
+        return {**plan, "escrita": True, "version": sobre + 1, "aviso": ""}
+    def sincronizar_yachay(self):
+        return {"ok": True, "error": ""}
+
+fichado = piezas["fichado"]
+fichado.canal = canal = Falso()
+def esperar(cond, segundos=60):
+    t0 = time.monotonic()
+    while time.monotonic() - t0 < segundos:
+        app.app.processEvents()
+        if cond():
+            return True
+        time.sleep(0.03)
+    return False
+def leer(obj, nombre):
+    v = obj.property(nombre)
+    return v.toVariant() if hasattr(v, "toVariant") else v
+def llamar(obj, fn, *args):
+    QMetaObject.invokeMethod(obj, fn, *[Q_ARG("QVariant", a) for a in args])
+    app.app.processEvents()
+
+ruta = os.path.join(os.environ["XDG_CACHE_HOME"], "Prueba_corregir.qml")
+os.makedirs(os.path.dirname(ruta), exist_ok=True)
+qml = str(aplicacion.QML_DIR / "componentes")
+open(ruta, "w").write('import QtQuick\\nimport GuiComun\\nimport "file://%s"\\nVentanaBase { id: ventana; acciones: studio.acciones; visible: false\\n'
+                      '  DialogoFicha { objectName: "pruebaFicha" }\\n  DialogoObraYachay { objectName: "pruebaObra" } }\\n' % qml)
+ok = app.cargar(ruta)
+raiz = app.motor.rootObjects()[0]
+piezas["libros"].abrirUrl("biblioteca-studio://libro/1")
+fichado.preparar(1); esperar(lambda: not fichado.ocupado)
+carpeta = fichado.escritos[0]["carpeta"]; escrito = fichado.escritos[0]["titulo"]
+seis = {"Pregunta": "Si las ciudades chicas ganan algo al unirse a su región.", "Método": "Compara series de varias décadas.",
+        "Datos": "Censos nacionales.", "Hallazgo": "Las que se unen a su región ganan más.",
+        "Límites": "No separa el efecto de la carretera.", "Uso que le daré": "El marco del capítulo dos."}
+hecho = []
+fichado.revisada.connect(lambda r: hecho.append(dict(r)))
+fichado.revisar(carpeta, {"tipo": "obra", "secciones": seis}, True); esperar(lambda: bool(hecho))
+archivo = Path(carpeta) / "fuentes" / "fichas" / hecho[-1]["archivo"]
+
+d = raiz.findChild(QObject, "pruebaFicha")
+llamar(d, "corregir", {"tipo": "obra", "carpeta": carpeta, "archivo": str(archivo), "calibreId": "1", "escrito": escrito})
+esperar(lambda: bool((leer(d, "corrigiendo") or {}).get("huella")))
+r = {"titulo": leer(d, "title"), "leidos": leer(d, "textos"), "corrigiendo": leer(d, "corrigiendo")}
+llamar(d, "poner", {"tipo": "obra", "archivo": archivo.name, "huella": r["corrigiendo"]["huella"], "pagina": "", "uso": "", "categoria": "",
+                    "secciones": [{"titulo": k, "texto": v} for k, v in {**seis, "Límites": "No separa la carretera de otras obras del mismo año."}.items()]})
+vuelta = d.findChild(QObject, "vueltaYachay")
+llamar(d, "revisar", False)
+esperar(lambda: leer(d, "revision") is not None and leer(vuelta, "plan") is not None and not fichado.ocupado)
+r["revision"] = {k: (leer(d, "revision") or {}).get(k) for k in ("archivo", "error", "correccion", "escrito", "aplicar")}
+r["llevable"], r["resumen"] = leer(d, "llevable"), leer(vuelta, "resumen")
+confirmar, conflicto = vuelta.findChild(QObject, "confirmarYachay"), vuelta.findChild(QObject, "conflictoYachay")
+llamar(d, "revisar", True)
+esperar(lambda: bool(leer(confirmar, "opened")))
+r["confirmar"] = {"abierto": leer(confirmar, "opened"), "titulo": leer(confirmar, "title"), "texto": leer(confirmar, "subtitle")}
+r["en_disco"] = "otras obras del mismo año" in archivo.read_text(encoding="utf-8")
+llamar(vuelta, "llevar", -1)
+esperar(lambda: bool(leer(conflicto, "opened")))
+r["conflicto"] = {"abierto": leer(conflicto, "opened"), "texto": leer(conflicto, "subtitle")}
+llamar(vuelta, "llevar", 4)
+esperar(lambda: not leer(d, "visible"))
+r["cerrado"], r["llamadas"] = not leer(d, "visible"), canal.llamadas[:]
+
+antes = archivo.stat().st_mtime_ns
+o = raiz.findChild(QObject, "pruebaObra")
+canal.llamadas.clear()
+llamar(o, "abrir", {"calibreId": 1, "detalle": "versión 3", "preguntas": [{"titulo": k, "texto": v} for k, v in seis.items()]}, "Economía de ciudades")
+o.setProperty("textos", {**seis, "Hallazgo": "Ganan más las que se unen a su región."})
+vo = o.findChild(QObject, "vueltaYachay")
+llamar(o, "revisar")
+esperar(lambda: leer(vo, "plan") is not None and not fichado.ocupado)
+r["obra"] = {"titulo": leer(o, "title"), "llevable": leer(vo, "llevable"), "simulo": canal.llamadas[-1][:1] + canal.llamadas[-1][2:]}
+llamar(vo, "llevar", 4)
+esperar(lambda: not leer(o, "visible"))
+r["obra"].update(cerrado=not leer(o, "visible"), llevo=canal.llamadas[-1][:1] + canal.llamadas[-1][2:],
+                 hallazgo=canal.llamadas[-1][1]["Hallazgo"], escrito_intacto=archivo.stat().st_mtime_ns == antes)
+app.cerrar()
+print(json.dumps({"ok": ok, "errores": errores, **r}, ensure_ascii=False, default=str))
+"""
+
+
+@requiere_sistema
+def test_corregir_una_ficha_de_obra_y_la_de_yachay_en_la_ventana(tmp_path, muestra):
+    """La ventana (§9.13, nota del 2026-11-19): «Corregir…» abre la ficha de obra que ya existe con su huella, «Revisar»
+    simula la corrección y la vuelta, «Guardar la corrección» la escribe y ofrece «¿Llevarla también a Yachay?»; un 409
+    abre «Tu ficha de obra cambió en Yachay» y «Llevar la mía sobre la versión N» la envía. «Corregir…» de la de Yachay lleva
+    las seis sin tocar ningún escrito. Todo con un Yachay falso."""
+    r = correr_python(CORREGIR, entorno_gui(tmp_path, muestra))
+    assert r.returncode == 0, r.stderr[-3000:]
+    d = json.loads(r.stdout.strip().splitlines()[-1])
+    assert d["ok"] and not _graves(d["errores"]), "\n".join(_graves(d["errores"]))
+    assert d["titulo"].startswith("Corregir la ficha de «") and d["leidos"]["Límites"] == "No separa el efecto de la carretera."
+    assert d["revision"]["correccion"] and not d["revision"]["error"] and not d["revision"]["escrito"]
+    assert d["llevable"] and d["resumen"].startswith("En Yachay: tu ficha de obra va en la versión 3; cambiarían Límites")
+    assert d["confirmar"]["abierto"] and d["confirmar"]["titulo"] == "¿Llevarla también a Yachay?" and d["en_disco"]
+    assert d["conflicto"]["abierto"] and "Va en la versión 4" in d["conflicto"]["texto"]
+    assert d["cerrado"] and [l[2:] for l in d["llamadas"]] == [[False, None], [True, None], [True, 4]]
+    o = d["obra"]
+    assert o["titulo"] == "Corregir tu ficha de obra de «Economía de ciudades»" and o["llevable"] and o["simulo"] == [1, False, None]
+    assert o["cerrado"] and o["llevo"] == [1, True, 4] and o["hallazgo"].startswith("Ganan más") and o["escrito_intacto"]

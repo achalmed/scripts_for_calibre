@@ -984,3 +984,25 @@ simulación, la escritura con `version_base`, el 409, el 422 y la migración del
 (el canal falso: simular, el 409, «sobre la versión» y quedarse; el canal de verdad simula por la CLI sobre la muestra) y
 `tests/studio/test_inicio.py` (la de Yachay en Fichas y en la ficha editorial). Primera lectura de producción (2026-11-19,
 solo `cambios`): la entidad responde y aún no hay fichas de obra.
+
+**Nota del 2026-11-19: corregir también lleva a Yachay.** Faltaban dos caminos de la vuelta: corregir la ficha de obra de un
+escrito que ya existe y corregir la de Yachay sin pasar por un escrito. Los dos usan la misma vuelta, sin otro canal:
+
+- **Una sola vuelta en la ventana**: `VueltaYachay.qml` (de `DialogoFicha.qml`, que tenía los diálogos dentro) simula, abre
+  «¿Llevarla…?», envía con `version_base` y, ante un 409, abre «Tu ficha de obra cambió en Yachay» con «Llevar la mía sobre
+  la versión N» o «Quedarme con la de Yachay». La usan los tres diálogos y solo atiende la señal `yachay` mientras el suyo
+  está abierto. En `Fichado`, `simularYachayDe` y `llevarAYachayDe` reciben el libro explícito (las de antes los llaman con
+  el preparado); el canal sigue siendo `CanalYachay`, la CLI `ficha-a-yachay`.
+- **Corregir la ficha de un escrito** (área Fichas, «Corregir…» en las textuales, de paráfrasis, de fuente y de obra de un
+  escrito): abre el diálogo de la ficha con el PDF al lado, con el escrito y el tipo fijos; `leerFicha` la lee con su huella
+  (`lib/fichar.py leer`) y `corregir` la reescribe por `lib/consulta.py guardar_ficha` (simula; «Guardar la corrección»
+  escribe con la huella con que se abrió). Si otro la cambió en disco, `ficha_cambiada`: no se pisa, el diálogo pone la de
+  ahora y pide revisarla de nuevo. La de obra corregida simula y ofrece la vuelta igual que al crearla.
+- **Corregir la de Yachay** («Corregir…» del bloque «Ficha de obra en Yachay» de la ficha editorial): `DialogoObraYachay.qml`
+  con las seis respuestas; «Revisar» dice qué cambiaría y sobre qué versión, y «Llevar a Yachay…» la envía tras confirmar
+  («¿Llevarla a Yachay?»). No toca ningún escrito: las copias que ya están en uno quedan como están (la de Yachay es de la
+  persona; la del escrito, su copia). «Ahora no» deja seguir corrigiendo; temas y signo siguen corrigiéndose en Yachay.
+
+Pruebas: `tests/studio/test_fichado.py` (corregir con la huella, la vieja no pisa, la vuelta con el libro explícito y la de
+Yachay sin tocar los escritos) y `tests/studio/test_studio.py::test_corregir_una_ficha_de_obra_y_la_de_yachay_en_la_ventana`
+(los dos diálogos en la ventana sin pantalla, con un Yachay falso: la simulación, la confirmación, el 409 y el envío).

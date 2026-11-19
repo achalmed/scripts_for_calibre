@@ -5,7 +5,8 @@
 // Zotero, la lectura en KOReader, la nota, identificadores, materias, descripción, formatos y fichas canónicas. Solo lee: lo que cambia la biblioteca es una operación.
 // Desde aquí se ficha el libro en un escrito y se estudia con la IA (DialogoFicha y DialogoEstudioObra, §9.4 y §9.5):
 // eso escribe solo en las fichas del escrito, nunca en Calibre ni en Zotero. Debajo de «Usado en», la ficha de obra de la
-// persona en Yachay (§9.13: las seis respuestas, temas, signo, si está leída), con «Llevar a un escrito».
+// persona en Yachay (§9.13: las seis respuestas, temas, signo, si está leída), con «Llevar a un escrito» y «Corregir…»
+// (DialogoObraYachay: las seis, a Yachay tras confirmar, sin pasar por un escrito).
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -206,6 +207,13 @@ QQC2.Control {
                             ayuda: "Una ficha de obra en un escrito, rellena con esta: ajusta «Uso que le daré» a ese escrito"
                             onClicked: dialogoFicha.abrir({ tipo: "obra", textos: Object.assign({}, obraYachay.fo.secciones) })
                         }
+                        Chip {
+                            objectName: "fichaObraCorregir"
+                            text: "Corregir…"
+                            icono: "document-edit"
+                            ayuda: "Corregir tus seis respuestas en Yachay sin pasar por un escrito: se revisa qué cambia y se lleva tras confirmar"
+                            onClicked: dialogoObraYachay.abrir(obraYachay.fo, studio.libros.ficha.titulo || "")
+                        }
                     }
                     QQC2.Label {
                         Layout.fillWidth: true
@@ -371,5 +379,6 @@ QQC2.Control {
     }
 
     DialogoFicha { id: dialogoFicha; objectName: "dialogoFicha" }
+    DialogoObraYachay { id: dialogoObraYachay; objectName: "dialogoObraYachay" }
     DialogoEstudioObra { id: dialogoEstudio; objectName: "dialogoEstudio"; dialogoFicha: dialogoFicha }
 }

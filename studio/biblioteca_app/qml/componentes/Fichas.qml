@@ -1,10 +1,12 @@
 // Fichas — el área «Fichas» (Ctrl+4, rediseño del 2026-11-18, decisiones §9.9): todas las fichas de los escritos y las
 // canónicas. A la izquierda, los filtros en lista (Todas, Textuales, Paráfrasis, Por revisar, con su cuenta) y el «Repaso
 // para estudiantes». En el centro, cada ficha como una tarjeta sutil: la cita en letra de lectura y, debajo y tenue, la
-// obra, la página, el tipo, si está cotejada con el PDF y el escrito; con «Abrir en LaTeX Studio» y «Copiar la cita».
+// obra, la página, el tipo, si está cotejada con el PDF y el escrito; con «Abrir en LaTeX Studio», «Copiar la cita» y
+// «Corregir…» (la ficha que ya existe en su escrito, en el diálogo de la ficha; la de obra ofrece después llevarla a Yachay).
 // Arriba, «Nueva ficha» (la acción rellena) y «Estudiar con la IA», los diálogos de la ficha editorial, sobre el libro de
 // la ficha elegida. El repaso es el sistema Leitner de cinco cajas (lib/repaso.py): la pregunta, «Mostrar la ficha», «La
-// sabía» o «Repasar luego», y lo que queda hoy. Solo lee las fichas (studio.fichas); escribe solo la base del repaso.
+// sabía» o «Repasar luego», y lo que queda hoy. Lee las fichas (studio.fichas) y escribe la base del repaso; corregir una
+// ficha la escribe el diálogo (studio.fichado, con su huella).
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -189,6 +191,16 @@ RowLayout {
                             icono: "checkmark"
                             ayuda: "Comprobé en el PDF que la cita está en la página que dice: la ficha pasa a verificada por el autor y se puede citar"
                             onClicked: { confirmarCotejo.ficha = ficha.modelData; confirmarCotejo.open() }
+                        }
+                        Chip {
+                            // corregir una que ya existe en su escrito (§9.13): la de obra ofrece después llevarla a Yachay
+                            objectName: "corregirFicha"
+                            visible: ficha.modelData.carpeta !== "" && ["textual", "parafrasis", "fuente", "obra"].includes(ficha.modelData.tipo)
+                            text: "Corregir…"
+                            icono: "document-edit"
+                            ayuda: ficha.modelData.tipo === "obra" ? "Corregir la ficha de obra de «" + ficha.modelData.escrito + "», con el PDF al lado; después se ofrece llevarla a Yachay"
+                                                                    : "Corregir la ficha en «" + ficha.modelData.escrito + "», con el PDF al lado"
+                            onClicked: { raiz.fi.elegir(ficha.modelData.clave); dialogoFicha.corregir(ficha.modelData) }
                         }
                         Chip {
                             visible: ficha.modelData.archivo !== ""      // la ficha de obra de Yachay no tiene archivo (§9.13)
