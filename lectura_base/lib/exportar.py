@@ -1,12 +1,14 @@
 """lectura_base/lib/exportar.py — la vuelta: llevar a una herramienta los subrayados que tiene la base y ella no.
 
 Candidata: una anotación viva, con libro, hoja y rectángulos (Zotero, KOReader y Okular la ubican por su posición), sin
-presencia viva en el destino. El plan se calcula siempre (simular); escribir depende del destino:
+presencia viva en el destino. A KOReader van también las de un EPUB con `pos0` y `pos1` (la `posicion` del esquema 3):
+las que se anotaron en Ñawinchay. El plan se calcula siempre (simular); escribir depende del destino:
 
 - **Zotero** (`ESCRIBE`): por la puerta (`lib/escribir.puerta` con Zotero cerrado, el candado y el respaldo verificado;
   `lib/escribir_zotero.z_anadir_anotacion`), en el adjunto PDF del libro; tras el commit, `integrity_check`.
-- **KOReader** (`ESCRIBE`, aprobado por el autor el 2026-11-17, §9.7): en el `.lua` del libro (`metadata.pdf.lua`), solo
-  si KOReader ya abrió ese PDF y está cerrado; respaldo verificado, escritura atómica y relectura antes de reemplazar.
+- **KOReader** (`ESCRIBE`, aprobado por el autor el 2026-11-17, §9.7): en el `.lua` del libro (`metadata.pdf.lua`, o
+  `metadata.epub.lua` para un EPUB), solo si KOReader ya abrió ese libro y está cerrado; respaldo verificado, escritura
+  atómica y relectura antes de reemplazar.
 - **Okular** (`ESCRIBE`, aprobado el 2026-11-17): en su docdata (lo crea si falta), con Okular cerrado y el mismo respaldo;
   nunca en el PDF (cambiaría su MD5 de KOReader).
 - **Yachay** (`ESCRIBE` desde el 2026-11-17, ya con su cliente y el token del autor): por su API (`cliente.resaltar`), con
@@ -40,7 +42,8 @@ def candidatas(destino: str, ruta: Path | None = None, ids: set[int] | None = No
                           (destino,)).fetchall()
         salida = [base.anotacion_publica(c, a) for a in filas if ids is None or a["calibre_id"] in ids]
     if destino != "yachay":
-        salida = [a for a in salida if a["hoja"] and a["rects"]]
+        from lectura_base.lib.adaptadores.koreader import de_flujo
+        salida = [a for a in salida if (a["hoja"] and a["rects"]) or (destino == "koreader" and not a["hoja"] and de_flujo(a))]
     return salida
 
 
@@ -133,6 +136,14 @@ def plan_koreader(cands: list[dict], resolutor: Resolutor, ruta: Path | None = N
             md5s = {r["calibre_id"]: r["md5"] for r in c.execute("SELECT calibre_id, md5 FROM libros WHERE md5 != ''")}
     plan, avisos = [], []
     for a in cands:
+        if not a["hoja"] and k.de_flujo(a):
+            # un EPUB: su MD5 parcial es el del archivo que se anotó (lo trae la anotación; el de `libros` puede ser el del PDF)
+            sidecar = k.sidecar_de(carpeta, a.get("md5") or "", "epub")
+            e = k.entrada_flujo(a) if sidecar is not None else None
+            if e is not None:
+                plan.append({"uid": a["uid"], "calibre_id": a["calibre_id"], "hoja": None, "texto": a["texto"][:80],
+                             "sidecar": str(sidecar), "entrada": e})
+            continue
         md5 = md5s.get(a["calibre_id"]) or (resolutor.ficha(a["calibre_id"]) or {}).get("md5", "")
         sidecar = k.sidecar_de(carpeta, md5)
         pdf = resolutor.pdf(a["calibre_id"])

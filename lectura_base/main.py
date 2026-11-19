@@ -66,10 +66,11 @@ def _imprimir_plan(p: base.Plan, aplicar: bool) -> None:
 
 
 def cmd_sincronizar(a, log) -> int:
-    origenes = tuple(o.strip() for o in (a.origen or ",".join(base.ORIGENES)).split(",") if o.strip())
-    malos = [o for o in origenes if o not in base.ORIGENES]
+    origenes = tuple(o.strip() for o in (a.origen or ",".join(base.LEIDOS)).split(",") if o.strip())
+    malos = [o for o in origenes if o not in base.LEIDOS]
     if malos:
-        log.error("origen desconocido: %s (uno de %s)", ", ".join(malos), ", ".join(base.ORIGENES))
+        log.error("origen desconocido: %s (uno de %s; %s vuelca por su cuenta)", ", ".join(malos), ", ".join(base.LEIDOS),
+                  ", ".join(base.NOMBRES[o] for o in base.CLIENTES))
         return 2
     planes = sincronizar.sincronizar(origenes, aplicar=a.aplicar, recortar_okular=not a.sin_recorte)
     if a.json:
@@ -139,7 +140,7 @@ def cmd_ciclo(a, log) -> int:
             log.info("otro ciclo de la base de lectura está corriendo")
             return 75
         cliente = ad_yachay.cargar_cliente()
-        origenes = base.ORIGENES if cliente is not None else tuple(o for o in base.ORIGENES if o != "yachay")
+        origenes = base.LEIDOS if cliente is not None else tuple(o for o in base.LEIDOS if o != "yachay")
         informe = {"ida": [], "vuelta": {}, "saltados": []}
         if cliente is None:
             informe["saltados"].append("yachay: sin cliente o sin token en el llavero")

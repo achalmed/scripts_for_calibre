@@ -1,7 +1,7 @@
 """lectura_base/lib/base.py — la base de lectura de Biblioteca Studio (decisiones §9.6): el ÚNICO escritor de `lectura.sqlite`.
 
-Una sola base donde se juntan, con su origen, los subrayados, resaltados y notas de KOReader, Zotero, Okular y el lector
-de Yachay, y las sesiones, el progreso y el tiempo de lectura de cada libro. Vive fuera del repo y fuera de toda base de
+Una sola base donde se juntan, con su origen, los subrayados, resaltados y notas de KOReader, Zotero, Okular, el lector
+de Yachay y Ñawinchay, y las sesiones, el progreso y el tiempo de lectura de cada libro. Vive fuera del repo y fuera de toda base de
 Calibre o de Zotero: `$XDG_DATA_HOME/biblioteca/lectura.sqlite` (o `LECTURA_DB`). Esta conexión se niega a abrir una
 ruta dentro de la biblioteca o de la carpeta de Zotero, o igual a `CALIBRE_DB` o `ZOTERO_DB`: esas solo las escribe la
 puerta (`lib/escribir*`).
@@ -9,7 +9,9 @@ puerta (`lib/escribir*`).
 El modelo:
 - `anotaciones`: una por pasaje subrayado, venga de donde venga (libro por `calibre_id` y MD5 parcial de KOReader; hoja
   del PDF; página o capítulo que se cita; texto; rectángulos como fracciones de la hoja [[hoja, x, y, ancho, alto]] con el
-  origen arriba a la izquierda, como Yachay; color; tipo; intención; nota; fechas; huella).
+  origen arriba a la izquierda, como Yachay; color; tipo; intención; nota; fechas; huella) y, desde el esquema 3, su
+  `posicion` en un libro de flujo (EPUB): los xpointers `pos0` y `pos1` de KOReader (fin exclusivo) y el pasaje con su
+  contexto (`cita`, el TextQuoteSelector de la W3C). Con ella, lo anotado en un EPUB vuelve a KOReader en su lugar.
 - `presencias`: dónde vive cada anotación (origen y su identificador en esa herramienta). Un mismo subrayado hecho en
   KOReader y en Zotero es UNA anotación con dos presencias: así no se duplica al cruzar orígenes.
 - `sesiones` (KOReader trae cada página con su hora) y `progreso` (por libro y por origen: hoja, fracción, estado,
@@ -25,6 +27,10 @@ cambió en el origen y es más nuevo; lo nuevo se une a una anotación de otro o
 o el texto casi igual en la misma hoja o la vecina, o los rectángulos solapados); si no, es una anotación nueva. Lo que un
 origen leyó entero y ya no trae queda «ausente» en ese origen; una anotación ausente en todos queda «borrada» (borrar en
 una herramienta no borra en las otras: eso lo decide el autor, §9.7).
+
+Quién escribe: los adaptadores de `sincronizar` (los `LEIDOS`: KOReader, Zotero, Okular y Yachay se leen desde aquí) y los
+clientes que traen su propia lectura (`CLIENTES`: Ñawinchay, el lector del ecosistema, llama a `importar` con lo de su
+diario). Todos pasan por `importar`, el único escritor; la conexión espera hasta `ESPERA_MS` si otro está escribiendo.
 
 Simular es la regla: `importar(..., aplicar=False)` concilia sobre una copia en memoria y devuelve el plan; con
 `aplicar=True`, antes de escribir, un respaldo verificado (`lib/escribir.respaldar`).
@@ -44,9 +50,13 @@ from pathlib import Path
 from lectura_base.lib import texto as tx
 
 REPO = Path(__file__).resolve().parents[2]
-ESQUEMA = 2          # 2 (2026-11-19): `fichas_obra`, aditiva (CREATE … IF NOT EXISTS)
-ORIGENES = ("koreader", "zotero", "okular", "yachay")
-NOMBRES = {"koreader": "KOReader", "zotero": "Zotero", "okular": "Okular", "yachay": "Yachay", "base": "Biblioteca Studio"}
+ESQUEMA = 3          # 2 (2026-11-19): `fichas_obra`; 3 (2026-11-19): `anotaciones.posicion`. Ambas aditivas
+LEIDOS = ("koreader", "zotero", "okular", "yachay")     # los que `sincronizar` lee desde aquí
+CLIENTES = ("nawinchay",)                                # los que traen su lectura y llaman a `importar` (§9.14)
+ORIGENES = LEIDOS + CLIENTES
+NOMBRES = {"koreader": "KOReader", "zotero": "Zotero", "okular": "Okular", "yachay": "Yachay", "nawinchay": "Ñawinchay",
+           "base": "Biblioteca Studio"}
+ESPERA_MS = 5000     # busy_timeout: un cliente que vuelca mientras corre el ciclo espera en vez de fallar
 
 SQL_ESQUEMA = """
 CREATE TABLE IF NOT EXISTS libros (
@@ -77,7 +87,8 @@ CREATE TABLE IF NOT EXISTS anotaciones (
     modificada TEXT NOT NULL DEFAULT '',
     huella TEXT NOT NULL,
     borrada TEXT,
-    origen_ultimo TEXT NOT NULL DEFAULT ''
+    origen_ultimo TEXT NOT NULL DEFAULT '',
+    posicion TEXT NOT NULL DEFAULT '{}'
 );
 CREATE INDEX IF NOT EXISTS anotaciones_libro ON anotaciones(calibre_id, hoja);
 CREATE INDEX IF NOT EXISTS anotaciones_md5 ON anotaciones(md5);
@@ -274,12 +285,12 @@ def conectar(ruta: Path | None = None, escribir: bool = False) -> sqlite3.Connec
     tras comprobar la ruta, y con el esquema creado o al día."""
     ruta = Path(ruta or ruta_base())
     if not escribir:
-        c = sqlite3.connect(ruta.resolve().as_uri() + "?mode=ro", uri=True)
+        c = sqlite3.connect(ruta.resolve().as_uri() + "?mode=ro", uri=True, timeout=ESPERA_MS / 1000)
         c.row_factory = sqlite3.Row
         return c
     real = comprobar_ruta(ruta)
     real.parent.mkdir(parents=True, exist_ok=True)
-    c = sqlite3.connect(real)
+    c = sqlite3.connect(real, timeout=ESPERA_MS / 1000)
     preparar(c)
     return c
 
@@ -287,7 +298,11 @@ def conectar(ruta: Path | None = None, escribir: bool = False) -> sqlite3.Connec
 def preparar(c: sqlite3.Connection) -> None:
     c.row_factory = sqlite3.Row
     c.execute("PRAGMA foreign_keys = ON")
+    c.execute(f"PRAGMA busy_timeout = {ESPERA_MS}")
     c.executescript(SQL_ESQUEMA)
+    columnas = {f[1] for f in c.execute("PRAGMA table_info(anotaciones)")}
+    if "posicion" not in columnas:          # esquema 3 sobre una base anterior: la columna, con su valor por omisión
+        c.execute("ALTER TABLE anotaciones ADD COLUMN posicion TEXT NOT NULL DEFAULT '{}'")
     if int(c.execute("PRAGMA user_version").fetchone()[0]) < ESQUEMA:
         c.execute(f"PRAGMA user_version = {ESQUEMA}")
     c.commit()
@@ -350,7 +365,7 @@ class Lectura:
     """Lo que un adaptador leyó de su herramienta, ya en la forma de la base.
 
     `anotaciones`: [{origen_id, calibre_id, md5, hoja, pagina, capitulo, texto, rects, color, tipo, intencion, nota, creada,
-    modificada}]; `sesiones`: [{origen_id, calibre_id, md5, inicio, fin, segundos, paginas, desde, hasta}]; `progreso`:
+    modificada, posicion}] (`posicion`, opcional: {pos0, pos1, cita} en un EPUB, ver `posicion_limpia`); `sesiones`: [{origen_id, calibre_id, md5, inicio, fin, segundos, paginas, desde, hasta}]; `progreso`:
     [{calibre_id, md5, hoja, hojas, fraccion, estado, segundos, primera, ultima}]; `libros`: {calibre_id: {md5, titulo,
     autores}}; `fichas_obra`: [{origen_id, calibre_id, ficha, secciones, escritas, total, leida, leida_en,
     version, creada, modificada}] (Yachay; `bajas_fichas`, las que quitó); `alcance`: las claves de libro (`clave_libro`) que se leyeron enteras (lo que falta de ellas queda ausente;
@@ -385,16 +400,17 @@ class Plan:
     sesiones: dict = field(default_factory=lambda: {"altas": 0, "cambios": 0})
     progreso: dict = field(default_factory=lambda: {"altas": 0, "cambios": 0})
     fichas_obra: dict = field(default_factory=lambda: {"altas": 0, "cambios": 0, "bajas": 0})
+    posiciones: int = 0                                   # anotaciones que ganaron su posición en el EPUB
     avisos: list[str] = field(default_factory=list)
 
     def resumen(self) -> dict:
         return {"origen": self.origen, "leidas": self.leidas, "altas": len(self.altas), "uniones": len(self.uniones),
                 "cambios": len(self.cambios), "ausentes": len(self.ausentes), "borradas": len(self.borradas),
                 "sesiones": dict(self.sesiones), "progreso": dict(self.progreso), "fichas_obra": dict(self.fichas_obra),
-                "avisos": list(self.avisos)}
+                "posiciones": self.posiciones, "avisos": list(self.avisos)}
 
     def vacio(self) -> bool:
-        return not (self.altas or self.uniones or self.cambios or self.ausentes or self.borradas
+        return not (self.altas or self.uniones or self.cambios or self.ausentes or self.borradas or self.posiciones
                     or any(self.sesiones.values()) or any(self.progreso.values()) or any(self.fichas_obra.values()))
 
 
@@ -403,6 +419,29 @@ CAMPOS = ("hoja", "pagina", "capitulo", "texto", "rects", "color", "tipo", "inte
 UMBRAL_TEXTO = 0.9          # dos textos de la misma hoja (o la vecina) que se parecen así son el mismo pasaje
 UMBRAL_TEXTO_SIN_HOJA = 0.95
 UMBRAL_SOLAPE = 0.5
+
+
+XPOINTER = "/body/DocFragment["
+
+
+def posicion_limpia(p) -> dict:
+    """La posición de un pasaje en un libro de flujo, en su forma: `pos0` y `pos1` (xpointers de crengine, como los
+    guarda KOReader: «/body/DocFragment[9]/body/p[1]/text().28», fin exclusivo) y `cita` ({exacto, prefijo, sufijo},
+    el pasaje con su contexto, que lo vuelve a encontrar si el libro cambió). Lo demás se descarta; {} si no hay nada."""
+    if isinstance(p, str):
+        try:
+            p = json.loads(p or "{}")
+        except ValueError:
+            p = {}
+    p = p if isinstance(p, dict) else {}
+    salida = {}
+    if all(isinstance(p.get(k), str) and p[k].startswith(XPOINTER) for k in ("pos0", "pos1")):
+        salida["pos0"], salida["pos1"] = p["pos0"], p["pos1"]
+    cita = p.get("cita") if isinstance(p.get("cita"), dict) else {}
+    cita = {k: str(cita.get(k) or "")[:2000 if k == "exacto" else 64] for k in ("exacto", "prefijo", "sufijo") if cita.get(k)}
+    if cita.get("exacto"):
+        salida["cita"] = cita
+    return salida
 
 
 def _normalizar(r: dict) -> dict:
@@ -425,6 +464,7 @@ def _normalizar(r: dict) -> dict:
         "modificada": str(r.get("modificada") or r.get("creada") or ""),
     }
     salida["uid_base"] = str(r.get("uid_base") or "")
+    salida["posicion"] = json.dumps(posicion_limpia(r.get("posicion")), ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     salida["texto_normal"] = tx.normal(salida["texto"])
     salida["huella"] = tx.huella(clave_libro(salida["calibre_id"], salida["md5"]), salida["hoja"], salida["texto_normal"],
                                  salida["nota"], json.loads(salida["rects"]))
@@ -499,8 +539,8 @@ def _actualizar(c, fila, r: dict, origen: str) -> bool:
     if fila["modificada"] and r["modificada"] and r["modificada"] < fila["modificada"]:
         return False
     nuevos = {}
-    for k in ("texto", "rects", "color", "tipo", "intencion", "pagina", "capitulo"):
-        vacio = r[k] in ("", "[]")
+    for k in ("texto", "rects", "color", "tipo", "intencion", "pagina", "capitulo", "posicion"):
+        vacio = r[k] in ("", "[]", "{}")
         if not vacio and r[k] != fila[k]:
             nuevos[k] = r[k]
     if r["nota"] != fila["nota"]:                  # la nota sí se puede vaciar: borrarla es una edición
@@ -528,6 +568,8 @@ def _rellenar(c, fila, r: dict, origen: str) -> None:
             nuevos[k] = r[k]
     if (fila["rects"] in ("", "[]")) and r["rects"] != "[]":
         nuevos["rects"] = r["rects"]
+    if fila["posicion"] in ("", "{}") and r["posicion"] != "{}":
+        nuevos["posicion"] = r["posicion"]
     for k in ("hoja", "calibre_id"):
         if fila[k] is None and r[k] is not None:
             nuevos[k] = r[k]
@@ -564,6 +606,10 @@ def _conciliar(c: sqlite3.Connection, lectura: Lectura, plan: Plan) -> None:
             fila = _anotacion_de(c, p["anotacion_id"])
             if p["huella_origen"] and p["huella_origen"] != r["huella_origen"] and _actualizar(c, fila, r, origen):
                 plan.cambios.append(_vista(r, uid=fila["uid"]))
+            elif fila["posicion"] in ("", "{}") and r["posicion"] != "{}":
+                # lo ya visto antes del esquema 3 (los EPUB de KOReader) gana su posición sin contar como edición
+                c.execute("UPDATE anotaciones SET posicion = ? WHERE id = ?", (r["posicion"], fila["id"]))
+                plan.posiciones += 1
             if fila["borrada"] is not None:
                 c.execute("UPDATE anotaciones SET borrada = NULL, origen_ultimo = ? WHERE id = ?", (origen, fila["id"]))
             c.execute("UPDATE presencias SET huella_origen = ?, visto = ?, ausente = NULL WHERE id = ?",
@@ -582,9 +628,9 @@ def _conciliar(c: sqlite3.Connection, lectura: Lectura, plan: Plan) -> None:
             uid = secrets.token_hex(8)
             cur = c.execute(
                 "INSERT INTO anotaciones(uid, calibre_id, md5, hoja, pagina, capitulo, texto, texto_normal, rects, color, tipo, "
-                "intencion, nota, creada, modificada, huella, origen_ultimo) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+                "intencion, nota, creada, modificada, huella, origen_ultimo, posicion) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
                 (uid, r["calibre_id"], r["md5"], r["hoja"], r["pagina"], r["capitulo"], r["texto"], r["texto_normal"], r["rects"],
-                 r["color"], r["tipo"], r["intencion"], r["nota"], r["creada"], r["modificada"], r["huella"], origen))
+                 r["color"], r["tipo"], r["intencion"], r["nota"], r["creada"], r["modificada"], r["huella"], origen, r["posicion"]))
             anotacion_id = cur.lastrowid
             plan.altas.append(_vista(r, uid=uid))
         cur = c.execute("INSERT INTO presencias(anotacion_id, origen, origen_id, huella_origen, visto) VALUES (?,?,?,?,?)",
@@ -814,6 +860,7 @@ def anotacion_publica(c, a) -> dict:
     """Una anotación como la ven los consumidores: sus campos, sus rectángulos como lista y dónde vive."""
     d = {k: a[k] for k in a.keys() if k not in ("id", "texto_normal")}
     d["rects"] = json.loads(a["rects"] or "[]")
+    d["posicion"] = posicion_limpia(a["posicion"]) if "posicion" in a.keys() else {}
     d["origenes"] = [{"origen": p["origen"], "origen_id": p["origen_id"], "ausente": p["ausente"]}
                      for p in c.execute("SELECT origen, origen_id, ausente FROM presencias WHERE anotacion_id = ? ORDER BY id", (a["id"],))]
     return d

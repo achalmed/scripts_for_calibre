@@ -9,10 +9,14 @@ Lee (siempre en solo lectura):
 
 El libro se reconoce por la carpeta `(<id>)/` de su `doc_path` o por el MD5 parcial (el nombre del `.sdr` central o
 `partial_md5_checksum`, contra `#ko_md5` de Calibre). En un PDF la hoja es `page` y los rectángulos salen de `pboxes`
-(puntos) entre las medidas de la hoja; en un EPUB `page` es un xpointer: no hay hoja del PDF, se queda el capítulo.
+(puntos) entre las medidas de la hoja; en un EPUB `page` es un xpointer: no hay hoja del PDF, se quedan el capítulo y la
+`posicion` ({pos0, pos1}, los xpointers de crengine; esquema 3 de la base).
 
-Escribe (solo si el autor lo aprueba, `ESCRIBE` en `exportar.py`; §9.7): suma a un sidecar de un PDF, con KOReader
-cerrado, los resaltados de otros orígenes que tengan hoja y rectángulos, con respaldo del archivo y escritura atómica.
+Escribe (solo si el autor lo aprueba, `ESCRIBE` en `exportar.py`; §9.7): suma a un sidecar, con KOReader cerrado, los
+resaltados de otros orígenes que KOReader sabe ubicar: en un PDF, los que tienen hoja y rectángulos; en un EPUB, los que
+tienen `pos0` y `pos1` (Ñawinchay los calcula con la forma de crengine). Respaldo del archivo y escritura atómica; en un
+EPUB, además, `annotations_externally_modified`: KOReader, al abrir el libro, recalcula la página de cada resaltado y los
+ordena (la marca que usa KOHighlights), así no hay que imitar su paginación.
 El archivo se reescribe con `lua.escribir`, que deja idéntico byte a byte lo que lee (probado sobre los sidecars reales).
 """
 from __future__ import annotations
@@ -102,7 +106,9 @@ def anotaciones_de(datos: dict, md5: str, calibre_id, es_pdf: bool, hojas: list)
         if usados[clave] > 1:
             clave += f":{usados[clave]}"
         hoja = a.get("page") if es_pdf and isinstance(a.get("page"), int) else None
-        salida.append({"origen_id": clave, "calibre_id": calibre_id, "md5": md5, "hoja": hoja,
+        posicion = {"pos0": a["pos0"], "pos1": a["pos1"]} if not es_pdf and isinstance(a.get("pos0"), str) \
+            and isinstance(a.get("pos1"), str) else {}
+        salida.append({"posicion": posicion, "origen_id": clave, "calibre_id": calibre_id, "md5": md5, "hoja": hoja,
                        "pagina": str(a.get("pageref") or ""), "capitulo": str(a.get("chapter") or ""),
                        "texto": texto, "rects": _rects(a, hoja, hojas), "color": a.get("color") or "",
                        "tipo": DRAWERS.get(str(a.get("drawer")), "resaltado"), "nota": nota,
@@ -227,9 +233,30 @@ def abierto() -> bool:
     return any(re.search(r"(^|/)koreader(\s|$)|reader\.lua", linea) for linea in r.splitlines())
 
 
-def sidecar_de(carpeta: Path, md5: str) -> Path | None:
-    p = carpeta / "hashdocsettings" / md5[:2] / f"{md5}.sdr" / "metadata.pdf.lua"
+def sidecar_de(carpeta: Path, md5: str, formato: str = "pdf") -> Path | None:
+    """El sidecar central de un libro que KOReader ya abrió (`hashdocsettings/<md5[:2]>/<md5>.sdr/metadata.<formato>.lua`)."""
+    p = carpeta / "hashdocsettings" / md5[:2] / f"{md5}.sdr" / f"metadata.{formato}.lua"
     return p if md5 and p.is_file() else None
+
+
+def de_flujo(a: dict) -> bool:
+    """¿Es un pasaje de un libro de flujo que KOReader sabe ubicar (con `pos0` y `pos1`)?"""
+    pos = a.get("posicion") or {}
+    return bool(pos.get("pos0") and pos.get("pos1"))
+
+
+def entrada_flujo(a: dict) -> dict | None:
+    """Un resaltado de la base como lo guarda KOReader en un EPUB: `page` y `pos0` son el xpointer del comienzo, `pos1` el
+    del fin (exclusivo). `pageno` es provisional: KOReader lo recalcula al abrir el libro (`annotations_externally_modified`)."""
+    if not de_flujo(a) or not (a.get("texto") or "").strip():
+        return None
+    pos = a["posicion"]
+    e = {"chapter": a.get("capitulo") or "", "color": tx.nombre_de_color(a.get("color") or ""), "datetime": "",
+         "drawer": {"subrayado": "underscore", "tachado": "strikeout"}.get(a.get("tipo"), "lighten"), "page": pos["pos0"],
+         "pageno": 1, "pos0": pos["pos0"], "pos1": pos["pos1"], "text": a.get("texto") or ""}
+    if a.get("nota"):
+        e["note"] = a["nota"]
+    return e
 
 
 def entrada(a: dict, hojas: list) -> dict | None:
@@ -277,8 +304,12 @@ def anadir(sidecar: Path, nuevas: list[dict], respaldos: Path) -> list[str]:
         ocupadas.add(e["datetime"])
         entradas.append(e)
         ids.append(f"{md5}:{e['datetime']}")
-    entradas.sort(key=lambda e: (e.get("page") if isinstance(e.get("page"), int) else 0,
-                                 (e.get("pos0") or {}).get("y", 0), (e.get("pos0") or {}).get("x", 0)))
+    flujo = any(isinstance(e.get("page"), str) for e in entradas if isinstance(e, dict))
+    if flujo:          # EPUB: KOReader compara xpointers con el libro abierto; se le pide que ordene y pagine él
+        datos["annotations_externally_modified"] = True
+    else:
+        entradas.sort(key=lambda e: (e.get("page") if isinstance(e.get("page"), int) else 0,
+                                     (e.get("pos0") or {}).get("y", 0), (e.get("pos0") or {}).get("x", 0)))
     datos["annotations"] = {i: e for i, e in enumerate(entradas, 1)}
     if isinstance(datos.get("stats"), dict) and "highlights" in datos["stats"]:
         datos["stats"]["highlights"] = sum(1 for e in entradas if e.get("drawer"))

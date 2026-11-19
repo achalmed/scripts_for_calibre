@@ -1006,3 +1006,42 @@ escrito que ya existe y corregir la de Yachay sin pasar por un escrito. Los dos 
 Pruebas: `tests/studio/test_fichado.py` (corregir con la huella, la vieja no pisa, la vuelta con el libro explícito y la de
 Yachay sin tocar los escritos) y `tests/studio/test_studio.py::test_corregir_una_ficha_de_obra_y_la_de_yachay_en_la_ventana`
 (los dos diálogos en la ventana sin pantalla, con un Yachay falso: la simulación, la confirmación, el 409 y el envío).
+
+### §9.14 Ñawinchay como origen y la posición en un EPUB (esquema 3, 2026-11-19)
+
+Ñawinchay (`../nawinchay`, el lector del ecosistema) anota en PDF, EPUB y Markdown y vuelca su diario a esta base con
+`base.importar`, cargado por ruta, como un origen más (`nawinchay`). Hasta hoy entraba sin estar registrado: `importar`
+acepta cualquier origen, pero el área Lectura del studio buscaba su nombre con `NOMBRES[o]` y habría fallado con el primer
+volcado, y lo anotado en un EPUB no podía volver a KOReader porque la base no guardaba dónde está un pasaje en un libro de
+flujo (solo hoja y rectángulos, que un EPUB no tiene). La decisión:
+
+- **Dos clases de origen**: `LEIDOS` (KOReader, Zotero, Okular y Yachay: `sincronizar` los lee desde aquí) y `CLIENTES`
+  (Ñawinchay: trae su propia lectura y la vuelca; `sincronizar` no lo lee). `ORIGENES` es la suma (los recuentos por
+  origen) y `NOMBRES` y los colores del área Lectura lo incluyen (Ñawinchay, el ámbar `#BA7517` de la misma paleta: el verde
+  azulado ya es de Okular). `main.py sincronizar --origen` acepta solo los `LEIDOS`. La conexión espera hasta 5 s
+  (`ESPERA_MS`, `busy_timeout`) si otro escribe, para que un volcado de Ñawinchay durante el ciclo no falle. No se pasó a WAL:
+  las lecturas son de corta duración y WAL añadiría `-wal` y `-shm` junto a la base y al respaldo, sin necesidad todavía.
+- **La columna `posicion`** (`anotaciones.posicion`, JSON, esquema 3, aditiva: `ALTER TABLE … ADD COLUMN` con `'{}'` por
+  omisión; una base anterior la gana al abrirse para escribir y se sigue leyendo sin ella). Guarda, en un EPUB, `pos0` y
+  `pos1` (los xpointers de crengine, como KOReader: `/body/DocFragment[9]/body/p[1]/text().28`, **fin exclusivo**) y
+  `cita` (`exacto`, `prefijo`, `sufijo`: el TextQuoteSelector de la W3C, que vuelve a encontrar el pasaje si el archivo
+  cambió). `posicion_limpia` descarta lo demás. KOReader trae los `pos0`/`pos1` de sus EPUB; Ñawinchay los calcula con la
+  forma de crengine, cotejados con los tres resaltados reales de KOReader en EPUB (los tres iguales, carácter por carácter).
+- **Sin tocar la huella**: `posicion` no entra en `CAMPOS` (la `huella_origen`), porque eso cambiaría la de todas las
+  presencias y la sincronía siguiente tomaría cada anotación como editada, pisando entre orígenes lo unido. La posición se
+  completa si falta (al unir, `_rellenar`; en una presencia ya vista, sin contar como cambio: `Plan.posiciones`) y cambia solo
+  con una edición real del origen (`_actualizar`). La cola de cambios no la registra: ningún consumidor la usa todavía. En
+  la base real, la primera sincronía tras el cambio (simulada el 2026-11-19 sobre una copia en memoria) da 71 leídas,
+  0 cambios y 3 posiciones.
+- **La vuelta a KOReader en un EPUB** (`exportar koreader`, con la aprobación de §9.7): son candidatas también las anotaciones
+  sin hoja con `pos0` y `pos1`. Se escriben en `metadata.epub.lua` del MD5 parcial que trae la anotación (el del archivo
+  anotado; el de `libros` puede ser el del PDF), solo si KOReader ya abrió ese EPUB y está cerrado, con el mismo respaldo y
+  la escritura atómica. La entrada lleva `page` = `pos0`, `pos0`, `pos1`, capítulo, color, texto y nota; además el sidecar
+  recibe `annotations_externally_modified = true`, la marca que usa KOHighlights: KOReader, al abrir el libro, recalcula
+  la página de cada resaltado y los ordena (`readerannotation.lua`, `onReadSettings`), así no hay que imitar su paginación.
+  Zotero y Okular no reciben lo de un EPUB (no tiene hoja ni rectángulos).
+
+Pruebas: `tests/lectura_base/test_posicion.py` (los orígenes; `posicion_limpia`; la migración desde el esquema 2; los
+`pos0`/`pos1` de KOReader; la posición que llega sin contar como edición; un vacío que no la borra; la vuelta de lo de
+Ñawinchay a un sidecar de EPUB y su reconocimiento en la lectura siguiente; sin sidecar no hay dónde escribir). Sin
+probar: abrir en KOReader un EPUB con una entrada escrita así (se verá en la primera vuelta real).

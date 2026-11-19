@@ -3,7 +3,8 @@
 El orden importa poco (la conciliación une el mismo pasaje venga primero de donde venga), pero se fija para que el
 informe sea estable: KOReader, Zotero, Okular, Yachay. Yachay se lee por su cliente desde el cursor que la base guarda
 («yachay» en `cursores`); sin cliente, se avisa y se sigue con los demás. Las fichas de obra de Yachay (§9.13) llegan en
-la misma lectura de Yachay, con su propio cursor («yachay-fichas-obra»).
+la misma lectura de Yachay, con su propio cursor («yachay-fichas-obra»). Ñawinchay no se lee aquí: es un cliente que trae
+su propia lectura (`base.CLIENTES`) y la vuelca con `base.importar`.
 """
 from __future__ import annotations
 
@@ -16,7 +17,7 @@ CONSUMIDOR_YACHAY = "yachay-entrada"
 CONSUMIDOR_FICHAS = "yachay-fichas-obra"
 
 
-def leer(origenes: tuple[str, ...] = base.ORIGENES, resolutor: Resolutor | None = None, ruta: Path | None = None,
+def leer(origenes: tuple[str, ...] = base.LEIDOS, resolutor: Resolutor | None = None, ruta: Path | None = None,
          cliente=None, recortar_okular: bool = True) -> tuple[list[base.Lectura], dict]:
     """(lecturas, extra) de los orígenes pedidos; `extra["cursor_yachay"]` y `extra["cursor_fichas"]` son los cursores nuevos
     de Yachay (resaltados y progreso; fichas de obra), si se leyeron."""
@@ -54,7 +55,7 @@ def leer(origenes: tuple[str, ...] = base.ORIGENES, resolutor: Resolutor | None 
     return lecturas, extra
 
 
-def sincronizar(origenes: tuple[str, ...] = base.ORIGENES, aplicar: bool = False, ruta: Path | None = None,
+def sincronizar(origenes: tuple[str, ...] = base.LEIDOS, aplicar: bool = False, ruta: Path | None = None,
                 resolutor: Resolutor | None = None, cliente=None, recortar_okular: bool = True) -> list[base.Plan]:
     lecturas, extra = leer(origenes, resolutor, ruta, cliente, recortar_okular)
     planes = base.importar(lecturas, aplicar=aplicar, ruta=ruta)

@@ -7,7 +7,7 @@ estado: activo
 <!-- suite:inicio -->
 **Suite `lectura_base`** · objetivo *biblioteca* · estado *activo* · python · interfaz cli
 
-Una sola base de lectura (fuera de Calibre y de Zotero) con los subrayados, notas, sesiones, horas y progreso de KOReader, Zotero, Okular y Yachay, y la ficha de obra de Yachay, sin duplicados entre ellos, con su cola de cambios y la vuelta a Zotero por la puerta y a Yachay por su API.
+Una sola base de lectura (fuera de Calibre y de Zotero) con los subrayados, notas, sesiones, horas y progreso de KOReader, Zotero, Okular, Yachay y Ñawinchay, y la ficha de obra de Yachay, sin duplicados entre ellos, con su cola de cambios y la vuelta a Zotero por la puerta y a Yachay por su API.
 
 - Escribe en: archivos, zotero · simula por defecto: sí
 - Entrada: KOReader (metadata.*.lua, statistics.sqlite3), zotero.sqlite (copia), Okular (docdata), Yachay (su API)
@@ -85,7 +85,7 @@ Zotero», «→ KOReader» y «→ Okular»; el área **Lectura** (Ctrl+5) muest
 
 | tabla | qué guarda |
 |---|---|
-| `anotaciones` | un pasaje: libro (`calibre_id`, MD5 parcial de KOReader), hoja del PDF, página o capítulo que se cita, texto, rectángulos (fracciones de la hoja, origen arriba: `[[hoja, x, y, ancho, alto]]`, como Yachay), color, tipo, intención, nota, fechas, huella; `borrada` si ya no está en ninguna herramienta |
+| `anotaciones` | un pasaje: libro (`calibre_id`, MD5 parcial de KOReader), hoja del PDF, página o capítulo que se cita, texto, rectángulos (fracciones de la hoja, origen arriba: `[[hoja, x, y, ancho, alto]]`, como Yachay), color, tipo, intención, nota, fechas, huella; `borrada` si ya no está en ninguna herramienta; `posicion` (esquema 3, §9.14) en un EPUB: `pos0`/`pos1` (xpointers de crengine, fin exclusivo) y la `cita` con su contexto |
 | `presencias` | dónde vive cada anotación: origen y su identificador allí (KOReader: `md5:fecha`; Zotero: la clave del ítem; Okular: `uniqueName`; Yachay: el id del resaltado); `ausente` si el origen ya no la tiene |
 | `sesiones` | las de KOReader (cada página con su hora; una pausa de más de 10 min abre otra) |
 | `progreso` | por libro y por origen: hoja, fracción, estado, segundos (cada origen es dueño de su reloj: las horas se suman, nunca se copian) |
@@ -105,10 +105,11 @@ Lo que la base escribió en una herramienta queda apuntado como presencia y vuel
 
 | origen | lee | escribe |
 |---|---|---|
-| KOReader | `hashdocsettings/*/*.sdr/metadata.*.lua` (resaltados con `drawer`, progreso) y `statistics.sqlite3` (`mode=ro`) | sí (§9.7): en el `.lua` de los PDF que ya abrió, con KOReader cerrado, respaldo y escritura atómica (el `.lua` se reescribe idéntico byte a byte) |
+| KOReader | `hashdocsettings/*/*.sdr/metadata.*.lua` (resaltados con `drawer`, en un EPUB con su `pos0`/`pos1`; progreso) y `statistics.sqlite3` (`mode=ro`) | sí (§9.7): en el `.lua` de los PDF y EPUB que ya abrió, con KOReader cerrado, respaldo y escritura atómica (el `.lua` se reescribe idéntico byte a byte; en un EPUB, con `annotations_externally_modified` para que KOReader pagine y ordene, §9.14) |
 | Zotero | `itemAnnotations` de los adjuntos PDF de la biblioteca, el readingTime de Ethereal Style y la última hoja, de una copia | sí, por la puerta: `z_anadir_anotacion` de `lib/escribir_zotero.py` |
 | Okular | `docdata/*.xml` de los PDF de la biblioteca (el texto se recorta del PDF con `pdftotext`) | sí (§9.7): en el docdata (nunca en el PDF), con Okular cerrado y respaldo |
 | Yachay | su API con token (`cliente.cambios`): los `resaltado` y el `progreso` desde el cursor «yachay-entrada», y la `ficha_obra` sola desde el suyo, «yachay-fichas-obra» | sí: los resaltados con `POST /lector/{id}/resaltados` (`exportar yachay`) y la ficha de obra con `PUT /lectura/{id}/ficha` y `version_base` (`ficha-a-yachay`, §9.13) |
+| Ñawinchay | nada desde aquí: es un cliente (`base.CLIENTES`) que vuelca su diario con `base.importar` (PDF con hoja y rectángulos; EPUB con su `posicion`) | no: lee la base directamente |
 
 ## Límite honesto
 

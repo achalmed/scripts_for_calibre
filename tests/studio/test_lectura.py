@@ -32,7 +32,7 @@ def test_lectura_resumen_libros_y_subrayados(app, entorno, muestra):
     assert [c["rotulo"] for c in lec.cifras] == ["Subrayados", "Horas en 12 semanas", "Libros con lectura", "Racha"]
     assert lec.cifras[0]["valor"] == "4" and lec.cifras[2]["valor"] == "2"
     assert len(lec.dias) == 84 and any(d["nivel"] > 0 for d in lec.dias) and lec.dias[0]["texto"].startswith("lun ")
-    assert lec.colores["koreader"] == "#378ADD" and lec.colores["yachay"] == "#7F77DD"
+    assert lec.colores["koreader"] == "#378ADD" and lec.colores["yachay"] == "#7F77DD" and lec.colores["nawinchay"] == "#BA7517"
     assert compartido["colorOrigen"] == "#378ADD" and compartido["origen"] == "KOReader"
     assert {a["colorOrigen"] for a in lec.anotaciones} == {"#378ADD", "#1D9E75", "#7F77DD"}
     assert b["fraccion"] == 0.42 and next(p for p in b["progreso"] if p["origen"] == "KOReader")["color"] == "#378ADD"

@@ -232,6 +232,6 @@ def test_el_esquema_viejo_gana_la_tabla_sin_perder_nada(mundo):
         c.execute("PRAGMA user_version = 1")
     b.conectar(mundo.lectura_db, escribir=True).close()
     with sqlite3.connect(mundo.lectura_db) as c:
-        assert c.execute("PRAGMA user_version").fetchone()[0] == 2
+        assert c.execute("PRAGMA user_version").fetchone()[0] == b.ESQUEMA      # aditivas: 2 (fichas_obra) y 3 (posicion)
         assert c.execute("select count(*) from anotaciones").fetchone()[0] == 1
         assert c.execute("select count(*) from fichas_obra").fetchone()[0] == 0

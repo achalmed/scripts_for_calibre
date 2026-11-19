@@ -4,7 +4,7 @@ lectura (`lectura_base/lib/consulta.py`, `mode=ro`).
 A la izquierda, los libros con lectura (tiempo, progreso o subrayados), los más recientes primero, y arriba el resumen
 de toda la base (horas, este mes, racha, sesiones, de dónde vienen los subrayados) con las horas de las últimas doce
 semanas. A la derecha, el libro elegido: su tiempo y su progreso en cada herramienta, sus sesiones y sus subrayados, que
-se filtran por origen (KOReader, Zotero, Okular, Yachay) y se copian como cita. El libro elegido sigue al del catálogo.
+se filtran por origen (KOReader, Zotero, Okular, Yachay, Ñawinchay) y se copian como cita. El libro elegido sigue al del catálogo.
 La ventana no escribe la base: lo hace la operación «Base de lectura» (la CLI `lectura_base/main.py sincronizar`).
 
 Sincronizar (decisiones §9.8): arriba, el estado del timer de cada hora (`systemd/lectura-base.timer`: la última vuelta y
@@ -38,9 +38,10 @@ if str(REPO) not in sys.path:
 from lectura_base.lib import base as lb  # noqa: E402
 from lectura_base.lib import consulta  # noqa: E402
 
-NOMBRES = {"koreader": "KOReader", "zotero": "Zotero", "okular": "Okular", "yachay": "Yachay"}
-# el color de cada herramienta (la maqueta aprobada del 2026-11-18): la raya de un subrayado, la barra de lectura
-COLORES = {"koreader": "#378ADD", "zotero": "#D85A30", "okular": "#1D9E75", "yachay": "#7F77DD"}
+NOMBRES = {"koreader": "KOReader", "zotero": "Zotero", "okular": "Okular", "yachay": "Yachay", "nawinchay": "Ñawinchay"}
+# el color de cada herramienta (la maqueta aprobada del 2026-11-18): la raya de un subrayado, la barra de lectura;
+# Ñawinchay (2026-11-19), el ámbar de la misma paleta: el verde azulado ya es de Okular
+COLORES = {"koreader": "#378ADD", "zotero": "#D85A30", "okular": "#1D9E75", "yachay": "#7F77DD", "nawinchay": "#BA7517"}
 DIAS_SEMANA = ("lun", "mar", "mié", "jue", "vie", "sáb", "dom")
 ESTADOS = {"reading": "leyendo", "complete": "terminado", "abandoned": "abandonado"}
 SIGNOS = {"positivo": "Positivo", "negativo": "Negativo", "nulo": "Nulo", "mixto": "Mixto", "no_aplica": "No aplica"}
@@ -274,7 +275,7 @@ class Lectura(QObject):
 
     @Property("QVariantMap", constant=True)
     def colores(self) -> dict:
-        """El color de cada herramienta, por su nombre (koreader, zotero, okular, yachay)."""
+        """El color de cada herramienta, por su nombre (koreader, zotero, okular, yachay, nawinchay)."""
         return dict(COLORES)
 
     @Property("QVariantList", notify=cambiado)
