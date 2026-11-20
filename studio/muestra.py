@@ -426,9 +426,12 @@ def crear(raiz: Path, con_calibre: bool | None = None) -> Muestra:
                "WRITING_DIR": str(raiz / "escritura"), "DATAFW_DIR": str(raiz / "datafw"), "NOTES_DIR": str(raiz / "notas")}
     (raiz / "notas").mkdir()
     _escrito_de_muestra(raiz / "escritura", libros)
+    # NAWINCHAY_DATOS explícito: la captura fija XDG_DATA_HOME al real y el mapa de lo leído no debe leer el de quien la corre
     entorno.update(LECTURA_DB=str(raiz / "datos" / "biblioteca" / "lectura.sqlite"), XDG_DATA_HOME=str(raiz / "datos"),
+                   NAWINCHAY_DATOS=str(raiz / "datos" / "nawinchay"),
                    REPASO_DB=str(raiz / "datos" / "biblioteca" / "repaso.sqlite"))
     _lectura(Path(entorno["LECTURA_DB"]), libros)
+    _diario_nawinchay(raiz / "datos" / "nawinchay" / "diario", libros)
     _repaso(Path(entorno["REPASO_DB"]))
     indice = _indice(entorno, repo, libros, estado / "biblioteca" / "indice.json", raiz / "notas")
     _respaldos(raiz / "respaldos" / "biblioteca" / "puerta")
@@ -481,6 +484,38 @@ def _indice(entorno: dict, repo: Path, libros: dict, destino: Path, notas: Path)
     destino.parent.mkdir(parents=True, exist_ok=True)
     destino.write_text(json.dumps(d, ensure_ascii=False), encoding="utf-8")
     return destino
+
+
+def _diario_nawinchay(carpeta: Path, libros: dict) -> None:
+    """El diario de Ñawinchay de los dos primeros libros de muestra con sesiones guiadas cuya respuesta de la IA trajo su
+    bloque (el mapa de lo leído, 2026-11-19): conceptos, relaciones y temas inventados aquí, de ninguna obra real."""
+    por_titulo = {d["titulo"]: b for b, d in libros.items()}
+    b1, b2 = por_titulo.get(LIBROS[0][0]), por_titulo.get(LIBROS[1][0])
+    if b1 is None:
+        return
+    carpeta.mkdir(parents=True, exist_ok=True)
+
+    def sesion(i, conceptos, relaciones, etiquetas):
+        return {"id": f"g{i}", "fecha": f"2026-11-1{i}T20:00:00-05:00", "tecnica": "parrafo", "propio": "Lo que entendí.",
+                "respuesta": "Su versión…", "estructura": {"captado": [], "omitido": [], "distinto": [], "preguntas": [],
+                "conceptos": [{"termino": t, "definicion": d, "lugar": l} for t, d, l in conceptos],
+                "relaciones": [{"de": a, "tipo": t, "a": b} for a, t, b in relaciones], "etiquetas": etiquetas}}
+
+    uno = [sesion(1, [("Economía de aglomeración", "Ventaja de producir cerca de otros productores.", "p. 12 ¶2"),
+                      ("Ciudad pequeña", "Núcleo urbano de menos de cincuenta mil habitantes.", "p. 3 ¶1"),
+                      ("Costo de transporte", "Lo que cuesta mover bienes entre mercados.", "p. 14 ¶1")],
+                  [("Economía de aglomeración", "contrasta", "Costo de transporte"), ("Ciudad pequeña", "depende_de", "Costo de transporte")],
+                  ["ciudades", "localización"]),
+           sesion(2, [("Mercado regional", "El conjunto de compradores al alcance de una ciudad.", "p. 20 ¶3"),
+                      ("Economía de aglomeración", "Las empresas ganan al compartir proveedores y trabajadores.", "p. 21 ¶1"),
+                      ("Capital humano", "La formación que eleva la productividad de quien trabaja.", "p. 25 ¶2")],
+                  [("Mercado regional", "causa", "Economía de aglomeración"), ("Capital humano", "parte_de", "Economía de aglomeración"),
+                   ("Ciudad pequeña", "ejemplifica", "Mercado regional")],
+                  ["localización", "empleo"])]
+    (carpeta / f"c{b1}.json").write_text(json.dumps({"estudio": {"guia": {"sesiones": uno}}}, ensure_ascii=False), encoding="utf-8")
+    if b2 is not None:
+        dos = [sesion(3, [("Capital humano", "Años de estudio como medida de la formación.", "p. 40 ¶1")], [], ["medición"])]
+        (carpeta / f"c{b2}.json").write_text(json.dumps({"estudio": {"guia": {"sesiones": dos}}}, ensure_ascii=False), encoding="utf-8")
 
 
 def _lectura(destino: Path, libros: dict) -> None:

@@ -189,6 +189,7 @@ class Lectura(QObject):
         self._lista: list = []
         self._libro: dict = {}
         self._id = -1
+        self._mapa: dict | None = None
         self._origen = ""
         self._vigia = None
         self._espera = QTimer(self)
@@ -241,6 +242,7 @@ class Lectura(QObject):
             self._leer_libro()
 
     def _leer_libro(self) -> None:
+        self._mapa = None                 # el mapa de lo leído se lee al pedirlo
         self._libro = consulta.libro(self._id, self.ruta()) if self._id >= 0 else {}
         if self._libro and not self._libro.get("titulo") and self._libros is not None and str(self._libros.id) == str(self._id):
             self._libro["titulo"] = self._libros.titulo
@@ -418,6 +420,15 @@ class Lectura(QObject):
                 "datos": " · ".join(datos), "progreso": progreso, "total": len(l["anotaciones"]),
                 "sesiones": [{"fecha": s["fecha"], "tiempo": s["tiempo"], "paginas": s["paginas"],
                               "texto": f"{s['fecha']} · {s['tiempo']} · {s['paginas']} páginas"} for s in l["sesiones"][:12]]}
+
+    @Property("QVariantMap", notify=libroCambiado)
+    def mapa(self) -> dict:
+        """El mapa de lo leído del libro elegido (2026-11-19): los conceptos, relaciones y temas que la IA estructuró en
+        las sesiones guiadas de Ñawinchay, leídos de su diario en solo lectura (`servicios.mapa_lectura`)."""
+        if self._mapa is None:
+            from biblioteca_app.servicios import mapa_lectura
+            self._mapa = mapa_lectura.mapa_libro(self._id)
+        return self._mapa
 
     @Property("QVariantMap", notify=libroCambiado)
     def fichaObra(self) -> dict:

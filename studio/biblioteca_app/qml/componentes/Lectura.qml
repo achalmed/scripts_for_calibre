@@ -364,6 +364,13 @@ QQC2.Control {
                             }
                         }
 
+                        // el mapa de lo leído (2026-11-19): lo que la IA estructuró en las sesiones guiadas de Ñawinchay
+                        MapaLectura {
+                            Layout.fillWidth: true
+                            visible: raiz.b.hay
+                            mapa: raiz.lec.mapa
+                        }
+
                         // las últimas sesiones
                         Kirigami.Heading {
                             type: Kirigami.Heading.Type.Primary

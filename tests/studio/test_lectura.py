@@ -107,3 +107,20 @@ def test_sincronizar_ahora_y_el_interruptor_de_cada_hora(app, entorno, muestra):
     assert avisos[-1] == ("llevados a Yachay (3)", "positivo") and lec.estadoSincronia.startswith("ahora: llevados a Yachay")
     lec.fijarTimer(False)
     assert not lec.timerActivo and "apagada" in lec.estadoSincronia and "solo con el botón" in avisos[-1][0]
+
+
+@requiere_binding
+def test_el_mapa_de_lo_leido_sale_del_diario_de_nawinchay(app, entorno, muestra):
+    """2026-11-19: los conceptos, relaciones y temas que la IA estructuró en las sesiones guiadas de Ñawinchay, leídos de
+    su diario de muestra en solo lectura; un concepto del primer libro que también aparece en otro lo dice."""
+    from biblioteca_app.controladores.lectura import Lectura
+    from biblioteca_app.servicios import mapa_lectura
+    lec = Lectura(None, vigilar=False)
+    m = lec.mapa
+    assert m["sesiones"] == 2 and len(m["conceptos"]) == 5 and len(m["relaciones"]) == 5
+    ag = m["conceptos"][0]
+    assert ag["termino"] == "Economía de aglomeración" and ag["veces"] == 2 and len(ag["definiciones"]) == 2
+    ch = next(c for c in m["conceptos"] if c["termino"] == "Capital humano")
+    assert ch["otros"] == 1                                 # también en el segundo libro de muestra
+    assert m["etiquetas"][0] == ["localización", 2]
+    assert mapa_lectura.mapa_libro(-1)["conceptos"] == []

@@ -1087,3 +1087,22 @@ Pruebas: `tests/fuentes/test_catalogar_ia.py` (un repo y una metadata.db mínimo
 corrige, lo que se rechaza, simular, no escribir con problemas, reescribir solo la fila) y, en `tests/studio/
 test_controladores.py`, los filtros por columna y «Catalogar con un chat» sobre la muestra. Capturas: `studio/capturar.py
 --catalogar-ia`, `--filtro-columna` y `--sin-panel`.
+
+### §9.16 El mapa de lo leído: lo que la IA estructuró en Ñawinchay, visto aquí (2026-11-19)
+
+El autor pidió que la respuesta de la IA en la lectura guiada de Ñawinchay no fuera solo texto: que trajera lo
+estructurado y que con ello se armara un mapa de conceptos. Ñawinchay pide al final de cada prompt un bloque yaml
+`nawinchay:` (lo captado, lo omitido, conceptos con definición y lugar, preguntas, etiquetas, relaciones) y lo guarda
+con la sesión en el diario del libro (Ñawinchay `49189e9`). **El mapa se ve aquí, no en Ñawinchay ni en Obsidian**
+(decisión del autor): el área Lectura muestra, para el libro elegido, el grafo de conceptos y relaciones, la tarjeta del
+concepto (definiciones, lugares, en cuántos otros libros aparece) y los temas.
+
+- Fuente: el diario de Ñawinchay (`NAWINCHAY_DATOS` o `$XDG_DATA_HOME/nawinchay`, `diario/c<calibre_id>.json`), leído
+  en solo lectura por `studio/biblioteca_app/servicios/mapa_lectura.py`; el agrupado es el contrato de Ñawinchay,
+  `nawinchay/studio/nawinchay_app/mapa.py` (`mapa()`, `clave()`), cargado por ruta como `manifiesto/`. Sin Ñawinchay,
+  el mapa queda vacío y el área no cambia.
+- No es una base ni una puerta: nada se escribe, nada va a Zotero ni a Calibre, y lo propuesto por la IA se rotula como
+  tal («cotéjelo con el texto»). La muestra trae su diario (`muestra._diario_nawinchay`) y fija `NAWINCHAY_DATOS`.
+- Alternativa descartada: exportar notas a Obsidian (lo pidió y lo retiró el autor) y llevar los conceptos a la base de
+  lectura (no son anotaciones; si un día hacen falta en otro lector, se decide con Ñawinchay).
+
