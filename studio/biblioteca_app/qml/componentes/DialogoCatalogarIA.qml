@@ -20,6 +20,9 @@ Kirigami.Dialog {
     preferredWidth: Kirigami.Units.gridUnit * 48
     preferredHeight: Kirigami.Units.gridUnit * 42
     standardButtons: Kirigami.Dialog.Close
+    showCloseButton: false     // los botones ya están al pie (la × de la cabecera es roja en algunos temas de iconos)
+    // «Cerrar» sin el círculo rojo de «dialog-close» (Colloid, Papirus): solo su texto
+    Component.onCompleted: { const c = standardButton(Kirigami.Dialog.Close); if (c) c.icon.name = "" }
 
     // `texto` (opcional): lo pegado, que se revisa en cuanto se abre
     function abrir(texto) {
@@ -79,7 +82,7 @@ Kirigami.Dialog {
                       + " Ni Calibre ni Zotero se tocan hasta «" + dialogo.ca.operacion + "»."
             }
 
-            Kirigami.Heading { level: 4; text: "1. Copia el prompt y pégalo en tu chat" }
+            Kirigami.Heading { level: 4; type: Kirigami.Heading.Type.Primary;  text: "1. Copia el prompt y pégalo en tu chat" }
             QQC2.Label {
                 Layout.fillWidth: true
                 wrapMode: Text.WordWrap
@@ -102,7 +105,7 @@ Kirigami.Dialog {
                       + ", " + dialogo.prompt.prompt.length + " caracteres" + (dialogo.prompt.conTexto ? ", con el texto del documento." : ", sin texto del documento.") : ""
             }
 
-            Kirigami.Heading { level: 4; text: "2. Pega aquí la respuesta del chat" }
+            Kirigami.Heading { level: 4; type: Kirigami.Heading.Type.Primary;  text: "2. Pega aquí la respuesta del chat" }
             QQC2.ScrollView {
                 Layout.fillWidth: true
                 Layout.preferredHeight: Kirigami.Units.gridUnit * 9
@@ -117,7 +120,7 @@ Kirigami.Dialog {
             }
 
             // 3. lo comprobado
-            Kirigami.Heading { level: 4; text: "3. Revisa los cambios"; visible: !!dialogo.revision && !dialogo.revision.error }
+            Kirigami.Heading { level: 4; type: Kirigami.Heading.Type.Primary;  text: "3. Revisa los cambios"; visible: !!dialogo.revision && !dialogo.revision.error }
             Kirigami.InlineMessage {
                 Layout.fillWidth: true
                 visible: !!dialogo.revision && !!dialogo.revision.error
@@ -128,9 +131,13 @@ Kirigami.Dialog {
                 model: dialogo.revision ? dialogo.revision.problemas || [] : []
                 Kirigami.InlineMessage { required property string modelData; Layout.fillWidth: true; visible: true; type: Kirigami.MessageType.Error; text: modelData }
             }
-            Repeater {
-                model: dialogo.revision ? dialogo.revision.avisos || [] : []
-                Kirigami.InlineMessage { required property string modelData; Layout.fillWidth: true; visible: true; type: Kirigami.MessageType.Warning; text: modelData }
+            // los avisos juntos, en un solo mensaje con su lista (antes, una caja naranja por aviso, apiladas)
+            Kirigami.InlineMessage {
+                readonly property var avisos: dialogo.revision ? dialogo.revision.avisos || [] : []
+                Layout.fillWidth: true
+                visible: avisos.length > 0
+                type: Kirigami.MessageType.Warning
+                text: avisos.length === 1 ? avisos[0] : "• " + avisos.join("\n• ")
             }
             GridLayout {
                 Layout.fillWidth: true

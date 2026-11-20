@@ -35,17 +35,23 @@ QQC2.ItemDelegate {
         Item {
             Layout.fillWidth: true
             Layout.preferredHeight: width * 1.45
-            Rectangle {                               // el sustituto: los colores del tema, el título y el autor
-                anchors.fill: parent
+            // el sustituto: los colores del tema, el título y el autor; anclado abajo y con la proporción de una portada
+            // común (no la caja entera, que lo hacía más alto que las portadas vecinas), sin borde gris
+            Rectangle {
+                anchors.left: parent.left
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                height: parent.width * 1.33
                 visible: !tarjeta.model.portada || portada.status !== Image.Ready
                 radius: Kirigami.Units.cornerRadius
                 color: Kirigami.Theme.alternateBackgroundColor
-                border.color: Kirigami.Theme.disabledTextColor
+                border.color: Kirigami.ColorUtils.linearInterpolation(Kirigami.Theme.backgroundColor, Kirigami.Theme.textColor, 0.12)
                 border.width: 1
                 ColumnLayout {
                     anchors.fill: parent
                     anchors.margins: Kirigami.Units.largeSpacing
-                    Kirigami.Icon { source: "x-office-document"; Layout.alignment: Qt.AlignHCenter; implicitWidth: Kirigami.Units.iconSizes.large; implicitHeight: implicitWidth; opacity: 0.5 }
+                    Kirigami.Icon { source: "x-office-document-symbolic"; isMask: true; color: Kirigami.Theme.disabledTextColor; Layout.alignment: Qt.AlignHCenter
+                                    implicitWidth: Kirigami.Units.iconSizes.medium; implicitHeight: implicitWidth; opacity: 0.7 }
                     QQC2.Label {
                         Layout.fillWidth: true
                         text: tarjeta.model.titulo
@@ -90,14 +96,18 @@ QQC2.ItemDelegate {
             QQC2.ToolTip.visible: zonaLectura.hovered && tarjeta.model.koProgreso >= 0
             HoverHandler { id: zonaLectura }
         }
+        FontMetrics { id: metricas; font: Kirigami.Theme.defaultFont }
         QQC2.Label {
             Layout.fillWidth: true
+            // siempre el alto de dos líneas: los títulos de una línea ya no bajan la fila de autor y año de su tarjeta
+            Layout.preferredHeight: Math.ceil(metricas.lineSpacing * 2)
+            verticalAlignment: Text.AlignTop
             text: tarjeta.model.titulo
             wrapMode: Text.WordWrap
             maximumLineCount: 2
             elide: Text.ElideRight
             font.weight: Font.DemiBold
-            color: tarjeta.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+            color: Kirigami.Theme.textColor
         }
         RowLayout {
             Layout.fillWidth: true
@@ -107,7 +117,7 @@ QQC2.ItemDelegate {
                 text: tarjeta.model.autores + (tarjeta.model.año ? " · " + tarjeta.model.año : "")
                 elide: Text.ElideRight
                 font: Kirigami.Theme.smallFont
-                color: tarjeta.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor
+                color: Kirigami.Theme.disabledTextColor
             }
             Kirigami.Icon {
                 visible: tarjeta.model.clave !== ""
@@ -120,8 +130,11 @@ QQC2.ItemDelegate {
                 HoverHandler { id: zonaClave }
             }
             Kirigami.Icon {
-                source: tarjeta.model.zotero ? "data-success" : "emblem-unavailable"
-                opacity: tarjeta.model.zotero ? 1 : 0.5
+                // en Zotero, una palomita verde; sin él, una interrogación tenue (antes, un círculo con aspa que parecía
+                // un botón de quitar, y una «data-success» que en Colloid parece una casilla de verificación)
+                source: tarjeta.model.zotero ? "checkmark" : "dialog-question-symbolic"
+                color: tarjeta.model.zotero ? Kirigami.Theme.positiveTextColor : Kirigami.Theme.disabledTextColor
+                opacity: tarjeta.model.zotero ? 1 : 0.6
                 implicitWidth: Kirigami.Units.iconSizes.small
                 implicitHeight: implicitWidth
                 Accessible.name: tarjeta.model.zotero ? "En Zotero" : "Sin Zotero"

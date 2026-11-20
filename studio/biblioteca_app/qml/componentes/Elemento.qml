@@ -51,14 +51,38 @@ Item {
                 Kirigami.Separator { Kirigami.FormData.isSection: true; Kirigami.FormData.label: "Deshacer una escritura" }
                 QQC2.Label { Layout.fillWidth: true; wrapMode: Text.WordWrap; text: "Cierra la aplicación y copia el respaldo de la suite (Intro en la tabla abre su carpeta) sobre la base (metadata.db o zotero.sqlite). Las suites respaldan por la puerta antes de tocar nada; la guía del repo lo detalla (CLAUDE.md, «Deshacer una escritura»)."; color: Kirigami.Theme.disabledTextColor }
             }
-            Repeater {
-                model: pagina.e.elementoCampos
-                delegate: ColumnLayout {
-                    required property var modelData
-                    Layout.fillWidth: true
-                    spacing: 0
-                    QQC2.Label { text: modelData.etiqueta; font: Kirigami.Theme.smallFont; color: Kirigami.Theme.disabledTextColor }
-                    QQC2.Label { Layout.fillWidth: true; text: modelData.valor; wrapMode: Text.Wrap; textFormat: Text.PlainText }
+            // los campos en dos columnas, la etiqueta tenue a la derecha de su columna y el valor al lado (como un
+            // FormLayout de KDE): antes, una columna larga de rótulo encima de valor, todos con el mismo aire
+            GridLayout {
+                Layout.fillWidth: true
+                visible: pagina.e.hayElemento && pagina.e.elementoCampos.length > 0
+                columns: 2
+                columnSpacing: Kirigami.Units.largeSpacing
+                rowSpacing: Kirigami.Units.smallSpacing + Kirigami.Units.smallSpacing / 2
+                Repeater {
+                    model: pagina.e.elementoCampos
+                    delegate: QQC2.Label {
+                        required property var modelData
+                        Layout.row: index
+                        Layout.column: 0
+                        Layout.alignment: Qt.AlignRight | Qt.AlignTop
+                        required property int index
+                        text: modelData.etiqueta
+                        color: Kirigami.Theme.disabledTextColor
+                    }
+                }
+                Repeater {
+                    model: pagina.e.elementoCampos
+                    delegate: QQC2.Label {
+                        required property var modelData
+                        required property int index
+                        Layout.row: index
+                        Layout.column: 1
+                        Layout.fillWidth: true
+                        text: modelData.valor
+                        wrapMode: Text.Wrap
+                        textFormat: Text.PlainText
+                    }
                 }
             }
             RowLayout {

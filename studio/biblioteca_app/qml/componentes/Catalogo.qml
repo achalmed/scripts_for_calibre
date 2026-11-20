@@ -9,6 +9,7 @@ import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 import QtCore
 import org.kde.kirigami as Kirigami
+import GuiComun
 
 QQC2.SplitView {
     id: raiz
@@ -76,20 +77,22 @@ QQC2.SplitView {
             Layout.bottomMargin: Kirigami.Units.smallSpacing
             visible: raiz.l.hayFiltros || raiz.l.busqueda !== ""
             spacing: Kirigami.Units.smallSpacing
-            Chip {
+            OpcionColor {
                 visible: raiz.l.busqueda !== ""
+                elegida: true                         // la búsqueda puesta: teñida, y un toque la quita
                 text: "Búsqueda: " + raiz.l.busqueda
-                icono: "edit-delete-remove"
-                ayuda: "Quitar la búsqueda"
+                icon.name: "edit-delete-remove"
+                descripcion: "Quitar la búsqueda"
                 onClicked: raiz.l.buscar("")
             }
             Repeater {
                 model: raiz.l.nombresFiltros.filter(n => (raiz.l.filtros[n.clave] || "") !== "")
-                delegate: Chip {
+                delegate: OpcionColor {
                     required property var modelData
+                    elegida: true
                     text: modelData.titulo + ": " + raiz.l.filtros[modelData.clave]
-                    icono: "edit-delete-remove"
-                    ayuda: "Quitar este filtro"
+                    icon.name: "edit-delete-remove"
+                    descripcion: "Quitar este filtro"
                     onClicked: raiz.l.fijarFiltro(modelData.clave, "")
                 }
             }

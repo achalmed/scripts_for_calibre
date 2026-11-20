@@ -41,6 +41,7 @@ Kirigami.Dialog {
     preferredWidth: Kirigami.Units.gridUnit * 72
     preferredHeight: Kirigami.Units.gridUnit * 44
     standardButtons: Kirigami.Dialog.Cancel
+    showCloseButton: false     // los botones ya están al pie (la × de la cabecera es roja en algunos temas de iconos)
 
     // `v` (opcional): una ficha ya pensada {tipo, pagina, hoja, categoria, tema, textos, revisar} (del estudio de obra)
     function abrir(v) {
@@ -226,21 +227,16 @@ Kirigami.Dialog {
                     color: Kirigami.Theme.disabledTextColor
                     wrapMode: Text.WordWrap
                 }
-                RowLayout {
-                    visible: !dialogo.corrigiendo              // una corrección no cambia de tipo
-                    spacing: Kirigami.Units.smallSpacing
-                    Repeater {
-                        model: dialogo.tipos
-                        Chip {
-                            required property var modelData
-                            text: modelData.nombre
-                            destacado: dialogo.tipo === modelData.clave
-                            onClicked: {
-                                dialogo.tipo = modelData.clave; dialogo.revision = null; vuelta.olvidar()
-                                if (modelData.clave === "obra") dialogo.rellenarObra()
-                                dialogo.version++
-                            }
-                        }
+                // el tipo de ficha, en un selector segmentado (gui-comun 4.2); una corrección no cambia de tipo
+                SelectorSegmentado {
+                    visible: !dialogo.corrigiendo
+                    titulo: "Tipo de ficha"
+                    opciones: dialogo.tipos.map(t => ({ clave: t.clave, texto: t.nombre }))
+                    actual: dialogo.tipo
+                    onElegida: clave => {
+                        dialogo.tipo = clave; dialogo.revision = null; vuelta.olvidar()
+                        if (clave === "obra") dialogo.rellenarObra()
+                        dialogo.version++
                     }
                 }
                 // la línea «por qué · fuente» del tipo (la ficha de obra, C3.1)

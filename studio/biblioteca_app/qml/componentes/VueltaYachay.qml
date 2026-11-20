@@ -92,6 +92,7 @@ Item {
                   + Object.keys(claves).filter(k => (actual[k] || "") !== (mia[k] || ""))
                           .map(k => claves[k] + ": en Yachay «" + (actual[k] || "") + "»; la tuya «" + (mia[k] || "") + "»").join(" · ")
         standardButtons: Kirigami.Dialog.Cancel
+        showCloseButton: false     // los botones ya están al pie (la × de la cabecera es roja en algunos temas de iconos)
         customFooterActions: [
             Kirigami.Action { text: "Llevar la mía sobre la versión " + (vuelta.conflicto ? vuelta.conflicto.version : ""); icon.name: "go-up"
                               onTriggered: vuelta.llevar(Number(vuelta.conflicto.version)) },

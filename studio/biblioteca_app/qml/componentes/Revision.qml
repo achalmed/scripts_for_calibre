@@ -10,6 +10,7 @@ import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 import QtQuick.Dialogs as Dialogos
 import org.kde.kirigami as Kirigami
+import GuiComun
 
 RowLayout {
     id: raiz
@@ -32,7 +33,7 @@ RowLayout {
         visible: !!de
         text: de ? de.texto + " · " + de.fuente : ""
     }
-    component Titulo: Kirigami.Heading { level: 4; Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.largeSpacing }
+    component Titulo: Kirigami.Heading { level: 4; type: Kirigami.Heading.Type.Primary; Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.largeSpacing }
 
     // ------------------------------------------------------------------ los escritos
     ColumnLayout {
@@ -40,7 +41,7 @@ RowLayout {
         Layout.maximumWidth: Kirigami.Units.gridUnit * 14
         Layout.fillHeight: true
         spacing: 0
-        Kirigami.Heading { level: 4; text: "Escritos"; Layout.margins: Kirigami.Units.largeSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
+        Kirigami.Heading { level: 4; type: Kirigami.Heading.Type.Primary; text: "Escritos"; Layout.margins: Kirigami.Units.largeSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
         QQC2.ScrollView {
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -53,14 +54,16 @@ RowLayout {
                     required property var modelData
                     width: ListView.view.width
                     highlighted: raiz.rv.escrito === modelData.carpeta
+                    // la elegida teñida con su marca (FondoSeleccion de la base), no el bloque lleno del acento (en Lliphi Oscuro, el rojo de los errores)
+                    background: FondoSeleccion { elegida: fila.highlighted; sobre: fila.hovered; pulsada: fila.pressed; foco: fila.visualFocus }
                     onClicked: raiz.rv.elegir(modelData.carpeta)
                     Accessible.name: modelData.titulo
                     contentItem: ColumnLayout {
                         spacing: 0
                         QQC2.Label { Layout.fillWidth: true; text: fila.modelData.titulo; elide: Text.ElideRight
-                                     color: fila.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor }
+                                     color: Kirigami.Theme.textColor }
                         QQC2.Label { Layout.fillWidth: true; text: fila.modelData.proyecto; elide: Text.ElideMiddle; font: Kirigami.Theme.smallFont
-                                     color: fila.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor }
+                                     color: Kirigami.Theme.disabledTextColor }
                     }
                 }
             }
@@ -101,16 +104,15 @@ RowLayout {
                 ColumnLayout {
                     Layout.fillWidth: true
                     spacing: 0
-                    Kirigami.Heading { level: 3; text: raiz.rv.tituloEscrito; Layout.fillWidth: true; elide: Text.ElideRight }
+                    Kirigami.Heading { level: 3; type: Kirigami.Heading.Type.Primary; text: raiz.rv.tituloEscrito; Layout.fillWidth: true; elide: Text.ElideRight }
                     Tenue { text: raiz.d.existe ? "fuentes/revision.yml" : "Aún sin bitácora: declara el tipo para empezar" }
                 }
-                Chip {
+                BotonPrincipal {
                     text: "Generar el diagrama"
-                    icono: "office-chart-area-focus-peak-node"
-                    destacado: raiz.rv.pendientes === 0
+                    icon.name: "office-chart-area-focus-peak-node"
                     enabled: !raiz.rv.ocupado && raiz.rv.pendientes === 0 && (raiz.r.busquedas || []).length > 0
-                    ayuda: "PRISMA 2020 desde la bitácora: fuentes/prisma.pdf, listo para \\includegraphics"
                     onClicked: raiz.rv.generarPrisma()
+                    QQC2.ToolTip.text: "PRISMA 2020 desde la bitácora: fuentes/prisma.pdf, listo para \\includegraphics"; QQC2.ToolTip.visible: hovered
                 }
             }
             // los cambios simulados: nada está en fuentes/revision.yml hasta «Aplicar»
@@ -126,22 +128,14 @@ RowLayout {
                 ]
             }
             Titulo { visible: !!raiz.rv.escrito; text: "Tipo de revisión" }
-            Flow {
+            // el tipo, en un selector segmentado: el elegido teñido con su borde (antes, solo una palomita)
+            SelectorSegmentado {
                 visible: !!raiz.rv.escrito
-                Layout.fillWidth: true
-                spacing: Kirigami.Units.smallSpacing
-                Repeater {
-                    model: raiz.rv.tipos
-                    Chip {
-                        required property var modelData
-                        text: modelData.nombre
-                        destacado: false
-                        checkable: false
-                        icono: raiz.r.tipo === modelData.clave ? "checkmark" : ""
-                        ayuda: "Búsqueda " + modelData.busqueda + "; síntesis " + modelData.sintesis
-                        onClicked: raiz.rv.declarar(modelData.clave, pregunta.text, inclusion.text, exclusion.text)
-                    }
-                }
+                titulo: "Tipo de revisión"
+                compacto: raiz.width < Kirigami.Units.gridUnit * 60
+                opciones: raiz.rv.tipos.map(t => ({ clave: t.clave, texto: t.nombre, descripcion: "Búsqueda " + t.busqueda + "; síntesis " + t.sintesis }))
+                actual: raiz.r.tipo || ""
+                onElegida: clave => raiz.rv.declarar(clave, pregunta.text, inclusion.text, exclusion.text)
             }
             Tenue {
                 visible: !!(raiz.d.tipo && raiz.d.tipo.nombre)
@@ -165,9 +159,11 @@ RowLayout {
                 QQC2.TextArea { id: exclusion; Layout.fillWidth: true; wrapMode: TextEdit.Wrap; placeholderText: "Un criterio por línea"
                                 text: (raiz.r.criterios && raiz.r.criterios.exclusion || []).join("\n") }
                 Item { width: 1 }
-                Chip { text: "Guardar la pregunta y los criterios"; icono: "document-save"; enabled: !!raiz.r.tipo
-                       ayuda: raiz.r.tipo ? "" : "Primero elige el tipo de revisión"
-                       onClicked: raiz.rv.declarar(raiz.r.tipo, pregunta.text, inclusion.text, exclusion.text) }
+                GrupoOpciones {
+                    OpcionColor { text: "Guardar la pregunta y los criterios"; icon.name: "document-save"; enabled: !!raiz.r.tipo
+                           descripcion: raiz.r.tipo ? "" : "Primero elige el tipo de revisión"
+                           onClicked: raiz.rv.declarar(raiz.r.tipo, pregunta.text, inclusion.text, exclusion.text) }
+                }
             }
 
             // ---------------------------------------------------------- lo que exige el tipo
@@ -207,11 +203,13 @@ RowLayout {
                         QQC2.Label { text: busqueda.modelData.id + " · " + busqueda.modelData.base; font.weight: Font.DemiBold }
                         Tenue { text: busqueda.modelData.fecha + " · " + busqueda.modelData.resultados + (busqueda.modelData.resultados === 1 ? " resultado" : " resultados")
                                       + (busqueda.modelData.clase !== "base" ? " · " + (raiz.rv.clases.find(x => x.clave === busqueda.modelData.clase) || {}).texto : "") }
-                        Chip { visible: busqueda.modelData.cadena !== ""; icono: "edit-copy"; ayuda: "Copiar la cadena exacta para repetir la búsqueda"
-                               Accessible.name: "Copiar la cadena"; onClicked: raiz.rv.copiar(busqueda.modelData.cadena) }
-                        Chip { text: "Importar registros…"; icono: "document-import"; ayuda: "La exportación de la base, en RIS o BibTeX"
-                               onClicked: { elegirArchivo.busqueda = busqueda.modelData.id; elegirArchivo.open() } }
-                        Chip { text: "Añadir registro"; icono: "list-add"; onClicked: { dialogoRegistro.busqueda = busqueda.modelData.id; dialogoRegistro.open() } }
+                        GrupoOpciones {
+                            OpcionColor { visible: busqueda.modelData.cadena !== ""; icon.name: "edit-copy"; descripcion: "Copiar la cadena exacta para repetir la búsqueda"
+                                   Accessible.name: "Copiar la cadena"; onClicked: raiz.rv.copiar(busqueda.modelData.cadena) }
+                            OpcionColor { text: "Importar registros…"; icon.name: "document-import"; descripcion: "La exportación de la base, en RIS o BibTeX"
+                                   onClicked: { elegirArchivo.busqueda = busqueda.modelData.id; elegirArchivo.open() } }
+                            OpcionColor { text: "Añadir registro"; icon.name: "list-add"; onClicked: { dialogoRegistro.busqueda = busqueda.modelData.id; dialogoRegistro.open() } }
+                        }
                     }
                     QQC2.Label {
                         Layout.fillWidth: true
@@ -247,14 +245,16 @@ RowLayout {
                 RowLayout {
                     Layout.fillWidth: true
                     Item { Layout.fillWidth: true }
-                    Chip {
-                        text: "Añadir a la bitácora"
-                        icono: "list-add"
-                        enabled: nbBase.text.trim() !== ""
-                        onClicked: {
-                            raiz.rv.anadirBusqueda({ base: nbBase.text, clase: raiz.rv.clases[Math.max(0, nbClase.currentIndex)].clave, cadena: nbCadena.text,
-                                                     filtros: nbFiltros.text, fecha: nbFecha.text, resultados: nbResultados.value })
-                            nbBase.text = ""; nbCadena.text = ""; nbFiltros.text = ""; nbFecha.text = ""; nbResultados.value = 0
+                    GrupoOpciones {
+                        OpcionColor {
+                            text: "Añadir a la bitácora"
+                            icon.name: "list-add"
+                            enabled: nbBase.text.trim() !== ""
+                            onClicked: {
+                                raiz.rv.anadirBusqueda({ base: nbBase.text, clase: raiz.rv.clases[Math.max(0, nbClase.currentIndex)].clave, cadena: nbCadena.text,
+                                                         filtros: nbFiltros.text, fecha: nbFecha.text, resultados: nbResultados.value })
+                                nbBase.text = ""; nbCadena.text = ""; nbFiltros.text = ""; nbFecha.text = ""; nbResultados.value = 0
+                            }
                         }
                     }
                 }
@@ -263,19 +263,12 @@ RowLayout {
             // ---------------------------------------------------------- 3. el cribado en dos fases
             Titulo { visible: (raiz.r.registros || []).length > 0; text: "Cribado" }
             PorQue { de: (raiz.r.registros || []).length > 0 ? raiz.pq.cribado : null }
-            Flow {
+            SelectorSegmentado {
                 visible: (raiz.r.registros || []).length > 0
-                Layout.fillWidth: true
-                spacing: Kirigami.Units.smallSpacing
-                Repeater {
-                    model: raiz.rv.fases
-                    Chip {
-                        required property var modelData
-                        text: modelData.texto + " · " + modelData.n
-                        icono: raiz.rv.fase === modelData.clave ? "checkmark" : ""
-                        onClicked: raiz.rv.fijarFase(modelData.clave)
-                    }
-                }
+                titulo: "Fase del cribado"
+                opciones: raiz.rv.fases.map(f => ({ clave: f.clave, texto: f.texto, contador: f.n }))
+                actual: raiz.rv.fase
+                onElegida: clave => raiz.rv.fijarFase(clave)
             }
             Repeater {
                 model: raiz.rv.registros
@@ -289,11 +282,13 @@ RowLayout {
                         Layout.fillWidth: true
                         visible: raiz.rv.fase === "fase1" || raiz.rv.fase === "fase2"
                         Item { Layout.fillWidth: true }
-                        Chip { visible: raiz.rv.fase === "fase2" && reg.modelData.recuperado !== true; text: "No se consiguió"; icono: "dialog-cancel"
-                               ayuda: "No hubo forma de leer el texto completo"; onClicked: raiz.rv.cribar(reg.modelData.id, 2, "no_recuperado", "") }
-                        Chip { text: "Excluir"; icono: "list-remove"
-                               onClicked: { dialogoMotivo.rid = reg.modelData.id; dialogoMotivo.fase = raiz.rv.fase === "fase1" ? 1 : 2; dialogoMotivo.open() } }
-                        Chip { text: "Incluir"; icono: "list-add"; onClicked: raiz.rv.cribar(reg.modelData.id, raiz.rv.fase === "fase1" ? 1 : 2, "incluir", "") }
+                        GrupoOpciones {
+                            OpcionColor { visible: raiz.rv.fase === "fase2" && reg.modelData.recuperado !== true; text: "No se consiguió"; icon.name: "dialog-cancel"
+                                   descripcion: "No hubo forma de leer el texto completo"; onClicked: raiz.rv.cribar(reg.modelData.id, 2, "no_recuperado", "") }
+                            OpcionColor { text: "Excluir"; icon.name: "list-remove"; color: Kirigami.Theme.negativeTextColor
+                                   onClicked: { dialogoMotivo.rid = reg.modelData.id; dialogoMotivo.fase = raiz.rv.fase === "fase1" ? 1 : 2; dialogoMotivo.open() } }
+                            OpcionColor { text: "Incluir"; icon.name: "list-add"; color: Kirigami.Theme.positiveTextColor; onClicked: raiz.rv.cribar(reg.modelData.id, raiz.rv.fase === "fase1" ? 1 : 2, "incluir", "") }
+                        }
                     }
                 }
             }
@@ -334,9 +329,11 @@ RowLayout {
             RowLayout {
                 visible: !!raiz.d.prisma && raiz.d.prisma.pdf !== ""
                 Item { Layout.fillWidth: true }
-                Chip { text: "Abrir el PDF"; icono: "document-open"; onClicked: Qt.openUrlExternally("file://" + raiz.d.prisma.pdf) }
-                Chip { text: "Copiar para LaTeX"; icono: "edit-copy"; ayuda: "\\includegraphics[width=\\textwidth]{fuentes/prisma}"
-                       onClicked: raiz.rv.copiar("\\includegraphics[width=\\textwidth]{fuentes/prisma}") }
+                GrupoOpciones {
+                    OpcionColor { text: "Abrir el PDF"; icon.name: "document-open"; onClicked: Qt.openUrlExternally("file://" + raiz.d.prisma.pdf) }
+                    OpcionColor { text: "Copiar para LaTeX"; icon.name: "edit-copy"; descripcion: "\\includegraphics[width=\\textwidth]{fuentes/prisma}"
+                           onClicked: raiz.rv.copiar("\\includegraphics[width=\\textwidth]{fuentes/prisma}") }
+                }
             }
             Item { implicitHeight: Kirigami.Units.gridUnit * 2 }
         }
@@ -346,6 +343,9 @@ RowLayout {
         id: dialogoDiferencia
         title: "Lo que «Aplicar» escribirá en fuentes/revision.yml"
         standardButtons: Kirigami.Dialog.Close
+        showCloseButton: false     // los botones ya están al pie (la × de la cabecera es roja en algunos temas de iconos)
+        // «Cerrar» sin el círculo rojo de «dialog-close» (Colloid, Papirus): solo su texto
+        Component.onCompleted: { const c = standardButton(Kirigami.Dialog.Close); if (c) c.icon.name = "" }
         preferredWidth: Kirigami.Units.gridUnit * 44
         preferredHeight: Kirigami.Units.gridUnit * 28
         customFooterActions: [Kirigami.Action { text: "Aplicar"; icon.name: "dialog-ok-apply"
@@ -374,6 +374,7 @@ RowLayout {
         title: fase === 1 ? "Excluir por título y resumen" : "Excluir por texto completo"
         subtitle: fase === 1 ? "El motivo es opcional en esta fase." : "Toda exclusión por texto completo lleva su motivo (PRISMA 2020)."
         standardButtons: Kirigami.Dialog.Cancel
+        showCloseButton: false     // los botones ya están al pie (la × de la cabecera es roja en algunos temas de iconos)
         onOpened: { motivo.text = ""; motivo.forceActiveFocus() }
         QQC2.TextField { id: motivo; placeholderText: "Otra población, otro periodo, sin datos propios…" }
         customFooterActions: [Kirigami.Action { text: "Excluir"; icon.name: "list-remove"
@@ -385,6 +386,7 @@ RowLayout {
         property string busqueda: ""
         title: "Añadir un registro a " + busqueda
         standardButtons: Kirigami.Dialog.Cancel
+        showCloseButton: false     // los botones ya están al pie (la × de la cabecera es roja en algunos temas de iconos)
         preferredWidth: Kirigami.Units.gridUnit * 30
         onOpened: { rTitulo.text = ""; rAutores.text = ""; rAnio.text = ""; rDoi.text = ""; rTitulo.forceActiveFocus() }
         customFooterActions: [Kirigami.Action { text: "Añadir"; icon.name: "list-add"; enabled: rTitulo.text.trim() !== ""

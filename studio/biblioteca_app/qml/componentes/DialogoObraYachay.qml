@@ -21,6 +21,7 @@ Kirigami.Dialog {
     title: "Corregir tu ficha de obra de «" + libro + "»"
     preferredWidth: Kirigami.Units.gridUnit * 36
     standardButtons: Kirigami.Dialog.Cancel
+    showCloseButton: false     // los botones ya están al pie (la × de la cabecera es roja en algunos temas de iconos)
 
     // `fo`: la ficha de obra de Yachay como la da `studio.lectura.fichaObra` ({calibreId, preguntas, detalle})
     function abrir(fo, titulo) {

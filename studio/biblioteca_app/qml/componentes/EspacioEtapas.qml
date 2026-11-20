@@ -25,7 +25,7 @@ ColumnLayout {
     readonly property var etapas: studio.etapas
     readonly property var ops: studio.operaciones
     readonly property string vista: studio.espacio.vista
-    property alias pestana: lado.currentIndex
+    property int pestana: 1                       // el lado: 0 Elemento · 1 Operación · 2 Plan · 3 Registro · 4 Salida
     property alias conPanel: recuerdo.conPanel        // falso: la tabla ocupa todo el ancho
     readonly property var filtrosPuestos: etapas.filtrosColumna[vista] || []
     readonly property bool catalogable: vista === "entrada" || vista === "catalogar"
@@ -33,7 +33,7 @@ ColumnLayout {
 
     function tabla() { return tablas.children[tablas.currentIndex] }
     function accion(n) { return studio.acciones.accion(n) }
-    function mostrarPestana(i) { lado.currentIndex = i; raiz.conPanel = true }
+    function mostrarPestana(i) { raiz.pestana = i; raiz.conPanel = true }
 
     Settings {
         id: recuerdo
@@ -67,12 +67,14 @@ ColumnLayout {
                         Accessible.name: tarjeta.modelData.estado === "positivo" ? "en orden" : "requiere atención"
                     }
                     QQC2.Label { Layout.fillWidth: true; text: tarjeta.modelData.titulo; font.weight: Font.DemiBold; elide: Text.ElideRight }
-                    Chip {
-                        text: tarjeta.modelData.boton
-                        ayuda: tarjeta.modelData.operacion !== "" ? "Elige la operación: se simula con F5 y se aplica con Ctrl+Intro" : "Ver la etapa"
-                        onClicked: {
-                            studio.espacio.fijarVista(tarjeta.modelData.vista)
-                            if (tarjeta.modelData.operacion !== "") { studio.operaciones.fijar(tarjeta.modelData.operacion); raiz.mostrarPestana(1) }
+                    GrupoOpciones {
+                        OpcionColor {
+                            text: tarjeta.modelData.boton
+                            descripcion: tarjeta.modelData.operacion !== "" ? "Elige la operación: se simula con F5 y se aplica con Ctrl+Intro" : "Ver la etapa"
+                            onClicked: {
+                                studio.espacio.fijarVista(tarjeta.modelData.vista)
+                                if (tarjeta.modelData.operacion !== "") { studio.operaciones.fijar(tarjeta.modelData.operacion); raiz.mostrarPestana(1) }
+                            }
                         }
                     }
                 }
@@ -97,6 +99,7 @@ ColumnLayout {
             model: raiz.filas
             delegate: RowLayout {
                 id: etapa
+                visible: raiz.recorrido               // en la Coherencia, el selector segmentado de abajo
                 required property var modelData
                 required property int index
                 readonly property bool elegida: raiz.vista === modelData.nombre
@@ -121,14 +124,16 @@ ColumnLayout {
                         spacing: Kirigami.Units.smallSpacing
                         Rectangle {
                             implicitWidth: Kirigami.Units.gridUnit * 1.5; implicitHeight: implicitWidth; radius: width / 2
-                            color: etapa.elegida ? Kirigami.Theme.highlightColor : "transparent"
-                            border.width: etapa.elegida ? 0 : 1
-                            border.color: Qt.alpha(Kirigami.Theme.textColor, boton.hovered ? 0.5 : 0.25)
+                            // la etapa elegida, teñida del acento con su borde (gui-comun 4.2), no rellena
+                            color: etapa.elegida ? Kirigami.ColorUtils.tintWithAlpha(Kirigami.Theme.backgroundColor, Kirigami.Theme.highlightColor, 0.28) : "transparent"
+                            border.width: etapa.elegida ? 1.5 : 1
+                            border.color: etapa.elegida ? Kirigami.Theme.highlightColor : Qt.alpha(Kirigami.Theme.textColor, boton.hovered ? 0.5 : 0.25)
                             QQC2.Label {
                                 anchors.centerIn: parent
                                 text: etapa.index + 1
-                                font: Kirigami.Theme.smallFont
-                                color: etapa.elegida ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+                                font.pointSize: Kirigami.Theme.smallFont.pointSize
+                                font.weight: etapa.elegida ? Font.DemiBold : Font.Normal
+                                color: Kirigami.Theme.textColor
                             }
                         }
                         ColumnLayout {
@@ -142,14 +147,16 @@ ColumnLayout {
                         color: boton.hovered && !etapa.elegida ? Qt.alpha(Kirigami.Theme.textColor, 0.06) : "transparent"
                     }
                 }
-                Chip {
-                    visible: !raiz.recorrido
-                    text: etapa.modelData.texto + (etapa.cuenta !== "" ? "  " + etapa.cuenta : "")
-                    icono: etapa.modelData.icono
-                    destacado: etapa.elegida
-                    onClicked: studio.espacio.fijarVista(etapa.modelData.nombre)
-                }
             }
+        }
+        // en la Coherencia, las etapas en un selector segmentado con su contador (gui-comun 4.2)
+        SelectorSegmentado {
+            visible: !raiz.recorrido
+            titulo: "Etapas"
+            opciones: raiz.filas.map(f => ({ clave: f.nombre, texto: f.texto, icono: f.icono,
+                                              contador: f.contador !== "" && f.contador !== undefined ? f.contador : "" }))
+            actual: raiz.vista
+            onElegida: clave => studio.espacio.fijarVista(clave)
         }
         Item { Layout.fillWidth: !raiz.recorrido }
     }
@@ -184,13 +191,11 @@ ColumnLayout {
         BotonAccion { accion: raiz.accion("metodo.catalogar_ia"); visible: raiz.catalogable }
         BotonAccion { accion: raiz.accion("op.cancelar"); conTexto: false; visible: raiz.ops.enCurso }
         BotonAccion { accion: raiz.accion("op.simular"); visible: raiz.ops.hayOperacion }
-        QQC2.Button {
-            readonly property var a: raiz.accion("op.aplicar")
+        // la acción principal de la vista, rellena del acento (con Kvantum, `highlighted` no pintaba nada)
+        BotonPrincipal {
+            accion: raiz.accion("op.aplicar")
             visible: raiz.ops.hayOperacion && raiz.ops.escribe
-            highlighted: true
-            text: a.textoPlano; icon.name: a.icono; enabled: a.habilitada
-            onClicked: a.disparar()
-            QQC2.ToolTip.text: a.descripcion + " (" + a.atajoTexto + ")"; QQC2.ToolTip.visible: hovered
+            QQC2.ToolTip.text: accion.descripcion + " (" + accion.atajoTexto + ")"; QQC2.ToolTip.visible: hovered
         }
     }
     Kirigami.Separator { Layout.fillWidth: true }
@@ -218,11 +223,12 @@ ColumnLayout {
             spacing: Kirigami.Units.smallSpacing
             Repeater {
                 model: raiz.filtrosPuestos
-                delegate: Chip {
+                delegate: OpcionColor {
                     required property var modelData
+                    elegida: true                     // un filtro puesto: teñido, y un toque lo quita
                     text: modelData.titulo + ": " + modelData.valor
-                    icono: "edit-delete-remove"
-                    ayuda: "Quitar este filtro"
+                    icon.name: "edit-delete-remove"
+                    descripcion: "Quitar este filtro"
                     onClicked: raiz.etapas.filtrarColumna(raiz.vista, modelData.columna, "")
                 }
             }
@@ -428,7 +434,7 @@ ColumnLayout {
                     })[nombre] || []
                     menuContextual: menuTabla
                     onOrdenar: (columna, descendente) => modelo.ordenar(columna, descendente)
-                    onFilaActualCambiada: fila => { raiz.etapas.fijarFila(nombre, fila); if (fila >= 0 && lado.currentIndex > 1) lado.currentIndex = 0 }
+                    onFilaActualCambiada: fila => { raiz.etapas.fijarFila(nombre, fila); if (fila >= 0 && raiz.pestana > 1) raiz.pestana = 0 }
                     onActivada: fila => { raiz.etapas.fijarFila(nombre, fila); raiz.etapas.abrirElemento() }
                 }
             }
@@ -438,20 +444,24 @@ ColumnLayout {
             QQC2.SplitView.preferredWidth: Kirigami.Units.gridUnit * 28
             QQC2.SplitView.minimumWidth: Kirigami.Units.gridUnit * 18
             spacing: 0
-            QQC2.TabBar {
+            // el lado en un selector segmentado (gui-comun 4.2), no pestañas de Kvantum con la elegida en gris
+            SelectorSegmentado {
                 id: lado
-                Layout.fillWidth: true
-                currentIndex: 1
-                QQC2.TabButton { text: "Elemento"; width: implicitWidth }
-                QQC2.TabButton { text: "Operación"; width: implicitWidth }
-                QQC2.TabButton { text: "Plan"; width: implicitWidth }
-                QQC2.TabButton { text: "Registro"; width: implicitWidth }
-                QQC2.TabButton { text: "Salida"; width: implicitWidth }
+                Layout.alignment: Qt.AlignHCenter
+                Layout.topMargin: Kirigami.Units.smallSpacing
+                Layout.bottomMargin: Kirigami.Units.smallSpacing
+                titulo: "El elemento y su operación"
+                compacto: true
+                opciones: [{ clave: "0", texto: "Elemento" }, { clave: "1", texto: "Operación" }, { clave: "2", texto: "Plan" },
+                           { clave: "3", texto: "Registro" }, { clave: "4", texto: "Salida" }]
+                actual: String(raiz.pestana)
+                onElegida: clave => raiz.pestana = Number(clave)
             }
+            Kirigami.Separator { Layout.fillWidth: true }
             StackLayout {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
-                currentIndex: lado.currentIndex
+                currentIndex: raiz.pestana
                 Elemento {}
                 Operacion { conBotones: false }      // Simular y Aplicar, arriba (§9.9)
                 Plan {}

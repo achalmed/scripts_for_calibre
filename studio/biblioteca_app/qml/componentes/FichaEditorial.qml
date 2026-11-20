@@ -53,7 +53,7 @@ QQC2.Control {
                     Layout.topMargin: Kirigami.Units.smallSpacing
                     QQC2.Label { text: "Calibre " + (raiz.f.id || ""); color: Kirigami.Theme.disabledTextColor; font: Kirigami.Theme.smallFont }
                     Item { Layout.fillWidth: true }
-                    QQC2.ToolButton { icon.name: "window-close"; display: QQC2.AbstractButton.IconOnly; text: "Cerrar la ficha"; onClicked: raiz.cerrar(); Accessible.name: text }
+                    BotonCierre { text: "Cerrar la ficha"; onClicked: raiz.cerrar() }
                 }
                 // la portada, el título, el autor y el año, y la clave para citar (§9.9)
                 RowLayout {
@@ -89,6 +89,7 @@ QQC2.Control {
                         Kirigami.Heading {
                             Layout.fillWidth: true
                             level: 3
+                            type: Kirigami.Heading.Type.Primary
                             text: raiz.f.titulo || ""
                             wrapMode: Text.WordWrap
                         }
@@ -135,40 +136,42 @@ QQC2.Control {
                 Flow {
                     Layout.fillWidth: true
                     spacing: Kirigami.Units.smallSpacing
-                    Chip {
+                    BotonPrincipal {
                         readonly property var a: raiz.accion("libro.archivo")
                         text: "Abrir"
-                        icono: "document-open"
-                        destacado: true
+                        icon.name: "document-open"
                         enabled: a ? a.habilitada : false
-                        ayuda: "El documento con su aplicación"
                         onClicked: a.disparar()
+                        QQC2.ToolTip.text: "El documento con su aplicación"; QQC2.ToolTip.visible: hovered
                     }
-                    Chip {
+                    GrupoOpciones {
+                        titulo: "Con el libro"
+                    OpcionColor {
                         objectName: "nuevaFicha"
                         text: "Nueva ficha"
-                        icono: "document-new"
-                        ayuda: "Una ficha textual, de paráfrasis o de fuente en un escrito, con el PDF al lado y su cotejo"
+                        icon.name: "document-new"
+                        descripcion: "Una ficha textual, de paráfrasis o de fuente en un escrito, con el PDF al lado y su cotejo"
                         onClicked: dialogoFicha.abrir()
                     }
-                    Chip {
+                    OpcionColor {
                         objectName: "estudiarIA"
                         text: "Estudiar con la IA"
-                        icono: "tools-wizard"
-                        ayuda: "Copia el prompt de una mirada sobre unas hojas del libro y lee de vuelta lo que respondió el chat"
+                        icon.name: "tools-wizard"
+                        descripcion: "Copia el prompt de una mirada sobre unas hojas del libro y lee de vuelta lo que respondió el chat"
                         onClicked: dialogoEstudio.abrir()
                     }
-                    Chip {
+                    OpcionColor {
                         text: "Citar en LaTeX"
-                        icono: "edit-copy"
+                        icon.name: "edit-copy"
                         enabled: !!raiz.f.clave
-                        ayuda: raiz.f.clave ? "Copia \\parencite{" + raiz.f.clave + "}: pégalo en LaTeX Studio" : "Sin clave para citar: enlázalo con Zotero"
+                        descripcion: raiz.f.clave ? "Copia \\parencite{" + raiz.f.clave + "}: pégalo en LaTeX Studio" : "Sin clave para citar: enlázalo con Zotero"
                         onClicked: raiz.l.copiarCita()
+                    }
                     }
                 }
 
                 // en qué escritos se usa (§9.1)
-                Kirigami.Heading { level: 4; text: "Usado en"; visible: raiz.l.usos.length > 0 }
+                Kirigami.Heading { level: 4; type: Kirigami.Heading.Type.Primary; text: "Usado en"; visible: raiz.l.usos.length > 0 }
                 Repeater {
                     model: raiz.l.usos
                     delegate: QQC2.ItemDelegate {
@@ -198,23 +201,25 @@ QQC2.Control {
                     visible: fo.hay === true && String(fo.calibreId) === String(raiz.f.id)
                     spacing: Kirigami.Units.smallSpacing
                     // el título en su línea y los botones debajo: en una sola fila, a un ancho estrecho, se pisaban (2026-11-19)
-                    Kirigami.Heading { level: 4; text: obraYachay.fo.procedencia || "Ficha de obra en Yachay"; Layout.fillWidth: true; wrapMode: Text.WordWrap }
+                    Kirigami.Heading { level: 4; type: Kirigami.Heading.Type.Primary; text: obraYachay.fo.procedencia || "Ficha de obra en Yachay"; Layout.fillWidth: true; wrapMode: Text.WordWrap }
                     Flow {
                         Layout.fillWidth: true
                         spacing: Kirigami.Units.smallSpacing
-                        Chip {
+                        GrupoOpciones {
+                        OpcionColor {
                             objectName: "fichaObraAlEscrito"
                             text: "Llevar a un escrito"
-                            icono: "document-new"
-                            ayuda: "Una ficha de obra en un escrito, rellena con esta: ajusta «Uso que le daré» a ese escrito"
+                            icon.name: "document-new"
+                            descripcion: "Una ficha de obra en un escrito, rellena con esta: ajusta «Uso que le daré» a ese escrito"
                             onClicked: dialogoFicha.abrir({ tipo: "obra", textos: Object.assign({}, obraYachay.fo.secciones) })
                         }
-                        Chip {
+                        OpcionColor {
                             objectName: "fichaObraCorregir"
                             text: "Corregir…"
-                            icono: "document-edit"
-                            ayuda: "Corregir tus seis respuestas en Yachay sin pasar por un escrito: se revisa qué cambia y se lleva tras confirmar"
+                            icon.name: "document-edit"
+                            descripcion: "Corregir tus seis respuestas en Yachay sin pasar por un escrito: se revisa qué cambia y se lleva tras confirmar"
                             onClicked: dialogoObraYachay.abrir(obraYachay.fo, studio.libros.ficha.titulo || "")
+                        }
                         }
                     }
                     QQC2.Label {
@@ -254,18 +259,22 @@ QQC2.Control {
                 Flow {
                     Layout.fillWidth: true
                     spacing: Kirigami.Units.smallSpacing
+                    GrupoOpciones {
+                    titulo: "Abrir en"
                     Repeater {
                         model: [{ n: "libro.dolphin", t: "Dolphin", i: "system-file-manager" }, { n: "libro.calibre", t: "Calibre", i: "calibre" },
                                 { n: "libro.zotero", t: "Zotero", i: "zotero" }]
-                        Chip {
+                        OpcionColor {
                             required property var modelData
                             readonly property var a: raiz.accion(modelData.n)
                             text: modelData.t
-                            icono: modelData.i
+                            icon.name: modelData.i
                             enabled: a ? a.habilitada : false
-                            ayuda: a ? a.texto.replace("&", "") : ""
+                            descripcion: a ? a.texto.replace("&", "") : ""
+                            iconoMonocromo: false        // los iconos de las aplicaciones, con sus colores
                             onClicked: a.disparar()
                         }
+                    }
                     }
                 }
 
@@ -353,7 +362,7 @@ QQC2.Control {
                     wrapMode: Text.WordWrap
                     textFormat: Text.PlainText
                 }
-                Kirigami.Heading { level: 4; text: "Formatos"; visible: (raiz.f.formatos || []).length > 0 }
+                Kirigami.Heading { level: 4; type: Kirigami.Heading.Type.Primary; text: "Formatos"; visible: (raiz.f.formatos || []).length > 0 }
                 Repeater {
                     model: raiz.f.formatos || []
                     delegate: RowLayout {
@@ -364,7 +373,7 @@ QQC2.Control {
                         QQC2.Label { text: modelData.tamano; color: Kirigami.Theme.disabledTextColor }
                     }
                 }
-                Kirigami.Heading { level: 4; text: "Fichas canónicas"; visible: (raiz.f.fichas || []).length > 0 }
+                Kirigami.Heading { level: 4; type: Kirigami.Heading.Type.Primary; text: "Fichas canónicas"; visible: (raiz.f.fichas || []).length > 0 }
                 Repeater {
                     model: raiz.f.fichas || []
                     delegate: QQC2.ItemDelegate {

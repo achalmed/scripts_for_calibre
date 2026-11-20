@@ -11,6 +11,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
+import GuiComun
 
 RowLayout {
     id: raiz
@@ -42,7 +43,7 @@ RowLayout {
         Layout.fillWidth: false
         Layout.fillHeight: true
         spacing: 0
-        Kirigami.Heading { level: 4; text: "Fichas"; Layout.margins: Kirigami.Units.largeSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
+        Kirigami.Heading { level: 4; type: Kirigami.Heading.Type.Primary; text: "Fichas"; Layout.margins: Kirigami.Units.largeSpacing; Layout.bottomMargin: Kirigami.Units.smallSpacing }
         Repeater {
             model: raiz.fi.filtros
             delegate: QQC2.ItemDelegate {
@@ -50,13 +51,15 @@ RowLayout {
                 required property var modelData
                 Layout.fillWidth: true
                 highlighted: !raiz.repaso && raiz.fi.filtro === modelData.clave
+                // la elegida teñida con su marca (FondoSeleccion de la base), no el bloque lleno del acento (en Lliphi Oscuro, el rojo de los errores)
+                background: FondoSeleccion { elegida: filtro.highlighted; sobre: filtro.hovered; pulsada: filtro.pressed; foco: filtro.visualFocus }
                 onClicked: raiz.fi.fijarFiltro(modelData.clave)
                 Accessible.name: modelData.texto + ", " + modelData.n
                 contentItem: RowLayout {
                     QQC2.Label { Layout.fillWidth: true; text: filtro.modelData.texto; elide: Text.ElideRight
-                                 color: filtro.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor }
+                                 color: Kirigami.Theme.textColor }
                     QQC2.Label { text: filtro.modelData.n; font: Kirigami.Theme.smallFont
-                                 color: filtro.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor }
+                                 color: Kirigami.Theme.disabledTextColor }
                 }
             }
         }
@@ -65,15 +68,17 @@ RowLayout {
             id: entradaRepaso
             Layout.fillWidth: true
             highlighted: raiz.repaso
+            // la elegida teñida con su marca (FondoSeleccion de la base), no el bloque lleno del acento (en Lliphi Oscuro, el rojo de los errores)
+            background: FondoSeleccion { elegida: entradaRepaso.highlighted; sobre: entradaRepaso.hovered; pulsada: entradaRepaso.pressed; foco: entradaRepaso.visualFocus }
             onClicked: raiz.fi.fijarModo("repaso")
             Accessible.name: "Repaso para estudiantes, " + raiz.fi.paraHoy + " para hoy"
             contentItem: RowLayout {
                 Kirigami.Icon { source: "view-task"; implicitWidth: Kirigami.Units.iconSizes.small; implicitHeight: implicitWidth
-                                color: entradaRepaso.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor }
+                                color: Kirigami.Theme.textColor }
                 QQC2.Label { Layout.fillWidth: true; text: "Repaso para estudiantes"; elide: Text.ElideRight
-                             color: entradaRepaso.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor }
+                             color: Kirigami.Theme.textColor }
                 QQC2.Label { text: raiz.fi.paraHoy; font: Kirigami.Theme.smallFont; visible: raiz.fi.paraHoy > 0
-                             color: entradaRepaso.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor }
+                             color: Kirigami.Theme.disabledTextColor }
             }
         }
         Tenue {
@@ -102,6 +107,7 @@ RowLayout {
                 Layout.fillWidth: true
                 spacing: 0
                 Kirigami.Heading {
+                    type: Kirigami.Heading.Type.Primary
                     level: 3
                     text: raiz.repaso ? "Repaso para estudiantes" : ((raiz.fi.filtros.find(f => f.clave === raiz.fi.filtro) || {}).texto || "Fichas")
                 }
@@ -113,22 +119,28 @@ RowLayout {
                                          : raiz.fi.lista.length + " fichas" + (studio.libros.hayActual ? " · libro: " + studio.libros.titulo : ""))
                 }
             }
-            Chip {
-                text: "Estudiar con la IA"
-                icono: "tools-wizard"
-                enabled: studio.libros.hayActual
-                ayuda: studio.libros.hayActual ? "Una mirada sobre unas hojas de «" + studio.libros.titulo + "»: copia el prompt y lee lo que respondió el chat"
-                                               : "Elige una ficha o un libro del catálogo"
-                onClicked: dialogoEstudio.abrir()
+            GrupoOpciones {
+                titulo: "Con el libro"
+                OpcionColor {
+                    text: "Estudiar con la IA"
+                    icon.name: "tools-wizard"
+                    enabled: studio.libros.hayActual
+                    opacity: enabled ? 1 : 0.45
+                    descripcion: studio.libros.hayActual ? "Una mirada sobre unas hojas de «" + studio.libros.titulo + "»: copia el prompt y lee lo que respondió el chat"
+                                                         : "Elige una ficha o un libro del catálogo"
+                    onClicked: dialogoEstudio.abrir()
+                }
             }
-            Chip {
+            // la acción principal de la lista; en el repaso, la de la tarjeta
+            BotonPrincipal {
+                visible: !raiz.repaso
                 text: "Nueva ficha"
-                icono: "document-new"
-                destacado: !raiz.repaso                    // la acción rellena de la lista; en el repaso, la de la tarjeta
+                icon.name: "document-new"
                 enabled: studio.libros.hayActual
                 onClicked: dialogoFicha.abrir()
-                ayuda: studio.libros.hayActual ? "Una ficha de «" + studio.libros.titulo + "» en un escrito, con el PDF al lado y su cotejo"
-                                               : "Elige una ficha o un libro del catálogo"
+                QQC2.ToolTip.text: studio.libros.hayActual ? "Una ficha de «" + studio.libros.titulo + "» en un escrito, con el PDF al lado y su cotejo"
+                                                           : "Elige una ficha o un libro del catálogo"
+                QQC2.ToolTip.visible: hovered
             }
         }
         Kirigami.Separator { Layout.fillWidth: true }
@@ -154,6 +166,7 @@ RowLayout {
                     width: ListView.view.width - Kirigami.Units.largeSpacing
                     resaltada: raiz.fi.actual === modelData.clave
                     TapHandler { onTapped: raiz.fi.elegir(ficha.modelData.clave) }
+                    HoverHandler { id: sobreFicha }
                     TextoLectura {
                         visible: ficha.modelData.cita !== ""
                         text: ficha.modelData.tipo === "textual" ? "“" + ficha.modelData.cita + "”" : ficha.modelData.cita
@@ -171,43 +184,54 @@ RowLayout {
                         Layout.fillWidth: true
                         spacing: Kirigami.Units.smallSpacing
                         Tenue { text: ficha.modelData.detalle }
-                        Chip {
-                            visible: ficha.modelData.principal !== ""
-                            text: "Abrir en LaTeX Studio"
-                            icono: "document-edit"
-                            ayuda: "Abrir el escrito «" + ficha.modelData.escrito + "» en LaTeX Studio"
-                            onClicked: raiz.fi.abrirEnLatex(ficha.modelData.principal)
-                        }
-                        Chip {
-                            visible: ficha.modelData.insertar !== ""
-                            icono: "edit-copy"
-                            ayuda: "Copiar para LaTeX: " + ficha.modelData.insertar
-                            Accessible.name: "Copiar la cita para LaTeX"
-                            onClicked: raiz.fi.copiar(ficha.modelData.insertar)
-                        }
-                        Chip {
-                            visible: ficha.modelData.porCotejar
-                            text: "Cotejé la página"
-                            icono: "checkmark"
-                            ayuda: "Comprobé en el PDF que la cita está en la página que dice: la ficha pasa a verificada por el autor y se puede citar"
-                            onClicked: { confirmarCotejo.ficha = ficha.modelData; confirmarCotejo.open() }
-                        }
-                        Chip {
-                            // corregir una que ya existe en su escrito (§9.13): la de obra ofrece después llevarla a Yachay
-                            objectName: "corregirFicha"
-                            visible: ficha.modelData.carpeta !== "" && ["textual", "parafrasis", "fuente", "obra"].includes(ficha.modelData.tipo)
-                            text: "Corregir…"
-                            icono: "document-edit"
-                            ayuda: ficha.modelData.tipo === "obra" ? "Corregir la ficha de obra de «" + ficha.modelData.escrito + "», con el PDF al lado; después se ofrece llevarla a Yachay"
-                                                                    : "Corregir la ficha en «" + ficha.modelData.escrito + "», con el PDF al lado"
-                            onClicked: { raiz.fi.elegir(ficha.modelData.clave); dialogoFicha.corregir(ficha.modelData) }
-                        }
-                        Chip {
-                            visible: ficha.modelData.archivo !== ""      // la ficha de obra de Yachay no tiene archivo (§9.13)
-                            icono: "document-open"
-                            ayuda: "Abrir el archivo de la ficha"
-                            Accessible.name: "Abrir la ficha"
-                            onClicked: raiz.fi.abrirArchivo(ficha.modelData.archivo)
+                        // las acciones en un pozo que aparece al pasar el ratón o en la elegida (antes, cuatro botones con borde en
+                        // cada tarjeta: una pared de botones); «Cotejé la página», pendiente, siempre a la vista
+                        GrupoOpciones {
+                            titulo: "Con la ficha"
+                            opacity: sobreFicha.hovered || ficha.resaltada || ficha.modelData.porCotejar ? 1 : 0
+                            Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
+                            OpcionColor {
+                                visible: ficha.modelData.porCotejar
+                                text: "Cotejé la página"
+                                icon.name: "checkmark"
+                                color: Kirigami.Theme.neutralTextColor
+                                descripcion: "Comprobé en el PDF que la cita está en la página que dice: la ficha pasa a verificada por el autor y se puede citar"
+                                onClicked: { confirmarCotejo.ficha = ficha.modelData; confirmarCotejo.open() }
+                            }
+                            OpcionColor {
+                                // corregir una que ya existe en su escrito (§9.13): la de obra ofrece después llevarla a Yachay
+                                objectName: "corregirFicha"
+                                visible: ficha.modelData.carpeta !== "" && ["textual", "parafrasis", "fuente", "obra"].includes(ficha.modelData.tipo)
+                                text: "Corregir…"
+                                icon.name: "document-edit"
+                                descripcion: ficha.modelData.tipo === "obra" ? "Corregir la ficha de obra de «" + ficha.modelData.escrito + "», con el PDF al lado; después se ofrece llevarla a Yachay"
+                                                                             : "Corregir la ficha en «" + ficha.modelData.escrito + "», con el PDF al lado"
+                                onClicked: { raiz.fi.elegir(ficha.modelData.clave); dialogoFicha.corregir(ficha.modelData) }
+                            }
+                            OpcionColor {
+                                visible: ficha.modelData.principal !== ""
+                                text: "Abrir en LaTeX Studio"
+                                icon.name: "text-x-tex"
+                                display: QQC2.AbstractButton.IconOnly
+                                descripcion: "Abrir el escrito «" + ficha.modelData.escrito + "» en LaTeX Studio"
+                                onClicked: raiz.fi.abrirEnLatex(ficha.modelData.principal)
+                            }
+                            OpcionColor {
+                                visible: ficha.modelData.insertar !== ""
+                                text: "Copiar la cita para LaTeX"
+                                icon.name: "edit-copy"
+                                display: QQC2.AbstractButton.IconOnly
+                                descripcion: "Copiar para LaTeX: " + ficha.modelData.insertar
+                                onClicked: raiz.fi.copiar(ficha.modelData.insertar)
+                            }
+                            OpcionColor {
+                                visible: ficha.modelData.archivo !== ""      // la ficha de obra de Yachay no tiene archivo (§9.13)
+                                text: "Abrir la ficha"
+                                icon.name: "document-open"
+                                display: QQC2.AbstractButton.IconOnly
+                                descripcion: "Abrir el archivo de la ficha"
+                                onClicked: raiz.fi.abrirArchivo(ficha.modelData.archivo)
+                            }
                         }
                     }
                     // por qué no se cita todavía (la de la IA sin cotejar o la que no casa con el PDF), con su fuente
@@ -243,7 +267,7 @@ RowLayout {
                     visible: raiz.t.hay === true
                     espacio: Kirigami.Units.largeSpacing
                     Tenue { text: "Caja " + (raiz.t.caja || 1) + " de 5" + (raiz.t.nueva ? " · nueva" : "") + " · " + (raiz.t.tipo || "") }
-                    Kirigami.Heading { Layout.fillWidth: true; level: 2; text: raiz.t.pregunta || ""; wrapMode: Text.WordWrap }
+                    Kirigami.Heading { Layout.fillWidth: true; level: 2; type: Kirigami.Heading.Type.Primary; text: raiz.t.pregunta || ""; wrapMode: Text.WordWrap }
                     Tenue { text: [raiz.t.tema, raiz.t.obra].filter(x => x).join(" · ") }
                     Kirigami.Separator { Layout.fillWidth: true; visible: raiz.fi.mostrada }
                     TextoLectura { visible: raiz.fi.mostrada; text: raiz.t.cita || "" }
@@ -252,27 +276,27 @@ RowLayout {
                         Layout.topMargin: Kirigami.Units.smallSpacing
                         spacing: Kirigami.Units.smallSpacing
                         Item { Layout.fillWidth: true }
-                        Chip {
+                        BotonPrincipal {
                             visible: !raiz.fi.mostrada
                             text: "Mostrar la ficha"
-                            icono: "view-visible"
-                            destacado: true
+                            icon.name: "view-visible"
                             onClicked: raiz.fi.mostrar()
                         }
-                        Chip {
+                        GrupoOpciones {
                             visible: raiz.fi.mostrada
-                            text: "Repasar luego"
-                            icono: "view-refresh"
-                            ayuda: "Vuelve a la caja 1: mañana otra vez"
-                            onClicked: raiz.fi.responder(false)
+                            OpcionColor {
+                                text: "Repasar luego"
+                                icon.name: "view-refresh"
+                                descripcion: "Vuelve a la caja 1: mañana otra vez"
+                                onClicked: raiz.fi.responder(false)
+                            }
                         }
-                        Chip {
+                        BotonPrincipal {
                             visible: raiz.fi.mostrada
                             text: "La sabía"
-                            icono: "checkmark"
-                            destacado: true
-                            ayuda: "Sube una caja: vuelve más tarde"
+                            icon.name: "checkmark"
                             onClicked: raiz.fi.responder(true)
+                            QQC2.ToolTip.text: "Sube una caja: vuelve más tarde"; QQC2.ToolTip.visible: hovered
                         }
                     }
                 }
@@ -290,18 +314,19 @@ RowLayout {
                     visible: raiz.fi.sinGuardar > 0
                     spacing: Kirigami.Units.smallSpacing
                     Tenue { Layout.fillWidth: true; text: raiz.fi.resumenSinGuardar }
-                    Chip {
-                        text: "Descartar"
-                        icono: "edit-undo"
-                        ayuda: "Olvida estas respuestas: las fichas vuelven a la cola de hoy"
-                        onClicked: raiz.fi.descartarRepaso()
+                    GrupoOpciones {
+                        OpcionColor {
+                            text: "Descartar"
+                            icon.name: "edit-undo"
+                            descripcion: "Olvida estas respuestas: las fichas vuelven a la cola de hoy"
+                            onClicked: raiz.fi.descartarRepaso()
+                        }
                     }
-                    Chip {
+                    BotonPrincipal {
                         text: "Guardar el repaso"
-                        icono: "document-save"
-                        destacado: true
-                        ayuda: "Escribe las respuestas en la base del repaso (con respaldo del día)"
+                        icon.name: "document-save"
                         onClicked: raiz.fi.guardarRepaso()
+                        QQC2.ToolTip.text: "Escribe las respuestas en la base del repaso (con respaldo del día)"; QQC2.ToolTip.visible: hovered
                     }
                 }
             }
@@ -315,6 +340,7 @@ RowLayout {
         subtitle: "¿Comprobaste en el PDF que la cita está en " + (ficha.pagina ? "la página " + ficha.pagina : "su lugar") + " de «" + (ficha.obra || "") + "»?"
                   + (ficha.deIa ? " La propuso la IA: desde ahora se podrá citar." : "")
         standardButtons: Kirigami.Dialog.Cancel
+        showCloseButton: false     // los botones ya están al pie (la × de la cabecera es roja en algunos temas de iconos)
         customFooterActions: [Kirigami.Action { text: "Sí, la cotejé"; icon.name: "checkmark"
                                                 onTriggered: { raiz.fi.cotejar(confirmarCotejo.ficha.clave); confirmarCotejo.close() } }]
     }

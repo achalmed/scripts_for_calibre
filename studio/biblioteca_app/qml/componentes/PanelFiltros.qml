@@ -8,6 +8,7 @@ import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 import QtCore
 import org.kde.kirigami as Kirigami
+import GuiComun
 
 QQC2.Control {
     id: raiz
@@ -30,7 +31,7 @@ QQC2.Control {
             RowLayout {
                 Layout.fillWidth: true
                 Layout.margins: Kirigami.Units.smallSpacing
-                Kirigami.Heading { level: 4; text: "Filtros"; Layout.fillWidth: true }
+                Kirigami.Heading { level: 4; type: Kirigami.Heading.Type.Primary;  text: "Filtros"; Layout.fillWidth: true }
                 QQC2.ToolButton {
                     text: "Quitar"
                     icon.name: "edit-clear-all"
@@ -93,6 +94,9 @@ QQC2.Control {
                             required property var modelData
                             Layout.fillWidth: true
                             highlighted: grupo.elegido === modelData.valor
+                            id: valorFiltro
+                            // la elegida teñida con su marca (FondoSeleccion de la base), no el bloque lleno del acento (en Lliphi Oscuro, el rojo de los errores)
+                            background: FondoSeleccion { elegida: valorFiltro.highlighted; sobre: valorFiltro.hovered; pulsada: valorFiltro.pressed; foco: valorFiltro.visualFocus }
                             onClicked: raiz.l.fijarFiltro(grupo.modelData.clave, highlighted ? "" : modelData.valor)
                             Accessible.name: grupo.modelData.titulo + " " + modelData.valor + ", " + modelData.n + " libros"
                             contentItem: RowLayout {
@@ -100,12 +104,12 @@ QQC2.Control {
                                     Layout.fillWidth: true
                                     text: modelData.valor
                                     elide: Text.ElideRight
-                                    color: parent.parent.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+                                    color: Kirigami.Theme.textColor
                                 }
                                 QQC2.Label {
                                     text: modelData.n
                                     font: Kirigami.Theme.smallFont
-                                    color: parent.parent.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor
+                                    color: Kirigami.Theme.disabledTextColor
                                 }
                             }
                         }

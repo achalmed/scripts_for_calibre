@@ -29,7 +29,7 @@ QQC2.ScrollView {
         Kirigami.FormLayout {
             Layout.fillWidth: true
             visible: pagina.o.hayOperacion
-            Kirigami.Heading { Kirigami.FormData.label: "Operación:"; level: 4; text: pagina.o.titulo; wrapMode: Text.WordWrap; Layout.fillWidth: true }
+            Kirigami.Heading { type: Kirigami.Heading.Type.Primary; Kirigami.FormData.label: "Operación:"; level: 4; text: pagina.o.titulo; wrapMode: Text.WordWrap; Layout.fillWidth: true }
             QQC2.Label { Kirigami.FormData.label: "Etapa:"; text: pagina.o.etapaTexto; color: Kirigami.Theme.disabledTextColor }
             QQC2.Label { Kirigami.FormData.label: "Qué hace:"; text: pagina.o.descripcion; wrapMode: Text.WordWrap; Layout.fillWidth: true }
             QQC2.Label { Kirigami.FormData.label: "Escribe:"; text: pagina.o.basesTexto; wrapMode: Text.WordWrap; Layout.fillWidth: true; color: pagina.o.escribe ? Kirigami.Theme.neutralTextColor : Kirigami.Theme.positiveTextColor }
@@ -97,13 +97,11 @@ QQC2.ScrollView {
             Item { Layout.fillWidth: true }
             BotonAccion { accion: studio.acciones.accion("op.cancelar"); conTexto: false; visible: pagina.o.enCurso }
             BotonAccion { accion: studio.acciones.accion("op.simular") }
-            QQC2.Button {
-                readonly property var a: studio.acciones.accion("op.aplicar")
+            // la acción principal de la vista, rellena del acento (con Kvantum, `highlighted` no pintaba nada)
+            BotonPrincipal {
+                accion: studio.acciones.accion("op.aplicar")
                 visible: pagina.o.escribe
-                highlighted: true
-                text: a.textoPlano; icon.name: a.icono; enabled: a.habilitada
-                onClicked: a.disparar()
-                QQC2.ToolTip.text: a.descripcion + " (" + a.atajoTexto + ")"; QQC2.ToolTip.visible: hovered
+                QQC2.ToolTip.text: accion.descripcion + " (" + accion.atajoTexto + ")"; QQC2.ToolTip.visible: hovered
             }
         }
         Item { Layout.preferredHeight: Kirigami.Units.largeSpacing }

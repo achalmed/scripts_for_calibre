@@ -5,6 +5,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
+import GuiComun
 
 QQC2.ItemDelegate {
     id: fila
@@ -16,11 +17,13 @@ QQC2.ItemDelegate {
     signal abierta(int indice)
 
     highlighted: actual
+    // la elegida teñida con su marca (FondoSeleccion de la base), no el bloque lleno del acento (en Lliphi Oscuro, el rojo de los errores)
+    background: FondoSeleccion { elegida: fila.highlighted; sobre: fila.hovered; pulsada: fila.pressed; foco: fila.visualFocus }
     onClicked: elegida(index)
     onDoubleClicked: abierta(index)
     Accessible.name: model.titulo + ", " + model.autores
 
-    readonly property color secundario: highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor
+    readonly property color secundario: Kirigami.Theme.disabledTextColor
 
     contentItem: RowLayout {
         spacing: Kirigami.Units.largeSpacing
@@ -38,7 +41,9 @@ QQC2.ItemDelegate {
             Kirigami.Icon {
                 anchors.centerIn: parent
                 visible: !fila.model.portada
-                source: fila.model.otro ? "document-import" : "x-office-document"
+                source: fila.model.otro ? "document-import" : "x-office-document-symbolic"
+                isMask: true                                  // simbólico y tenue: el azul del tipo de archivo desentonaba con las portadas
+                color: Kirigami.Theme.disabledTextColor
                 implicitWidth: Kirigami.Units.iconSizes.smallMedium
                 implicitHeight: implicitWidth
             }
@@ -51,7 +56,7 @@ QQC2.ItemDelegate {
                 text: fila.model.titulo
                 elide: Text.ElideRight
                 font.weight: Font.DemiBold
-                color: fila.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+                color: Kirigami.Theme.textColor
             }
             QQC2.Label {
                 Layout.fillWidth: true
@@ -80,8 +85,11 @@ QQC2.ItemDelegate {
         }
         Kirigami.Icon {
             visible: !fila.model.otro
-            source: fila.model.zotero ? "data-success" : "emblem-unavailable"
-            opacity: fila.model.zotero ? 1 : 0.5
+            // en Zotero, una palomita verde; sin él, una interrogación tenue (antes, un círculo con aspa que parecía
+            // un botón de quitar, y una «data-success» que en Colloid parece una casilla de verificación)
+            source: fila.model.zotero ? "checkmark" : "dialog-question-symbolic"
+            color: fila.model.zotero ? Kirigami.Theme.positiveTextColor : Kirigami.Theme.disabledTextColor
+            opacity: fila.model.zotero ? 1 : 0.6
             implicitWidth: Kirigami.Units.iconSizes.small
             implicitHeight: implicitWidth
             Accessible.name: fila.model.zotero ? "En Zotero" : "Sin Zotero"

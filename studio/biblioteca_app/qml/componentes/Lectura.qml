@@ -13,6 +13,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
+import GuiComun
 
 QQC2.Control {
     id: raiz
@@ -102,16 +103,16 @@ QQC2.Control {
                             RowLayout {
                                 Layout.fillWidth: true
                                 spacing: Kirigami.Units.smallSpacing
-                                Tenue { text: raiz.lec.estadoSincronia }
+                                Tenue { Layout.fillWidth: true; text: raiz.lec.estadoSincronia }
                                 QQC2.BusyIndicator { running: raiz.lec.sincronizando; visible: running; implicitWidth: Kirigami.Units.iconSizes.small; implicitHeight: implicitWidth }
-                                QQC2.Button {
+                                GrupoOpciones {
+                                OpcionColor {
                                     text: "Sincronizar ahora"
                                     icon.name: "view-refresh"
-                                    highlighted: true
                                     enabled: !raiz.lec.sincronizando
                                     onClicked: raiz.lec.sincronizarAhora()
-                                    QQC2.ToolTip.text: "Trae lo nuevo de KOReader, Zotero, Okular y Yachay y lleva a cada uno lo que le falta; lo que esté abierto queda para la próxima vuelta"
-                                    QQC2.ToolTip.visible: hovered
+                                    descripcion: "Trae lo nuevo de KOReader, Zotero, Okular y Yachay y lleva a cada uno lo que le falta; lo que esté abierto queda para la próxima vuelta"
+                                }
                                 }
                             }
                         }
@@ -144,7 +145,9 @@ QQC2.Control {
                                                 width: parent.width
                                                 height: Math.max(2, parent.height * modelData.proporcion)
                                                 radius: Kirigami.Units.cornerRadius / 2
-                                                color: modelData.horas > 0 ? Kirigami.Theme.highlightColor : Qt.alpha(Kirigami.Theme.textColor, 0.1)
+                                                // el color de KOReader (un dato: sus horas son las que se cuentan), no el acento del tema,
+                                                // que en Lliphi Oscuro es el rojo de los errores
+                                                color: modelData.horas > 0 ? (raiz.lec.colores.koreader || Kirigami.Theme.positiveTextColor) : Qt.alpha(Kirigami.Theme.textColor, 0.1)
                                             }
                                             QQC2.ToolTip.text: "Semana del " + modelData.etiqueta + ": " + modelData.horas + " h en " + modelData.sesiones + " sesiones"
                                             QQC2.ToolTip.visible: zona.containsMouse
@@ -172,7 +175,7 @@ QQC2.Control {
                                         height: calor.alto
                                         radius: 2
                                         opacity: modelData.futuro ? 0 : 1
-                                        color: modelData.nivel > 0 ? Qt.alpha(Kirigami.Theme.highlightColor, 0.2 + 0.2 * modelData.nivel)
+                                        color: modelData.nivel > 0 ? Qt.alpha(raiz.lec.colores.koreader || Kirigami.Theme.positiveTextColor, 0.2 + 0.2 * modelData.nivel)
                                                                    : Qt.alpha(Kirigami.Theme.textColor, 0.07)
                                         QQC2.ToolTip.text: modelData.texto
                                         QQC2.ToolTip.visible: casilla.containsMouse
@@ -203,6 +206,8 @@ QQC2.Control {
                             required property int index
                             width: ListView.view.width
                             highlighted: modelData.id === raiz.lec.actualId
+                            // la elegida teñida con su marca (FondoSeleccion de la base), no el bloque lleno del acento (en Lliphi Oscuro, el rojo de los errores)
+                            background: FondoSeleccion { elegida: fila.highlighted; sobre: fila.hovered; pulsada: fila.pressed; foco: fila.visualFocus }
                             enabled: modelData.id >= 0
                             onClicked: raiz.lec.elegir(modelData.id)
                             Accessible.name: modelData.titulo + ", " + modelData.detalle
@@ -213,14 +218,14 @@ QQC2.Control {
                                     text: fila.modelData.titulo
                                     elide: Text.ElideRight
                                     font.weight: Font.DemiBold
-                                    color: fila.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor
+                                    color: Kirigami.Theme.textColor
                                 }
                                 QQC2.Label {
                                     Layout.fillWidth: true
                                     text: [fila.modelData.detalle, fila.modelData.origenes].filter(x => x).join(" · ")
                                     elide: Text.ElideRight
                                     font: Kirigami.Theme.smallFont
-                                    color: fila.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor
+                                    color: Kirigami.Theme.disabledTextColor
                                 }
                             }
                         }
@@ -258,8 +263,8 @@ QQC2.Control {
                             spacing: Kirigami.Units.smallSpacing
                             RowLayout {
                                 Layout.fillWidth: true
-                                Kirigami.Heading { Layout.fillWidth: true; level: 2; text: raiz.b.titulo || ""; wrapMode: Text.WordWrap }
-                                Chip { text: "Ver en el catálogo"; icono: "folder-book"; onClicked: raiz.lec.verEnCatalogo() }
+                                Kirigami.Heading { type: Kirigami.Heading.Type.Primary; Layout.fillWidth: true; level: 2; text: raiz.b.titulo || ""; wrapMode: Text.WordWrap }
+                                GrupoOpciones { OpcionColor { text: "Ver en el catálogo"; icon.name: "folder-book"; onClicked: raiz.lec.verEnCatalogo() } }
                             }
                             Tenue { text: [raiz.b.autores, raiz.b.tiempo !== "—" ? raiz.b.tiempo + " de lectura" : "", raiz.b.datos].filter(x => x).join(" · ") }
                         }
@@ -287,20 +292,13 @@ QQC2.Control {
                             }
                         }
 
-                        // los subrayados: los chips filtran por origen
-                        Flow {
-                            Layout.fillWidth: true
-                            visible: raiz.b.hay
-                            spacing: Kirigami.Units.smallSpacing
-                            Repeater {
-                                model: raiz.lec.origenes
-                                delegate: Chip {
-                                    required property var modelData
-                                    text: modelData.texto
-                                    destacado: raiz.lec.origen === modelData.nombre
-                                    onClicked: raiz.lec.fijarOrigen(modelData.nombre)
-                                }
-                            }
+                        // los subrayados: un selector por origen, cada herramienta con su punto de color (un dato, COLORES)
+                        SelectorSegmentado {
+                            visible: raiz.b.hay && raiz.lec.origenes.length > 0
+                            titulo: "Origen de los subrayados"
+                            opciones: raiz.lec.origenes.map(o => ({ clave: o.nombre, texto: o.texto, color: raiz.lec.colores[o.nombre] || "transparent" }))
+                            actual: raiz.lec.origen
+                            onElegida: clave => raiz.lec.fijarOrigen(clave)
                         }
                         Tenue { visible: raiz.b.hay && raiz.b.total === 0; text: "Este libro no tiene subrayados en ninguna herramienta." }
 
@@ -309,6 +307,7 @@ QQC2.Control {
                             delegate: Tarjeta {
                                 id: tarjeta
                                 required property var modelData
+                                HoverHandler { id: sobreSubrayado }
                                 RowLayout {
                                     Layout.fillWidth: true
                                     spacing: Kirigami.Units.largeSpacing
@@ -348,12 +347,18 @@ QQC2.Control {
                                         }
                                         Tenue { text: tarjeta.modelData.detalle }
                                     }
-                                    Chip {
+                                    // copiar, discreto: solo el icono, en su pozo, al pasar el ratón por el subrayado
+                                    GrupoOpciones {
                                         Layout.alignment: Qt.AlignTop
-                                        text: "Copiar"
-                                        icono: "edit-copy"
-                                        ayuda: tarjeta.modelData.cita
-                                        onClicked: raiz.lec.copiar(tarjeta.modelData.cita)
+                                        opacity: sobreSubrayado.hovered ? 1 : 0
+                                        Behavior on opacity { NumberAnimation { duration: Kirigami.Units.shortDuration } }
+                                        OpcionColor {
+                                            text: "Copiar el subrayado"
+                                            icon.name: "edit-copy"
+                                            display: QQC2.AbstractButton.IconOnly
+                                            descripcion: "Copiar: " + tarjeta.modelData.cita
+                                            onClicked: raiz.lec.copiar(tarjeta.modelData.cita)
+                                        }
                                     }
                                 }
                             }
@@ -361,6 +366,7 @@ QQC2.Control {
 
                         // las últimas sesiones
                         Kirigami.Heading {
+                            type: Kirigami.Heading.Type.Primary
                             visible: raiz.b.hay && (raiz.b.sesiones || []).length > 0
                             Layout.topMargin: Kirigami.Units.largeSpacing
                             level: 4

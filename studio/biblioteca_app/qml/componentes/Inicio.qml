@@ -8,6 +8,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
+import GuiComun
 
 Item {
     id: raiz
@@ -48,20 +49,21 @@ Item {
                 spacing: Kirigami.Units.largeSpacing
                 ColumnLayout {
                     spacing: 0
-                    Kirigami.Heading { level: 1; text: "Esto es lo de hoy" }
+                    Kirigami.Heading { level: 1; type: Kirigami.Heading.Type.Primary; text: "Esto es lo de hoy" }
                     Tenue { text: raiz.ini.fecha.charAt(0).toUpperCase() + raiz.ini.fecha.slice(1) }
                 }
                 Item { Layout.fillWidth: true }
+                // al borde derecho de las tarjetas, alineado con ellas (antes flotaba a media fila)
                 RowLayout {
                     visible: studio.lectura.hayBase
-                    Layout.maximumWidth: Kirigami.Units.gridUnit * 26
+                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     spacing: Kirigami.Units.smallSpacing
                     Rectangle {
                         implicitWidth: Kirigami.Units.smallSpacing * 2; implicitHeight: implicitWidth; radius: width / 2
                         color: studio.lectura.sincronizando ? Kirigami.Theme.neutralTextColor
                              : (studio.lectura.timerActivo ? Kirigami.Theme.positiveTextColor : Kirigami.Theme.disabledTextColor)
                     }
-                    Tenue { Layout.fillWidth: true; text: studio.lectura.estadoSincronia }
+                    Tenue { text: studio.lectura.estadoSincronia }
                 }
             }
 
@@ -103,7 +105,7 @@ Item {
                     Layout.preferredWidth: 1
                     Layout.alignment: Qt.AlignTop
                     espacio: Kirigami.Units.largeSpacing
-                    Kirigami.Heading { level: 4; text: "Seguir leyendo" }
+                    Kirigami.Heading { level: 4; type: Kirigami.Heading.Type.Primary; text: "Seguir leyendo" }
                     Repeater {
                         model: raiz.ini.seguir
                         delegate: RowLayout {
@@ -120,7 +122,7 @@ Item {
                                     visible: !fila.modelData.portada || portada.status !== Image.Ready
                                     radius: Kirigami.Units.cornerRadius
                                     color: Kirigami.Theme.alternateBackgroundColor
-                                    Kirigami.Icon { anchors.centerIn: parent; source: "x-office-document"; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: implicitWidth; opacity: 0.5 }
+                                    Kirigami.Icon { anchors.centerIn: parent; source: "x-office-document-symbolic"; isMask: true; color: Kirigami.Theme.disabledTextColor; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: implicitWidth }
                                 }
                                 Image {
                                     id: portada
@@ -140,13 +142,19 @@ Item {
                                 BarraLectura { Layout.fillWidth: true; Layout.topMargin: Kirigami.Units.smallSpacing / 2; fraccion: fila.modelData.fraccion; tono: fila.modelData.color }
                                 Tenue { Layout.fillWidth: true; text: fila.modelData.texto }
                             }
-                            Chip {
+                            // el primero, la acción principal de Inicio; los demás, una opción en su pozo
+                            BotonPrincipal {
+                                visible: fila.index === 0
                                 text: "Abrir"
-                                icono: "document-open"
-                                destacado: fila.index === 0
+                                icon.name: "document-open"
                                 enabled: fila.modelData.enCatalogo
-                                ayuda: "El documento con su aplicación"
                                 onClicked: raiz.ini.abrir(fila.modelData.id)
+                                QQC2.ToolTip.text: "El documento con su aplicación"; QQC2.ToolTip.visible: hovered
+                            }
+                            GrupoOpciones {
+                                visible: fila.index > 0
+                                OpcionColor { text: "Abrir"; icon.name: "document-open"; enabled: fila.modelData.enCatalogo
+                                              descripcion: "El documento con su aplicación"; onClicked: raiz.ini.abrir(fila.modelData.id) }
                             }
                         }
                     }
@@ -159,7 +167,7 @@ Item {
                     Layout.preferredWidth: 1
                     Layout.alignment: Qt.AlignTop
                     espacio: Kirigami.Units.largeSpacing
-                    Kirigami.Heading { level: 4; text: "Siguiente paso" }
+                    Kirigami.Heading { level: 4; type: Kirigami.Heading.Type.Primary; text: "Siguiente paso" }
                     Repeater {
                         model: raiz.ini.pasos
                         delegate: RowLayout {
@@ -169,10 +177,12 @@ Item {
                             spacing: Kirigami.Units.largeSpacing
                             Kirigami.Icon { source: paso.modelData.icono; implicitWidth: Kirigami.Units.iconSizes.smallMedium; implicitHeight: implicitWidth }
                             QQC2.Label { Layout.fillWidth: true; text: paso.modelData.texto; wrapMode: Text.WordWrap; maximumLineCount: 2; elide: Text.ElideRight }
-                            Chip {
-                                text: paso.modelData.boton
-                                onClicked: paso.modelData.accion === "obra" ? raiz.ficharObra(paso.modelData.datos) : paso.modelData.accion === "ficha" ? raiz.fichar(paso.modelData.datos)
-                                                                              : raiz.ini.ir(paso.modelData.accion, paso.modelData.datos)
+                            GrupoOpciones {
+                                OpcionColor {
+                                    text: paso.modelData.boton
+                                    onClicked: paso.modelData.accion === "obra" ? raiz.ficharObra(paso.modelData.datos) : paso.modelData.accion === "ficha" ? raiz.fichar(paso.modelData.datos)
+                                                                                  : raiz.ini.ir(paso.modelData.accion, paso.modelData.datos)
+                                }
                             }
                         }
                     }

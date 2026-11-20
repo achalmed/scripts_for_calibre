@@ -76,8 +76,8 @@ VentanaBase {
     }
 
     // ------------------------------------------------------------------ la cabecera: áreas, búsqueda y puerta
-    // la barra de arriba (decisiones §9.2 y §9.9): ligera, como la de Datafw Studio y LaTeX Studio. Las seis áreas
-    // como chips (la elegida, rellena), la búsqueda, el estado de la puerta como un punto y una línea, y lo de siempre en ⋮ y Ctrl+K
+    // la barra de arriba (decisiones §9.2 y §9.9): ligera, como la de Datafw Studio y LaTeX Studio. Las siete áreas
+    // en un selector segmentado (la elegida, teñida), la búsqueda, el estado de la puerta como un punto y una línea, y lo de siempre en ⋮ y Ctrl+K
     header: ColumnLayout {
         spacing: 0
         RowLayout {
@@ -86,18 +86,14 @@ VentanaBase {
             Layout.leftMargin: Kirigami.Units.largeSpacing
             Layout.rightMargin: Kirigami.Units.largeSpacing
             spacing: Kirigami.Units.smallSpacing
-            Repeater {
-                model: espacio.areas.length
-                delegate: Chip {
-                    required property int index
-                    readonly property var a: espacio.areas[index]
-                    visible: a.chip
-                    text: a.texto
-                    icono: a.icono
-                    destacado: espacio.indiceArea === index
-                    ayuda: a.atajo
-                    onClicked: espacio.fijarAreaPorIndice(index)
-                }
+            // las áreas en un selector segmentado (gui-comun 4.2): un solo grupo reconocible como la navegación, la elegida
+            // teñida del acento con su borde (no un bloque lleno, que en Lliphi Oscuro es el rojo de los errores)
+            SelectorSegmentado {
+                titulo: "Áreas"
+                compacto: ventana.width < Kirigami.Units.gridUnit * 80
+                opciones: espacio.areas.map(a => ({ clave: a.nombre, texto: a.texto, icono: a.icono, atajo: a.atajo, visible: a.chip }))
+                actual: espacio.area
+                onElegida: clave => espacio.fijarArea(clave)
             }
             Item { Layout.fillWidth: true }
             Kirigami.SearchField {
@@ -168,6 +164,7 @@ VentanaBase {
         id: dialogoAplicar
         title: "Aplicar: " + ops.titulo
         standardButtons: Kirigami.Dialog.Cancel
+        showCloseButton: false     // los botones ya están al pie (la × de la cabecera es roja en algunos temas de iconos)
         preferredWidth: Kirigami.Units.gridUnit * 34
         padding: Kirigami.Units.largeSpacing * 2
         customFooterActions: [Kirigami.Action { text: "Aplicar"; icon.name: "dialog-ok-apply"; enabled: ops.puedeAplicar; onTriggered: { ops.aplicar(); dialogoAplicar.close() } }]

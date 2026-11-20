@@ -6,6 +6,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
 import org.kde.kirigami as Kirigami
+import GuiComun
 
 RowLayout {
     id: raiz
@@ -18,7 +19,7 @@ RowLayout {
         if (studio.espacio.area !== "bandejas" || !raiz.b.operacion) return
         if (studio.operaciones.actual !== raiz.b.operacion) studio.operaciones.fijar(raiz.b.operacion)
     }
-    function preparar() { sincronizar(); lado.currentIndex = 1 }
+    function preparar() { sincronizar(); lado.indice = 1 }
     Connections { target: studio.espacio; function onAreaCambiada() { raiz.sincronizar() } }
     Connections { target: raiz.l; function onBandejaCambiada() { raiz.sincronizar() } }
     Component.onCompleted: { if (raiz.l.bandeja === "" && raiz.l.bandejas.length) raiz.l.fijarBandeja(raiz.l.bandejas[0].clave); raiz.sincronizar() }
@@ -35,6 +36,9 @@ RowLayout {
                 required property var modelData
                 width: ListView.view.width
                 highlighted: modelData.clave === raiz.l.bandeja
+                id: filaBandeja
+                // la elegida teñida con su marca (FondoSeleccion de la base), no el bloque lleno del acento (en Lliphi Oscuro, el rojo de los errores)
+                background: FondoSeleccion { elegida: filaBandeja.highlighted; sobre: filaBandeja.hovered; pulsada: filaBandeja.pressed; foco: filaBandeja.visualFocus }
                 onClicked: raiz.l.fijarBandeja(modelData.clave)
                 Accessible.name: modelData.titulo + ", " + modelData.n
                 contentItem: RowLayout {
@@ -43,13 +47,13 @@ RowLayout {
                     ColumnLayout {
                         Layout.fillWidth: true
                         spacing: 0
-                        QQC2.Label { Layout.fillWidth: true; text: modelData.titulo; elide: Text.ElideRight; font.weight: Font.DemiBold; color: parent.parent.parent.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.textColor }
-                        QQC2.Label { Layout.fillWidth: true; text: modelData.descripcion; wrapMode: Text.WordWrap; maximumLineCount: 2; elide: Text.ElideRight; font: Kirigami.Theme.smallFont; color: parent.parent.parent.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.disabledTextColor }
+                        QQC2.Label { Layout.fillWidth: true; text: modelData.titulo; elide: Text.ElideRight; font.weight: Font.DemiBold; color: Kirigami.Theme.textColor }
+                        QQC2.Label { Layout.fillWidth: true; text: modelData.descripcion; wrapMode: Text.WordWrap; maximumLineCount: 2; elide: Text.ElideRight; font: Kirigami.Theme.smallFont; color: Kirigami.Theme.disabledTextColor }
                     }
                     QQC2.Label {
                         text: modelData.n
                         font.weight: Font.DemiBold
-                        color: modelData.n > 0 ? (parent.parent.highlighted ? Kirigami.Theme.highlightedTextColor : Kirigami.Theme.neutralTextColor) : Kirigami.Theme.disabledTextColor
+                        color: modelData.n > 0 ? (Kirigami.Theme.neutralTextColor) : Kirigami.Theme.disabledTextColor
                     }
                 }
             }
@@ -70,7 +74,7 @@ RowLayout {
             ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 0
-                Kirigami.Heading { level: 3; text: (raiz.b.titulo || "") + (raiz.b.n !== undefined ? " · " + raiz.b.n : ""); Layout.fillWidth: true; elide: Text.ElideRight }
+                Kirigami.Heading { level: 3; type: Kirigami.Heading.Type.Primary;  text: (raiz.b.titulo || "") + (raiz.b.n !== undefined ? " · " + raiz.b.n : ""); Layout.fillWidth: true; elide: Text.ElideRight }
                 QQC2.Label { text: raiz.b.descripcion || ""; color: Kirigami.Theme.disabledTextColor; wrapMode: Text.WordWrap; Layout.fillWidth: true }
             }
             QQC2.Button {
@@ -97,7 +101,7 @@ RowLayout {
                 delegate: FilaLibro {
                     width: contenido.width
                     actual: !model.otro && model.id === raiz.l.id
-                    onElegida: i => { if (!model.otro) { raiz.l.fijarId(model.id); lado.currentIndex = 0 } }
+                    onElegida: i => { if (!model.otro) { raiz.l.fijarId(model.id); lado.indice = 0 } }
                     onAbierta: i => { if (!model.otro) { raiz.l.fijarId(model.id); studio.acciones.accion("libro.archivo").disparar() } }
                 }
                 Kirigami.PlaceholderMessage {
@@ -117,18 +121,24 @@ RowLayout {
         Layout.preferredWidth: Kirigami.Units.gridUnit * 24
         Layout.fillHeight: true
         spacing: 0
-        QQC2.TabBar {
+        // el libro o la operación que vacía la bandeja (un libro elegido pasa a «Libro»), en un selector segmentado
+        SelectorSegmentado {
             id: lado
-            Layout.fillWidth: true
-            currentIndex: 1                          // la operación que vacía la bandeja; un libro elegido pasa a «Libro»
-            QQC2.TabButton { text: "Libro"; width: implicitWidth }
-            QQC2.TabButton { text: "Operación"; width: implicitWidth }
+            property int indice: 1
+            Layout.alignment: Qt.AlignHCenter
+            Layout.topMargin: Kirigami.Units.smallSpacing
+            Layout.bottomMargin: Kirigami.Units.smallSpacing
+            titulo: "El libro o la operación"
+            opciones: [{ clave: "0", texto: "Libro", icono: "folder-book" }, { clave: "1", texto: "Operación", icono: "system-run" }]
+            actual: String(indice)
+            onElegida: clave => indice = Number(clave)
         }
+        Kirigami.Separator { Layout.fillWidth: true }
         StackLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
-            currentIndex: lado.currentIndex
-            FichaEditorial { onCerrar: lado.currentIndex = 1 }
+            currentIndex: lado.indice
+            FichaEditorial { onCerrar: lado.indice = 1 }
             Operacion {}
         }
     }
