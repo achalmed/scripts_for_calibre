@@ -203,10 +203,14 @@ QQC2.SplitView {
                 section.property: raiz.l.agrupar !== "" ? "grupo" : ""
                 section.criteria: ViewSection.FullString
                 section.labelPositioning: ViewSection.InlineLabels | ViewSection.CurrentLabelAtStart
-                section.delegate: Kirigami.ListSectionHeader {
+                // con fondo propio: fijo arriba, el título no se sobrepone a la fila que pasa por debajo
+                section.delegate: Rectangle {
                     required property string section
                     width: ListView.view ? ListView.view.width : 0
-                    text: section
+                    height: titulo.implicitHeight
+                    z: 2
+                    color: Kirigami.Theme.backgroundColor
+                    Kirigami.ListSectionHeader { id: titulo; anchors.fill: parent; text: parent.section }
                 }
                 delegate: FilaLibro {
                     width: lista.width

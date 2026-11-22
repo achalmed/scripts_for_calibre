@@ -344,11 +344,9 @@ QQC2.Control {
                     spacing: Kirigami.Units.smallSpacing
                     Repeater {
                         model: raiz.f.etiquetas || []
-                        delegate: QQC2.Button {
+                        delegate: EtiquetaMateria {
                             required property string modelData
                             text: modelData
-                            flat: true
-                            font: Kirigami.Theme.smallFont
                             onClicked: raiz.l.buscar("etiqueta:\"" + modelData + "\"")
                             QQC2.ToolTip.text: "Buscar los libros con esta etiqueta"
                             QQC2.ToolTip.visible: hovered

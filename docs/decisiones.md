@@ -1136,3 +1136,8 @@ Zotero llega solo.
 - Pruebas: `test_servicios.py` (orden natural, índice, facetas, grupos), `test_controladores.py` (agrupar, orden de
   facetas, Zotero rehace el índice sin tocar ninguna base), `test_lectura.py` (la cifra) y `test_studio.py` (la cabecera
   fija con 303 colecciones, sin avisos de QML). `studio/capturar.py` gana `--agrupar`, `--orden` y `--orden-colecciones`.
+
+**Nota (2026-11-22, tarde).** Agrupada, el título del grupo que queda fijo arriba no tenía fondo y se sobreponía a la
+fila que pasaba por debajo: ahora lo lleva (el de la ventana). Las etiquetas de la ficha son `EtiquetaMateria`: una pestaña
+con punta y ojal, en un tono neutro del texto (el acento de Lliphi Oscuro es rojo y parecerían errores), que busca su
+etiqueta al pulsarla. `studio/capturar.py --ficha-al-final` muestra la ficha desplazada hasta las etiquetas.

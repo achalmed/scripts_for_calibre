@@ -145,6 +145,7 @@ def main() -> int:
     parser.add_argument("--agrupar", default="", help="el catálogo agrupado: coleccion · autor · tipo · decada (pasa a la lista)")
     parser.add_argument("--orden", default="", help="el orden del catálogo: titulo · autor · año · añadido · serie")
     parser.add_argument("--orden-colecciones", default="", help="el orden de las colecciones del filtro: n · nombre · reciente")
+    parser.add_argument("--ficha-al-final", action="store_true", help="con --libro: la ficha editorial desplazada hasta abajo (las etiquetas)")
     parser.add_argument("--bandeja", default="", help="clasificar · fichas · sin_clave · sin_zotero · sin_portada")
     parser.add_argument("--operacion", default="", help="la operación elegida (id del catálogo)")
     parser.add_argument("--fila", type=int, default=0, help="en una etapa, la fila seleccionada de la tabla (−1 ninguna)")
@@ -271,6 +272,21 @@ def main() -> int:
             QTimer.singleShot(700, lambda: raiz.findChild(_Q, "metodo" if args.area == "metodo" else "coherencia").setProperty("conPanel", False))
         if args.catalogar_ia:
             QTimer.singleShot(1200, lambda: interfaz.pedir.emit("catalogar_ia", {"texto": CATALOGACION_DE_MUESTRA}))
+        if args.ficha_al_final:
+            def bajar():
+                def items(i):
+                    yield i
+                    for h in i.childItems():
+                        yield from items(h)
+                for o in items(raiz.contentItem()):          # el Flickable más alto y visible de la derecha: la ficha
+                    if o.metaObject().className().startswith("QQuickFlickable") and o.property("visible") \
+                            and o.mapToScene(QPointF(0, 0)).x() > raiz.property("width") * 0.6:
+                        o.setProperty("contentY", max(0.0, o.property("contentHeight") - o.property("height")))
+            try:
+                from PySide6.QtCore import QPointF
+            except ImportError:
+                from PyQt6.QtCore import QPointF
+            QTimer.singleShot(1500, bajar)
         if args.paleta is not None:
             QTimer.singleShot(900, lambda: interfaz.pedir.emit("paleta", {"texto": args.paleta}))
         if args.dialogo:

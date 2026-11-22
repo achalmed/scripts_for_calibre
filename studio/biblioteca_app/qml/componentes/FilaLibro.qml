@@ -72,8 +72,7 @@ QQC2.ItemDelegate {
             readonly property string leido: fila.model.otro ? "" : (studio.lectura.version, studio.lectura.cifraDe(fila.model.id))
             visible: text !== ""
             text: leido !== "" ? leido : (fila.model.paginas > 0 ? fila.model.paginas + " págs." : "")
-            font.pointSize: Kirigami.Theme.smallFont.pointSize
-            font.features: { "tnum": 1 }
+            font: Kirigami.Theme.smallFont
             color: fila.secundario
             elide: Text.ElideRight
             horizontalAlignment: Text.AlignRight
