@@ -124,3 +124,12 @@ def test_el_mapa_de_lo_leido_sale_del_diario_de_nawinchay(app, entorno, muestra)
     assert ch["otros"] == 1                                 # también en el segundo libro de muestra
     assert m["etiquetas"][0] == ["localización", 2]
     assert mapa_lectura.mapa_libro(-1)["conceptos"] == []
+
+
+def test_la_cifra_de_un_libro_para_la_fila_del_catalogo():
+    """2026-11-22: la fila del catálogo dice lo leído (avance, subrayados, horas) en vez de la clave para citar."""
+    from biblioteca_app.controladores.lectura import cifra_libro
+    assert cifra_libro({"fraccion": 0.83, "porcentaje": 83, "anotaciones": 4, "segundos": 4380, "tiempo": "1 h 13 min"}) == \
+        "83 % · 4 subrayados · 1 h 13 min"
+    assert cifra_libro({"fraccion": None, "porcentaje": 0, "anotaciones": 1, "segundos": 0, "tiempo": ""}) == "1 subrayado"
+    assert cifra_libro({"fraccion": None, "porcentaje": 0, "anotaciones": 0, "segundos": 0, "tiempo": ""}) == ""

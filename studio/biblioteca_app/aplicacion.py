@@ -151,7 +151,7 @@ def construir(app: Aplicacion, cache: Path | None = None, vigilar_puerta: bool =
                        descripcion="Vuelve a leer la biblioteca (solo lectura), los ledgers, las fichas, los respaldos o los timers; el índice no se regenera")
     acciones.registrar("ver.vigilar", "&Vigilar la biblioteca de Calibre", "view-refresh-symbolic", None, "Ver", marcable=True,
                        marcada=libros.vigilar, al_disparar=lambda marcada: setattr(libros, "vigilar", bool(marcada)), operacion="lectura",
-                       descripcion="Relee el catálogo (en solo lectura) cuando metadata.db cambia: Calibre o una suite escribieron")
+                       descripcion="Relee el catálogo (en solo lectura) cuando metadata.db o el índice cambian, y rehace el índice cuando Zotero cambia")
     acciones.registrar("ver.indice", "Actualizar el &índice", "folder-sync", "Ctrl+R", "Ver", al_disparar=lambda *_: actualizar_indice(), operacion="lectura",
                        descripcion="lib/indice.py --aplicar: relee Calibre y Zotero en solo lectura y reescribe el índice que leen la ventana y los complementos")
     # --- Método: elegir cada operación (un submenú por etapa), simular, aplicar, cancelar

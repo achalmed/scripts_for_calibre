@@ -1106,3 +1106,33 @@ concepto (definiciones, lugares, en cuántos otros libros aparece) y los temas.
 - Alternativa descartada: exportar notas a Obsidian (lo pidió y lo retiró el autor) y llevar los conceptos a la base de
   lectura (no son anotaciones; si un día hacen falta en otro lector, se decide con Ñawinchay).
 
+### §9.17 El catálogo ordenado como lo piensa el autor y lo que se sincroniza solo (2026-11-22)
+
+El autor pidió, con capturas: que la cabecera «Colección» no se pierda al recorrer sus más de 300 colecciones, elegir el
+orden de las colecciones, ver una colección en el orden del índice de serie que pone en Calibre (`[0]`, `[5.1]`, `[10]`),
+agrupar aparte de ordenar, algo más útil que la clave para citar en cada fila, y saber si lo que cambia en Calibre o en
+Zotero llega solo.
+
+- **La cabecera fija**: cada grupo de filtros desplaza su cabecera (y su buscador) con el desplazamiento, sin salirse del
+  grupo (`fija` en `PanelFiltros.qml`, un `Translate` y no un segundo encabezado: el plegado y la búsqueda son los
+  mismos); plegarla desde ahí devuelve la vista al grupo. El botón de orden de cada grupo (salvo «Año») elige entre
+  **más libros**, **nombre** en orden natural («CAF 2» antes que «CAF 10») y **recién añadidos** (el libro añadido más
+  tarde); se recuerda (`catalogo/orden_facetas`). El tope de 400 valores se aplica después de ordenar.
+- **«Colección (índice)»** en «Orden»: por colección en orden natural y, dentro, por `serie_indice` como número
+  (0, 1, 2, …, 5.1, 5.2, 10); los libros sin colección, al final. **«Agrupar»** (colección, autor, tipo, década) ordena
+  primero por grupo y deja el orden elegido dentro (`sorted` es estable) y pone el título del grupo en la lista, fijo
+  arriba (`section` del `ListView`); la cuadrícula no tiene títulos, así que agrupar pasa a la lista.
+- **La fila dice lo leído** («83 % · 4 subrayados · 1 h 13 min», de la base de lectura por `Lectura.cifraDe`; si aún no
+  se lee, las páginas). La clave para citar sigue en la ficha, con su botón de copiar, y en la búsqueda `clave:`.
+- **Lo que se sincroniza solo** (la pregunta del autor): lo que se edita en **Calibre** se ve al momento: el vigilante de
+  `metadata.db` relee el catálogo en solo lectura 1,5 s después de que Calibre escribe (ya existía; ahora mira también el
+  índice). De **Zotero**, la ventana mira la firma de `zotero.sqlite`: cuando cambia y Zotero se calma (20 s), rehace el
+  índice (`lib/indice.py --aplicar`, que solo lee las bases y escribe el JSON) y el catálogo trae las claves de Zotero y
+  para citar. **Los metadatos que Zotero manda** (título, autores, año…) llegan a Calibre solo por la puerta: la
+  orquestación de las 04:30 (`ecosistema-metadatos.timer`, si las dos aplicaciones están cerradas y algo cambió) o
+  «Zotero ⇄ Calibre» cuando el autor quiera. No se automatiza más: escribir en Calibre exige la aplicación cerrada,
+  candado y respaldo (§2.5), y Zotero suele estar abierto. El botón «Sincronizar» del catálogo dice esto y da los dos
+  caminos (traer las claves ya, Ctrl+R; abrir «Zotero ⇄ Calibre» para simular y aplicar).
+- Pruebas: `test_servicios.py` (orden natural, índice, facetas, grupos), `test_controladores.py` (agrupar, orden de
+  facetas, Zotero rehace el índice sin tocar ninguna base), `test_lectura.py` (la cifra) y `test_studio.py` (la cabecera
+  fija con 303 colecciones, sin avisos de QML). `studio/capturar.py` gana `--agrupar`, `--orden` y `--orden-colecciones`.

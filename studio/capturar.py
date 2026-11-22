@@ -15,6 +15,7 @@ biblioteca real: las portadas son las que la muestra genera con el propio Calibr
     /usr/bin/python3 studio/capturar.py salida.png --libro 1 --ficha-obra               # «Nueva ficha» de obra rellena con la de Yachay (§9.13)
     /usr/bin/python3 studio/capturar.py salida.png --area metodo --vista catalogar --catalogar-ia   # catalogar con un chat (§9.15)
     /usr/bin/python3 studio/capturar.py salida.png --area metodo --vista catalogar --filtro-columna 5=alta --sin-panel
+    /usr/bin/python3 studio/capturar.py salida.png --agrupar coleccion --orden serie --orden-colecciones nombre   # 2026-11-22
 
 Antes de capturar corre de verdad una operación que solo lee la muestra («Validar las fichas» sobre sus fichas): la
 salida del panel inferior y el plan son reales.
@@ -141,6 +142,9 @@ def main() -> int:
     parser.add_argument("--libro", default="", help="el libro de la ficha editorial (su número de Calibre)")
     parser.add_argument("--buscar", default="", help="la búsqueda del catálogo (autor:… año:…)")
     parser.add_argument("--lista", action="store_true", help="el catálogo en lista compacta (no en cuadrícula)")
+    parser.add_argument("--agrupar", default="", help="el catálogo agrupado: coleccion · autor · tipo · decada (pasa a la lista)")
+    parser.add_argument("--orden", default="", help="el orden del catálogo: titulo · autor · año · añadido · serie")
+    parser.add_argument("--orden-colecciones", default="", help="el orden de las colecciones del filtro: n · nombre · reciente")
     parser.add_argument("--bandeja", default="", help="clasificar · fichas · sin_clave · sin_zotero · sin_portada")
     parser.add_argument("--operacion", default="", help="la operación elegida (id del catálogo)")
     parser.add_argument("--fila", type=int, default=0, help="en una etapa, la fila seleccionada de la tabla (−1 ninguna)")
@@ -232,6 +236,12 @@ def main() -> int:
 
     def listo():
         libros.enLista = args.lista
+        if args.orden:
+            libros.fijarOrden(args.orden)
+        if args.agrupar:
+            libros.fijarAgrupar(args.agrupar)
+        if args.orden_colecciones:
+            libros.fijarOrdenFaceta("coleccion", args.orden_colecciones)
         if args.vista:
             espacio.fijarVista(args.vista)
         if args.operacion:

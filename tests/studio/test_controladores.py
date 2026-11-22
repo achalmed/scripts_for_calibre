@@ -124,6 +124,26 @@ def test_vigila_metadata_db_y_relee_en_solo_lectura(piezas, app, muestra):
     l.vigilar = True
 
 
+def test_si_zotero_cambia_el_indice_se_rehace_solo(piezas, app, monkeypatch):
+    """2026-11-22, pregunta del autor («¿se sincroniza al momento?»): cuando zotero.sqlite cambia, el índice (claves de
+    Zotero y para citar) se rehace solo tras una espera; el vigilante solo mira la firma del archivo. La orden que rehace
+    el índice no corre aquí: se registra (nunca se toca una base, ni la de muestra)."""
+    l = piezas["libros"]
+    assert l._zotero is not None and str(l._zotero) in l._vigilante.files()
+    pedidas = []
+    monkeypatch.setattr(l, "rehacerIndice", lambda: pedidas.append(True))
+    l._espera_zotero.setInterval(50)
+    with open(l._zotero, "ab") as f:                             # «Zotero escribe»: la firma cambia
+        f.write(b"\0")
+    inicio = time.monotonic()
+    while not pedidas and time.monotonic() - inicio < 5:
+        app.processEvents()
+        time.sleep(0.05)
+    assert pedidas == [True]
+    l._zotero_calmo()                                              # sin otro cambio, no se rehace dos veces
+    assert pedidas == [True]
+
+
 @requiere_binding
 def test_catalogo_busqueda_filtros_y_orden(piezas, muestra):
     l = piezas["libros"]
@@ -161,6 +181,22 @@ def test_catalogo_busqueda_filtros_y_orden(piezas, muestra):
     l.alternarForma()
     assert l.enLista is (not forma)
     l.alternarForma()
+    # agrupar (2026-11-22): las filas vienen por grupo, con su título; en la cuadrícula pasa a la lista
+    l.enLista = False
+    l.fijarAgrupar("coleccion")
+    assert l.agrupar == "coleccion" and l.enLista
+    grupos = [_visible(l, i)["grupo"] for i in range(l.visibles)]
+    assert grupos[-2:] == ["Sin colección"] * 2 and grupos == sorted(grupos, key=lambda g: (g == "Sin colección", g))
+    l.fijarAgrupar("")
+    assert all(_visible(l, i)["grupo"] == "" for i in range(l.visibles))
+    l.fijarOrden("serie")
+    assert l.orden == "serie"
+    l.fijarOrden("titulo")
+    # el orden de un grupo de filtros se recuerda
+    l.fijarOrdenFaceta("coleccion", "nombre")
+    assert l.ordenFacetas["coleccion"] == "nombre" and [x["valor"] for x in l.facetas["coleccion"]] == ["Desarrollo local", "Métodos"]
+    l.fijarOrdenFaceta("coleccion", "n")
+    assert "Calibre: al momento" in l.estadoSincronia and "Zotero ⇄ Calibre" in l.estadoSincronia
 
 
 @requiere_binding

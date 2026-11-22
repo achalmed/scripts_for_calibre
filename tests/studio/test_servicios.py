@@ -275,3 +275,30 @@ def test_el_informe_de_la_importacion_por_estado(tmp_path, monkeypatch):
     assert i["nuevo"]["obras"][0] == {"titulo": "Obra 0 (2020)", "linea": "Calibre 10 · con su archivo · a.ris"}
     assert i["ya"]["obras"][0]["linea"] == "ABCD1234: el mismo DOI · b.bib" and i["ya"]["obras"][0]["titulo"] == "Vieja (s. f.)"
     assert i["dudoso"]["obras"][0]["linea"] == "el mismo título con otro año · a.ris"
+
+
+def test_orden_natural_por_indice_de_serie_y_grupos():
+    """2026-11-22, pedido del autor: dentro de una colección, el índice de serie en orden numérico (0, 1, 2, …, 5.1, 5.2,
+    10); las colecciones por nombre en orden natural («CAF 2» antes que «CAF 10») o por lo último añadido; agrupar."""
+    base = {"autores": ["Díaz"], "año": 2022, "tipo": "Presentation", "orden_autor": "Díaz", "añadido": "2025-01-01", "serie": "CAF 18"}
+    indices = [5.2, 0, 10, 1, 5.1, 2, None]
+    libros = [dict(base, id=str(n), titulo=f"T{n}", orden_titulo=f"T{n}", serie_indice=i) for n, i in enumerate(indices)]
+    libros.append(dict(base, id="x", titulo="Sin serie", orden_titulo="Sin serie", serie="", serie_indice=None))
+    orden = [l["serie_indice"] for l in sorted(libros, key=cat.clave_orden("serie"))]
+    assert orden == [0, 1, 2, 5.1, 5.2, 10, None, None] and "serie" in dict(cat.ORDENES)
+    assert sorted(["CAF 10 - Matematicas III", "CAF 2 - Micro", "Atao", "caf 01 - Matematicas I"], key=cat.natural) == \
+        ["Atao", "caf 01 - Matematicas I", "CAF 2 - Micro", "CAF 10 - Matematicas III"]
+
+    colecciones = [dict(base, id=str(i), serie=s, añadido=a, autores=[], titulo="t", orden_titulo="t")
+                   for i, (s, a) in enumerate((("CAF 10", "2025-01-01"), ("CAF 10", "2025-01-02"), ("CAF 2", "2026-11-01"),
+                                               ("Atao", "2024-01-01"), ("Atao", "2024-01-01"), ("Atao", "2024-01-01")))]
+    valores = lambda modo: [x["valor"] for x in cat.facetas(colecciones, ordenes={"coleccion": modo})["coleccion"]]  # noqa: E731
+    assert valores("n") == ["Atao", "CAF 10", "CAF 2"]
+    assert valores("nombre") == ["Atao", "CAF 2", "CAF 10"]
+    assert valores("reciente") == ["CAF 2", "CAF 10", "Atao"]
+    assert cat.facetas(colecciones)["coleccion"][0] == {"valor": "Atao", "n": 3}       # sin `ordenes`, como antes
+
+    sueltos = libros + [dict(base, id="y", titulo="Otro", orden_titulo="Otro", serie="CAF 2", serie_indice=1)]
+    grupos = [cat.grupo_de(l, "coleccion") for l in sorted(sueltos, key=cat.clave_grupo("coleccion"))]
+    assert grupos == ["CAF 2"] + ["CAF 18"] * 7 + ["Sin colección"]
+    assert cat.grupo_de(libros[0], "decada") == "2020–2029" and cat.grupo_de(libros[0], "") == ""

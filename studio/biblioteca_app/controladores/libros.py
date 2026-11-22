@@ -4,11 +4,19 @@ al índice de `lib/indice.py` (claves de Zotero y para citar, fichas, nota); la 
 colección, autor, década y tipo, el orden y la cuadrícula o la lista; las portadas en miniatura (`gui_comun.miniaturas.ProveedorMiniaturas`);
 la ficha editorial del libro actual y lo que se hace con él (abrir el documento con su aplicación, mostrarlo en Dolphin,
 abrir en Calibre y en Zotero, la nota, copiar la clave); y las bandejas de trabajo. El enlace `biblioteca-studio://libro/<id>`
-de los complementos lo abre. La ventana no escribe: lo que cambia la biblioteca es una operación (la CLI de su suite)."""
+de los complementos lo abre. La ventana no escribe: lo que cambia la biblioteca es una operación (la CLI de su suite).
+2026-11-22 (pedido del autor): el orden por colección e índice de serie, agrupar la lista con títulos (colección, autor,
+tipo, década), el orden de cada grupo de filtros (más libros, nombre, recientes) y, además de metadata.db, el vigilante
+mira el índice (lo reescribe el timer cada 30 min) y `zotero.sqlite`: si Zotero cambió, el índice se rehace solo (solo lee las
+bases y escribe el JSON); lo que va de Zotero a Calibre sigue siendo la operación «Zotero ⇄ Calibre», por la puerta."""
 
 from __future__ import annotations
 
+import json
 import os
+import subprocess
+import sys
+import threading
 from pathlib import Path
 
 from gui_comun.modelos import ModeloFiltrado, ModeloLista
@@ -18,7 +26,7 @@ from biblioteca_app.servicios import catalogo as cat
 from biblioteca_app.servicios import datos
 
 ROLES = ("id", "titulo", "autores", "año", "serie", "tipo", "portada", "fuente", "zotero", "clave", "koProgreso", "koEstado",
-         "fichas", "etiquetas", "seccion", "otro", "detalle", "nivel")
+         "fichas", "etiquetas", "seccion", "otro", "detalle", "nivel", "grupo", "paginas")
 FILTROS = (("coleccion", "Colección"), ("autor", "Autor"), ("decada", "Año"), ("tipo", "Tipo"))
 TEXTO_KO = {"reading": "leyendo", "complete": "terminado", "abandoned": "abandonado"}
 
@@ -42,16 +50,18 @@ def _serie(l: dict) -> str:
     return f"{l['serie']} [{i:g}]" if i is not None else l["serie"]
 
 
-def fila(l: dict, seccion: str = "") -> dict:
-    """Una tarjeta del catálogo (o de una bandeja)."""
+def fila(l: dict, seccion: str = "", grupo: str = "") -> dict:
+    """Una tarjeta del catálogo (o de una bandeja); `grupo`, el título de su grupo en la lista agrupada."""
     return {"id": l["id"], "titulo": l["titulo"], "autores": " · ".join(l["autores"]) or "sin autor", "año": str(l["año"] or ""),
             "serie": _serie(l), "tipo": l["tipo"], "portada": bool(l["portada"]), "fuente": f"image://portadas/{l['id']}" if l["portada"] else "",
             "zotero": bool(l["zotero_key"]), "clave": l["clave"], "koProgreso": -1.0 if l["ko_progreso"] is None else float(l["ko_progreso"]),
             "koEstado": l["ko_estado"], "fichas": len(l["fichas"]), "etiquetas": ", ".join(l["etiquetas"]), "seccion": seccion,
-            "otro": False, "detalle": "", "nivel": ""}
+            "otro": False, "detalle": "", "nivel": "", "grupo": grupo, "paginas": l.get("paginas") or 0}
 
 
 ESPERA_DB_MS = 1500
+ESPERA_ZOTERO_MS = 20_000              # Zotero escribe a ráfagas mientras se edita: el índice se rehace cuando se calma
+ENTRE_INDICES_S = 120                  # y no más de una vez cada dos minutos (Zotero también escribe al sincronizar)
 
 
 def firma(ruta: Path) -> tuple:
@@ -92,6 +102,8 @@ class Libros(QObject):
     usosCambiados = Signal()            # los escritos que usan el libro de la ficha (decisiones §9.1)
     _usosListos = Signal(str, "QVariantList")
     _leido = Signal(object)             # la relectura en segundo plano terminó (llega al hilo de la ventana)
+    _indiceListo = Signal(int, str)     # el índice rehecho en un hilo (código, última línea)
+    sincroniaCambiada = Signal()
 
     def __init__(self, espacio, consola, env, ruta_indice: Path | None = None, escritorio=None, repo: Path = datos.REPO,
                  portadas=None, parent=None):
@@ -117,6 +129,14 @@ class Libros(QObject):
         self._terminos: list = []
         self._filtros = {k: "" for k, _t in FILTROS}
         self._orden = str(self._s.value("catalogo/orden", "titulo") or "titulo")
+        self._agrupar = str(self._s.value("catalogo/agrupar", "") or "")
+        if self._agrupar not in dict(cat.AGRUPAR):
+            self._agrupar = ""
+        try:
+            self._orden_facetas = {k: v for k, v in json.loads(str(self._s.value("catalogo/orden_facetas", "{}") or "{}")).items()
+                                   if v in dict(cat.ORDENES_FACETA)}
+        except (ValueError, AttributeError):
+            self._orden_facetas = {}
         self._lista = str(self._s.value("catalogo/forma", "cuadricula") or "cuadricula") == "lista"
         self._facetas: dict = {}
         self._bandejas: dict = {}
@@ -139,6 +159,17 @@ class Libros(QObject):
         self._espera_db.setSingleShot(True)
         self._espera_db.setInterval(ESPERA_DB_MS)
         self._espera_db.timeout.connect(self._releer_si_cambio)
+        # Zotero (solo se mira la firma de zotero.sqlite): si cambió después del índice, el índice se rehace en un hilo
+        self._zotero: Path | None = None
+        self._firma_zotero: tuple = ()
+        self._rehaciendo = False
+        self._ultimo_indice = ""
+        self._rehecho_en = float("-inf")
+        self._espera_zotero = QTimer(self)
+        self._espera_zotero.setSingleShot(True)
+        self._espera_zotero.setInterval(ESPERA_ZOTERO_MS)
+        self._espera_zotero.timeout.connect(self._zotero_calmo)
+        self._indiceListo.connect(self._indice_listo)
         self.recargar()
 
     modelo = Property(QObject, lambda self: self._modelo, constant=True)
@@ -194,6 +225,7 @@ class Libros(QObject):
             self.consola.registrar("error", f"No se pudo releer el catálogo: {r['fallo']}")
         else:
             self._indice, self._db, self._firma_db = r["indice"], r["db"], r["firma"]
+            self._firma_indice = firma(self._ruta_indice_actual())
             self._vigilar_db()
             self._libros, self._inmutable, self._error = r["libros"], r["inmutable"], r["error"]
             if self._error:
@@ -212,28 +244,112 @@ class Libros(QObject):
             self.recargar_en_segundo_plano()
 
     # ------------------------------------------------------------------ el vigilante de metadata.db
+    def _ruta_indice_actual(self) -> Path:
+        return self._ruta_indice or datos.ruta_indice()
+
     def _vigilar_db(self) -> None:
-        """Vigila metadata.db y su carpeta (Calibre puede reemplazar el archivo o escribir su diario al lado)."""
+        """Vigila metadata.db y su carpeta (Calibre puede reemplazar el archivo o escribir su diario al lado), el índice
+        (lo reescriben el timer de cada 30 min y Ctrl+R) y zotero.sqlite (solo su firma)."""
         actuales = set(self._vigilante.files()) | set(self._vigilante.directories())
         if actuales:
             self._vigilante.removePaths(list(actuales))
+        zotero = Path(getattr(self.env, "ZOTERO_DB", "") or "")
+        self._zotero = zotero if str(zotero) not in ("", ".") and zotero.is_file() else None
+        if self._zotero is not None and not self._firma_zotero:
+            self._firma_zotero = firma(self._zotero)
         if not self._vigilar or self._db is None:
             return
-        rutas = [str(r) for r in (self._db, self._db.parent) if r.exists()]
+        indice = self._ruta_indice_actual()
+        rutas = [str(r) for r in (self._db, self._db.parent, indice) if r.exists()]
+        if self._zotero is not None:
+            rutas.append(str(self._zotero))
         if rutas:
             self._vigilante.addPaths(rutas)
 
-    def _db_cambio(self, _ruta: str = "") -> None:
-        if self._vigilar:
-            self._espera_db.start()             # Calibre escribe en ráfagas: se relee cuando se calma
+    def _db_cambio(self, ruta: str = "") -> None:
+        if not self._vigilar:
+            return
+        if self._zotero is not None and ruta == str(self._zotero):
+            self._espera_zotero.start()         # Zotero: el índice se rehace cuando deja de escribir
+            self.sincroniaCambiada.emit()
+            return
+        self._espera_db.start()                 # Calibre escribe en ráfagas: se relee cuando se calma
 
     def _releer_si_cambio(self) -> None:
-        if self._db is None or firma(self._db) == self._firma_db:
+        indice = self._ruta_indice_actual()
+        if self._vigilar and indice.exists() and str(indice) not in self._vigilante.files():
+            self._vigilante.addPath(str(indice))         # reescrito (os.replace): se vuelve a vigilar
+        firma_indice = firma(indice)
+        if self._db is None or (firma(self._db) == self._firma_db and firma_indice == getattr(self, "_firma_indice", ())):
             if self._db is not None and str(self._db) not in self._vigilante.files() and self._db.exists():
                 self._vigilante.addPath(str(self._db))   # reemplazado por uno nuevo: se vuelve a vigilar
             return
-        self.consola.registrar("info", "metadata.db cambió (Calibre o una suite): el catálogo se relee en solo lectura.")
+        self.consola.registrar("info", "metadata.db o el índice cambiaron (Calibre, una suite o el timer): el catálogo se relee en solo lectura.")
         self.recargar_en_segundo_plano()
+
+    # ------------------------------------------------------------------ Zotero: el índice se rehace solo
+    def _zotero_calmo(self) -> None:
+        if self._zotero is None or not self._vigilar:
+            return
+        if str(self._zotero) not in self._vigilante.files() and self._zotero.exists():
+            self._vigilante.addPath(str(self._zotero))
+        f = firma(self._zotero)
+        if f == self._firma_zotero:
+            return
+        import time
+        falta = self._rehecho_en + ENTRE_INDICES_S - time.monotonic()
+        if falta > 0:                           # se rehízo hace poco: se mira otra vez cuando toque
+            QTimer.singleShot(int(falta * 1000) + 50, self._zotero_calmo)
+            return
+        self._firma_zotero = f
+        self._rehecho_en = time.monotonic()
+        self.rehacerIndice()
+
+    @Slot()
+    def rehacerIndice(self) -> None:
+        """`lib/indice.py --aplicar` en un hilo: relee Calibre y Zotero en solo lectura (claves de Zotero y para citar) y
+        reescribe el JSON; el vigilante del índice relee el catálogo. No toca ninguna base: no pasa por la puerta."""
+        if self._rehaciendo:
+            return
+        self._rehaciendo = True
+        self.sincroniaCambiada.emit()
+        orden = [sys.executable or "python3", str(datos.REPO / "lib" / "indice.py"), "--aplicar"]
+
+        def trabajo():
+            try:
+                r = subprocess.run(orden, capture_output=True, text=True, timeout=300, check=False)
+                salida = (r.stdout if r.returncode == 0 else (r.stderr or r.stdout)) or ""
+                self._indiceListo.emit(r.returncode, (salida.strip().splitlines() or [""])[-1])
+            except (OSError, subprocess.TimeoutExpired) as e:
+                self._indiceListo.emit(1, str(e))
+        threading.Thread(target=trabajo, name="indice", daemon=True).start()
+
+    def _indice_listo(self, codigo: int, linea: str) -> None:
+        self._rehaciendo = False
+        if codigo == 0:
+            from datetime import datetime
+            self._ultimo_indice = datetime.now().strftime("%H:%M")
+            self.consola.registrar("info", f"Zotero cambió: índice rehecho ({linea})")
+            self.recargar_en_segundo_plano()
+        else:
+            self.consola.registrar("warn", f"No se pudo rehacer el índice tras un cambio en Zotero: {linea}")
+        self.sincroniaCambiada.emit()
+
+    @Property(bool, notify=sincroniaCambiada)
+    def rehaciendoIndice(self) -> bool:
+        return self._rehaciendo
+
+    @Property(str, notify=sincroniaCambiada)
+    def estadoSincronia(self) -> str:
+        """Lo que dice el botón «Sincronizar» del catálogo: qué se sigue solo y cuándo se rehízo el índice."""
+        if not self._vigilar:
+            return "Vigilancia apagada: el catálogo se relee con F6 y el índice con Ctrl+R"
+        partes = ["Calibre: al momento", "Zotero: claves al momento; metadatos con «Zotero ⇄ Calibre» (04:30, o ahora)"]
+        if self._rehaciendo:
+            partes.append("rehaciendo el índice…")
+        elif self._ultimo_indice:
+            partes.append(f"índice rehecho a las {self._ultimo_indice}")
+        return " · ".join(partes)
 
     def _vigilar_set(self, v: bool) -> None:
         self._vigilar = bool(v)
@@ -244,12 +360,14 @@ class Libros(QObject):
     vigilar = Property(bool, lambda self: self._vigilar, _vigilar_set, notify=vigilarCambiado)
 
     def _pintar(self, facetas: bool = True) -> None:
-        """Las filas en su orden; el proxy las filtra al recibirlas (no hace falta otra pasada). Las facetas no dependen
-        del orden: cambiar el orden no las recuenta."""
+        """Las filas en su orden (y, si se agrupa, por grupo y dentro en ese orden); el proxy las filtra al recibirlas (no
+        hace falta otra pasada). Las facetas no dependen del orden: cambiar el orden no las recuenta."""
         if facetas:
             self._buscar_ids()
         orden = sorted(self._libros, key=cat.clave_orden(self._orden))
-        self._filas.poner([fila(l) for l in orden])
+        if self._agrupar:
+            orden = sorted(orden, key=cat.clave_grupo(self._agrupar))       # estable: dentro de cada grupo sigue el orden
+        self._filas.poner([fila(l, grupo=cat.grupo_de(l, self._agrupar)) for l in orden])
         if facetas:
             self._contar_facetas()
 
@@ -263,7 +381,7 @@ class Libros(QObject):
     def _contar_facetas(self) -> None:
         """Las facetas se cuentan sobre lo que cumple la búsqueda (no los filtros: se ve cuánto da cada uno)."""
         buscados = self._libros if self._coinciden is None else [l for l in self._libros if l["id"] in self._coinciden]
-        self._facetas = cat.facetas(buscados)
+        self._facetas = cat.facetas(buscados, ordenes=self._orden_facetas)
         self.facetasCambiadas.emit()
 
     def _recalcular(self) -> None:
@@ -385,6 +503,41 @@ class Libros(QObject):
             self._pintar(facetas=False)
             self.filtroCambiado.emit()
 
+    @Property("QVariantList", constant=True)
+    def agrupaciones(self) -> list:
+        return [{"clave": k, "titulo": t} for k, t in cat.AGRUPAR]
+
+    @Property(str, notify=filtroCambiado)
+    def agrupar(self) -> str:
+        return self._agrupar
+
+    @Slot(str)
+    def fijarAgrupar(self, clave: str) -> None:
+        """Agrupa la lista con títulos (colección, autor, tipo, década); en la cuadrícula no hay títulos: pasa a la lista."""
+        if clave in dict(cat.AGRUPAR) and clave != self._agrupar:
+            self._agrupar = clave
+            self._s.setValue("catalogo/agrupar", clave)
+            self._pintar(facetas=False)
+            if clave and not self._lista:
+                self.enLista = True
+            self.filtroCambiado.emit()
+
+    @Property("QVariantList", constant=True)
+    def ordenesFaceta(self) -> list:
+        return [{"clave": k, "titulo": t} for k, t in cat.ORDENES_FACETA]
+
+    @Property("QVariantMap", notify=facetasCambiadas)
+    def ordenFacetas(self) -> dict:
+        return {k: self._orden_facetas.get(k, "n") for k, _t in FILTROS}
+
+    @Slot(str, str)
+    def fijarOrdenFaceta(self, grupo: str, orden: str) -> None:
+        """El orden de los valores de un grupo de filtros (p. ej., las colecciones por nombre); se recuerda."""
+        if grupo in self._filtros and orden in dict(cat.ORDENES_FACETA) and self._orden_facetas.get(grupo, "n") != orden:
+            self._orden_facetas[grupo] = orden
+            self._s.setValue("catalogo/orden_facetas", json.dumps(self._orden_facetas))
+            self._contar_facetas()
+
     def _lista_get(self) -> bool:
         return self._lista
 
@@ -430,7 +583,7 @@ class Libros(QObject):
                           "serie": "", "tipo": e.get("tipo", ""), "portada": False, "fuente": "", "zotero": False, "clave": "", "koProgreso": -1.0,
                           "koEstado": "", "fichas": 0, "etiquetas": "", "seccion": e.get("seccion", ""), "otro": True,
                           "detalle": f"{e.get('origen', '')} · {e.get('paso', '')}" + (f" · confianza {e['confianza']}" if e.get("confianza") else ""),
-                          "nivel": e.get("nivel", "")})
+                          "nivel": e.get("nivel", ""), "grupo": "", "paginas": 0})
         libros = sorted((self._por_id[i] for i in b.get("libros", []) if i in self._por_id), key=cat.clave_orden("titulo"))
         filas += [fila(l, "En Calibre") for l in libros]
         self._bandeja_filas.poner(filas)

@@ -4,6 +4,9 @@
 // cada portada, la barra de lectura del color de KOReader. Intro o doble clic abre el documento con su aplicación.
 // Los tres paneles van en un divisor (2026-11-19): el borde entre los filtros, el centro y la ficha se arrastra y el ancho
 // se recuerda entre sesiones.
+// 2026-11-22 (pedido del autor): «Agrupar» (colección, autor, tipo, década) con títulos de grupo en la lista, aparte del
+// orden (que suma «Colección (índice)»); y «Sincronizar»: qué se sigue solo (Calibre al momento; de Zotero, las claves al
+// momento y los metadatos con «Zotero ⇄ Calibre») y los dos botones para hacerlo ya.
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls as QQC2
@@ -51,6 +54,57 @@ QQC2.SplitView {
                 font.weight: Font.DemiBold
             }
             Item { Layout.fillWidth: true }
+            QQC2.ToolButton {
+                id: botonSincronia
+                icon.name: "folder-sync"
+                text: raiz.l.rehaciendoIndice ? "Sincronizando…" : "Sincronizar"
+                display: QQC2.AbstractButton.TextBesideIcon
+                onClicked: menuSincronia.popup(botonSincronia, 0, botonSincronia.height)
+                QQC2.ToolTip.text: raiz.l.estadoSincronia
+                QQC2.ToolTip.visible: hovered
+                Accessible.name: "Sincronizar con Calibre y Zotero"
+                Accessible.description: raiz.l.estadoSincronia
+                QQC2.Menu {
+                    id: menuSincronia
+                    QQC2.MenuItem {
+                        text: "Traer de Zotero las claves ahora (Ctrl+R)"
+                        icon.name: "view-refresh"
+                        enabled: !raiz.l.rehaciendoIndice
+                        onTriggered: studio.acciones.accion("ver.indice").disparar()
+                    }
+                    QQC2.MenuItem {
+                        text: "Zotero ⇄ Calibre: los metadatos…"
+                        icon.name: "zotero"
+                        onTriggered: { studio.acciones.accion("op.zotero_calibre").disparar(); studio.acciones.accion("ver.vista.sincronizar").disparar() }
+                    }
+                    QQC2.MenuSeparator {}
+                    QQC2.MenuItem {
+                        text: "Seguir los cambios de Calibre y Zotero"
+                        checkable: true
+                        checked: raiz.l.vigilar
+                        onTriggered: { studio.acciones.accion("ver.vigilar").disparar(); checked = Qt.binding(() => raiz.l.vigilar) }
+                    }
+                    QQC2.MenuItem {
+                        enabled: false
+                        contentItem: QQC2.Label {
+                            text: raiz.l.estadoSincronia.split(" · ").join("\n")
+                            font: Kirigami.Theme.smallFont
+                            color: Kirigami.Theme.disabledTextColor
+                            wrapMode: Text.WordWrap
+                        }
+                    }
+                }
+            }
+            QQC2.Label { text: "Agrupar:"; color: Kirigami.Theme.disabledTextColor }
+            QQC2.ComboBox {
+                model: raiz.l.agrupaciones
+                textRole: "titulo"
+                currentIndex: raiz.l.agrupaciones.findIndex(o => o.clave === raiz.l.agrupar)
+                onActivated: i => raiz.l.fijarAgrupar(raiz.l.agrupaciones[i].clave)
+                Accessible.name: "Agrupar el catálogo por"
+                QQC2.ToolTip.text: "Los grupos se ven con su título en la lista (Ctrl+G)"
+                QQC2.ToolTip.visible: hovered
+            }
             QQC2.Label { text: "Orden:"; color: Kirigami.Theme.disabledTextColor }
             QQC2.ComboBox {
                 model: raiz.l.ordenes
@@ -145,6 +199,15 @@ QQC2.SplitView {
                 activeFocusOnTab: true
                 currentIndex: -1
                 QQC2.ScrollBar.vertical: QQC2.ScrollBar {}
+                // agrupada: el título de cada grupo, fijo arriba mientras se recorre (las filas ya vienen por grupo)
+                section.property: raiz.l.agrupar !== "" ? "grupo" : ""
+                section.criteria: ViewSection.FullString
+                section.labelPositioning: ViewSection.InlineLabels | ViewSection.CurrentLabelAtStart
+                section.delegate: Kirigami.ListSectionHeader {
+                    required property string section
+                    width: ListView.view ? ListView.view.width : 0
+                    text: section
+                }
                 delegate: FilaLibro {
                     width: lista.width
                     actual: model.id === raiz.l.id

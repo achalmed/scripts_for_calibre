@@ -64,6 +64,14 @@ def ficha_obra_vista(f: dict | None) -> dict:
             "completa": all(p["texto"] for p in preguntas), "procedencia": "Ficha de obra en Yachay"}
 
 
+def cifra_libro(f: dict) -> str:
+    """La lectura de un libro en pocas palabras: avance (el del lector que va más lejos), subrayados y horas."""
+    n = int(f.get("anotaciones") or 0)
+    return " · ".join(x for x in (f"{f['porcentaje']} %" if f.get("fraccion") else "",
+                                  f"{n} subrayado{'s' if n != 1 else ''}" if n else "",
+                                  f["tiempo"] if f.get("segundos") else "") if x)
+
+
 def _cita(a: dict) -> str:
     """«“texto” (p. 73)»: lo que copia el botón de un subrayado."""
     texto = (a.get("texto") or "").strip()
@@ -187,6 +195,8 @@ class Lectura(QObject):
         self._semanas: list = []
         self._dias: list = []
         self._lista: list = []
+        self._por_libro: dict[str, str] = {}
+        self._version = 0
         self._libro: dict = {}
         self._id = -1
         self._mapa: dict | None = None
@@ -225,7 +235,8 @@ class Lectura(QObject):
             self._resumen = consulta.resumen(self.ruta())
             self._semanas = consulta.semanas(12, self.ruta())
             self._dias = consulta.dias(12, self.ruta())
-            self._lista = consulta.libros(300, self.ruta())
+            todos = consulta.libros(1_000_000, self.ruta())
+            self._lista = todos[:300]
         except Exception as e:  # noqa: BLE001 — una base a medio escribir: se reintenta en la próxima señal
             self.aviso.emit(f"No se pudo leer la base de lectura: {e}", "aviso")
             return
@@ -234,6 +245,8 @@ class Lectura(QObject):
                                                   f"{f['anotaciones']} subrayados" if f["anotaciones"] else "",
                                                   ESTADOS.get(f["estado"], "")) if x)
             f["origenesTexto"] = ", ".join(NOMBRES.get(o, o) for o in f["origenes"])
+        self._por_libro = {str(f["calibre_id"]): cifra_libro(f) for f in todos if f["calibre_id"] is not None}
+        self._version += 1
         self._vigilar()
         self.cambiado.emit()
         if self._id < 0 and self._lista and self._lista[0]["calibre_id"] is not None:
@@ -308,6 +321,17 @@ class Lectura(QObject):
     def semanas(self) -> list:
         return [{"etiqueta": s["etiqueta"], "horas": s["horas"], "proporcion": s["proporcion"], "sesiones": s["sesiones"]}
                 for s in self._semanas]
+
+    @Property(int, notify=cambiado)
+    def version(self) -> int:
+        """Sube con cada relectura de la base: lo que pide `cifraDe` en QML se vuelve a pedir."""
+        return self._version
+
+    @Slot(str, result=str)
+    def cifraDe(self, calibre_id: str) -> str:
+        """«83 % · 4 subrayados · 1 h 13 min»: lo que la base sabe de la lectura de un libro (en cualquier lector), para la
+        fila del catálogo (2026-11-22: reemplaza la clave para citar, que sigue en la ficha con su botón de copiar)."""
+        return self._por_libro.get(str(calibre_id), "")
 
     @Property("QVariantList", notify=cambiado)
     def libros(self) -> list:

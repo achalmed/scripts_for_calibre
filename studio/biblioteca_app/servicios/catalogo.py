@@ -8,7 +8,10 @@ B6 y B8; `docs/reingenieria.md`).
   su orden no cambian: son contrato de los complementos.
 - `consulta(texto)`, `planos(libro)` y `cumple(libro, terminos)`: la búsqueda avanzada (`titulo:`, `autor:`, `año:` o un rango,
   `serie:`, `etiqueta:`, `id:`, `clave:`; palabras sueltas en todo; comillas para agrupar), sin tildes ni mayúsculas.
-- `facetas(libros)`: los valores de los filtros (colección = la serie, autor, década, tipo) con su cuenta.
+- `facetas(libros, ordenes)`: los valores de los filtros (colección = la serie, autor, década, tipo) con su cuenta, en el
+  orden que el autor elija por grupo (`ORDENES_FACETA`: más libros, nombre en orden natural, recientes; 2026-11-22).
+- `clave_orden(orden)` y `grupo_de(libro, agrupar)`: el orden del catálogo (también por colección e índice de serie,
+  con orden numérico: 0, 1, 2, …, 5.1, 5.2, 10) y los grupos con título de la lista (colección, autor, tipo, década).
 - `bandejas(libros, entrada, fichas)`: las bandejas de trabajo y lo que hay en cada una.
 """
 from __future__ import annotations
@@ -22,7 +25,11 @@ from pathlib import Path
 CAMPOS = {"titulo": "titulo", "título": "titulo", "autor": "autor", "autores": "autor", "año": "año", "ano": "año", "anio": "año",
           "serie": "serie", "coleccion": "serie", "colección": "serie", "etiqueta": "etiqueta", "etiquetas": "etiqueta", "tag": "etiqueta",
           "id": "id", "isbn": "id", "doi": "id", "clave": "clave", "tipo": "tipo"}
-ORDENES = (("titulo", "Título"), ("autor", "Autor"), ("año", "Año"), ("añadido", "Recién añadidos"))
+ORDENES = (("titulo", "Título"), ("autor", "Autor"), ("año", "Año"), ("añadido", "Recién añadidos"),
+           ("serie", "Colección (índice)"))
+AGRUPAR = (("", "Sin agrupar"), ("coleccion", "Colección"), ("autor", "Autor"), ("tipo", "Tipo"), ("decada", "Año (década)"))
+ORDENES_FACETA = (("n", "Más libros primero"), ("nombre", "Por nombre"), ("reciente", "Recién añadidos primero"))
+SIN_GRUPO = {"coleccion": "Sin colección", "autor": "Sin autor", "tipo": "sin tipo", "decada": "sin año"}
 BANDEJAS = (
     ("clasificar", "Pendientes de clasificar", "view-catalog",
      "Lo que entró y aún no está catalogado en Calibre, y los libros sin tipo", "entrada", "catalogar"),
@@ -44,6 +51,11 @@ def _plano(texto) -> str:
 
 
 _CAMPOS_PLANOS = {_plano(k): v for k, v in CAMPOS.items()}
+
+
+def natural(texto) -> tuple:
+    """La clave del orden natural, sin tildes ni mayúsculas: «CAF 2» antes que «CAF 10» y «caf 01» junto a «CAF 1»."""
+    return tuple((0, int(x), "") if x.isdigit() else (1, 0, x) for x in re.split(r"(\d+)", _plano(texto).strip()) if x)
 
 
 def _año(pubdate) -> int | None:
@@ -184,24 +196,38 @@ def decada(año: int | None) -> str:
     return f"{año // 10 * 10}–{año // 10 * 10 + 9}" if año else "sin año"
 
 
-def facetas(libros: list[dict], tope: int = 400) -> dict[str, list[dict]]:
-    """{coleccion, autor, decada, tipo: [{valor, n}]}: por cuenta descendente (las décadas, en orden); a lo sumo `tope`."""
+def facetas(libros: list[dict], tope: int = 400, ordenes: dict[str, str] | None = None) -> dict[str, list[dict]]:
+    """{coleccion, autor, decada, tipo: [{valor, n}]}: por cuenta descendente (las décadas, en orden); a lo sumo `tope`.
+    `ordenes` cambia el de un grupo (`ORDENES_FACETA`): «nombre» en orden natural o «reciente» (el libro añadido más
+    tarde); el tope se aplica después de ordenar."""
+    ordenes = ordenes or {}
     cuentas: dict[str, dict[str, int]] = {"coleccion": {}, "autor": {}, "decada": {}, "tipo": {}}
+    recientes: dict[str, dict[str, str]] = {k: {} for k in cuentas}
+
+    def contar(grupo, valor, añadido):
+        cuentas[grupo][valor] = cuentas[grupo].get(valor, 0) + 1
+        if añadido > recientes[grupo].get(valor, ""):
+            recientes[grupo][valor] = añadido
+
     for l in libros:
+        añadido = l.get("añadido") or ""
         if l["serie"]:
-            cuentas["coleccion"][l["serie"]] = cuentas["coleccion"].get(l["serie"], 0) + 1
+            contar("coleccion", l["serie"], añadido)
         for a in l["autores"]:
-            cuentas["autor"][a] = cuentas["autor"].get(a, 0) + 1
-        d = decada(l["año"])
-        cuentas["decada"][d] = cuentas["decada"].get(d, 0) + 1
-        t = l["tipo"] or "sin tipo"
-        cuentas["tipo"][t] = cuentas["tipo"].get(t, 0) + 1
+            contar("autor", a, añadido)
+        contar("decada", decada(l["año"]), añadido)
+        contar("tipo", l["tipo"] or "sin tipo", añadido)
     salida = {}
     for k, v in cuentas.items():
-        if k == "decada":                    # de la más reciente a la más antigua; «sin año» al final
+        modo = ordenes.get(k, "n")
+        if modo == "nombre":
+            orden = sorted(v.items(), key=lambda kv: natural(kv[0]))
+        elif modo == "reciente":
+            orden = sorted(sorted(v.items(), key=lambda kv: natural(kv[0])), key=lambda kv: recientes[k].get(kv[0], ""), reverse=True)
+        elif k == "decada":                  # de la más reciente a la más antigua; «sin año» al final
             orden = sorted((x for x in v.items() if x[0] != "sin año"), reverse=True) + [x for x in v.items() if x[0] == "sin año"]
         else:
-            orden = sorted(v.items(), key=lambda kv: (-kv[1], _plano(kv[0])))
+            orden = sorted(v.items(), key=lambda kv: (-kv[1], natural(kv[0])))
         salida[k] = [{"valor": a, "n": n} for a, n in orden[:tope]]
     return salida
 
@@ -227,7 +253,30 @@ def clave_orden(orden: str):
         return lambda l: (-(l["año"] or 0), _plano(l["orden_titulo"]))
     if orden == "añadido":
         return lambda l: (l["añadido"] == "", "".join(chr(0x10FFFF - ord(ch)) for ch in l["añadido"]), _plano(l["orden_titulo"]))
+    if orden == "serie":                     # por colección y, dentro, por el índice que el autor puso en Calibre (5.1 < 5.2 < 10)
+        return lambda l: (not l["serie"], natural(l["serie"]), l.get("serie_indice") is None, l.get("serie_indice") or 0.0,
+                          _plano(l["orden_titulo"]))
     return lambda l: _plano(l["orden_titulo"])
+
+
+def grupo_de(libro: dict, agrupar: str) -> str:
+    """El título del grupo de un libro en la lista agrupada (`AGRUPAR`); "" sin agrupar."""
+    if agrupar == "coleccion":
+        return libro["serie"] or SIN_GRUPO["coleccion"]
+    if agrupar == "autor":
+        return libro["autores"][0] if libro["autores"] else SIN_GRUPO["autor"]
+    if agrupar == "tipo":
+        return libro["tipo"] or SIN_GRUPO["tipo"]
+    if agrupar == "decada":
+        return decada(libro["año"])
+    return ""
+
+
+def clave_grupo(agrupar: str):
+    """El orden de los grupos: colección, autor y tipo por nombre (natural); las décadas de la más reciente; sin valor, al final."""
+    if agrupar == "decada":
+        return lambda l: (l["año"] is None, -((l["año"] or 0) // 10))
+    return lambda l: (grupo_de(l, agrupar) == SIN_GRUPO.get(agrupar), natural(grupo_de(l, agrupar)), grupo_de(l, agrupar))
 
 
 # ------------------------------------------------------------------------------------- bandejas

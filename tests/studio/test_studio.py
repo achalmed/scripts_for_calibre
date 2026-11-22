@@ -302,3 +302,56 @@ def test_corregir_una_ficha_de_obra_y_la_de_yachay_en_la_ventana(tmp_path, muest
     o = d["obra"]
     assert o["titulo"] == "Corregir tu ficha de obra de «Economía de ciudades»" and o["llevable"] and o["simulo"] == [1, False, None]
     assert o["cerrado"] and o["llevo"] == [1, True, 4] and o["hallazgo"].startswith("Ganan más") and o["escrito_intacto"]
+
+
+FILTROS_LARGOS = """
+import sys, json, os; sys.path.insert(0, sys.argv[1])
+from biblioteca_app import aplicacion
+from gui_comun.nucleo import Aplicacion
+from gui_comun.qt import QObject, QTimer
+app = Aplicacion("biblioteca-studio", "Biblioteca Studio", version="prueba", nombre_ajustes="BibliotecaStudio")
+piezas = aplicacion.construir(app, vigilar_puerta=False)
+errores = []
+app.motor.warnings.connect(lambda avisos: errores.extend(a.toString() for a in avisos))
+ruta = os.path.join(os.environ["XDG_CACHE_HOME"], "Prueba_filtros_largos.qml")
+os.makedirs(os.path.dirname(ruta), exist_ok=True)
+open(ruta, "w").write('import QtQuick\\nimport GuiComun\\nimport "file://%s/componentes"\\nVentanaBase { id: ventana; acciones: studio.acciones; width: 320; height: 600; '
+                      'PanelFiltros { objectName: "panel"; anchors.fill: parent } }\\n' % str(aplicacion.QML_DIR))
+l = piezas["libros"]
+l._facetas = dict(l._facetas, coleccion=[{"valor": f"CAF {i:03d} - Curso", "n": 303 - i} for i in range(303)])
+ok = app.cargar(ruta)
+raiz = app.motor.rootObjects()[0]
+app.app.processEvents()
+def items(i):                                                # el árbol visual (los delegados de un Repeater no son hijos QObject)
+    yield i
+    for h in i.childItems():
+        yield from items(h)
+todos_items = lambda: list(items(raiz.contentItem()))
+grupos = [o for o in todos_items() if o.property("fija") is not None and o.property("todos") is not None]
+coleccion = next(g for g in grupos if g.property("modelData")["clave"] == "coleccion")
+coleccion.setProperty("todos", True)                         # «Ver los 303»
+for _ in range(5): app.app.processEvents()
+flick = next(o for o in todos_items() if o.metaObject().className().startswith("QQuickFlickable") and o.property("contentHeight") > 3000)
+flick.setProperty("contentY", 2000.0)
+for _ in range(5): app.app.processEvents()
+fija = coleccion.property("fija")
+alto_grupo = coleccion.property("height")
+from gui_comun.qt import QMetaObject
+QMetaObject.invokeMethod(coleccion, "alternar")
+QTimer.singleShot(300, app.app.quit); app.app.exec()
+despues = {"contentY": flick.property("contentY"), "plegado": coleccion.property("plegado"), "y": coleccion.property("y")}
+app.cerrar()
+print(json.dumps({"ok": ok, "errores": errores, "fija": fija, "alto": alto_grupo, "despues": despues}))
+"""
+
+
+@requiere_sistema
+def test_la_cabecera_de_las_colecciones_se_queda_arriba(tmp_path, muestra):
+    """2026-11-22, pedido del autor: con 303 colecciones, la cabecera «Colección» (y su buscador) baja con el desplazamiento
+    para que se pueda plegar sin volver arriba; plegarla ahí devuelve la vista al grupo. Sin avisos de QML (ni bucles)."""
+    r = correr_python(FILTROS_LARGOS, entorno_gui(tmp_path, muestra))
+    assert r.returncode == 0, r.stderr[-3000:]
+    datos = json.loads(r.stdout.strip().splitlines()[-1])
+    assert datos["ok"] and not [e for e in datos["errores"] if "PanelFiltros" in e], datos["errores"]
+    assert datos["alto"] > 3000 and 1900 < datos["fija"] < 2000          # contentY 2000 menos dónde empieza el grupo
+    assert datos["despues"]["plegado"] and datos["despues"]["contentY"] <= datos["despues"]["y"] + 1
