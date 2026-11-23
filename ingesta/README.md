@@ -48,6 +48,8 @@ Simulación por defecto; `--aplicar` escribe. Desde esta carpeta:
 ./main.sh catalogar [--solo REGEX]    simula; --aplicar escribe en Calibre (Calibre cerrado)
 ./main.sh zotero                      salida_ris/ingesta_<fecha>.ris, desde Calibre
 python3 ../lib/importar_zotero.py <.ris .bib .json…> [--aplicar]   funde e importa en Zotero lo que falta (§2.15)
+python3 ../lib/lista_referencias.py <lista.txt> [--aplicar --lote X]   una lista pegada de una IA: qué está y qué falta;
+                                      aplicar verifica DOI e ISBN y deja entrada/X/candidatos.json (no escribe en bases)
 ./main.sh archivar [--aplicar]        retira el original y lo registra (ARCHIVAR_MODO; --mover borra sin manifiesto en esa corrida)
 ./main.sh paquetes [--aplicar]        anexos de un paquete → data/ del documento principal
 ./main.sh ocr [--aplicar]             X.ocr.pdf, X_ocr_buscable.pdf, X_texto.pdf → formato de X
@@ -129,6 +131,12 @@ completa `biblioteca-studio/catalogacion/`.
 - **Zotero se alimenta por RIS, por la puerta** (`../lib/importar_zotero.py`, `../docs/decisiones.md` §2.15): funde,
   no duplica, deja las dudosas y enlaza el archivo de Calibre; ya no se importa a mano. Los `.ris` anteriores al
   2026-09-30 no se importan (`salida_ris/obsoletos_2026-09-30/`, §2.7).
+- **Lo que descubre una IA entra por la lista, no por la cita** (`../lib/lista_referencias.py`, 2026-11-22): la
+  bibliografía de un chat o el informe de Deep Research de un cuaderno de Gemini Notebook se pega en un `.txt`; la
+  simulación dice qué ya está en Calibre o Zotero, qué falta y qué queda por identificar; `--aplicar` consulta Crossref y
+  Open Library por cada DOI e ISBN que falta (una referencia inventada «no existe»; un DOI real de otra obra «discrepa»)
+  y deja `entrada/<lote>/candidatos.json`, el comienzo de la lista de `../lib/ingresar.py` una vez completados los
+  autores y cotejada cada obra.
 - **`fichas/` de esta carpeta es provisional**: la ficha que cuenta es la que `catalogar` escribe
   con `calibre_id` en `biblioteca-studio/catalogacion/fichas/`.
 - **La serie `Informe <slug> - Fuentes` solo se asigna bajo `01_fuentes/`**: un PDF identificado bajo la

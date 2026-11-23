@@ -65,6 +65,10 @@ con siete áreas en chips (Ctrl+1–7: las seis del rediseño del 2026-11-18 y R
   uno o varios RIS, BibTeX o CSL-JSON en el diálogo de KDE; F5 deja en la pestaña Plan cuántas obras son nuevas, cuántas
   ya estaban y cuántas son dudosas, cada una con su título y, en una línea tenue, su fuente o su porqué; Ctrl+Intro crea
   las nuevas en Zotero por la puerta (con Zotero y Calibre cerrados).
+  **«Lista de referencias de una IA»** (`../lib/lista_referencias.py`, 2026-11-22): se elige el `.txt` con la lista
+  pegada (de un chat o del Deep Research de un cuaderno de Gemini Notebook); F5 dice qué ya está, qué falta y qué queda
+  por identificar; Ctrl+Intro verifica cada DOI e ISBN que falta y deja `candidatos.json` en la entrada. No escribe en
+  ninguna base.
   Sobre cada tabla, sus **filtros por columna** (clic derecho en una celda: «Solo este valor»; o «Filtrar», con cuántas
   filas tiene cada valor), que se quitan de un toque; el clic en una cabecera ordena, arrastrar su borde la ensancha y
   «Ampliar la tabla» oculta el panel de la derecha. En Entrada y Catalogar, **«Catalogar con un chat…»** (Ctrl+Mayús+I,

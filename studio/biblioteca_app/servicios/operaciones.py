@@ -124,6 +124,12 @@ ETAPAS = (
           "Zotero y Calibre y crea en Zotero lo que falta, con su archivo de Calibre enlazado.", ("lib/importar_zotero.py",),
           bases=("calibre", "zotero"), entrada="archivos", etiqueta="archivos RIS, BibTeX o CSL-JSON",
           informe="importar-zotero/ultimo.json"),
+        # 2026-11-22 (P3 del análisis de NotebookLM): lo que descubre una IA entra por aquí, no por la cita
+        O("lista_referencias", "Lista de referencias de una IA", "Una lista pegada (de un chat, del Deep Research de un "
+          "cuaderno de Gemini Notebook o de un artículo): qué ya está en Calibre o en Zotero y qué falta. Aplicar verifica "
+          "en Crossref y Open Library cada DOI e ISBN que falta (una referencia inventada no existe) y deja candidatos.json "
+          "en la entrada para ingresarlos; no escribe en ninguna base.", ("lib/lista_referencias.py",),
+          entrada="archivo", etiqueta="lista de referencias (.txt o .md)"),
         O("archivar", "Archivar", "Saca de la entrada lo ya catalogado y lo registra en el fuentes.yml del proyecto.",
           ("ingesta/main.sh", "archivar")),
         O("ocr", "OCR de los escaneados", "Reconoce el texto de los PDF que no lo tienen (ocrmypdf).", ("ingesta/main.sh", "ocr")),
