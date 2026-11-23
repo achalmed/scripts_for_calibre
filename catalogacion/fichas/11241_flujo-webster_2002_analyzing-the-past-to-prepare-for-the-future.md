@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-Sin archivo: la obra no tiene un PDF de acceso abierto en su sede oficial; queda el registro con sus metadatos e identificadores.
+`biblioteca-studio/entrada/2026-11-23-aprender-ensenar/11241.pdf` · SHA-256 `956d1660b4c409f4…` · bajado con el navegador de MIS Quarterly (acceso libre), bajado por el autor con su navegador (añadido el 2026-11-23 por `lib/ingresar.py adjuntar`)
 
 ## Zotero
 | Campo | Valor |
