@@ -9,10 +9,12 @@ Objetivo: lo que Yachay ofrece con «Ayuda de la IA» y «Estudiar por partes» 
 Método: el prompt se lee del disco cada vez. Qué prompt sirve a cada parte lo dice el cuadro de Yachay
   (`yachay/estudios/prompts_por_parte.py`) y cuáles son las miradas del estudio de obra, su catálogo
   (`yachay/estudios/catalogo.py`): los dos son puros y se cargan por su ruta, como el traductor
-  (`prompts/scripts/para_ia_externa.py`); sin ellos, el prompt general de redacción y ninguna mirada. Lo pegado se lee como
-  Yachay: el bloque ```latex de una parte (`ayuda_componente.verificar`: sin `\\componente` ni `\\section`, con las claves de
-  su bibliografía, sin las marcas de trabajo) y el bloque `tipo: estudio-de-obra` de un estudio (el contrato
-  `estudio-de-obra.yml` de Qillqa): sus fichas, cotejadas en su unidad con el cotejo de la suite `fichas`.
+  (`prompts/scripts/para_ia_externa.py`); sin ellos, el prompt general de redacción y ninguna mirada. Lo pegado se lee con
+  el lector común de los contratos de pegado (`prompts/scripts/pegado.py`) y el cuerpo de una parte se comprueba con la
+  regla común de escritura (`escritura/core/parte.py`, la misma de Yachay: sin `\\componente`, `\\section`, figuras ni
+  tablas, con las claves de su bibliografía y sin las marcas de trabajo; las figuras que la parte ya tenía se conservan),
+  los dos por `core/py-common/ia_externa.py` (2026-11-23). El bloque `tipo: estudio-de-obra` (el contrato
+  `estudio-de-obra.yml` de Qillqa) trae fichas, cotejadas en su unidad con el cotejo de la suite `fichas`.
 Fundamento: Yachay, `docs/prompts-por-parte.md` y `docs/prompts-del-flujo.md`; `prompts/14 estudio/README.md`.
 Límite: no escribe nada. Lo que el autor acepta lo guarda LaTeX Studio con Ctrl+S (la parte) o `lib/fichar.py` (las
   fichas). El tramo de una obra va por hojas del PDF (las unidades `uN` son hojas; Yachay usa las de su acervo).
@@ -33,19 +35,7 @@ LARGO = 60000          # caracteres: por encima, un chat externo puede cortar el
 MAX_FICHAS = 30
 MAX_FICHA = 600
 RE_ABRE = re.compile(r"^\\componente(?:\[([^\]\n]*)\])?\{([^}\n]*)\}", re.M)
-RE_CITA = re.compile(r"\\(?:paren|text|auto|foot)?cites?\*?(?:\[[^\]]*\]){0,2}\{([^}]+)\}")
 RE_ENTRADA_BIB = re.compile(r"@(\w+)\s*\{\s*([^,\s]+)\s*,")
-PROHIBIDO = [(re.compile(r"\\componente\b"), "la línea \\componente la pone el escrito: el bloque trae solo el cuerpo"),
-             (re.compile(r"\\(?:chapter|section)\*?\s*[\[{]"), "el componente ya es la sección: use \\subsection si necesita subtítulos"),
-             (re.compile(r"\\(?:documentclass|usepackage|input|include|begin\{document\}|end\{document\})\b"),
-              "el maestro y el preámbulo no se tocan desde aquí"),
-             (re.compile(r"\\(?:write18|immediate|openout|directlua|luaexec)\b"), "esa orden no va en una parte")]
-_ROTULOS = r"(?:H|I|O|PRENSA|HECHO|INTERPRETACI[ÓO]N|VALORACI[ÓO]N|OPINI[ÓO]N|C[ÁA]LCULO|ESTIMACI[ÓO]N|DATO)"
-RE_MARCA_AL_COMIENZO = re.compile(rf"(?m)^([ \t]*)\[{_ROTULOS}\][ \t]*")
-RE_MARCA_ROTULO = re.compile(rf"[ \t]*(?<![\\\w\]])\[{_ROTULOS}\]")
-RE_MARCA_FALTA = re.compile(r"(?<![\\\w])\[(VERIFICAR|VAC[ÍI]O|CONFLICTO|SUPUESTO|PENDIENTE)\b[:\s]*([^\]]*)\]", re.I)
-QUE_FALTA = {"VERIFICAR": "confirmar en la fuente oficial", "VACIO": "laguna que resolver", "CONFLICTO": "antinomia que resolver",
-             "SUPUESTO": "supuesto que confirmar", "PENDIENTE": "por completar"}
 # Las fichas del estudio de obra (estudio-de-obra.yml, bloque `ficha`) y la ficha del escrito que les toca.
 CLASE_DE = {"textual_simple": "textual", "textual_compuesta": "textual", "textual_con_interpolacion": "textual", "mixta": "textual",
             "comentario": "textual", "parafrasis": "parafrasis", "resumen": "parafrasis"}
@@ -100,6 +90,18 @@ def _cargar(nombre: str, ruta: Path):
 def comun():
     """`core/py-common/ia_externa.py`: lo común de «copiar el prompt / pegar lo de la IA» (2026-11-23); None sin él."""
     return _cargar("core_ia_externa", Path(os.environ.get("PY_COMMON") or _env().PY_COMMON) / "ia_externa.py")
+
+
+def lector_pegado():
+    """El lector común del bloque pegado (`prompts/scripts/pegado.py`), por el módulo común; None sin él."""
+    c = comun()
+    return c.pegado(prompts_dir()) if c is not None else None
+
+
+def parte():
+    """La comprobación común de una parte LaTeX pegada (`escritura/core/parte.py`), por el módulo común; None sin ella."""
+    c = comun()
+    return c.parte_latex() if c is not None else None
 
 
 def traductor():
@@ -279,33 +281,6 @@ def prompt_parte(d: Path, archivo: str, componente: str = "", fichas: list[dict]
             "contexto": {"fichas": len(usadas), "fichas_de_la_parte": bool(propias), "obras": len(bib)}}
 
 
-def bloque_latex(texto: str) -> str:
-    m = re.search(r"```(?:latex|tex)?[ \t]*\n(.*?)```", texto or "", re.S | re.I)
-    return (m.group(1) if m else (texto or "")).strip("\n")
-
-
-def quitar_marcas(cuerpo: str) -> tuple[str, int, int]:
-    cuerpo, al_comienzo = RE_MARCA_AL_COMIENZO.subn(r"\1", cuerpo or "")
-    cuerpo, rotulos = RE_MARCA_ROTULO.subn("", cuerpo)
-
-    def pendiente(m: re.Match) -> str:
-        clase = unicodedata.normalize("NFKD", m.group(1).upper()).encode("ascii", "ignore").decode()
-        return f"[dato pendiente: {(m.group(2) or '').strip() or QUE_FALTA.get(clase, 'por completar')}]"
-
-    cuerpo, faltas = RE_MARCA_FALTA.subn(pendiente, cuerpo)
-    return cuerpo, rotulos + al_comienzo, faltas
-
-
-def _equilibrado(t: str) -> str:
-    sin = re.sub(r"\\[{}%]", "", re.sub(r"(?<!\\)%.*$", "", t, flags=re.M))
-    n = 0
-    for c in sin:
-        n += 1 if c == "{" else -1 if c == "}" else 0
-        if n < 0:
-            return "hay una llave } de más"
-    return f"faltan {n} llave{'s' if n != 1 else ''} }}" if n else ""
-
-
 def pegar_parte(d: Path, archivo: str, pegado: str, componente: str = "", tex: str | None = None) -> dict:
     """Lo que devolvió el chat para una parte, comprobado contra el escrito, sin escribir nada. `tex` es el texto del
     archivo que se tiene abierto (el del editor; sin él, el de disco). → {ok, errores, avisos, componente, ini, fin,
@@ -319,42 +294,13 @@ def pegar_parte(d: Path, archivo: str, pegado: str, componente: str = "", tex: s
     if tramo is None:
         return {**vacio, "errores": ["Esta parte no tiene ese componente (\\componente{…})."]}
     clave = tramo["clave"]
-    cuerpo = bloque_latex(pegado)
-    errores: list[str] = []
-    avisos: list[str] = []
-    m = re.match(r"^\s*%\s*componente:\s*([A-Za-z0-9_-]+)\s*$", cuerpo.split("\n", 1)[0]) if cuerpo else None
-    if m:
-        if m.group(1) != clave:
-            errores.append(f"Este bloque es del componente «{m.group(1)}», no de «{clave}». ¿Lo pegó en otra parte?")
-        cuerpo = cuerpo.split("\n", 1)[1] if "\n" in cuerpo else ""
-    cuerpo = cuerpo.strip()
-    if not cuerpo:
-        errores.append("No llegó texto: pegue el bloque ```latex que devolvió el chat.")
-    cuerpo, rotulos, faltas = quitar_marcas(cuerpo)
-    if rotulos or faltas:
-        avisos.append("Se quitaron las marcas de trabajo que el documento entregado no lleva"
-                      + (f" ({rotulos} como [H] o [I])" if rotulos else "")
-                      + (f"; {faltas} {'quedó' if faltas == 1 else 'quedaron'} como [dato pendiente: …]" if faltas else "") + ".")
-    sin_com = re.sub(r"(?<!\\)%.*$", "", cuerpo, flags=re.M)
-    for patron, porque in PROHIBIDO:
-        if patron.search(sin_com):
-            errores.append(f"Trae algo que no va: {porque}.")
-    bib = claves_bib(d)
-    usadas = [k.strip() for g in RE_CITA.findall(cuerpo) for k in g.split(",") if k.strip()]
-    faltan = sorted({k for k in usadas if k not in bib})
-    if faltan:
-        errores.append("Cita obras que el escrito no tiene en su bibliografía: " + ", ".join(faltan)
-                       + ". Cítelas antes desde la biblioteca (Citas) o quítelas.")
-    roto = _equilibrado(cuerpo)
-    if roto:
-        errores.append(f"El LaTeX no está cerrado: {roto}.")
-    for c in re.finditer(r"[«\"“]([^»\"”]{12,})[»\"”]\s*\\(?:paren|text)cite(\[[^\]]*\])?(?:\[[^\]]*\])?\{", cuerpo):
-        if not c.group(2) or not re.search(r"\d", c.group(2)):
-            avisos.append("Una cita textual va sin página: APA 7 la pide («…» \\parencite[p.~N]{clave}).")
-            break
-    pendientes = re.findall(r"\[(?:dato|ficha) pendiente[^\]]*\]", cuerpo)
-    if pendientes:
-        avisos.append(f"La IA dejó {len(pendientes)} marca{'s' if len(pendientes) != 1 else ''} de pendiente: complételas antes de entregar.")
+    pg, pt = lector_pegado(), parte()
+    if pg is None or pt is None:
+        return {**vacio, "errores": ["No se encontró la lectura común de lo pegado (prompts/scripts/pegado.py y "
+                                     "escritura/core/parte.py, por core/py-common/ia_externa.py)."]}
+    r = pt.comprobar(pg.bloque_latex(pegado), clave, claves_bib(d), antes=tex[tramo["ini"]:tramo["fin"]],
+                     citar="Cítelas antes desde la biblioteca (Citas) o quítelas.")
+    errores, avisos, cuerpo = r["errores"], r["avisos"], r["cuerpo"]
     antes = tex[tramo["ini"]:tramo["fin"]]
     despues = "\n\n" + cuerpo + ("\n\n" if tramo["fin"] < len(tex) else "\n")
     diff = "".join(difflib.unified_diff(antes.strip("\n").splitlines(keepends=True), cuerpo.splitlines(keepends=True),
@@ -428,15 +374,6 @@ def prompt_obra(libro: dict, mirada: str, paginas: list[str], desde: int, hasta:
             "largo": len(texto) > LARGO, "aviso": aviso, "problemas": problemas_externos(texto), "sensible": sensible(texto_prompt)}
 
 
-def _bloque_yaml(texto: str) -> str:
-    t = (texto or "").replace("\r\n", "\n")
-    for m in re.finditer(r"```[ \t]*(?:yaml|yml)?[ \t]*\n(.*?)\n[ \t]*```", t, re.S | re.I):
-        if re.search(r"^\s*tipo\s*:|\"tipo\"\s*:", m.group(1), re.M):
-            return m.group(1)
-    m = re.search(r"^tipo\s*:.*", t, re.M | re.S)
-    return m.group(0) if m else ""
-
-
 def _hoja(cita) -> int | None:
     m = re.match(r"^\s*u?(\d+)\s*$", str(cita or ""), re.I)
     return int(m.group(1)) if m else None
@@ -454,17 +391,14 @@ def pegar_obra(pegado: str, paginas: list[str], cotejar=None) -> dict:
     afirmaciones) y sus fichas propuestas, cada una con su literal cotejado en su hoja (`cotejar(fragmentos, hoja)` → bool;
     sin él, el de la suite `fichas`). → {ok, errores, avisos, estudio, fichas: [{clase, tema, categoria, pagina, hoja,
     cita, parafrasis, analisis, verificacion, detalle}]}."""
-    import yaml
-    bloque = _bloque_yaml(pegado)
     vacio = {"ok": False, "avisos": [], "estudio": {}, "fichas": []}
-    if not bloque:
-        return {**vacio, "errores": ["No encuentro el bloque `tipo: estudio-de-obra`: pegue el bloque yaml que devolvió el chat."]}
-    try:
-        d = yaml.safe_load(bloque) or {}
-    except yaml.YAMLError as e:
-        return {**vacio, "errores": [f"El bloque no es YAML válido: {str(e).splitlines()[0]}"]}
-    if not isinstance(d, dict) or str(d.get("tipo") or "") != "estudio-de-obra":
-        return {**vacio, "errores": [f"El bloque es de tipo «{d.get('tipo') if isinstance(d, dict) else '?'}», no un estudio de obra."]}
+    pg = lector_pegado()
+    if pg is None:
+        return {**vacio, "errores": ["No se encontró la lectura común de lo pegado (prompts/scripts/pegado.py)."]}
+    lec = pg.leer(pegado, tipo="estudio-de-obra")
+    if lec.errores:
+        return {**vacio, "errores": lec.errores}
+    d = lec.datos
     sys.path.insert(0, str(RAIZ / "lib"))
     import fichar
     V = fichar._verificador()
@@ -476,7 +410,7 @@ def pegar_obra(pegado: str, paginas: list[str], cotejar=None) -> dict:
             return bool(cotejar(frs, hoja))
         return 1 <= hoja <= len(paginas) and V.en_pagina(frs, paginas[hoja - 1])
 
-    avisos: list[str] = []
+    avisos: list[str] = list(lec.avisos)   # p. ej., los valores que el lector puso entre comillas
     fichas = []
     for i, f in enumerate(d.get("fichas") or [], 1):
         if not isinstance(f, dict):

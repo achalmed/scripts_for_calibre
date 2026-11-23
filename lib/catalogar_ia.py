@@ -313,15 +313,6 @@ def prompt(registro: str, clave: str, repo: Path | None = None) -> dict:
 
 # --- lo pegado -----------------------------------------------------------------------------------------------------------
 
-def _bloque(pegado: str) -> str:
-    t = (pegado or "").replace("\r\n", "\n")
-    for m in re.finditer(r"```[ \t]*(?:yaml|yml)?[ \t]*\n(.*?)\n[ \t]*```", t, re.S | re.I):
-        if re.search(r"^\s*tipo\s*:\s*[\"']?catalogacion", m.group(1), re.M):
-            return m.group(1)
-    m = re.search(r"^tipo\s*:\s*[\"']?catalogacion.*", t, re.M | re.S)
-    return m.group(0) if m else ""
-
-
 def _texto(valor) -> str:
     if valor is None:
         return ""
@@ -359,24 +350,25 @@ def _parecidos(autor: str, existentes: list[str]) -> list[str]:
 def leer(registro: str, clave: str, pegado: str, repo: Path | None = None, hoy: dt.date | None = None) -> dict:
     """Lo pegado, comprobado sin IA contra la fila y los vocabularios de Calibre.
     → {ok, campos (los que se guardarían), cambios [{campo, rotulo, antes, despues}], problemas [], avisos [], verificar []}."""
-    import yaml
     repo = Path(repo or RAIZ)
     hoy = hoy or dt.date.today()
     f = fila(registro, clave, repo)
     cols, _ = _leer_tsv(_ruta_registro(registro, repo))
     problemas: list[str] = []
     avisos: list[str] = []
-    bloque = _bloque(pegado)
-    if not bloque:
+    pg = _ayuda().lector_pegado()
+    if pg is None:
+        return {"ok": False, "campos": {}, "cambios": [], "verificar": [], "avisos": [],
+                "problemas": ["No se encontró la lectura común de lo pegado (prompts/scripts/pegado.py)."]}
+    lec = pg.leer(pegado, tipo="catalogacion")
+    if not lec.bloque:
         return {"ok": False, "campos": {}, "cambios": [], "verificar": [], "avisos": [],
                 "problemas": ["No hay un bloque ```yaml con «tipo: catalogacion»: pide al chat el formato de vuelta del prompt."]}
-    try:
-        d = yaml.safe_load(bloque)
-    except yaml.YAMLError as e:
+    if lec.errores:
         return {"ok": False, "campos": {}, "cambios": [], "verificar": [], "avisos": [],
-                "problemas": [f"El bloque YAML no se puede leer: {str(e).splitlines()[0]}. Suele ser un valor con dos puntos sin comillas."]}
-    if not isinstance(d, dict):
-        return {"ok": False, "campos": {}, "cambios": [], "verificar": [], "avisos": [], "problemas": ["El bloque YAML no es un mapa de campos."]}
+                "problemas": [f"El bloque YAML no se puede leer: {lec.errores[0]}"]}
+    d = lec.datos
+    avisos += lec.avisos   # los valores con dos puntos que el lector puso entre comillas
     v = vocabularios()
     campos = {}
     for c in CAMPOS:

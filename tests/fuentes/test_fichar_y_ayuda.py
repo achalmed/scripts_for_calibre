@@ -113,6 +113,9 @@ def test_prompt_y_pegado_de_una_parte(escrito):
     assert "Texto viejo" in tex, "pegar no escribe"
     malo = consulta.pegar_parte(d, "content/01-introduccion.tex", "```latex\n\\section{X} \\parencite{otraClave}\n```")
     assert not malo["ok"] and any("otraClave" in e for e in malo["errores"]) and any("sección" in e for e in malo["errores"])
+    # la regla común de escritura (core/parte.py), la misma de Yachay: una tabla o una figura no las escribe la IA
+    tabla = consulta.pegar_parte(d, "content/01-introduccion.tex", "```latex\n\\begin{table}x\\end{table}\n```")
+    assert not tabla["ok"] and any("figuras y tablas" in e for e in tabla["errores"])
 
 
 def test_estudio_de_obra_prompt_y_pegado(escrito):
