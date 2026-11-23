@@ -19,6 +19,7 @@ Límite: un libro sin clave de Zotero recibe la que arma el manifiesto (`apellid
     python3 lib/consulta.py citar <carpeta del proyecto> <calibre_id> [--aplicar]
     python3 lib/consulta.py usos <calibre_id>
     python3 lib/consulta.py escritos                                    # todos los escritos de escritura
+    python3 lib/consulta.py destinos                                    # dónde puede ir una ficha: los escritos y los cursos que se toman
     python3 lib/consulta.py formulario                                  # los tipos de ficha, sus secciones y los once rótulos
     python3 lib/consulta.py ficha <proyecto> <archivo>                  # una ficha para editarla, con su huella
     python3 lib/consulta.py nueva_ficha <proyecto> '<json>' [--aplicar]
@@ -31,6 +32,10 @@ Límite: un libro sin clave de Zotero recibe la que arma el manifiesto (`apellid
     python3 lib/consulta.py prompt_parte <proyecto> <archivo .tex> [--componente c]
     python3 lib/consulta.py pegar_parte <proyecto> <archivo .tex> <archivo con lo pegado> [--componente c] [--tex buffer]
 
+Los cursos que se toman (2026-11-23, plan «aprender y enseñar», fase 2.5): la carpeta de un curso con su
+  `curso-tomado.yml` (`notas/40-cursos-y-formacion/<id>/`, contrato `core/py-common/curso_tomado.py`) es un destino de
+  fichas como un escrito, con su `fuentes/`; `destinos` los da junto a los escritos (como `cursos/<id>`) y de ahí sale la
+  cola única de repaso del estudiante. `escritos` sigue dando solo los escritos (LaTeX Studio cita en ellos).
 Fichar y los prompts (decisiones §9.4 y §9.5): `nueva_ficha` y `guardar_ficha` escriben solo en `fuentes/fichas/` del
   proyecto y solo con `--aplicar` (`lib/fichar.py`, con la huella sha256 del archivo: una ficha que cambió en disco
   responde `{"codigo": "ficha_cambiada"}`); si el libro aún no es fuente del escrito, `nueva_ficha --aplicar` lo cita
@@ -124,9 +129,11 @@ def buscar(texto: str, limite: int = 40) -> list[dict]:
 
 
 def _proyecto(carpeta: str | Path) -> Path:
+    """Un escrito (con `proyecto.yaml` o `fuentes/`) o un curso que se toma (con `curso-tomado.yml`)."""
     p = Path(carpeta).expanduser().resolve()
-    if not (p / "proyecto.yaml").is_file() and not (p / "fuentes").is_dir():
-        raise SystemExit(f"[ERROR] {p} no es un proyecto de escritura (sin proyecto.yaml ni fuentes/)")
+    if not (p / "proyecto.yaml").is_file() and not (p / "fuentes").is_dir() and not (p / "curso-tomado.yml").is_file():
+        raise SystemExit(f"[ERROR] {p} no es un proyecto de escritura ni un curso que se toma (sin proyecto.yaml, fuentes/ "
+                         "ni curso-tomado.yml)")
     return p
 
 
@@ -228,7 +235,18 @@ def usos(calibre_id: int) -> list[dict]:
             principal = ((ficha.get("productos") or {}).get("documento")) or next(
                 (n for n in ("informe.tex", "main.tex", "tesis.tex") if (proyecto / n).is_file()), "")
             salida.append({"proyecto": f"{fam}/{proyecto.name}", "titulo": ficha.get("titulo") or proyecto.name,
-                           "principal": str(proyecto / principal) if principal else "", "fichas": nfichas})
+                           "principal": str(proyecto / principal) if principal else "", "fichas": nfichas,
+                           "carpeta": str(proyecto)})
+    for c in cursos_tomados():                       # las fichas de un curso que se toma (su `fuentes/fichas/`)
+        n = 0
+        for f in (Path(c["carpeta"]) / "fuentes" / "fichas").glob("*.md"):
+            try:
+                if re.search(rf"^calibre_id:\s*{int(calibre_id)}\s*$", f.read_text(encoding="utf-8", errors="replace")[:600], re.M):
+                    n += 1
+            except OSError:
+                continue
+        if n:
+            salida.append({"proyecto": c["proyecto"], "titulo": c["titulo"], "principal": "", "fichas": n, "carpeta": c["carpeta"]})
     return salida
 
 
@@ -250,6 +268,34 @@ def escritos() -> list[dict]:
             salida.append({"proyecto": f"{fam}/{proyecto.name}", "carpeta": str(proyecto), "titulo": ficha.get("titulo") or proyecto.name,
                            "principal": str(proyecto / principal) if principal else ""})
     return salida
+
+
+def _curso_tomado():
+    """`core/py-common/curso_tomado.py` (el contrato de los cursos que se toman), cargado por su ruta; None sin él."""
+    ruta = Path(os.environ.get("PY_COMMON") or _env().PY_COMMON) / "curso_tomado.py"
+    return _modulo("core_curso_tomado", ruta) if ruta.is_file() else None
+
+
+def cursos_tomados() -> list[dict]:
+    """Los cursos que se toman, como destino de fichas: [{proyecto: cursos/<id>, carpeta, titulo, principal: "", destino:
+    curso}], sin los abandonados."""
+    ct = _curso_tomado()
+    if ct is None:
+        return []
+    salida = []
+    for c in ct.cursos():
+        d = c.get("datos") or {}
+        if not d or d.get("estado") == "abandonado":
+            continue
+        salida.append({"proyecto": f"cursos/{c['id']}", "carpeta": c["carpeta"], "titulo": f"Curso: {d.get('titulo') or c['id']}",
+                       "principal": "", "destino": "curso"})
+    return salida
+
+
+def destinos() -> list[dict]:
+    """Dónde puede ir una ficha: los escritos (`destino: escrito`) y los cursos que se toman (`destino: curso`). De sus
+    fichas sale la cola única de repaso del estudiante."""
+    return [dict(e, destino="escrito") for e in escritos()] + cursos_tomados()
 
 
 def _fichar():
@@ -388,6 +434,7 @@ def main(argv=None) -> int:
     c = sub.add_parser("citar"); c.add_argument("proyecto"); c.add_argument("calibre_id", type=int); c.add_argument("--aplicar", action="store_true")
     u = sub.add_parser("usos"); u.add_argument("calibre_id", type=int)
     sub.add_parser("escritos")
+    sub.add_parser("destinos")
     sub.add_parser("formulario")
     x = sub.add_parser("ficha"); x.add_argument("proyecto"); x.add_argument("archivo")
     n = sub.add_parser("nueva_ficha"); n.add_argument("proyecto"); n.add_argument("datos"); n.add_argument("--aplicar", action="store_true")
@@ -415,6 +462,8 @@ def main(argv=None) -> int:
 def _orden(a):
     if a.orden == "escritos":
         return escritos()
+    if a.orden == "destinos":
+        return destinos()
     if a.orden == "formulario":
         return _fichar().formulario()
     if a.orden == "ficha":

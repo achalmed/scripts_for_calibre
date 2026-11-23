@@ -178,7 +178,7 @@ class Fichado(QObject):
         def trabajo():
             c = _consulta()
             usos = {u["proyecto"]: u for u in c.usos(calibre_id)}
-            escritos = [{**e, "usa": e["proyecto"] in usos, "fichas": usos.get(e["proyecto"], {}).get("fichas", 0)} for e in c.escritos()]
+            escritos = [{**e, "usa": e["proyecto"] in usos, "fichas": usos.get(e["proyecto"], {}).get("fichas", 0)} for e in c.destinos()]
             escritos.sort(key=lambda e: (not e["usa"], e["proyecto"]))
             libro = c._indice()["libros"].get(str(calibre_id)) or {}
             biblioteca = Path(c._indice().get("biblioteca") or "")

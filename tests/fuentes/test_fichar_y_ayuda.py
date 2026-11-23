@@ -165,3 +165,29 @@ def test_ayuda_por_el_modulo_comun_con_su_guarda_y_el_aviso():
     assert "estudiantes" in a.sensible(texto)
     assert a.sensible(a.leer_prompt("14 estudio/prompt_00_plan_de_estudio.md")) == ""
     assert not a.para_ia_externa(texto).startswith("---")
+
+
+def test_una_ficha_puede_ir_a_un_curso_que_se_toma_y_entra_en_la_cola_de_repaso(escrito, tmp_path, monkeypatch):
+    """Plan «aprender y enseñar», fase 2.5: la carpeta de un curso con su `curso-tomado.yml` es un destino de fichas como un
+    escrito (`destinos`, como `cursos/<id>`), y `usos` la cuenta con su carpeta, de donde sale la cola única de repaso."""
+    d, _fichar, consulta = escrito
+    curso = tmp_path / "notas" / "40-cursos-y-formacion" / "caf_13"
+    (curso / "fuentes").mkdir(parents=True)
+    (curso / "curso-tomado.yml").write_text("tipo: curso-tomado\nversion: 1\ntitulo: Econometría I\ninstitucion: CAF\n"
+                                            "modalidad: en_linea\nestado: en_curso\n", encoding="utf-8")
+    (curso / "fuentes" / "fuentes.yml").write_text(
+        "proyecto: caf_13\nfuentes:\n- calibre_id: 1\n  zotero_key: QUISPE01\n  clave_bibtex: quispeEconomiaCiudades2021\n"
+        "  titulo: Economía de las ciudades pequeñas\n  uso: ''\n", encoding="utf-8")
+    monkeypatch.setenv("NOTES_DIR", str(tmp_path / "notas"))
+    destinos = consulta.destinos()
+    assert {e["destino"] for e in destinos} == {"escrito", "curso"}
+    del_curso = next(e for e in destinos if e["destino"] == "curso")
+    assert del_curso["proyecto"] == "cursos/caf_13" and del_curso["titulo"] == "Curso: Econometría I"
+    assert all(e["proyecto"] != "cursos/caf_13" for e in consulta.escritos()), "LaTeX Studio sigue viendo solo escritos"
+    r = consulta.nueva_ficha(curso, {"tipo": "textual", "calibre_id": 1, "pagina": "2", "categoria": "Idea principal",
+                                     "secciones": {"Cita exacta": "las ciudades pequeñas crecen cuando se integran a su región"}},
+                             aplicar=True)
+    assert (curso / "fuentes" / "fichas" / r["archivo"]).is_file()
+    usos = {u["proyecto"]: u for u in consulta.usos(1)}
+    assert usos["cursos/caf_13"]["fichas"] == 2 and usos["cursos/caf_13"]["carpeta"] == str(curso)   # la textual y su fuente
+    assert Path(r["archivo"]).stem in [f["nombre"] for f in consulta.fichas(curso) if f["tipo"] == "textual"]

@@ -74,7 +74,7 @@ def leer_todas(repo: Path, titulos: dict) -> tuple[list[dict], list[dict]]:
     {calibre_id: título} del catálogo."""
     from biblioteca_app.controladores.fichado import _consulta
     c = _consulta()
-    escritos = c.escritos()
+    escritos = c.destinos()          # los escritos y los cursos que se toman: una sola cola de repaso (2026-11-23)
     salida = []
     for e in escritos:
         try:
