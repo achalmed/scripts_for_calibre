@@ -1,7 +1,7 @@
 ---
 tipo: estado
 estado: activo
-actualizado: 2026-11-22
+actualizado: 2026-11-24
 ---
 # estado.md — biblioteca-studio
 
@@ -13,6 +13,7 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 
 | fecha | qué | dónde se ve |
 |---|---|---|
+| 2026-11-24 | **La ayuda de una parte con el prompt que elige el marco** (plan «aprender y enseñar», fase 4.4): `prompt_parte` y `pegar_parte` aceptan `--cuadro <yml>`, el cuadro de prompts de un marco sin `\componente` (docencia: `docencia/config/ayuda-ia.yml`). La regla que corresponde al documento (por su clase, sus órdenes como `\tipodocumento`, su nombre o el archivo que lo acompaña) da el prompt, lo que se pide, los archivos de contexto (`sesion.yml`, el guion) y lo que añade al formato de vuelta, o el motivo por el que no lleva ayuda; las partes son sus `\section` (`ayuda_ia.secciones`), sin tocar la línea de la sección ni `\end{document}`. Lo pegado se comprueba con la misma regla común. Sin `--cuadro`, todo sigue igual (el cuadro de Yachay) | `lib/ayuda_ia.py` (`leer_cuadro`, `regla_del_marco`, `secciones`), `lib/consulta.py`; `tests/fuentes/test_ayuda_marco.py` |
 | 2026-11-23 | **Una ficha puede ir a un curso que se toma, y su repaso es la misma cola** (plan «aprender y enseñar», fase 2.5): la carpeta de un curso con su `curso-tomado.yml` es un destino de fichas como un escrito (`consulta.py destinos`, como `cursos/<id>`; `escritos` sigue dando solo escritos, para LaTeX Studio); `usos` la cuenta con su carpeta; «Fichar» y la cola de repaso de Fichas leen `destinos` | `lib/consulta.py`; `controladores/fichado.py`, `fichas.py`; `tests/fuentes/test_fichar_y_ayuda.py` |
 | 2026-11-23 | **Lo pegado, con el lector y la regla comunes** (plan «aprender y enseñar», fase 1.2 y 1.3): el catalogado (`tipo: catalogacion`) y el estudio de obra (`tipo: estudio-de-obra`) leen el bloque con `prompts/scripts/pegado.py`, que repara los dos puntos sin comillas; la parte de un escrito de LaTeX Studio se comprueba con `escritura/core/parte.py`, la regla de Yachay: ya no acepta figuras ni tablas y conserva las que la parte tenía. `lib/ayuda_ia.py` deja su copia (las marcas de trabajo, lo prohibido, las llaves) | `lib/ayuda_ia.py`, `lib/catalogar_ia.py`; `tests/fuentes/test_fichar_y_ayuda.py` |
 | 2026-11-23 | **La ayuda de la IA por el módulo común de `core`** (plan «aprender y enseñar», fase 1): `lib/ayuda_ia.py` carga `core/py-common/ia_externa.py` (`comun()`), que halla el traductor, lee un prompt sin salir del repo de prompts y traduce; se va el bucle contra traductores viejos. **El aviso C12.3**: el prompt de una parte, de una obra y del catálogo trae `sensible` y la consola lo muestra al copiarlo | `python3 -m pytest tests/fuentes/test_fichar_y_ayuda.py` (8); `tests/run.sh` (103) |
@@ -80,6 +81,7 @@ nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (mi
 
 ## Por hacer
 
+- 2026-11-24 · dueño: director · pasar a `docs/decisiones.md` (§9.5) «el cuadro de un marco» de `lib/ayuda_ia.py` (hoy en su docstring, en el uso de `lib/consulta.py` y en §Hecho) cuando se confirmen los cambios de otra sesión que ese archivo tiene sin commitear.
 - 2026-11-22 · dueño: director · pasar a `docs/decisiones.md` (§9.18) la decisión de `lib/lista_referencias.py` (hoy en
   su docstring y en §Hecho) cuando se confirmen los cambios de otra sesión que ese archivo tiene sin commitear.
 - 2026-11-19 · dueño: **el autor** · **los PDF de la lectura guiada que solo se pueden bajar con el navegador** (sus registros ya están en Calibre y Zotero, sin archivo; la sede no deja a un programa y no se bajan de copias de terceros): 11171 Dunlosky et al. 2013 (el enlace gratuito de la APS, psychologicalscience.org/publications/journals/pspi/learning-techniques.html), 11264 Miyatsu et al. 2018 (la subida del autor en ResearchGate) y 11195 Keshav 2007 (ccr.sigcomm.org o la web del autor). Se añaden con Calibre y Zotero cerrados: `python3 lib/ingresar.py adjuntar <lista.json>` (simula) y `--aplicar --lote <nombre>`, con `[{"calibre_id": N, "archivo": "<el PDF bajado>", "sede": "<de dónde>"}]`. Fiorella y Mayer 2016 (11173) no tiene versión abierta. Opcional: OCR del escaneo de 11275 (Hulstijn et al. 1996).

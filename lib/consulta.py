@@ -29,8 +29,10 @@ Límite: un libro sin clave de Zotero recibe la que arma el manifiesto (`apellid
     python3 lib/consulta.py miradas
     python3 lib/consulta.py prompt_obra <calibre_id> <mirada> <desde> <hasta> [--proposito …]
     python3 lib/consulta.py pegar_obra <calibre_id> <archivo con lo pegado>
-    python3 lib/consulta.py prompt_parte <proyecto> <archivo .tex> [--componente c]
-    python3 lib/consulta.py pegar_parte <proyecto> <archivo .tex> <archivo con lo pegado> [--componente c] [--tex buffer]
+    python3 lib/consulta.py prompt_parte <proyecto> <archivo .tex> [--componente c] [--cuadro yml]
+    python3 lib/consulta.py pegar_parte <proyecto> <archivo .tex> <archivo con lo pegado> [--componente c] [--tex buffer] [--cuadro yml]
+  Con `--cuadro`, el prompt lo elige el cuadro del marco y la carpeta puede ser cualquiera (docencia: la de la sesión o del
+  deck; `lib/ayuda_ia.py`, «el cuadro de un marco», 2026-11-24); sin él, la de un escrito.
 
 Los cursos que se toman (2026-11-23, plan «aprender y enseñar», fase 2.5): la carpeta de un curso con su
   `curso-tomado.yml` (`notas/40-cursos-y-formacion/<id>/`, contrato `core/py-common/curso_tomado.py`) es un destino de
@@ -409,12 +411,32 @@ def pegar_obra(calibre_id: int, pegado: str) -> dict:
     return _ayuda().pegar_obra(pegado, paginas(calibre_id))
 
 
-def prompt_parte(carpeta: str | Path, archivo: str, componente: str = "") -> dict:
+def _carpeta_del_marco(carpeta: str | Path) -> Path:
+    """La carpeta de un documento de un marco con su cuadro de prompts (docencia): cualquiera que exista."""
+    p = Path(carpeta).expanduser().resolve()
+    if not p.is_dir():
+        raise ValueError(f"No existe la carpeta {p}.")
+    return p
+
+
+def _es_escrito(p: Path) -> bool:
+    return (p / "proyecto.yaml").is_file() or (p / "fuentes").is_dir() or (p / "curso-tomado.yml").is_file()
+
+
+def prompt_parte(carpeta: str | Path, archivo: str, componente: str = "", cuadro: str = "") -> dict:
+    if cuadro:
+        proyecto = _carpeta_del_marco(carpeta)
+        return _ayuda().prompt_parte(proyecto, archivo, componente, fichas(proyecto) if _es_escrito(proyecto) else [],
+                                     cuadro=_ayuda().leer_cuadro(cuadro))
     proyecto = _proyecto(carpeta)
     return _ayuda().prompt_parte(proyecto, archivo, componente, fichas(proyecto))
 
 
-def pegar_parte(carpeta: str | Path, archivo: str, pegado: str, componente: str = "", tex: str | None = None) -> dict:
+def pegar_parte(carpeta: str | Path, archivo: str, pegado: str, componente: str = "", tex: str | None = None,
+                cuadro: str = "") -> dict:
+    if cuadro:
+        return _ayuda().pegar_parte(_carpeta_del_marco(carpeta), archivo, pegado, componente, tex,
+                                    cuadro=_ayuda().leer_cuadro(cuadro))
     return _ayuda().pegar_parte(_proyecto(carpeta), archivo, pegado, componente, tex)
 
 
@@ -448,8 +470,9 @@ def main(argv=None) -> int:
     po.add_argument("desde", type=int); po.add_argument("hasta", type=int); po.add_argument("--proposito", default="")
     pe = sub.add_parser("pegar_obra"); pe.add_argument("calibre_id", type=int); pe.add_argument("pegado")
     pp = sub.add_parser("prompt_parte"); pp.add_argument("proyecto"); pp.add_argument("archivo"); pp.add_argument("--componente", default="")
+    pp.add_argument("--cuadro", default="", help="el cuadro de prompts del marco (docencia/config/ayuda-ia.yml)")
     pg = sub.add_parser("pegar_parte"); pg.add_argument("proyecto"); pg.add_argument("archivo"); pg.add_argument("pegado")
-    pg.add_argument("--componente", default=""); pg.add_argument("--tex", default=None)
+    pg.add_argument("--componente", default=""); pg.add_argument("--tex", default=None); pg.add_argument("--cuadro", default="")
     a = ap.parse_args(argv)
     try:
         r = _orden(a)
@@ -483,9 +506,9 @@ def _orden(a):
     if a.orden == "pegar_obra":
         return pegar_obra(a.calibre_id, _leer_arg(a.pegado))
     if a.orden == "prompt_parte":
-        return prompt_parte(a.proyecto, a.archivo, a.componente)
+        return prompt_parte(a.proyecto, a.archivo, a.componente, a.cuadro)
     if a.orden == "pegar_parte":
-        return pegar_parte(a.proyecto, a.archivo, _leer_arg(a.pegado), a.componente, _leer_arg(a.tex) if a.tex else None)
+        return pegar_parte(a.proyecto, a.archivo, _leer_arg(a.pegado), a.componente, _leer_arg(a.tex) if a.tex else None, a.cuadro)
     if a.orden == "buscar":
         return buscar(a.texto, a.limite)
     if a.orden == "fichas":

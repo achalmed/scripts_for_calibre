@@ -15,6 +15,11 @@ Método: el prompt se lee del disco cada vez. Qué prompt sirve a cada parte lo 
   tablas, con las claves de su bibliografía y sin las marcas de trabajo; las figuras que la parte ya tenía se conservan),
   los dos por `core/py-common/ia_externa.py` (2026-11-23). El bloque `tipo: estudio-de-obra` (el contrato
   `estudio-de-obra.yml` de Qillqa) trae fichas, cotejadas en su unidad con el cotejo de la suite `fichas`.
+  Un marco cuyos documentos no tienen `\\componente` (docencia: el deck, la consigna y la hoja de una sesión, 2026-11-24)
+  elige el prompt con su propio cuadro (`--cuadro <yaml>`; `regla_del_marco`): cada documento por su clase, sus órdenes
+  (`\\tipodocumento{…}`) o el archivo que lo acompaña (`sesion.yml`), con lo que se pide, los archivos que van de
+  contexto y lo que añade al formato de vuelta; sus partes son entonces sus `\\section` (`secciones`). La comprobación
+  de lo pegado es la misma (`escritura/core/parte.py`).
 Fundamento: Yachay, `docs/prompts-por-parte.md` y `docs/prompts-del-flujo.md`; `prompts/14 estudio/README.md`.
 Límite: no escribe nada. Lo que el autor acepta lo guarda LaTeX Studio con Ctrl+S (la parte) o `lib/fichar.py` (las
   fichas). El tramo de una obra va por hojas del PDF (las unidades `uN` son hojas; Yachay usa las de su acervo).
@@ -36,6 +41,11 @@ MAX_FICHAS = 30
 MAX_FICHA = 600
 RE_ABRE = re.compile(r"^\\componente(?:\[([^\]\n]*)\])?\{([^}\n]*)\}", re.M)
 RE_ENTRADA_BIB = re.compile(r"@(\w+)\s*\{\s*([^,\s]+)\s*,")
+# Las partes de un documento sin \componente (el cuadro de un marco, `partes: seccion`): sus \section, hasta \end{document}.
+RE_SECCION = re.compile(r"^[ \t]*\\section\*?[ \t]*(?:\[[^\]\n]*\])?[ \t]*\{", re.M)
+RE_FIN_DOCUMENTO = re.compile(r"^[ \t]*\\end\{document\}", re.M)
+RE_CLASE = re.compile(r"^[ \t]*\\documentclass[ \t]*(?:\[[^\]]*\])?[ \t]*\{([^}]+)\}", re.M)
+MAX_CONTEXTO = 6000    # caracteres de cada archivo de contexto del cuadro (sesion.yml, guion.md)
 # Las fichas del estudio de obra (estudio-de-obra.yml, bloque `ficha`) y la ficha del escrito que les toca.
 CLASE_DE = {"textual_simple": "textual", "textual_compuesta": "textual", "textual_con_interpolacion": "textual", "mixta": "textual",
             "comentario": "textual", "parafrasis": "parafrasis", "resumen": "parafrasis"}
@@ -179,6 +189,157 @@ def tramos(tex: str) -> list[dict]:
              "ini": m.end(), "fin": ms[k + 1].start() if k + 1 < len(ms) else len(tex)} for k, m in enumerate(ms)]
 
 
+def _cierre(tex: str, i: int) -> int:
+    """La posición tras la llave que cierra la que abre en `tex[i]`."""
+    n = 0
+    for k in range(i, len(tex)):
+        c = tex[k]
+        if c == "\\":
+            continue
+        if c == "{" and (k == 0 or tex[k - 1] != "\\"):
+            n += 1
+        elif c == "}" and (k == 0 or tex[k - 1] != "\\"):
+            n -= 1
+            if n == 0:
+                return k + 1
+    return len(tex)
+
+
+def _sin_ordenes(t: str) -> str:
+    """«La función \\emph{f}» → «La función f»: el título de una sección, para mostrarlo y para su clave."""
+    t = re.sub(r"\\[a-zA-Z@]+\*?(?:\[[^\]]*\])?", "", t or "")
+    return " ".join(t.replace("{", "").replace("}", "").replace("~", " ").split())
+
+
+def clave_de(titulo: str, n: int) -> str:
+    plano = re.sub(r"[^a-z0-9]+", "-", _plano(_sin_ordenes(titulo))).strip("-")[:40].strip("-")
+    return plano or f"seccion-{n}"
+
+
+def secciones(tex: str) -> list[dict]:
+    r"""Las partes de un archivo sin `\componente`: cada `\section` (con o sin asterisco), de su línea a la siguiente o a
+    `\end{document}` → [{clave, titulo, ini, fin}]. Lo que va antes de la primera (la portada, el índice) no es una parte."""
+    tex = tex or ""
+    fin = RE_FIN_DOCUMENTO.search(tex)
+    tope = fin.start() if fin else len(tex)
+    ms = [m for m in RE_SECCION.finditer(tex) if m.start() < tope]
+    salida, vistas = [], {}
+    for k, m in enumerate(ms):
+        cierra = _cierre(tex, m.end() - 1)
+        titulo = _sin_ordenes(tex[m.end():cierra - 1])
+        linea = tex.find("\n", cierra)
+        ini = linea if 0 <= linea < tope else min(cierra, tope)
+        clave = clave_de(titulo, k + 1)
+        vistas[clave] = vistas.get(clave, 0) + 1
+        if vistas[clave] > 1:
+            clave = f"{clave}-{vistas[clave]}"
+        salida.append({"clave": clave, "titulo": titulo, "ini": ini, "fin": ms[k + 1].start() if k + 1 < len(ms) else tope})
+    return salida
+
+
+def tramos_de(tex: str, cuadro: dict | None = None) -> list[dict]:
+    r"""Las partes de un archivo: sus `\componente` y, si no tiene ninguno y el cuadro del marco lo dice
+    (`partes: seccion`), sus `\section`."""
+    ts = tramos(tex)
+    if not ts and cuadro and str(cuadro.get("partes") or "") == "seccion":
+        ts = secciones(tex)
+    return ts
+
+
+# --- el cuadro de un marco (docencia, 2026-11-24) ----------------------------------------------------------------------
+
+def leer_cuadro(ruta: str | Path) -> dict:
+    """El cuadro de prompts de un marco (`--cuadro`): {version, partes, contexto, documentos: [regla…]}; LookupError si no
+    se puede leer."""
+    import yaml
+    try:
+        d = yaml.safe_load(Path(ruta).read_text(encoding="utf-8")) or {}
+    except (OSError, yaml.YAMLError) as e:
+        raise LookupError(f"No se pudo leer el cuadro de prompts del marco ({ruta}): {e}") from None
+    if not isinstance(d, dict) or not isinstance(d.get("documentos"), list):
+        raise LookupError(f"El cuadro de prompts del marco ({ruta}) no tiene `documentos:`.")
+    return {**d, "_ruta": str(ruta)}
+
+
+def _orden(tex: str, orden: str) -> str:
+    m = re.search(r"\\" + re.escape(orden) + r"\*?[ \t]*\{", sin_comentarios(tex))
+    if not m:
+        return ""
+    s = sin_comentarios(tex)
+    return _sin_ordenes(s[m.end():_cierre(s, m.end() - 1) - 1])
+
+
+def clase_de(tex: str, ruta: Path | None = None) -> str:
+    r"""La clase del documento (`\documentclass{…}`); si el archivo es una pieza sin ella, la del maestro de su carpeta
+    que la incluye por su nombre."""
+    m = RE_CLASE.search(sin_comentarios(tex))
+    if m:
+        return m.group(1).strip()
+    if ruta is not None and Path(ruta).parent.is_dir():
+        for otro in sorted(Path(ruta).parent.glob("*.tex")):
+            if otro == Path(ruta):
+                continue
+            try:
+                texto = otro.read_text(encoding="utf-8", errors="replace")
+            except OSError:
+                continue
+            m = RE_CLASE.search(sin_comentarios(texto))
+            if m and re.search(r"\\(?:input|include|subfile)\s*\{[^}]*" + re.escape(Path(ruta).stem) + r"(?:\.tex)?\}", texto):
+                return m.group(1).strip()
+    return ""
+
+
+def _junto(nombre: str, ruta: Path, d: Path) -> Path | None:
+    for carpeta in (Path(ruta).parent, Path(d)):
+        if (carpeta / nombre).is_file():
+            return carpeta / nombre
+    return None
+
+
+def regla_del_marco(cuadro: dict, d: Path, ruta: Path, tex: str) -> dict | None:
+    r"""La primera regla del cuadro que corresponde al documento: por su clase (`clases`), su nombre de archivo
+    (`archivos`, patrones), sus órdenes (`ordenes: {tipodocumento: [Hoja Cornell]}`, sin distinguir tildes ni
+    mayúsculas) y el archivo que debe acompañarlo (`junto_a: sesion.yml`). None si ninguna."""
+    import fnmatch
+    clase = clase_de(tex, ruta)
+    for r in cuadro.get("documentos") or []:
+        if not isinstance(r, dict):
+            continue
+        if r.get("clases") and clase not in [str(c) for c in r["clases"]]:
+            continue
+        if r.get("archivos") and not any(fnmatch.fnmatch(Path(ruta).name, str(g)) for g in r["archivos"]):
+            continue
+        if r.get("junto_a") and _junto(str(r["junto_a"]), ruta, d) is None:
+            continue
+        ordenes = r.get("ordenes") or {}
+        if any(_plano(_orden(tex, o)) not in {_plano(str(v)) for v in (vs or [])} for o, vs in ordenes.items()):
+            continue
+        return r
+    return None
+
+
+def _contexto(regla: dict, cuadro: dict, ruta: Path, d: Path) -> list[str]:
+    """Los archivos que el cuadro pone de contexto (el registro de la sesión y su guion), recortados."""
+    salida = []
+    for nombre in regla.get("contexto", cuadro.get("contexto")) or []:
+        f = _junto(str(nombre), ruta, d)
+        if f is None:
+            continue
+        texto = f.read_text(encoding="utf-8", errors="replace").strip()
+        if len(texto) > MAX_CONTEXTO:
+            texto = texto[:MAX_CONTEXTO].rstrip() + "\n(… recortado)"
+        salida.append(f"`{nombre}` (contexto, no se reescribe):\n{texto}")
+    return salida
+
+
+def _titulo_documento(tex: str, ruta: Path) -> str:
+    for orden in ("titulodocumento", "title", "subtitulo", "tipoevaluacion"):
+        v = _orden(tex, orden)
+        if v and "{{" not in v:
+            return v
+    return Path(ruta).stem
+
+
 def _proyecto_yaml(d: Path) -> dict:
     import yaml
     p = Path(d) / "proyecto.yaml"
@@ -230,16 +391,25 @@ def _ficha_en_texto(f: dict) -> str:
     return f"- `{f.get('clave') or '—'}`{lugar} ({f.get('tipo') or 'ficha'}): {(f.get('texto') or '')[:MAX_FICHA]}"
 
 
-def prompt_parte(d: Path, archivo: str, componente: str = "", fichas: list[dict] | None = None) -> dict:
-    """El prompt de UNA parte (el de su componente según el cuadro de Yachay), traducido, con su entrada: el escrito, el
-    texto actual de la parte, las fichas que la respaldan, las obras que puede citar y el formato de vuelta.
-    → {prompt, componente, titulo, componentes, fuente, aviso, contexto, largo}."""
+def prompt_parte(d: Path, archivo: str, componente: str = "", fichas: list[dict] | None = None,
+                 cuadro: dict | None = None) -> dict:
+    """El prompt de UNA parte, traducido, con su entrada: el escrito, el texto actual de la parte, las fichas que la
+    respaldan, las obras que puede citar y el formato de vuelta. El prompt es el de su componente según el cuadro de
+    Yachay o, si el marco da el suyo (`cuadro`, docencia), el de la regla que corresponde al documento, con su contexto.
+    → {prompt, componente, titulo, componentes, fuente, aviso, contexto, largo, documento}."""
     d = Path(d)
     ruta = (d / archivo) if not Path(archivo).is_absolute() else Path(archivo)
     tex = ruta.read_text(encoding="utf-8", errors="replace")
-    ts = tramos(tex)
+    ts = tramos_de(tex, cuadro)
+    regla = regla_del_marco(cuadro, d, ruta, tex) if cuadro else None
+    if cuadro and regla is None:
+        raise ValueError(f"Este documento no tiene prompt en el cuadro del marco ({Path(cuadro['_ruta']).name}): "
+                         "la ayuda no sabe qué método le toca.")
+    if regla is not None and regla.get("sin_ayuda"):
+        raise ValueError(f"Este documento no lleva ayuda de la IA. {regla['sin_ayuda']}")
     if not ts:
-        raise ValueError("Esta parte no declara su componente (\\componente{…}): la ayuda necesita saber qué redacta.")
+        raise ValueError("Esta parte no declara su componente (\\componente{…})" +
+                         (" ni tiene secciones (\\section{…})" if cuadro else "") + ": la ayuda necesita saber qué redacta.")
     tramo = next((t for t in ts if t["clave"] == componente), None) if componente else ts[0]
     if tramo is None:
         raise ValueError(f"Esta parte no tiene el componente «{componente}».")
@@ -247,20 +417,28 @@ def prompt_parte(d: Path, archivo: str, componente: str = "", fichas: list[dict]
     esquema, tipo = str(ficha.get("esquema") or ""), str(ficha.get("tipo") or "")
     clave = tramo["clave"]
     titulo_parte = tramo["titulo"] or clave
-    rel, parte_del_prompt, aviso = _destino(esquema, clave, tipo)
+    if regla is not None:
+        rel, parte_del_prompt, aviso = str(regla["prompt"]), str(regla.get("parte") or ""), str(regla.get("aviso") or "")
+        tipo = str(regla.get("nombre") or "documento")
+    else:
+        rel, parte_del_prompt, aviso = _destino(esquema, clave, tipo)
     texto_prompt = leer_prompt(rel)
     actual = sin_comentarios(tex[tramo["ini"]:tramo["fin"]])
     fichas = list(fichas or [])
     propias = [f for f in fichas if clave in _plano(f.get("uso", "")) or _plano(titulo_parte) in _plano(f.get("uso", ""))]
     usadas = (propias or fichas)[:MAX_FICHAS]
     bib = claves_bib(d)
-    titulo_escrito = str(ficha.get("titulo") or d.name)
+    titulo_escrito = str(ficha.get("titulo") or (_titulo_documento(tex, ruta) if regla is not None else d.name))
+    partes = "Componentes" if not cuadro or tramos(tex) else "Secciones"
     entrada = [
         f"Parte que se pide: `{clave}`, «{titulo_parte}»" + (f" (en este prompt, la parte `{parte_del_prompt}`)" if parte_del_prompt and parte_del_prompt != clave else ""),
-        f"Escrito: {tipo or 'escrito'} «{titulo_escrito}», " + (f"esquema `{esquema}`." if esquema else "sin esquema declarado."),
+        (f"Documento: {tipo} «{titulo_escrito}» (`{ruta.name}`)." if regla is not None else
+         f"Escrito: {tipo or 'escrito'} «{titulo_escrito}», " + (f"esquema `{esquema}`." if esquema else "sin esquema declarado.")),
+        *([f"Lo que se pide con este prompt: {' '.join(str(regla['pide']).split())}"] if regla is not None and regla.get("pide") else []),
         *([f"Atención: {aviso}"] if aviso else []),
-        "Componentes de este archivo:\n" + "\n".join(f"{'▶' if t['clave'] == clave else '·'} {t['titulo'] or t['clave']} (`{t['clave']}`)" for t in ts),
+        f"{partes} de este archivo:\n" + "\n".join(f"{'▶' if t['clave'] == clave else '·'} {t['titulo'] or t['clave']} (`{t['clave']}`)" for t in ts),
         "Texto actual de la parte (lo guardado):\n" + (actual or "(vacía: todavía no tiene texto)"),
+        *(_contexto(regla, cuadro, ruta, d) if regla is not None else []),
         ("Fichas que respaldan esta parte:\n" if propias else
          "Fichas del proyecto (ninguna declara esta parte en su `uso`: elige las que la respaldan y no uses las demás):\n")
         + ("\n".join(_ficha_en_texto(f) for f in usadas) if usadas else "ninguna: lo que no sea del autor queda marcado [ficha pendiente: …]"),
@@ -268,31 +446,35 @@ def prompt_parte(d: Path, archivo: str, componente: str = "", fichas: list[dict]
             "\n".join(f"- `{k}` ({v})" for k, v in bib.items()) if bib else "ninguna todavía: no cites nada; marca [ficha pendiente: …]"),
     ]
     fuente = _fuente(rel, texto_prompt)
+    vuelta = FORMATO_DE_VUELTA.format(clave=clave)
+    if regla is not None and regla.get("vuelta"):
+        vuelta += "\n" + "\n".join(f"- {' '.join(str(x).split())}" for x in regla["vuelta"])
     bloques = [f"# {fuente['titulo']} · para «{titulo_parte}» del {tipo or 'escrito'} «{titulo_escrito}»",
                f"(Versión {fuente['version'] or '—'} de este prompt. Su sección «4 Entrada» la trae, ya rellena, el bloque «entrada» "
                "de abajo: no hace falta abrir nada más.)",
                para_ia_externa(texto_prompt).strip(),
                "<entrada>\n" + "\n\n".join(entrada) + "\n</entrada>",
-               FORMATO_DE_VUELTA.format(clave=clave)]
+               vuelta]
     texto = "\n\n".join(b for b in bloques if b.strip())
     return {"prompt": texto, "componente": clave, "titulo": titulo_parte, "componentes": [{"clave": t["clave"], "titulo": t["titulo"] or t["clave"]} for t in ts],
             "fuente": fuente, "aviso": aviso, "largo": len(texto) > LARGO, "problemas": problemas_externos(texto),
-            "sensible": sensible(texto_prompt),
+            "sensible": sensible(texto_prompt), "documento": tipo if regla is not None else "",
             "contexto": {"fichas": len(usadas), "fichas_de_la_parte": bool(propias), "obras": len(bib)}}
 
 
-def pegar_parte(d: Path, archivo: str, pegado: str, componente: str = "", tex: str | None = None) -> dict:
+def pegar_parte(d: Path, archivo: str, pegado: str, componente: str = "", tex: str | None = None,
+                cuadro: dict | None = None) -> dict:
     """Lo que devolvió el chat para una parte, comprobado contra el escrito, sin escribir nada. `tex` es el texto del
     archivo que se tiene abierto (el del editor; sin él, el de disco). → {ok, errores, avisos, componente, ini, fin,
     antes, despues, diff}: el editor reemplaza [ini, fin) por `despues` si la persona acepta."""
     d = Path(d)
     ruta = (d / archivo) if not Path(archivo).is_absolute() else Path(archivo)
     tex = tex if tex is not None else ruta.read_text(encoding="utf-8", errors="replace")
-    ts = tramos(tex)
+    ts = tramos_de(tex, cuadro)
     tramo = (next((t for t in ts if t["clave"] == componente), None) if componente else (ts[0] if ts else None))
     vacio = {"ok": False, "avisos": [], "componente": componente, "ini": 0, "fin": 0, "antes": "", "despues": "", "diff": ""}
     if tramo is None:
-        return {**vacio, "errores": ["Esta parte no tiene ese componente (\\componente{…})."]}
+        return {**vacio, "errores": ["Esta parte no tiene ese componente (\\componente{…})" + (" ni esa sección" if cuadro else "") + "."]}
     clave = tramo["clave"]
     pg, pt = lector_pegado(), parte()
     if pg is None or pt is None:
