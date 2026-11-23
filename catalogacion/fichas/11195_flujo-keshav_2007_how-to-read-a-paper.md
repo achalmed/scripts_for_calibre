@@ -14,7 +14,7 @@ verificacion:
 
 ## Origen
 
-Sin archivo: la obra no tiene un PDF de acceso abierto en su sede oficial; queda el registro con sus metadatos e identificadores.
+`biblioteca-studio/entrada/2026-11-23-aprender-ensenar/11195.pdf` · SHA-256 `24941b30ecbaa8d8…` · https://svr-sk818-web.cl.cam.ac.uk/keshav/papers/07/paper-reading.pdf (añadido el 2026-11-23 por `lib/ingresar.py adjuntar`; sin control del año: revisión del autor del 17 de febrero de 2016 del artículo de 2007 (CCR 37(3), 83-84); la versión maquetada de 2007 ya no está en su página)
 
 ## Zotero
 | Campo | Valor |
