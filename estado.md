@@ -1,7 +1,7 @@
 ---
 tipo: estado
 estado: activo
-actualizado: 2026-11-19
+actualizado: 2026-11-22
 ---
 # estado.md — biblioteca-studio
 
@@ -13,6 +13,7 @@ fecha y dueño. Las decisiones vigentes viven en [docs/decisiones.md](docs/decis
 
 | fecha | qué | dónde se ve |
 |---|---|---|
+| 2026-11-22 | **La etapa elegida del recorrido sigue al esquema de color de la ventana (gui-comun 4.4)**: el círculo de la etapa toma `EstiloSeleccion` (fondo y número); con «Ajustes ▸ Esquema de color de la ventana ▸ Lliphi Dark», un bloque lleno como en Dolphin; con «Predeterminado», el tinte con su borde de siempre; 103 pruebas | `studio/biblioteca_app/qml/componentes/EspacioEtapas.qml` |
 | 2026-11-22 | **El título del grupo y las etiquetas** (§9.17, nota): el título fijo de un grupo ya no se sobrepone a la fila de debajo; las etiquetas de la ficha son pestañas con punta y ojal (`EtiquetaMateria`) | `tests/run.sh` (103); `capturar.py --libro 1 --ficha-al-final` |
 | 2026-11-22 | **El catálogo como lo piensa el autor** (§9.17, pedido con capturas): la cabecera de «Colección» (y de cada filtro) se queda arriba al desplazarse y se pliega desde ahí; cada grupo de filtros se ordena por cantidad, por nombre (natural) o por lo último añadido; el orden «Colección (índice)» respeta el índice de serie de Calibre (0, 1, …, 5.1, 5.2, 10); «Agrupar» por colección, autor, tipo o década con títulos en la lista; la fila dice lo leído (avance, subrayados, horas) en vez de la clave; Calibre se ve al momento y, si Zotero cambia, el índice se rehace solo; «Sincronizar» dice qué es automático y lleva a «Zotero ⇄ Calibre» para los metadatos | `tests/run.sh` (102); `capturar.py --agrupar coleccion --orden serie` |
 | 2026-11-19 | **El mapa de lo leído** (§9.16, pedido del autor): el área Lectura dibuja, para el libro elegido, los conceptos y relaciones que la IA estructuró en las sesiones guiadas de Ñawinchay (grafo, píldoras, tarjeta del concepto con sus definiciones, lugares y en cuántos otros libros aparece, temas), leídos de su diario en solo lectura (`servicios/mapa_lectura.py` + el contrato `nawinchay_app/mapa.py`) | `tests/run.sh` (98; `test_lectura.py`); `docs/figuras/biblioteca-studio-mapa-{oscuro,claro}.png` |

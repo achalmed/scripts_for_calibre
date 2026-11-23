@@ -124,8 +124,9 @@ ColumnLayout {
                         spacing: Kirigami.Units.smallSpacing
                         Rectangle {
                             implicitWidth: Kirigami.Units.gridUnit * 1.5; implicitHeight: implicitWidth; radius: width / 2
-                            // la etapa elegida, teñida del acento con su borde (gui-comun 4.2), no rellena
-                            color: etapa.elegida ? Kirigami.ColorUtils.tintWithAlpha(Kirigami.Theme.backgroundColor, Kirigami.Theme.highlightColor, 0.28) : "transparent"
+                            // la etapa elegida como lo elegido del esquema de color (EstiloSeleccion, gui-comun 4.4): con el
+                            // predeterminado, teñida del acento con su borde; con «Lliphi Dark», el bloque lleno como en Dolphin
+                            color: etapa.elegida ? EstiloSeleccion.fondo(Kirigami.Theme.backgroundColor, Kirigami.Theme.highlightColor, 0.28) : "transparent"
                             border.width: etapa.elegida ? 1.5 : 1
                             border.color: etapa.elegida ? Kirigami.Theme.highlightColor : Qt.alpha(Kirigami.Theme.textColor, boton.hovered ? 0.5 : 0.25)
                             QQC2.Label {
@@ -133,7 +134,7 @@ ColumnLayout {
                                 text: etapa.index + 1
                                 font.pointSize: Kirigami.Theme.smallFont.pointSize
                                 font.weight: etapa.elegida ? Font.DemiBold : Font.Normal
-                                color: Kirigami.Theme.textColor
+                                color: etapa.elegida ? EstiloSeleccion.texto(Kirigami.Theme.textColor, Kirigami.Theme.highlightedTextColor) : Kirigami.Theme.textColor
                             }
                         }
                         ColumnLayout {
