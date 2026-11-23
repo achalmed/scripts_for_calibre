@@ -121,6 +121,8 @@ class Catalogado(QObject):
         if que == "prompt":
             if r.get("prompt"):
                 QGuiApplication.clipboard().setText(r["prompt"])
+                if r.get("sensible"):                    # C12.3: el prompt puede llevar datos sensibles
+                    self.consola.registrar("warn", r["sensible"])
                 self.consola.registrar("info", f"Catalogar con un chat: prompt del paso 02 copiado ({len(r['prompt'])} caracteres) para «{self._titulo}»")
             self.prompt.emit(r)
         elif que == "revisar":

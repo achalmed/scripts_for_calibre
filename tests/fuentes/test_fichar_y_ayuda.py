@@ -148,3 +148,17 @@ def test_el_verificador_carga_aunque_lib_sea_el_paquete_del_repo(monkeypatch):
     fichar = _cargar("t_fichar_lib", REPO / "lib" / "fichar.py")
     V = fichar._verificador()
     assert hasattr(V, "cotejar") and Path(sys.modules["lib"].__file__) == REPO / "lib" / "__init__.py"
+
+
+def test_ayuda_por_el_modulo_comun_con_su_guarda_y_el_aviso():
+    """2026-11-23: la ayuda carga lo común de `core/py-common/ia_externa.py`: no lee fuera del repo de prompts y da el
+    aviso C12.3 de un prompt que declara datos de estudiantes (`05 docencia/prompt_04`)."""
+    a = _cargar("t_ayuda_ia_comun", REPO / "lib" / "ayuda_ia.py")
+    if a.comun() is None:
+        pytest.skip("sin core/py-common/ia_externa.py")
+    with pytest.raises(LookupError):
+        a.leer_prompt("../biblioteca-studio/CLAUDE.md")
+    texto = a.leer_prompt("05 docencia/prompt_04_analisis_de_errores.md")
+    assert "estudiantes" in a.sensible(texto)
+    assert a.sensible(a.leer_prompt("14 estudio/prompt_00_plan_de_estudio.md")) == ""
+    assert not a.para_ia_externa(texto).startswith("---")

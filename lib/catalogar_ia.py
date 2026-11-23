@@ -304,6 +304,7 @@ def prompt(registro: str, clave: str, repo: Path | None = None) -> dict:
     salida = "\n\n".join(bloques)
     largo = len(salida) > a.LARGO
     return {"prompt": salida, "fuente": fuente, "archivo": str(archivo or ""), "titulo": f.get("titulo", "") or nombre,
+            "sensible": a.sensible(texto_prompt),
             "conTexto": bool(texto), "largo": largo,
             "aviso": "El prompt es largo para un chat externo: puede cortarse." if largo else
                      ("" if texto else "El documento no tiene texto extraíble: el chat solo verá el nombre y la ficha heurística."),

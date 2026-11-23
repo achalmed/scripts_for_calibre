@@ -152,6 +152,8 @@ class Fichado(QObject):
         elif que == "prompt":
             if r.get("prompt"):
                 QGuiApplication.clipboard().setText(r["prompt"])
+                if r.get("sensible"):                    # C12.3: el prompt puede llevar datos sensibles
+                    self.consola.registrar("warn", r["sensible"])
             self.promptObra.emit(r)
         elif que == "pegar":
             self.pegadoObra.emit(r)

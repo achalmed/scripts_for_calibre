@@ -97,8 +97,22 @@ def _cargar(nombre: str, ruta: Path):
     return m
 
 
+def comun():
+    """`core/py-common/ia_externa.py`: lo común de «copiar el prompt / pegar lo de la IA» (2026-11-23); None sin él."""
+    return _cargar("core_ia_externa", Path(os.environ.get("PY_COMMON") or _env().PY_COMMON) / "ia_externa.py")
+
+
 def traductor():
+    c = comun()
+    if c is not None:
+        return c.traductor(prompts_dir())
     return _cargar("para_ia_externa", prompts_dir() / "scripts" / "para_ia_externa.py")
+
+
+def sensible(texto: str) -> str:
+    """El aviso C12.3 de un prompt que declara `datos_sensibles` (estudiantes, despacho, personales), o ""."""
+    c = comun()
+    return (c.aviso_sensible(texto, prompts_dir()) or "") if c is not None else ""
 
 
 def cuadro():
@@ -121,6 +135,12 @@ def _frontmatter(texto: str) -> dict:
 
 
 def leer_prompt(rel: str) -> str:
+    c = comun()
+    if c is not None:                            # con la guarda del módulo común: nunca un archivo fuera del repo
+        try:
+            return c.leer_prompt(rel, prompts_dir())
+        except ValueError:
+            raise LookupError(f"No está el prompt {rel} en la carpeta de prompts: sin él no hay método que copiar.") from None
     ruta = prompts_dir() / rel
     if not ruta.is_file():
         raise LookupError(f"No está el prompt {rel} en la carpeta de prompts: sin él no hay método que copiar.")
@@ -129,15 +149,13 @@ def leer_prompt(rel: str) -> str:
 
 def para_ia_externa(texto: str, extra: tuple[str, ...] = (), claves: dict | None = None) -> str:
     """El prompt listo para un chat externo (sin frontmatter ni rutas, con lo esencial de las normas que cita)."""
+    c = comun()
+    if c is not None:                            # el traductor del repo, cargado una vez por el módulo común
+        return c.para_ia(texto, prompts_dir(), extra=extra, claves=claves or {}) + "\n"
     m = traductor()
     if m is None:
         return re.sub(r"\A---\n.*?\n---\n", "", texto or "", count=1, flags=re.S).strip() + "\n"
-    for kw in ({"extra": extra, "claves": claves or {}}, {"extra": extra}, {}):
-        try:
-            return m.para_ia_externa(texto, prompts_dir(), **kw)
-        except TypeError:
-            continue
-    return texto
+    return m.para_ia_externa(texto, prompts_dir(), extra=extra, claves=claves or {})
 
 
 def problemas_externos(texto: str) -> list[str]:
@@ -257,6 +275,7 @@ def prompt_parte(d: Path, archivo: str, componente: str = "", fichas: list[dict]
     texto = "\n\n".join(b for b in bloques if b.strip())
     return {"prompt": texto, "componente": clave, "titulo": titulo_parte, "componentes": [{"clave": t["clave"], "titulo": t["titulo"] or t["clave"]} for t in ts],
             "fuente": fuente, "aviso": aviso, "largo": len(texto) > LARGO, "problemas": problemas_externos(texto),
+            "sensible": sensible(texto_prompt),
             "contexto": {"fichas": len(usadas), "fichas_de_la_parte": bool(propias), "obras": len(bib)}}
 
 
@@ -406,7 +425,7 @@ def prompt_obra(libro: dict, mirada: str, paginas: list[str], desde: int, hasta:
     texto = "\n\n".join(bloques)
     aviso = ("El tramo es largo para un chat externo: pártalo en menos hojas." if len(texto) > LARGO else "")
     return {"prompt": texto, "mirada": mirada, "nombre": m["nombre"], "fuente": fuente, "unidades": hasta - desde + 1,
-            "largo": len(texto) > LARGO, "aviso": aviso, "problemas": problemas_externos(texto)}
+            "largo": len(texto) > LARGO, "aviso": aviso, "problemas": problemas_externos(texto), "sensible": sensible(texto_prompt)}
 
 
 def _bloque_yaml(texto: str) -> str:
