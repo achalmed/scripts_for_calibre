@@ -1,0 +1,1818 @@
+{
+ "_": "migraciones/zotero_creadores.py: el plan de una campaña ZOTERO-CREADORES (se genera; no se edita)",
+ "campana": "zotero-creadores",
+ "fecha": "2026-11-23",
+ "cambios": [
+  {
+   "itemID": 10608,
+   "key": "22JXCGG3",
+   "titulo": "Ley N.° 32069. Contrataciones públicas",
+   "citationKey": "eficientesLeyNdeg320692025",
+   "calibre_id": 10143,
+   "creadores": [
+    [
+     [
+      "Organismo Especializado para las Contrataciones Públicas",
+      "Eficientes",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Organismo Especializado para las Contrataciones Públicas Eficientes",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11644,
+   "key": "2CQWFJYG",
+   "titulo": "Zotero Documentation (web, consultado 2026-10-04)",
+   "citationKey": "scholarshipZoteroDocumentationWeb",
+   "calibre_id": 10435,
+   "creadores": [
+    [
+     [
+      "Corporation for Digital",
+      "Scholarship",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Corporation for Digital Scholarship",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11323,
+   "key": "2R77LLTD",
+   "titulo": "Organigrama de Municipalidad Provincial de Huanta (organigrama oficial (munihuanta.gob.pe))",
+   "citationKey": "dehuantaOrganigramaMunicipalidadProvincial2018",
+   "calibre_id": 10324,
+   "creadores": [
+    [
+     [
+      "Municipalidad Provincial",
+      "De Huanta",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Provincial de Huanta",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13030,
+   "key": "34W9QIBG",
+   "titulo": "Organigrama de Municipalidad Distrital de Soras (estructura orgánica 2021)",
+   "citationKey": "desorasOrganigramaMunicipalidadDistrital2021",
+   "calibre_id": 10811,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Soras",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Soras",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13076,
+   "key": "3BK2HG8M",
+   "titulo": "Memoria anual 2024 de SEDA Ayacucho",
+   "citationKey": "s.a.MemoriaAnual20242024",
+   "calibre_id": 10834,
+   "creadores": [
+    [
+     [
+      "Servicio de Agua Potable y Alcantarillado de Ayacucho",
+      "S.A.",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Servicio de Agua Potable y Alcantarillado de Ayacucho S.A.",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13024,
+   "key": "43NLZQR2",
+   "titulo": "Organigrama de Municipalidad Distrital de San Pedro de Lucanas (Ordenanza Municipal N.° 007-2020-MDSP, anexo del ROF)",
+   "citationKey": "desanpedroOrganigramaMunicipalidadDistrital2020",
+   "calibre_id": 10808,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De San Pedro",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de San Pedro",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11785,
+   "key": "44ZGYDZE",
+   "titulo": "Recommended Formats Statement 2025-2026",
+   "citationKey": "congressRecommendedFormatsStatement2025",
+   "calibre_id": 10505,
+   "creadores": [
+    [
+     [
+      "Library of",
+      "Congress",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Library of Congress",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13050,
+   "key": "4B2XNUK9",
+   "titulo": "Correos institucionales de la Municipalidad Provincial de Lucanas-Puquio",
+   "citationKey": "delucanasCorreosInstitucionalesMunicipalidad2022",
+   "calibre_id": 10821,
+   "creadores": [
+    [
+     [
+      "Municipalidad Provincial",
+      "De Lucanas",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Provincial de Lucanas",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13006,
+   "key": "4W2MQV83",
+   "titulo": "Organigrama de Municipalidad Distrital de Chipao (organigrama estructural del ROF 2026)",
+   "citationKey": "dechipaoOrganigramaMunicipalidadDistrital2026",
+   "calibre_id": 10799,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Chipao",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Chipao",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 10845,
+   "key": "64CV7BYD",
+   "titulo": "El Proyecto Educativo Regional de Ayacucho 2025-2036: movilización ciudadana por la educación ayacuchana",
+   "citationKey": "lapobrezaProyectoEducativoRegional2025",
+   "calibre_id": 10203,
+   "creadores": [
+    [
+     [
+      "Mesa de Concertación para la Lucha contra",
+      "La Pobreza",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Mesa de Concertación para la Lucha contra la Pobreza",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13008,
+   "key": "6FDZ96CF",
+   "titulo": "Organigrama de Municipalidad Distrital de Chumpi (organigrama con sello de la Alcaldía, abril de 2022)",
+   "citationKey": "dechumpiOrganigramaMunicipalidadDistrital2022",
+   "calibre_id": 10800,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Chumpi",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Chumpi",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11660,
+   "key": "78E4583L",
+   "titulo": "Web Content Accessibility Guidelines (WCAG) 2.2. W3C Recommendation 12 December 2024",
+   "citationKey": "consortiumWebContentAccessibility2024",
+   "calibre_id": 10443,
+   "creadores": [
+    [
+     [
+      "World Wide Web",
+      "Consortium",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "World Wide Web Consortium",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13000,
+   "key": "8E4GFFCR",
+   "titulo": "Organigrama de Municipalidad Distrital de Asquipata (imagen publicada en gob.pe)",
+   "citationKey": "deasquipataOrganigramaMunicipalidadDistrital",
+   "calibre_id": 10796,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Asquipata",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Asquipata",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11694,
+   "key": "8GDEUFJI",
+   "titulo": "Obsidian Help (web, consultado 2026-10-04)",
+   "citationKey": "inc.ObsidianHelpWeb",
+   "calibre_id": 10460,
+   "creadores": [
+    [
+     [
+      "Obsidian (Dynalist",
+      "Inc.)",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Obsidian (Dynalist Inc.)",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11154,
+   "key": "9XLQ6K8V",
+   "titulo": "Perspectivas económicas de América Latina 2023: invirtiendo para un desarrollo sostenible",
+   "citationKey": "ocdePerspectivasEconomicasAmerica2023",
+   "calibre_id": 10278,
+   "creadores": [
+    [
+     [
+      "",
+      "OCDE",
+      1,
+      10
+     ],
+     [
+      "",
+      "CEPAL",
+      1,
+      10
+     ],
+     [
+      "",
+      "CAF",
+      1,
+      10
+     ],
+     [
+      "Unión",
+      "Europea",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "OCDE",
+      1,
+      10
+     ],
+     [
+      "",
+      "CEPAL",
+      1,
+      10
+     ],
+     [
+      "",
+      "CAF",
+      1,
+      10
+     ],
+     [
+      "",
+      "Unión Europea",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11291,
+   "key": "9YNM3S3T",
+   "titulo": "Organigrama de Municipalidad Provincial de Cangallo (estructura orgánica (gob.pe/municangallo))",
+   "citationKey": "decangalloOrganigramaMunicipalidadProvincial2024",
+   "calibre_id": 10315,
+   "creadores": [
+    [
+     [
+      "Municipalidad Provincial",
+      "De Cangallo",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Provincial de Cangallo",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13078,
+   "key": "AD2XDWIH",
+   "titulo": "Directorio de la sede administrativa de la UGEL La Mar, octubre de 2026",
+   "citationKey": "lamarDirectorioSedeAdministrativa2026",
+   "calibre_id": 10835,
+   "creadores": [
+    [
+     [
+      "Unidad de Gestión Educativa Local",
+      "La Mar",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Unidad de Gestión Educativa Local La Mar",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 10584,
+   "key": "AU6R6C9U",
+   "titulo": "Texto Único Ordenado de la Ley N.° 30225. Contrataciones estado histórico",
+   "citationKey": "eficientesTextoUnicoOrdenado2019",
+   "calibre_id": 10137,
+   "creadores": [
+    [
+     [
+      "Organismo Especializado para las Contrataciones Públicas",
+      "Eficientes",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Organismo Especializado para las Contrataciones Públicas Eficientes",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 12574,
+   "key": "AZ2PEA2M",
+   "titulo": "Resolución de Dirección Ejecutiva N.° 000084-2026-MIDIS/PAE-DE. Norma técnica del procedimiento de contrataciones de bienes y servicios para las prestaciones del Programa de Alimentación Escolar, versión 3",
+   "citationKey": "escolarResolucionDireccionEjecutiva2026",
+   "calibre_id": 10905,
+   "creadores": [
+    [
+     [
+      "Programa de Alimentación",
+      "Escolar",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Programa de Alimentación Escolar",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13018,
+   "key": "B35EGPC4",
+   "titulo": "Organigrama de Municipalidad Distrital de Otoca (organigrama estructural actualizado)",
+   "citationKey": "deotocaOrganigramaMunicipalidadDistrital2024",
+   "calibre_id": 10805,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Otoca",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Otoca",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11702,
+   "key": "BNIEHHBJ",
+   "titulo": "An Introduction to R: Notes on R, a Programming Environment for Data Analysis and Graphics, version 4.6.1",
+   "citationKey": "venablesIntroductionNotesProgramming2026",
+   "calibre_id": 10464,
+   "creadores": [
+    [
+     [
+      "W. N.",
+      "Venables",
+      0,
+      10
+     ],
+     [
+      "D. M.",
+      "Smith",
+      0,
+      10
+     ],
+     [
+      "R Core",
+      "Team",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "W. N.",
+      "Venables",
+      0,
+      10
+     ],
+     [
+      "D. M.",
+      "Smith",
+      0,
+      10
+     ],
+     [
+      "",
+      "R Core Team",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 10811,
+   "key": "BTLVSK3X",
+   "titulo": "Conclusiones y recomendaciones en el marco del buen retorno al año académico 2025 (foro regional, Ayacucho)",
+   "citationKey": "lapobrezaConclusionesRecomendacionesMarco2025",
+   "calibre_id": 10194,
+   "creadores": [
+    [
+     [
+      "Mesa de Concertación para la Lucha contra",
+      "La Pobreza",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Mesa de Concertación para la Lucha contra la Pobreza",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13016,
+   "key": "C3Q6P743",
+   "titulo": "Organigrama de Municipalidad Distrital de Ocaña (estructura orgánica con vistos de la Alcaldía y la Gerencia Municipal)",
+   "citationKey": "deocanaOrganigramaMunicipalidadDistrital2023",
+   "calibre_id": 10804,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Ocaña",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Ocaña",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11799,
+   "key": "CAE2EK4Q",
+   "titulo": "Sustainability of Digital Formats: Planning for Library of Congress Collections. Introduction; Sustainability Factors (dos páginas de loc.gov, web, consultado 2026-10-05)",
+   "citationKey": "congressSustainabilityDigitalFormats2025",
+   "calibre_id": 10511,
+   "creadores": [
+    [
+     [
+      "Library of",
+      "Congress",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Library of Congress",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11783,
+   "key": "D6WSIYCP",
+   "titulo": "CSL 1.0.2 Specification (docs.citationstyles.org, web, consultado 2026-10-04)",
+   "citationKey": "languageCSL102Specification",
+   "calibre_id": 10504,
+   "creadores": [
+    [
+     [
+      "Citation Style",
+      "Language",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Citation Style Language",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13074,
+   "key": "DGSHBTYY",
+   "titulo": "Resolución Directoral N.° 000026-2026-GRA-DIRESA-HRMAMLLA/DE. Aprueba el Plan frente a la celebración del Carnaval Ayacuchano 2026",
+   "citationKey": "llerenaResolucionDirectoralNdeg2026",
+   "calibre_id": 10833,
+   "creadores": [
+    [
+     [
+      "Hospital Regional de Ayacucho Miguel Ángel Mariscal",
+      "Llerena",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Hospital Regional de Ayacucho Miguel Ángel Mariscal Llerena",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11357,
+   "key": "DHIXW4RJ",
+   "titulo": "Organigrama de Univ. Nac. de San Cristóbal de Huamanga (ROF 2021, RR 041-2021-UNSCH (Art. 5))",
+   "citationKey": "dehuamangaOrganigramaUnivNac2026",
+   "calibre_id": 10333,
+   "creadores": [
+    [
+     [
+      "Univ. Nac. de San Cristóbal",
+      "De Huamanga",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Univ. Nac. de San Cristóbal de Huamanga",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 9962,
+   "key": "E3QNKUHR",
+   "titulo": "Características del servicio civil peruano 2025",
+   "citationKey": "civilCaracteristicasServicioCivil2026",
+   "calibre_id": 9931,
+   "creadores": [
+    [
+     [
+      "Autoridad Nacional del Servicio",
+      "Civil",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Autoridad Nacional del Servicio Civil",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11736,
+   "key": "EDNKQHJJ",
+   "titulo": "How to write software documentation: A beginner's guide to writing documentation (Write the Docs, web, consultado 2026-10-04)",
+   "citationKey": "docsHowWriteSoftware",
+   "calibre_id": 10481,
+   "creadores": [
+    [
+     [
+      "Write the",
+      "Docs",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Write the Docs",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 12292,
+   "key": "F49BC4JI",
+   "titulo": "Guidelines for applications: The IFCN Code of Principles",
+   "citationKey": "networkGuidelinesApplicationsIFCN2020",
+   "calibre_id": 11115,
+   "creadores": [
+    [
+     [
+      "International Fact-Checking",
+      "Network",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "International Fact-Checking Network",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11787,
+   "key": "F5U47QMK",
+   "titulo": "Zotero Data Schema, version 42 (zotero-schema.json; portada: repositorio zotero/zotero-schema, web, consultado 2026-10-04)",
+   "citationKey": "scholarshipZoteroDataSchema",
+   "calibre_id": 10506,
+   "creadores": [
+    [
+     [
+      "Corporation for Digital",
+      "Scholarship",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Corporation for Digital Scholarship",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13026,
+   "key": "F6KVX8DY",
+   "titulo": "Organigrama de Municipalidad Distrital de San Salvador de Quije (estructura orgánica del ROF 2021)",
+   "citationKey": "dequijeOrganigramaMunicipalidadDistrital2021",
+   "calibre_id": 10809,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital de San Salvador",
+      "De Quije",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de San Salvador de Quije",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13012,
+   "key": "FK7JHKTN",
+   "titulo": "Organigrama de Municipalidad Distrital de Hualla (organigrama con vistos de la Alcaldía y las gerencias)",
+   "citationKey": "dehuallaOrganigramaMunicipalidadDistrital2021",
+   "calibre_id": 10802,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Hualla",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Hualla",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11345,
+   "key": "FM4MB6E6",
+   "titulo": "Organigrama de Municipalidad Provincial de Huamanga (Ordenanza Municipal 013-2021-MPH/A)",
+   "citationKey": "dehuamangaOrganigramaMunicipalidadProvincial2022",
+   "calibre_id": 10330,
+   "creadores": [
+    [
+     [
+      "Municipalidad Provincial",
+      "De Huamanga",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Provincial de Huamanga",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11724,
+   "key": "G85VR6YD",
+   "titulo": "ISO/TC 46/SC 11 N800R1. Construcción de un esquema de metadatos – Por dónde empezar (traducción al español)",
+   "citationKey": "11ISOTC462011",
+   "calibre_id": 10475,
+   "creadores": [
+    [
+     [
+      "ISO/TC 46/SC",
+      "11",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "ISO/TC 46/SC 11",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13048,
+   "key": "GIYW7976",
+   "titulo": "Ordenanza Municipal N.° 018-2022-MPLP. Aprueba el Reglamento de Organización y Funciones y la Estructura Orgánica de la Municipalidad Provincial de Lucanas-Puquio",
+   "citationKey": "delucanasOrdenanzaMunicipalNdeg2022",
+   "calibre_id": 10820,
+   "creadores": [
+    [
+     [
+      "Municipalidad Provincial",
+      "De Lucanas",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Provincial de Lucanas",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11317,
+   "key": "GL2H6BHC",
+   "titulo": "Organigrama de Municipalidad Distrital de Jesús Nazareno (ROF (Anexo Organigrama), Huamanga)",
+   "citationKey": "nazarenoOrganigramaMunicipalidadDistrital",
+   "calibre_id": 10322,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital de Jesús",
+      "Nazareno",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Jesús Nazareno",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11335,
+   "key": "GRAHMHTT",
+   "titulo": "Organigrama de Municipalidad Distrital de San Juan Bautista (ROF (Anexo Organigrama), Huamanga)",
+   "citationKey": "bautistaOrganigramaMunicipalidadDistrital2024",
+   "calibre_id": 10327,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital de San Juan",
+      "Bautista",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de San Juan Bautista",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13020,
+   "key": "GUW8WA9P",
+   "titulo": "Organigrama de Municipalidad Distrital de Oyolo (organigrama estructural con sellos de la Alcaldía y la Gerencia Municipal)",
+   "citationKey": "deoyoloOrganigramaMunicipalidadDistrital2025",
+   "calibre_id": 10806,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Oyolo",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Oyolo",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 10596,
+   "key": "HNGN85ZB",
+   "titulo": "Directiva N.° 0005-2025-EF. Bases estándar procedimientos selección",
+   "citationKey": "eficientesDirectivaNdeg00052025EF2025",
+   "calibre_id": 10140,
+   "creadores": [
+    [
+     [
+      "Organismo Especializado para las Contrataciones Públicas",
+      "Eficientes",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Organismo Especializado para las Contrataciones Públicas Eficientes",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13032,
+   "key": "I2BDD8MM",
+   "titulo": "Organigrama de Municipalidad Distrital de Vilcanchos (organigrama del ROF)",
+   "citationKey": "devilcanchosOrganigramaMunicipalidadDistrital2021",
+   "calibre_id": 10812,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Vilcanchos",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Vilcanchos",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 10861,
+   "key": "ILSMFV62",
+   "titulo": "Conclusiones del foro virtual «Situación de la educación en la región Ayacucho: problemas y posibilidades» (26 de noviembre de 2025)",
+   "citationKey": "lapobrezaConclusionesForoVirtual2025",
+   "calibre_id": 10207,
+   "creadores": [
+    [
+     [
+      "Mesa de Concertación para la Lucha contra",
+      "La Pobreza",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Mesa de Concertación para la Lucha contra la Pobreza",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13014,
+   "key": "J59HC4I9",
+   "titulo": "Organigrama de Municipalidad Distrital de Lucanas (organigrama institucional del ROF, gestión 2023-2026)",
+   "citationKey": "delucanasOrganigramaMunicipalidadDistrital2024",
+   "calibre_id": 10803,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Lucanas",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Lucanas",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11319,
+   "key": "J68RXFAR",
+   "titulo": "Organigrama de Despacho Presidencial (Res. 000044-2024/DP-SG (Anexo 02, Sección 2 del ROF))",
+   "citationKey": "presidencialOrganigramaDespachoPresidencial2024",
+   "calibre_id": 10323,
+   "creadores": [
+    [
+     [
+      "Despacho",
+      "Presidencial",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Despacho Presidencial",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 10750,
+   "key": "JWDMT3X8",
+   "titulo": "Características servicio civil peruano 2024",
+   "citationKey": "civilCaracteristicasServicioCivil2024",
+   "calibre_id": 10179,
+   "creadores": [
+    [
+     [
+      "Autoridad Nacional del Servicio",
+      "Civil",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Autoridad Nacional del Servicio Civil",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 10604,
+   "key": "K5ABWRWJ",
+   "titulo": "Directiva N.° 006-2019-OSCE. Subasta inversa electrónica histórico",
+   "citationKey": "delestadoDirectivaNdeg0062019OSCE2019",
+   "calibre_id": 10142,
+   "creadores": [
+    [
+     [
+      "Organismo Supervisor de las Contrataciones",
+      "Del Estado",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Organismo Supervisor de las Contrataciones del Estado",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11755,
+   "key": "K85MGH2M",
+   "titulo": "Zotero Item Types and Fields (Zotero Documentation, web, consultado 2026-10-04)",
+   "citationKey": "scholarshipZoteroItemTypes",
+   "calibre_id": 10490,
+   "creadores": [
+    [
+     [
+      "Corporation for Digital",
+      "Scholarship",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Corporation for Digital Scholarship",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13080,
+   "key": "KGH4WXJD",
+   "titulo": "Directorio del personal de la UGEL Parinacochas",
+   "citationKey": "parinacochasDirectorioPersonalUGEL2025",
+   "calibre_id": 10836,
+   "creadores": [
+    [
+     [
+      "Unidad de Gestión Educativa Local",
+      "Parinacochas",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Unidad de Gestión Educativa Local Parinacochas",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11730,
+   "key": "KPGKTNKL",
+   "titulo": "Code documentation (The Turing Way: Guide for Reproducible Research, web, consultado 2026-10-04)",
+   "citationKey": "communityCodeDocumentationTuring",
+   "calibre_id": 10478,
+   "creadores": [
+    [
+     [
+      "The Turing Way",
+      "Community",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "The Turing Way Community",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11769,
+   "key": "LIQ5MUUX",
+   "titulo": "Data best practices and case studies: Name files; Version files (dos páginas de guides.library.stanford.edu, web, consultado 2026-10-04)",
+   "citationKey": "librariesDataBestPractices2023",
+   "calibre_id": 10497,
+   "creadores": [
+    [
+     [
+      "Stanford",
+      "Libraries",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Stanford Libraries",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13002,
+   "key": "MRBS3DYH",
+   "titulo": "Organigrama de Municipalidad Distrital de Canaria (organigrama con vistos de la Alcaldía y la Gerencia Municipal)",
+   "citationKey": "decanariaOrganigramaMunicipalidadDistrital2021",
+   "calibre_id": 10797,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Canaria",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Canaria",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13028,
+   "key": "NCC86C2Z",
+   "titulo": "Organigrama de Municipalidad Distrital de Santiago de Paucaray (estructura orgánica con visto de la Alcaldía)",
+   "citationKey": "depaucarayOrganigramaMunicipalidadDistrital2021",
+   "calibre_id": 10810,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital de Santiago",
+      "De Paucaray",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Santiago de Paucaray",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11297,
+   "key": "NN2VAV6M",
+   "titulo": "Organigrama de Municipalidad Distrital de Chuschi (organigrama 2023-2026)",
+   "citationKey": "dechuschiOrganigramaMunicipalidadDistrital2023",
+   "calibre_id": 10317,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Chuschi",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Chuschi",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11492,
+   "key": "P3DTXELH",
+   "titulo": "Análisis del régimen económico (documentos de debate sobre régimen económico)",
+   "citationKey": "fundamentalesAnalisisRegimenEconomico2020",
+   "calibre_id": 10363,
+   "creadores": [
+    [
+     [
+      "Movimiento por Amnistía y Derechos",
+      "Fundamentales",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Movimiento por Amnistía y Derechos Fundamentales",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 12778,
+   "key": "P59HC4TS",
+   "titulo": "Informe Técnico N.° 000210-2026-SERVIR-GPGSC (régimen de contratación de los obreros municipales)",
+   "citationKey": "civilInformeTecnicoNdeg2026",
+   "calibre_id": 10676,
+   "creadores": [
+    [
+     [
+      "Autoridad Nacional del Servicio",
+      "Civil",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Autoridad Nacional del Servicio Civil",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11662,
+   "key": "Q2HUJKMG",
+   "titulo": "Preserving Your Digital Memories: How to Preserve Your Own Digital Materials (Personal Archiving)",
+   "citationKey": "congressPreservingYourDigital2010",
+   "calibre_id": 10444,
+   "creadores": [
+    [
+     [
+      "Library of",
+      "Congress",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Library of Congress",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 12998,
+   "key": "QH8PEGUA",
+   "titulo": "Organigrama de Municipalidad Distrital de Alcamenca (estructura orgánica con visto de la Alcaldía)",
+   "citationKey": "dealcamencaOrganigramaMunicipalidadDistrital2026",
+   "calibre_id": 10795,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Alcamenca",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Alcamenca",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13034,
+   "key": "QUVHN5WL",
+   "titulo": "Organigrama de Red de Salud San Francisco (organigrama estructural del ROF, Ordenanza Regional N.° 018-2018-GRA/CR)",
+   "citationKey": "sanfranciscoOrganigramaRedSalud2018",
+   "calibre_id": 10813,
+   "creadores": [
+    [
+     [
+      "Red de Salud",
+      "San Francisco",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Red de Salud San Francisco",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11710,
+   "key": "RC74EURC",
+   "titulo": "Digital Preservation Handbook, 2nd edition. Contents (índice del sitio, consultado 2026-10-04)",
+   "citationKey": "coalitionDigitalPreservationHandbook2015",
+   "calibre_id": 10468,
+   "creadores": [
+    [
+     [
+      "Digital Preservation",
+      "Coalition",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Digital Preservation Coalition",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13022,
+   "key": "SHIAS469",
+   "titulo": "Organigrama de Municipalidad Distrital de Sacsamarca (estructura orgánica)",
+   "citationKey": "desacsamarcaOrganigramaMunicipalidadDistrital2025",
+   "calibre_id": 10807,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Sacsamarca",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Sacsamarca",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13054,
+   "key": "SLG8D9BH",
+   "titulo": "Plan de prevención y reducción del riesgo de desastres del distrito de Paras, provincia de Cangallo, periodo 2024-2030",
+   "citationKey": "deparasPlanPrevencionReduccion2024",
+   "calibre_id": 10823,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Paras",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Paras",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11636,
+   "key": "TLFMANYG",
+   "titulo": "Reference Model for an Open Archival Information System (OAIS). Recommended Practice CCSDS 650.0-M-3 (= ISO 14721:2025)",
+   "citationKey": "systemsReferenceModelOpen2024",
+   "calibre_id": 10431,
+   "creadores": [
+    [
+     [
+      "Consultative Committee for Space Data",
+      "Systems",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Consultative Committee for Space Data Systems",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 12320,
+   "key": "TRFGLJQ3",
+   "titulo": "Reading Your Textbook",
+   "citationKey": "centreReadingYourTextbook2020",
+   "calibre_id": 11129,
+   "creadores": [
+    [
+     [
+      "Douglas College. Learning",
+      "Centre",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Douglas College. Learning Centre",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13004,
+   "key": "UCGS4I6G",
+   "titulo": "Organigrama de Municipalidad Distrital de Chaviña (Reglamento de Organización y Funciones, estructura orgánica en el art. 11)",
+   "citationKey": "dechavinaOrganigramaMunicipalidadDistrital2021",
+   "calibre_id": 10798,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Chaviña",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Chaviña",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11646,
+   "key": "VNGWIUC9",
+   "titulo": "Conventional Commits 1.0.0",
+   "citationKey": "comunidadConventionalCommits100",
+   "calibre_id": 10436,
+   "creadores": [
+    [
+     [
+      "Conventional Commits",
+      "(comunidad)",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Conventional Commits (comunidad)",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13052,
+   "key": "VZPZ8WQQ",
+   "titulo": "Plan de Desarrollo Local Concertado del distrito de Anco al 2034",
+   "citationKey": "deancoPlanDesarrolloLocal2023",
+   "calibre_id": 10822,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Anco",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Anco",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11714,
+   "key": "W36XD295",
+   "titulo": "Digital Preservation Handbook, 2nd edition. Digital Preservation Briefing",
+   "citationKey": "coalitionDigitalPreservationHandbook2015a",
+   "calibre_id": 10470,
+   "creadores": [
+    [
+     [
+      "Digital Preservation",
+      "Coalition",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Digital Preservation Coalition",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 12994,
+   "key": "X29JSM8P",
+   "titulo": "Organigrama de Biblioteca Nacional del Perú (organigrama publicado en gob.pe, abril de 2024)",
+   "citationKey": "delperuOrganigramaBibliotecaNacional2024",
+   "calibre_id": 10837,
+   "creadores": [
+    [
+     [
+      "Biblioteca Nacional",
+      "Del Perú",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Biblioteca Nacional del Perú",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 11690,
+   "key": "XRSRSJ7M",
+   "titulo": "Audit and Certification of Trustworthy Digital Repositories. Recommended Practice CCSDS 652.0-M-2 (= ISO 16363:2025)",
+   "citationKey": "systemsAuditCertificationTrustworthy2024",
+   "calibre_id": 10458,
+   "creadores": [
+    [
+     [
+      "Consultative Committee for Space Data",
+      "Systems",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Consultative Committee for Space Data Systems",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13010,
+   "key": "YMLDH8RH",
+   "titulo": "Organigrama de Municipalidad Distrital de Huamanquiquia (organigrama 2019 del Manual de Perfil de Puestos)",
+   "citationKey": "dehuamanquiquiaOrganigramaMunicipalidadDistrital2019",
+   "calibre_id": 10801,
+   "creadores": [
+    [
+     [
+      "Municipalidad Distrital",
+      "De Huamanquiquia",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Municipalidad Distrital de Huamanquiquia",
+      1,
+      10
+     ]
+    ]
+   ]
+  }
+ ],
+ "faltan": []
+}

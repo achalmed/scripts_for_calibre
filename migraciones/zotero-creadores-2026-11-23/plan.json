@@ -1,0 +1,58 @@
+{
+ "_": "migraciones/zotero_creadores.py: el plan de una campaña ZOTERO-CREADORES (se genera; no se edita)",
+ "campana": "zotero-creadores",
+ "fecha": "2026-11-23",
+ "cambios": [
+  {
+   "itemID": 13056,
+   "key": "DN4CTW9B",
+   "titulo": "Resolución N.° 4204-2022-JNE. Declara concluido el proceso de Elecciones Municipales 2022 con los alcaldes provinciales y distritales proclamados para el periodo 2023-2026",
+   "citationKey": "deeleccionesResolucionNdeg42042022JNE2022",
+   "calibre_id": 10824,
+   "creadores": [
+    [
+     [
+      "Jurado Nacional",
+      "De Elecciones",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Jurado Nacional de Elecciones",
+      1,
+      10
+     ]
+    ]
+   ]
+  },
+  {
+   "itemID": 13058,
+   "key": "I5LEUR57",
+   "titulo": "Resolución N.° 0220-2026-JNE. Declaran conformación de Jurados Electorales Especiales correspondientes al proceso de Elecciones Regionales y Municipales 2026",
+   "citationKey": "deeleccionesResolucionNdeg02202026JNE2026",
+   "calibre_id": 10825,
+   "creadores": [
+    [
+     [
+      "Jurado Nacional",
+      "De Elecciones",
+      0,
+      10
+     ]
+    ],
+    [
+     [
+      "",
+      "Jurado Nacional de Elecciones",
+      1,
+      10
+     ]
+    ]
+   ]
+  }
+ ],
+ "faltan": []
+}
