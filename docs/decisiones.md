@@ -1230,6 +1230,17 @@ conceptos de 2 libros frente a 4 795. El autor pidió poblarlo sin leer. Lo hace
   dinero» → «El origen del dinero», «La acción humana» → «La acción humana»). Lo que el umbral deja fuera son sobre
   todo documentos oficiales. Un defecto que solo salió corriéndola de verdad: un autor cuyo nombre no deja letras
   latinas (ideogramas) rompía la comparación de apellidos; tiene su prueba.
+- **El límite de la sede, aprendido a la mala** (2026-11-24): la corrida sobre los 4 328 restantes **agotó el
+  presupuesto diario de OpenAlex** —1 000 peticiones por IP sin clave, repuestas a medianoche UTC— y las 4 266
+  siguientes volvieron con 429 («Insufficient budget… shared by everyone on your network's IP address»). Se habían
+  consultado ya 222 por DOI y 60 de la muestra. Resultado: 43 coincidencias por título (25 + 18), **341 libros con
+  materias y 141 de los 317 temas**; lo que no llegó a consultarse no se perdió, porque los errores no se guardan y
+  la cola los vuelve a tomar.
+  **Lo que estaba mal era el código, no la sede**: `traer` seguía pidiendo 4 266 veces algo que la sede ya había
+  dicho que no iba a servir. Ahora un 429 **para la corrida en seco**, guarda lo que lleva, lee `Retry-After` y dice
+  cuántos quedan y en cuántas horas volver (`ESPERA`, `sin_presupuesto`; su prueba). Para hacerlo de una vez haría
+  falta una clave de OpenAlex o el «polite pool» con un correo de contacto, que en este repo llegaría por
+  `FUENTES_CORREO_CONTACTO` y nunca escrito en el código (es público).
 - **Lo que hubo que limpiar de Open Library**, con su prueba: los autores que el catálogo guarda como materia
   («Hayek, Friedrich A. von, 1899-1992», reconocidos por el año del encabezado y no por llevar coma, que
   «Economics, Mathematical» sí es materia); los encabezados genéricos (`GENERICAS`: «General», «Fiction - General»…,

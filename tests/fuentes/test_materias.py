@@ -155,3 +155,24 @@ def test_la_via_incierta_es_el_ultimo_recurso(mat):
     assert ("2", "openalex_titulo", "Sin nada, sin materias") in cola
     assert not [x for x in cola if x[0] in ("1", "3") and x[1] == "openalex_titulo"]
     assert mat.EXACTAS == ("openalex", "openlibrary")         # `traer` sin --fuente no gasta la vía incierta
+
+
+def test_al_acabarse_el_presupuesto_del_dia_se_para_en_seco(mat, monkeypatch, tmp_path):
+    """2026-11-24: OpenAlex da 1 000 peticiones al día por IP sin clave. Al llegar al tope contesta 429, y seguir
+    pidiendo no adelanta nada: la corrida para, guarda lo que lleva y dice cuánto falta y cuándo volver."""
+    indice = {"libros": {str(i): {"doi": f"10.1/{i}"} for i in range(1, 6)}}
+    monkeypatch.setattr(mat, "_indice", lambda: indice)
+    pedidos = []
+
+    def consulta(doi, *a, **k):
+        pedidos.append(doi)
+        if len(pedidos) <= 2:
+            return {"estado": "hallado", "fecha": "2026-11-24", "materias": [{"nombre": "X", "tipo": "materia"}]}
+        mat.ESPERA["segundos"] = 78187
+        return {"estado": "error", "fecha": "2026-11-24", "codigo": mat.RATE_LIMIT, "materias": []}
+
+    r = mat.traer(aplicar=True, consulta={"openalex": consulta}, fuentes=("openalex",), pausa=0)
+    assert r["sin_presupuesto"] is True and r["espera"] == 78187
+    assert len(pedidos) == 3 and r["consultados"] == 3        # pidió una vez más y paró; no gastó las cinco
+    assert r["hallados"] == 2
+    assert mat.por_libro(mat.leer_cache()) == {1: ["X"], 2: ["X"]}   # lo consultado antes del tope no se pierde

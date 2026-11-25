@@ -54,6 +54,11 @@ VIGENCIA = {"hallado": 180, "no_hallado": 30}
 SCORE_MINIMO = 0.05          # por debajo, OpenAlex está adivinando: el tercer topic de una obra venía con 0,0002
 TOPE_OL = 12                 # una obra de Open Library llegaba a 63 materias y se comía el recuento de su tema
 PAUSA = 0.12                 # cortesía con dos APIs públicas y gratuitas
+RATE_LIMIT = 429
+# OpenAlex da 1 000 peticiones al día por IP sin clave («free daily budget shared by everyone on your network's IP
+# address»), y se reponen a medianoche UTC. Al llegar al tope contesta 429 con `Retry-After`: seguir pidiendo no
+# adelanta nada y molesta a una sede gratuita, así que `traer` para en seco y lo dice.
+ESPERA: dict = {"segundos": 0}
 # «Bueno, Gustavo, 1924-» es un autor que el catálogo guarda como materia. Se reconoce por la coma y el año del
 # encabezado, no por tener coma: «Economics, Mathematical» es una materia de verdad y se queda.
 PERSONA = re.compile(r",\s*\d{4}\s*-|,\s*\d{4}\s*$")
@@ -113,12 +118,19 @@ def vigente(entrada: dict | None, hoy: date | None = None) -> bool:
 
 
 def _pedir(url: str, timeout: int = 25):
-    """(código HTTP, JSON o None). Un fallo de red da (0, None): nunca se toma por «no está en el catálogo»."""
+    """(código HTTP, JSON o None). Un fallo de red da (0, None): nunca se toma por «no está en el catálogo».
+
+    Un 429 (presupuesto agotado) guarda en `ESPERA` lo que la sede pide aguardar, para que `traer` pare en seco."""
     req = urllib.request.Request(url, headers={"User-Agent": AGENTE, "Accept": "application/json"})
     try:
         with urllib.request.urlopen(req, timeout=timeout) as r:
             return r.status, json.loads(r.read().decode("utf-8", "replace") or "null")
     except urllib.error.HTTPError as e:
+        if e.code == RATE_LIMIT:
+            try:
+                ESPERA["segundos"] = int(e.headers.get("Retry-After") or 0)
+            except (TypeError, ValueError):
+                ESPERA["segundos"] = 0
         return e.code, None
     except (urllib.error.URLError, TimeoutError, OSError, ValueError):
         return 0, None
@@ -322,12 +334,19 @@ def traer(aplicar: bool = False, fuentes=EXACTAS, limite: int | None = None, ids
     if not aplicar:
         r["ejemplos"] = [f"{b} · {fuente} · {clave}" for b, fuente, clave in faltan[:5]]
         return r
+    ESPERA["segundos"] = 0
     for n, (b, fuente, clave) in enumerate(faltan):
         if fuente in INCIERTAS:
             d = consulta[fuente](clave, (indice["libros"].get(b) or {}).get("autores") or ())
         else:
             d = consulta[fuente](clave)
         r["consultados"] += 1
+        if d.get("codigo") == RATE_LIMIT:
+            # el presupuesto del día se acabó: lo consultado queda guardado y el resto se retoma cuando se reponga
+            r["sin_presupuesto"] = True
+            r["espera"] = ESPERA["segundos"]
+            r["errores"] += 1
+            break
         if d["estado"] == "error":
             r["errores"] += 1                     # no se guarda: se reintenta la próxima vez
         else:
@@ -392,6 +411,10 @@ def main(argv=None) -> int:
     else:
         print(f"{r['consultados']} consultados · {r['hallados']} hallados · {r['no_hallados']} sin materias · "
               f"{r['errores']} con error (se reintentan) · {r['materias']} materias en {r['cache']}")
+        if r.get("sin_presupuesto"):
+            horas = (r.get("espera") or 0) / 3600
+            print(f"   se acabó el presupuesto del día de la sede (429); quedan {r['pendientes'] - r['consultados']} "
+                  f"por consultar. Vuelva a correrlo en {horas:.0f} h, cuando se reponga.")
     return 0
 
 
