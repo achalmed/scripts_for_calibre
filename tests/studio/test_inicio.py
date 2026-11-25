@@ -166,3 +166,19 @@ def test_la_pregunta_del_repaso_es_una_pista_de_recuperacion():
     assert pregunta_de({"tema": "escala urbana", "tipoTexto": "Paráfrasis"}) == "¿Qué sostiene la obra sobre «escala urbana»?"
     assert pregunta_de({"tema": "escala urbana", "tipoTexto": "Textual"}) == "¿Qué dice la obra, con sus palabras, sobre «escala urbana»?"
     assert pregunta_de({"tema": "", "categoria": "Idea principal"}) == "Idea principal: ¿qué sostiene la obra en esta página?"
+
+
+@requiere_binding
+def test_el_area_mapa_da_el_mapa_global_y_la_cobertura(areas):
+    """2026-11-24 (§9.19): el área Mapa lee del controlador de Lectura el mapa de toda la biblioteca (con `otros` por
+    concepto, para pintarlo con el mismo componente que el de un libro) y la cobertura por tema, sobre los libros que el
+    catálogo ya tiene leídos."""
+    lec, libros = areas["lectura"], areas["libros"]
+    g = lec.mapaGlobal
+    assert g["libros"] == 2 and len(g["conceptos"]) == 5          # los dos libros de muestra con diario
+    assert g["conceptos"][0]["termino"] == "Capital humano" and g["conceptos"][0]["otros"] == 1
+    c = lec.cobertura
+    assert c["libros"] == len(libros.libros) > 0
+    assert c["leido"] + c["en_curso"] + c["sin_abrir"] == c["libros"]   # cada libro cae en un estado y solo en uno
+    assert c["conceptos"] == len(g["conceptos"])
+    assert all(t["libros"] >= t["leido"] + t["en_curso"] for t in c["temas"])

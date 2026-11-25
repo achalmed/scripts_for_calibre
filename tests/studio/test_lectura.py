@@ -133,3 +133,70 @@ def test_la_cifra_de_un_libro_para_la_fila_del_catalogo():
         "83 % · 4 subrayados · 1 h 13 min"
     assert cifra_libro({"fraccion": None, "porcentaje": 0, "anotaciones": 1, "segundos": 0, "tiempo": ""}) == "1 subrayado"
     assert cifra_libro({"fraccion": None, "porcentaje": 0, "anotaciones": 0, "segundos": 0, "tiempo": ""}) == ""
+
+
+@requiere_binding
+def test_el_mapa_global_junta_los_diarios_de_toda_la_biblioteca(app, entorno, muestra):
+    """2026-11-24 (§9.19): un solo barrido de los diarios da el mapa de toda la biblioteca; cada concepto sabe en qué
+    libros aparece, y el del libro se arma de ahí (antes cada libro rehacía el mapa de todos los demás)."""
+    from biblioteca_app.servicios import mapa_lectura
+    g = mapa_lectura.mapa_global()
+    assert g["libros"] == 2 and g["sesiones"] == 3            # los dos libros de muestra con diario
+    assert len(g["conceptos"]) == 5 and len(g["relaciones"]) == 5
+    ch = g["conceptos"][0]                                     # el que está en más libros va primero
+    assert ch["termino"] == "Capital humano" and ch["nlibros"] == 2 and len(ch["libros"]) == 2
+    assert ch["veces"] == 2 and len(ch["definiciones"]) == 2   # una definición de cada libro
+    assert dict(g["etiquetas"])["localización"] == 2
+    assert "por_libro" not in g                                # eso se queda en la caché
+    uno = mapa_lectura.mapa_libro(ch["libros"][0])             # el del libro sigue dando lo suyo y lo que comparte
+    assert next(c for c in uno["conceptos"] if c["termino"] == "Capital humano")["otros"] == 1
+    uno["conceptos"][0]["termino"] = "tocado"                  # lo que entrega es copia: la caché no se ensucia
+    assert mapa_lectura.mapa_global()["conceptos"][0]["termino"] == "Capital humano"
+
+
+def test_el_estado_de_lectura_de_un_libro():
+    """2026-11-24 (§9.19): «complete» o el progreso casi al final es leído; algo empezado, en curso; lo demás, sin abrir."""
+    from biblioteca_app.servicios import mapa_lectura as m
+    assert m.estado_lectura({"ko_estado": "complete", "ko_progreso": 1.0}) == m.LEIDO
+    assert m.estado_lectura({"ko_estado": "", "ko_progreso": 0.97}) == m.LEIDO
+    assert m.estado_lectura({"ko_estado": "reading", "ko_progreso": 0.4}) == m.EN_CURSO
+    assert m.estado_lectura({"ko_estado": "", "ko_progreso": 0.0}) == m.SIN_ABRIR
+    assert m.estado_lectura({"ko_estado": "", "ko_progreso": None}) == m.SIN_ABRIR
+
+
+def test_la_cobertura_dice_por_tema_cuanto_falta():
+    """2026-11-24 (§9.19): por etiqueta del vocabulario cerrado, cuántos libros hay, cuántos leídos, en curso y sin
+    abrir, y cuántos conceptos salieron de ellos; primero el tema con más libros sin abrir, que es lo que falta."""
+    from biblioteca_app.servicios import mapa_lectura as m
+    libros = [{"id": "1", "etiquetas": ["economia", "ciudades"], "ko_estado": "complete", "ko_progreso": 1.0},
+              {"id": "2", "etiquetas": ["economia"], "ko_estado": "reading", "ko_progreso": 0.4},
+              {"id": "3", "etiquetas": ["economia", "filosofia"], "ko_estado": "", "ko_progreso": None},
+              {"id": "4", "etiquetas": ["filosofia"], "ko_estado": "", "ko_progreso": None}]
+    # el «id» va en texto porque así lo entrega `catalogo.leer`, y el mapa lo tiene en número: con enteros aquí la
+    # prueba pasaba y la cobertura real decía «0 conceptos» en todos los temas (2026-11-24)
+    mapa = {"conceptos": [{"termino": "Aglomeración", "libros": [1]}, {"termino": "Ciudad", "libros": [1, 2]}]}
+    c = m.cobertura(libros, mapa)
+    assert c["libros"] == 4 and c[m.LEIDO] == 1 and c[m.EN_CURSO] == 1 and c[m.SIN_ABRIR] == 2 and c["conceptos"] == 2
+    filosofia, economia = c["temas"][0], next(t for t in c["temas"] if t["tema"] == "economia")
+    assert filosofia["tema"] == "filosofia"                    # dos libros sin abrir: lo que más falta
+    assert filosofia["libros"] == 2 and filosofia[m.SIN_ABRIR] == 2 and filosofia["conceptos"] == 0
+    assert economia["libros"] == 3 and economia[m.LEIDO] == 1 and economia[m.EN_CURSO] == 1 and economia[m.SIN_ABRIR] == 1
+    assert economia["conceptos"] == 3                          # 2 conceptos del libro 1 y 1 del libro 2
+
+
+def test_la_cobertura_dice_de_que_trata_cada_tema_segun_openalex():
+    """2026-11-24 (§9.20): las materias de OpenAlex (caché de `lib/temas_openalex.py`, solo lectura) dicen de qué trata
+    un tema aunque ninguno de sus libros se haya leído; se muestran las tres que más se repiten."""
+    from biblioteca_app.servicios import mapa_lectura as m
+    libros = [{"id": "1", "etiquetas": ["macroeconomia"], "ko_estado": "", "ko_progreso": None},
+              {"id": "2", "etiquetas": ["macroeconomia"], "ko_estado": "", "ko_progreso": None},
+              {"id": "3", "etiquetas": ["legislacion"], "ko_estado": "", "ko_progreso": None}]
+    materias = {1: ["Monetary Policy and Economic Impact", "Economic Theory and Policy"],
+                2: ["Monetary Policy and Economic Impact", "Inflation dynamics"]}
+    c = m.cobertura(libros, {"conceptos": []}, materias)
+    macro = next(t for t in c["temas"] if t["tema"] == "macroeconomia")
+    assert macro["con_materias"] == 2 and macro["materias"][0] == "Monetary Policy and Economic Impact"
+    assert len(macro["materias"]) == 3 and macro["conceptos"] == 0      # ningún libro leído con guía, y aun así se sabe de qué trata
+    legislacion = next(t for t in c["temas"] if t["tema"] == "legislacion")
+    assert legislacion["con_materias"] == 0 and legislacion["materias"] == []
+    assert c["con_materias"] == 2

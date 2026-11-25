@@ -433,6 +433,7 @@ def crear(raiz: Path, con_calibre: bool | None = None) -> Muestra:
     _lectura(Path(entorno["LECTURA_DB"]), libros)
     _diario_nawinchay(raiz / "datos" / "nawinchay" / "diario", libros)
     _repaso(Path(entorno["REPASO_DB"]))
+    _materias(estado / "biblioteca" / "materias.json", libros)
     indice = _indice(entorno, repo, libros, estado / "biblioteca" / "indice.json", raiz / "notas")
     _respaldos(raiz / "respaldos" / "biblioteca" / "puerta")
     _informe_importacion(estado / "biblioteca" / "importar-zotero" / "ultimo.json", libros)
@@ -516,6 +517,28 @@ def _diario_nawinchay(carpeta: Path, libros: dict) -> None:
     if b2 is not None:
         dos = [sesion(3, [("Capital humano", "Años de estudio como medida de la formación.", "p. 40 ¶1")], [], ["medición"])]
         (carpeta / f"c{b2}.json").write_text(json.dumps({"estudio": {"guia": {"sesiones": dos}}}, ensure_ascii=False), encoding="utf-8")
+
+
+def _materias(destino: Path, libros: dict) -> None:
+    """La caché de materias de los catálogos (§9.20) de los tres primeros libros de muestra: materias inventadas aquí,
+    de ninguna obra real, para que el área Mapa enseñe de qué trata un tema sin haberlo leído."""
+    por_titulo = {d["titulo"]: b for b, d in libros.items()}
+    elegidos = [por_titulo.get(t[0]) for t in LIBROS[:3]]
+    materias = [["Regional and Urban Economic Development", "Economic Theory and Policy"],
+                ["Human Capital and Labor Market Outcomes", "Regional and Urban Economic Development"],
+                ["Advanced Statistical Methods and Models"]]
+    cache = {"libros": {}}
+    for b, nombres in zip(elegidos, materias):
+        if b is None:
+            continue
+        cache["libros"][str(b)] = {"openalex": {
+            "estado": "hallado", "fecha": "2026-11-24", "clave": f"10.0000/muestra.{b}",
+            "ref": f"https://openalex.org/W{900000000 + int(b)}", "titulo": libros[b]["titulo"],
+            "materias": [{"nombre": n, "score": round(0.9 - i / 10, 4), "tipo": "materia", "subcampo": "Economics",
+                          "campo": "Economics, Econometrics and Finance", "dominio": "Social Sciences"}
+                         for i, n in enumerate(nombres)]}}
+    destino.parent.mkdir(parents=True, exist_ok=True)
+    destino.write_text(json.dumps(cache, ensure_ascii=False, indent=1, sort_keys=True), encoding="utf-8")
 
 
 def _lectura(destino: Path, libros: dict) -> None:

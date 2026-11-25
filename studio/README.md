@@ -27,7 +27,8 @@ install.sh
 ## Qué es
 
 Un gestor bibliográfico sobre la biblioteca de Calibre (`../docs/reingenieria.md`), en `VentanaBase` de `gui-comun` 3.0,
-con siete áreas en chips (Ctrl+1–7: las seis del rediseño del 2026-11-18 y Revisión, `../docs/decisiones.md` §9.9 y §9.10) y Bandejas (Ctrl+8):
+con ocho áreas en chips (Ctrl+1–7: las seis del rediseño del 2026-11-18 y Revisión, `../docs/decisiones.md` §9.9 y §9.10;
+Mapa, Ctrl+9, §9.19) y Bandejas (Ctrl+8):
 
 ![El catálogo con portadas y la ficha editorial](../docs/figuras/biblioteca-studio-claro.png)
 
@@ -83,6 +84,14 @@ con siete áreas en chips (Ctrl+1–7: las seis del rediseño del 2026-11-18 y R
 - **Bandejas** (Ctrl+8, desde Inicio, el menú Ver o la paleta): pendientes de clasificar (la zona de entrada sin
   catalogar y los libros sin tipo), fichas incompletas, sin clave para citar, sin Zotero y sin portada; cada una con lo
   que tiene y la operación que la vacía.
+- **Mapa** (Ctrl+9, §9.19 y §9.20): el mapa de toda la biblioteca y, sobre todo, dónde estoy y qué me falta. Arriba, las cifras
+  (libros, leídos, en curso, sin abrir, conceptos) y el grafo de los conceptos de todas las sesiones guiadas de
+  Ñawinchay, con el mismo componente que el mapa de un libro; abajo, los temas del vocabulario cerrado de Calibre, del
+  que menos se ha leído al que más, cada uno con su barra (leído · en curso · sin abrir) y sus conceptos. Un tema con
+  libros y sin conceptos es un tema que la biblioteca tiene y el lector todavía no. Bajo cada tema, de qué trata
+  según OpenAlex («según N de M», §9.20: la caché de `../lib/materias.py`, que la ventana solo lee). Solo lee.
+
+![El mapa de la biblioteca: lo estudiado y lo que falta por tema](../docs/figuras/biblioteca-studio-mapa-biblioteca-oscuro.png)
 
 **La ventana no escribe en ninguna base de Calibre ni de Zotero, ni las abre.** Lo único que escribe es la base del repaso
 (`$XDG_DATA_HOME/biblioteca/repaso.sqlite`, `REPASO_DB`), del usuario y por su único escritor, `../lib/repaso.py`, y, en los
@@ -103,7 +112,7 @@ suite; la ventana los sigue en la salida y, al terminar, comprueba en solo lectu
 | `biblioteca_app/aplicacion.py` | arma la aplicación: controladores, el proveedor de portadas (`gui_comun.miniaturas.ProveedorMiniaturas`, `image://portadas/<id>`), el registro de acciones (menú, paleta, atajos, estados de operación) y `biblioteca_app/qml/Main.qml` |
 | `biblioteca_app/servicios/` | sin Qt: `catalogo` (une lo editorial al índice; búsqueda por campo, facetas, orden, bandejas), `pasos` (los seis pasos de la puerta vistos desde fuera), `operaciones` (el catálogo de órdenes), `puerta` (procesos, candados, respaldos, timers), `datos` (el índice, los ledgers, las fichas, los manifiestos, la coherencia) |
 | `biblioteca_app/controladores/` | lo que QML ve: `espacio` (áreas, etapa, barra de estado, rutas), `libros` (el catálogo, la ficha, las bandejas), `etapas`, `operaciones` (la actual, Simular y Aplicar, plan, registro y pasos), `puerta`, `ajustes`, `lectura` (la base de lectura, solo lee), `fichas` (las fichas de los escritos y las canónicas, y el repaso), `inicio` (lo de hoy) |
-| `biblioteca_app/qml/` | `Main.qml` sobre `GuiComun.VentanaBase` y `componentes/` (Inicio, Catalogo, TarjetaLibro, FilaLibro, PanelFiltros, FichaEditorial, Lectura, Fichas, EspacioEtapas, Operacion, Elemento, Plan, Registro, Bandejas; y las piezas Tarjeta, Cifra, BarraLectura y Chip) |
+| `biblioteca_app/qml/` | `Main.qml` sobre `GuiComun.VentanaBase` y `componentes/` (Inicio, Catalogo, TarjetaLibro, FilaLibro, PanelFiltros, FichaEditorial, Lectura, MapaLectura, MapaBiblioteca, Fichas, EspacioEtapas, Operacion, Elemento, Plan, Registro, Bandejas; y las piezas Tarjeta, Cifra, BarraLectura y Chip) |
 | `biblioteca_app/recursos/marca.svg` | el icono del lanzador: la única marca del studio |
 | `muestra.py` | la biblioteca de muestra (libros ficticios con `calibredb`, metadatos y portadas por la API de Calibre, Zotero mínimo, ledgers y fichas) de las pruebas y las capturas; nunca la real |
 | `capturar.py` | las capturas de la documentación sobre la muestra, con `HOME` temporal |

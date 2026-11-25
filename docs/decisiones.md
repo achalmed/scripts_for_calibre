@@ -1141,3 +1141,101 @@ Zotero llega solo.
 fila que pasaba por debajo: ahora lo lleva (el de la ventana). Las etiquetas de la ficha son `EtiquetaMateria`: una pestaña
 con punta y ojal, en un tono neutro del texto (el acento de Lliphi Oscuro es rojo y parecerían errores), que busca su
 etiqueta al pulsarla. `studio/capturar.py --ficha-al-final` muestra la ficha desplazada hasta las etiquetas.
+
+
+### §9.19 El mapa de toda la biblioteca: dónde estoy y qué me falta (2026-11-24)
+
+El autor pidió que el mapa de §9.16 no fuera solo de un libro ni solo de lo estudiado: un mapa de toda la biblioteca
+que diga **dónde está, qué estudió y qué le falta**, y que crezca mientras lee, estudia o enseña. Se hace sobre lo que
+ya hay, sin base nueva ni puerta nueva, en `servicios/mapa_lectura.py`:
+
+- **`mapa_global()`**: un solo barrido de los diarios de Ñawinchay, con caché por la huella de la carpeta (`_sello`:
+  nombre, tamaño y fecha de cada diario), que se invalida sola cuando Ñawinchay escribe. Cada concepto trae `libros`
+  (los `calibre_id` donde aparece) y `nlibros`; cada relación, los libros de donde sale. `mapa_libro` se arma de aquí y
+  entrega copias: la caché no se ensucia. De paso corrige el costo de §9.16, que era O(n²) — abrir un libro rehacía el
+  mapa de todos los demás solo para contar en cuántos otros aparecía cada concepto.
+- **`cobertura(libros)`**: lo que falta, por tema. Cruza las etiquetas del vocabulario cerrado de Calibre (las que ya
+  trae `catalogo.leer`) con la lectura de KOReader (`estado_lectura`: `complete` o un progreso ≥ 0,95 es **leído**;
+  algo empezado, **en curso**; lo demás, **sin abrir**) y con los conceptos del mapa. Los temas salen de menos a más
+  estudiado —primero el que más libros sin abrir tiene—, que es el orden en que esto se mira. Un tema con libros y
+  cero conceptos es un tema que la biblioteca tiene y el lector todavía no.
+- **No es una base ni una puerta**: nada se escribe, nada va a Calibre ni a Zotero, y no se abre ninguna base (los
+  libros los da `catalogo.leer`, que ya los tiene leídos). Sin Ñawinchay, la cobertura sigue valiendo: las etiquetas y
+  la lectura de KOReader no dependen de él.
+- **El defecto que encontró la primera corrida real**: `catalogo.leer` entrega el `id` en texto y el mapa lo tiene en
+  número (sale del nombre del diario, `c<calibre_id>.json`), así que no casaba ninguno y todos los temas decían «0
+  conceptos». Lo arregla `_entero`; la prueba usa ahora ids en texto, como el catálogo, que es lo que la habría hecho
+  fallar antes del código.
+- **Lo que mide hoy** (biblioteca real, 2026-11-24): 4 795 libros, 44 leídos, 227 en curso, 4 524 sin abrir; 28
+  conceptos de los dos únicos libros con sesiones guiadas, bajo `economia` (28), `politica_monetaria` (23),
+  `economia_internacional` (23), `finanzas_internacionales` (23) y `macroeconomia` (5). El mapa fino nace pequeño
+  porque nace de lo leído con guía; poblarlo sin leer es lo que viene (anclar los conceptos a vocabularios abiertos:
+  STW y JEL para economía, OpenAlex por el DOI de cada obra para el resto, que la biblioteca ya tiene verificado).
+- **La vista es un área propia, «Mapa»** (`MapaBiblioteca.qml`, chip al final, Ctrl+9: va después de Bandejas para no
+  mover los atajos de las demás, como hizo Revisión en §9.10). Arriba, las cinco cifras (libros, leídos, en curso, sin
+  abrir, conceptos) y el grafo de todo lo estudiado; abajo, «Dónde estoy»: los temas con su barra (leído · en curso ·
+  sin abrir) y sus conceptos, los 40 primeros y un botón que los muestra todos. El grafo es el mismo componente del
+  mapa de un libro (`MapaLectura.qml`), al que se le dieron `titulo`, `resumen` y `vacio` en vez de duplicarlo; por eso
+  el controlador entrega `otros` (en cuántos libros más aparece el concepto) ya calculado, y la vista no sabe si mira
+  un libro o la biblioteca. Lo sirve el controlador de Lectura (`mapaGlobal`, `cobertura`), que ya tenía el catálogo y
+  el mapa del libro: no se añadió un controlador nuevo.
+- **Capturar sin pantalla** (`docs/figuras/biblioteca-studio-mapa-biblioteca-{oscuro,claro}.png`): en una sesión sin
+  sesión gráfica, `studio/capturar.py` moría con SIGSEGV (salida 245) antes de pintar, con cualquier área. Ya no fija
+  `QT_QPA_PLATFORM` a la fuerza (`setdefault`) y pone `QT_QUICK_BACKEND=software` si nadie lo fijó, así que la captura
+  sale dentro de Xvfb: `xvfb-run -a --server-args="-screen 0 1600x1000x24" env QT_QPA_PLATFORM=xcb
+  /usr/bin/python3 studio/capturar.py <salida>.png --area mapa`. Con pantalla de verdad, todo sigue igual. La muestra
+  trae ahora una caché de materias inventadas (`muestra._materias`) para que la captura enseñe la línea de §9.20.
+
+
+### §9.20 De qué trata lo que no he leído: las materias de los catálogos abiertos (2026-11-24)
+
+El mapa de §9.19 nace de las sesiones guiadas de Ñawinchay, así que solo sabe de los libros que ya se estudiaron: 28
+conceptos de 2 libros frente a 4 795. El autor pidió poblarlo sin leer. Lo hace `lib/materias.py`:
+
+- **Qué trae**, según lo que cada obra tenga, y las dos si tiene las dos:
+  · por **DOI**, `api.openalex.org/works/doi:<doi>` (CC0, sin clave ni registro): sus `topics` con score ≥ 0,05 —con
+    su jerarquía materia > subcampo > campo > dominio— y sus `keywords`. Los `concepts` heredados no se usan: traen
+    ruido («Perspective (graphical)» en un artículo de política monetaria).
+  · por **ISBN**, `openlibrary.org/isbn/<isbn>.json` y, si lo tiene, su `work`: las materias de catálogo suelen estar
+    en la obra y no en la edición. Son materias de biblioteca —irregulares, en varios idiomas— y el catálogo guarda
+    además los autores como materia: se descartan los encabezados con año («Hayek, Friedrich A. von, 1899-1992») sin
+    tocar los que solo llevan coma («Economics, Mathematical», que sí es una materia), y se toman las 12 primeras,
+    porque una obra traía 63 y se comía el recuento de su tema.
+  El módulo se llamó `lib/temas_openalex.py` las primeras horas del día; al entrar la segunda fuente pasó a
+  `lib/materias.py` (no estaba commiteado, no tenía consumidores) y la caché, de `temas-openalex.json` a
+  `materias.json`, con una entrada por fuente y por libro; `leer_cache` trae sola las entradas del formato anterior.
+- **No es catalogación ni una puerta**: nada entra en `metadata.db` ni en `zotero.sqlite`. Es una caché de consulta en
+  `$XDG_STATE_HOME/biblioteca/materias.json`, junto al índice y a la de `verificar_ids` (§9.10), con la misma
+  regla: lo hallado se vuelve a mirar a los 180 días, lo no hallado a los 30, y un error de red no se guarda. Sin
+  `--aplicar` no se toca la red. **Las etiquetas del vocabulario cerrado de Calibre son del autor y no se tocan**: las
+  materias viven aparte y en inglés, que es como las publica la fuente.
+- **Lo que dieron las dos corridas** (2026-11-24): de 4 795 libros, 222 tienen DOI y 204 ISBN.
+  · **OpenAlex reconoció los 222** (2 065 materias, 129 distintas, 1 335 palabras clave; por dominio: 276 Ciencias
+    Sociales, 54 Físicas, 13 Salud, 9 Vida).
+  · **Open Library halló materias en 94 de los 204** (46 %): 101 obras están en el catálogo pero sin materias y el
+    resto no está. Se midió antes de escribir el código (6 de 15 en una muestra) y la corrida lo confirmó; **Google
+    Books se descartó porque devolvió 0 categorías en los mismos 15**. Los errores de red no se guardan, así que las
+    17 que fallaron se recuperaron repitiendo la orden, hasta dejar 1.
+  · **En total, 298 libros con materias y 136 de los 317 temas** dicen ya de qué tratan. El resto —documentos
+    oficiales del INEI, del Congreso y de los ministerios— no está en ningún catálogo internacional y no lo estará:
+    para esos, las etiquetas de Calibre son lo único que hay.
+  **Corrige una cuenta que se dio por buena en la sesión**: los 4 731 son los libros con ítem en Zotero, no con DOI.
+- **La tercera vía, por título y autor** (`openalex_titulo`, 2026-11-24): para lo que no tiene DOI ni ISBN ni
+  materias ya. Es la única que puede emparejar mal, así que: se piden cinco candidatos y se toma el que más se
+  parezca, con umbral 0,87 del título (0,75 si además coincide un apellido, porque la traducción lo cambia); un
+  título de menos de ocho letras no se busca («Ley» encuentra cualquier cosa); y la entrada queda marcada `incierta`
+  con su `parecido`, para poder auditarla o retirarla sin tocar las otras dos fuentes. `traer` **no** la gasta si no
+  se le pide (`--fuente openalex_titulo`): son más de cuatro mil consultas.
+  En la muestra de 60 dio **25 coincidencias, todas con parecido ≥ 0,97** y correctas a la vista («Del origen del
+  dinero» → «El origen del dinero», «La acción humana» → «La acción humana»). Lo que el umbral deja fuera son sobre
+  todo documentos oficiales. Un defecto que solo salió corriéndola de verdad: un autor cuyo nombre no deja letras
+  latinas (ideogramas) rompía la comparación de apellidos; tiene su prueba.
+- **Lo que hubo que limpiar de Open Library**, con su prueba: los autores que el catálogo guarda como materia
+  («Hayek, Friedrich A. von, 1899-1992», reconocidos por el año del encabezado y no por llevar coma, que
+  «Economics, Mathematical» sí es materia); los encabezados genéricos (`GENERICAS`: «General», «Fiction - General»…,
+  que dejaban `filosofia` como «General · Fiction - General · Philosophy»); y las marcas de público («Spanish: Adult
+  Nonfiction»). El filtro se aplica al traer **y al leer**, así que afinar no obliga a volver a consultar.
+- **Dónde se ve**: en el área Mapa, bajo cada tema, «según N de M: materia · materia · materia» (`cobertura` las suma
+  por etiqueta y se queda con las tres que más se repiten). El «según N de M» va porque con 222 libros repartidos en
+  317 temas una materia puede apoyarse en un solo libro: `gestion_publica` sale hoy como «Municipal Solid Waste
+  Management» según 1 de 236. Es un indicio, no el tema, y la vista lo dice.

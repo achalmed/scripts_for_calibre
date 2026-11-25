@@ -21,7 +21,8 @@ AREAS = (("inicio", "Inicio", "go-home"), ("catalogo", "Catálogo", "view-previe
          ("fichas", "Fichas", "document-edit-verify"),   # las fichas de los escritos y el repaso (§9.9)
          ("metodo", "Método", "view-process-tree"), ("coherencia", "Coherencia", "folder-sync"),
          ("revision", "Revisión", "view-list-details"),  # la revisión de literatura (§9.10): al final, sin mover los atajos de §9.9
-         ("bandejas", "Bandejas", "mail-folder-inbox"))
+         ("bandejas", "Bandejas", "mail-folder-inbox"),
+         ("mapa", "Mapa", "distribute-graph-directed"))   # el mapa de toda la biblioteca (§9.19): al final, sin mover los atajos
 NOMBRES_AREAS = tuple(a for a, _t, _i in AREAS)
 SIN_CHIP = ("bandejas",)                 # se llega desde Inicio (Pendientes, Siguiente paso), el menú Ver y la paleta
 INICIAL = "inicio"

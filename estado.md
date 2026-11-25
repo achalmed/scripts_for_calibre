@@ -81,6 +81,9 @@ nada en curso. La 2a de la ola 2 cerró con la fusión (fase E); sigue la 2b (mi
 
 ## Por hacer
 
+- 2026-11-24 · dueño: la sesión que lo escribió · **`tests/calibre/test_escritores_k5.py::test_register_aplica_por_la_puerta` falla** (41 pasan): toca `koreader/main.sh`, `koreader/config.sh` y `lib/escribir.{py,sh}`, los cuatro con cambios sin commitear de otra sesión; §9.19 y §9.20 no tocan la puerta ni KOReader. Se arregla donde se escribió.
+- 2026-11-24 · dueño: la sesión que lo escribió · **`tests/fuentes/test_privacidad_rutas.py::test_codigo_sin_lib_comun_ni_reparaciones` falla** por un cambio sin commitear ajeno a §9.19 y §9.20: `studio/biblioteca_app/controladores/libros.py:927` usa `Path.home() / "Downloads"` como respaldo de `DESCARGAS_DIR`, y la prueba solo tolera `Path.home()` en una línea que nombre una variable `XDG_` (normativa 5.1–5.3). No está en `HEAD`. Se arregla donde se escribió, no aquí.
+- 2026-11-24 · dueño: asistente · **Las materias por título, para lo que no tiene DOI ni ISBN** (§9.20): con las dos vías hechas, 298 de 4 795 libros tienen materias (136 de 317 temas). Queda la tercera, OpenAlex por título y autor, con umbral de coincidencia y marcada como incierta; y revisar si vale la pena, porque el grueso de lo que falta son documentos oficiales peruanos que ningún catálogo internacional indexa.
 - 2026-11-24 · dueño: director · pasar a `docs/decisiones.md` (§9.5) «el cuadro de un marco» de `lib/ayuda_ia.py` (hoy en su docstring, en el uso de `lib/consulta.py` y en §Hecho) cuando se confirmen los cambios de otra sesión que ese archivo tiene sin commitear.
 - 2026-11-22 · dueño: director · pasar a `docs/decisiones.md` (§9.18) la decisión de `lib/lista_referencias.py` (hoy en
   su docstring y en §Hecho) cuando se confirmen los cambios de otra sesión que ese archivo tiene sin commitear.

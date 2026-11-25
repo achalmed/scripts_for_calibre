@@ -12,6 +12,10 @@ ColumnLayout {
     id: raiz
     property var mapa: ({ conceptos: [], relaciones: [], etiquetas: [], sesiones: 0 })
     property string elegido: ""
+    // el mismo grafo sirve para un libro y para toda la biblioteca (§9.19): sólo cambian los rótulos
+    property string titulo: "Mapa de lo leído"
+    property string resumen: ""
+    property string vacio: "Aún no hay mapa: lo arman las sesiones guiadas de Ñawinchay cuyo prompt devolvió su bloque de conceptos y relaciones."
     readonly property var conceptos: mapa.conceptos || []
     readonly property var relaciones: mapa.relaciones || []
     readonly property bool hay: conceptos.length > 0
@@ -26,17 +30,16 @@ ColumnLayout {
         type: Kirigami.Heading.Type.Primary
         level: 4
         Layout.topMargin: Kirigami.Units.largeSpacing
-        text: "Mapa de lo leído"
+        text: raiz.titulo
     }
     QQC2.Label {
         Layout.fillWidth: true
         wrapMode: Text.Wrap
         font: Kirigami.Theme.smallFont
         color: Kirigami.Theme.disabledTextColor
-        text: raiz.hay
-              ? raiz.conceptos.length + " conceptos · " + raiz.relaciones.length + " relaciones · de " + raiz.mapa.sesiones
-                + (raiz.mapa.sesiones === 1 ? " sesión guiada" : " sesiones guiadas") + " en Ñawinchay. Lo propuso la IA: cotéjelo con el texto."
-              : "Aún no hay mapa: lo arman las sesiones guiadas de Ñawinchay cuyo prompt devolvió su bloque de conceptos y relaciones."
+        text: !raiz.hay ? raiz.vacio : (raiz.resumen !== "" ? raiz.resumen
+              : raiz.conceptos.length + " conceptos · " + raiz.relaciones.length + " relaciones · de " + raiz.mapa.sesiones
+                + (raiz.mapa.sesiones === 1 ? " sesión guiada" : " sesiones guiadas") + " en Ñawinchay. Lo propuso la IA: cotéjelo con el texto.")
     }
 
     // el grafo

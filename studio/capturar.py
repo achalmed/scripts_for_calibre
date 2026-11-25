@@ -196,10 +196,14 @@ def main() -> int:
         (carpeta / "muestra" / "core").symlink_to(REPO.parent / "core")      # DOCS_ROOT = la muestra: las rutas se ven relativas a ella
         env.update(m.entorno)
         env.update({"HOME": str(hogar), "XDG_CACHE_HOME": str(hogar / ".cache"), "XDG_DATA_HOME": str(Path.home() / ".local" / "share"),
-                    "DOCS_ROOT": str(carpeta / "muestra"), "WRITING_DIR": str(carpeta / "muestra" / "escritura"), "BIBLIOTECA_STUDIO_CAPTURA": str(carpeta), "QT_QPA_PLATFORM": "offscreen"})
+                    "DOCS_ROOT": str(carpeta / "muestra"), "WRITING_DIR": str(carpeta / "muestra" / "escritura"), "BIBLIOTECA_STUDIO_CAPTURA": str(carpeta)})
+        env.setdefault("QT_QPA_PLATFORM", "offscreen")    # sin pantalla; con una de verdad (o Xvfb), el entorno manda
         # los prompts del ecosistema y el catálogo de miradas de Yachay (código público, solo se leen): la muestra cambia DOCS_ROOT
         env.update({"PROMPTS_DIR": str(REPO.parent / "prompts"), "YACHAY_CODIGO": str(REPO.parent / "yachay")})
         env.setdefault("QT_QPA_PLATFORMTHEME", "kde")     # sin pantalla, la paleta de Qt también lee el kdeglobals temporal
+        # sin pantalla y sin GPU (una sesión del asistente, un contenedor), el renderizador normal de Qt Quick se cae con
+        # SIGSEGV antes de pintar: el de software no (2026-11-24). Quien tenga pantalla puede fijar otro valor.
+        env.setdefault("QT_QUICK_BACKEND", "software")
         orden = [sys.executable, str(AQUI / "capturar.py")] + [a for a in sys.argv[1:] if not a.startswith("--esquema") and a != args.esquema]
         codigo = subprocess.run(orden, env=env).returncode
         shutil.rmtree(carpeta, ignore_errors=True)

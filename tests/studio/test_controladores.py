@@ -68,11 +68,11 @@ def _visible(l, i: int) -> dict:
 @requiere_binding
 def test_espacio_areas(piezas):
     e = piezas["espacio"]
-    # el rediseño del 2026-11-18 (§9.9): seis chips con Ctrl+1–6; Revisión, Ctrl+7 (§9.10); y Bandejas, sin chip, con Ctrl+8;
-    # se abre en Inicio
+    # el rediseño del 2026-11-18 (§9.9): seis chips con Ctrl+1–6; Revisión, Ctrl+7 (§9.10); Bandejas, sin chip, con Ctrl+8;
+    # y Mapa, Ctrl+9 (§9.19), al final para no mover los atajos de los demás; se abre en Inicio
     assert e.area == "inicio" and [a["nombre"] for a in e.areas] == ["inicio", "catalogo", "lectura", "fichas", "metodo", "coherencia",
-                                                                     "revision", "bandejas"]
-    assert [a["atajo"] for a in e.areas] == [f"Ctrl+{n}" for n in range(1, 9)]
+                                                                     "revision", "bandejas", "mapa"]
+    assert [a["atajo"] for a in e.areas] == [f"Ctrl+{n}" for n in range(1, 10)]
     assert [a["nombre"] for a in e.areas if not a["chip"]] == ["bandejas"]
     e.fijarArea("metodo")
     assert e.area == "metodo" and e.vista == "adquirir"                 # la primera etapa del Método

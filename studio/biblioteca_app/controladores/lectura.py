@@ -200,6 +200,8 @@ class Lectura(QObject):
         self._libro: dict = {}
         self._id = -1
         self._mapa: dict | None = None
+        self._global: dict | None = None        # el mapa de toda la biblioteca (§9.19), al pedirlo
+        self._cobertura: dict | None = None     # y lo que falta por tema
         self._origen = ""
         self._vigia = None
         self._espera = QTimer(self)
@@ -256,6 +258,7 @@ class Lectura(QObject):
 
     def _leer_libro(self) -> None:
         self._mapa = None                 # el mapa de lo leído se lee al pedirlo
+        self._global = self._cobertura = None   # y el de toda la biblioteca, que cambia cuando cambian los diarios
         self._libro = consulta.libro(self._id, self.ruta()) if self._id >= 0 else {}
         if self._libro and not self._libro.get("titulo") and self._libros is not None and str(self._libros.id) == str(self._id):
             self._libro["titulo"] = self._libros.titulo
@@ -453,6 +456,30 @@ class Lectura(QObject):
             from biblioteca_app.servicios import mapa_lectura
             self._mapa = mapa_lectura.mapa_libro(self._id)
         return self._mapa
+
+    def _mapa_global(self) -> dict:
+        """El mapa de toda la biblioteca (§9.19), con `otros` por concepto (en cuántos libros más aparece) para que la
+        vista sea la misma que la del libro."""
+        if self._global is None:
+            from biblioteca_app.servicios import mapa_lectura
+            g = mapa_lectura.mapa_global()
+            self._global = dict(g, conceptos=[dict(c, otros=c["nlibros"] - 1) for c in g["conceptos"]])
+        return self._global
+
+    @Property("QVariantMap", notify=cambiado)
+    def mapaGlobal(self) -> dict:
+        """El mapa de toda la biblioteca: los conceptos y relaciones de todos los diarios de Ñawinchay (§9.19)."""
+        return self._mapa_global()
+
+    @Property("QVariantMap", notify=cambiado)
+    def cobertura(self) -> dict:
+        """Dónde estoy y qué me falta, por tema (§9.19): las etiquetas del vocabulario cerrado de Calibre con sus libros
+        leídos, en curso y sin abrir, y cuántos conceptos salieron de ellos. Los libros son los que ya tiene el catálogo."""
+        if self._cobertura is None:
+            from biblioteca_app.servicios import mapa_lectura
+            libros = self._libros.libros if self._libros is not None else []
+            self._cobertura = mapa_lectura.cobertura(libros, self._mapa_global())
+        return self._cobertura
 
     @Property("QVariantMap", notify=libroCambiado)
     def fichaObra(self) -> dict:
